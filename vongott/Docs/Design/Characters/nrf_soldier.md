@@ -12,3 +12,4 @@ NRF Soldier
 ### Weapons
 - Assault rifle
 - Pistol
+- Knife
