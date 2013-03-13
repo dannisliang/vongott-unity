@@ -22,7 +22,7 @@ Scene 1: Tutorial ( NRF bunker 1 )
 ( prompt: what is your name? )
 
 - Strange man: “(player name)! Yeah, that’s it! Definitely didn’t just make that up!”
-- Player: “(player name).. OK. Seems legit...”
+- You: “(player name).. OK. Seems legit...”
 - Strange man: “And I'm Miguel. Let’s get you out of there and put you on a test run."
 - Miguel: "Hopefully this will be the last time we have to do this..”
 - (player name): "Did... did we do this earlier?”
