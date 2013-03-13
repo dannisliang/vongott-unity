@@ -34,7 +34,7 @@ Scene 1: Tutorial ( NRF bunker 1 )
 
 ( player is tipped out of the incubator )
 
-- Miguel: "Now just try moving around. This really should be no problem at all."
+- Miguel: "Now just try moving around. It should be no problem if my calibrations are good enough."
 - Miguel: "Come on back and talk to me when you've gotten comfortable with your legs and whatnot."
 
 ( prompt: use [arrow keys] to move, press [space] to jump, [shift] to crouch and look around with your mouse )
