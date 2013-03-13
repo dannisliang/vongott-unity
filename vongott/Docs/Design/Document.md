@@ -1,8 +1,11 @@
 Design document for Von Gott
 ===
 - [Gameplay](#gameplay)
-  - [Controls](#controls)
 	- [Genre](#genre)
+	- [Controls](#controls)
+	- [Mods system](#mods-system)
+		- [Mechinal mods](#mechinal-mods)
+		- [Digital mods](#digital-mods)
 - [Setting](#setting)
 	- [Visuals](#visuals)
 	- [Story](#story)
