@@ -1,16 +1,14 @@
-Scene 1: Tutorial
+Scene 1: Tutorial ( NRF bunker 1 )
 =====
 
-## Underground bunker
-
-black
+( screen is black )
 
 - Player:
   “Whuh?”
 - Player:
   “Whoah?”
 
-sudden change to scene
+( sudden change to scene )
 
 - Player:
   “AAAARRRGGGHH!!!”
@@ -29,7 +27,7 @@ sudden change to scene
 - NRF Guard:
   “Ehrm.. Your name is..”
 
-prompt: what is your name?
+( prompt: what is your name? )
 
 - NRF Guard:
   “<player name>! Yeah, that’s it! Definitely didn’t just make that up!”
