@@ -73,9 +73,10 @@ Conversations consist of a regular popup with the name of the current speaker at
 # Distribution
 ## Target platforms
 - Linux/Windows/Mac
-- Consoles if posible
+- Consoles if possible
 
 ## Stores
 - Steam
 - HumbleBundle
 - From own website
+- Ubuntu Software Center
