@@ -52,7 +52,7 @@ Scene 2: Introduction ( nrf_bunker_quarters )
   3. "Yes, sir!"
 - Miguel:
   1. "Don't worry, my man."
-  2. "I can kill you with the press of a button, so don't think for a second that you have a choice."
+  2. "I can kill you bu flipping a switch, so don't think for a second that you have a choice."
   3. "That's the spirit!"
 - Miguel: "I've taken the liberty of implementing some basic field training in your memory..."
 - Miguel: "...it should be more than enough to complete this mission. Let's head out!"
