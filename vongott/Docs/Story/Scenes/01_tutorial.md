@@ -11,19 +11,19 @@ Scene 1: Tutorial ( NRF bunker 1 )
 ( sudden change to scene )
 
 - Player: “AAAARRRGGGHH!!!”
-- NRF Guard: "Jesus man, calm down!”
+- NRF Soldier: "Jesus man, calm down!”
 - Player: “What’s going on? What is this? I don’t even..”
-- NRF Guard: “Relax, buddy, ok? You just woke up, that’s all.”
+- NRF Soldier: “Relax, buddy, ok? You just woke up, that’s all.”
 - Player: “But.. I mean.. What? Have I... been awake before?”
-- NRF Guard: “Well, technically, no.. or yes. It’s complicated. Take your pick, it doesn’t matter.”
+- NRF Soldier: “Well, technically, no.. or yes. It’s complicated. Take your pick, it doesn’t matter.”
 - Player: “But.. who am I?”
-- NRF Guard: “Ehrm.. Your name is..”
+- NRF Soldier: “Ehrm.. Your name is..”
 
 ( prompt: what is your name? )
 
-- NRF Guard: “(player name)! Yeah, that’s it! Definitely didn’t just make that up!”
+- NRF Soldier: “(player name)! Yeah, that’s it! Definitely didn’t just make that up!”
 - Player: “(player name).. OK. Seems legit...”
-- NRF Guard: “And I'm Miguel. Let’s get you out of there and put you on a test run."
+- NRF Soldier: “And I'm Miguel. Let’s get you out of there and put you on a test run."
 - Miguel: "Hopefully this will be the last time we have to do this..”
 - (player name): "Did... did we do this earlier?”
 - Miguel: “Yeah, but we have to fry your memory every time it fails."
