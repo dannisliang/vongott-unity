@@ -40,7 +40,7 @@ Scene 2: Introduction ( nrf_bunker_quarters )
   2. "OK, let me explain our situation."
 
 ### Head out
-- Miguel: "For now, all you need to know is that there is a big ass plague going on right now."
+- Miguel: "For now, all you need to know is that there is a big ass plague going on."
 - Miguel: "Everyone is dying around us, and we know who is responsible."
 - Miguel: "These pigs have been synthesizing the chemical that causes this plague to spread..."
 - Miguel: "...while also taking charge of distributing the cure to a select few."
