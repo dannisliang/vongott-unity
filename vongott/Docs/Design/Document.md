@@ -28,7 +28,22 @@ The team consists of me, Jeppe Zapp. Yay!
 - Action RPG
 
 ## Controls
-- Optimised for keyboard+mouse and gamepad
+Optimised for keyboard+mouse and gamepad
+
+### Melee attack
+- Various combat animations based on Oni and Tekken
+- The damage dealt during melee attacks is influenced by mechanical mods
+- The range of combos are influenced by digital mods
+
+### Weapons
+- The player can pick up any weapon within the game and use it
+- Additional weapons can be bought from shops
+- Reload speed is affected by digital mods
+
+### Move and look
+- Keyboard+mouse: WASD and aim with mouse like the old GTA games and The Guardian of Light
+- Gamepad: Similar to Guardian of Light
+- Jumping onto walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
 
 ## Mods system
 Players can obtain mechanical and digital mods to improve their abilities. Mechanical mods are stat improvements that can be obtained by completing main quests, and digital mods are skills that can be bought or earned via sidequests.
@@ -50,8 +65,15 @@ Players can obtain mechanical and digital mods to improve their abilities. Mecha
 	- Auto aim
 - Hands:  
 	- Lock picking
+	- Reload speed
+	- Punch combo tier 1
+	- Punch combo tier 2
+	- Punch combo tier 3
 - Feet:
 	- Run up walls
+	- Kick combo tier 1
+	- Kick combo tier 2
+	- Kick combo tier 3
 - Skull:  
 	- Hacking
 - Chest:
