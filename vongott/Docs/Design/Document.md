@@ -28,6 +28,8 @@ Players can obtain mechanical and digital mods to improve their abilities
 - Back:   
 	- Fall damage reduction
 	- Inventory capacity
+- Chest:
+	- Cloak
 
 ### Digital mods
 - Eyes:  
