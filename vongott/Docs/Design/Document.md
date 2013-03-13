@@ -65,7 +65,7 @@ The menu system is completely circular. Inspired by mechanical aesthetics of The
 Displays health and energy in the top right and weapons in the bottom. The weapons interface only pops up if activated via scroll wheel or number keys.
 
 ## Conversations
-Conversations consist of a regular popup with the name of the current speaker at the top. All characters will have speaking animations. The player can press [enter] to proceed to the next line at any time.
+Conversations consist of a regular popup with the name of the current speaker at the top. All characters will have speaking animations. The player can press [enter] to proceed to the next line at any time. All important characters have a recorded greeting message, like "hello" or "how you doin'?" to be played randomly at the beginning of every new conversation.
 
 # Setting
 ## Visuals
