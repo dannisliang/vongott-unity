@@ -47,13 +47,13 @@ Scene 2: Introduction ( nrf_bunker_quarters )
 - (player name): "Riiight... Bye now."
 
 ### Back with Miguel
-- Miguel: "All right, Robocop. You ready to do some field work?"
+- Miguel: "You ready to do some field work?"
 - (player name):
   1. "Nope."
   2. "Sure."
 - Miguel:
   1. "Just let me know when you are ready."
-  2. "OK, let me explain our situation."
+  2. "All right Robocop, let me explain our situation."
 
 ### Head out
 - Miguel: "For now, all you need to know is that there is a big ass plague going on."
