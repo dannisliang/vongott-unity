@@ -30,6 +30,22 @@ Scene 2: Introduction ( nrf_bunker_quarters )
   3. "Well you gonna get it if you don't get outta my face! But you all right. Move along."
 - (player name): "Bye."
 
+### optional: NRF Commander
+- NRF Commander: "Hi there, newbie."
+(player name):
+  1. "I'm not that new, I'm almost 15 minutes old!"
+  2. "You disgust me."
+  3. "Hello there. Who are you?"
+- NRF Commander:
+  1. "Well, you sure are becoming more mature by the minute, little guy."
+  2. "Hey, give me some slack!"
+  3. "I don't really like using my name here."
+- NRF Commander: "I'm just an accountant. I don't know anything. I actually only barely exist."
+- NRF Commander: "The others here call me The Commander. But my only job is to stand around, really."
+- NRF Commander: "I'm going to be doing some standing around in the sewers later this week..."
+- NRF Commander: "...maybe I'll see you there."
+- (player name): "Riiight... Bye now."
+
 ### Back with Miguel
 - Miguel: "All right, Robocop. You ready to do some field work?"
 - (player name):
