@@ -15,6 +15,29 @@ Design document for Von Gott
 ## Controls
 - Optimised for keyboard+mouse and gamepad
 
+## Mods system
+Players can obtain mechanical and digital mods to improve their abilities
+
+### Mechinal mods
+- Legs:  
+Kicking damage  
+Running speed
+- Arms:  
+Hitting damage  
+Swimming speed
+- Back:   
+Fall damage reduction
+Inventory capacity
+
+### Digital mods
+- Eyes:  
+See enemies behind walls  
+Identify friend/foe
+- Hands:  
+Lock picking
+- Skull:  
+Hacking
+
 ## Genre
 - Isometric view
 - Action RPG
