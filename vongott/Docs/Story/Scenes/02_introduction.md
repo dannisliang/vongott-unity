@@ -32,7 +32,7 @@ Scene 2: Introduction ( nrf_bunker_quarters )
 
 ### optional: NRF Commander
 - NRF Commander: "Hi there, newbie."
-(player name):
+- (player name):
   1. "I'm not that new, I'm almost 15 minutes old!"
   2. "You disgust me."
   3. "Hello there. Who are you?"
