@@ -20,6 +20,8 @@ Story outline
   - A multi-fantazillionaire bent on taking over the world
 - Gerhart Herrman
   - Gerhart hates 2 things: Terrorists and soda machines.
+- Sean Kalshnikov Ermahgerd
+  - The most prominent NRF leader and financial backer
 
 # Story
 ### Prologue
