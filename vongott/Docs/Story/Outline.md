@@ -38,7 +38,7 @@ They board a ship piloted by the same soldiers that were on the island.
 The player steals 3 barrels of slimy goo, sneaking past, killing or knocking out any soldiers in his way.  
 They all then return to the mainland, where they will stash the barrels.  
 NRF soldiers take care of the barrels while the player gains access to Castle Clifton.  
-The player and incapacitates all guards on site and places the 3 barrels in separate locations.  
+The player incapacitates all guards on site and places the 3 barrels in separate locations.  
 
 ### Back at the NRF bunker
 bla bla bla
