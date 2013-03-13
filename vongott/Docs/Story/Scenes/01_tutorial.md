@@ -34,7 +34,7 @@ Scene 1: Tutorial ( NRF bunker 1 )
 - Player:
   “(player name).. OK. Seems legit...”
 - NRF Guard:
-  “OK (player name), let’s get you out of there and put you on a test run. Hopefully this will be the last time we have to do this..”
+  “All right (player name), let’s get you out of there and put you on a test run. Hopefully this will be the last time we have to do this..”
 - Player:
   "Did... did we do this earlier?”
 - NRF Guard:
