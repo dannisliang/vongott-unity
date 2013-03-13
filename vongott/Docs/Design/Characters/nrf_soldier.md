@@ -7,7 +7,7 @@ NRF Soldier
 ### Clothes
 - Beige tracksuit
 - (field) Grey armour
-- (field) Orange visor
+- (field) Full helmet with orange visor
 
 ### Weapons
 - Assault rifle
