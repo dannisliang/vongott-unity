@@ -27,7 +27,7 @@ Scene 1: Tutorial ( NRF bunker 1 )
 - Miguel: "Hopefully this will be the last time we have to do this..”
 - (player name): "Did... did we do this earlier?”
 - Miguel: “Yeah, but we have to fry your memory every time it fails."
-- Miguel: "I have a good feeling about this time, though. 435th time’s the charm!”
+- Miguel: "I have a good feeling about this one, though. 435th time’s the charm!”
 - (player name): “...”
 
 ( the incubator turns to a test course )
