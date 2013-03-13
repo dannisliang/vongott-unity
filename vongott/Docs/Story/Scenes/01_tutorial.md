@@ -49,4 +49,4 @@ Scene 1: Tutorial ( NRF bunker 1 )
 - Miguel: "I better go tell the others. You can stay here and practice if you like."
 - Miguel: "Come on upstairs when you're ready."
 
-( you can adjust the controls to your liking in the options menu [esc] )
+( prompt: you can adjust the controls to your liking in the options menu [esc] )
