@@ -30,11 +30,11 @@ Scene 1: Tutorial ( NRF bunker 1 )
 ( prompt: what is your name? )
 
 - NRF Guard:
-  “<player name>! Yeah, that’s it! Definitely didn’t just make that up!”
+  “(player name)! Yeah, that’s it! Definitely didn’t just make that up!”
 - Player:
-  “<player name>.. OK. Seems legit...”
+  “(player name).. OK. Seems legit...”
 - NRF Guard:
-  “Let’s get you out of there, and put you on a test run. Hopefully this will be the last time we have to do this..”
+  “Let’s get you out of there (player name), and put you on a test run. Hopefully this will be the last time we have to do this..”
 - Player:
   "Did... did we do this earlier?”
 - NRF Guard:
