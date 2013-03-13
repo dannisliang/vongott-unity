@@ -1,5 +1,17 @@
 Design document for Von Gott
 ===
+- [Design document for Von Gott](#design-document-for-von-gott)
+- [Gameplay](#gameplay)
+  - [Controls](#controls)
+	- [Genre](#genre)
+- [Setting](#setting)
+	- [Visuals](#visuals)
+	- [Story](#story)
+	- [Musical inspiration](#musical-inspiration)
+- [Distribution](#distribution)
+	- [Target platforms](#target-platforms)
+	- [Stores](#stores)
+
 # Gameplay
 ## Controls
 - Optimised for keyboard+mouse and gamepad
