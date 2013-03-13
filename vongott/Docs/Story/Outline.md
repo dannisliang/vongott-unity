@@ -11,9 +11,9 @@ Story outline of Von Gott
 
 # Characters
 - Paul Dalton
-  - A NRF spy whose job is to pretend to work for ULTACO
+  - An NRF spy whose job is to pretend to work for ULTACO
 - Walther Simmons
-  - A FUMA employee who constantly pops up in mysterious places and very calmy and arrogantly tries to kill the player
+  - The director of FUMA who constantly pops up in mysterious places and very calmy and arrogantly tries to kill the player
 - Laser Dong
   - A Hong Kong based scientist who is a good guy, somehow
 - Bab Rage
