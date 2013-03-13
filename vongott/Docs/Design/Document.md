@@ -43,7 +43,11 @@ Optimised for keyboard+mouse and gamepad
 ### Move and look
 - Keyboard+mouse: WASD and aim with mouse like the old GTA games and The Guardian of Light
 - Gamepad: Similar to Guardian of Light
-- Jumping onto walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
+- Jumping into walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
+	- >50%: fall
+	- 50%: slide down
+	- 25$: wall flip
+	- 10%: wall run
 
 ## Mods system
 Players can obtain mechanical and digital mods to improve their abilities. Mechanical mods are stat improvements that can be obtained by completing main quests, and digital mods are skills that can be bought or earned via sidequests.
