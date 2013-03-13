@@ -14,6 +14,14 @@ Design document for Von Gott
 	- [Target platforms](#target-platforms)
 	- [Stores](#stores)
 
+# Production
+## Tools
+The game will be produced in Unity using various additional libraries such as NGUI.
+It will be written in ?JavaScript/Python?
+
+## Team
+The team consists of me, Jeppe Zapp. Yay!
+
 # Gameplay
 ## Genre
 - Isometric view
