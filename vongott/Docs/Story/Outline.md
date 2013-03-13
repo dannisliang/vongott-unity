@@ -1,4 +1,4 @@
-Story outline of Von Gott
+Story outline
 ====
 
 # Organisations
