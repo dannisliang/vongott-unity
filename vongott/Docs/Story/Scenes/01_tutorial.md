@@ -39,8 +39,8 @@ Scene 1: Tutorial ( NRF bunker 1 )
 
 ( prompt: use [arrow keys] to move, press [space] to jump, [shift] to crouch and look around with your mouse )
 
-- Miguel: "All right, let's make this a little more interesting.
-- Miguel: "Take this gun and take out those barrels any way you want."
+- Miguel: "All right, let's make this a little more interesting."
+- Miguel: "Here's a gun. Take out those barrels any way you want."
 
 ( prompt: use [left click] to shoot, [1-0] to change weapon, and [right click] to do a melee attack )
 
