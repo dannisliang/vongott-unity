@@ -10,6 +10,7 @@ Design document for Von Gott
 
 ## Story
 - In line with the original Deus Ex game
+- Cameos from original characters, but with altered names
 
 # Distribution
 ## Target platforms
