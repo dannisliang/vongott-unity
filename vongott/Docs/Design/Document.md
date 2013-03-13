@@ -20,23 +20,23 @@ Players can obtain mechanical and digital mods to improve their abilities
 
 ### Mechinal mods
 - Legs:  
-Kicking damage  
-Running speed
+* Kicking damage  
+* Running speed
 - Arms:  
-Hitting damage  
-Swimming speed
+* Punching damage  
+* Swimming speed
 - Back:   
-Fall damage reduction
-Inventory capacity
+* Fall damage reduction
+* Inventory capacity
 
 ### Digital mods
 - Eyes:  
-See enemies behind walls  
-Identify friend/foe
+* See enemies behind walls  
+* Identify friend/foe
 - Hands:  
-Lock picking
+* Lock picking
 - Skull:  
-Hacking
+* Hacking
 
 ## Genre
 - Isometric view
