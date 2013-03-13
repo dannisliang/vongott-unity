@@ -1,4 +1,4 @@
-Scene 1: Tutorial ( NRF bunker 1 )
+Scene 1: Tutorial ( nrf_bunker_basement )
 =====
 
 ( player is locked in a poorly crafted incubator )
