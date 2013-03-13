@@ -1,6 +1,7 @@
 Scene 2: Introduction ( nrf_bunker_quarters )
 =====
 
+### Enter
 ( Miguel is chatting to some other NRF soldiers )
 
 - Miguel: “There you are Pinnochio, say hello to everybody.”
@@ -17,7 +18,7 @@ Scene 2: Introduction ( nrf_bunker_quarters )
 - Miguel: "Feel free to look around and talk to some of your fellow activists."
 - Miguel: "Come back to me when you're ready to see some action."
 
-( optional: Yoyo Fine )
+### optional: Yoyo Fine
 - Yoyo: "Hey punk! I'm Yoyo Fine, and you can call me master, biatch!"
 - (player name):
   1. "You seem nice."
@@ -28,3 +29,30 @@ Scene 2: Introduction ( nrf_bunker_quarters )
   2. "Oh you are really asking for it already. You better watch your back, you little shit!"
   3. "Well you gonna get it if you don't get outta my face! But you all right. Move along."
 - (player name): "Bye."
+
+### Back with Miguel
+- Miguel: "All right, Robocop. You ready to do some field work?"
+- (player name):
+  1. "Nope."
+  2. "Sure."
+- Miguel:
+  1. "Just let me know when you are ready."
+  2. "OK, let's me explain our situation."
+
+### Head out
+- Miguel: "All you need to know for now is that there is a big ass plague going on right now."
+- Miguel: "Everyone is dying around us, and we know who is responsible."
+- Miguel: "These pigs have been synthesizing the chemical that causes this plague to spread..."
+- Miguel: "...while also taking charge of distributing the cure to a select few."
+- Miguel: "We know of a vaccine shipment that is our for the taking, if we can first create a diversion..."
+- Miguel: "...so you're going to help us blow up the Statue of Awesome and capture the shipment afterwards."
+- (player name):
+  1. "How to do that?"
+  2. "No way! I have no reason to help you at all."
+  3. "Yes, sir!"
+- Miguel:
+  1. "Don't worry, my man."
+  2. "I can kill you with the press of a button, so don't think for a second that you have a choice."
+  3. "That's the spirit!"
+- Miguel: "I've taken the liberty of implementing some basic field training in your memory..."
+- Miguel: "...it should be more than enough to complete this mission. Let's head out!"
