@@ -12,38 +12,39 @@ Design document for Von Gott
 	- [Stores](#stores)
 
 # Gameplay
+## Genre
+- Isometric view
+- Action RPG
+
 ## Controls
 - Optimised for keyboard+mouse and gamepad
 
 ## Mods system
-Players can obtain mechanical and digital mods to improve their abilities
+Players can obtain mechanical and digital mods to improve their abilities. Mechanical mods are stat improvements that can be obtained by completing main quests, and digital mods are skills that can be bought or earned via sidequests.
 
 ### Mechinal mods
 - Legs:  
 	- Kicking damage  
 	- Running speed
+	- Jumping height
 - Arms:  
 	- Punching damage  
 	- Swimming speed
 - Back:   
 	- Fall damage reduction
 	- Inventory capacity
-- Chest:
-	- Cloak
 
 ### Digital mods
 - Eyes:  
-	- See enemies behind walls  
-	- Identify friend/foe
+	- Auto aim
 - Hands:  
 	- Lock picking
+- Feet:
+	- Run up walls
 - Skull:  
 	- Hacking
-
-## Genre
-- Isometric view
-- Action RPG
-
+- Chest:
+	- Cloak
 
 # Setting
 ## Visuals
