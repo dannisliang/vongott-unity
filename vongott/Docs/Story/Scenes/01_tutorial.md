@@ -34,9 +34,8 @@ Scene 1: Tutorial ( NRF bunker 1 )
 
 ( player is tipped out of the incubator )
 
-- Miguel: "Now just try out the basics. Running, jumping, looking and crouching."
-- Miguel: "This really should be no problem at all."
-- Miguel: "Come on back and talk to me when you've gotten comfortable moving around."
+- Miguel: "Now just try moving around. This really should be no problem at all."
+- Miguel: "Come on back and talk to me when you've gotten comfortable with your legs and whatnot."
 
 ( prompt: use [arrow keys] to move, press [space] to jump, [shift] to crouch and look around with your mouse )
 
