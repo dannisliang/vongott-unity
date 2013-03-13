@@ -42,7 +42,7 @@ Scene 2: Introduction ( nrf_bunker_quarters )
 ### Head out
 - Miguel: "For now, all you need to know is that there is a big ass plague going on."
 - Miguel: "Everyone is dying around us, and we know who is responsible."
-- Miguel: "These pigs have been synthesizing the chemical that causes this plague to spread..."
+- Miguel: "These pigs have been synthesizing the chemical that causes the plague to spread..."
 - Miguel: "...while also taking charge of distributing the cure to a select few."
 - Miguel: "We know of a vaccine shipment that is our for the taking, if we can first create a diversion..."
 - Miguel: "...so you're going to help us blow up the Statue of Awesome and capture the shipment afterwards."
