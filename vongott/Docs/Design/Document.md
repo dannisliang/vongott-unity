@@ -1,6 +1,5 @@
 Design document for Von Gott
 ===
-- [Design document for Von Gott](#design-document-for-von-gott)
 - [Gameplay](#gameplay)
   - [Controls](#controls)
 	- [Genre](#genre)
