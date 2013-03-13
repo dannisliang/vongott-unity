@@ -44,7 +44,7 @@ Scene 2: Introduction ( nrf_bunker_quarters )
 - Miguel: "Everyone is dying around us, and we know who is responsible."
 - Miguel: "These pigs have been synthesizing the chemical that causes the plague to spread..."
 - Miguel: "...while also taking charge of distributing the cure to a select few."
-- Miguel: "We know of a vaccine shipment that is our for the taking, if we can first create a diversion..."
+- Miguel: "We know of a vaccine shipment that is ours for the taking, if we can first create a diversion..."
 - Miguel: "...so you're going to help us blow up the Statue of Awesome and capture the shipment afterwards."
 - (player name):
   1. "How to do that?"
