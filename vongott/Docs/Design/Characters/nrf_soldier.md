@@ -4,10 +4,10 @@ NRF Soldier
 ### Affiliates
 - The National Revolutionist Front
 
-### Looks
+### Clothes
 - Beige tracksuit
-- Grey armour
-- Orange visor
+- (field) Grey armour
+- (field) Orange visor
 
 ### Weapons
 - Assault rifle
