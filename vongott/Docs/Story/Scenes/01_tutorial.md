@@ -5,8 +5,8 @@ Scene 1: Tutorial ( NRF bunker 1 )
 
 ( screen is black )
 
-- Player: “Whuh?”
-- Player: “Whoah?”
+- You: “Whuh?”
+- You: “Whoah?”
 
 ( sudden change to scene )
 
