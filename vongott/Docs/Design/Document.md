@@ -49,6 +49,16 @@ Players can obtain mechanical and digital mods to improve their abilities. Mecha
 - Chest:
 	- Cloak
 
+# User interface
+## Menu system
+The menu system is completely circular. Inspired by mechanical aesthetics of The Matrix, it is an attempt to do better what they tried to accomplish in Deus Ex Invisible War. On clicking a menu item in the outer rim, the cirlce expands and reveals a new page underneath. Halo lights will indicate the active circle.
+
+## Heads Up Display
+Displays health and energy in the top right and weapons in the bottom. The weapons interface only pops up if activated via scroll wheel or number keys.
+
+## Conversations
+Conversations consist of a regular popup with the name of the current speaker at the top. All characters will have speaking animations.
+
 # Setting
 ## Visuals
 - Cyberpunk theme
