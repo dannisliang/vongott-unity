@@ -37,7 +37,7 @@ Scene 2: Introduction ( nrf_bunker_quarters )
   2. "Sure."
 - Miguel:
   1. "Just let me know when you are ready."
-  2. "OK, let's me explain our situation."
+  2. "OK, let me explain our situation."
 
 ### Head out
 - Miguel: "All you need to know for now is that there is a big ass plague going on right now."
