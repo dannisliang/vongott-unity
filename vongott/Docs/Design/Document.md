@@ -1,30 +1,6 @@
 Design document for Von Gott
 ====
 
-- [Production](#production)
-	- [Tools](#tools)
-	- [Team](#team)
-- [Gameplay](#gameplay)
-	- [Genre](#genre)
-	- [Controls](#controls)
-		- [Melee attack](#melee-attack)
-		- [Weapons](#weapons)
-		- [Move and look](#move-and-look)
-	- [Mods system](#mods-system)
-		- [Mechinal mods](#mechinal-mods)
-		- [Digital mods](#digital-mods)
-- [User interface](#user-interface)
-	- [Menu system](#menu-system)
-	- [Heads Up Display](#heads-up-display)
-	- [Conversations](#conversations)
-- [Setting](#setting)
-	- [Visuals](#visuals)
-	- [Story](#story)
-	- [Musical inspiration](#musical-inspiration)
-- [Distribution](#distribution)
-	- [Target platforms](#target-platforms)
-	- [Stores](#stores)
-
 # Production
 ## Tools
 The game will be produced in Unity using various additional libraries such as NGUI.
