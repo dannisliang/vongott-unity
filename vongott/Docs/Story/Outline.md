@@ -10,8 +10,17 @@ Story outline
   - The all-powerful FUMA.. What exactly they do, nobody knows.
 
 # Characters
+## NRF
 - Paul Dalton
   - An NRF spy whose job is to pretend to work for ULTACO
+- Sean Kalshnikov Ermahgerd
+  - The most prominent NRF leader and financial backer
+- Charlie Furben
+  - An informant working for the NRF, also posing as an ULTACO freelancer
+- Samuel Jensen
+  - A preachy ideologist whose only purpose is to avert the public eye from the true purpose of the NRF
+
+## Others
 - Walther Simmons
   - The director of FUMA who constantly pops up in mysterious places and very calmy and arrogantly tries to kill the player
 - Laser Dong
@@ -20,10 +29,6 @@ Story outline
   - A multi-fantazillionaire bent on taking over the world
 - Gerhart Haarmund
   - Gerhart hates 2 things: Terrorists and soda machines.
-- Sean Kalshnikov Ermahgerd
-  - The most prominent NRF leader and financial backer
-- Charlie Furben
-  - An informant working for the NRF, also posing as an ULTACO freelancer
 
 # Story
 ### Prologue
