@@ -33,6 +33,13 @@ It will be written in ?JavaScript/Python?
 ## Team
 The team consists of me, Jeppe Zapp. Yay!
 
+# Features
+## Flag system
+The game will have a flag system that keeps track of player actions in order to make consequences for them later in the game. The flags will be nested as (chapter)/(map name)/(identifier)
+
+## Debug menu
+- Flag editor
+
 # Gameplay
 ## Genre
 - Isometric view
