@@ -17,7 +17,7 @@ Story outline
   - The most prominent NRF leader and financial backer
 - Charlie Furben
   - An informant working for the NRF, also posing as an ULTACO freelancer
-- Samuel Jensen
+- Leonard Gull
   - A preachy ideologist whose only purpose is to avert the public eye from the true purpose of the NRF
 
 ## Others
