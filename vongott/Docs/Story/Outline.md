@@ -18,10 +18,12 @@ Story outline
   - A Hong Kong based scientist who is a good guy, somehow
 - Bab Rage
   - A multi-fantazillionaire bent on taking over the world
-- Gerhart Herrman
+- Gerhart Haarmund
   - Gerhart hates 2 things: Terrorists and soda machines.
 - Sean Kalshnikov Ermahgerd
   - The most prominent NRF leader and financial backer
+- Charlie Furben
+  - An informant working for the NRF, also posing as an ULTACO freelancer
 
 # Story
 ### Prologue

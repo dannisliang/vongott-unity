@@ -37,35 +37,8 @@ The team consists of me, Jeppe Zapp. Yay!
 ## Flag system
 The game will have a flag system that keeps track of player actions in order to make consequences for them later in the game. The flags will be nested as (chapter)/(map name)/(identifier)
 
-## Debug menu
-- Flag editor
-
-# Gameplay
-## Genre
-- Isometric view
-- Action RPG
-
-## Controls
-Optimised for keyboard+mouse and gamepad
-
-### Melee attack
-- Various combat animations based on Oni and Tekken
-- The damage dealt during melee attacks is influenced by mechanical mods
-- The range of combos are influenced by digital mods
-
-### Weapons
-- The player can pick up any weapon within the game and use it
-- Additional weapons can be bought from shops
-- Reload speed is affected by digital mods
-
-### Move and look
-- Keyboard+mouse: WASD and aim with mouse like the old GTA games and The Guardian of Light
-- Gamepad: Similar to Guardian of Light
-- Jumping into walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
-	- >50%: fall
-	- 50%: slide down
-	- 25$: wall flip
-	- 10%: wall run
+## Economy
+Weapons, provisions and digital mods can be purchased in shops. The currency is called 'moneys'. Moneys can be found on incapacitated people, in locked containers that require lockpicking and in cash points.
 
 ## Mods system
 Players can obtain mechanical and digital mods to improve their abilities. Mechanical mods are stat improvements that can be obtained by completing main quests, and digital mods are skills that can be bought or earned via sidequests.
@@ -96,10 +69,42 @@ Players can obtain mechanical and digital mods to improve their abilities. Mecha
 	- Kick combo tier 1
 	- Kick combo tier 2
 	- Kick combo tier 3
-- Skull:  
+- Skull: 
 	- Hacking
 - Chest:
 	- Cloak
+
+## Debug menu
+- Flag editor
+
+# Gameplay
+## Genre
+- Isometric view
+- Action RPG
+
+## Controls
+Optimised for keyboard+mouse and gamepad
+
+### Melee attack
+- Various combat animations based on Oni and Tekken
+- The damage dealt during melee attacks is influenced by mechanical mods
+- The range of combos are influenced by digital mods
+
+### Weapons
+- The player can pick up any weapon within the game and use it
+- Additional weapons can be bought from shops
+- Reload speed is affected by digital mods
+
+### Move and look
+- Keyboard+mouse: WASD and aim with mouse like the old GTA games and The Guardian of Light
+- Gamepad: Similar to Guardian of Light
+- Jumping into walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
+	- >50%: fall
+	- 50%: slide down
+	- 25$: wall flip
+	- 10%: wall run
+- Sneak: In sneak mode, the animation will be cartoony
+	- While in sneak mode, the player will stick to walls
 
 # User interface
 ## Menu system
