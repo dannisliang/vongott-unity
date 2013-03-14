@@ -19,6 +19,8 @@ Story outline
   - An informant working for the NRF, also posing as an ULTACO freelancer
 - Leonard Gull
   - A preachy ideologist whose only purpose is to avert the public eye from the true purpose of the NRF
+- Marcel
+  - The first NRF activist to make the player's acquaintance
 
 ## Others
 - Walther Simmons
@@ -37,7 +39,7 @@ Only government officials and wealthy people seem to be immune.
 
 ### Introduction
 The player wakes up in an NRF bunker, where he is quickly introduced to the team.
-Miguel, the first NRF soldier to make the player's aquaintance, lays down the law of the land and sends him on his first mission.
+Marcel, the first NRF soldier to make the player's aquaintance, lays down the law of the land and sends him on his first mission.
 
 ### Field test
 The mission is to occupy the Statue of Awesome. The player will incapacitate all guards on site.  
