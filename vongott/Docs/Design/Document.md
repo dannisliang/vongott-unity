@@ -34,16 +34,16 @@ It will be written in ?JavaScript/Python?
 The team consists of me, Jeppe Zapp. Yay!
 
 # Features
-## Flag system
+## Flags
 The game will have a flag system that keeps track of player actions in order to make consequences for them later in the game. The flags will be nested as (chapter)/(map name)/(identifier)
 
 ## Economy
 Weapons, provisions and digital mods can be purchased in shops. The currency is called 'moneys'. Moneys can be found on incapacitated people, in locked containers that require lockpicking and in cash points.
 
-## Mods system
+## Mods
 Players can obtain mechanical and digital mods to improve their abilities. Mechanical mods are stat improvements that can be obtained by completing main quests, and digital mods are skills that can be bought or earned via sidequests.
 
-### Mechinal mods
+### Mechinal
 - Legs:  
 	- Kicking damage  
 	- Running speed
@@ -55,7 +55,7 @@ Players can obtain mechanical and digital mods to improve their abilities. Mecha
 	- Fall damage reduction
 	- Inventory capacity
 
-### Digital mods
+### Digital
 - Eyes:  
 	- Auto aim
 - Hands:  
