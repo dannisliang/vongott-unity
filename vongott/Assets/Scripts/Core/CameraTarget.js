@@ -8,5 +8,5 @@ function Start () {
 
 // Game loop
 function Update () {
-	this.transform.localPosition = _player.transform.localPosition;
+	this.transform.position = _player.transform.position;
 }
