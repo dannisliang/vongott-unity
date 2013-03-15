@@ -4,9 +4,9 @@ Missions
 ## Occupy the Statue of Awesome
 - Incapacitate all guards
 
-## Take From The Feds...
+## Infiltrate the Harbour
 - Steal a shipment of slimy goo (3 barrels)
 
-## ...And Give To The Dead
+## Stash the Goo in Castle Clifton
 - Incapacitate all guards
 - Hide the slimy goo underground
