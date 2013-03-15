@@ -41,9 +41,13 @@ Only government officials and wealthy people seem to be immune.
 The player wakes up in an NRF bunker, where he is quickly introduced to the team.
 Marcel, the first NRF soldier to make the player's aquaintance, lays down the law of the land and sends him on his first mission.
 
-### Field test
+### First mission
 The mission is to occupy the Statue of Awesome. The player will incapacitate all guards on site.  
-Afterwards, the island will be occupied by NRF soldiers, and the player leaves the site by boat. They board a ship piloted by ULTACO soldiers. The player steals 3 barrels of slimy goo, sneaking past, killing or knocking out any soldiers in his way. They all then return to the mainland, where they will stash the barrels. NRF soldiers take care of the barrels while the player gains access to Castle Clifton. The player incapacitates all guards on site and places the 3 barrels in separate locations.  
+Afterwards, the island will be occupied by NRF soldiers, and the player leaves the site by boat.
+
+The player steals 3 barrels of slimy goo, sneaking past, killing or knocking out any soldiers in his way. 
+
+NRF soldiers take care of the barrels while the player gains access to Castle Clifton. The player incapacitates all guards on site and places the 3 barrels in separate locations.  
 
 ### Back at the NRF bunker
 bla bla bla
