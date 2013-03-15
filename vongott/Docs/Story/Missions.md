@@ -1,13 +1,12 @@
 Missions
 ===
-# The Island
+# Field test
 ## Occupy the Statue of Awesome
 - Incapacitate all guards
 
-# The Harbour
+## Take From The Feds...
 - Steal a shipment of slimy goo (3 barrels)
 
-# The City
-## Infiltrate Castle Clifton
+## ...And Give To The Dead
 - Incapacitate all guards
 - Hide the slimy goo underground
