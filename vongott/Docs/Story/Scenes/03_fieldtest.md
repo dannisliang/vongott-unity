@@ -1,9 +1,8 @@
-
 Scene 3: Field Test ( island_exterior ) 
 =====
 
-### Enter
-( boat approaches the island dock, Marcel and player gets out )
+## Enter
+( boat approaches the north dock, Marcel and player gets out )
 
 - Marcel: "We want to see how you deal with this situation on your own, so you'll be going in alone. We will occupy this place once the coast is clear."
 - Marcel: "Pick a weapon and incapacitate the guards any way you like."
@@ -15,7 +14,7 @@ Scene 3: Field Test ( island_exterior )
   1. "Very funny. I'll give you a tazer."
   2. "OK, big man. Don't trip over your huge cojones on the way."
   3. "Good thinking. The non-lethal approach makes us look better in any case."
-- Marcel: "We have an informant on the north dock who knows this place inside out."
+- Marcel: "We have an informant here, Charlie Furben, who knows this place inside and out."
 - Marcel: "If you want a few tips from him, tell him I sent you." 
 - Marcel: "Now get moving. Vaya con dios."
 
@@ -49,8 +48,17 @@ Scene 3: Field Test ( island_exterior )
   3. "Grumble.. OK, I'll let you in for 10 moneys."
 	- (player):
   	1. "Maybe later."
-	2. "No way! Get ready to die!"
+	2. "No way! I'd sooner kill you!"
 	3. "Here you go."
+
+## (npc) Guards
+- Guard 1: "I just have a hard time believing that a tiny French terrorist group could have pulled off something so elaborate."
+- Guard 2: "Listen man, it was in the tabloids and everything. What more do you want?"
+- Guard 1: "A bit of critical thinking from the people I surround myself with would be nice..."
+- Guard 2: "This thing had the most extensive news coverage I've seen in my life. The frog munchers did blow up the statue, period."
+- Guard 2: "I mean it's no wonder they're pissed at us lately, they just finally had enough and took back their present."
+- Guard 1: "Yeah, that does make sense... I just wonder how those sneaky little turds got away with it."
+- Guard 2: "That's racist, man."
 
 ## (optional) Leonard
 - Leonard: "I will take point from here, (player). We will change this world tonight."
@@ -65,3 +73,19 @@ Scene 3: Field Test ( island_exterior )
   2. "Don't be negative in the freedom dimension, brother."
   3. "I am Leonard, the spiritual guide of this team."
 - Leonard: "Report back to Marcel. We probably won't meet again."
+
+## Back with Marcel
+1.
+- Marcel: "What the hell was that? That could not have been more conspicuous if we came here in an air balloon."
+- (player): "Damn, too many alarms, right? Can we try that again?"
+- Miguel: "Get your stupid ass into this boat. We've got a freighter to loot."
+
+2.
+- Marcel: "Well, you completed the objective. And managed to murder everyone in your path. Congratulations, Mr. Bond."
+- (player): "I was sent to do a task, and I performed it. The style of execution is mine to decide."
+- Marcel: "I will decide to proclaim you a major jackass, then. Get in the boat. We have a shipment to capture."
+
+3.
+- Marcel: "Nice work tonight, (player). That went smooth as butter."
+- (player): "I felt a subtle and non-lethal approach would benefit us in the end."
+- Marcel: "My thoughts exactly. I think you will do well here, my man. Let's go steal some barrels."
