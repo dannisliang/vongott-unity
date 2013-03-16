@@ -55,3 +55,10 @@ bla bla bla
 ### Securing important documents
 The ULTACO has sent some special agent dumbass out to capture one of the occupied NRF strongholds, which they believe to be the NRF headquarters.
 The player's job is to retrieve whatever important material and key activists are still in there, before the shit hits the fan.
+
+### Some time
+player gets dismissed from nrf, marcel spares his life
+
+...
+
+marcel gets kicked out for disobeying orders, captured by ultaco. contacts player to pick him up. tried to escape with jc.
