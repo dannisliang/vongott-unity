@@ -1,8 +1,10 @@
-Von Gott
+The Vongott Chronicles
 =======
-This is a parody game based on the first Deus Ex.  
+This game is set in a cyberpunk not-so-distant future. The story is parallel to that of the first Deus Ex, although occurence of original characters will be cameos at most. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters, although that is up for discussion. 
 
-Have a look in the docs for descriptions of any kind.
+Everything except the framework with which Vongott is developed, Unity 3D, will be open source. In the future, I will try to get this project some traction and invite others to collaborate with me, especially on the story and the look. Before that can happen, though, I will have to create the foundation for this game entirely, writing a new action RPG engine from scratch.
+
+I will document the code as I move along. Have a look in the docs for that and everything else about Vongott.
 
 ### Current features in the works
 - Story
