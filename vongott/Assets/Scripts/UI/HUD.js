@@ -4,6 +4,9 @@ var conversation_top:TweenScale;
 var conversation_bottom:TweenScale;
 var conversation_name:UILabel;
 var conversation_line:UILabel;
+var conversation_option1:UILabel;
+var conversation_option2:UILabel;
+var conversation_option3:UILabel;
 
 var status:GameObject;
 
@@ -16,15 +19,29 @@ static var update_convo = false;
 // Variables
 static var convo_current_name = "";
 static var convo_current_line = "";
+static var convo_current_option1 = "";
+static var convo_current_option2 = "";
+static var convo_current_option3 = "";
 
 private function ToggleHUD () {
 	hud_active = !hud_active;
 	status.SetActiveRecursively(hud_active);
 }
 
+private function ResetConversation () {
+	conversation_name.text = "";
+	conversation_line.text = "";
+	conversation_option1.text = "";
+	conversation_option2.text = "";
+	conversation_option3.text = "";
+}
+
 private function UpdateConversation () {
 	conversation_name.text = convo_current_name;
 	conversation_line.text = convo_current_line;
+	conversation_option1.text = convo_current_option1;
+	conversation_option2.text = convo_current_option2;
+	conversation_option3.text = convo_current_option3;
 }
 
 private function EnterConversation () {
@@ -43,14 +60,12 @@ private function LeaveConversation () {
 	conversation_top.Play(false);
 	conversation_bottom.Play(false);
 	
-	conversation_name.text = "";
-	conversation_line.text = "";
+	ResetConversation();
 }
 
 
 function Start () {
-	conversation_name.text = "";
-	conversation_line.text = "";
+	ResetConversation();
 }
 
 function Update () {

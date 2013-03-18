@@ -3,7 +3,7 @@ import System.Xml;
 
 // Game objects
 var hud : HUD;
-var convo_text : UILabel;
+var core : GameCore;
 
 // Variables
 private var in_convo = false; 
@@ -23,6 +23,10 @@ function NextLine () {
 	var name : String;
 	var text : String;
 	var id : String;
+	var flag : String;
+	var option1 : String;
+	var option2 : String;
+	var option3 : String;
 	
 	if ( type == "line" ) {
 		name = line_array[current_line][1];
@@ -42,6 +46,14 @@ function NextLine () {
 	
 		hud.convo_current_name = type;
 		hud.convo_current_line = id;
+	
+	} else if ( type == "group" ) {
+		hud.convo_current_name = "(player)";
+		hud.convo_current_line = "";
+		
+		for ( var i = 1; line_array[current_line].Count; i++ ) {
+			hud.convo_current_option1 = line_array[current_line][i];
+		}
 	}
 		
 	hud.update_convo = true;
@@ -57,7 +69,8 @@ function EnterConversation () {
 	if (!in_convo) {
 		hud.start_convo = true;
 		in_convo = true;
-			
+		var current_convo = 0;
+				
 		var xml_data = new XmlDocument();
 		xml_data.Load("Assets/Resources/Conversations/" + id + ".xml");
 
@@ -67,28 +80,65 @@ function EnterConversation () {
 	    node_list = root.SelectNodes("/scene/convo");
 			
 		for ( var i=0; i<node_list.Count; i++) {
-	        for ( var x=0; x<node_list[i].ChildNodes.Count; x++) {
-	        	var type = node_list[i].ChildNodes[x].Name;
-	        	var name : String;
-				var text : String;
-				var id : String;
-	        	
-	        	if ( type == "line" ) {
-	        		name = node_list[i].ChildNodes[x].Attributes["name"].Value;
-	        		text = node_list[i].ChildNodes[x].InnerText;
-	       			line_array[x] = [type,name,text];
-	        	
-	        	} else if ( type == "machinima" ) {
-	        		id = node_list[i].ChildNodes[x].Attributes["id"].Value;
-	        		line_array[x] = [type,id];
-	        	
-	        	} else if ( type == "prompt" ) {
-	        		id = node_list[i].ChildNodes[x].Attributes["id"].Value;
-	        		line_array[x] = [type,id];
-	        	}
-	        }
-	    }
-	    
+			if ( node_list[i].Attributes["flag"] ) {
+				if ( core.GetFlag ( node_list[i].Attributes["flag"].Value ) ) {
+					current_convo = i;
+					break;
+				}
+								
+			} else {
+				if ( node_list[i].Attributes["setflag"] ) {
+					if ( !core.GetFlag ( node_list[i].Attributes["setflag"].Value ) ) {
+						core.SetFlag ( node_list[i].Attributes["setflag"].Value );
+						current_convo = i;
+						break;
+					}
+				} else {
+					current_convo = i;
+					break;
+				}			
+			}
+		}
+		
+		for ( var x=0; x<node_list[current_convo].ChildNodes.Count; x++) {
+        	var type = node_list[i].ChildNodes[x].Name;
+        	var name : String;
+			var text : String;
+			var id : String;
+			var flag : String;
+        	var option1 : String;
+        	var option2 : String;
+        	var option3 : String;
+        	
+        	if ( type == "line" ) {
+        		name = node_list[i].ChildNodes[x].Attributes["name"].Value;
+        		text = node_list[i].ChildNodes[x].InnerText;
+       			
+       			if ( node_list[i].ChildNodes[x].Attributes["flag"] ) {
+       				flag = node_list[i].ChildNodes[x].Attributes["flag"].Value;
+        		} else {
+        			flag = "";
+        		}
+        		
+        		line_array[x] = [type,name,text,flag];
+        	
+        	} else if ( type == "machinima" ) {
+        		id = node_list[i].ChildNodes[x].Attributes["id"].Value;
+        		line_array[x] = [type,id];
+        	
+        	} else if ( type == "prompt" ) {
+        		id = node_list[i].ChildNodes[x].Attributes["id"].Value;
+        		line_array[x] = [type,id];
+        	
+        	} else if ( type == "group" ) {
+        		line_array[x] = [type];
+        			        		
+        		for ( var v = 0; v < node_list[i].ChildNodes[x].ChildNodes.Count; v++ ) {
+        			line_array.push ( node_list[i].ChildNodes[x].ChildNodes[v].InnerText );
+        		}
+        	}
+		}
+	   
 	    NextLine();
 	}
 }

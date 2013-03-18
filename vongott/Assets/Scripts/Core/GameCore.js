@@ -1,4 +1,5 @@
 static var interactive_object:GameObject;
+static var flag_array = new Hashtable();
 
 function SetInteractiveObject ( obj:GameObject ) {
 	interactive_object = obj;
@@ -8,6 +9,14 @@ function SetInteractiveObject ( obj:GameObject ) {
 		Debug.Log ( ">>> core: interactive object released" );
 	}
 };
+
+function SetFlag ( flag : String ) {
+	flag_array[flag] = true;
+}
+
+function GetFlag ( flag : String ) {
+	return flag_array[flag];
+}
 
 function Interact () {
 	if ( interactive_object ) {
