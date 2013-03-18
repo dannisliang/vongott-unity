@@ -45,8 +45,23 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Core\CameraTarget.js" />
+     <Compile Include="Assets\Scripts\Core\Conversation.js" />
+     <Compile Include="Assets\Scripts\Core\GameCore.js" />
+     <Compile Include="Assets\Scripts\Core\InteractiveObject.js" />
      <Compile Include="Assets\Scripts\Levels\nrf_bunker.js" />
      <Compile Include="Assets\Scripts\Triggers\Door.js" />
+     <Compile Include="Assets\Scripts\UI\HUD.js" />
+     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Depth.shader" />
+     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
+     <None Include="Assets\Fonts\Font_Ubuntu.txt" />
+     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
+     <None Include="Assets\Resources\Conversations\1\marcel.xml" />
+     <None Include="Assets\Plugins\NGUI\ReadMe - 2.0.3d.txt" />
+     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
+     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (HardClip).shader" />
+     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored Overlay.shader" />
+     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
+     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">

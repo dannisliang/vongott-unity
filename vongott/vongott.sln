@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{9F170F86-BE4B-4602-1D4F-A5AF93557269}") = "vongott", "Assembly-CSharp-firstpass.csproj", "{2C88D938-AC35-5CAA-6853-E89F6D4458D2}"
 EndProject
+Project("{9F170F86-BE4B-4602-1D4F-A5AF93557269}") = "vongott", "Assembly-CSharp-Editor.csproj", "{F8E91962-8AD7-98EB-9C70-EC06BF597096}"
+EndProject
 Project("{9F170F86-BE4B-4602-1D4F-A5AF93557269}") = "vongott", "Assembly-UnityScript-firstpass.unityproj", "{01704A3D-E951-9AC9-5C92-05F96075275C}"
 EndProject
 Project("{9F170F86-BE4B-4602-1D4F-A5AF93557269}") = "vongott", "Assembly-UnityScript.unityproj", "{AB3026D7-0CDE-81F9-B2BB-936ED7E848C9}"
@@ -17,6 +19,10 @@ Global
 		{2C88D938-AC35-5CAA-6853-E89F6D4458D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C88D938-AC35-5CAA-6853-E89F6D4458D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C88D938-AC35-5CAA-6853-E89F6D4458D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8E91962-8AD7-98EB-9C70-EC06BF597096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E91962-8AD7-98EB-9C70-EC06BF597096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E91962-8AD7-98EB-9C70-EC06BF597096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E91962-8AD7-98EB-9C70-EC06BF597096}.Release|Any CPU.Build.0 = Release|Any CPU
 		{01704A3D-E951-9AC9-5C92-05F96075275C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01704A3D-E951-9AC9-5C92-05F96075275C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01704A3D-E951-9AC9-5C92-05F96075275C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,7 +35,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																											GlobalSection(MonoDevelopProperties) = preSolution
+																																															GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

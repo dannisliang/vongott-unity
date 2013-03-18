@@ -1,21 +1,25 @@
-@SerializeField private var _nextRoom:GameObject = null;
+@SerializeField private var next_room:GameObject;
 
-private var _doorOpen:boolean = false;
+static var door_open = false;
 
-function Open () {
-	if ( !_doorOpen ) {
-		this.animation.Play();
-		_doorOpen = true;
+private function Open () {
+	this.animation.Play();
+	door_open = true;
+	next_room.SetActiveRecursively ( true );
+}
+
+private function Close () {
+	this.animation.Play();
+	door_open = false;
+	//_room.SetActiveRecursively ( true );
+}
+
+function Toggle () {
+	if ( door_open ) {
+		Close ();
+	} else {
+		Open ();
 	}
-}
-
-function Close () {
-	
-}
-
-function OnTriggerEnter ( other:Collider ) {
-	Open();
-	_nextRoom.SetActiveRecursively ( true );
 }
 
 function Start () {

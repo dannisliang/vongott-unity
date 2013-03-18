@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<scene>
+	<convo flags="">
+		<line name="You">Whuh?</line>
+		<line name="You">Whah?</line>
+		<line name="You">AAARGH!</line>
+		
+		<machinima id="01_marcel_lights"/>
+		
+		<line name="Strange man">Jesus man, calm down!</line>
+		<line name="You">What’s going on? What is this? I don’t even...</line>
+		<line name="Strange man">Relax, buddy, ok? You just woke up, that’s all.</line>
+		<line name="You">But.. I mean.. What? Have I... been awake before?</line>
+		<line name="Strange man">Well, technically, no.. or yes. It’s complicated. Take your pick, it doesn’t matter.</line>
+		<line name="You">But... who am I?</line>
+		<line name="Strange man">Ehrm... Your name is...</line>
+		
+		<prompt id="choose_name"/>
+		
+		<line name="Strange man">(player)! Yeah, that’s it! Definitely didn’t just make that up!</line>
+		<line name="You">(player)... OK. Seems legit, I guess.</line>
+		<line name="Strange man">And I'm Marcel. Let’s get you out of there and put you on a test run.</line>
+	    <line name="Marcel">Hopefully this will be the last time we have to do this...</line>
+	    <line name="(player)">Did... did we do this earlier?</line>
+	    <line name="Marcel">Yeah, but we have to fry your memory every time it fails.</line>
+	    <line name="Marcel">I have a good feeling about this one, though. 435th time’s the charm!</line>
+	    <line name="(player)">...</line>
+	
+		<machinima id="01_marcel_incubator"/>
+		
+	    <line name="Marcel">Now just try moving around. It should be no problem if my calibrations are good enough.</line>
+	    <line name="Marcel">Come on back and talk to me when you've gotten comfortable with your legs and whatnot.</line>
+	
+		<prompt id="tutorial_move"/>
+	
+	    <line name="Marcel">All right, let's make this a little more interesting.</line>
+	    <line name="Marcel">Here's a gun. Take out those barrels any way you want.</line>
+	
+		<prompt id="tutorial_combat"/>
+	
+	    <line name="Marcel">Nice moves! It looks like my gut feeling was correct!</line>
+	    <line name="Marcel">I better go tell the others. You can stay here and practice if you like.</line>
+	    <line name="Marcel">Put the gun down and come on upstairs when you're ready.</line>
+	</convo>
+</scene>
