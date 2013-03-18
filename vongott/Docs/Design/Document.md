@@ -4,7 +4,7 @@ Design document for Von Gott
 # Production
 ## Tools
 The game will be produced in Unity using various additional libraries such as NGUI.
-It will be written in ?JavaScript/Python?
+It will be written in JavaScript
 
 ## Team
 The team consists of me, Jeppe Zapp. Yay!
@@ -50,12 +50,18 @@ Players can obtain mechanical and digital mods to improve their abilities. Mecha
 - Chest:
 	- Cloak
 
+## Conversations
+During conversations, the HUD will disappear and black bars come up, the camera zooms in a little. There will be an extensive library of short speaking animations which can be applied to any character. The player can press [enter] to proceed to the next line at any time.
+
+Conversations can happen between NPCs as well.
+
 ## Debug menu
 - Flag editor
 
 # Gameplay
 ## Genre
 - Isometric view
+- Camera in perspactive mode but with the perspective setting almost orthographical.
 - Action RPG
 
 ## Controls
@@ -74,13 +80,12 @@ Optimised for keyboard+mouse and gamepad
 ### Move and look
 - Keyboard+mouse: WASD and aim with mouse like the old GTA games and The Guardian of Light
 - Gamepad: Similar to Guardian of Light
-- Jumping into walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
-	- >50%: fall
-	- 50%: slide down
-	- 25$: wall flip
-	- 10%: wall run
+- Jumping into specially scripted walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
+	- above 30%: fall
+	- below 30%: wall flip
+	- below 15%: wall run
 - Sneak: In sneak mode, the animation will be cartoony
-	- While in sneak mode, the player will stick to walls
+- Grab: Specially scripted ledges can be grabbed, shimmied on and traversed.
 
 # User interface
 ## Menu system
@@ -89,8 +94,12 @@ The menu system is completely circular. Inspired by mechanical aesthetics of The
 ## Heads Up Display
 Displays health and energy in the top right and weapons in the bottom. The weapons interface only pops up if activated via scroll wheel or number keys.
 
-## Conversations
-Conversations consist of a regular popup with the name of the current speaker at the top. All characters will have speaking animations. The player can press [enter] to proceed to the next line at any time. All important characters have a recorded greeting message, like "hello" or "how you doin'?" to be played randomly at the beginning of every new conversation.
+## Enemies
+Enemies will walk patrol routes and have a fairly wide vision cone. 
+
+They will have 3 states: casual, cautious and aggressive. Cautious leads to aggressive, if they spot the player. No NPCs outside of the game screen should be able to see the player, unless they're already chasing him.
+
+If they spot dead bodies, they will become cautious.
 
 # Setting
 ## Visuals
@@ -102,6 +111,7 @@ Conversations consist of a regular popup with the name of the current speaker at
 
 ## Musical inspiration
 - Trentemøller
+- Zenzile
 
 # Distribution
 ## Target platforms

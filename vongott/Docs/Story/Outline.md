@@ -13,11 +13,11 @@ Story outline
 ## NRF
 - Paul Dalton
   - An NRF spy whose job is to pretend to work for ULTACO
-- Sean Kalshnikov Ermahgerd
+- Juan Kalshnikov Ermahgerd
   - The most prominent NRF leader and financial backer
 - Charlie Furben
   - An informant working for the NRF, also posing as an ULTACO freelancer
-- Leonard Gull
+- Leo
   - A preachy ideologist whose only purpose is to avert the public eye from the true purpose of the NRF
 - Marcel
   - The first NRF activist to make the player's acquaintance
@@ -55,3 +55,10 @@ bla bla bla
 ### Securing important documents
 The ULTACO has sent some special agent dumbass out to capture one of the occupied NRF strongholds, which they believe to be the NRF headquarters.
 The player's job is to retrieve whatever important material and key activists are still in there, before the shit hits the fan.
+
+### Later
+Player gets dismissed from NRF, because he is attracting too much attention, Marcel smuggles him out instead of killing him.
+
+...
+
+Marcel gets kicked out for disobeying orders, captured by ULTACO. Contacts player to pick him up. Tried to escape with JC, but got left behind without warning.
