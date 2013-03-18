@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <scene>
-	<convo>
+	<convo setflag="1_marcel_wokenup">
 		<line name="You">Whuh?</line>
 		<line name="You">Whah?</line>
 		<line name="You">AAARGH!</line>
@@ -28,17 +28,23 @@
 	    <line name="(player)">...</line>
 	
 		<machinima id="01_marcel_incubator"/>
-		
+	</convo>
+	
+	<convo flag="1_marcel_wokenup" setflag="1_marcel_tutorialmove">	
 	    <line name="Marcel">Now just try moving around. It should be no problem if my calibrations are good enough.</line>
 	    <line name="Marcel">Come on back and talk to me when you've gotten comfortable with your legs and whatnot.</line>
 	
 		<prompt id="tutorial_move"/>
+	</convo>
 	
+	<convo flag="1_marcel_tutorialmove" setflag="1_marcel_tutorialcombat">
 	    <line name="Marcel">All right, let's make this a little more interesting.</line>
 	    <line name="Marcel">Here's a gun. Take out those barrels any way you want.</line>
 	
 		<prompt id="tutorial_combat"/>
-	
+	</convo>
+		
+	<convo flag="1_marcel_tutorialmove">
 	    <line name="Marcel">Nice moves! It looks like my gut feeling was correct!</line>
 	    <line name="Marcel">I better go tell the others. You can stay here and practice if you like.</line>
 	    <line name="Marcel">Put the gun down and come on upstairs when you're ready.</line>
