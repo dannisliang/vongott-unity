@@ -38,20 +38,38 @@ function NextLine () {
 		name = line_array[current_line][1];
 		text = line_array[current_line][2];
 		
+		if ( name == "(player)" ) {
+			name = GameCore.player_name;
+		}
+		
+		if ( text.Replace( "(player)", GameCore.player_name ) ) {
+			text = text.Replace( "(player)", GameCore.player_name );
+		}
+		
 		hud.convo_current_name = name;
 		hud.convo_current_line = text;
+		
+		hud.update_convo = true;
 	
 	} else if ( type == "machinima" ) {
 		id = line_array[current_line][1];
 	
 		hud.convo_current_name = type;
 		hud.convo_current_line = id;
+		
+		hud.update_convo = true;
 	
 	} else if ( type == "prompt" ) {
-		id = line_array[current_line][1];
+		title = line_array[current_line][1];
+		text = line_array[current_line][2];
+		cancel = line_array[current_line][3];
 	
-		hud.convo_current_name = type;
-		hud.convo_current_line = id;
+		hud.prompt_current_title = title;
+		hud.prompt_current_instructions = text;
+		hud.prompt_current_cancel = ( cancel == "true" );
+		hud.prompt_current_convo = this;
+		
+		hud.open_prompt = true;
 	
 	} else if ( type == "group" ) {
 		hud.convo_current_name = "(player)";
@@ -60,10 +78,11 @@ function NextLine () {
 		for ( var i = 1; line_array[current_line].Count; i++ ) {
 			hud.convo_current_option1 = line_array[current_line][i];
 		}
+		
+		hud.update_convo = true;
 	}
 	
-	// send update message to HUD and go to next line
-	hud.update_convo = true;
+	// go to next line
 	current_line++;
 }
 
@@ -152,8 +171,10 @@ function EnterConversation () {
         		line_array[x] = [type,id];
         	
         	} else if ( type == "prompt" ) {
-        		id = node_list[i].ChildNodes[x].Attributes["id"].Value;
-        		line_array[x] = [type,id];
+        		name = node_list[i].ChildNodes[x].Attributes["title"].Value;
+        		text = node_list[i].ChildNodes[x].Attributes["text"].Value;
+        		flag = node_list[i].ChildNodes[x].Attributes["cancel"].Value;
+        		line_array[x] = [type,name,text,flag];
         	
         	} else if ( type == "group" ) {
         		line_array[x] = [type];

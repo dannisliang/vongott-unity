@@ -1,5 +1,6 @@
 static var interactive_object:GameObject;
 static var flag_array = new Hashtable();
+static var player_name = "Nameless";
 
 function SetInteractiveObject ( obj:GameObject ) {
 	interactive_object = obj;

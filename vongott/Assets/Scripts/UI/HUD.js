@@ -10,23 +10,26 @@ var conversation_option3:UILabel;
 
 var status:GameObject;
 
+var prompt:TweenScale;
+var prompt_input:UIInput;
+var prompt_instructions:UILabel;
+var prompt_ok:GameObject;
+var prompt_cancel:GameObject;
+var prompt_title:UILabel;
+
 // Booleans
-var hud_active:boolean = true;
+static var hud_active = true;
 static var start_convo = false;
 static var exit_convo = false;
 static var update_convo = false;
+static var open_prompt = false;
 
-// Variables
+// CONVERSATIONS
 static var convo_current_name = "";
 static var convo_current_line = "";
 static var convo_current_option1 = "";
 static var convo_current_option2 = "";
 static var convo_current_option3 = "";
-
-private function ToggleHUD () {
-	hud_active = !hud_active;
-	status.SetActiveRecursively(hud_active);
-}
 
 private function ResetConversation () {
 	conversation_name.text = "";
@@ -63,11 +66,70 @@ private function LeaveConversation () {
 	ResetConversation();
 }
 
+// PROMPT
+static var prompt_current_instructions = "";
+static var prompt_current_title = "";
+static var prompt_current_cancel = false;
+static var prompt_current_convo:Conversation;
 
-function Start () {
-	ResetConversation();
+private function OpenPrompt () {
+	prompt.gameObject.SetActiveRecursively ( true );
+	
+	if ( prompt_current_instructions != "" ) {
+		prompt_input.gameObject.SetActiveRecursively ( false );
+		
+	}
+		
+	if ( prompt_current_cancel ) {
+		prompt_ok.transform.localPosition.x = -60.0;
+	} else { 
+		prompt_ok.transform.localPosition.x = 0.0;
+		prompt_cancel.SetActiveRecursively ( false );
+	}
+	
+	prompt_title.text = prompt_current_title;
+	prompt_instructions.text = prompt_current_instructions;
+	
+	prompt.Play ( true );
 }
 
+function ClosePrompt () {
+	prompt.Play ( false );
+	prompt_current_instructions = "";
+	prompt_current_title = "";
+	prompt_current_cancel = false;
+	prompt_current_convo = null;
+}
+
+function PromptOK () {
+	if ( prompt_input.label.text != "" ) {
+		GameCore.player_name = prompt_input.label.text;
+	}
+	
+	if ( prompt_current_convo ) {
+		prompt_current_convo.NextLine();
+	}
+	
+	ClosePrompt();
+}
+
+private function ResetPrompt () {
+	prompt.gameObject.SetActiveRecursively ( false );
+}
+
+// TOGGLE HUD
+private function ToggleHUD () {
+	hud_active = !hud_active;
+	status.SetActiveRecursively(hud_active);
+}
+
+// INIT
+function Start () {
+	ResetConversation();
+	ResetPrompt();
+}
+
+// UPDATE
 function Update () {
 	if ( start_convo ) {
 		start_convo = false;
@@ -82,5 +144,10 @@ function Update () {
 	if ( update_convo ) {
 		update_convo = false;
 		UpdateConversation();
+	}
+	
+	if ( open_prompt ) {
+		open_prompt = false;
+		OpenPrompt ();
 	}
 }

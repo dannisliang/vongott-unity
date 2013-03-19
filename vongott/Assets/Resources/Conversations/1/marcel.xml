@@ -16,7 +16,7 @@
 		<line name="You">But... who am I?</line>
 		<line name="Strange man">Ehrm... Your name is...</line>
 		
-		<prompt id="choose_name"/>
+		<prompt title="What is your name?" text="" cancel="false"/>
 		
 		<line name="Strange man">(player)! Yeah, that’s it! Definitely didn’t just make that up!</line>
 		<line name="You">(player)... OK. Seems legit, I guess.</line>
@@ -34,14 +34,14 @@
 	    <line name="Marcel">Now just try moving around. It should be no problem if my calibrations are good enough.</line>
 	    <line name="Marcel">Come on back and talk to me when you've gotten comfortable with your legs and whatnot.</line>
 	
-		<prompt id="tutorial_move"/>
+		<prompt title="Tutorial: Move" text="Move around with [WASD], jump with [SPACE], crouch with [C] and run with [SHIFT]" cancel="false"/>
 	</convo>
 	
 	<convo flag="1_marcel_tutorialmove" setflag="1_marcel_tutorialcombat">
 	    <line name="Marcel">All right, let's make this a little more interesting.</line>
 	    <line name="Marcel">Here's a gun. Take out those barrels any way you want.</line>
 	
-		<prompt id="tutorial_combat"/>
+		<prompt title="Tutorial: Combat" text="Aim with your mouse, shoot with [LEFT CLICK], melee attack with [RIGHT CLICK] and select weapons with [0-9] or [SCROLL WHEEL]." cancel="false"/>
 	</convo>
 		
 	<convo flag="1_marcel_tutorialmove">
