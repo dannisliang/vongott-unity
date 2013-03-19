@@ -108,6 +108,7 @@ If they spot dead bodies, they will become cautious.
 ## Story
 - In line with the original Deus Ex game
 - Cameos from original characters, but with altered names
+- Side quests unrelated to the main plot will be available
 
 ## Musical inspiration
 - Trentemøller
