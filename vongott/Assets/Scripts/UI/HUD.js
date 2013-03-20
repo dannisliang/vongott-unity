@@ -4,9 +4,8 @@ var conversation_top:TweenScale;
 var conversation_bottom:TweenScale;
 var conversation_name:UILabel;
 var conversation_line:UILabel;
-var conversation_option1:UILabel;
-var conversation_option2:UILabel;
-var conversation_option3:UILabel;
+var conversation_highlight:GameObject;
+var conversation_options:UILabel[];
 
 var status:GameObject;
 
@@ -25,26 +24,53 @@ static var update_convo = false;
 static var open_prompt = false;
 
 // CONVERSATIONS
-static var convo_current_name = "";
+static var convo_current_name = "dude";
 static var convo_current_line = "";
-static var convo_current_option1 = "";
-static var convo_current_option2 = "";
-static var convo_current_option3 = "";
+static var convo_current_options = ["","",""];
+static var convo_current_highlight = 1;
 
 private function ResetConversation () {
 	conversation_name.text = "";
 	conversation_line.text = "";
-	conversation_option1.text = "";
-	conversation_option2.text = "";
-	conversation_option3.text = "";
+	for ( var option in conversation_options ) {
+		option.text = "";
+		option.color = new Color ( 255, 255, 255, 255 );
+	}
+	conversation_highlight.active = false;
+	
+}
+
+private function HighlightLine ( num : int ) {
+	conversation_highlight.active = true;
+	convo_current_highlight = num;
+	
+	var line = conversation_options[num];
+	
+	conversation_highlight.transform.localPosition.y = line.gameObject.transform.localPosition.y;
+	line.color = new Color ( 0, 0, 0, 255 );
+}
+
+private function UnhighlightLine ( num : int ) {
+	conversation_highlight.active = false;
+	convo_current_highlight = num;
+	
+	var line = conversation_options[num];
+	line.color = new Color ( 255, 255, 255, 255 );
 }
 
 private function UpdateConversation () {
+	ResetConversation();
+	
 	conversation_name.text = convo_current_name;
 	conversation_line.text = convo_current_line;
-	conversation_option1.text = convo_current_option1;
-	conversation_option2.text = convo_current_option2;
-	conversation_option3.text = convo_current_option3;
+	
+	for ( var i = 0; i < convo_current_options.Length; i++ ) {
+		conversation_options[i].text = convo_current_options[i];
+	}
+
+	if ( convo_current_options[0] != "" ) {
+		HighlightLine( 0 );
+	}
 }
 
 private function EnterConversation () {
@@ -124,7 +150,7 @@ private function ToggleHUD () {
 }
 
 // INIT
-function Start () {
+function Start () {	
 	ResetConversation();
 	ResetPrompt();
 }
@@ -144,6 +170,16 @@ function Update () {
 	if ( update_convo ) {
 		update_convo = false;
 		UpdateConversation();
+	}
+	
+	if ( convo_current_options[0] != "" ) {
+		if ( Input.GetKeyDown(KeyCode.S) && convo_current_highlight < convo_current_options.Length ) {
+			UnhighlightLine ( convo_current_highlight );
+			HighlightLine ( convo_current_highlight + 1 );
+		} else if ( Input.GetKeyDown(KeyCode.W) && convo_current_highlight > 0 ) {
+			UnhighlightLine ( convo_current_highlight );
+			HighlightLine ( convo_current_highlight - 1 );
+		}
 	}
 	
 	if ( open_prompt ) {

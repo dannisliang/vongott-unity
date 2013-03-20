@@ -1,5 +1,3 @@
-var core : GameCore;
-
 function Start () {
 }
 
@@ -8,11 +6,11 @@ function Update () {
 }
 
 function OnTriggerEnter ( other:Collider ) {
-	core.SetInteractiveObject ( this.gameObject );
+	GameCore.SetInteractiveObject ( this.gameObject );
 }
 
 function OnTriggerExit ( other:Collider ) {
-	core.SetInteractiveObject ( null );
+	GameCore.SetInteractiveObject ( null );
 }
 
 function Interact () {

@@ -44,6 +44,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Character\CharacterMotor.js" />
+     <Compile Include="Assets\Scripts\Character\FPSInputController.js" />
+     <Compile Include="Assets\Scripts\Character\PlatformInputController.js" />
+     <Compile Include="Assets\Scripts\Character\Player.js" />
+     <Compile Include="Assets\Scripts\Character\ThirdPersonCamera.js" />
+     <Compile Include="Assets\Scripts\Character\ThirdPersonController.js" />
      <Compile Include="Assets\Scripts\Core\CameraTarget.js" />
      <Compile Include="Assets\Scripts\Core\Conversation.js" />
      <Compile Include="Assets\Scripts\Core\GameCore.js" />
@@ -63,9 +69,6 @@
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored Overlay.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
- <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
