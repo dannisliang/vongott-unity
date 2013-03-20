@@ -7,6 +7,10 @@ static function SetPlayerObject ( obj:GameObject ) {
 	player_object = obj;
 }
 
+static function GetPlayerObject () {
+	return player_object;
+}
+
 static function SetInteractiveObject ( obj : GameObject ) {
 	GameCore.interactive_object = obj;
 	
