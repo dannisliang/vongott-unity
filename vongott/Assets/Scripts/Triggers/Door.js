@@ -61,9 +61,13 @@ function Update () {
 		}
 	}
 	
-	/*if ( !next_room.active && !prev_room.active ) {
-		this.gameObject.SetActiveRecursively ( false );
+	if ( !next_room.active && !prev_room.active ) {
+		for ( var renderer in this.gameObject.GetComponentsInChildren(MeshRenderer) ) {
+			renderer.enabled = false;
+		}
 	} else {
-		this.gameObject.SetActiveRecursively ( true );
-	}*/
+		for ( var renderer in this.gameObject.GetComponentsInChildren(MeshRenderer) ) {
+			renderer.enabled = true;
+		}
+	}
 }

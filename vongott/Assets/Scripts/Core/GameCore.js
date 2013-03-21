@@ -12,13 +12,17 @@ static function GetPlayerObject () {
 }
 
 static function SetInteractiveObject ( obj : GameObject ) {
-	GameCore.interactive_object = obj;
+	interactive_object = obj;
 	
 	if ( obj ) {
 		Debug.Log ( ">>> core: interactive object set to " + obj );
 	} else {
 		Debug.Log ( ">>> core: interactive object released" );
 	}
+}
+
+static function GetInteractiveObject () {
+	return interactive_object;
 }
 
 static function SetFlag ( flag : String ) {
@@ -38,19 +42,12 @@ static function ToggleControls ( state : boolean ) {
 	Debug.Log ( ">>> core: controls active = " + state );
 }
 
-static function Interact () {
-	if ( interactive_object ) {
-		interactive_object.GetComponent(InteractiveObject).Interact();
-		interactive_object = null;
-	}
-}
-
 function Start () {
 	Debug.Log(">>> core: started");
+	
+	Instantiate ( Resources.Load ( "Prefabs/UI/ui_root" ) );
 }
 
 function Update () {
-	if ( Input.GetKeyDown(KeyCode.F) ) {
-		Interact();	
-	}
+	
 }

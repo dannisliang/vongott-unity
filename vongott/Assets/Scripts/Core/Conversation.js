@@ -235,7 +235,6 @@ function EnterConversation () {
 	   	   
 	   	// go to next line
 	   	HUD.update_convo = true;
-		NextLine();
 	}
 }
 
@@ -258,7 +257,7 @@ function Update () {
 		if ( Input.GetKeyDown(KeyCode.F) ) {
 			if ( HUD.convo_current_options[0] != "" ) {
 				ChooseLine();
-			} else {
+			} else if ( HUD.prompt_current_title == "" ) {
 				NextLine();
 			}
 		}

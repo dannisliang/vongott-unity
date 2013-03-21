@@ -2,15 +2,13 @@
 var basement : GameObject;
 var stairs_b_g : GameObject;
 var groundFloor : GameObject;
-var ui_root : GameObject;
-var game_core : GameObject;
 
 // Init
 function Start () {
+	Instantiate ( Resources.Load ( "Prefabs/Core/game_core" ) );
+
 	stairs_b_g.SetActiveRecursively(false);
 	groundFloor.SetActiveRecursively(false);
-	Instantiate(game_core);
-	Instantiate(ui_root);
 }
 
 // Game loop
