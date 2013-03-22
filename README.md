@@ -11,10 +11,18 @@ I will document the code as I move along. Have a look in the docs for that and e
 	- Outline
 	- Script
 	- Main quests and sidequests
+- Audio
+	- Music
+	- Sound effects
+	- Dialogue?
 - AI
 	- Enemies
 	- Allies
 	- Animals
+- Animation
+	- Male
+	- Female
+	- Conversation poses
 - Core
 	- Controls
 	- Infrastructure
