@@ -1,8 +1,8 @@
-Mods 
+Upgrades 
 =====
 # Functionality
-Mechanical mods are like experience points, will be awarded for every level up.
-Digital mods are like skills, can be purchased or awarded for quest solving.
+Mechanical upgrades are like experience points, will be awarded for every level up.
+Digital upgrades are like skills, can be purchased or awarded for quest solving.
 
 # Mechanical
 ## Legs:  
