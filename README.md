@@ -27,6 +27,7 @@ I will document the code as I move along. Have a look in the docs for that and e
 	- Controls
 	- Infrastructure
 	- Flag system (almost done)
+	- New UI plugin for Unity
 - Modeling
 	- Player
 	- Standard male
