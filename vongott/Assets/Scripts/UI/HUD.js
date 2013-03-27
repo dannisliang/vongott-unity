@@ -16,6 +16,10 @@ var prompt_ok:GameObject;
 var prompt_cancel:GameObject;
 var prompt_title:UILabel;
 
+var notification:TweenPosition;
+var notification_label:UILabel;
+var notification_image:UISprite;
+
 // Booleans
 static var hud_active = true;
 static var start_convo = false;
@@ -29,6 +33,7 @@ static var convo_current_line = "";
 static var convo_current_options = ["","",""];
 static var convo_current_highlight = 1;
 
+// reset
 private function ResetConversation () {
 	conversation_name.text = "";
 	conversation_line.text = "";
@@ -40,6 +45,7 @@ private function ResetConversation () {
 	
 }
 
+// highlight
 private function HighlightLine ( num : int ) {
 	conversation_highlight.active = true;
 	convo_current_highlight = num;
@@ -50,6 +56,7 @@ private function HighlightLine ( num : int ) {
 	line.color = new Color ( 0, 0, 0, 255 );
 }
 
+// unhighlight
 private function UnhighlightLine ( num : int ) {
 	conversation_highlight.active = false;
 	convo_current_highlight = num;
@@ -58,6 +65,7 @@ private function UnhighlightLine ( num : int ) {
 	line.color = new Color ( 255, 255, 255, 255 );
 }
 
+// update
 private function UpdateConversation () {
 	ResetConversation();
 	
@@ -73,6 +81,7 @@ private function UpdateConversation () {
 	}
 }
 
+// enter
 private function EnterConversation () {
 	conversation_bottom.callWhenFinished = null;
 	ToggleHUD();
@@ -83,6 +92,7 @@ private function EnterConversation () {
 	UpdateConversation();
 }
 
+// leave
 private function LeaveConversation () {
 	conversation_bottom.callWhenFinished = "ToggleHUD";
 
@@ -92,12 +102,30 @@ private function LeaveConversation () {
 	ResetConversation();
 }
 
+// NOTIFICATION
+static var notification_message = "";
+private var notification_active = false;
+
+// show
+private function ShowNotification ( msg : String ) {
+	if ( msg ) {
+		notification.Play ( true );
+		notification_label.text = msg;
+		notification_active = true;
+	} else {
+		notification.Play ( false );
+		notification_label.text = "";
+		notification_active = false;
+	}
+}
+
 // PROMPT
 static var prompt_current_instructions = "";
 static var prompt_current_title = "";
 static var prompt_current_cancel = false;
 static var prompt_current_convo:Conversation;
 
+// open
 private function OpenPrompt () {
 	prompt.gameObject.SetActiveRecursively ( true );
 	
@@ -119,6 +147,7 @@ private function OpenPrompt () {
 	prompt.Play ( true );
 }
 
+// close
 function ClosePrompt () {
 	prompt.Play ( false );
 	prompt_current_instructions = "";
@@ -127,6 +156,7 @@ function ClosePrompt () {
 	prompt_current_convo = null;
 }
 
+// press OK
 function PromptOK () {
 	if ( prompt_input.label.text != "" ) {
 		GameCore.player_name = prompt_input.label.text;
@@ -139,6 +169,7 @@ function PromptOK () {
 	ClosePrompt();
 }
 
+// reset
 private function ResetPrompt () {
 	prompt.gameObject.SetActiveRecursively ( false );
 }
@@ -170,6 +201,12 @@ function Update () {
 	if ( update_convo ) {
 		update_convo = false;
 		UpdateConversation();
+	}
+	
+	if ( notification_message != "" && !notification_active ) {
+		ShowNotification ( notification_message );
+	} else if ( notification_message == "" ) {
+		ShowNotification ( null );
 	}
 	
 	if ( convo_current_options[0] != "" ) {
