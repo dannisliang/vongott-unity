@@ -6,16 +6,41 @@ Everything except the framework with which Vongott is developed, Unity 3D, will 
 
 I will document the code as I move along. Have a look in the docs for that and everything else about Vongott.
 
-### Current features in the works
+### What needs to be done
 - Story
 	- Outline
 	- Script
+	- Main quests and sidequests
+- Audio
+	- Music
+	- Sound effects
+	- Dialogue?
+- AI
+	- Enemies
+	- Allies
+	- Animals
+- Animation
+	- Male
+	- Female
+	- Conversation poses
 - Core
 	- Controls
 	- Infrastructure
+	- Flag system (almost done)
+	- New UI plugin for Unity
+- Modeling
+	- Player
+	- Standard male
+	- Standard female
+	- Marcel
+- Level design
+	- Awesome Island
+	- NRF bunker
+	- Ship
 - UI
+	- Game menu 
 	- HUD
-	- Dialogue interface
+	- Conversation interface (almost done)
 
 <p align=right>
   <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
