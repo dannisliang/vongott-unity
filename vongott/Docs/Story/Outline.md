@@ -8,6 +8,7 @@ Story outline
   - The people who are a bit tired of ULTACO
 - FUMA: The Fabulous Ulterior Motives Agency 
   - The all-powerful FUMA.. What exactly they do, nobody knows.
+- The Ohrmazd: Heavily modified merchants who believe strongly in the medical advances of bionic upgrades
 
 # Characters
 ## NRF
