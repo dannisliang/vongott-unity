@@ -37,6 +37,14 @@ static function GetFlag ( flag : String ) {
 	}
 }
 
+static function StartQuest ( name : String ) {
+	QuestManager.StartQuest ( name );
+}
+
+static function EndQuest ( name : String ) {
+	QuestManager.EndQuest ( name );
+}
+
 static function ToggleControls ( state : boolean ) {
 	//player_object.GetComponent(CharacterController).enabled = state;
 	Debug.Log ( ">>> core: controls active = " + state );

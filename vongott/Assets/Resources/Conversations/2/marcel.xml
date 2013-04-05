@@ -24,7 +24,7 @@
 		<line name="(player)">All right.</line>
 	</convo>
 	
-	<convo flag="2_talked_to_marcel">
+	<convo flag="2_talked_to_marcel" setflag="2_talked_to_marcel_done">
     	<line name="Marcel">You ready to do some field work?</line>
     
 		<group>

@@ -1,79 +1,86 @@
-// Game objects and tweens
-var conversation:GameObject;
-var conversation_top:TweenScale;
-var conversation_bottom:TweenScale;
-var conversation_name:UILabel;
-var conversation_line:UILabel;
-var conversation_highlight:GameObject;
-var conversation_options:UILabel[];
+// =============== PREREQUISITES
+// Classes
+private class HUDConversation {
+	var instance : GameObject;	
+	var top : TweenScale;
+	var bottom : TweenScale;
+	var name : UILabel;
+	var line : UILabel;
+	var highlight : GameObject;
+	var options : UILabel[];
+}
 
-var status:GameObject;
+private class HUDPrompt {
+	var instance : TweenScale;
+	var input : UIInput;
+	var instructions : UILabel;
+	var ok : GameObject;
+	var cancel : GameObject;
+	var title : UILabel;
+}
 
-var prompt:TweenScale;
-var prompt_input:UIInput;
-var prompt_instructions:UILabel;
-var prompt_ok:GameObject;
-var prompt_cancel:GameObject;
-var prompt_title:UILabel;
+private class HUDNotification {
+	var instance : TweenPosition;
+	var label : UILabel;
+	var image : UISprite;
+	var active = false;
+}
 
-var notification:TweenPosition;
-var notification_label:UILabel;
-var notification_image:UISprite;
+// Inspector items
+var _conversation : HUDConversation;
+var _notification : HUDNotification;
+var _prompt : HUDPrompt;
+var _status : GameObject;
+
+// Static references
+static var conversation : HUDConversation;
+static var notification : HUDNotification;
+static var prompt : HUDPrompt;
+static var status : GameObject;
 
 // Booleans
-static var hud_active = true;
-static var start_convo = false;
-static var exit_convo = false;
-static var update_convo = false;
-static var open_prompt = false;
+static var showing = true;
 
-// CONVERSATIONS
-static var convo_current_name = "dude";
-static var convo_current_line = "";
+// =============== CONVERSATIONS
 static var convo_current_options = ["","",""];
 static var convo_current_highlight = 1;
 
 // reset
-private function ResetConversation () {
-	conversation_name.text = "";
-	conversation_line.text = "";
-	for ( var option in conversation_options ) {
+static function ResetConversation () {
+	conversation.name.text = "";
+	conversation.line.text = "";
+	for ( var option in conversation.options ) {
 		option.text = "";
 		option.color = new Color ( 255, 255, 255, 255 );
 	}
-	conversation_highlight.active = false;
+	conversation.highlight.active = false;
 	
 }
 
 // highlight
-private function HighlightLine ( num : int ) {
-	conversation_highlight.active = true;
+static function HighlightLine ( num : int ) {
+	conversation.highlight.active = true;
 	convo_current_highlight = num;
 	
-	var line = conversation_options[num];
+	var line = conversation.options[num];
 	
-	conversation_highlight.transform.localPosition.y = line.gameObject.transform.localPosition.y;
+	conversation.highlight.transform.localPosition.y = line.gameObject.transform.localPosition.y;
 	line.color = new Color ( 0, 0, 0, 255 );
 }
 
 // unhighlight
-private function UnhighlightLine ( num : int ) {
-	conversation_highlight.active = false;
+static function UnhighlightLine ( num : int ) {
+	conversation.highlight.active = false;
 	convo_current_highlight = num;
 	
-	var line = conversation_options[num];
+	var line = conversation.options[num];
 	line.color = new Color ( 255, 255, 255, 255 );
 }
 
 // update
-private function UpdateConversation () {
-	ResetConversation();
-	
-	conversation_name.text = convo_current_name;
-	conversation_line.text = convo_current_line;
-	
+static function UpdateConversation () {
 	for ( var i = 0; i < convo_current_options.Length; i++ ) {
-		conversation_options[i].text = convo_current_options[i];
+		conversation.options[i].text = convo_current_options[i];
 	}
 
 	if ( convo_current_options[0] != "" ) {
@@ -82,74 +89,71 @@ private function UpdateConversation () {
 }
 
 // enter
-private function EnterConversation () {
-	conversation_bottom.callWhenFinished = null;
+static function EnterConversation () {
+	conversation.bottom.callWhenFinished = null;
 	ToggleHUD();
 
-	conversation_top.Play(true);
-	conversation_bottom.Play(true);
+	conversation.top.Play(true);
+	conversation.bottom.Play(true);
 
 	UpdateConversation();
 }
 
 // leave
-private function LeaveConversation () {
-	conversation_bottom.callWhenFinished = "ToggleHUD";
+static function LeaveConversation () {
+	conversation.bottom.callWhenFinished = "ToggleHUDFromTween";
 
-	conversation_top.Play(false);
-	conversation_bottom.Play(false);
+	conversation.top.Play(false);
+	conversation.bottom.Play(false);
 	
 	ResetConversation();
 }
 
-// NOTIFICATION
-static var notification_message = "";
-private var notification_active = false;
-
+// =============== NOTIFICATION
 // show
-private function ShowNotification ( msg : String ) {
-	if ( msg ) {
-		notification.Play ( true );
-		notification_label.text = msg;
-		notification_active = true;
+static function ShowNotification ( msg : String ) {
+	if ( msg != null && msg != "" ) {
+		notification.instance.Play ( true );
+		notification.label.text = msg;
+		notification.active = true;
 	} else {
-		notification.Play ( false );
-		notification_label.text = "";
-		notification_active = false;
+		notification.instance.Play ( false );
+		notification.label.text = "";
+		notification.active = false;
 	}
 }
 
-// PROMPT
+// =============== PROMPT
 static var prompt_current_instructions = "";
 static var prompt_current_title = "";
 static var prompt_current_cancel = false;
 static var prompt_current_convo:Conversation;
 
 // open
-private function OpenPrompt () {
-	prompt.gameObject.SetActiveRecursively ( true );
+static function OpenPrompt () {
+	prompt.instance.gameObject.SetActiveRecursively ( true );
 	
 	if ( prompt_current_instructions != "" ) {
-		prompt_input.gameObject.SetActiveRecursively ( false );
+		prompt.input.gameObject.SetActiveRecursively ( false );
 		
 	}
 		
 	if ( prompt_current_cancel ) {
-		prompt_ok.transform.localPosition.x = -60.0;
+		prompt.ok.transform.localPosition.x = -60.0;
 	} else { 
-		prompt_ok.transform.localPosition.x = 0.0;
-		prompt_cancel.SetActiveRecursively ( false );
+		prompt.ok.transform.localPosition.x = 0.0;
+		prompt.cancel.SetActiveRecursively ( false );
 	}
 	
-	prompt_title.text = prompt_current_title;
-	prompt_instructions.text = prompt_current_instructions;
+	prompt.title.text = prompt_current_title;
+	prompt.instructions.text = prompt_current_instructions;
 	
-	prompt.Play ( true );
+	prompt.instance.Play ( true );
 }
 
 // close
 function ClosePrompt () {
-	prompt.Play ( false );
+	prompt.instance.Play ( false );
 	prompt_current_instructions = "";
 	prompt_current_title = "";
 	prompt_current_cancel = false;
@@ -158,8 +162,8 @@ function ClosePrompt () {
 
 // press OK
 function PromptOK () {
-	if ( prompt_input.label.text != "" ) {
-		GameCore.player_name = prompt_input.label.text;
+	if ( prompt.input.label.text != "" ) {
+		GameCore.player_name = prompt.input.label.text;
 	}
 	
 	if ( prompt_current_convo ) {
@@ -170,45 +174,39 @@ function PromptOK () {
 }
 
 // reset
-private function ResetPrompt () {
-	prompt.gameObject.SetActiveRecursively ( false );
+static function ResetPrompt () {
+	prompt.instance.gameObject.SetActiveRecursively ( false );
 }
 
-// TOGGLE HUD
-private function ToggleHUD () {
-	hud_active = !hud_active;
-	status.SetActiveRecursively(hud_active);
+// =============== TOGGLE HUD
+static function ToggleHUD () {
+	showing = !showing;
+	status.SetActiveRecursively(showing);
 }
 
-// INIT
-function Start () {	
+function ToggleHUDFromTween () {
+	showing = !showing;
+	status.SetActiveRecursively(showing);
+}
+
+// =============== INIT
+private function InitVars () {
+	conversation = _conversation;
+	notification = _notification;
+	prompt = _prompt;
+	status = _status;
+}
+
+// =============== START
+function Start () {
+	InitVars();
 	ResetConversation();
 	ResetPrompt();
+	ShowNotification( null );
 }
 
-// UPDATE
-function Update () {
-	if ( start_convo ) {
-		start_convo = false;
-		EnterConversation();
-	}
-	
-	if ( exit_convo ) {
-		exit_convo = false;
-		LeaveConversation();
-	} 
-	
-	if ( update_convo ) {
-		update_convo = false;
-		UpdateConversation();
-	}
-	
-	if ( notification_message != "" && !notification_active ) {
-		ShowNotification ( notification_message );
-	} else if ( notification_message == "" ) {
-		ShowNotification ( null );
-	}
-	
+// =============== UPDATE
+function Update () {	
 	if ( convo_current_options[0] != "" ) {
 		if ( Input.GetKeyDown(KeyCode.S) && convo_current_highlight < convo_current_options.Length ) {
 			UnhighlightLine ( convo_current_highlight );
@@ -217,10 +215,5 @@ function Update () {
 			UnhighlightLine ( convo_current_highlight );
 			HighlightLine ( convo_current_highlight - 1 );
 		}
-	}
-	
-	if ( open_prompt ) {
-		open_prompt = false;
-		OpenPrompt ();
 	}
 }

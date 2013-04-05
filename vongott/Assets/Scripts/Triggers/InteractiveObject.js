@@ -4,7 +4,7 @@ function OnTriggerEnter ( other:Collider ) {
 
 function OnTriggerExit ( other:Collider ) {
 	GameCore.SetInteractiveObject ( null );
-	HUD.notification_message = "";
+	HUD.ShowNotification ( null );
 }
 
 function Start () {

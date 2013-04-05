@@ -52,8 +52,10 @@ class Door extends InteractiveObject {
 	
 	function Update () {
 		// Interact
-		if ( HUD.hud_active && GameCore.GetInteractiveObject() == this.gameObject ) {
-			HUD.notification_message = "Open [F]";
+		if ( HUD.showing && GameCore.GetInteractiveObject() == this.gameObject ) {
+			if ( !HUD.notification.active ) {
+				HUD.ShowNotification ( "Open [F]" );
+			}
 			
 			if ( Input.GetKeyDown(KeyCode.F) ) {
 				Toggle();

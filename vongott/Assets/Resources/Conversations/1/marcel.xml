@@ -44,7 +44,7 @@
 		<prompt title="Tutorial: Combat" text="Aim with your mouse, shoot with [LEFT CLICK], melee attack with [RIGHT CLICK] and select weapons with [0-9] or [SCROLL WHEEL]." cancel="false"/>
 	</convo>
 		
-	<convo flag="1_marcel_tutorialmove">
+	<convo flag="1_marcel_tutorialmove" startquest="1_go_upstairs">
 	    <line name="Marcel">Nice moves! It looks like my gut feeling was correct!</line>
 	    <line name="Marcel">I better go tell the others. You can stay here and practice if you like.</line>
 	    <line name="Marcel">Put the gun down and come on upstairs when you're ready.</line>

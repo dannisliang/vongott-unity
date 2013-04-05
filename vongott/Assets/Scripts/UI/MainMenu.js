@@ -1,43 +1,88 @@
-var base : TweenTransform;
+class Pages extends System.Object {
+	var root : TweenTransform = null;
+	var load : GameObject = null;
+	var newGame : GameObject = null;
+	var options : GameObject = null;
+	var community : GameObject = null;
+}
 
-var current_page = "root";
-var tween_duration = 2;
+class Buttons extends System.Object {
+	var load : GameObject = null;
+	var newGame : GameObject = null;
+	var options : GameObject = null;
+	var community : GameObject = null;
+
+	function GetAll () {
+		return [ this.load, this.newGame, this.options, this.community ];
+	}
+}
+
+var pages = Pages();
+var buttons = Buttons();
+var current_page : GameObject = null;
+var tween_duration = 0.5;
 
 private var buttons_active = true;
+private var zoomed_in = false;
 
 function ToggleButtons () {
 	buttons_active = !buttons_active;
-	
-	for ( var c in base.gameObject.GetComponentsInChildren(MeshCollider) ) {
-		c.enabled = buttons_active;
-	}
 }
 
 private function OuterRimZoom ( direction : boolean ) {
 	ToggleButtons();
 	
-	base.Play ( direction );
+	pages.root.Play ( direction );
+	
+	for ( var b in buttons.GetAll() ) {
+		b.GetComponent(MeshCollider).enabled = !direction;
+	}
+	
+	zoomed_in = direction;
 }
 
-private function GoBack () {
-	if ( current_page != "root" ) {
-		OuterRimZoom ( false );
+function GoToLevel ( sender : GameObject ) {
+	if ( buttons_active ) {
+		Application.LoadLevel ( sender.name );
 	}
 }
 
-function GoToLoad () {
+function GoToPage ( sender : GameObject ) {
 	if ( buttons_active ) {
+		if ( sender.name == "btn_load" ) {
+			current_page = pages.load;
+		} else if ( sender.name == "btn_new_game" ) {
+			current_page = pages.newGame;
+		} else if ( sender.name == "btn_community" ) {
+			current_page = pages.community;
+		} else if ( sender.name == "btn_options" ) {
+			current_page = pages.options;
+		}
+		
+		current_page.SetActiveRecursively( true );
 		OuterRimZoom ( true );
-		current_page = "load";
+	}
+}
+
+function OnZoomEnd () {
+	ToggleButtons ();
+	
+	if ( !zoomed_in ) {
+		current_page.SetActiveRecursively( false );
+		current_page = null;
 	}
 }
 
 function Start () {
-
+	pages.load.SetActiveRecursively(false);
+	pages.newGame.SetActiveRecursively(false);
+	pages.options.SetActiveRecursively(false);
+	pages.community.SetActiveRecursively(false);
+	pages.root.duration = tween_duration;
 }
 
 function Update () {
-	if ( Input.GetKeyDown(KeyCode.Escape) && buttons_active ) {
-		GoBack();
+	if ( Input.GetKeyDown(KeyCode.Escape) && buttons_active && current_page ) {
+		OuterRimZoom ( false );
 	}
 }

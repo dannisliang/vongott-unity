@@ -12,7 +12,7 @@ class Conversation extends InteractiveObject {
 	function LeaveConversation () {
 		GameCore.ToggleControls( true );
 	
-		HUD.exit_convo = true;
+		HUD.LeaveConversation();
 		in_convo = false;
 		current_line = 0;
 		line_array = [];
@@ -55,18 +55,22 @@ class Conversation extends InteractiveObject {
 				text = text.Replace( "(player)", GameCore.player_name );
 			}
 			
-			HUD.convo_current_name = name;
-			HUD.convo_current_line = text;
+			HUD.ResetConversation();
 			
-			HUD.update_convo = true;
+			HUD.conversation.name.text = name;
+			HUD.conversation.line.text = text;
+			
+			HUD.UpdateConversation();
 		
 		} else if ( type == "machinima" ) {
 			id = line_array[current_line][1];
 		
-			HUD.convo_current_name = type;
-			HUD.convo_current_line = id;
+			HUD.ResetConversation();
+		
+			HUD.conversation.name.text = type;
+			HUD.conversation.line.text = id;
 			
-			HUD.update_convo = true;
+			HUD.UpdateConversation();
 		
 		} else if ( type == "prompt" ) {
 			title = line_array[current_line][1];
@@ -78,11 +82,13 @@ class Conversation extends InteractiveObject {
 			HUD.prompt_current_cancel = ( cancel == "true" );
 			HUD.prompt_current_convo = this;
 			
-			HUD.open_prompt = true;
+			HUD.OpenPrompt();
 		
 		} else if ( type == "group" ) {
-			HUD.convo_current_name = GameCore.player_name;
-			HUD.convo_current_line = "";
+			HUD.ResetConversation();
+			
+			HUD.conversation.name.text = GameCore.player_name;
+			HUD.conversation.line.text = "";
 			
 			for ( var i = 1; i < line_array[current_line].Count; i++ ) {
 				text = line_array[current_line][i];
@@ -93,7 +99,7 @@ class Conversation extends InteractiveObject {
 				HUD.convo_current_options[i-1] = text.Split("|"[0])[0];
 			}
 			
-			HUD.update_convo = true;
+			HUD.UpdateConversation();
 		}
 		
 		// go to next line
@@ -124,7 +130,7 @@ class Conversation extends InteractiveObject {
 			GameCore.ToggleControls( false );
 		
 		   	// send start message to HUD
-			HUD.start_convo = true;
+			HUD.EnterConversation();
 			in_convo = true;
 			var current_convo = 0;
 			
@@ -143,6 +149,11 @@ class Conversation extends InteractiveObject {
 				// if there is a flag and it's true, use this convo
 				if ( convo.Attributes["flag"] ) {
 					if ( GameCore.GetFlag ( convo.Attributes["flag"].Value ) ) {
+						// if there is a startquest attribute, start it
+						if ( convo.Attributes["startquest"] ) {
+							GameCore.StartQuest ( convo.Attributes["startquest"].Value );
+						}
+						
 						// if there is a setflag attribute, set it
 						if ( convo.Attributes["setflag"] ) {
 							if ( !GameCore.GetFlag ( convo.Attributes["setflag"].Value ) ) {
@@ -236,7 +247,7 @@ class Conversation extends InteractiveObject {
 		   	   
 		   	// go to next line
 		   	NextLine();
-		   	HUD.update_convo = true;
+		   	HUD.UpdateConversation();
 		}
 	}
 	
@@ -265,8 +276,10 @@ class Conversation extends InteractiveObject {
 			}
 			
 		// Interact
-		} else if ( HUD.hud_active && GameCore.GetInteractiveObject() == this.gameObject ) {
-			HUD.notification_message = "Talk [F]";
+		} else if ( HUD.showing && GameCore.GetInteractiveObject() == this.gameObject ) {
+			if ( !HUD.notification.active ) {
+				HUD.ShowNotification ( "Talk [F]" );
+			}
 			
 			if ( Input.GetKeyDown(KeyCode.F) ) {
 				EnterConversation();
