@@ -2,11 +2,14 @@ Menus
 ====
 
 # Main menu
-## Continue
-- Resumes a game from the last saved spot
+## Load
+- Autosaves
+- Quicksaves
 
 ## New game
-- Creates a new game, overwriting previous autosaves and quicksaves
+- Easy
+- Medium
+- Hard
 
 ## Options
 - Controls
@@ -23,6 +26,7 @@ Menus
 - Forums
 - News
 - Github
+- User content
 
 ## Quit
 - Quits the game
@@ -43,9 +47,9 @@ Menus
 - Level
 - Stats
 
-## Mods menu
-- Hardware mods
-- Software mods
+## Upgrades menu
+- Mechanical upgrades
+- Firmware upgrades
 - Inspector panel
 
 ## Inventory menu
