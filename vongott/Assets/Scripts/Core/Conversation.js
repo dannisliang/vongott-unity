@@ -8,7 +8,10 @@ class Conversation extends InteractiveObject {
 	private var in_convo = false; 
 	private var skip_line = false;
 	
-	// LEAVE CONVO
+	
+	////////////////////
+	// Leave convo
+	////////////////////
 	function LeaveConversation () {
 		GameCore.ToggleControls( true );
 	
@@ -18,7 +21,10 @@ class Conversation extends InteractiveObject {
 		line_array = [];
 	}
 	
-	// NEXT LINE
+	
+	////////////////////
+	// Next line
+	////////////////////
 	function NextLine () {
 		// check if there are more lines to read
 		if ( current_line >= line_array.Count ) {
@@ -38,7 +44,7 @@ class Conversation extends InteractiveObject {
 		// consequences for different types
 		if ( type == "line" ) {
 			if ( line_array[current_line][3] ) {
-				if ( GameCore.GetFlag( line_array[current_line][3] ) == false ) {
+				if ( FlagManager.GetFlag( line_array[current_line][3] ) == false ) {
 					skip_line = true;
 					return;			
 				}
@@ -106,7 +112,10 @@ class Conversation extends InteractiveObject {
 		current_line++;
 	}
 	
-	// CHOOSE LINE
+	
+	////////////////////
+	// Choose line
+	////////////////////
 	function ChooseLine () {
 		var attr = line_array[current_line-1][1 + HUD.convo_current_highlight].ToString().Split("|"[0])[1]; 
 		
@@ -119,12 +128,14 @@ class Conversation extends InteractiveObject {
 		} else if ( attr == "" ) {
 			NextLine();
 		} else {
-			GameCore.SetFlag ( attr );
+			FlagManager.SetFlag ( attr );
 			NextLine();
 		}
 	}
 	
-	// ENTER CONVO
+	////////////////////
+	// Enter convo
+	////////////////////
 	function EnterConversation () {
 		if (!in_convo) {
 			GameCore.ToggleControls( false );
@@ -148,16 +159,16 @@ class Conversation extends InteractiveObject {
 			for ( var convo in node_list ) {	
 				// if there is a flag and it's true, use this convo
 				if ( convo.Attributes["flag"] ) {
-					if ( GameCore.GetFlag ( convo.Attributes["flag"].Value ) ) {
+					if ( FlagManager.GetFlag ( convo.Attributes["flag"].Value ) ) {
 						// if there is a startquest attribute, start it
 						if ( convo.Attributes["startquest"] ) {
-							GameCore.StartQuest ( convo.Attributes["startquest"].Value );
+							QuestManager.StartQuest ( convo.Attributes["startquest"].Value );
 						}
-						
+														
 						// if there is a setflag attribute, set it
 						if ( convo.Attributes["setflag"] ) {
-							if ( !GameCore.GetFlag ( convo.Attributes["setflag"].Value ) ) {
-								GameCore.SetFlag ( convo.Attributes["setflag"].Value );
+							if ( !FlagManager.GetFlag ( convo.Attributes["setflag"].Value ) ) {
+								FlagManager.SetFlag ( convo.Attributes["setflag"].Value );
 								current_convo = convo_counter;
 								break;
 							}
@@ -168,11 +179,15 @@ class Conversation extends InteractiveObject {
 					}
 				
 				} else {
-				
+					// if there is a startquest attribute, start it
+					if ( convo.Attributes["startquest"] ) {
+						QuestManager.StartQuest ( convo.Attributes["startquest"].Value );
+					}
+					
 					// if there is a setflag attribute and it's not been set already, set it and use this convo
 					if ( convo.Attributes["setflag"] ) {
-						if ( !GameCore.GetFlag ( convo.Attributes["setflag"].Value ) ) {
-							GameCore.SetFlag ( convo.Attributes["setflag"].Value );
+						if ( !FlagManager.GetFlag ( convo.Attributes["setflag"].Value ) ) {
+							FlagManager.SetFlag ( convo.Attributes["setflag"].Value );
 							current_convo = convo_counter;
 							break;
 						}
@@ -251,12 +266,18 @@ class Conversation extends InteractiveObject {
 		}
 	}
 	
-	// INIT
+	
+	////////////////////
+	// Init
+	////////////////////
 	function Start () {
 	
 	}
 	
-	// UPDATE
+	
+	////////////////////
+	// Update
+	////////////////////
 	function Update () {
 		if ( in_convo ) {
 			// Check if line should be skipped

@@ -5,13 +5,15 @@ var groundFloor : GameObject;
 
 // Init
 function Start () {
-	Instantiate ( Resources.Load ( "Prefabs/Core/game_core" ) );
+	GameCore.Start();
 
 	stairs_b_g.SetActiveRecursively(false);
 	groundFloor.SetActiveRecursively(false);
+	
+	PageManager.GoToPage("HUD");
 }
 
 // Game loop
 function Update () {
-
+	GameCore.Update();
 }

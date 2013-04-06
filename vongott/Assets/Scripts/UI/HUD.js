@@ -1,4 +1,6 @@
-// =============== PREREQUISITES
+////////////////////
+// Prerequisites
+////////////////////
 // Classes
 private class HUDConversation {
 	var instance : GameObject;	
@@ -41,7 +43,10 @@ static var status : GameObject;
 // Booleans
 static var showing = true;
 
-// =============== CONVERSATIONS
+
+////////////////////
+// Conversations
+////////////////////
 static var convo_current_options = ["","",""];
 static var convo_current_highlight = 1;
 
@@ -109,7 +114,9 @@ static function LeaveConversation () {
 	ResetConversation();
 }
 
-// =============== NOTIFICATION
+////////////////////
+// Notifications
+////////////////////
 // show
 static function ShowNotification ( msg : String ) {
 	if ( msg != null && msg != "" ) {
@@ -123,7 +130,10 @@ static function ShowNotification ( msg : String ) {
 	}
 }
 
-// =============== PROMPT
+
+////////////////////
+// Prompt
+////////////////////
 static var prompt_current_instructions = "";
 static var prompt_current_title = "";
 static var prompt_current_cancel = false;
@@ -178,7 +188,20 @@ static function ResetPrompt () {
 	prompt.instance.gameObject.SetActiveRecursively ( false );
 }
 
-// =============== TOGGLE HUD
+
+////////////////////
+// Redirects
+////////////////////
+private function GoToQuests() {
+	for ( var q in QuestManager.GetMainQuests() ) {
+		Debug.Log ( q.title + " - " + q.desc );
+	}
+}
+
+
+////////////////////
+// Toggle HUD
+////////////////////
 static function ToggleHUD () {
 	showing = !showing;
 	status.SetActiveRecursively(showing);
@@ -189,7 +212,11 @@ function ToggleHUDFromTween () {
 	status.SetActiveRecursively(showing);
 }
 
-// =============== INIT
+
+////////////////////
+// INIT
+////////////////////
+// Init vars
 private function InitVars () {
 	conversation = _conversation;
 	notification = _notification;
@@ -197,7 +224,7 @@ private function InitVars () {
 	status = _status;
 }
 
-// =============== START
+// Start
 function Start () {
 	InitVars();
 	ResetConversation();
@@ -205,7 +232,10 @@ function Start () {
 	ShowNotification( null );
 }
 
-// =============== UPDATE
+
+////////////////////
+// Update
+////////////////////
 function Update () {	
 	if ( convo_current_options[0] != "" ) {
 		if ( Input.GetKeyDown(KeyCode.S) && convo_current_highlight < convo_current_options.Length ) {
@@ -215,5 +245,7 @@ function Update () {
 			UnhighlightLine ( convo_current_highlight );
 			HighlightLine ( convo_current_highlight - 1 );
 		}
+	} else if ( Input.GetKeyDown(KeyCode.Tab) ) {
+		GoToQuests();
 	}
 }
