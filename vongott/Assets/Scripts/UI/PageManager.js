@@ -1,18 +1,9 @@
 ////////////////////
 // Prerequisites
 ////////////////////
-// Classes
-private class UIPages {
-	var hud : HUD;
-	var questlog : QuestLog;
-}
-
-// Inspector items
-var _pages : UIPages;
-
 // Static vars
-static var pages : UIPages;
 static var current_page = "";
+static var current_page_object = null;
 static var instance : GameObject;
 
 
@@ -22,13 +13,22 @@ static var instance : GameObject;
 // Go to specific page
 static function GoToPage ( p : String ) {
 	if ( p != "" && p != current_page && p != null ) {
+		if ( current_page_object != null ) {
+			Destroy ( current_page_object.gameObject );
+		}
+		
 		var page = Instantiate ( Resources.Load ( "Prefabs/UI/" + p ) );
 		page.gameObject.transform.parent = instance.transform;
 		page.gameObject.transform.localScale = new Vector3 ( 1.0, 1.0, 1.0 );
+	
+		current_page_object = page;
 	}
+	
+	Debug.Log ( "PageManager | go to " + p );
 }
 
 function Start () {
-	pages = _pages;
 	instance = this.gameObject;
+	
+	GoToPage ( "HUD" );
 }

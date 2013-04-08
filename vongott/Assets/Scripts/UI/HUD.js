@@ -190,16 +190,6 @@ static function ResetPrompt () {
 
 
 ////////////////////
-// Redirects
-////////////////////
-private function GoToQuests() {
-	for ( var q in QuestManager.GetMainQuests() ) {
-		Debug.Log ( q.title + " - " + q.desc );
-	}
-}
-
-
-////////////////////
 // Toggle HUD
 ////////////////////
 static function ToggleHUD () {
@@ -248,6 +238,6 @@ function Update () {
 			HighlightLine ( convo_current_highlight - 1 );
 		}
 	} else if ( Input.GetKeyDown(KeyCode.Tab) ) {
-		GoToQuests();
+		PageManager.GoToPage ( "QuestLog" );
 	}
 }

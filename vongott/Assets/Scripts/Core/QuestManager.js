@@ -31,7 +31,6 @@ private class Quest {
 
 // Static vars
 static var quests = new Quest[2];
-static var main_quest : Quest = null;
 
 
 ////////////////////
@@ -107,11 +106,7 @@ static function StartQuest ( id : String ) {
 	
 	var quest = GetQuestByID ( id );
 
-	quest.SetActive ( true );
-	if ( quest.is_main_quest ) {
-		main_quest = quest;
-	}
-	
+	quest.SetActive ( true );	
 }
 
 // End
@@ -119,7 +114,4 @@ static function EndQuest ( id : String ) {
 	var quest = GetQuestByID ( id );
 
 	quest.SetActive ( false );
-	if ( quest.is_main_quest ) {
-		main_quest = null;
-	}
 }

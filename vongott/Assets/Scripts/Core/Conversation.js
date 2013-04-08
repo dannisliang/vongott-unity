@@ -160,6 +160,11 @@ class Conversation extends InteractiveObject {
 				// if there is a flag and it's true, use this convo
 				if ( convo.Attributes["flag"] ) {
 					if ( FlagManager.GetFlag ( convo.Attributes["flag"].Value ) ) {
+						// if there is an endquest attribute, end it
+						if ( convo.Attributes["endquest"] ) {
+							QuestManager.EndQuest ( convo.Attributes["endquest"].Value );
+						}
+						
 						// if there is a startquest attribute, start it
 						if ( convo.Attributes["startquest"] ) {
 							QuestManager.StartQuest ( convo.Attributes["startquest"].Value );
