@@ -27,6 +27,7 @@ I will document the code as I move along. Have a look in the docs for that and e
 	- Controls
 	- Infrastructure
 	- Flag system (almost done)
+	- Quest manager (almost done)
 	- New UI plugin for Unity
 - Modeling
 	- Player
@@ -39,6 +40,7 @@ I will document the code as I move along. Have a look in the docs for that and e
 	- Ship
 - UI
 	- Game menu 
+	- Quest log interface
 	- HUD
 	- Conversation interface (almost done)
 
