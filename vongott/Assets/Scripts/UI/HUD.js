@@ -214,6 +214,7 @@ private function InitVars () {
 	status = _status;
 	
 	conversation.bottom.eventReceiver = this.gameObject;
+	prompt.ok.GetComponent(UIButtonMessage).target = this.gameObject;
 }
 
 // Start

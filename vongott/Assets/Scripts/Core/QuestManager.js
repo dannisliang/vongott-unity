@@ -102,11 +102,11 @@ static function GetSideQuests () {
 ////////////////////
 // Start
 static function StartQuest ( id : String ) {
-	Debug.Log ( "... QuestManager | starting quest: " + id );
-	
 	var quest = GetQuestByID ( id );
 
 	quest.SetActive ( true );	
+
+	Debug.Log ( "... QuestManager |  quest started: " + id );
 }
 
 // End
@@ -114,4 +114,6 @@ static function EndQuest ( id : String ) {
 	var quest = GetQuestByID ( id );
 
 	quest.SetActive ( false );
+	
+	Debug.Log ( "... QuestManager |  quest ended: " + id );
 }

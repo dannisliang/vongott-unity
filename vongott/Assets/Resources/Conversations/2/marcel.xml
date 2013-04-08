@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <scene>
-	<convo setflag="2_talked_to_marcel" startquest="2_get_back_to_marcel">
+	<convo setflag="2_talked_to_marcel" endquest="1_go_upstairs" startquest="2_get_back_to_marcel">
 		<machinima id="2_marcel_talking"/>
 		
 		<line name="Marcel">There you are Pinnochio, say hello to everybody.</line>

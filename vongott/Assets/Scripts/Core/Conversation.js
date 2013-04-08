@@ -153,7 +153,8 @@ class Conversation extends InteractiveObject {
 			var node_list : XmlNodeList;
 			var root : XmlNode = xml_data.DocumentElement;
 		    node_list = root.SelectNodes("/scene/convo");
-				
+			
+			// REWRITE THIS LOOP, IT'S STUPID
 			// loop through convo tags and determine which one to display
 			var convo_counter = 0;
 			for ( var convo in node_list ) {	
@@ -184,6 +185,11 @@ class Conversation extends InteractiveObject {
 					}
 				
 				} else {
+					// if there is an endquest attribute, end it
+					if ( convo.Attributes["endquest"] ) {
+						QuestManager.EndQuest ( convo.Attributes["endquest"].Value );
+					}
+					
 					// if there is a startquest attribute, start it
 					if ( convo.Attributes["startquest"] ) {
 						QuestManager.StartQuest ( convo.Attributes["startquest"].Value );
