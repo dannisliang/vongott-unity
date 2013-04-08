@@ -21,7 +21,6 @@ static var instance : GameObject;
 ////////////////////
 // Go to specific page
 static function GoToPage ( p : String ) {
-Debug.Log ( "WOO" + p );
 	if ( p != "" && p != current_page && p != null ) {
 		var page = Instantiate ( Resources.Load ( "Prefabs/UI/" + p ) );
 		page.gameObject.transform.parent = instance.transform;

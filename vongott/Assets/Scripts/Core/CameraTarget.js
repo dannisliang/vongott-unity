@@ -1,12 +1,15 @@
 // Game objects
-@SerializeField private var _player:GameObject = null;
+var player:GameObject;
+var cam:GameObject;
 
 // Init
 function Start () {
-	this.gameObject.transform.FindChild("MainCamera").localPosition = new Vector3 ( 4.5f, -12.5f, -25f );
+	
 }
 
 // Game loop
 function Update () {
-	this.transform.position = _player.transform.position;
+	this.transform.localPosition = player.transform.localPosition;
+	cam.transform.localEulerAngles = Vector3.zero;
+	cam.transform.localPosition = new Vector3 ( 0, 0, -30 );
 }

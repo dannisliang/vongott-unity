@@ -222,6 +222,8 @@ private function InitVars () {
 	notification = _notification;
 	prompt = _prompt;
 	status = _status;
+	
+	conversation.bottom.eventReceiver = this.gameObject;
 }
 
 // Start
