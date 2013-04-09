@@ -7,10 +7,8 @@ var groundFloor : GameObject;
 function Start () {
 	GameCore.Start();
 
-	stairs_b_g.SetActiveRecursively(false);
-	groundFloor.SetActiveRecursively(false);
-	
-	PageManager.GoToPage("HUD");
+	stairs_b_g.SetActive(false);
+	groundFloor.SetActive(false);
 }
 
 // Game loop

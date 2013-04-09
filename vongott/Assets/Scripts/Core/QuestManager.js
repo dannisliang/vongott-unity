@@ -37,7 +37,7 @@ static var quests = new Quest[2];
 // Init
 ////////////////////
 // All quests
-static function InitQuests () {	
+static function Init () {	
 	// Chapter 1
 	quests[0] = new Quest ( true, "1_go_upstairs", "Go upstairs", "Go up and say hello", "2_talked_to_marcel", 100 );
 	

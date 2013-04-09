@@ -154,7 +154,7 @@ class Conversation extends InteractiveObject {
 			var root : XmlNode = xml_data.DocumentElement;
 		    node_list = root.SelectNodes("/scene/convo");
 			
-			// REWRITE THIS LOOP, IT'S STUPID
+			// TODO: REWRITE THIS LOOP, IT'S STUPID
 			// loop through convo tags and determine which one to display
 			var convo_counter = 0;
 			for ( var convo in node_list ) {	

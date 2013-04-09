@@ -58,13 +58,13 @@ static function ResetConversation () {
 		option.text = "";
 		option.color = new Color ( 255, 255, 255, 255 );
 	}
-	conversation.highlight.active = false;
+	conversation.highlight.SetActive ( false );
 	
 }
 
 // highlight
 static function HighlightLine ( num : int ) {
-	conversation.highlight.active = true;
+	conversation.highlight.SetActive ( true );
 	convo_current_highlight = num;
 	
 	var line = conversation.options[num];
@@ -75,7 +75,7 @@ static function HighlightLine ( num : int ) {
 
 // unhighlight
 static function UnhighlightLine ( num : int ) {
-	conversation.highlight.active = false;
+	conversation.highlight.SetActive ( false );
 	convo_current_highlight = num;
 	
 	var line = conversation.options[num];
@@ -122,11 +122,11 @@ static function ShowNotification ( msg : String ) {
 	if ( msg != null && msg != "" ) {
 		notification.instance.Play ( true );
 		notification.label.text = msg;
-		notification.active = true;
+		notification.instance.gameObject.SetActive ( true );
 	} else {
 		notification.instance.Play ( false );
 		notification.label.text = "";
-		notification.active = false;
+		notification.instance.gameObject.SetActive ( false );
 	}
 }
 
@@ -141,10 +141,10 @@ static var prompt_current_convo:Conversation;
 
 // open
 static function OpenPrompt () {
-	prompt.instance.gameObject.SetActiveRecursively ( true );
+	prompt.instance.gameObject.SetActive ( true );
 	
 	if ( prompt_current_instructions != "" ) {
-		prompt.input.gameObject.SetActiveRecursively ( false );
+		prompt.input.gameObject.SetActive ( false );
 		
 	}
 		
@@ -152,7 +152,7 @@ static function OpenPrompt () {
 		prompt.ok.transform.localPosition.x = -60.0;
 	} else { 
 		prompt.ok.transform.localPosition.x = 0.0;
-		prompt.cancel.SetActiveRecursively ( false );
+		prompt.cancel.SetActive ( false );
 	}
 	
 	prompt.title.text = prompt_current_title;
@@ -185,7 +185,7 @@ function PromptOK () {
 
 // reset
 static function ResetPrompt () {
-	prompt.instance.gameObject.SetActiveRecursively ( false );
+	prompt.instance.gameObject.SetActive ( false );
 }
 
 
@@ -194,12 +194,12 @@ static function ResetPrompt () {
 ////////////////////
 static function ToggleHUD () {
 	showing = !showing;
-	status.SetActiveRecursively(showing);
+	status.SetActive (showing);
 }
 
 function ToggleHUDFromTween () {
 	showing = !showing;
-	status.SetActiveRecursively(showing);
+	status.SetActive (showing);
 }
 
 
@@ -222,14 +222,16 @@ function Start () {
 	InitVars();
 	ResetConversation();
 	ResetPrompt();
-	ShowNotification( null );
+	ShowNotification ( null );
 }
 
 
 ////////////////////
 // Update
 ////////////////////
-function Update () {	
+function Update () {
+
+	// if there are conversation options available, enable controls for them
 	if ( convo_current_options[0] != "" ) {
 		if ( Input.GetKeyDown(KeyCode.S) && convo_current_highlight < convo_current_options.Length ) {
 			UnhighlightLine ( convo_current_highlight );
@@ -238,7 +240,15 @@ function Update () {
 			UnhighlightLine ( convo_current_highlight );
 			HighlightLine ( convo_current_highlight - 1 );
 		}
-	} else if ( Input.GetKeyDown(KeyCode.Tab) ) {
+	}
+	
+	// go to quest log
+	else if ( Input.GetKeyDown(KeyCode.Tab) ) {
 		PageManager.GoToPage ( "QuestLog" );
+	}
+	
+	// go to inventory
+	else if ( Input.GetKeyDown(KeyCode.I) ) {
+		PageManager.GoToPage ( "Inventory" );
 	}
 }

@@ -51,10 +51,10 @@ static function ToggleControls ( state : boolean ) {
 ////////////////////
 static function Start () {	
 	// quests
-	QuestManager.InitQuests();
+	QuestManager.Init();
 	
 	// ui root
-	// Instantiate ( Resources.Load ( "Prefabs/UI/Root" ) );
+	Instantiate ( Resources.Load ( "Prefabs/UI/Root" ) );
 	
 	Debug.Log("... GameCore | started");
 }

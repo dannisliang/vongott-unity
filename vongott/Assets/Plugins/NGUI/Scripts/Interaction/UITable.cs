@@ -115,7 +115,7 @@ public class UITable : MonoBehaviour
 		{
 			Transform child = myTrans.GetChild(i);
 
-			if (!hideInactive || child.gameObject.active)
+			if (!hideInactive || child.gameObject.activeSelf)
 			{
 				children.Add(child);
 			}

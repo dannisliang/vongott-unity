@@ -24,7 +24,7 @@ class Door extends InteractiveObject {
 	private function Open () {
 		this.animation.Play("door_open");
 		door_open = true;
-		next_room.SetActiveRecursively ( true );
+		next_room.SetActive ( true );
 		timer = 1.0;
 		
 		//var player:GameObject = GameCore.GetPlayerObject();
@@ -34,7 +34,7 @@ class Door extends InteractiveObject {
 	private function Close () {
 		this.animation.Play("door_close");
 		door_open = false;
-		prev_room.SetActiveRecursively ( false );
+		prev_room.SetActive ( false );
 		timer = 0.0;
 		ReverseRooms();
 	}
@@ -75,7 +75,7 @@ class Door extends InteractiveObject {
 		}
 		
 		// Set room visibility
-		if ( !next_room.active && !prev_room.active ) {
+		if ( !next_room.activeSelf && !prev_room.activeSelf ) {
 			for ( var renderer in this.gameObject.GetComponentsInChildren(MeshRenderer) ) {
 				renderer.enabled = false;
 			}

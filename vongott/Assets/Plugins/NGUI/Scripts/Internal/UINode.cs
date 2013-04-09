@@ -61,7 +61,7 @@ public class UINode
 
 	public bool HasChanged ()
 	{
-		bool isActive = trans.gameObject.active && (widget == null || (widget.enabled && widget.color.a > 0.001f));
+		bool isActive = trans.gameObject.activeSelf && (widget == null || (widget.enabled && widget.color.a > 0.001f));
 
 		if (lastActive != isActive || (isActive &&
 			(lastPos != trans.localPosition ||

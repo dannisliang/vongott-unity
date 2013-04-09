@@ -59,7 +59,7 @@ function GoToPage ( sender : GameObject ) {
 			current_page = pages.options;
 		}
 		
-		current_page.SetActiveRecursively( true );
+		current_page.SetActive ( true );
 		OuterRimZoom ( true );
 	}
 }
@@ -68,16 +68,16 @@ function OnZoomEnd () {
 	ToggleButtons ();
 	
 	if ( !zoomed_in ) {
-		current_page.SetActiveRecursively( false );
+		current_page.SetActive ( false );
 		current_page = null;
 	}
 }
 
 function Start () {
-	pages.load.SetActiveRecursively(false);
-	pages.newGame.SetActiveRecursively(false);
-	pages.options.SetActiveRecursively(false);
-	pages.community.SetActiveRecursively(false);
+	pages.load.SetActive (false);
+	pages.newGame.SetActive (false);
+	pages.options.SetActive (false);
+	pages.community.SetActive (false);
 	pages.root.duration = tween_duration;
 }
 
