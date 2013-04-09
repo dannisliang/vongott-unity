@@ -15,10 +15,6 @@ I will document the code as I move along. Have a look in the docs for that and e
 	- Music
 	- Sound effects
 	- Dialogue?
-- AI
-	- Enemies
-	- Allies
-	- Animals
 - Animation
 	- Male
 	- Female
@@ -26,8 +22,10 @@ I will document the code as I move along. Have a look in the docs for that and e
 - Core
 	- Controls
 	- Infrastructure
-	- Flag system (almost done)
-	- Quest manager (almost done)
+		- Flag system (almost done)
+		- Quest system (almost done)
+		- AI (path finding, friend/foe system, awareness levels)
+		- Inventory
 	- New UI plugin for Unity
 - Modeling
 	- Player
@@ -39,8 +37,9 @@ I will document the code as I move along. Have a look in the docs for that and e
 	- NRF bunker
 	- Ship
 - UI
-	- Game menu 
-	- Quest log interface
+	- Main menu 
+	- Quest log
+	- Inventory
 	- HUD
 	- Conversation interface (almost done)
 
