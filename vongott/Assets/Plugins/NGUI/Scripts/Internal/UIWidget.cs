@@ -26,14 +26,13 @@ public abstract class UIWidget : MonoBehaviour
 	}
 
 	// Cached and saved values
-	[SerializeField] Material mMat;
-	[SerializeField] Color mColor = Color.white;
-	[SerializeField] Pivot mPivot = Pivot.Center;
-	[SerializeField] int mDepth = 0;
-
-	Transform mTrans;
-	Texture mTex;
-	UIPanel mPanel;
+	[HideInInspector][SerializeField] protected Material mMat;
+	[HideInInspector][SerializeField] protected Texture mTex;
+	[HideInInspector][SerializeField] Color mColor = Color.white;
+	[HideInInspector][SerializeField] Pivot mPivot = Pivot.Center;
+	[HideInInspector][SerializeField] int mDepth = 0;
+	protected Transform mTrans;
+	protected UIPanel mPanel;
 
 	protected bool mChanged = true;
 	protected bool mPlayMode = true;
@@ -50,7 +49,7 @@ public abstract class UIWidget : MonoBehaviour
 	/// Color used by the widget.
 	/// </summary>
 
-	public Color color { get { return mColor; } set { if (mColor != value) { mColor = value; mChanged = true; } } }
+	public Color color { get { return mColor; } set { if (!mColor.Equals(value)) { mColor = value; mChanged = true; } } }
 
 	/// <summary>
 	/// Widget's alpha -- a convenience method.
@@ -105,16 +104,52 @@ public abstract class UIWidget : MonoBehaviour
 	/// Returns the texture used to draw this widget.
 	/// </summary>
 
-	public Texture mainTexture
+	public virtual Texture mainTexture
 	{
 		get
 		{
-			if (mTex == null)
+			// If the material has a texture, always use it instead of 'mTex'.
+			Material mat = material;
+			
+			if (mat != null)
 			{
-				Material mat = material;
-				if (mat != null) mTex = mat.mainTexture;
+				if (mat.mainTexture != null)
+				{
+					mTex = mat.mainTexture;
+				}
+				else if (mTex != null)
+				{
+					// The material has no texture, but we have a saved texture
+					if (mPanel != null) mPanel.RemoveWidget(this);
+
+					// Set the material's texture to the saved value
+					mPanel = null;
+					mMat.mainTexture = mTex;
+
+					// Ensure this widget gets added to the panel
+					if (enabled) CreatePanel();
+				}
 			}
 			return mTex;
+		}
+		set
+		{
+			Material mat = material;
+
+			if (mat == null || mat.mainTexture != value)
+			{
+				if (mPanel != null) mPanel.RemoveWidget(this);
+
+				mPanel = null;
+				mTex = value;
+				mat = material;
+
+				if (mat != null)
+				{
+					mat.mainTexture = value;
+					if (enabled) CreatePanel();
+				}
+			}
 		}
 	}
 
@@ -150,7 +185,7 @@ public abstract class UIWidget : MonoBehaviour
 		mChanged = true;
 
 		// If we're in the editor, update the panel right away so its geometry gets updated.
-		if (mPanel != null && enabled && gameObject.activeSelf && !Application.isPlaying && material != null)
+		if (mPanel != null && enabled && NGUITools.GetActive(gameObject) && !Application.isPlaying && material != null)
 		{
 			mPanel.AddWidget(this);
 			CheckLayer();
@@ -165,9 +200,9 @@ public abstract class UIWidget : MonoBehaviour
 	/// Ensure we have a panel referencing this widget.
 	/// </summary>
 
-	void CreatePanel ()
+	public void CreatePanel ()
 	{
-		if (mPanel == null && enabled && gameObject.activeSelf && material != null)
+		if (mPanel == null && enabled && NGUITools.GetActive(gameObject) && material != null)
 		{
 			mPanel = UIPanel.Find(cachedTransform);
 
@@ -184,7 +219,7 @@ public abstract class UIWidget : MonoBehaviour
 	/// Check to ensure that the widget resides on the same layer as its panel.
 	/// </summary>
 
-	void CheckLayer ()
+	public void CheckLayer ()
 	{
 		if (mPanel != null && mPanel.gameObject.layer != gameObject.layer)
 		{
@@ -198,7 +233,7 @@ public abstract class UIWidget : MonoBehaviour
 	/// Checks to ensure that the widget is still parented to the right panel.
 	/// </summary>
 
-	void CheckParent ()
+	public void CheckParent ()
 	{
 		if (mPanel != null)
 		{
@@ -217,7 +252,7 @@ public abstract class UIWidget : MonoBehaviour
 			// This widget is no longer parented to the same panel. Remove it and re-add it to a new one.
 			if (!valid)
 			{
-				if (!keepMaterial) material = null;
+				if (!keepMaterial || Application.isPlaying) material = null;
 				mPanel = null;
 				CreatePanel();
 			}
@@ -225,21 +260,10 @@ public abstract class UIWidget : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Cache the transform.
+	/// Remember whether we're in play mode.
 	/// </summary>
 
-	void Awake ()
-	{
-		if (GetComponents<UIWidget>().Length > 1)
-		{
-			Debug.LogError("Can't have more than one widget on the same game object.\nDestroying the second one.", this);
-			NGUITools.Destroy(this);
-		}
-		else
-		{
-			mPlayMode = Application.isPlaying;
-		}
-	}
+	protected virtual void Awake() { mPlayMode = Application.isPlaying; }
 
 	/// <summary>
 	/// Mark the widget and the panel as having been changed.
@@ -247,16 +271,24 @@ public abstract class UIWidget : MonoBehaviour
 
 	void OnEnable ()
 	{
-		mChanged = true;
-
-		if (!keepMaterial)
+#if UNITY_EDITOR
+		if (GetComponents<UIWidget>().Length > 1)
 		{
-			mMat = null;
-			mTex = null;
+			Debug.LogError("Can't have more than one widget on the same game object!", this);
+			enabled = false;
 		}
-	
-		// If we have a panel and a material to work with, mark the material as changed
-		if (mPanel != null && material != null) mPanel.MarkMaterialAsChanged(mMat, false);
+		else
+#endif
+		{
+			mChanged = true;
+
+			if (!keepMaterial)
+			{
+				mMat = null;
+				mTex = null;
+			}
+			mPanel = null;
+		}
 	}
 
 	/// <summary>
@@ -275,7 +307,7 @@ public abstract class UIWidget : MonoBehaviour
 	/// is brought in on a prefab object as it happens before it gets parented.
 	/// </summary>
 
-	void Update ()
+	public void Update ()
 	{
 		CheckLayer();
 
@@ -342,7 +374,7 @@ public abstract class UIWidget : MonoBehaviour
 			pos.z -= mDepth * 0.25f;
 
 			// Widget's local size
-			Vector2 size = relativeSize;
+			Vector3 size = relativeSize;
 			Vector2 offset = pivotOffset;
 			pos.x += (offset.x + 0.5f) * size.x;
 			pos.y += (offset.y - 0.5f) * size.y;
@@ -351,6 +383,7 @@ public abstract class UIWidget : MonoBehaviour
 			Gizmos.matrix = cachedTransform.localToWorldMatrix;
 			Gizmos.color = (UnityEditor.Selection.activeGameObject == gameObject) ? new Color(0f, 0.75f, 1f) : outline;
 			Gizmos.DrawWireCube(pos, size);
+			size.z = 0.01f;
 			Gizmos.color = Color.clear;
 			Gizmos.DrawCube(pos, size);
 		}
@@ -394,7 +427,11 @@ public abstract class UIWidget : MonoBehaviour
 	/// Append the local geometry buffers to the specified ones.
 	/// </summary>
 
+#if UNITY_3_5_4
 	public void WriteToBuffers (BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color> c, BetterList<Vector3> n, BetterList<Vector4> t)
+#else
+	public void WriteToBuffers (BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color32> c, BetterList<Vector3> n, BetterList<Vector4> t)
+#endif
 	{
 		mGeom.WriteToBuffers(v, u, c, n, t);
 	}
@@ -460,13 +497,6 @@ public abstract class UIWidget : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Deprecated property.
-	/// </summary>
-
-	[System.Obsolete("Use 'relativeSize' instead")]
-	public Vector2 visibleSize { get { return relativeSize; } }
-
-	/// <summary>
 	/// Visible size of the widget in relative coordinates. In most cases this can remain at (1, 1).
 	/// If you want to figure out the widget's size in pixels, scale this value by cachedTransform.localScale.
 	/// </summary>
@@ -495,5 +525,9 @@ public abstract class UIWidget : MonoBehaviour
 	/// Virtual function called by the UIPanel that fills the buffers.
 	/// </summary>
 
+#if UNITY_3_5_4
 	virtual public void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color> cols) { }
+#else
+	virtual public void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols) { }
+#endif
 }

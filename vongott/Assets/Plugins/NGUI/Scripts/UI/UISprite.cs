@@ -15,8 +15,8 @@ using System.Collections.Generic;
 public class UISprite : UIWidget
 {
 	// Cached and saved values
-	[SerializeField] UIAtlas mAtlas;
-	[SerializeField] string mSpriteName;
+	[HideInInspector][SerializeField] UIAtlas mAtlas;
+	[HideInInspector][SerializeField] string mSpriteName;
 
 	protected UIAtlas.Sprite mSprite;
 	protected Rect mOuter;
@@ -107,7 +107,7 @@ public class UISprite : UIWidget
 				mSpriteName = value;
 				mSprite = null;
 				mChanged = true;
-				if (mSprite != null) UpdateUVs(true);
+				if (sprite != null) UpdateUVs(true);
 			}
 		}
 	}
@@ -231,19 +231,46 @@ public class UISprite : UIWidget
 
 	override public void MakePixelPerfect ()
 	{
+		if (sprite == null) return;
+
 		Texture tex = mainTexture;
+		Vector3 scale = cachedTransform.localScale;
 
 		if (tex != null)
 		{
 			Rect rect = NGUIMath.ConvertToPixels(outerUV, tex.width, tex.height, true);
-			Vector3 scale = cachedTransform.localScale;
 			float pixelSize = atlas.pixelSize;
-			scale.x = rect.width * pixelSize;
-			scale.y = rect.height * pixelSize;
+			scale.x = Mathf.RoundToInt(rect.width * pixelSize) * Mathf.Sign(scale.x);
+			scale.y = Mathf.RoundToInt(rect.height * pixelSize) * Mathf.Sign(scale.y);
 			scale.z = 1f;
 			cachedTransform.localScale = scale;
 		}
-		base.MakePixelPerfect();
+
+		int width  = Mathf.RoundToInt(Mathf.Abs(scale.x) * (1f + mSprite.paddingLeft + mSprite.paddingRight));
+		int height = Mathf.RoundToInt(Mathf.Abs(scale.y) * (1f + mSprite.paddingTop + mSprite.paddingBottom));
+
+		Vector3 pos = cachedTransform.localPosition;
+		pos.z = Mathf.RoundToInt(pos.z);
+
+		if (width % 2 == 1 && (pivot == Pivot.Top || pivot == Pivot.Center || pivot == Pivot.Bottom))
+		{
+			pos.x = Mathf.Floor(pos.x) + 0.5f;
+		}
+		else
+		{
+			pos.x = Mathf.Round(pos.x);
+		}
+
+		if (height % 2 == 1 && (pivot == Pivot.Left || pivot == Pivot.Center || pivot == Pivot.Right))
+		{
+			pos.y = Mathf.Ceil(pos.y) - 0.5f;
+		}
+		else
+		{
+			pos.y = Mathf.Round(pos.y);
+		}
+
+		cachedTransform.localPosition = pos;
 	}
 
 	/// <summary>
@@ -280,7 +307,12 @@ public class UISprite : UIWidget
 	/// Virtual function called by the UIScreen that fills the buffers.
 	/// </summary>
 
+#if UNITY_3_5_4
 	override public void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color> cols)
+#else
+	override public void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
+#endif
+
 	{
 		Vector2 uv0 = new Vector2(mOuterUV.xMin, mOuterUV.yMin);
 		Vector2 uv1 = new Vector2(mOuterUV.xMax, mOuterUV.yMax);
@@ -295,9 +327,14 @@ public class UISprite : UIWidget
 		uvs.Add(uv0);
 		uvs.Add(new Vector2(uv0.x, uv1.y));
 
-		cols.Add(color);
-		cols.Add(color);
-		cols.Add(color);
-		cols.Add(color);
+#if UNITY_3_5_4
+		Color col = color;
+#else
+		Color32 col = color;
+#endif
+		cols.Add(col);
+		cols.Add(col);
+		cols.Add(col);
+		cols.Add(col);
 	}
 }

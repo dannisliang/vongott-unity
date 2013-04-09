@@ -83,6 +83,11 @@ public class UICreateNewUIWizard : EditorWindow
 			uiRoot.manualHeight = 800;
 		}
 
+		// Apparently ensuring that there is a kinematic rigidbody on the root of the UI makes collisions checks much faster.
+		Rigidbody rb = root.AddComponent<Rigidbody>();
+		rb.useGravity = false;
+		rb.isKinematic = true;
+
 		// Assign the layer to be used by everything
 		root.layer = layer;
 
@@ -111,7 +116,7 @@ public class UICreateNewUIWizard : EditorWindow
 				if (layer != 0 && c.cullingMask != mask) c.cullingMask = (c.cullingMask & (~mask));
 
 				// Only consider this object if it's active
-				if (c.enabled && c.gameObject.activeSelf) clearColor = false;
+				if (c.enabled && NGUITools.GetActive(c.gameObject)) clearColor = false;
 
 				// If this camera has an audio listener, we won't need to add one
 				if (c.GetComponent<AudioListener>() != null) audioListener = false;
@@ -150,8 +155,8 @@ public class UICreateNewUIWizard : EditorWindow
 			UIAnchor anchor = NGUITools.AddChild<UIAnchor>(cam.gameObject);
 			anchor.uiCamera = cam;
 
-			// Since the camera was brought back 700 units above, we should bring the anchor forward 700 to compensate
-			if (camType == CameraType.Advanced3D) anchor.depthOffset = 700f;
+			// Since the camera was brought back 700 units above, we should bring the anchor forward to compensate
+			if (camType == CameraType.Advanced3D) anchor.depthOffset = 1.7f;
 
 			// And finally -- the first UI panel
 			UIPanel panel = NGUITools.AddChild<UIPanel>(anchor.gameObject);

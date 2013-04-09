@@ -52,7 +52,7 @@ private function PopulateGrid () {
 		var slot = CreateSlot ( i, col, row );
 		
 		if ( slots[i].item ) {
-			slot.GetComponent(UISprite).spriteName = slots[i].item.sprite_name;
+			slot.GetComponent(UISprite).spriteName = slots[i].item.spriteName;
 		} else {
 			slot.GetComponent(UISprite).spriteName = "empty";
 		}
@@ -72,7 +72,7 @@ function SelectSlot ( sender : GameObject ) {
 	var slots = InventoryManager.GetSlots();
 	
 	if ( slots[index].item ) {
-		item_name.text = slots[index].item.name;
+		item_name.text = slots[index].item.title;
 		item_desc.text = slots[index].item.desc;
 	}
 }
@@ -82,8 +82,6 @@ function SelectSlot ( sender : GameObject ) {
 // Init
 ////////////////////
 function Start () {
-	InventoryManager.Init();
-
 	PopulateGrid();
 }
 
@@ -92,7 +90,7 @@ function Start () {
 // Update
 ////////////////////
 function Update () {
-	if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab) ) {
+	if ( Input.GetKeyDown(KeyCode.Escape) ) {
 		PageManager.GoToPage ( "HUD" );
 	}
 }

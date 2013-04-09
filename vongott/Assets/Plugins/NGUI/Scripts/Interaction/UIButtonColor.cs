@@ -36,10 +36,10 @@ public class UIButtonColor : MonoBehaviour
 
 	public float duration = 0.2f;
 
-	Color mColor;
-	bool mInitDone = false;
-	bool mStarted = false;
-	bool mHighlighted = false;
+	protected Color mColor;
+	protected bool mInitDone = false;
+	protected bool mStarted = false;
+	protected bool mHighlighted = false;
 
 	/// <summary>
 	/// UIButtonColor's default (starting) color. It's useful to be able to change it, just in case.
@@ -47,9 +47,11 @@ public class UIButtonColor : MonoBehaviour
 
 	public Color defaultColor { get { return mColor; } set { mColor = value; } }
 
-	void Start () { mStarted = true; }
+	void Awake () { Init(); }
 
-	void OnEnable () { if (mStarted && mHighlighted) OnHover(UICamera.IsHighlighted(gameObject)); }
+	void Start () { mStarted = true; OnEnable(); }
+
+	protected virtual void OnEnable () { if (mStarted && mHighlighted) OnHover(UICamera.IsHighlighted(gameObject)); }
 
 	void OnDisable ()
 	{
@@ -65,7 +67,7 @@ public class UIButtonColor : MonoBehaviour
 		}
 	}
 
-	void Init ()
+	protected void Init ()
 	{
 		mInitDone = true;
 		if (tweenTarget == null) tweenTarget = gameObject;
@@ -100,17 +102,15 @@ public class UIButtonColor : MonoBehaviour
 		}
 	}
 
-	void OnPress (bool isPressed)
+	protected virtual void OnPress (bool isPressed)
 	{
-		if (!mInitDone) Init();
-		if (enabled) TweenColor.Begin(tweenTarget, duration, isPressed ? pressed : mColor);
+		if (enabled) TweenColor.Begin(tweenTarget, duration, isPressed ? pressed : (UICamera.IsHighlighted(gameObject) ? hover : mColor));
 	}
 
-	void OnHover (bool isOver)
+	protected virtual void OnHover (bool isOver)
 	{
 		if (enabled)
 		{
-			if (!mInitDone) Init();
 			TweenColor.Begin(tweenTarget, duration, isOver ? hover : mColor);
 			mHighlighted = isOver;
 		}

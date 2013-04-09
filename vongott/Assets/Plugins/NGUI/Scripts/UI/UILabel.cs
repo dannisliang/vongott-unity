@@ -5,6 +5,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/UI/Label")]
@@ -17,21 +18,29 @@ public class UILabel : UIWidget
 		Outline,
 	}
 
-	[SerializeField] UIFont mFont;
-	[SerializeField] string mText = "";
-	[SerializeField] int mMaxLineWidth = 0;
-	[SerializeField] bool mEncoding = true;
-	[SerializeField] bool mMultiline = true;
-	[SerializeField] bool mPassword = false;
-	[SerializeField] bool mShowLastChar = false;
-	[SerializeField] Effect mEffectStyle = Effect.None;
-	[SerializeField] Color mEffectColor = Color.black;
+	[HideInInspector][SerializeField] UIFont mFont;
+	[HideInInspector][SerializeField] string mText = "";
+	[HideInInspector][SerializeField] int mMaxLineWidth = 0;
+	[HideInInspector][SerializeField] bool mEncoding = true;
+	[HideInInspector][SerializeField] int mMaxLineCount = 0; // 0 denotes unlimited
+	[HideInInspector][SerializeField] bool mPassword = false;
+	[HideInInspector][SerializeField] bool mShowLastChar = false;
+	[HideInInspector][SerializeField] Effect mEffectStyle = Effect.None;
+	[HideInInspector][SerializeField] Color mEffectColor = Color.black;
+	[HideInInspector][SerializeField] UIFont.SymbolStyle mSymbols = UIFont.SymbolStyle.Uncolored;
+	[HideInInspector][SerializeField] Vector2 mEffectDistance = Vector2.one;
 
 	/// <summary>
 	/// Obsolete, do not use. Use 'mMaxLineWidth' instead.
 	/// </summary>
 
-	[SerializeField] float mLineWidth = 0;
+	[HideInInspector][SerializeField] float mLineWidth = 0;
+
+	/// <summary>
+	/// Obsolete, do not use. Use 'mMaxLineCount' instead
+	/// </summary>
+
+	[HideInInspector][SerializeField]bool mMultiline = true;
 
 	bool mShouldBeProcessed = true;
 	string mProcessedText = null;
@@ -41,11 +50,11 @@ public class UILabel : UIWidget
 	string mLastText = "";
 	int mLastWidth = 0;
 	bool mLastEncoding = true;
-	bool mLastMulti = true;
+	int mLastCount = 0;
 	bool mLastPass = false;
 	bool mLastShow = false;
 	Effect mLastEffect = Effect.None;
-	Color mLastColor = Color.black;
+	Vector3 mSize = Vector3.zero;
 
 	/// <summary>
 	/// Function used to determine if something has changed (and thus the geometry must be rebuilt)
@@ -59,11 +68,10 @@ public class UILabel : UIWidget
 				mLastText		!= text ||
 				mLastWidth		!= mMaxLineWidth ||
 				mLastEncoding	!= mEncoding ||
-				mLastMulti		!= mMultiline ||
+				mLastCount		!= mMaxLineCount ||
 				mLastPass		!= mPassword ||
 				mLastShow		!= mShowLastChar ||
-				mLastEffect		!= mEffectStyle ||
-				mLastColor		!= mEffectColor;
+				mLastEffect		!= mEffectStyle;
 		}
 		set
 		{
@@ -78,11 +86,10 @@ public class UILabel : UIWidget
 				mLastText			= text;
 				mLastWidth			= mMaxLineWidth;
 				mLastEncoding		= mEncoding;
-				mLastMulti			= mMultiline;
+				mLastCount			= mMaxLineCount;
 				mLastPass			= mPassword;
 				mLastShow			= mShowLastChar;
 				mLastEffect			= mEffectStyle;
-				mLastColor			= mEffectColor;
 			}
 		}
 	}
@@ -122,7 +129,13 @@ public class UILabel : UIWidget
 		}
 		set
 		{
-			if (value != null && mText != value)
+			if (string.IsNullOrEmpty(value))
+			{
+				if (!string.IsNullOrEmpty(mText))
+					mText = "";
+				hasChanged = true;
+			}
+			else if (mText != value)
 			{
 				mText = value;
 				hasChanged = true;
@@ -152,6 +165,26 @@ public class UILabel : UIWidget
 	}
 
 	/// <summary>
+	/// Style used for symbols.
+	/// </summary>
+
+	public UIFont.SymbolStyle symbolStyle
+	{
+		get
+		{
+			return mSymbols;
+		}
+		set
+		{
+			if (mSymbols != value)
+			{
+				mSymbols = value;
+				hasChanged = true;
+			}
+		}
+	}
+
+	/// <summary>
 	/// Maximum width of the label in pixels.
 	/// </summary>
 
@@ -174,20 +207,41 @@ public class UILabel : UIWidget
 	/// <summary>
 	/// Whether the label supports multiple lines.
 	/// </summary>
-
+	
 	public bool multiLine
 	{
 		get
 		{
-			return mMultiline;
+			return mMaxLineCount != 1;
 		}
 		set
 		{
-			if (mMultiline != value)
+			if ((mMaxLineCount != 1) != value)
 			{
-				mMultiline = value;
+				mMaxLineCount = (value ? 0 : 1);
 				hasChanged = true;
 				if (value) mPassword = false;
+			}
+		}
+	}
+
+	/// <summary>
+	/// The max number of lines to be displayed for the label
+	/// </summary>
+
+	public int maxLineCount
+	{
+		get
+		{
+			return mMaxLineCount;
+		}
+		set
+		{
+			if (mMaxLineCount != value)
+			{
+				mMaxLineCount = Mathf.Max(value, 0);
+				hasChanged = true;
+				if (value == 1) mPassword = false;
 			}
 		}
 	}
@@ -206,10 +260,13 @@ public class UILabel : UIWidget
 		{
 			if (mPassword != value)
 			{
-				mPassword	= value;
-				mMultiline	= false;
-				mEncoding	= false;
-				hasChanged	= true;
+				if (value)
+				{
+					mMaxLineCount = 1;
+					mEncoding = false;
+				}
+				mPassword = value;
+				hasChanged = true;
 			}
 		}
 	}
@@ -266,10 +323,30 @@ public class UILabel : UIWidget
 		}
 		set
 		{
-			if (mEffectColor != value)
+			if (!mEffectColor.Equals(value))
 			{
 				mEffectColor = value;
 				if (mEffectStyle != Effect.None) hasChanged = true;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Effect distance in pixels.
+	/// </summary>
+
+	public Vector2 effectDistance
+	{
+		get
+		{
+			return mEffectDistance;
+		}
+		set
+		{
+			if (mEffectDistance != value)
+			{
+				mEffectDistance = value;
+				hasChanged = true;
 			}
 		}
 	}
@@ -289,39 +366,7 @@ public class UILabel : UIWidget
 			}
 
 			// Process the text if necessary
-			if (hasChanged)
-			{
-				mChanged = true;
-				hasChanged = false;
-				mLastText = mText;
-				mProcessedText = mText.Replace("\\n", "\n");
-
-				if (mPassword)
-				{
-					mProcessedText = mFont.WrapText(mProcessedText, 100000f, false, false);
-
-					string hidden = "";
-
-					if (mShowLastChar)
-					{
-						for (int i = 1, imax = mProcessedText.Length; i < imax; ++i) hidden += "*";
-						if (mProcessedText.Length > 0) hidden += mProcessedText[mProcessedText.Length - 1];
-					}
-					else
-					{
-						for (int i = 0, imax = mProcessedText.Length; i < imax; ++i) hidden += "*";
-					}
-					mProcessedText = hidden;
-				}
-				else if (mMaxLineWidth > 0)
-				{
-					mProcessedText = mFont.WrapText(mProcessedText, mMaxLineWidth / cachedTransform.localScale.x, mMultiline, mEncoding);
-				}
-				else if (!mMultiline)
-				{
-					mProcessedText = mFont.WrapText(mProcessedText, 100000f, false, mEncoding);
-				}
-			}
+			if (hasChanged) ProcessText();
 			return mProcessedText;
 		}
 	}
@@ -353,12 +398,9 @@ public class UILabel : UIWidget
 	{
 		get
 		{
-			Vector3 size = (mFont != null && !string.IsNullOrEmpty(processedText)) ?
-				mFont.CalculatePrintedSize(mProcessedText, mEncoding) : Vector2.one;
-			float scale = cachedTransform.localScale.x;
-			size.x = Mathf.Max(size.x, (mFont != null && scale > 1f) ? lineWidth / scale : 1f);
-			size.y = Mathf.Max(size.y, 1f);
-			return size;
+			if (mFont == null) return Vector3.one;
+			if (hasChanged) ProcessText();
+			return mSize;
 		}
 	}
 
@@ -373,6 +415,12 @@ public class UILabel : UIWidget
 			mMaxLineWidth = Mathf.RoundToInt(mLineWidth);
 			mLineWidth = 0f;
 		}
+
+		if (!mMultiline)
+		{
+			mMaxLineCount = 1;
+			mMultiline = true;
+		}
 	}
 
 	/// <summary>
@@ -383,6 +431,48 @@ public class UILabel : UIWidget
 	{
 		hasChanged = true;
 		base.MarkAsChanged();
+	}
+
+	/// <summary>
+	/// Process the raw text, called when something changes.
+	/// </summary>
+
+	void ProcessText ()
+	{
+		mChanged = true;
+		hasChanged = false;
+		mLastText = mText;
+		mProcessedText = mText.Replace("\\n", "\n");
+
+		if (mPassword)
+		{
+			string hidden = "";
+
+			if (mShowLastChar)
+			{
+				for (int i = 1, imax = mProcessedText.Length; i < imax; ++i) hidden += "*";
+				if (mProcessedText.Length > 0) hidden += mProcessedText[mProcessedText.Length - 1];
+			}
+			else
+			{
+				for (int i = 0, imax = mProcessedText.Length; i < imax; ++i) hidden += "*";
+			}
+			mProcessedText = mFont.WrapText(hidden, mMaxLineWidth / cachedTransform.localScale.x, mMaxLineCount,
+				false, UIFont.SymbolStyle.None);
+		}
+		else if (mMaxLineWidth > 0)
+		{
+			mProcessedText = mFont.WrapText(mProcessedText, mMaxLineWidth / cachedTransform.localScale.x, mMaxLineCount, mEncoding, mSymbols);
+		}
+		else if (mMaxLineCount > 0)
+		{
+			mProcessedText = mFont.WrapText(mProcessedText, 100000f, mMaxLineCount, mEncoding, mSymbols);
+		}
+
+		mSize = !string.IsNullOrEmpty(mProcessedText) ? mFont.CalculatePrintedSize(mProcessedText, mEncoding, mSymbols) : Vector2.one;
+		float scale = cachedTransform.localScale.x;
+		mSize.x = Mathf.Max(mSize.x, (mFont != null && scale > 1f) ? lineWidth / scale : 1f);
+		mSize.y = Mathf.Max(mSize.y, 1f);
 	}
 
 	/// <summary>
@@ -462,11 +552,21 @@ public class UILabel : UIWidget
 	/// Apply a shadow effect to the buffer.
 	/// </summary>
 
+#if UNITY_3_5_4
 	void ApplyShadow (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color> cols, int start, int end, float x, float y)
+#else
+	void ApplyShadow (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols, int start, int end, float x, float y)
+#endif
 	{
+#if UNITY_3_5_4
 		Color c = mEffectColor;
-		c.a *= color.a;
-
+		c.a = c.a * color.a;
+		Color col = c;
+#else
+		Color c = mEffectColor;
+		c.a = c.a * color.a;
+		Color32 col = c;
+#endif
 		for (int i = start; i < end; ++i)
 		{
 			verts.Add(verts.buffer[i]);
@@ -477,7 +577,7 @@ public class UILabel : UIWidget
 			v.x += x;
 			v.y += y;
 			verts.buffer[i] = v;
-			cols.buffer[i] = c;
+			cols.buffer[i] = col;
 		}
 	}
 
@@ -485,7 +585,11 @@ public class UILabel : UIWidget
 	/// Draw the label.
 	/// </summary>
 
+#if UNITY_3_5_4
 	public override void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color> cols)
+#else
+	public override void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
+#endif
 	{
 		if (mFont == null) return;
 		MakePositionPerfect();
@@ -495,16 +599,16 @@ public class UILabel : UIWidget
 		// Print the text into the buffers
 		if (p == Pivot.Left || p == Pivot.TopLeft || p == Pivot.BottomLeft)
 		{
-			mFont.Print(processedText, color, verts, uvs, cols, mEncoding, UIFont.Alignment.Left, 0);
+			mFont.Print(processedText, color, verts, uvs, cols, mEncoding, mSymbols, UIFont.Alignment.Left, 0);
 		}
 		else if (p == Pivot.Right || p == Pivot.TopRight || p == Pivot.BottomRight)
 		{
-			mFont.Print(processedText, color, verts, uvs, cols, mEncoding, UIFont.Alignment.Right,
+			mFont.Print(processedText, color, verts, uvs, cols, mEncoding, mSymbols, UIFont.Alignment.Right,
 				Mathf.RoundToInt(relativeSize.x * mFont.size));
 		}
 		else
 		{
-			mFont.Print(processedText, color, verts, uvs, cols, mEncoding, UIFont.Alignment.Center,
+			mFont.Print(processedText, color, verts, uvs, cols, mEncoding, mSymbols, UIFont.Alignment.Center,
 				Mathf.RoundToInt(relativeSize.x * mFont.size));
 		}
 
@@ -517,24 +621,27 @@ public class UILabel : UIWidget
 			int end = verts.size;
 			float pixel =  1f / mFont.size;
 
-			ApplyShadow(verts, uvs, cols, offset, end, pixel, -pixel);
+			float fx = pixel * mEffectDistance.x;
+			float fy = pixel * mEffectDistance.y;
+
+			ApplyShadow(verts, uvs, cols, offset, end, fx, -fy);
 
 			if (effectStyle == Effect.Outline)
 			{
 				offset = end;
 				end = verts.size;
 
-				ApplyShadow(verts, uvs, cols, offset, end, -pixel, pixel);
+				ApplyShadow(verts, uvs, cols, offset, end, -fx, fy);
 
 				offset = end;
 				end = verts.size;
 
-				ApplyShadow(verts, uvs, cols, offset, end, pixel, pixel);
+				ApplyShadow(verts, uvs, cols, offset, end, fx, fy);
 
 				offset = end;
 				end = verts.size;
 
-				ApplyShadow(verts, uvs, cols, offset, end, -pixel, -pixel);
+				ApplyShadow(verts, uvs, cols, offset, end, -fx, -fy);
 			}
 		}
 	}

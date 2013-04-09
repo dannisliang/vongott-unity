@@ -14,6 +14,12 @@ using System.Collections.Generic;
 [AddComponentMenu("NGUI/Interaction/Popup List")]
 public class UIPopupList : MonoBehaviour
 {
+	/// <summary>
+	/// Current popup list. Only available during the OnSelectionChange event callback.
+	/// </summary>
+
+	static public UIPopupList current;
+
 	const float animSpeed = 0.15f;
 
 	public enum Position
@@ -22,6 +28,8 @@ public class UIPopupList : MonoBehaviour
 		Above,
 		Below,
 	}
+
+	public delegate void OnSelectionChange (string item);
 
 	/// <summary>
 	/// Atlas used by the sprites.
@@ -119,7 +127,13 @@ public class UIPopupList : MonoBehaviour
 
 	public string functionName = "OnSelectionChange";
 
-	[SerializeField] string mSelectedItem;
+	/// <summary>
+	/// Delegate that will be called when the selection changes. Faster than using the 'eventReceiver'.
+	/// </summary>
+
+	public OnSelectionChange onSelectionChange;
+
+	[HideInInspector][SerializeField] string mSelectedItem;
 	UIPanel mPanel;
 	GameObject mChild;
 	UISprite mBackground;
@@ -152,16 +166,20 @@ public class UIPopupList : MonoBehaviour
 				
 				if (textLabel != null)
 				{
-					textLabel.text = (isLocalized && Localization.instance != null) ? Localization.instance.Get(value) : value;
+					textLabel.text = (isLocalized) ? Localization.Localize(value) : value;
 #if UNITY_EDITOR
 					UnityEditor.EditorUtility.SetDirty(textLabel.gameObject);
 #endif
 				}
 
+				current = this;
+				if (onSelectionChange != null) onSelectionChange(mSelectedItem);
+
 				if (eventReceiver != null && !string.IsNullOrEmpty(functionName) && Application.isPlaying)
 				{
 					eventReceiver.SendMessage(functionName, mSelectedItem, SendMessageOptions.DontRequireReceiver);
 				}
+				current = null;
 			}
 		}
 	}
@@ -278,7 +296,7 @@ public class UIPopupList : MonoBehaviour
 
 			if (snd.trigger == UIButtonSound.Trigger.OnClick)
 			{
-				NGUITools.PlaySound(snd.audioClip, snd.volume);
+				NGUITools.PlaySound(snd.audioClip, snd.volume, 1f);
 			}
 		}
 	}
@@ -295,7 +313,7 @@ public class UIPopupList : MonoBehaviour
 
 	void OnKey (KeyCode key)
 	{
-		if (enabled && gameObject.activeSelf && handleEvents)
+		if (enabled && NGUITools.GetActive(gameObject) && handleEvents)
 		{
 			int index = mLabelList.IndexOf(mHighlightedLabel);
 
@@ -422,7 +440,7 @@ public class UIPopupList : MonoBehaviour
 
 	void OnClick()
 	{
-		if (mChild == null && atlas != null && font != null && items.Count > 1)
+		if (mChild == null && atlas != null && font != null && items.Count > 0)
 		{
 			mLabelList.Clear();
 
@@ -479,7 +497,7 @@ public class UIPopupList : MonoBehaviour
 				lbl.font = font;
 				lbl.text = (isLocalized && Localization.instance != null) ? Localization.instance.Get(s) : s;
 				lbl.color = textColor;
-				lbl.cachedTransform.localPosition = new Vector3(bgPadding.x, y, 0f);
+				lbl.cachedTransform.localPosition = new Vector3(bgPadding.x + padding.x, y, -0.01f);
 				lbl.MakePixelPerfect();
 
 				if (textScale != 1f)
@@ -507,7 +525,7 @@ public class UIPopupList : MonoBehaviour
 			}
 
 			// The triggering widget's width should be the minimum allowed width
-			x = Mathf.Max(x, bounds.size.x - bgPadding.x * 2f);
+			x = Mathf.Max(x, bounds.size.x - (bgPadding.x + padding.x) * 2f);
 
 			Vector3 bcCenter = new Vector3((x * 0.5f) / fontScale, -0.5f, 0f);
 			Vector3 bcSize = new Vector3(x / fontScale, (fontScale + padding.y) / fontScale, 1f);
@@ -522,7 +540,7 @@ public class UIPopupList : MonoBehaviour
 				bc.size = bcSize;
 			}
 
-			x += bgPadding.x * 2f;
+			x += (bgPadding.x + padding.x) * 2f;
 			y -= bgPadding.y;
 
 			// Scale the background sprite to envelop the entire set of items
@@ -530,7 +548,7 @@ public class UIPopupList : MonoBehaviour
 
 			// Scale the highlight sprite to envelop a single item
 			mHighlight.cachedTransform.localScale = new Vector3(
-				x - bgPadding.x * 2f + (hlsp.inner.xMin - hlsp.outer.xMin) * 2f,
+				x - (bgPadding.x + padding.x) * 2f + (hlsp.inner.xMin - hlsp.outer.xMin) * 2f,
 				fontScale + hlspHeight * 2f, 1f);
 
 			bool placeAbove = (position == Position.Above);

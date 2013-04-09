@@ -56,6 +56,9 @@ static function Start () {
 	// ui root
 	Instantiate ( Resources.Load ( "Prefabs/UI/Root" ) );
 	
+	// inventory
+	InventoryManager.Init();
+	
 	Debug.Log("... GameCore | started");
 }
 

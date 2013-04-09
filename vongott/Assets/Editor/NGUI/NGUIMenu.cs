@@ -30,7 +30,7 @@ static public class NGUIMenu
 		return go;
 	}
 
-	[MenuItem("NGUI/Attach a Collider")]
+	[MenuItem("NGUI/Attach a Collider #&c")]
 	static public void AddCollider ()
 	{
 		GameObject go = Selection.activeGameObject;
@@ -47,6 +47,49 @@ static public class NGUIMenu
 				Debug.Log("You must select a game object first, such as your button.");
 			}
 		}
+	}
+
+	[MenuItem("NGUI/Attach an Anchor #&h")]
+	static public void AddAnchor ()
+	{
+		GameObject go = Selection.activeGameObject;
+
+		if (go != null)
+		{
+			NGUIEditorTools.RegisterUndo("Add an Anchor", go);
+			if (go.GetComponent<UIAnchor>() == null) go.AddComponent<UIAnchor>();
+		}
+		else
+		{
+			Debug.Log("You must select a game object first.");
+		}
+	}
+
+	[MenuItem("NGUI/Attach UIStretch #&s")]
+	static public void AddUIStretch ()
+	{
+		GameObject go = Selection.activeGameObject;
+
+		if (go != null)
+		{
+			NGUIEditorTools.RegisterUndo("Add a UIStretch", go);
+			if (go.GetComponent<UIStretch>() == null) go.AddComponent<UIStretch>();
+		}
+		else
+		{
+			Debug.Log("You must select a game object first.");
+		}
+	}
+
+	[MenuItem("NGUI/Make Pixel Perfect #&p")]
+	static void PixelPerfectSelection ()
+	{
+		if (Selection.activeTransform == null)
+		{
+			Debug.Log("You must select an object in the scene hierarchy first");
+			return;
+		}
+		foreach (Transform t in Selection.transforms) NGUITools.MakePixelPerfect(t);
 	}
 
 	[MenuItem("NGUI/Create a Panel")]
@@ -84,13 +127,13 @@ static public class NGUIMenu
 		EditorWindow.GetWindow<UICreateNewUIWizard>(false, "UI Tool", true);
 	}
 
-	[MenuItem("NGUI/Panel Tool #&p")]
+	[MenuItem("NGUI/Panel Tool")]
 	static public void OpenPanelWizard ()
 	{
 		EditorWindow.GetWindow<UIPanelTool>(false, "Panel Tool", true);
 	}
 
-	[MenuItem("NGUI/Camera Tool #&c")]
+	[MenuItem("NGUI/Camera Tool")]
 	static public void OpenCameraWizard ()
 	{
 		EditorWindow.GetWindow<UICameraTool>(false, "Camera Tool", true);

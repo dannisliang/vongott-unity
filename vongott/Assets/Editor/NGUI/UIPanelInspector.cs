@@ -17,7 +17,7 @@ public class UIPanelInspector : Editor
 	public override void OnInspectorGUI ()
 	{
 		UIPanel panel = target as UIPanel;
-		List<UIDrawCall> drawcalls = panel.drawCalls;
+		BetterList<UIDrawCall> drawcalls = panel.drawCalls;
 		EditorGUIUtility.LookLikeControls(80f);
 
 		NGUIEditorTools.DrawSeparator();
@@ -29,7 +29,10 @@ public class UIPanelInspector : Editor
 			EditorWindow.FocusWindowIfItsOpen<UIPanelTool>();
 		}
 
-		bool norms = EditorGUILayout.Toggle("Normals", panel.generateNormals);
+		GUILayout.BeginHorizontal();
+		bool norms = EditorGUILayout.Toggle("Normals", panel.generateNormals, GUILayout.Width(100f));
+		GUILayout.Label("Needed for lit shaders");
+		GUILayout.EndHorizontal();
 
 		if (panel.generateNormals != norms)
 		{
@@ -38,7 +41,10 @@ public class UIPanelInspector : Editor
 			EditorUtility.SetDirty(panel);
 		}
 
-		bool depth = EditorGUILayout.Toggle("Depth Pass", panel.depthPass);
+		GUILayout.BeginHorizontal();
+		bool depth = EditorGUILayout.Toggle("Depth Pass", panel.depthPass, GUILayout.Width(100f));
+		GUILayout.Label("Extra draw call, saves fillrate");
+		GUILayout.EndHorizontal();
 
 		if (panel.depthPass != depth)
 		{
@@ -47,8 +53,20 @@ public class UIPanelInspector : Editor
 			EditorUtility.SetDirty(panel);
 		}
 
-		EditorGUILayout.LabelField("Widgets", panel.widgets.Count.ToString());
-		EditorGUILayout.LabelField("Draw Calls", drawcalls.Count.ToString());
+		GUILayout.BeginHorizontal();
+		bool stat = EditorGUILayout.Toggle("Static", panel.widgetsAreStatic, GUILayout.Width(100f));
+		GUILayout.Label("Check if widgets won't move");
+		GUILayout.EndHorizontal();
+
+		if (panel.widgetsAreStatic != stat)
+		{
+			panel.widgetsAreStatic = stat;
+			panel.UpdateDrawcalls();
+			EditorUtility.SetDirty(panel);
+		}
+
+		EditorGUILayout.LabelField("Widgets", panel.widgets.size.ToString());
+		EditorGUILayout.LabelField("Draw Calls", drawcalls.size.ToString());
 
 		UIPanel.DebugInfo di = (UIPanel.DebugInfo)EditorGUILayout.EnumPopup("Debug Info", panel.debugInfo);
 

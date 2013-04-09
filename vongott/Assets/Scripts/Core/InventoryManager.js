@@ -1,41 +1,7 @@
 ////////////////////
 // Prerequisites
 ////////////////////
-// Enums
-enum ItemTypes {
-	Equipment,
-	Consumable
-}
-
-enum ItemIDs {
-	Pistol,
-	Baton,
-	Tazer,
-	AssaultRifle,
-	DartGun
-}
-
 // Classes
-public class Item {
-	var type = ItemTypes.Equipment;
-	var id = ItemIDs.Pistol;
-	var sprite_name = "";
-	var name = "";
-	var desc = "";
-	
-	function Item ( t : ItemTypes, i : ItemIDs, d : String ) {
-		type = t;
-		id = i;
-		name = i.ToString();
-		
-		var prefix = "eq";
-		if ( t == ItemTypes.Consumable ) { prefix = "c"; }
-		sprite_name = prefix + "_" + name.ToLower();
-		
-		desc = d;
-	}
-}
-
 public class Slot {
 	var index = 0;
 	var item : Item;
@@ -63,9 +29,17 @@ static function GetSlots () { return slots; }
 
 // Test items
 static function LoadTestItems () {
-	slots[0].item = new Item( ItemTypes.Equipment, ItemIDs.Pistol, "This is an ordinary pistol" );
-	slots[1].item = new Item( ItemTypes.Equipment, ItemIDs.Baton, "This is an electrical baton" );
-	slots[2].item = new Item( ItemTypes.Equipment, ItemIDs.Tazer, "This is an electrical tazer" );
+	
+}
+
+// Add item
+static function AddItem ( item : Item ) {
+	for ( var i = 0; i < slots.Length; i++ ) {
+		if ( slots[i].GetItem() == null ) {
+			slots[i].SetItem ( item );
+			return;
+		}
+	}
 }
 
 // Init inventory

@@ -37,15 +37,15 @@ public class UILabelInspector : UIWidgetInspector
 		}
 	}
 
-	override protected void OnInit () { mAllowPreview = false; }
-
 	override protected bool OnDrawProperties ()
 	{
 		mLabel = mWidget as UILabel;
 		ComponentSelector.Draw<UIFont>(mLabel.font, OnSelectFont);
 		if (mLabel.font == null) return false;
 
-		string text = EditorGUILayout.TextArea(mLabel.text, GUILayout.Height(100f));
+		GUI.skin.textArea.wordWrap = true;
+		string text = string.IsNullOrEmpty(mLabel.text) ? "" : mLabel.text;
+		text = EditorGUILayout.TextArea(mLabel.text, GUI.skin.textArea, GUILayout.Height(100f));
 		if (!text.Equals(mLabel.text)) { RegisterUndo(); mLabel.text = text; }
 
 		GUILayout.BeginHorizontal();
@@ -53,20 +53,26 @@ public class UILabelInspector : UIWidgetInspector
 			int len = EditorGUILayout.IntField("Line Width", mLabel.lineWidth, GUILayout.Width(120f));
 			if (len != mLabel.lineWidth) { RegisterUndo(); mLabel.lineWidth = len; }
 
-			bool multi = EditorGUILayout.Toggle("Multi-line", mLabel.multiLine, GUILayout.Width(100f));
-			if (multi != mLabel.multiLine) { RegisterUndo(); mLabel.multiLine = multi; }
+			int count = EditorGUILayout.IntField("Line Count", mLabel.maxLineCount, GUILayout.Width(100f));
+			if (count != mLabel.maxLineCount) { RegisterUndo(); mLabel.maxLineCount = count; }
 		}
 		GUILayout.EndHorizontal();
 
 		GUILayout.BeginHorizontal();
-		{
-			bool password = EditorGUILayout.Toggle("Password", mLabel.password, GUILayout.Width(120f));
-			if (password != mLabel.password) { RegisterUndo(); mLabel.password = password; }
 
-			bool encoding = EditorGUILayout.Toggle("Encoding", mLabel.supportEncoding, GUILayout.Width(100f));
-			if (encoding != mLabel.supportEncoding) { RegisterUndo(); mLabel.supportEncoding = encoding; }
-		}
+		bool password = EditorGUILayout.Toggle("Password", mLabel.password, GUILayout.Width(120f));
+		if (password != mLabel.password) { RegisterUndo(); mLabel.password = password; }
+
+		bool encoding = EditorGUILayout.Toggle("Encoding", mLabel.supportEncoding, GUILayout.Width(100f));
+		if (encoding != mLabel.supportEncoding) { RegisterUndo(); mLabel.supportEncoding = encoding; }
+
 		GUILayout.EndHorizontal();
+
+		if (encoding)
+		{
+			UIFont.SymbolStyle sym = (UIFont.SymbolStyle)EditorGUILayout.EnumPopup("Symbols", mLabel.symbolStyle, GUILayout.Width(170f));
+			if (sym != mLabel.symbolStyle) { RegisterUndo(); mLabel.symbolStyle = sym; }
+		}
 
 		GUILayout.BeginHorizontal();
 		{
@@ -80,22 +86,23 @@ public class UILabelInspector : UIWidgetInspector
 			}
 		}
 		GUILayout.EndHorizontal();
-		return true;
-	}
 
-	override protected void OnDrawTexture ()
-	{
-		Texture2D tex = mLabel.mainTexture as Texture2D;
-
-		if (tex != null)
+		if (mLabel.effectStyle != UILabel.Effect.None)
 		{
-			// Draw the atlas
-			EditorGUILayout.Separator();
-			NGUIEditorTools.DrawSprite(tex, mLabel.font.uvRect, mUseShader ? mLabel.font.material : null);
+			GUILayout.Label("Distance", GUILayout.Width(70f));
+			GUILayout.Space(-34f);
+			GUILayout.BeginHorizontal();
+			GUILayout.Space(70f);
+			Vector2 offset = EditorGUILayout.Vector2Field("", mLabel.effectDistance);
+			GUILayout.Space(20f);
 
-			// Sprite size label
-			Rect rect = GUILayoutUtility.GetRect(Screen.width, 18f);
-			EditorGUI.DropShadowLabel(rect, "Font Size: " + mLabel.font.size);
+			if (offset != mLabel.effectDistance)
+			{
+				RegisterUndo();
+				mLabel.effectDistance = offset;
+			}
+			GUILayout.EndHorizontal();
 		}
+		return true;
 	}
 }

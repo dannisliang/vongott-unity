@@ -7,11 +7,11 @@ Shader "Unlit/Transparent Colored Overlay"
 	
 	SubShader
 	{
-		//LOD 100
+		LOD 100
 
 		Tags
 		{
-			"Queue" = "Overlay"
+			"Queue" = "Transparent+1"
 			"IgnoreProjector" = "True"
 			"RenderType" = "Transparent"
 		}
@@ -21,7 +21,6 @@ Shader "Unlit/Transparent Colored Overlay"
 			Cull Off
 			Lighting Off
 			ZWrite Off
-			ZTest NotEqual//Always
 			Offset -1, -1
 			Fog { Mode Off }
 			ColorMask RGB
