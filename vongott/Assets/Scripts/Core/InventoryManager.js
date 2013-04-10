@@ -4,16 +4,25 @@
 // Classes
 public class Slot {
 	var index = 0;
-	var item : Item;
+	var entry : Entry;
 	
-	function Slot ( i : int, it : Item ) {
+	function Slot ( i : int, e : Entry ) {
 		index = i;
-		item = it;
+		entry = e;
 	}
 
-	function SetItem ( it : Item ) { item = it; }
+	function SetEntry ( e : Entry ) { entry = e; }
 	
-	function GetItem () { return item; }
+	function GetEntry () { return entry; }
+}
+
+public class Entry {
+	var type = Item.Types.Equipment;
+	var id = Item.IDs.Pistol;
+	var spriteName = "";
+	var title = "";
+	var desc = "";
+	var attr : Item.Attribute[];
 }
 
 // Static vars
@@ -35,8 +44,18 @@ static function LoadTestItems () {
 // Add item
 static function AddItem ( item : Item ) {
 	for ( var i = 0; i < slots.Length; i++ ) {
-		if ( slots[i].GetItem() == null ) {
-			slots[i].SetItem ( item );
+		if ( slots[i].GetEntry() == null ) {
+			var entry = new Entry ();
+			
+			// translate item to entry
+			entry.type = item.type;
+			entry.id = item.id;
+			entry.spriteName = item.spriteName;
+			entry.title = item.title;
+			entry.desc = item.desc;
+			entry.attr = item.attr;
+			
+			slots[i].SetEntry ( entry );
 			return;
 		}
 	}

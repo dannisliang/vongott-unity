@@ -2,11 +2,13 @@
 // Prerequisites
 ////////////////////
 
-// Inspector items
+// Inspector entries
 var atlas_ui : UIAtlas;
 var grid : GameObject;
-var item_name : UILabel;
-var item_desc : UILabel;
+var entry_name : UILabel;
+var entry_desc : UILabel;
+var entry_attr_type : UILabel;
+var entry_attr_val : UILabel;
 
 // Private vars
 
@@ -51,8 +53,8 @@ private function PopulateGrid () {
 	for ( var i = 0; i < slots.Length; i++ ) {
 		var slot = CreateSlot ( i, col, row );
 		
-		if ( slots[i].item ) {
-			slot.GetComponent(UISprite).spriteName = slots[i].item.spriteName;
+		if ( slots[i].entry ) {
+			slot.GetComponent(UISprite).spriteName = slots[i].entry.spriteName;
 		} else {
 			slot.GetComponent(UISprite).spriteName = "empty";
 		}
@@ -66,14 +68,31 @@ private function PopulateGrid () {
 	}
 }
 
+// Reset inspector
+function ResetInspector () {
+	entry_name.text = "";
+	entry_desc.text = "";
+	entry_attr_type.text = "";
+	entry_attr_val.text = "";
+}
+
 // Select slot
 function SelectSlot ( sender : GameObject ) {
 	var index = int.Parse ( sender.name );
 	var slots = InventoryManager.GetSlots();
 	
-	if ( slots[index].item ) {
-		item_name.text = slots[index].item.title;
-		item_desc.text = slots[index].item.desc;
+	if ( slots[index].entry ) {
+		var entry = slots[index].entry;
+		
+		entry_name.text = entry.title;
+		entry_desc.text = entry.desc;
+		entry_attr_type.text = "";
+		entry_attr_val.text = "";
+		
+		for ( var a : Item.Attribute in entry.attr ) {
+			entry_attr_type.text += a.type.ToString() + ": \n";
+			entry_attr_val.text += a.val.ToString() + "\n";
+		}
 	}
 }
 
@@ -83,6 +102,7 @@ function SelectSlot ( sender : GameObject ) {
 ////////////////////
 function Start () {
 	PopulateGrid();
+	ResetInspector();
 }
 
 

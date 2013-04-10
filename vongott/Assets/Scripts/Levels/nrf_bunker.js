@@ -5,10 +5,9 @@ var groundFloor : GameObject;
 
 // Init
 function Start () {
-	GameCore.Start();
-
-	stairs_b_g.SetActive(false);
-	groundFloor.SetActive(false);
+	if ( !GameCore.started ) {
+		GameCore.Start();
+	}
 }
 
 // Game loop

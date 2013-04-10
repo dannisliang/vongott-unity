@@ -1,4 +1,4 @@
-@script ExecuteInEditMode()
+/*@script ExecuteInEditMode()
 
 // Inspector menu
 var size = 1024;
@@ -88,4 +88,4 @@ function Update () {
 // Start
 function Start () {
 
-}
+}*/

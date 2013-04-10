@@ -60,6 +60,9 @@ static function ResetConversation () {
 	}
 	conversation.highlight.SetActive ( false );
 	
+	for ( var i =  0; i < conversation.options.Length; i++ ) {
+		 conversation.options[i].lineWidth = Screen.width - 20.0;
+	}	
 }
 
 // highlight
@@ -122,11 +125,8 @@ static function ShowNotification ( msg : String ) {
 	if ( msg != null && msg != "" ) {
 		notification.instance.Play ( true );
 		notification.label.text = msg;
-		notification.instance.gameObject.SetActive ( true );
 	} else {
 		notification.instance.Play ( false );
-		notification.label.text = "";
-		notification.instance.gameObject.SetActive ( false );
 	}
 }
 
