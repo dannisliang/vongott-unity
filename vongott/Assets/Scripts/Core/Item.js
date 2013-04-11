@@ -10,14 +10,24 @@ class Item extends InteractiveObject {
 		Baton,
 		Tazer,
 		AssaultRifle,
-		DartGun
+		DartGun,
+		Vest,
+		Boots
 	}
 	
 	enum Attributes {
 		Damage,
 		Defence,
 		FireRate,
-		ReloadSpeed
+		ReloadSpeed,
+		Agility
+	}
+	
+	enum EquipmentSlots {
+		Hands,
+		Torso,
+		Legs,
+		Head
 	}
 	
 	class Attribute {
@@ -27,6 +37,7 @@ class Item extends InteractiveObject {
 	
 	var type = Types.Equipment;
 	var id = IDs.Pistol;
+	var eqSlot = EquipmentSlots.Hands;
 	var spriteName = "";
 	var title = "";
 	var desc = "";
@@ -42,7 +53,7 @@ class Item extends InteractiveObject {
 				InventoryManager.AddItem(this);
 				Destroy ( this.gameObject );
 				GameCore.SetInteractiveObject ( null );
-				HUD.ShowNotification ( null );
+				HUD.ShowNotification ( "" );
 			}
 		}
 	}

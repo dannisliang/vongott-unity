@@ -19,10 +19,14 @@ public class Slot {
 public class Entry {
 	var type = Item.Types.Equipment;
 	var id = Item.IDs.Pistol;
+	var eqSlot = Item.EquipmentSlots.Hands;
+	var sprite : UISprite;
 	var spriteName = "";
 	var title = "";
 	var desc = "";
 	var attr : Item.Attribute[];
+	var equipped = false;
+	var slot = 0;
 }
 
 // Static vars
@@ -50,15 +54,23 @@ static function AddItem ( item : Item ) {
 			// translate item to entry
 			entry.type = item.type;
 			entry.id = item.id;
+			entry.eqSlot = item.eqSlot;
 			entry.spriteName = item.spriteName;
 			entry.title = item.title;
 			entry.desc = item.desc;
 			entry.attr = item.attr;
+			entry.slot = i;
 			
 			slots[i].SetEntry ( entry );
 			return;
 		}
 	}
+}
+
+// Remove entry
+static function RemoveEntry ( entry : Entry ) {
+	slots[entry.slot].SetEntry ( null );
+	Debug.Log ( "InventoryManager | removed entry: " + entry.title );
 }
 
 // Init inventory

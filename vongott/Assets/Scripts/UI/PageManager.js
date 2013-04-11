@@ -22,9 +22,11 @@ static function GoToPage ( p : String ) {
 		page.gameObject.transform.localScale = new Vector3 ( 1.0, 1.0, 1.0 );
 	
 		current_page_object = page;
-	}
+
+		GameCore.ToggleControls( p == "HUD" );
 	
-	Debug.Log ( "PageManager | go to " + p );
+		Debug.Log ( "PageManager | go to " + p );
+	}
 }
 
 function Start () {

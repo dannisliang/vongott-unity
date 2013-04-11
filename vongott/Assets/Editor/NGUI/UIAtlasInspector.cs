@@ -361,7 +361,7 @@ public class UIAtlasInspector : Editor
 					}
 
 					// This functionality is no longer used. It became obsolete when the Atlas Maker was added.
-					/*NGUIEditorTools.DrawSeparator();
+					NGUIEditorTools.DrawSeparator();
 
 					GUILayout.BeginHorizontal();
 					{
@@ -396,7 +396,7 @@ public class UIAtlasInspector : Editor
 						}
 						GUI.backgroundColor = Color.white;
 					}
-					GUILayout.EndHorizontal();*/
+					GUILayout.EndHorizontal();
 
 					if (NGUIEditorTools.previousSelection != null)
 					{

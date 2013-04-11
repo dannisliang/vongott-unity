@@ -22,7 +22,7 @@ private class HUDPrompt {
 }
 
 private class HUDNotification {
-	var instance : TweenPosition;
+	var instance : GameObject;
 	var label : UILabel;
 	var image : UISprite;
 	var active = false;
@@ -34,7 +34,7 @@ var _notification : HUDNotification;
 var _prompt : HUDPrompt;
 var _status : GameObject;
 
-// Static references
+// Static vars
 static var conversation : HUDConversation;
 static var notification : HUDNotification;
 static var prompt : HUDPrompt;
@@ -122,11 +122,14 @@ static function LeaveConversation () {
 ////////////////////
 // show
 static function ShowNotification ( msg : String ) {
-	if ( msg != null && msg != "" ) {
-		notification.instance.Play ( true );
-		notification.label.text = msg;
+	notification.label.text = msg;
+	
+	if ( msg == "" ) {
+		notification.instance.SetActive ( false );
+		notification.active = false;
 	} else {
-		notification.instance.Play ( false );
+		notification.instance.SetActive ( true );
+		notification.active = true;
 	}
 }
 
@@ -222,7 +225,7 @@ function Start () {
 	InitVars();
 	ResetConversation();
 	ResetPrompt();
-	ShowNotification ( null );
+	ShowNotification ( "" );
 }
 
 
@@ -230,7 +233,6 @@ function Start () {
 // Update
 ////////////////////
 function Update () {
-
 	// if there are conversation options available, enable controls for them
 	if ( convo_current_options[0] != "" ) {
 		if ( Input.GetKeyDown(KeyCode.S) && convo_current_highlight < convo_current_options.Length ) {

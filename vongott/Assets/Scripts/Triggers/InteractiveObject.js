@@ -5,6 +5,6 @@ class InteractiveObject extends MonoBehaviour {
 	
 	function OnTriggerExit ( other:Collider ) {
 		GameCore.SetInteractiveObject ( null );
-		HUD.ShowNotification ( null );
+		HUD.ShowNotification ( "" );
 	}
 }
