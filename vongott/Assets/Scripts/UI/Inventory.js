@@ -143,6 +143,8 @@ private function Equip ( entry : Entry, equip : boolean ) {
 		eq_leg_l.spriteName = eq_sprite;
 		eq_leg_r.spriteName = eq_sprite;
 	}
+	
+	InventoryManager.EquipEntry ( entry, equip );
 }
 
 //////////////////

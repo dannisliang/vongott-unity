@@ -17,9 +17,9 @@ public class Slot {
 }
 
 public class Entry {
-	var type = Item.Types.Equipment;
-	var id = Item.IDs.Pistol;
-	var eqSlot = Item.EquipmentSlots.Hands;
+	var type : Item.Types = Item.Types.Equipment;
+	var id : Item.IDs = Item.IDs.Pistol;
+	var eqSlot : Item.EquipmentSlots = Item.EquipmentSlots.Hands;
 	var sprite : UISprite;
 	var spriteName = "";
 	var title = "";
@@ -27,6 +27,8 @@ public class Entry {
 	var attr : Item.Attribute[];
 	var equipped = false;
 	var slot = 0;
+	var mesh : Mesh;
+	var materials : Material[];
 }
 
 // Static vars
@@ -60,11 +62,19 @@ static function AddItem ( item : Item ) {
 			entry.desc = item.desc;
 			entry.attr = item.attr;
 			entry.slot = i;
+			entry.mesh = item.gameObject.GetComponent(MeshFilter).mesh;
+			entry.materials = item.gameObject.GetComponent(MeshRenderer).materials;
 			
 			slots[i].SetEntry ( entry );
 			return;
 		}
 	}
+}
+
+// Eqip entry
+static function EquipEntry ( entry : Entry, equip : boolean ) {
+	var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
+	player.Equip ( entry, equip );
 }
 
 // Remove entry
