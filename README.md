@@ -42,6 +42,13 @@ I will document the code as I move along. Have a look in the docs for that and e
 	- Inventory
 	- HUD
 	- Conversation interface (almost done)
+- Graphics
+	- UI
+	- Environment textures
+	- Humans
+	- Animals
+	- Skyboxes
+	- Shaders
 
 <p align=right>
   <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
