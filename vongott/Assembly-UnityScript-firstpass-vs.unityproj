@@ -48,6 +48,7 @@
      <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGSprite.js" />
      <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGWidget.js" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Depth.shader" />
+     <None Include="Assets\Shaders\CubemapReflection.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (HardClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (AlphaClip).shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
@@ -59,8 +60,10 @@
      <None Include="Assets\Resources\Conversations\2\marcel.xml" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (AlphaClip).shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (HardClip).shader" />
+     <None Include="Assets\Shaders\BumpedCubemapReflection.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont).shader" />
+     <None Include="Assets\Shaders\BumpedSpecular.shader" />
      <None Include="Assets\Demos\TexturePan\TexturePan.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (SoftClip).shader" />
      <None Include="Assets\Resources\Conversations\1\marcel.xml" />

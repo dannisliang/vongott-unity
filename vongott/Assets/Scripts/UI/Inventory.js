@@ -65,6 +65,8 @@ private function PopulateGrid () {
 			slots[i].entry.sprite = slot.GetComponent(UISprite);
 			if ( slots[i].entry.equipped ) {
 				Equip ( slots[i].entry, true );
+			} else if ( slots[i].entry.installed ) {
+				Install ( slots[i].entry, true );
 			}
 		} else {
 			slot.GetComponent(UISprite).spriteName = "empty";
@@ -142,8 +144,6 @@ private function Equip ( entry : Entry, equip : boolean ) {
 		eq_leg_l.spriteName = eq_sprite;
 		eq_leg_r.spriteName = eq_sprite;
 	}
-	
-	InventoryManager.EquipEntry ( entry, equip );
 }
 
 // Install entry
@@ -155,8 +155,6 @@ private function Install ( entry : Entry, install : boolean ) {
 	} else {
 		entry.sprite.alpha = 1.0;
 	}
-	
-	UpgradeManager.InstallEntry ( entry, install );
 }
 
 
@@ -168,18 +166,22 @@ function BtnEquip () {
 	if ( selected_entry.type == Item.Types.Equipment ) {
 		if ( !selected_entry.equipped ) {
 			Equip ( selected_entry, true );
+			InventoryManager.EquipEntry ( selected_entry, true );
 			SetButtons ( null, "Unequip" );
 		} else {
 			Equip ( selected_entry, false );
+			InventoryManager.EquipEntry ( selected_entry, false );
 			SetButtons ( "Discard", "Equip" );
 		}
 
 	} else if ( selected_entry.type == Item.Types.Upgrade ) {
 		if ( !selected_entry.installed ) {
 			Install ( selected_entry, true );
+			UpgradeManager.InstallEntry ( selected_entry, true );
 			SetButtons ( null, "Uninstall" );
 		} else {
 			Install ( selected_entry, false );
+			UpgradeManager.InstallEntry ( selected_entry, false );
 			SetButtons ( "Discard", "Install" );
 		}
 	}
