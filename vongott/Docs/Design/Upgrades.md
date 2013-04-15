@@ -1,22 +1,24 @@
 Upgrades 
 =====
 # Functionality
-Mechanical upgrades are like experience points, will be awarded for every level up.
-Digital upgrades are like skills, can be purchased or awarded for quest solving.
+Mechanical upgrades exist like items in the world and are sort of like experience points. As the player levels up they will be able to use them.
+Digital upgrades are similar to skills, they can be purchased, stolen or found as well.
 
 # Mechanical
 ## Legs:  
 - Kicking damage  
 - Running speed
 - Jumping height
+- Noise reduction
 
 ## Arms:  
 - Punching damage  
 - Swimming speed
+- Takedowns
 
 ## Back:   
 - Fall damage reduction
-- Inventory capacity
+- Climb edge speed
 
 # Digital
 ## Eyes:  
@@ -46,6 +48,7 @@ Digital upgrades are like skills, can be purchased or awarded for quest solving.
   - tier 1
   - tier 2
   - tier 3
+  - 
 - Kick combo
   - tier 1
   - tier 2
