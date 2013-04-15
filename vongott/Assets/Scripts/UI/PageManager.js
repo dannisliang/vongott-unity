@@ -25,7 +25,7 @@ static function GoToPage ( p : String ) {
 
 		GameCore.ToggleControls( p == "HUD" );
 	
-		Debug.Log ( "PageManager | go to " + p );
+		GameCore.Print ( "PageManager | go to " + p );
 	}
 }
 

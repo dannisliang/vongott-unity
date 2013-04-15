@@ -40,11 +40,11 @@ class Player extends MonoBehaviour {
 			instance.transform.localPosition = Vector3.zero;
 			instance.transform.localEulerAngles = Vector3.zero;
 		
-			GameCore.Print ( "Inventory | item '" + entry.title + "' equipped" );
+			GameCore.Print ( "Player | item '" + entry.title + "' equipped" );
 		} else {
 			Destroy ( target.transform.FindChild( entry.title ).gameObject );
 			
-			GameCore.Print ( "Inventory | item '" + entry.title + "' unequipped" );
+			GameCore.Print ( "Player | item '" + entry.title + "' unequipped" );
 		}
 	}
 	
