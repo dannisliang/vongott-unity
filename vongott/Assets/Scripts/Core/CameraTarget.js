@@ -1,10 +1,13 @@
+#pragma strict
+
 ////////////////////
 // Prerequisites
 ////////////////////
 // Inspector items
 var player:GameObject;
 var cam:GameObject;
-var cam_tween:TweenPosition;
+var camTween:TweenTransform;
+var followSpeed = 18.0;
 
 // Private vars
 private var runcam = false;
@@ -12,6 +15,15 @@ private var runcam = false;
 ////////////////////
 // Private functions
 ////////////////////
+// Ease follow
+private function EaseFollow () {
+	var now_y = this.transform.localEulerAngles.y;
+	var end_y = player.transform.localEulerAngles.y;
+	var new_y = now_y + ( end_y - now_y ) / followSpeed;
+	
+	this.transform.localPosition = player.transform.localPosition;
+	this.transform.localEulerAngles = new Vector3 ( this.transform.localEulerAngles.x, new_y, this.transform.localEulerAngles.z );
+}
 
 
 ////////////////////
@@ -19,22 +31,22 @@ private var runcam = false;
 ////////////////////
 // Init
 function Start () {
-	cam.transform.localPosition = new Vector3( 0.4, 0.6, -3.0 );
+	cam.transform.localPosition = Vector3.zero;
 	cam.transform.localEulerAngles = Vector3.zero;
+	
+	camTween.Play(false);
 }
 
 // Update
 function Update () {
-	this.transform.localPosition = player.transform.localPosition;
-	this.transform.localEulerAngles = player.transform.localEulerAngles;
-
+	EaseFollow();
 	
 	// input
 	if ( Input.GetKeyDown(KeyCode.LeftShift) && !runcam ) {
-		cam_tween.Play(true);
+		camTween.Play(true);
 		runcam = true;
 	} else if ( Input.GetKeyUp(KeyCode.LeftShift) && runcam ) {
-		cam_tween.Play(false);
+		camTween.Play(false);
 		runcam = false;
 	}
 }

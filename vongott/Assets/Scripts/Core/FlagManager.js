@@ -1,3 +1,5 @@
+#pragma strict
+
 static var flag_table = new Hashtable();
 
 static function SetFlag ( flag : String ) {

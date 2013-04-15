@@ -1,7 +1,10 @@
+#pragma strict
+
 ////////////////////
 // Prerequiites
 ////////////////////
 // Static vars
+static var debugging_enabled = true;
 static var player_name = "Nameless";
 static var interactive_object:GameObject;
 static var player_object:GameObject;
@@ -26,9 +29,9 @@ static function SetInteractiveObject ( obj : GameObject ) {
 	interactive_object = obj;
 	
 	if ( obj ) {
-		Debug.Log ( "GameCore | interactive object set to: " + obj );
+		Print ( "GameCore | interactive object set to: " + obj );
 	} else {
-		Debug.Log ( "GameCore | interactive object released" );
+		Print ( "GameCore | interactive object released" );
 	}
 }
 
@@ -43,7 +46,12 @@ static function GetInteractiveObject () {
 static function ToggleControls ( state : boolean ) {
 	player_object.GetComponent(CharacterController).enabled = state;
 	player_object.GetComponent(ThirdPersonController).enabled = state;
-	Debug.Log ( "GameCore | controls active = " + state );
+	
+	if ( state ) {
+		Print ( "GameCore | controls activated" );
+	} else {
+		Print ( "GameCore | controls deactivated" );
+	}
 }
 
 
@@ -60,7 +68,10 @@ static function Start () {
 	// inventory
 	InventoryManager.Init();
 	
-	Debug.Log("GameCore | started");
+	// upgrades
+	UpgradeManager.Init();
+	
+	Print ("GameCore | started");
 }
 
 
@@ -69,4 +80,14 @@ static function Start () {
 ////////////////////
 static function Update () {
 
+}
+
+
+////////////////////
+// Debug
+////////////////////
+static function Print ( msg : String ) {
+	if ( debugging_enabled ) {
+		Debug.Log ( msg );
+	}
 }

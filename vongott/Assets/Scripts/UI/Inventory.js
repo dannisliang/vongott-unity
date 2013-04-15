@@ -123,7 +123,6 @@ private function InitButtons () {
 // Equip entry
 private function Equip ( entry : Entry, equip : boolean ) {
 	entry.equipped = equip;
-	var eq_slot = entry.eqSlot.ToString();
 	var eq_sprite = "empty";
 	
 	if ( equip ) {
@@ -133,13 +132,13 @@ private function Equip ( entry : Entry, equip : boolean ) {
 		entry.sprite.alpha = 1.0;
 	}
 	
-	if ( eq_slot == "Hands" ) {
+	if ( entry.eqSlot == Equipment.Slots.Hands ) {
 		eq_hands.spriteName = eq_sprite;
-	} else if ( eq_slot == "Head" ) {
+	} else if ( entry.eqSlot == Equipment.Slots.Head ) {
 		eq_head.spriteName = eq_sprite;
-	} else if ( eq_slot == "Torso" ) {
+	} else if ( entry.eqSlot == Equipment.Slots.Torso ) {
 		eq_torso.spriteName = eq_sprite;
-	} else if ( eq_slot == "Legs" ) {
+	} else if ( entry.eqSlot == Equipment.Slots.Legs ) {
 		eq_leg_l.spriteName = eq_sprite;
 		eq_leg_r.spriteName = eq_sprite;
 	}
@@ -147,20 +146,43 @@ private function Equip ( entry : Entry, equip : boolean ) {
 	InventoryManager.EquipEntry ( entry, equip );
 }
 
+// Install entry
+private function Install ( entry : Entry, install : boolean ) {
+	entry.installed = install;
+	
+	if ( install ) {
+		entry.sprite.alpha = 0.5;
+	} else {
+		entry.sprite.alpha = 1.0;
+	}
+	
+	UpgradeManager.InstallEntry ( entry, install );
+}
+
+
 //////////////////
 // Public functions
 //////////////////
 // Equip button press
 function BtnEquip () {
-	if ( !selected_entry.equipped ) {
-		Equip ( selected_entry, true );
-		SetButtons ( "Discard", "Unequip" );
-	} else {
-		Equip ( selected_entry, false );
-		SetButtons ( "Discard", "Equip" );
+	if ( selected_entry.type == Item.Types.Equipment ) {
+		if ( !selected_entry.equipped ) {
+			Equip ( selected_entry, true );
+			SetButtons ( null, "Unequip" );
+		} else {
+			Equip ( selected_entry, false );
+			SetButtons ( "Discard", "Equip" );
+		}
+
+	} else if ( selected_entry.type == Item.Types.Upgrade ) {
+		if ( !selected_entry.installed ) {
+			Install ( selected_entry, true );
+			SetButtons ( null, "Uninstall" );
+		} else {
+			Install ( selected_entry, false );
+			SetButtons ( "Discard", "Install" );
+		}
 	}
-	
-	Debug.Log ( "Inventory | item '" + selected_entry.title + "' equipped: " + selected_entry.equipped );
 }
 
 // Discard button press
@@ -188,13 +210,21 @@ function SelectSlot ( sender : GameObject ) {
 			entry_attr_type.text += a.type.ToString() + ": \n";
 			entry_attr_val.text += a.val.ToString() + "\n";
 		}
-	
+		
 		if ( entry.type == Item.Types.Equipment ) {
 			if ( !entry.equipped ) {
 				SetButtons ( "Discard", "Equip" );
 			} else {
-				SetButtons ( "Discard", "Unequip" );
+				SetButtons ( null, "Unequip" );
 			}
+		} else if ( entry.type == Item.Types.Upgrade ) {
+			if ( !entry.installed ) {
+				SetButtons ( "Discard", "Install" );
+			} else {
+				SetButtons ( null, "Uninstall" );
+			}
+		} else {
+			SetButtons ( null, null );
 		}
 		
 		selected_entry = entry;

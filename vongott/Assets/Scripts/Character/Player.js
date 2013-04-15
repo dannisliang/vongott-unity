@@ -13,15 +13,16 @@ class Player extends MonoBehaviour {
 	////////////////////
 	// Public functions
 	////////////////////
+	// Equip
 	function Equip ( entry : Entry, equip : boolean ) {
-		var slot : Item.EquipmentSlots = entry.eqSlot;
+		var slot : Equipment.Slots = entry.eqSlot;
 		var target : GameObject;
 		
-		if ( slot == Item.EquipmentSlots.Hands ) {
+		if ( slot == Equipment.Slots.Hands ) {
 			target = hand;
-		} else if ( slot == Item.EquipmentSlots.Torso ) {
+		} else if ( slot == Equipment.Slots.Torso ) {
 			target = torso;
-		} else if ( slot == Item.EquipmentSlots.Head ) {
+		} else if ( slot == Equipment.Slots.Head ) {
 			target = head;
 		} else {
 			target = foot_r;
@@ -38,8 +39,23 @@ class Player extends MonoBehaviour {
 			instance.transform.parent = target.transform;
 			instance.transform.localPosition = Vector3.zero;
 			instance.transform.localEulerAngles = Vector3.zero;
+		
+			GameCore.Print ( "Inventory | item '" + entry.title + "' equipped" );
 		} else {
 			Destroy ( target.transform.FindChild( entry.title ).gameObject );
+			
+			GameCore.Print ( "Inventory | item '" + entry.title + "' unequipped" );
+		}
+	}
+	
+	// Install
+	function Install ( entry : Entry, install : boolean ) {
+		var slot : Upgrade.Slots = entry.upgSlot;
+		
+		if ( install ) {
+			GameCore.Print ( "Player | installed upgrade " + entry.title + " in " + slot );
+		} else {
+			GameCore.Print ( "Player | uninstalled upgrade " + entry.title );
 		}
 	}
 	

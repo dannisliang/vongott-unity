@@ -1,3 +1,5 @@
+#pragma strict
+
 ////////////////////
 // Prerequisites
 ////////////////////
@@ -19,13 +21,15 @@ public class Slot {
 public class Entry {
 	var type : Item.Types = Item.Types.Equipment;
 	var id : Item.IDs = Item.IDs.Pistol;
-	var eqSlot : Item.EquipmentSlots = Item.EquipmentSlots.Hands;
+	var eqSlot : Equipment.Slots = Equipment.Slots.Hands;
+	var upgSlot : Upgrade.Slots = Upgrade.Slots.Hands;
 	var sprite : UISprite;
 	var spriteName = "";
 	var title = "";
 	var desc = "";
 	var attr : Item.Attribute[];
 	var equipped = false;
+	var installed = false;
 	var slot = 0;
 	var mesh : Mesh;
 	var materials : Material[];
@@ -37,15 +41,11 @@ static var initialized = false;
 
 
 ////////////////////
-// Inventory actions
+// Static functions
 ////////////////////
 // Get slots
 static function GetSlots () { return slots; }
 
-// Test items
-static function LoadTestItems () {
-	
-}
 
 // Add item
 static function AddItem ( item : Item ) {
@@ -56,7 +56,15 @@ static function AddItem ( item : Item ) {
 			// translate item to entry
 			entry.type = item.type;
 			entry.id = item.id;
-			entry.eqSlot = item.eqSlot;
+			
+			if ( item.type == Item.Types.Equipment ) {
+				var eq = item as Equipment;
+				entry.eqSlot = eq.eqSlot;
+			} else if ( item.type == Item.Types.Upgrade ) {
+				var upg = item as Upgrade;
+				entry.upgSlot = upg.upgSlot;
+			}
+			
 			entry.spriteName = item.spriteName;
 			entry.title = item.title;
 			entry.desc = item.desc;
@@ -89,9 +97,7 @@ static function Init () {
 		for ( var i = 0; i < slots.Length; i++ ) {
 			slots[i] = new Slot ( i, null );
 		}
-		
-		LoadTestItems();	
-	
+			
 		initialized = true;
 	}
 }

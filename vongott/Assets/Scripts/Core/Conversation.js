@@ -32,7 +32,8 @@ class Conversation extends InteractiveObject {
 			return;
 		}
 		
-		var type = line_array[current_line][0];
+		var array = line_array[current_line];
+		var type = array[0];
 		var name : String;
 		var text : String;
 		var id : String;
