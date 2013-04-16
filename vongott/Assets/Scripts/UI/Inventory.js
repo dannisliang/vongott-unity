@@ -8,11 +8,6 @@ var entry_name : UILabel;
 var entry_desc : UILabel;
 var entry_attr_type : UILabel;
 var entry_attr_val : UILabel;
-var eq_hands : UISprite;
-var eq_head : UISprite;
-var eq_leg_l : UISprite;
-var eq_leg_r : UISprite;
-var eq_torso : UISprite;
 var btn_equip : GameObject;
 var btn_discard : GameObject;
 var highlight : GameObject;
@@ -45,7 +40,7 @@ private function CreateSlot ( i : int, x : int, y : int ) {
 	obj.name = i.ToString();
 	obj.transform.parent = grid.transform;
 	obj.transform.localScale = new Vector3 ( size, size, 1 );
-	obj.transform.localPosition = new Vector3 ( x * (size+2), y * (size+2), 0 );
+	obj.transform.localPosition = new Vector3 ( x * -(size+2), y * -(size+2), 0 );
 	
 	return obj;
 }
@@ -125,24 +120,11 @@ private function InitButtons () {
 // Equip entry
 private function Equip ( entry : Entry, equip : boolean ) {
 	entry.equipped = equip;
-	var eq_sprite = "empty";
 	
 	if ( equip ) {
-		eq_sprite = entry.spriteName;
 		entry.sprite.alpha = 0.5;
 	} else {
 		entry.sprite.alpha = 1.0;
-	}
-	
-	if ( entry.eqSlot == Equipment.Slots.Hands ) {
-		eq_hands.spriteName = eq_sprite;
-	} else if ( entry.eqSlot == Equipment.Slots.Head ) {
-		eq_head.spriteName = eq_sprite;
-	} else if ( entry.eqSlot == Equipment.Slots.Torso ) {
-		eq_torso.spriteName = eq_sprite;
-	} else if ( entry.eqSlot == Equipment.Slots.Legs ) {
-		eq_leg_l.spriteName = eq_sprite;
-		eq_leg_r.spriteName = eq_sprite;
 	}
 }
 
@@ -236,12 +218,13 @@ function SelectSlot ( sender : GameObject ) {
 	}
 }
 
-
 // Init
 function Start () {
 	InitButtons ();
 	PopulateGrid();
 	ResetInspector();
+	
+	CameraTarget.TurnCam ( true );
 }
 
 
@@ -249,5 +232,6 @@ function Start () {
 function Update () {
 	if ( Input.GetKeyDown(KeyCode.Escape) ) {
 		PageManager.GoToPage ( "HUD" );
+		CameraTarget.TurnCam ( false );
 	}
 }

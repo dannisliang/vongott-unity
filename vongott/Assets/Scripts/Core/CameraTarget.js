@@ -12,17 +12,27 @@ var followSpeed = 18.0;
 // Private vars
 private var runcam = false;
 
+// Static vars
+static var instance : Transform;
+static var cam_in_front = false;
+
+
 ////////////////////
 // Private functions
 ////////////////////
 // Ease follow
 private function EaseFollow () {
-	var now_y = this.transform.localEulerAngles.y;
-	var end_y = player.transform.localEulerAngles.y;
-	var new_y = now_y + ( end_y - now_y ) / followSpeed;
-	
-	this.transform.localPosition = player.transform.localPosition;
-	this.transform.localEulerAngles = new Vector3 ( this.transform.localEulerAngles.x, new_y, this.transform.localEulerAngles.z );
+	if ( cam_in_front ) {
+		this.transform.localPosition = player.transform.localPosition;
+		this.transform.localEulerAngles = new Vector3 ( this.transform.localEulerAngles.x, player.transform.localEulerAngles.y + 180.0, this.transform.localEulerAngles.z );
+	} else {
+		var now_y = this.transform.localEulerAngles.y;
+		var end_y = player.transform.localEulerAngles.y;
+		var new_y = now_y + ( end_y - now_y ) / followSpeed;
+		
+		this.transform.localPosition = player.transform.localPosition;
+		this.transform.localEulerAngles = new Vector3 ( this.transform.localEulerAngles.x, new_y, this.transform.localEulerAngles.z );
+	}
 }
 
 
@@ -35,6 +45,8 @@ function Start () {
 	cam.transform.localEulerAngles = Vector3.zero;
 	
 	camTween.Play(false);
+	
+	instance = this.gameObject.transform;
 }
 
 // Update
@@ -49,4 +61,13 @@ function Update () {
 		camTween.Play(false);
 		runcam = false;
 	}
+}
+
+
+////////////////////
+// Static functions
+////////////////////
+// Turn camera in front or back of player
+static function TurnCam ( in_front : boolean ) {
+	cam_in_front = in_front;
 }

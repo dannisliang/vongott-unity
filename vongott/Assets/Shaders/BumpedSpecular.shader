@@ -18,7 +18,7 @@ Shader "Vongott/Bumped Specular" {
 		
 		sampler2D _MainTex;
 		sampler2D _BumpTex;
-		float4 _SpecPower;
+		float _SpecPower;
 		
 		void surf ( Input IN, inout SurfaceOutput o ) {
 			fixed4 tex = tex2D (_MainTex, IN.uv_MainTex);
