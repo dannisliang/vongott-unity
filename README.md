@@ -31,6 +31,10 @@ I will document the code as I move along. Have a look in the docs for that and e
 		- AI (path finding, friend/foe system, awareness levels)
 		- Inventory
 	- New UI plugin for Unity
+- SDK
+	- Level Editor
+	- Dialogue Editor
+	- Quest Editor
 - Modeling
 	- Player
 	- Standard male
