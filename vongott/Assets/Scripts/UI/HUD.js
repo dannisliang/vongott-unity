@@ -33,6 +33,7 @@ var _conversation : HUDConversation;
 var _notification : HUDNotification;
 var _prompt : HUDPrompt;
 var _status : GameObject;
+var _reticule : GameObject;
 
 // Static vars
 static var conversation : HUDConversation;
@@ -253,4 +254,7 @@ function Update () {
 	else if ( Input.GetKeyDown(KeyCode.I) ) {
 		PageManager.GoToPage ( "Inventory" );
 	}
+	
+	// show reticule
+	_reticule.SetActive ( Input.GetMouseButton(1) );
 }

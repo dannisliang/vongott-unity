@@ -1,8 +1,13 @@
-Shader "ShaderEditor/EditorShaderCache"
+Shader "Vongott/BumpedSpecularEmissive"
 {
 	Properties 
 	{
 _DiffuseTex("Diffuse Texture", 2D) = "black" {}
+_NormalTex("Normals Texture", 2D) = "black" {}
+_EmissionTex("Emission Texture", 2D) = "black" {}
+_SpecularTex("Specular Texture", 2D) = "black" {}
+_DiffuseColor("Diffuse Color", Color) = (0,1,1,1)
+_EmissionColor("Emission Color", Color) = (0,1,1,1)
 
 	}
 	
@@ -31,6 +36,11 @@ Fog{
 
 
 sampler2D _DiffuseTex;
+sampler2D _NormalTex;
+sampler2D _EmissionTex;
+sampler2D _SpecularTex;
+float4 _DiffuseColor;
+float4 _EmissionColor;
 
 			struct EditorSurfaceOutput {
 				half3 Albedo;
@@ -71,6 +81,9 @@ return c;
 			
 			struct Input {
 				float2 uv_DiffuseTex;
+float2 uv_NormalTex;
+float2 uv_EmissionTex;
+float2 uv_SpecularTex;
 
 			};
 
@@ -94,15 +107,20 @@ float4 VertexOutputMaster0_3_NoInput = float4(0,0,0,0);
 				o.Custom = 0.0;
 				
 float4 Tex2D0=tex2D(_DiffuseTex,(IN.uv_DiffuseTex.xyxy).xy);
-float4 Subtract0=Tex2D0.aaaa - float4( 1,1,1,1 );
-float4 Master0_1_NoInput = float4(0,0,1,1);
-float4 Master0_2_NoInput = float4(0,0,0,0);
+float4 Multiply0=_DiffuseColor * Tex2D0;
+float4 Tex2D1=tex2D(_NormalTex,(IN.uv_NormalTex.xyxy).xy);
+float4 UnpackNormal0=float4(UnpackNormal(Tex2D1).xyz, 1.0);
+float4 Tex2D2=tex2D(_EmissionTex,(IN.uv_EmissionTex.xyxy).xy);
+float4 Multiply1=_EmissionColor * Tex2D2;
+float4 Tex2D3=tex2D(_SpecularTex,(IN.uv_SpecularTex.xyxy).xy);
 float4 Master0_3_NoInput = float4(0,0,0,0);
-float4 Master0_4_NoInput = float4(0,0,0,0);
 float4 Master0_5_NoInput = float4(1,1,1,1);
 float4 Master0_7_NoInput = float4(0,0,0,0);
-clip( Subtract0 );
-o.Albedo = Tex2D0;
+float4 Master0_6_NoInput = float4(1,1,1,1);
+o.Albedo = Multiply0;
+o.Normal = UnpackNormal0;
+o.Emission = Multiply1;
+o.Gloss = Tex2D3;
 
 				o.Normal = normalize(o.Normal);
 			}

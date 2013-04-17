@@ -1,3 +1,7 @@
+////////////////////
+// Prerequisites
+////////////////////
+// Classes
 class Pages extends System.Object {
 	var root : TweenTransform = null;
 	var load : GameObject = null;
@@ -17,36 +21,35 @@ class Buttons extends System.Object {
 	}
 }
 
+// Public vars
 var pages = Pages();
 var buttons = Buttons();
-var current_page : GameObject = null;
 var tween_duration = 0.5;
+var logo_rotation_speed = 10.0;
+var logo : Transform;
 
+// Private vars
+private var current_page : GameObject;
 private var buttons_active = true;
 private var zoomed_in = false;
+private var logo_rotation = 180.0;
 
+////////////////////
+// Public functions
+////////////////////
+// Toggle buttons
 function ToggleButtons () {
 	buttons_active = !buttons_active;
 }
 
-private function OuterRimZoom ( direction : boolean ) {
-	ToggleButtons();
-	
-	pages.root.Play ( direction );
-	
-	for ( var b in buttons.GetAll() ) {
-		b.GetComponent(MeshCollider).enabled = !direction;
-	}
-	
-	zoomed_in = direction;
-}
-
+// Go to level
 function GoToLevel ( sender : GameObject ) {
 	if ( buttons_active ) {
 		Application.LoadLevel ( sender.name );
 	}
 }
 
+// Goto specific page
 function GoToPage ( sender : GameObject ) {
 	if ( buttons_active ) {
 		if ( sender.name == "btn_load" ) {
@@ -64,6 +67,7 @@ function GoToPage ( sender : GameObject ) {
 	}
 }
 
+// What happens when zoom is done
 function OnZoomEnd () {
 	ToggleButtons ();
 	
@@ -73,6 +77,7 @@ function OnZoomEnd () {
 	}
 }
 
+// Init
 function Start () {
 	pages.load.SetActive (false);
 	pages.newGame.SetActive (false);
@@ -81,8 +86,30 @@ function Start () {
 	pages.root.duration = tween_duration;
 }
 
+// Update
 function Update () {
 	if ( Input.GetKeyDown(KeyCode.Escape) && buttons_active && current_page ) {
 		OuterRimZoom ( false );
 	}
+	
+	// revolve logo
+	logo_rotation += logo_rotation_speed * Time.deltaTime;
+	logo.localEulerAngles = new Vector3 ( 0.0, logo_rotation, 0.0 );
+}
+
+
+////////////////////
+// Private functions
+////////////////////
+// Outer rim zoom
+private function OuterRimZoom ( direction : boolean ) {
+	ToggleButtons();
+	
+	pages.root.Play ( direction );
+	
+	for ( var b in buttons.GetAll() ) {
+		b.GetComponent(MeshCollider).enabled = !direction;
+	}
+	
+	zoomed_in = direction;
 }

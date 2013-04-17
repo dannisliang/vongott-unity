@@ -230,7 +230,7 @@ function Start () {
 
 // Update
 function Update () {
-	if ( Input.GetKeyDown(KeyCode.Escape) ) {
+	if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
 		PageManager.GoToPage ( "HUD" );
 		CameraTarget.TurnCam ( false );
 	}
