@@ -2,15 +2,15 @@
 
 import System.Collections.Generic;
 
-////////////////////
-// Prerequisites
-////////////////////
 // Public vars
-var wireframeMaterial : Material;
 var workspace : Transform;
 
 // Private vars
 private var selected_objects : List.<GameObject> = new List.<GameObject>();
+
+// Static vars
+static var menusActive = false;
+
 
 ////////////////////
 // Public functions
@@ -59,5 +59,5 @@ function Start () {
 
 // Update
 function Update () {
-
+	EditorInput.Update ();
 }

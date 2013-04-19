@@ -23,10 +23,14 @@ function Start () {
 
 // Update
 function Update () {
+	if ( EditorCore.menusActive ) {
+		return;
+	}
+	
 	// position
-	var x = this.transform.localPosition.x;
-	var y = this.transform.localPosition.y;
-	var z = this.transform.localPosition.z;
+	var x = transform.localPosition.x;
+	var y = transform.localPosition.y;
+	var z = transform.localPosition.z;
 	var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
 	var horizontal = Camera.main.transform.TransformDirection ( Vector3.left );
 	var vertical = Camera.main.transform.TransformDirection ( Vector3.down );
@@ -36,7 +40,7 @@ function Update () {
 	
 	if ( translation != 0.0 ) {				
 		if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-			transform.position = transform.position + vertical * -translation;
+			transform.localPosition = new Vector3 ( x, y + translation, z );
 		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
 			transform.position = transform.position + horizontal * translation;
 		} else {		
@@ -49,9 +53,9 @@ function Update () {
 		var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
 	
 		rotationY += Input.GetAxis("Mouse Y") * sensitivity;
-		rotationY = Mathf.Clamp (rotationY, -90, 90);
+		rotationY = Mathf.Clamp (rotationY, -60, 60);
 	
-		transform.localEulerAngles = new Vector3(transform.localEulerAngles.y-rotationY, transform.localEulerAngles.x+rotationX, 0);
+		transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 	
 	// scroll button
 	} else if ( Input.GetMouseButton(2) ) {        
@@ -87,33 +91,7 @@ function Update () {
 			editorCore.DeselectAllObjects ();
 		}
 	}
-	
-	// Z key: wireframe toggle
-	if ( Input.GetKeyDown ( KeyCode.Z ) ) {
-		GL.wireframe = !GL.wireframe;
-	
-	// numpad 5: orthographic view
-	} else if ( Input.GetKeyDown ( KeyCode.Keypad5 ) ) {
-		Camera.main.orthographic = !Camera.main.orthographic;
-		Camera.main.orthographicSize = 50;
-	
-	// numpad 7: top view
-	} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) ) {
-		this.transform.localEulerAngles = new Vector3 ( 90.0, 0.0, 0.0 );
-		this.transform.localPosition = new Vector3 ( 0.0, 500.0, 0.0 );
-	
-	// numpad 3: left view
-	} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) ) {
-		this.transform.localEulerAngles = new Vector3 ( 0.0, 90.0, 0.0 );
-		this.transform.localPosition = new Vector3 ( -500.0, 0.0, 0.0 );
-	
-	// numpad 1: front
-	} else if ( Input.GetKeyDown ( KeyCode.Keypad1 ) ) {
-		this.transform.localEulerAngles = new Vector3 ( 0.0, 0.0, 0.0 );
-		this.transform.localPosition = new Vector3 ( 0.0, 0.0, -500.0 );
-	
-	}
-	
+		
 	// drag objects
 	if ( Input.GetMouseButton(0) ) {	
 		if ( editorCore.GetSelectedObjects().Count > 0 ) {
