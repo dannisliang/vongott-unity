@@ -49,9 +49,9 @@ function Update () {
 		var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
 	
 		rotationY += Input.GetAxis("Mouse Y") * sensitivity;
-		rotationY = Mathf.Clamp (rotationY, -60, 60);
+		rotationY = Mathf.Clamp (rotationY, -90, 90);
 	
-		transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+		transform.localEulerAngles = new Vector3(transform.localEulerAngles.y-rotationY, transform.localEulerAngles.x+rotationX, 0);
 	
 	// scroll button
 	} else if ( Input.GetMouseButton(2) ) {        
@@ -88,9 +88,30 @@ function Update () {
 		}
 	}
 	
-	// Z key
+	// Z key: wireframe toggle
 	if ( Input.GetKeyDown ( KeyCode.Z ) ) {
 		GL.wireframe = !GL.wireframe;
+	
+	// numpad 5: orthographic view
+	} else if ( Input.GetKeyDown ( KeyCode.Keypad5 ) ) {
+		Camera.main.orthographic = !Camera.main.orthographic;
+		Camera.main.orthographicSize = 50;
+	
+	// numpad 7: top view
+	} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) ) {
+		this.transform.localEulerAngles = new Vector3 ( 90.0, 0.0, 0.0 );
+		this.transform.localPosition = new Vector3 ( 0.0, 500.0, 0.0 );
+	
+	// numpad 3: left view
+	} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) ) {
+		this.transform.localEulerAngles = new Vector3 ( 0.0, 90.0, 0.0 );
+		this.transform.localPosition = new Vector3 ( -500.0, 0.0, 0.0 );
+	
+	// numpad 1: front
+	} else if ( Input.GetKeyDown ( KeyCode.Keypad1 ) ) {
+		this.transform.localEulerAngles = new Vector3 ( 0.0, 0.0, 0.0 );
+		this.transform.localPosition = new Vector3 ( 0.0, 0.0, -500.0 );
+	
 	}
 	
 	// drag objects
