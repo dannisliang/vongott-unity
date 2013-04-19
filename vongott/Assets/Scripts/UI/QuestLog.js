@@ -1,3 +1,5 @@
+#pragma strict
+
 ////////////////////
 // Prerequisites
 ////////////////////
@@ -36,6 +38,6 @@ function Start () {
 ////////////////////
 function Update () {
 	if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab) ) {
-		PageManager.GoToPage ( "HUD" );
+		PageManager.GoToPage ( Page.HUD );
 	}
 }

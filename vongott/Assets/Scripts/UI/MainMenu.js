@@ -1,3 +1,5 @@
+#pragma strict
+
 ////////////////////
 // Prerequisites
 ////////////////////
@@ -27,6 +29,7 @@ var buttons = Buttons();
 var tween_duration = 0.5;
 var logo_rotation_speed = 10.0;
 var logo : Transform;
+var levelManager : LevelManager;
 
 // Private vars
 private var current_page : GameObject;
@@ -45,7 +48,8 @@ function ToggleButtons () {
 // Go to level
 function GoToLevel ( sender : GameObject ) {
 	if ( buttons_active ) {
-		Application.LoadLevel ( sender.name );
+		var level_manager : LevelManager = Instantiate ( levelManager ) as LevelManager;
+		level_manager.GoToLevel ( sender.GetComponent(LevelButton).GetLevel() );
 	}
 }
 

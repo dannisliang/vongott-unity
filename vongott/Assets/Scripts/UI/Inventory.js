@@ -231,7 +231,7 @@ function Start () {
 // Update
 function Update () {
 	if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
-		PageManager.GoToPage ( "HUD" );
+		PageManager.GoToPage ( Page.HUD );
 		CameraTarget.TurnCam ( false );
 	}
 }

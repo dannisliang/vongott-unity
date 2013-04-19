@@ -10,6 +10,7 @@ static var interactive_object:GameObject;
 static var player_object:GameObject;
 static var started = false;
 
+
 ////////////////////
 // Player
 ////////////////////
@@ -58,12 +59,9 @@ static function ToggleControls ( state : boolean ) {
 ////////////////////
 // Init
 ////////////////////
-static function Start () {	
+function Start () {	
 	// quests
 	QuestManager.Init();
-	
-	// ui root
-	Instantiate ( Resources.Load ( "Prefabs/UI/Root" ) );
 	
 	// inventory
 	InventoryManager.Init();
@@ -78,7 +76,7 @@ static function Start () {
 ////////////////////
 // Update
 ////////////////////
-static function Update () {
+function Update () {
 
 }
 

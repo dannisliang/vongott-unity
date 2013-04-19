@@ -1,3 +1,5 @@
+#pragma strict
+
 ////////////////////
 // Prerequisites
 ////////////////////
@@ -227,6 +229,7 @@ function Start () {
 	ResetConversation();
 	ResetPrompt();
 	ShowNotification ( "" );
+	GameCore.ToggleControls ( true );
 }
 
 
@@ -247,12 +250,12 @@ function Update () {
 	
 	// go to quest log
 	else if ( Input.GetKeyDown(KeyCode.Tab) ) {
-		PageManager.GoToPage ( "QuestLog" );
+		PageManager.GoToPage ( Page.QuestLog );
 	}
 	
 	// go to inventory
 	else if ( Input.GetKeyDown(KeyCode.I) ) {
-		PageManager.GoToPage ( "Inventory" );
+		PageManager.GoToPage ( Page.Inventory );
 	}
 	
 	// show reticule

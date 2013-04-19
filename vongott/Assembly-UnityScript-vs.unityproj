@@ -52,12 +52,15 @@
      <Compile Include="Assets\Scripts\Character\ThirdPersonController.js" />
      <Compile Include="Assets\Scripts\Core\CameraTarget.js" />
      <Compile Include="Assets\Scripts\Core\Conversation.js" />
+     <Compile Include="Assets\Scripts\Core\EditorCamera.js" />
+     <Compile Include="Assets\Scripts\Core\EditorCore.js" />
      <Compile Include="Assets\Scripts\Core\Equipment.js" />
      <Compile Include="Assets\Scripts\Core\FlagManager.js" />
      <Compile Include="Assets\Scripts\Core\GameCore.js" />
      <Compile Include="Assets\Scripts\Core\InventoryManager.js" />
      <Compile Include="Assets\Scripts\Core\Item.js" />
      <Compile Include="Assets\Scripts\Core\Level.js" />
+     <Compile Include="Assets\Scripts\Core\LevelManager.js" />
      <Compile Include="Assets\Scripts\Core\MouseLook.js" />
      <Compile Include="Assets\Scripts\Core\QuestManager.js" />
      <Compile Include="Assets\Scripts\Core\Upgrade.js" />
@@ -66,6 +69,7 @@
      <Compile Include="Assets\Scripts\Triggers\InteractiveObject.js" />
      <Compile Include="Assets\Scripts\UI\HUD.js" />
      <Compile Include="Assets\Scripts\UI\Inventory.js" />
+     <Compile Include="Assets\Scripts\UI\LevelButton.js" />
      <Compile Include="Assets\Scripts\UI\MainMenu.js" />
      <Compile Include="Assets\Scripts\UI\PageManager.js" />
      <Compile Include="Assets\Scripts\UI\QuestLog.js" />
@@ -109,6 +113,7 @@
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\Shaders\BumpedRim.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
+     <None Include="Assets\Shaders\Wireframe.shader" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\TextureCopy.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
