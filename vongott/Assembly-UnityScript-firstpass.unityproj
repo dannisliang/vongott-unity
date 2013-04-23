@@ -44,8 +44,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGAtlas.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGSprite.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGButton.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGCore.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGDropDown.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGGroup.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGLabel.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGPage.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGPageManager.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGRect.js" />
+     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGScrollView.js" />
      <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGWidget.js" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Depth.shader" />
      <None Include="Assets\Shaders\CubemapReflection.shader" />

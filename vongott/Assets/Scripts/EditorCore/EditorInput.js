@@ -16,12 +16,11 @@ static function Update () {
 	
 	// Z key: wireframe toggle
 	} else if ( Input.GetKeyDown ( KeyCode.Z ) ) {
-		GL.wireframe = !GL.wireframe;
+		EditorCore.ToggleWireframe();
 	
 	// numpad 5: orthographic view
 	} else if ( Input.GetKeyDown ( KeyCode.Keypad5 ) ) {
-		Camera.main.orthographic = !Camera.main.orthographic;
-		Camera.main.orthographicSize = 50;
+		EditorCore.ToggleIsometric();
 	
 	// numpad 7: top view
 	} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) ) {

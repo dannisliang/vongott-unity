@@ -52,10 +52,6 @@
      <Compile Include="Assets\Scripts\Character\ThirdPersonController.js" />
      <Compile Include="Assets\Scripts\Core\CameraTarget.js" />
      <Compile Include="Assets\Scripts\Core\Conversation.js" />
-     <Compile Include="Assets\Scripts\Core\EditorCamera.js" />
-     <Compile Include="Assets\Scripts\Core\EditorCore.js" />
-     <Compile Include="Assets\Scripts\Core\EditorInput.js" />
-     <Compile Include="Assets\Scripts\Core\EditorMenus.js" />
      <Compile Include="Assets\Scripts\Core\Equipment.js" />
      <Compile Include="Assets\Scripts\Core\FlagManager.js" />
      <Compile Include="Assets\Scripts\Core\GameCore.js" />
@@ -67,6 +63,12 @@
      <Compile Include="Assets\Scripts\Core\QuestManager.js" />
      <Compile Include="Assets\Scripts\Core\Upgrade.js" />
      <Compile Include="Assets\Scripts\Core\UpgradeManager.js" />
+     <Compile Include="Assets\Scripts\EditorCore\EditorCamera.js" />
+     <Compile Include="Assets\Scripts\EditorCore\EditorCore.js" />
+     <Compile Include="Assets\Scripts\EditorCore\EditorInput.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorImportDialog.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorMenuBase.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorMenuRoot.js" />
      <Compile Include="Assets\Scripts\Triggers\Door.js" />
      <Compile Include="Assets\Scripts\Triggers\InteractiveObject.js" />
      <Compile Include="Assets\Scripts\UI\HUD.js" />

@@ -5,8 +5,8 @@
 ////////////////////
 // Public vars
 var sensitivity : float = 2.5;
-var speed : float = 5000.0;
-var editorCore : EditorCore;
+var speed : float = 10.0;
+var renderMode : int = 0;
 
 // Private vars
 private var mouselook_active = true;
@@ -16,9 +16,18 @@ private var rotationY : float = 0.0;
 ////////////////////
 // Public functions
 ////////////////////
+// Rendering
+function OnPreRender () {
+	GL.wireframe = ( renderMode == 1 );
+}
+
+function OnPostRender () {
+	GL.wireframe = false;
+}
+
 // Init
 function Start () {
-
+	
 }
 
 // Update
@@ -79,22 +88,22 @@ function Update () {
 			var obj : GameObject = hit.collider.gameObject;
 			
 			if ( !Input.GetKey ( KeyCode.LeftShift ) ) {
-				editorCore.DeselectAllObjects();
-				editorCore.SelectObject ( obj );
-			} else if ( editorCore.IsObjectSelected ( obj ) ) {
-				editorCore.DeselectObject ( obj );
+				EditorCore.DeselectAllObjects();
+				EditorCore.SelectObject ( obj );
+			} else if ( EditorCore.IsObjectSelected ( obj ) ) {
+				EditorCore.DeselectObject ( obj );
 			} else {
-				editorCore.SelectObject ( obj );
+				EditorCore.SelectObject ( obj );
 			}
 					
 		} else {
-			editorCore.DeselectAllObjects ();
+			EditorCore.DeselectAllObjects ();
 		}
 	}
 		
 	// drag objects
 	if ( Input.GetMouseButton(0) ) {	
-		if ( editorCore.GetSelectedObjects().Count > 0 ) {
+		if ( EditorCore.GetSelectedObjects().Count > 0 ) {
 			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
 				x = 0;
 				y = Input.GetAxis("Mouse Y") * sensitivity / 4;
@@ -111,7 +120,7 @@ function Update () {
 				return;
 			}
 			
-			for ( var o : GameObject in editorCore.GetSelectedObjects() ) {
+			for ( var o : GameObject in EditorCore.GetSelectedObjects() ) {
 				o.transform.localPosition = new Vector3 ( o.transform.localPosition.x + x, o.transform.localPosition.y + y, o.transform.localPosition.z + z );
 			}
 		}
