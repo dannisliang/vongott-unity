@@ -2,7 +2,7 @@ Shader "ShaderEditor/EditorShaderCache"
 {
 	Properties 
 	{
-_DiffuseTex("Diffuse Texture", 2D) = "black" {}
+_Color("_Color", Color) = (1,0,0,1)
 
 	}
 	
@@ -30,7 +30,7 @@ Fog{
 #pragma target 2.0
 
 
-sampler2D _DiffuseTex;
+float4 _Color;
 
 			struct EditorSurfaceOutput {
 				half3 Albedo;
@@ -70,7 +70,7 @@ return c;
 			}
 			
 			struct Input {
-				float2 uv_DiffuseTex;
+				float4 color : COLOR;
 
 			};
 
@@ -93,16 +93,14 @@ float4 VertexOutputMaster0_3_NoInput = float4(0,0,0,0);
 				o.Specular = 0.0;
 				o.Custom = 0.0;
 				
-float4 Tex2D0=tex2D(_DiffuseTex,(IN.uv_DiffuseTex.xyxy).xy);
-float4 Subtract0=Tex2D0.aaaa - float4( 1,1,1,1 );
 float4 Master0_1_NoInput = float4(0,0,1,1);
-float4 Master0_2_NoInput = float4(0,0,0,0);
 float4 Master0_3_NoInput = float4(0,0,0,0);
 float4 Master0_4_NoInput = float4(0,0,0,0);
 float4 Master0_5_NoInput = float4(1,1,1,1);
 float4 Master0_7_NoInput = float4(0,0,0,0);
-clip( Subtract0 );
-o.Albedo = Tex2D0;
+float4 Master0_6_NoInput = float4(1,1,1,1);
+o.Albedo = _Color;
+o.Emission = _Color;
 
 				o.Normal = normalize(o.Normal);
 			}

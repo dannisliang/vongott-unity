@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Plugins\JSONObject.cs" />
      <Compile Include="Assets\Plugins\NGUI\Scripts\Interaction\LanguageSelection.cs" />
      <Compile Include="Assets\Plugins\NGUI\Scripts\Interaction\UIButton.cs" />
      <Compile Include="Assets\Plugins\NGUI\Scripts\Interaction\UIButtonActivate.cs" />
@@ -127,6 +128,7 @@
      <Compile Include="Assets\Plugins\NGUI\Scripts\UI\UITiledSprite.cs" />
      <Compile Include="Assets\Plugins\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\Plugins\NGUI\Scripts\UI\UIViewport.cs" />
+     <Compile Include="Assets\Plugins\Nullable.cs" />
      <Compile Include="Assets\Plugins\iTween.cs" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Depth.shader" />
      <None Include="Assets\Shaders\CubemapReflection.shader" />
@@ -161,6 +163,7 @@
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
      <None Include="Assets\Demos\Outline\Outline.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
+     <None Include="Assets\Shaders\UnlitDiffuse.shader" />
      <None Include="Assets\Demos\Distortion(ProOnly)\Distortion.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (HardClip).shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />

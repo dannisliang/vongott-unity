@@ -4,22 +4,25 @@
 // Prerequiites
 ////////////////////
 // Static vars
-static var debugging_enabled = true;
-static var player_name = "Nameless";
-static var interactive_object:GameObject;
-static var player_object:GameObject;
+static var debuggingEnabled = true;
+static var playerName = "Nameless";
+static var interactiveObject:GameObject;
+static var playerObject:GameObject;
 static var started = false;
+
+static var currentChapter : Chapter;
+static var currentScene : Scene;
 
 
 ////////////////////
 // Player
 ////////////////////
 static function SetPlayerObject ( obj:GameObject ) {
-	player_object = obj;
+	playerObject = obj;
 }
 
 static function GetPlayerObject () {
-	return player_object;
+	return playerObject;
 }
 
 
@@ -27,7 +30,7 @@ static function GetPlayerObject () {
 // Interactions
 ////////////////////
 static function SetInteractiveObject ( obj : GameObject ) {
-	interactive_object = obj;
+	interactiveObject = obj;
 	
 	if ( obj ) {
 		Print ( "GameCore | interactive object set to: " + obj );
@@ -37,7 +40,7 @@ static function SetInteractiveObject ( obj : GameObject ) {
 }
 
 static function GetInteractiveObject () {
-	return interactive_object;
+	return interactiveObject;
 }
 
 
@@ -45,8 +48,8 @@ static function GetInteractiveObject () {
 // Controls
 ////////////////////
 static function ToggleControls ( state : boolean ) {
-	player_object.GetComponent(CharacterController).enabled = state;
-	player_object.GetComponent(ThirdPersonController).enabled = state;
+	playerObject.GetComponent(CharacterController).enabled = state;
+	playerObject.GetComponent(ThirdPersonController).enabled = state;
 	
 	if ( state ) {
 		Print ( "GameCore | controls activated" );
@@ -85,7 +88,7 @@ function Update () {
 // Debug
 ////////////////////
 static function Print ( msg : String ) {
-	if ( debugging_enabled ) {
+	if ( debuggingEnabled ) {
 		Debug.Log ( msg );
 	}
 }

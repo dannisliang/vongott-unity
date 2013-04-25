@@ -38,7 +38,7 @@ class OGScrollView extends OGWidget {
 	
 		GUI.EndScrollView();
 	
-		if ( area == 0 ) {
+		if ( area == 0 && widgets.Count > 0 ) {
 			var first = widgets[0];
 			var last = widgets[widgets.Count - 1];
 									

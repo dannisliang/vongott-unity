@@ -179,7 +179,7 @@ function ClosePrompt () {
 // press OK
 function PromptOK () {
 	if ( prompt.input.label.text != "" ) {
-		GameCore.player_name = prompt.input.label.text;
+		GameCore.playerName = prompt.input.label.text;
 	}
 	
 	if ( prompt_current_convo ) {

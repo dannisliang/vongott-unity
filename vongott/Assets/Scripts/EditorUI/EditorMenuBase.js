@@ -12,6 +12,7 @@ class EditorMenuBase extends OGPage {
 	var fileMenu : OGDropDown;
 	var viewMenu : OGDropDown;
 	var editorsMenu : OGDropDown;
+	var addMenu : OGDropDown;
 	
 	var inspector : OGGroup;
 	var inspectorBg : OGRect;
@@ -28,12 +29,12 @@ class EditorMenuBase extends OGPage {
 	
 	// Open file
 	var OpenFile : Function = function () {
-		Debug.Log ( "Opened file" );
+		EditorCore.LoadFile ( "TestMap" );
 	};
 	
 	// Save file
 	var SaveFile : Function = function () {
-		Debug.Log ( "Saved file" );
+		EditorCore.SaveFile ( "TestMap" );
 	};
 	
 	// Save file as
@@ -79,17 +80,37 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Conversation editor
 	var ConversationEditor : Function = function () {
-		OGPageManager.GoToPage ( "ConversationEditor" );
+		OGPageManager.GoToPage ( "Conversations" );
 	};
 	
 	// Quest editor
 	var QuestEditor : Function = function () {
-		OGPageManager.GoToPage ( "QuestEditor" );
+		OGPageManager.GoToPage ( "Quests" );
 	};
 	
 	// Flag editor
 	var FlagEditor : Function = function () {
-		OGPageManager.GoToPage ( "FlagEditor" );
+		OGPageManager.GoToPage ( "Flags" );
+	};
+	
+	
+	////////////////////
+	// Add menu
+	////////////////////
+	// Prefabs
+	var AddPrefabs : Function = function () 
+	{
+		OGPageManager.GoToPage ( "Prefabs" );
+	};
+	
+	var AddCharacters : Function = function () 
+	{
+		OGPageManager.GoToPage ( "Characters" );
+	};
+	
+	var AddLight : Function = function () 
+	{
+		EditorCore.AddLight ();
 	};
 	
 	
@@ -128,19 +149,29 @@ class EditorMenuBase extends OGPage {
 		viewMenu.x = 96;
 		viewMenu.y = 16;
 	
+		// top panel : add menu
+		addMenu = new OGDropDown ( "Add" );
+		addMenu.Add ( "Light", AddLight );
+		addMenu.Add ( "Prefabs", AddPrefabs );
+		addMenu.Add ( "Character", AddCharacters );
+	
+		addMenu.x = 176;
+		addMenu.y = 16;
+	
 		// top panel : editors menu
 		editorsMenu = new OGDropDown ( "Editors" );
 		editorsMenu.Add ( "Conversations", ConversationEditor );
 		editorsMenu.Add ( "Quests", QuestEditor );
 		editorsMenu.Add ( "Flags", FlagEditor );
 	
-		editorsMenu.x = 176;
+		editorsMenu.x = 256;
 		editorsMenu.y = 16;
 	
 		// top panel : add to group
 		topPanel.Add ( topPanelBg );
 		topPanel.Add ( fileMenu );
 		topPanel.Add ( viewMenu );
+		topPanel.Add ( addMenu );
 		topPanel.Add ( editorsMenu );
 		
 	

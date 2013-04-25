@@ -20,10 +20,16 @@ class OGPageManager {
 			}
 		}
 		
+		if ( currentPage == null ) {
+			Debug.LogError ( "OGPageManager | invalid page" );
+		}
+		
 		currentPage.Init ();
 	}
 	
 	static function Update () {
-		currentPage.Update ();
+		if ( currentPage ) {
+			currentPage.Update ();
+		}
 	}
 }

@@ -67,7 +67,7 @@ class OGDropDown extends OGWidget {
 			GUI.Box ( Rect ( x-8, y+32, 8 + width * 4, 8 + submenu.Count * 24 ), "" );
 			
 			for ( var i = 0; i < submenu.Count; i++ ) {			
-				if ( GUI.Button ( Rect ( x-8, 56 + ( 24 * i ), (width * 4) + 8, 16 ), submenu[i].Key, list ) ) {
+				if ( GUI.Button ( Rect ( x-8, y + 40 + ( 24 * i ), (width * 4) + 8, 16 ), submenu[i].Key, list ) ) {
 					submenu[i].Value();
 					isDown = false;
 				}

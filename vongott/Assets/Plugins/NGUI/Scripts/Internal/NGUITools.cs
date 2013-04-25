@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2012 Tasharen Entertainment
+// Copyright ï¿½ 2011-2012 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -577,7 +577,7 @@ static public class NGUITools
 	}
 
 	/// <summary>
-	/// SetActiveRecursively enables children before parents. This is a problem when a widget gets re-enabled
+	/// SetActive enables children before parents. This is a problem when a widget gets re-enabled
 	/// and it tries to find a panel on its parent.
 	/// </summary>
 

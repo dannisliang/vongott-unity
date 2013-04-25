@@ -90,6 +90,7 @@ function Update () {
 			if ( !Input.GetKey ( KeyCode.LeftShift ) ) {
 				EditorCore.DeselectAllObjects();
 				EditorCore.SelectObject ( obj );
+				EditorCore.SetGrabMode( false );
 			} else if ( EditorCore.IsObjectSelected ( obj ) ) {
 				EditorCore.DeselectObject ( obj );
 			} else {
@@ -98,6 +99,7 @@ function Update () {
 					
 		} else {
 			EditorCore.DeselectAllObjects ();
+			EditorCore.ToggleGrabMode();
 		}
 	}
 		
