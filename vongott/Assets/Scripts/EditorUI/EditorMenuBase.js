@@ -18,6 +18,11 @@ class EditorMenuBase extends OGPage {
 	var inspectorBg : OGRect;
 	var inspectorScroll : OGScrollView;
 	
+	var statusBar : OGGroup;
+	var statusBarBg : OGRect;
+	var objectInfo : OGLabel;
+	
+	
 	////////////////////
 	// File menu
 	////////////////////
@@ -207,13 +212,34 @@ class EditorMenuBase extends OGPage {
 		inspector.Add ( inspectorBg );
 		inspector.Add ( inspectorScroll );
 	
-		// disable by default
-		inspector.enabled = false;
+		
+		// status bar
+		statusBar = new OGGroup();
 	
+		// status bar : background;
+		statusBarBg = new OGRect ();
+		statusBarBg.x = 8;
+		statusBarBg.y = Screen.height - 32;
+		statusBarBg.width = Screen.width - 16;
+		statusBarBg.height = 24;
+		
+		// status bar : info
+		objectInfo = new OGLabel ( "info here" );
+		objectInfo.x = statusBarBg.x + 8;
+		objectInfo.y = statusBarBg.y + 6;
+		
+		// status bar : add to group
+		statusBar.Add ( statusBarBg );
+		statusBar.Add ( objectInfo );
+		
+	
+		// disabled by default
+		inspector.enabled = false;
 	
 		// add widgets
 		OGCore.Add ( topPanel );
 		OGCore.Add ( inspector );
+		OGCore.Add ( statusBar );
 	}
 	
 	
@@ -221,6 +247,12 @@ class EditorMenuBase extends OGPage {
 	// Update
 	////////////////////
 	override function Update () {
-		inspector.enabled = ( EditorCore.GetSelectedObjects().Count == 1 );
+		if ( EditorCore.GetSelectedObjects().Count <= 0 ) {
+			inspector.enabled = false;
+			objectInfo.text = Application.dataPath + "/" + EditorCore.currentLevel.name;
+		} else {
+			inspector.enabled = true;
+			objectInfo.text = "Object(s) selected";
+		}
 	}
 }

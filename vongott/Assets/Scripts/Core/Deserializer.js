@@ -28,6 +28,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newObj.GetComponent(LightSource).SetRange ( lgt.GetField ("range").n );
 		newObj.GetComponent(LightSource).SetColor ( DeserializeColor( lgt.GetField ("color") ) );
 		newObj.GetComponent(LightSource).SetIntensity ( lgt.GetField ("intensity").n );
+		newObj.transform.localPosition = DeserializeVector3 ( lgt.GetField("localPosition") );
 	
 		return newObj;
 	}
