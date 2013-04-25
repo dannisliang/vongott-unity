@@ -14,6 +14,8 @@ static var grabMode = false;
 static var grabRestrict : String;
 static var workspace : Transform;
 static var gizmo : GameObject;
+static var selectedMaterial : Material;
+static var previousMaterials : List.< KeyValuePair.< GameObject, Material > >;
 
 
 ////////////////////
@@ -77,7 +79,13 @@ static function DeselectAllObjects () {
 static function DeselectObject ( obj : GameObject ) {
 	selectedObjects.Remove ( obj );
 	
-	obj.renderer.material.color = Color.white;
+	for ( var kvp : KeyValuePair.< GameObject, Material > in previousMaterials ) {
+		if ( kvp.Key == obj ) {
+			obj.renderer.material = kvp.Value;
+			previousMaterials.Remove ( kvp );
+			return;
+		}
+	}
 }
 
 // Set grab mode
@@ -93,6 +101,7 @@ static function SetGrabMode ( state : boolean ) {
 		gizmo.transform.parent = selectedObjects[selectedObjects.Count-1].transform;
 		gizmo.transform.localPosition = Vector3.zero;
 	} else {
+		ToggleRestriction ( null );
 		gizmo.SetActive ( false );
 		gizmo.transform.parent = workspace;
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
@@ -121,7 +130,8 @@ static function ToggleRestriction ( axis : String ) {
 static function SelectObject ( obj : GameObject ) {
 	selectedObjects.Add ( obj );
 	
-	obj.renderer.material.color = Color.green;
+	previousMaterials.Add ( new KeyValuePair.< GameObject, Material > ( obj, obj.renderer.material ) );
+	obj.renderer.material = selectedMaterial;
 }
 
 // Save file
@@ -146,6 +156,8 @@ function Start () {
 	workspace = _workspace;
 	gizmo = _gizmo;
 	
+	selectedMaterial = Resources.Load ( "Materials/Editor/editor_outline" );	
+	previousMaterials = new List.< KeyValuePair.< GameObject, Material > > ();
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	gizmo.SetActive ( false );
 }

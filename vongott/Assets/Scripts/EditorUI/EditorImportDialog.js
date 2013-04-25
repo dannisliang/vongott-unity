@@ -50,7 +50,7 @@ class EditorImportDialog extends OGPage {
 		title.x = background.x + 16;
 		title.y = background.y + 16;
 		title.style.fontStyle = FontStyle.Bold;
-		title.style.fontSize = 12;
+		title.style.fontSize = 14;
 		
 		// obj button
 		objButton = new OGButton ( "OBJ", pickObj );

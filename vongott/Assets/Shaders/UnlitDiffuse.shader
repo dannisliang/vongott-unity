@@ -12,16 +12,18 @@ _Color("_Color", Color) = (1,0,0,1)
 		{
 "Queue"="Geometry"
 "IgnoreProjector"="False"
-"RenderType"="Opaque"
+"RenderType"="Transparent"
 
 		}
 
-		
-Cull Back
+
+Lighting Off		
+Cull Off
 ZWrite On
-ZTest LEqual
+ZTest Always
 ColorMask RGBA
 Fog{
+Mode Off
 }
 
 

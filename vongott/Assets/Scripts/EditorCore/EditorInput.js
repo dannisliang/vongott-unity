@@ -34,7 +34,7 @@ static function Update () {
 			
 		}
 	
-	// standard
+	// camera mode
 	} else {	
 		// tab key: toggle menu
 		if ( Input.GetKeyDown ( KeyCode.Tab ) ) {
@@ -67,6 +67,16 @@ static function Update () {
 			Camera.main.transform.localEulerAngles = new Vector3 ( 0.0, 0.0, 0.0 );
 			Camera.main.transform.localPosition = new Vector3 ( 0.0, 0.0, -500.0 );
 		
+		// CTRL modifier
+		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) ) {
+			if ( Input.GetKeyDown ( KeyCode.S ) ) {
+				if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
+					return;
+				} else {
+					EditorCore.SaveFile ( EditorCore.currentLevel.name );
+					return;
+				}
+			}
 		}
 	}
 }

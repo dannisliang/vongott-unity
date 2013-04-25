@@ -83,7 +83,9 @@
      <Compile Include="Assets\Scripts\EditorUI\EditorImportDialog.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorMenuBase.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorMenuRoot.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorOpenFile.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorPrefabs.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorRenameDialog.js" />
      <Compile Include="Assets\Scripts\Triggers\Door.js" />
      <Compile Include="Assets\Scripts\Triggers\InteractiveObject.js" />
      <Compile Include="Assets\Scripts\UI\HUD.js" />
@@ -126,6 +128,7 @@
      <None Include="Assets\Demos\Outline\Outline.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
+     <None Include="Assets\Shaders\OutlineDiffuse.shader" />
      <None Include="Assets\Demos\Distortion(ProOnly)\Distortion.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (HardClip).shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />

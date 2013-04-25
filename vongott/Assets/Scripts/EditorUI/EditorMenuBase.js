@@ -16,12 +16,19 @@ class EditorMenuBase extends OGPage {
 	
 	var inspector : OGGroup;
 	var inspectorBg : OGRect;
-	var inspectorScroll : OGScrollView;
+	var inspectorPosition : OGGroup;
+	var inspectorPositionTitle : OGLabel;
+	var inspectorPositionX : OGLabel;
+	var inspectorPositionY : OGLabel;
+	var inspectorPositionZ : OGLabel;
 	
 	var statusBar : OGGroup;
 	var statusBarBg : OGRect;
+	var statusUpdate : String;
 	var objectInfo : OGLabel;
 	
+	// Private vars
+	var unit : int = 32;
 	
 	////////////////////
 	// File menu
@@ -34,17 +41,22 @@ class EditorMenuBase extends OGPage {
 	
 	// Open file
 	var OpenFile : Function = function () {
-		EditorCore.LoadFile ( "TestMap" );
+		OGPageManager.GoToPage ( "OpenFile" );
 	};
-	
+		
 	// Save file
 	var SaveFile : Function = function () {
-		EditorCore.SaveFile ( "TestMap" );
+		if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
+			RenameLevel ();
+			return;
+		}
+	
+		EditorCore.SaveFile ( EditorCore.currentLevel.name );
 	};
 	
-	// Save file as
-	var SaveFileAs : Function = function () {
-		Debug.Log ( "Saved file as.." );
+	// Rename level
+	var RenameLevel : Function = function () {
+		OGPageManager.GoToPage ( "RenameDialog" );
 	};
 	
 	// Import file
@@ -128,9 +140,9 @@ class EditorMenuBase extends OGPage {
 
 		// top panel : background
 		topPanelBg = new OGRect ();
-		topPanelBg.x = 8;
-		topPanelBg.y = 8;
-		topPanelBg.width = Screen.width - 16;
+		topPanelBg.x = -8;
+		topPanelBg.y = -8;
+		topPanelBg.width = Screen.width + 16;
 		topPanelBg.height = 32;
 		
 		// top panel : file
@@ -138,12 +150,12 @@ class EditorMenuBase extends OGPage {
 		fileMenu.Add ( "New", NewFile );
 		fileMenu.Add ( "Open", OpenFile );
 		fileMenu.Add ( "Save", SaveFile );
-		fileMenu.Add ( "Save As..", SaveFileAs );
+		fileMenu.Add ( "Rename..", RenameLevel );
 		fileMenu.Add ( "Import..", ImportFile );
 		fileMenu.Add ( "Exit", Exit );
 	
 		fileMenu.x = 16;
-		fileMenu.y = 16;
+		fileMenu.y = 6;
 		
 		// top panel : view
 		viewMenu = new OGDropDown ( "View" );
@@ -152,7 +164,7 @@ class EditorMenuBase extends OGPage {
 		viewMenu.Add ( "Textured", ToggleTextured );
 		
 		viewMenu.x = 96;
-		viewMenu.y = 16;
+		viewMenu.y = 6;
 	
 		// top panel : add menu
 		addMenu = new OGDropDown ( "Add" );
@@ -161,7 +173,7 @@ class EditorMenuBase extends OGPage {
 		addMenu.Add ( "Character", AddCharacters );
 	
 		addMenu.x = 176;
-		addMenu.y = 16;
+		addMenu.y = 6;
 	
 		// top panel : editors menu
 		editorsMenu = new OGDropDown ( "Editors" );
@@ -170,7 +182,7 @@ class EditorMenuBase extends OGPage {
 		editorsMenu.Add ( "Flags", FlagEditor );
 	
 		editorsMenu.x = 256;
-		editorsMenu.y = 16;
+		editorsMenu.y = 6;
 	
 		// top panel : add to group
 		topPanel.Add ( topPanelBg );
@@ -190,27 +202,38 @@ class EditorMenuBase extends OGPage {
 		inspectorBg.width = 128;
 		inspectorBg.height = 256;
 	
-		// inspector : scrollview
-		inspectorScroll = new OGScrollView ();
+		// inspector : position
+		inspectorPosition = new OGGroup();
 		
-		var dudes : OGWidget[] = new OGWidget[20];
+		// inspector : position : title
+		inspectorPositionTitle = new OGLabel( "Position" );
+		inspectorPositionTitle.x = inspectorBg.x + 8;
+		inspectorPositionTitle.y = inspectorBg.y + 8;
 		
-		for ( var i = 0; i < 20; i++ ) {
-			dudes[i] = new OGLabel ( "dude " + i );
-			dudes[i].x = 16;
-			dudes[i].y = i * 48;
-		
-			inspectorScroll.Add ( dudes[i] );
-		}
-		
-		inspectorScroll.x = Screen.width - 8 - 128;
-		inspectorScroll.y = (Screen.height / 2 ) - 128;
-		inspectorScroll.width = 128;
-		inspectorScroll.height = 256;
+		// inspector : position : x
+		inspectorPositionX = new OGLabel ( "" );
+		inspectorPositionX.x = inspectorBg.x + unit / 2;
+		inspectorPositionX.y = inspectorBg.y + unit;
+	
+		// inspector : position : y
+		inspectorPositionY = new OGLabel ( "" );
+		inspectorPositionY.x = inspectorPositionX.x;
+		inspectorPositionY.y = inspectorPositionX.y + unit / 2;
+	
+		// inspector : position : z
+		inspectorPositionZ = new OGLabel ( "" );
+		inspectorPositionZ.x = inspectorPositionY.x;
+		inspectorPositionZ.y = inspectorPositionY.y + unit / 2;
+	
+		// inspector : position : add group
+		inspectorPosition.Add ( inspectorPositionTitle );
+		inspectorPosition.Add ( inspectorPositionX );
+		inspectorPosition.Add ( inspectorPositionY );
+		inspectorPosition.Add ( inspectorPositionZ );
 	
 		// inspector : add to group
 		inspector.Add ( inspectorBg );
-		inspector.Add ( inspectorScroll );
+		inspector.Add ( inspectorPosition );
 	
 		
 		// status bar
@@ -247,12 +270,23 @@ class EditorMenuBase extends OGPage {
 	// Update
 	////////////////////
 	override function Update () {
-		if ( EditorCore.GetSelectedObjects().Count <= 0 ) {
+		var count = EditorCore.GetSelectedObjects().Count;
+		
+		if ( count <= 0 ) {
 			inspector.enabled = false;
-			objectInfo.text = Application.dataPath + "/" + EditorCore.currentLevel.name;
+			if ( statusUpdate != "" ) {
+				objectInfo.text = statusUpdate;
+			} else {
+				objectInfo.text = EditorCore.currentLevel.name;
+			}
+		
 		} else {
 			inspector.enabled = true;
-			objectInfo.text = "Object(s) selected";
+			objectInfo.text = EditorCore.GetSelectedObjects()[count-1].name;
+		
+			inspectorPositionX.text = "X: " + EditorCore.GetSelectedObjects()[count-1].transform.localPosition.x.ToString();
+			inspectorPositionY.text = "Y: " + EditorCore.GetSelectedObjects()[count-1].transform.localPosition.y.ToString();
+			inspectorPositionZ.text = "Z: " + EditorCore.GetSelectedObjects()[count-1].transform.localPosition.z.ToString();
 		}
 	}
 }

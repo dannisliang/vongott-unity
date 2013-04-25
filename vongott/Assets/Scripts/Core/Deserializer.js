@@ -5,30 +5,33 @@
 ////////////////////
 // GameObject
 static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject {
-	var newObj : GameObject;
-		
 	// check if prefab
 	if ( obj.HasField("Prefab") ) {
 		var pfb : JSONObject = obj.GetField("Prefab");
-						
 		var newPfb : GameObject = Instantiate ( Resources.Load ( "Prefabs/" + pfb.GetField("path").str + "/" + pfb.GetField("id").str ) as GameObject );
+		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;
 		newPfb.transform.localScale = DeserializeVector3 ( pfb.GetField("localScale") );
 		newPfb.transform.localPosition = DeserializeVector3 ( pfb.GetField("localPosition") );
 		newPfb.transform.localEulerAngles = DeserializeVector3 ( pfb.GetField("localEulerAngles") );
 		
+		newPfb.name = pfb.GetField("id").str;
+		
 		return newPfb;
 
 	// check if lightsource
 	} else if ( obj.HasField("LightSource") ) {
 		var lgt : JSONObject = obj.GetField("LightSource");
+		var newObj : GameObject;
 		
 		newObj = Instantiate ( Resources.Load ( "Prefabs/Editor/light_source" ) as GameObject );
 		newObj.GetComponent(LightSource).SetRange ( lgt.GetField ("range").n );
 		newObj.GetComponent(LightSource).SetColor ( DeserializeColor( lgt.GetField ("color") ) );
 		newObj.GetComponent(LightSource).SetIntensity ( lgt.GetField ("intensity").n );
 		newObj.transform.localPosition = DeserializeVector3 ( lgt.GetField("localPosition") );
+	
+		newObj.name = newObj.name.Replace( "(Clone)", "" );
 	
 		return newObj;
 	}
