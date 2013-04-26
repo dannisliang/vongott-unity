@@ -1,7 +1,7 @@
 #pragma strict
 
 // Classes
-class OGPopUp extends OGWidget {
+class OGPopUp extends OGWidget {	
 	var title : String;
 	var submenu : List.< KeyValuePair.<String, Function> > = new List.< KeyValuePair.<String, Function> > ();
 	var selectedValue : int;
@@ -18,7 +18,7 @@ class OGPopUp extends OGWidget {
 	var text : GUIStyle = new GUIStyle();
 			
 	// Init
-	private function Init () {	
+	function Start () {	
 		bg = new Texture2D(2,2);
 		bg.SetPixels([Color.white,Color.white,Color.white,Color.white]);
 		bg.Apply();
@@ -34,22 +34,6 @@ class OGPopUp extends OGWidget {
 		text.fontSize = 12;
 	}
 	
-	// Set width
-	private function SetWidth () {
-		for ( var kvp : KeyValuePair.<String, Function> in submenu ) {
-			if ( width < ( kvp.Key.Length * 2 ) ) {
-				width = ( kvp.Key.Length * 2 );
-			}
-		}
-	}
-	
-	// Constructor
-	function OGPopUp ( t : String ) {
-		title = t;
-		
-		Init ();
-	}
-	
 	// Add submenu item
 	function Add ( str : String, func : Function ) {
 		var kvp : KeyValuePair.<String, Function> = new KeyValuePair.<String, Function>( str, func );
@@ -57,7 +41,7 @@ class OGPopUp extends OGWidget {
 	}
 	
 	// Draw
-	override function Draw () {	
+	function OnGUI () {	
 		if ( !enabled ) {
 			return;
 		}
@@ -66,23 +50,23 @@ class OGPopUp extends OGWidget {
 			selectedValue = 0;
 		}
 		
-		GUI.Label ( Rect ( x, y, width, 32 ), title, text );
+		GUI.Label ( Rect ( transform.localPosition.x, transform.localPosition.y, transform.localScale.x, 32 ), title, text );
 		
 		// submenu
 		if ( isUp ) {
-			GUI.Box ( Rect ( x + (width*4), y - 4, 8 + width * 4, 8 + submenu.Count * 24 ), "" );
+			GUI.Box ( Rect ( transform.localPosition.x + (transform.localScale.x*4), transform.localPosition.y - 4, 8 + transform.localScale.x * 4, 8 + submenu.Count * 24 ), "" );
 			
 			for ( var i = 0; i < submenu.Count; i++ ) {			
-				if ( GUI.Button ( Rect ( x  + (width*4), y + 4 + ( 24 * i ), (width * 4) + 8, 16 ), submenu[i].Key, list ) ) {
+				if ( GUI.Button ( Rect ( transform.localPosition.x  + (transform.localScale.x*4), transform.localPosition.y + 4 + ( 24 * i ), (transform.localScale.x * 4) + 8, 16 ), submenu[i].Key, list ) ) {
 					submenu[i].Value();
 					isUp = false;
 					selectedValue = i;
 				}
 			}
 		} else {			
-			GUI.Box ( Rect ( x + (width*4), y - 4, 8 + ( width * 4 ), 24 ), "" );
+			GUI.Box ( Rect ( transform.localPosition.x + (transform.localScale.x*4), transform.localPosition.y - 4, 8 + ( transform.localScale.x * 4 ), 24 ), "" );
 			
-			if ( GUI.Button ( Rect ( x + 8 + (width*4), y, ( width * 4 ) - 8, 16 ), submenu[selectedValue].Key, button ) ) {
+			if ( GUI.Button ( Rect ( transform.localPosition.x + 8 + (transform.localScale.x*4), transform.localPosition.y, ( transform.localScale.x * 4 ) - 8, 16 ), submenu[selectedValue].Key, button ) ) {
 				isUp = !isUp;
 			}
 		}
@@ -99,16 +83,9 @@ class OGPopUp extends OGWidget {
 	}
 	
 	// Update
-	override function Update () {
-		if ( enabled ) {
-			if ( !adjusted ) {
-				SetWidth ();
-				adjusted = true;
-			}
-			
-			if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-				isUp = false;
-			}
+	function Update () {		
+		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
+			isUp = false;
 		}
 	}
 }

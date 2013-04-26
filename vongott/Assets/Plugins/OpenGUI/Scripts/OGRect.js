@@ -1,13 +1,9 @@
 #pragma strict
 
+@script ExecuteInEditMode
+
 class OGRect extends OGWidget {
-	function OGRect () {}
-	
-	override function Draw () {
-		if ( !enabled ) {
-			return;
-		}
-		
-		GUI.Box ( Rect ( x, y, width, height ), "" );
+	override function Draw ( x : float, y : float ) {
+		GUI.Box ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), "" );
 	}
 }

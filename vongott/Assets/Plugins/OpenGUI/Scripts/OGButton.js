@@ -1,25 +1,23 @@
 #pragma strict
 
 class OGButton extends OGWidget {
-	var style : GUIStyle;
-	var texture : Texture;
-	var func : Function;
 	var text : String;
+	var target : GameObject;
+	var message : String;
+	var argument : String;
 
-	function OGButton ( s : String, f : Function ) {
-		text = s;
-		func = f;
+
+	function Start () {
+		
 	}
 
-	override function Draw () {
-		if ( !texture ) {
-			if ( GUI.Button ( Rect ( x, y, width, height ), text ) ) {
-				func ();
-			}
-		} else {
-			if ( GUI.Button ( Rect ( x, y, width, height ), texture ) ) {
-				func ();
-			}
+	override function UpdateWidget () {
+
+	}
+
+	override function Draw ( x : float, y : float ) {		
+		if ( GUI.Button ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text ) ) {
+			target.SendMessage ( message, argument );
 		}
 	}
 }

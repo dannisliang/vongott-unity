@@ -1,74 +1,59 @@
 #pragma strict
 
+import System.Collections.Generic;
+
+@script ExecuteInEditMode
+
 // Classes
-class OGDropDown extends OGWidget {
-	var title : String;
-	var submenu : List.< KeyValuePair.<String, Function> > = new List.< KeyValuePair.<String, Function> > ();
-	
-	var adjusted = false;
+private class DropDownItem {
+	var name : String;
+	var message : String;
+}
+
+class OGDropDown extends OGWidget {	
 	var isDown = false;
+	var title : String;
+	var font : Font;
+	var style : FontStyle;
+	var size : int = 12;
+	var alignment : TextAnchor;
+	var highlight : Color = Color.white;
+	var titleNormal : Color = Color.white;
+	var titleHover : Color = Color.blue;
+	var textNormal : Color = Color.white;
+	var textHover : Color = Color.black;
+	var padding : Vector2;
+	var offset : Vector2;
 	
-	// Images
-	var bg : Texture2D;
+	var target : GameObject;
+	var submenu : DropDownItem[];
+	
+	// Image
+	@HideInInspector var bg : Texture2D;
 	
 	// Styles
-	var list : GUIStyle = new GUIStyle();
-	var button : GUIStyle = new GUIStyle();
+	@HideInInspector var list : GUIStyle = new GUIStyle();
+	@HideInInspector var button : GUIStyle = new GUIStyle();
 		
 	// Init
-	private function Init () {	
+	function Start () {	
 		bg = new Texture2D(2,2);
-		bg.SetPixels([Color.white,Color.white,Color.white,Color.white]);
-		bg.Apply();
-		
-		list.normal.textColor = Color.white;
-		list.hover.background = bg;
-		list.hover.textColor = Color.black;
-		list.padding.left = 8;
-		
-		button.normal.textColor = Color.white;
-	}
-	
-	// Set width
-	private function SetWidth () {
-		for ( var kvp : KeyValuePair.<String, Function> in submenu ) {
-			if ( width < ( kvp.Key.Length * 2 ) ) {
-				width = ( kvp.Key.Length * 2 );
-			}
-		}
-	}
-	
-	// Constructor
-	function OGDropDown ( t : String ) {
-		title = t;
-		
-		Init ();
-	}
-	
-	// Add submenu item
-	function Add ( str : String, func : Function ) {
-		var kvp : KeyValuePair.<String, Function> = new KeyValuePair.<String, Function>( str, func );
-		submenu.Add ( kvp );
 	}
 	
 	// Draw
-	override function Draw () {	
-		if ( !enabled ) {
-			return;
-		}
-				
+	override function Draw ( x : float, y : float ) {				
 		// button
-		if ( GUI.Button ( Rect ( x, y, ( width * 4 ) - 8, 16 ), title, button ) ) {
+		if ( GUI.Button ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), title, button ) ) {
 			isDown = !isDown;
 		}
 				
 		// submenu
 		if ( isDown ) {
-			GUI.Box ( Rect ( x-8, y+32, 8 + width * 4, 8 + submenu.Count * 24 ), "" );
+			GUI.Box ( Rect ( x - offset.x, y + offset.y, ( padding.x * 2 ) + transform.localScale.x, ( submenu.Length * offset.y ) + ( padding.y * 2 ) ), "" );
 			
-			for ( var i = 0; i < submenu.Count; i++ ) {			
-				if ( GUI.Button ( Rect ( x-8, y + 40 + ( 24 * i ), (width * 4) + 8, 16 ), submenu[i].Key, list ) ) {
-					submenu[i].Value();
+			for ( var i = 0; i < submenu.Length; i++ ) {			
+				if ( GUI.Button ( Rect ( x - offset.x, y + offset.y + 4 + ( offset.y * i ), ( padding.x * 2 ) + transform.localScale.x, transform.localScale.y ), submenu[i].name, list ) ) {
+					target.SendMessage(submenu[i].message);
 					isDown = false;
 				}
 			}
@@ -76,11 +61,22 @@ class OGDropDown extends OGWidget {
 	}
 	
 	// Update
-	override function Update () {
-		if ( !adjusted ) {
-			SetWidth ();
-			adjusted = true;
-		}
+	override function UpdateWidget () {
+		bg.SetPixels([highlight,highlight,highlight,highlight]);
+		bg.Apply();
+		
+		list.font = font;
+		list.fontSize = size;
+		list.normal.textColor = textNormal;
+		list.hover.background = bg;
+		list.hover.textColor = textHover;
+		list.padding.left = padding.x;
+		list.padding.top = padding.y;
+		
+		button.font = font;
+		button.fontSize = size;
+		button.normal.textColor = titleNormal;
+		button.onHover.textColor = titleHover;
 		
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			isDown = false;

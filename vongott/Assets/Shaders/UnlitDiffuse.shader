@@ -10,7 +10,7 @@ _Color("_Color", Color) = (1,0,0,1)
 	{
 		Tags
 		{
-"Queue"="Geometry"
+"Queue"="Transparent+1"
 "IgnoreProjector"="False"
 "RenderType"="Transparent"
 

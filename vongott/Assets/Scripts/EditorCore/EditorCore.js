@@ -131,6 +131,7 @@ static function SelectObject ( obj : GameObject ) {
 	selectedObjects.Add ( obj );
 	
 	previousMaterials.Add ( new KeyValuePair.< GameObject, Material > ( obj, obj.renderer.material ) );
+	
 	obj.renderer.material = selectedMaterial;
 }
 

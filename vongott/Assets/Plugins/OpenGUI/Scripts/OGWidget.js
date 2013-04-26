@@ -1,98 +1,153 @@
 #pragma strict
 
-enum RelativePos {
-	TopLeft,
-	Top,
-	TopRight,
-	Right,
+@script ExecuteInEditMode
+
+enum RelativeX {
+	None,
+	Left,
 	Center,
-	BottomRight,
-	Bottom,
-	BottomLeft,
-	Left
+	Right
+}
+
+enum RelativeY {
+	None,
+	Top,
+	Center,
+	Bottom
 }
 
 enum ScreenSize {
 	None,
 	ScreenWidth,
-	ScreenHeight,
-	HalfScreenWidth,
-	HalfScreenHeight,
+	ScreenHeight
 }
 
 private class Stretch {
 	var width : ScreenSize = ScreenSize.None;
+	var widthFactor : float = 1.0;
+	var widthOffset : float = 0.0;
+	
 	var height : ScreenSize = ScreenSize.None;
+	var heightFactor : float = 1.0;
+	var heightOffset : float = 0.0;
 }
 
-class OGWidget {
-	var relativeTo : RelativePos = RelativePos.TopLeft;	
-	var x : int = 0;
-	var y : int = 0;
-	var stretch : Stretch = new Stretch();
-	var width : int = 16;
-	var height : int = 16;
+private class Anchor {
+	var object : GameObject;
 	
-	var enabled = true;
+	var x : RelativeX = RelativeX.None;
+	var xOffset : float = 0.0;
 	
-	function SetPosition () {
-		var modify_x = 0;
-		var modify_y = 0;
-		
-		if ( relativeTo == RelativePos.TopLeft ) {
-			// do nothing
-		} else if ( relativeTo == RelativePos.Top ) {
-			modify_x = ( Screen.width / 2 ) - ( width / 2 );
-		} else if ( relativeTo == RelativePos.TopRight ) {
-			modify_x = Screen.width - width;
-		} else if ( relativeTo == RelativePos.Right ) {
-			modify_x = Screen.width - width;
-			modify_y = ( Screen.height / 2 ) - ( height / 2 );
-		} else if ( relativeTo == RelativePos.BottomRight ) {
-			modify_x = Screen.width - width;
-			modify_y = Screen.height - height;
-		} else if ( relativeTo == RelativePos.Bottom ) {
-			modify_x = ( Screen.width / 2 ) - ( width / 2 );
-			modify_y = Screen.height - height;
-		} else if ( relativeTo == RelativePos.BottomLeft ) {
-			modify_y = Screen.height - height;
-		}  else if ( relativeTo == RelativePos.Left ) {
-			modify_y = ( Screen.height / 2 ) - ( height / 2 );
-		}
-		
-		x = modify_x + x;
-		y = modify_y + y;
+	var y : RelativeY = RelativeY.None;
+	var yOffset : float = 0.0;
+}
+
+class OGWidget extends MonoBehaviour {	
+	var drawOrder : int = 0;
+	var drawLocalPosition = false;
+	var manualDraw = false;
+	var anchor : Anchor;	
+	var stretch : Stretch;
+	
+	function SetX ( x : float ) {
+		transform.localPosition = new Vector3 ( x, transform.localPosition.y, 0.0 );
 	}
 	
-	function SetDimensions () {
-		var modify_width = 0;
-		var modify_height = 0;
+	function SetY ( y : float ) {
+		transform.localPosition = new Vector3 ( transform.localPosition.x, y, 0.0 );
+	}
+	
+	function SetWidth ( w : float ) {
+		transform.localScale = new Vector3 ( w, transform.localScale.y, 1.0 );
+	}
+	
+	function SetHeight ( h : float ) {
+		transform.localScale = new Vector3 ( transform.localScale.x, h, 1.0 );
+	}
+	
+	function ApplyStretch () {
+		var modify_width = transform.localScale.x;
+		var modify_height = transform.localScale.y;
 		
 		if ( stretch.width == ScreenSize.ScreenWidth ) {
-			modify_width = Screen.width;
+			modify_width = ( Screen.width * stretch.widthFactor ) + stretch.widthOffset;
 		} else if ( stretch.width == ScreenSize.ScreenHeight ) {
-			modify_width = Screen.height;
-		} else if ( stretch.width == ScreenSize.HalfScreenWidth ) {
-			modify_width = Screen.width / 2;
-		} else if ( stretch.width == ScreenSize.HalfScreenHeight ) {
-			modify_width = Screen.height / 2;
+			modify_width = ( Screen.height * stretch.widthFactor ) + stretch.widthOffset;
 		}
 		
 		if ( stretch.height == ScreenSize.ScreenWidth ) {
-			modify_height = Screen.width;
+			modify_height = ( Screen.width * stretch.heightFactor ) + stretch.heightOffset;
 		} else if ( stretch.height == ScreenSize.ScreenHeight ) {
-			modify_height = Screen.height;
-		} else if ( stretch.height == ScreenSize.HalfScreenWidth ) {
-			modify_height = Screen.width / 2;
-		} else if ( stretch.height == ScreenSize.HalfScreenHeight ) {
-			modify_height = Screen.height / 2;
+			modify_height = ( Screen.height * stretch.heightFactor ) + stretch.heightOffset;
 		}
 		
-		width = modify_width + width;
-		height = modify_height + height;
+		SetWidth ( modify_width );
+		SetHeight ( modify_height );
 	}
 	
-	function Draw () {}
-
-	function Update () {}
+	function ApplyPosition () {
+		if ( !anchor.object && anchor.x == RelativeX.None && anchor.y == RelativeY.None ) {
+			return;
+		}
+		
+		var modify_x = transform.localPosition.x;
+		var modify_y = transform.localPosition.y;
+		
+		var anchor_x = 0;
+		var anchor_y = 0;
+		
+		if ( anchor.object ) {
+			anchor_x = anchor.object.transform.localPosition.x;
+			anchor_y = anchor.object.transform.localPosition.y;
+		
+			anchor.x = RelativeX.None;
+			anchor.y = RelativeY.None;
+		} else {
+			if ( anchor.x == RelativeX.Center ) {
+				anchor_x = Screen.width / 2;
+			} else if ( anchor.x == RelativeX.Right ) {
+				anchor_x = Screen.width;
+			}
+			
+			if ( anchor.y == RelativeY.Center ) {
+				anchor_y = Screen.height / 2;
+			} else if ( anchor.y == RelativeY.Bottom ) {
+				anchor_y = Screen.height;
+			}
+		}
+		
+		modify_x = anchor_x + anchor.xOffset;
+		modify_y = anchor_y + anchor.yOffset;
+		
+		if ( anchor.object || anchor.x != RelativeX.None ) {
+			SetX ( modify_x );
+		}
+		
+		if ( anchor.object || anchor.y != RelativeY.None ) {
+			SetY ( modify_y );
+		}
+	}
+	
+	function UpdateWidget () {}
+	
+	function Draw ( x : float, y : float ) {}
+	
+	function OnGUI () {
+		if ( !manualDraw ) {
+			if ( drawLocalPosition ) {
+				Draw ( transform.localPosition.x, transform.localPosition.y );
+			} else {
+				Draw ( transform.position.x, transform.position.y );
+			}
+		}
+	}
+	
+	function Update () {	
+		if ( stretch ) {
+			ApplyStretch ();
+			ApplyPosition ();
+			
+			UpdateWidget();
+		}
+	}
 }

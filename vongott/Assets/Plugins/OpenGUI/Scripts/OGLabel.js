@@ -1,30 +1,30 @@
 #pragma strict
 
+@script ExecuteInEditMode
+
 class OGLabel extends OGWidget {
-	var text : String = "";
-	var style : GUIStyle;
+	var text : String;
+	var font : Font;
+	var style : FontStyle;
+	var size : int  = 12;
+	var alignment : TextAnchor;
+	var color : Color = Color.white;
 	
-	function OGLabel ( str : String ) {
-		text = str;
-	
-		style = new GUIStyle ();
-		style.normal.textColor = Color.white;
-		style.fontSize = 12;
+	@HideInInspector var guiStyle : GUIStyle;	
+		
+	function Start () {
+		guiStyle = new GUIStyle();
 	}
-		
-	override function Draw () {
-		if ( !enabled ) {
-			return;
-		}
-		
-		if ( width == null ) {
-			width = text.Length * style.fontSize;
-		}
 	
-		if ( height == null ) {
-			height = style.fontSize;
-		}
+	override function UpdateWidget () {
+		guiStyle.font = font;
+		guiStyle.alignment = alignment;
+		guiStyle.fontStyle = style;
+		guiStyle.normal.textColor = color;
+		guiStyle.fontSize = size;
+	}
 	
-		GUI.Label ( Rect ( x, y, width, height ), text, style );
+	override function Draw ( x : float, y : float ) {	
+		GUI.Label ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, guiStyle );
 	}
 }

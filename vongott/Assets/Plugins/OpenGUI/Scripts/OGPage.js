@@ -1,7 +1,13 @@
 #pragma strict
 
-class OGPage {
-	function Init () {}
-	
-	function Update () {}
+@script ExecuteInEditMode
+
+class OGPage extends MonoBehaviour {
+	var pageName : String = "";
+
+	function Start () {
+		if ( pageName == "" ) {
+			pageName = name;
+		}
+	}
 }

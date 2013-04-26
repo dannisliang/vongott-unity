@@ -1,48 +1,54 @@
 #pragma strict
 
 class OGScrollView extends OGWidget {
+	var scrollLength : float;
+	var viewWidth : float = 100;
+	var viewHeight : float = 100;
+	var alwaysVertical = false;
+	var alwaysHorizontal = false;
+	var inset : float = 10;
 	var position : Vector2 = Vector2.zero;
-	var widgets : List.<OGWidget> = new List.<OGWidget>();
-	var area : float = 0;
-
-	var alwaysShowVertical = false;
-	var alwaysShowHorizontal = false;
 	
-	// Constructor
-	function OGScrollView () {
-		
+	// Init
+	function Start () {
+	
 	}
 	
-	// Add widgets
-	function Add ( w : OGWidget ) {
-		widgets.Add ( w );
+	// Update
+	override function Update () {
+		for ( var i = 0; i < transform.childCount; i++ ) {
+			if ( transform.GetChild ( i ).GetComponent( OGWidget ) ) {
+				var w : OGWidget = transform.GetChild ( i ).GetComponent( OGWidget );
+				
+				if ( !w.manualDraw ) {
+					w.manualDraw = true;
+					w.drawLocalPosition = true;
+				}
+			
+				if ( scrollLength < inset + w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset ) {
+					scrollLength = inset + w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset;
+				} 
+			}
+		}
 	}
 	
 	// Draw
-	override function Draw () {
-		if ( !enabled ) {
-			return;
-		}
-		
+	override function Draw ( x : float, y : float ) {
 		position = GUI.BeginScrollView (
-			Rect ( x, y, width, height ),
+			Rect ( x, y, viewWidth, viewHeight ),
 			position,
-			Rect ( 8, -8, width - 16, area ),
-			alwaysShowHorizontal,
-			alwaysShowVertical
+			Rect ( -inset, -inset, viewWidth - ( inset * 2 ), scrollLength ),
+			alwaysHorizontal,
+			alwaysVertical
 		);
 		
-		for ( var w : OGWidget in widgets ) {
-			w.Draw ();
+		for ( var i = 0; i < transform.childCount; i++ ) {
+			if ( transform.GetChild ( i ).GetComponent( OGWidget ) ) {
+				transform.GetChild ( i ).GetComponent( OGWidget ).Draw( transform.GetChild ( i ).transform.localPosition.x, transform.GetChild ( i ).transform.localPosition.y );
+			}
 		}
 	
 		GUI.EndScrollView();
-	
-		if ( area == 0 && widgets.Count > 0 ) {
-			var first = widgets[0];
-			var last = widgets[widgets.Count - 1];
-									
-			area = first.y + first.height + last.y + last.height;
-		}
+
 	}
 }
