@@ -16,6 +16,7 @@ static var workspace : Transform;
 static var gizmo : GameObject;
 static var selectedMaterial : Material;
 static var previousMaterials : List.< KeyValuePair.< GameObject, Material > >;
+static var inspector : EditorMenuBase;
 
 
 ////////////////////
@@ -133,6 +134,8 @@ static function SelectObject ( obj : GameObject ) {
 	previousMaterials.Add ( new KeyValuePair.< GameObject, Material > ( obj, obj.renderer.material ) );
 	
 	obj.renderer.material = selectedMaterial;
+	
+	inspector.SetMenus ();
 }
 
 // Save file
@@ -150,6 +153,11 @@ static function LoadFile ( path : String ) {
 	
 	currentLevel.transform.parent = parent;
 	currentLevel.transform.localPosition = Vector3.zero;
+}
+
+// Set inspector
+static function SetInspector ( i : EditorMenuBase ) {
+	inspector = i;
 }
 
 // Init

@@ -1,11 +1,14 @@
 #pragma strict
 
+@script ExecuteInEditMode
+
 class OGRoot extends MonoBehaviour {
 	var _currentPage : OGPage;
 	var _allPages : OGPage[];
-	
+		
 	static var currentPage : OGPage;
 	static var allPages : OGPage[];
+	static var guiLayer : GUILayer;
 	
 	static function GoToPage ( name : String ) {
 		currentPage.gameObject.SetActive ( false );
@@ -34,6 +37,7 @@ class OGRoot extends MonoBehaviour {
 	function Start () {
 		currentPage = _currentPage;
 		allPages = _allPages;
+		guiLayer = Camera.main.GetComponent(GUILayer);
 		
 		currentPage.gameObject.SetActive ( true );	
 	}

@@ -8,13 +8,15 @@ private class VectorDisplay {
 
 class EditorMenuBase extends OGPage {	
 	////////////////////
-	// Inspector
+	// Public vars
 	////////////////////
 	var objectName : OGLabel;
 	
 	var pos : VectorDisplay;
 	var rot : VectorDisplay;
 	var scl : VectorDisplay;
+	
+	@HideInInspector var subMenus : GameObject[] = new GameObject[5];
 	
 	
 	////////////////////
@@ -110,6 +112,32 @@ class EditorMenuBase extends OGPage {
 	function FlagEditor () {
 		OGRoot.GoToPage ( "Flags" );
 	}
+		
+	////////////////////
+	// Inspector
+	////////////////////
+	function SetMenus () {
+		
+	}
+	
+	function SelectSubmenu ( num : String ) {
+		var number = int.Parse ( num );
+		
+		for ( var i = 0; i < subMenus.Length; i++ ) {
+			if ( subMenus[i] ) {
+				subMenus[i].SetActive ( number == i );
+			}
+		}
+	}
+		
+		
+	////////////////////
+	// Init
+	////////////////////
+	function Start () {
+		EditorCore.SetInspector ( this );
+	}
+	
 		
 	////////////////////
 	// Update

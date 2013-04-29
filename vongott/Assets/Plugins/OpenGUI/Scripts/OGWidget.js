@@ -113,6 +113,8 @@ class OGWidget extends MonoBehaviour {
 	var anchor : Anchor;	
 	var stretch : Stretch;
 	
+	@HideInInspector var guiRect : Rect;
+	
 	function SetX ( x : float ) {
 		transform.localPosition = new Vector3 ( x, transform.localPosition.y, 0.0 );
 	}
@@ -204,14 +206,18 @@ class OGWidget extends MonoBehaviour {
 				Draw ( transform.position.x, transform.position.y );
 			}
 		}
+		
+		if ( guiRect.Contains ( Input.mousePosition ) ) {
+			// DETECT MOUSE RAY STUFF AND THING
+		}
 	}
 	
 	function Update () {	
 		if ( stretch ) {
 			ApplyStretch ();
 			ApplyPosition ();
-			
-			UpdateWidget();
 		}
+		
+		UpdateWidget();
 	}
 }
