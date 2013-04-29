@@ -113,10 +113,10 @@ static function DeserializeLight ( l : JSONObject, o : GameObject ) {
 
 // Color
 static function DeserializeColor ( c : JSONObject ) : Color {
-	var r : JSONObject = c.list[0];
-	var g : JSONObject = c.list[1];
-	var b : JSONObject = c.list[2];
-	var a : JSONObject = c.list[3];
+	var r : JSONObject = c.list[0] as JSONObject;
+	var g : JSONObject = c.list[1] as JSONObject;
+	var b : JSONObject = c.list[2] as JSONObject;
+	var a : JSONObject = c.list[3] as JSONObject;
 	
 	var color : Color = new Color ( r.n, g.n, b.n, a.n );
 	
@@ -125,9 +125,9 @@ static function DeserializeColor ( c : JSONObject ) : Color {
 
 // Vector3
 static function DeserializeVector3 ( v : JSONObject ) : Vector3 {
-	var x : JSONObject = v.list[0];
-	var y : JSONObject = v.list[1];
-	var z : JSONObject = v.list[2];
+	var x : JSONObject = v.list[0] as JSONObject;
+	var y : JSONObject = v.list[1] as JSONObject;
+	var z : JSONObject = v.list[2] as JSONObject;
 
 	var vector : Vector3 = new Vector3 ( x.n, y.n, z.n );
 		
@@ -136,8 +136,8 @@ static function DeserializeVector3 ( v : JSONObject ) : Vector3 {
 
 // Vector2
 static function DeserializeVector2 ( v : JSONObject ) : Vector2 {
-	var x : JSONObject = v.list[0];
-	var y : JSONObject = v.list[1];
+	var x : JSONObject = v.list[0] as JSONObject;
+	var y : JSONObject = v.list[1] as JSONObject;
 	
 	var vector : Vector3 = new Vector3 ( x.n, y.n );
 		

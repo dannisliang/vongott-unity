@@ -59,7 +59,7 @@ class EditorOpenFile extends OGPage {
 	// Clear list
 	function ClearList () {
 		for ( var i = 0; i < mapList.transform.childCount; i++ ) {
-			Destroy ( mapList.transform.GetChild ( i ).gameObject );
+			DestroyImmediate ( mapList.transform.GetChild ( i ).gameObject );
 		}
 	}
 	

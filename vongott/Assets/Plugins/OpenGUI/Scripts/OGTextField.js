@@ -9,8 +9,12 @@ class OGTextField extends OGWidget {
 	var restrictSpaces : boolean = false;
 	var restrictNumbers : boolean = false;
 
+	var style : GUIStyle;
+
 	override function Draw ( x : float, y : float ) {
-		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength );
+		GUI.depth = depth;
+		
+		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, style );
 		
 		if ( restrictASCII ) {
 			text = Regex.Replace(text, "[^a-zA-Z0-9]", "");

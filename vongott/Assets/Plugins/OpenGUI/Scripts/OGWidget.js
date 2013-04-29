@@ -22,6 +22,70 @@ enum ScreenSize {
 	ScreenHeight
 }
 
+public class TextProperties {
+	var font : Font;
+	var style : FontStyle;
+	var size : int = 12;
+	var alignment : TextAnchor;
+	var normal : Color = Color.white;
+	var hover : Color = Color.white;
+	var active : Color = Color.white;	
+
+	@HideInInspector var guiStyle : GUIStyle;
+	
+	function Init () {
+		guiStyle = new GUIStyle ();
+		guiStyle.font = font;
+		guiStyle.fontStyle = style;
+		guiStyle.fontSize = size;
+		guiStyle.alignment = alignment;
+		guiStyle.normal.textColor = normal;
+		guiStyle.hover.textColor = hover;
+		guiStyle.active.textColor = active;
+	}
+}
+
+public class ButtonProperties extends TextProperties {
+	var normalBg : Color = Color.black;
+	var hoverBg : Color = Color.black;
+	var activeBg : Color = Color.black;
+	var padding : Vector2 = Vector2.zero;
+	
+	@HideInInspector var bg1 : Texture2D;
+	@HideInInspector var bg2 : Texture2D;
+	@HideInInspector var bg3 : Texture2D;
+	
+	override function Init () {
+		bg1 = new Texture2D(2,2);
+		bg1.SetPixels([normalBg,normalBg,normalBg,normalBg]);
+		bg1.Apply();
+	
+		bg2 = new Texture2D(2,2);
+		bg2.SetPixels([hoverBg,hoverBg,hoverBg,hoverBg]);
+		bg2.Apply();
+		
+		bg3 = new Texture2D(2,2);
+		bg3.SetPixels([activeBg,activeBg,activeBg,activeBg]);
+		bg3.Apply();
+	
+		guiStyle = new GUIStyle ();
+		guiStyle.font = font;
+		guiStyle.fontStyle = style;
+		guiStyle.fontSize = size;
+		guiStyle.alignment = alignment;
+		guiStyle.normal.textColor = normal;
+		guiStyle.hover.textColor = hover;
+		guiStyle.active.textColor = active;
+		guiStyle.normal.background = bg1;
+		guiStyle.hover.background = bg2;
+		guiStyle.active.background = bg3;
+		guiStyle.padding.top = padding.y;
+		guiStyle.padding.bottom = padding.y;
+		guiStyle.padding.left = padding.x;
+		guiStyle.padding.right = padding.x;
+	}
+}
+
 private class Stretch {
 	var width : ScreenSize = ScreenSize.None;
 	var widthFactor : float = 1.0;
@@ -43,7 +107,7 @@ private class Anchor {
 }
 
 class OGWidget extends MonoBehaviour {	
-	var drawOrder : int = 0;
+	var depth : int = 0;
 	var drawLocalPosition = false;
 	var manualDraw = false;
 	var anchor : Anchor;	

@@ -92,7 +92,8 @@ static function GetSideQuests () {
 	var list = new Quest[indexes.length];
 	
 	for ( i = 0; i < indexes.length; i++ ) {
-		list[i] = quests[indexes[i]];
+		var index : int = indexes[i];
+		list[i] = quests[index];
 	}
 	
 	return list;

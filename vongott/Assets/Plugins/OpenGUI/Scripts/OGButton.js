@@ -6,16 +6,11 @@ class OGButton extends OGWidget {
 	var message : String;
 	var argument : String;
 
-
-	function Start () {
-		
-	}
-
-	override function UpdateWidget () {
-
-	}
+	var style : GUIStyle;
 
 	override function Draw ( x : float, y : float ) {		
+		GUI.depth = depth;
+		
 		if ( GUI.Button ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text ) ) {
 			target.SendMessage ( message, argument );
 		}
