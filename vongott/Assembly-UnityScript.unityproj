@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Character\Player.js" />
      <Compile Include="Assets\Scripts\Character\ThirdPersonCamera.js" />
      <Compile Include="Assets\Scripts\Character\ThirdPersonController.js" />
+     <Compile Include="Assets\Scripts\Core\Actor.js" />
      <Compile Include="Assets\Scripts\Core\CameraTarget.js" />
      <Compile Include="Assets\Scripts\Core\Chapter.js" />
      <Compile Include="Assets\Scripts\Core\Conversation.js" />
@@ -72,14 +73,19 @@
      <Compile Include="Assets\Scripts\Core\Scene.js" />
      <Compile Include="Assets\Scripts\Core\SceneManager.js" />
      <Compile Include="Assets\Scripts\Core\Serializer.js" />
+     <Compile Include="Assets\Scripts\Core\Tween.js" />
      <Compile Include="Assets\Scripts\Core\Upgrade.js" />
      <Compile Include="Assets\Scripts\Core\UpgradeManager.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorBillboard.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorCamera.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorCore.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorInput.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorInspectorActor.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorInspectorLight.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorInspectorTween.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorMenuBase.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorOpenFile.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorPlayMode.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorPrefabs.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorRenameLevel.js" />
      <Compile Include="Assets\Scripts\Triggers\Door.js" />

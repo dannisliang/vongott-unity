@@ -100,7 +100,7 @@ class EditorOpenFile extends OGPage {
 	////////////////////
 	function Update () {
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-			OGRoot.GoToPage ( "BaseMenu" );
+			OGRoot.GoToPage ( "MenuBase" );
 		}
 	}
 }

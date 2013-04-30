@@ -127,7 +127,10 @@ class EditorMenuBase extends OGPage {
 		}
 		
 		for ( var i = 0; i < subMenus.Length; i++ ) {
-			subMenus[i] = null;
+			if ( subMenus[i] ) {
+				subMenus[i].SetActive ( false );
+				subMenus[i] = null;
+			}
 		}
 	}
 	
@@ -167,8 +170,17 @@ class EditorMenuBase extends OGPage {
 		
 		tabs.activeTab = number;
 	}
-		
-		
+	
+			
+	////////////////////
+	// Play level
+	////////////////////
+	function PlayLevel () {
+		EditorCore.PlayLevel ();
+		OGRoot.GoToPage ( "PlayMode" );
+	}
+	
+	
 	////////////////////
 	// Init
 	////////////////////

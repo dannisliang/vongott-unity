@@ -17,6 +17,7 @@ static var gizmo : GameObject;
 static var selectedMaterial : Material;
 static var previousMaterials : List.< KeyValuePair.< GameObject, Material > >;
 static var inspector : EditorMenuBase;
+static var player : GameObject;
 
 
 ////////////////////
@@ -144,6 +145,20 @@ static function SelectObject ( obj : GameObject ) {
 	previousMaterials.Add ( new KeyValuePair.< GameObject, Material > ( obj, obj.renderer.material ) );
 	
 	obj.renderer.material = selectedMaterial;
+	
+	// Check what to display in the inspector
+	inspector.ClearMenus ();
+		
+	// LightSource
+	if ( obj.GetComponent(LightSource) ) {
+		inspector.SetMenu ( 0, "Light" );
+	} else {
+		inspector.SetMenu ( 0, "Actor" );
+		inspector.SetMenu ( 1, "Path" );
+		inspector.SetMenu ( 2, "Trigger" );
+	}
+
+	inspector.SelectSubmenu ( "0" );
 }
 
 // Save file
@@ -166,6 +181,18 @@ static function LoadFile ( path : String ) {
 // Set inspector
 static function SetInspector ( i : EditorMenuBase ) {
 	inspector = i;
+}
+
+// Play level
+static function PlayLevel () {
+	player = Instantiate ( Resources.Load ( "Prefabs/Character/Player" ) ) as GameObject;
+	player.transform.parent = currentLevel.transform;
+	player.transform.localPosition = Vector3.one;
+}
+
+// Exit level
+static function ExitLevel () {
+	Destroy ( player );
 }
 
 // Init

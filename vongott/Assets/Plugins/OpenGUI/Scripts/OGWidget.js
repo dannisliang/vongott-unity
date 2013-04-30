@@ -198,6 +198,8 @@ class OGWidget extends MonoBehaviour {
 	
 	function Draw ( x : float, y : float ) {}
 	
+	function Start () {}
+	
 	function OnGUI () {
 		if ( !manualDraw ) {
 			if ( drawLocalPosition ) {

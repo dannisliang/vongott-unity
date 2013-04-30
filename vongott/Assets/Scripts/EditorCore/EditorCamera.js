@@ -89,7 +89,7 @@ function Update () {
 		}
 		
 		// right mouse button
-		if ( Input.GetMouseButton(1) ) {    
+		if ( Input.GetMouseButton(1) && !OGRoot.mouseOver ) {    
 			var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
 		
 			rotationY += Input.GetAxis("Mouse Y") * sensitivity;
@@ -111,7 +111,7 @@ function Update () {
 	   		}
 			
 		// left mouse button
-		} else if ( Input.GetMouseButtonDown(0) ) {
+		} else if ( Input.GetMouseButtonDown(0) && !OGRoot.mouseOver ) {
 			var ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
 			var hit : RaycastHit;
 			

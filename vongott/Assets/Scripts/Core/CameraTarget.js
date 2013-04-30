@@ -45,24 +45,6 @@ private function CheckVisibility ( pos : Vector3 ) : Vector3 {
 	return pos;
 }
 
-// Hide obscuring objects
-private function HideObscuringObjects () {
-	var origin : Vector3 = cam.transform.position;
-	var target : Vector3 = player.transform.position;
-	var direction = cam.transform.forward;
-	var distance = Vector3.Distance ( origin, target );
-		
-	direction.Normalize();
-
-	var hits : RaycastHit[] = Physics.RaycastAll ( origin, direction, distance );
-	
-	for ( var i = 0; i < hits.Length; i++ ) {
-		if ( hits[i].collider.gameObject != player ) {
-			hits[i].collider.gameObject.renderer.enabled = false;
-		}
-	}
-}
-
 // Check run cam
 private function CheckRunCam ( pos : Vector3 ) : Vector3 {
 	if ( runcam ) {
