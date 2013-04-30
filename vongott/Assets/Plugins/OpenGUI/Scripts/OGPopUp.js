@@ -11,20 +11,22 @@ class OGPopUp extends OGWidget {
 	var style : GUIStyle;
 	
 	@HideInInspector var selectedOption : String = "(pick)";
-		
+	@HideInInspector var popDepth : int = 0;
+			
 	// Draw
 	override function Draw ( x : float, y : float ) {	
-		GUI.depth = depth;
+		GUI.depth = popDepth;
 		
 		if ( !isUp ) {
+			popDepth = depth;
 			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), style.fontSize + padding.y );
 			GUI.Box ( guiRect, "" );
 			
 			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (padding.x * 2), transform.localScale.y ), selectedOption, style ) ) {
 				isUp = true;
-				depth = -5;
 			}
 		} else {
+			popDepth = depth - 10;
 			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), ( options.Length * (style.fontSize + padding.y) ) + ( padding.y * 2 ) );
 			GUI.Box ( guiRect, "" );
 			
@@ -32,7 +34,6 @@ class OGPopUp extends OGWidget {
 				if ( GUI.Button ( Rect ( x, y + padding.y + ( ( style.fontSize + padding.y ) * i ), transform.localScale.x + ( padding.x * 2 ), style.fontSize + padding.y ), options[i], style ) ) {
 					selectedOption = options[i];
 					isUp = false;
-					depth = 0;
 				}
 			}
 		}
@@ -40,7 +41,7 @@ class OGPopUp extends OGWidget {
 	
 	// Update
 	override function UpdateWidget () {		
-		if ( selectedOption == "(pick an option)" && options.Length > 0 ) {
+		if ( selectedOption == "(pick)" && options.Length > 0 ) {
 			selectedOption = options[0];
 		}
 		

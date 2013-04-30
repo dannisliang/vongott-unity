@@ -46,16 +46,20 @@ class OGTabs extends OGWidget {
 			GUI.Box ( Rect ( x + boxPos.x, y, transform.localScale.x, transform.localScale.y ), "" );
 			for ( var i = 0; i < tabs.Count; i++ ) {				
 				if ( GUI.Button ( Rect ( x + ( i * transform.localScale.x ), y, transform.localScale.x, transform.localScale.y ), tabs[i].label, normal ) ) {
-					messageTarget.SendMessage ( tabs[i].message, tabs[i].argument );
-					activeTab = i;
+					if ( tabs[i].label != "" ) {	
+						messageTarget.SendMessage ( tabs[i].message, tabs[i].argument );
+						activeTab = i;
+					}
 				}
 			}
 		} else {
 			GUI.Box ( Rect ( x, y + boxPos.y, transform.localScale.x, transform.localScale.y ), "" );
 			for ( i = 0; i < tabs.Count; i++ ) {				
 				if ( GUI.Button ( Rect ( x, y + ( i * transform.localScale.y ), transform.localScale.x, transform.localScale.y ), tabs[i].label, normal ) ) {
-					messageTarget.SendMessage ( tabs[i].message, tabs[i].argument );
-					activeTab = i;
+					if ( tabs[i].label != "" ) {
+						messageTarget.SendMessage ( tabs[i].message, tabs[i].argument );
+						activeTab = i;
+					}
 				}
 			}
 		}

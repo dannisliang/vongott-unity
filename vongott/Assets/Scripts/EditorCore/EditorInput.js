@@ -48,6 +48,10 @@ static function Update () {
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {
 			EditorCore.ToggleGrabMode();
 		
+		// X or delete key: delete item
+		} else if ( Input.GetKeyDown ( KeyCode.Delete ) || Input.GetKeyDown ( KeyCode.X ) ) {
+			EditorCore.DeleteSelected();
+		
 		// numpad 5: orthographic view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad5 ) ) {
 			EditorCore.ToggleIsometric();

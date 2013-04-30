@@ -58,6 +58,16 @@ static function GetSelectedObjects () : List.<GameObject> {
 	return selectedObjects;
 }
 
+// Delete selected objects
+static function DeleteSelected () {
+	for ( var i = 0; i < selectedObjects.Count; i++ ) {
+		var obj : GameObject = selectedObjects[i];
+		
+		DeselectObject ( obj );
+		Destroy ( obj );
+	}
+}
+
 // Is object selected?
 static function IsObjectSelected ( obj : GameObject ) : boolean {
 	for ( var o in selectedObjects ) {
@@ -134,8 +144,6 @@ static function SelectObject ( obj : GameObject ) {
 	previousMaterials.Add ( new KeyValuePair.< GameObject, Material > ( obj, obj.renderer.material ) );
 	
 	obj.renderer.material = selectedMaterial;
-	
-	inspector.SetMenus ();
 }
 
 // Save file

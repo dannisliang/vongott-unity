@@ -11,12 +11,17 @@ class EditorMenuBase extends OGPage {
 	// Public vars
 	////////////////////
 	var objectName : OGLabel;
+	var levelName : OGLabel;
+	
+	var inspector : GameObject;
+	var inspectorMenus : GameObject;
 	
 	var pos : VectorDisplay;
 	var rot : VectorDisplay;
 	var scl : VectorDisplay;
 	
-	@HideInInspector var subMenus : GameObject[] = new GameObject[5];
+	var tabs : OGTabs;
+	@HideInInspector var subMenus : GameObject[] = new GameObject[3];
 	
 	
 	////////////////////
@@ -116,8 +121,39 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Inspector
 	////////////////////
-	function SetMenus () {
+	function ClearMenus () {
+		for ( var t = 0; t < tabs.tabs.Count; t++ ) {
+			tabs.tabs[t].label = "";
+		}
 		
+		for ( var i = 0; i < subMenus.Length; i++ ) {
+			subMenus[i] = null;
+		}
+	}
+	
+	function SetMenu ( index : int, menu : String ) {
+		var obj : GameObject;
+		
+		for ( var i = 0; i < inspectorMenus.transform.childCount; i++ ) {		
+			if ( inspectorMenus.transform.GetChild ( i ).gameObject.name == menu ) {
+				obj = inspectorMenus.transform.GetChild ( i ).gameObject;
+				continue;
+			}
+		}
+		
+		if ( !obj ) {
+			return;
+		}
+		
+		if ( subMenus[index] ) {
+			subMenus[index].SetActive ( false );
+			subMenus[index] = null;
+		}
+		
+		subMenus[index] = obj;
+		subMenus[index].SetActive ( false );
+		
+		tabs.tabs[index].label = menu;
 	}
 	
 	function SelectSubmenu ( num : String ) {
@@ -128,6 +164,8 @@ class EditorMenuBase extends OGPage {
 				subMenus[i].SetActive ( number == i );
 			}
 		}
+		
+		tabs.activeTab = number;
 	}
 		
 		
@@ -136,6 +174,12 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	function Start () {
 		EditorCore.SetInspector ( this );
+		
+		ClearMenus ();
+		SetMenu ( 0, "Actor" );
+		SetMenu ( 1, "Path" );
+		SetMenu ( 2, "Trigger" );
+		SelectSubmenu ( "0" );
 	}
 	
 		
@@ -144,35 +188,37 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	function Update () {
 		if ( EditorCore.currentLevel ) {
+			levelName.text = EditorCore.currentLevel.name;
+			
 			var count = EditorCore.GetSelectedObjects().Count;
 			
 			if ( count > 0 && EditorCore.GetSelectedObjects()[count-1] ) {
+				if ( !inspector.activeSelf ) {
+					inspector.SetActive ( true );
+				}
+				
 				pos.x.transform.parent.gameObject.SetActive ( true );
 				rot.x.transform.parent.gameObject.SetActive ( true );
 				scl.x.transform.parent.gameObject.SetActive ( true );
 				
 				var t = EditorCore.GetSelectedObjects()[count-1].transform;
 				
-				pos.x.text = t.localPosition.x.ToString("f1");
-				pos.y.text = t.localPosition.y.ToString("f1");
-				pos.z.text = t.localPosition.z.ToString("f1");
+				pos.x.text = "X: " + t.localPosition.x.ToString("f1");
+				pos.y.text = "Y: " + t.localPosition.y.ToString("f1");
+				pos.z.text = "Z: " + t.localPosition.z.ToString("f1");
 				
-				rot.x.text = t.localEulerAngles.x.ToString("f1");
-				rot.y.text = t.localEulerAngles.y.ToString("f1");
-				rot.z.text = t.localEulerAngles.z.ToString("f1");
+				rot.x.text = "X: " + t.localEulerAngles.x.ToString("f1");
+				rot.y.text = "Y: " + t.localEulerAngles.y.ToString("f1");
+				rot.z.text = "Z: " + t.localEulerAngles.z.ToString("f1");
 				
-				scl.x.text = t.localScale.x.ToString("f1");
-				scl.y.text = t.localScale.y.ToString("f1");
-				scl.z.text = t.localScale.z.ToString("f1");
+				scl.x.text = "X: " + t.localScale.x.ToString("f1");
+				scl.y.text = "Y: " + t.localScale.y.ToString("f1");
+				scl.z.text = "Z: " + t.localScale.z.ToString("f1");
 				
 				objectName.text = t.gameObject.name;
 			
-			} else {
-				pos.x.transform.parent.gameObject.SetActive ( false );
-				rot.x.transform.parent.gameObject.SetActive ( false );
-				scl.x.transform.parent.gameObject.SetActive ( false );
-				
-				objectName.text = EditorCore.currentLevel.name;
+			} else if ( inspector.activeSelf ) {
+				//inspector.SetActive ( false );
 			}
 		}
 	}

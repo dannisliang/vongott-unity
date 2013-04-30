@@ -9,17 +9,19 @@ class OGScrollView extends OGWidget {
 	var inset : float = 10;
 	var position : Vector2 = Vector2.zero;
 	
+	@HideInInspector var widgets : Component[];
+	
 	// Init
 	function Start () {
 	
 	}
 	
 	// Update
-	override function Update () {
-		for ( var i = 0; i < transform.childCount; i++ ) {
-			if ( transform.GetChild ( i ).GetComponent( OGWidget ) ) {
-				var w : OGWidget = transform.GetChild ( i ).GetComponent( OGWidget );
-				
+	override function UpdateWidget () {
+		widgets = transform.GetComponentsInChildren (OGWidget);
+		
+		for ( var w : OGWidget in widgets ) {			
+			if ( w != this ) {
 				if ( !w.manualDraw ) {
 					w.manualDraw = true;
 					w.drawLocalPosition = true;
@@ -27,7 +29,7 @@ class OGScrollView extends OGWidget {
 			
 				if ( scrollLength < inset + w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset ) {
 					scrollLength = inset + w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset;
-				} 
+				}
 			}
 		}
 	}
@@ -42,9 +44,9 @@ class OGScrollView extends OGWidget {
 			alwaysVertical
 		);
 		
-		for ( var i = 0; i < transform.childCount; i++ ) {
-			if ( transform.GetChild ( i ).GetComponent( OGWidget ) ) {
-				transform.GetChild ( i ).GetComponent( OGWidget ).Draw( transform.GetChild ( i ).transform.localPosition.x, transform.GetChild ( i ).transform.localPosition.y );
+		for ( var w : OGWidget in widgets ) {
+			if ( w != this ) {
+				w.Draw ( w.transform.localPosition.x, w.transform.localPosition.y );
 			}
 		}
 	
