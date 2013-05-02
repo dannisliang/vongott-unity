@@ -4,7 +4,7 @@
 // Prerequisites
 ////////////////////
 // Public vars
-var player : GameObject;
+/*var player : GameObject;
 
 // Private vars
 private var current_level : Level;
@@ -36,3 +36,4 @@ public function GoToLevel ( l : Level ) {
 
 	GameCore.Print ( "LevelManager | go to " + l.ToString() );
 }
+*/

@@ -35,6 +35,26 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		o.AddField ( "LightSource", lgt );
 		
 		return o;
+		
+	// check if actor
+	} else if ( obj.GetComponent(Actor) ) {
+		var act : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		act.AddField ( "model", obj.GetComponent(Actor).model );
+		act.AddField ( "affiliation", obj.GetComponent(Actor).affiliation );
+		act.AddField ( "mood", obj.GetComponent(Actor).mood );
+		act.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
+		act.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		act.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+		
+		var cnv : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		cnv.AddField ( "chapter", obj.GetComponent(Conversation).chapter );
+		cnv.AddField ( "scene", obj.GetComponent(Conversation).scene );
+		cnv.AddField ( "actorName", obj.GetComponent(Conversation).actorName );
+		
+		o.AddField ( "Actor", act );
+		o.AddField ( "Conversation", cnv );
+		
+		return o;
 	}
 	
 	// name

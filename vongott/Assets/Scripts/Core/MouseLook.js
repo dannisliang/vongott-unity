@@ -17,8 +17,8 @@ var maximumY : float = 60.0;
 
 var rotationY : float = 0.0;
 
-// Private vars
-private var mouselook_active = true;
+// Static vars
+static var mouselook_active = true;
 
 
 ////////////////////
@@ -50,7 +50,7 @@ function Update () {
 }
 
 // Set active
-function SetActive ( state : boolean ) {
+static function SetActive ( state : boolean ) {
 	mouselook_active = state;
 	//Screen.lockCursor = state;
 	GameCore.Print ( "MouseLook | active: " + state );

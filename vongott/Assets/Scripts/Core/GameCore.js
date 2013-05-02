@@ -3,28 +3,33 @@
 ////////////////////
 // Prerequiites
 ////////////////////
+// Public vars
+var _levelContainer : Transform;
+
 // Static vars
 static var debuggingEnabled = true;
 static var playerName = "Nameless";
 static var interactiveObject:GameObject;
+
 static var playerObject:GameObject;
+static var camTarget:GameObject;
+static var cam:Transform;
+
 static var started = false;
 
 static var currentChapter : Chapter;
 static var currentScene : Scene;
+static var currentLevel : GameObject;
+
+static var levelContainer : Transform;
 
 
 ////////////////////
 // Player
 ////////////////////
-static function SetPlayerObject ( obj:GameObject ) {
-	playerObject = obj;
-}
-
-static function GetPlayerObject () {
+static function GetPlayerObject () : GameObject {
 	return playerObject;
 }
-
 
 ////////////////////
 // Interactions
@@ -60,6 +65,32 @@ static function ToggleControls ( state : boolean ) {
 
 
 ////////////////////
+// Load level
+////////////////////
+static function LoadLevel ( path : String ) {
+	if ( currentLevel != null ) {
+		Destroy ( currentLevel );
+		currentLevel = null;
+	}
+	
+	currentLevel = Loader.LoadMap ( path );
+	
+	currentLevel.transform.parent = levelContainer;
+	currentLevel.transform.localPosition = Vector3.zero;
+	
+	/// BLAAAA
+	playerObject = Instantiate ( Resources.Load ( "Prefabs/Character/Player" ) ) as GameObject;
+	playerObject.transform.parent = currentLevel.transform;
+	playerObject.transform.localPosition = Vector3.one;
+	
+	camTarget = Instantiate ( Resources.Load ( "Prefabs/Core/CameraTarget" ) ) as GameObject;
+	camTarget.transform.parent = currentLevel.transform;
+	camTarget.GetComponent ( CameraTarget ).player = playerObject;
+	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
+}
+
+
+////////////////////
 // Init
 ////////////////////
 function Start () {	
@@ -72,6 +103,16 @@ function Start () {
 	// upgrades
 	UpgradeManager.Init();
 	
+	// main camera
+	cam = Camera.main.transform;
+	
+	// level container
+	levelContainer = _levelContainer;
+	
+	// test level
+	LoadLevel ( "DudeMeister" );
+	
+	// signal
 	Print ("GameCore | started");
 }
 

@@ -109,7 +109,7 @@ static function StartQuest ( id : String ) {
 
 	quest.SetActive ( true );	
 
-	Debug.Log ( "... QuestManager |  quest started: " + id );
+	Debug.Log ( "QuestManager |  quest started: " + id );
 }
 
 // End
@@ -118,5 +118,5 @@ static function EndQuest ( id : String ) {
 
 	quest.SetActive ( false );
 	
-	Debug.Log ( "... QuestManager |  quest ended: " + id );
+	Debug.Log ( "QuestManager |  quest ended: " + id );
 }

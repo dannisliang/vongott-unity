@@ -34,6 +34,29 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newObj.name = newObj.name.Replace( "(Clone)", "" );
 	
 		return newObj;
+	
+	// check if actor
+	} else if ( obj.HasField("Actor") ) {
+		var act : JSONObject = obj.GetField("Actor");
+		var cnv : JSONObject = obj.GetField("Conversation");
+		var newAct : GameObject;
+		
+		newAct = Instantiate ( Resources.Load ( "Characters/" + act.GetField("model").str ) as GameObject );
+		
+		newAct.GetComponent(Actor).affiliation = act.GetField ( "affiliation" ).str;
+		newAct.GetComponent(Actor).mood = act.GetField ( "mood" ).str;
+		
+		newAct.GetComponent(Conversation).chapter = cnv.GetField ( "chapter" ).n;
+		newAct.GetComponent(Conversation).scene = cnv.GetField ( "scene" ).n;
+		newAct.GetComponent(Conversation).actorName = cnv.GetField ( "actorName" ).str;
+								
+		newAct.transform.localScale = DeserializeVector3 ( act.GetField("localScale") );
+		newAct.transform.localPosition = DeserializeVector3 ( act.GetField("localPosition") );
+		newAct.transform.localEulerAngles = DeserializeVector3 ( act.GetField("localEulerAngles") );
+	
+		newAct.name = act.GetField("model").str;
+	
+		return newAct;
 	}
 	
 	var o : GameObject = new GameObject ( obj.GetField ( "name" ).str );
@@ -62,6 +85,7 @@ static function DeserializeGameObjectChildren ( obj : JSONObject, parent : Trans
 	
 	for ( var c in obj.list ) {
 		var o : GameObject = DeserializeGameObjectFromJSON ( c );
+		
 		o.transform.parent = parent;
 	}
 }

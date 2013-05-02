@@ -63,16 +63,14 @@ class Item extends InteractiveObject {
 
 	// Handle pick-up
 	function Update () {
-		if ( HUD.showing && GameCore.GetInteractiveObject() == this.gameObject ) {
-			if ( !HUD.notification.active ) {
-				HUD.ShowNotification ( "Pick up [F]" );
-			}
+		if ( GameCore.GetInteractiveObject() == this.gameObject ) {
+			UIHUD.ShowNotification ( "Pick up [F]" );
 			
 			if ( Input.GetKeyDown(KeyCode.F) ) {
 				InventoryManager.AddItem(this);
 				Destroy ( this.gameObject );
 				GameCore.SetInteractiveObject ( null );
-				HUD.ShowNotification ( "" );
+				UIHUD.ShowNotification ( "" );
 			}
 		}
 	}

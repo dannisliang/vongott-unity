@@ -36,7 +36,7 @@ public class Entry {
 }
 
 // Static vars
-static var slots = new Slot[30];
+static var slots = new Slot[16];
 static var initialized = false;
 
 

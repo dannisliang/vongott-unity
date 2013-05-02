@@ -49,7 +49,7 @@ function ToggleButtons () {
 function GoToLevel ( sender : GameObject ) {
 	if ( buttons_active ) {
 		var level_manager : LevelManager = Instantiate ( levelManager ) as LevelManager;
-		level_manager.GoToLevel ( sender.GetComponent(LevelButton).GetLevel() );
+//		level_manager.GoToLevel ( sender.GetComponent(LevelButton).GetLevel() );
 	}
 }
 

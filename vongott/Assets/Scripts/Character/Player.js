@@ -60,7 +60,7 @@ class Player extends MonoBehaviour {
 	}
 	
 	function Start () {
-		GameCore.SetPlayerObject ( this.gameObject );
+		
 	}
 		
 	function Update () {

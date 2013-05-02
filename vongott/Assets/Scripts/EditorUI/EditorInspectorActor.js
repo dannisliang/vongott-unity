@@ -24,12 +24,15 @@ class EditorInspectorActor extends MonoBehaviour {
 			if ( o.GetComponent ( Actor ) ) {
 				var a : Actor = o.GetComponent ( Actor );
 				
-				a.conversation.chapter = int.Parse ( convoControl.chapter.selectedOption );
-				a.conversation.scene = int.Parse ( convoControl.scene.selectedOption );
-				a.conversation.name = convoControl.name.selectedOption;
+				a.affiliation = stateControl.affiliation.selectedOption;
+				a.mood = stateControl.mood.selectedOption;
 			
-				a.state.affiliation = stateControl.affiliation.selectedOption;
-				a.state.mood = stateControl.mood.selectedOption;
+			} else if ( o.GetComponent ( Conversation ) ) {
+				var c : Conversation = o.GetComponent ( Conversation );
+				
+				c.chapter = int.Parse ( convoControl.chapter.selectedOption );
+				c.scene = int.Parse ( convoControl.scene.selectedOption );
+				c.actorName = convoControl.name.selectedOption;
 			}
 		}
 	}

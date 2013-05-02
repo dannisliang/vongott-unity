@@ -1,12 +1,15 @@
 import System.Xml;
 
 class Conversation extends InteractiveObject {	
-	var id : String;
+	var chapter : int;
+	var scene : int;
+	var actorName : String;
 	
-	private var line_array = new Array();
-	private var current_line = 0;
-	private var in_convo = false; 
-	private var skip_line = false;
+	@HideInInspector private var line_array = new Array();
+	@HideInInspector private var current_line = 0;
+	@HideInInspector private var in_convo = false; 
+	@HideInInspector private var skip_line = false;
+	@HideInInspector private var current_option = 0;
 	
 	
 	////////////////////
@@ -14,8 +17,9 @@ class Conversation extends InteractiveObject {
 	////////////////////
 	function LeaveConversation () {
 		GameCore.ToggleControls( true );
-	
-		HUD.LeaveConversation();
+		
+		MouseLook.SetActive ( true );
+		OGRoot.GoToPage ( "HUD" );
 		in_convo = false;
 		current_line = 0;
 		line_array = [];
@@ -55,31 +59,23 @@ class Conversation extends InteractiveObject {
 			text = line_array[current_line][2];
 			
 			if ( name == "(player)" ) {
-				name = GameCore.player_name;
+				name = GameCore.playerName;
 			}
 			
-			if ( text.Replace( "(player)", GameCore.player_name ) ) {
-				text = text.Replace( "(player)", GameCore.player_name );
+			if ( text.Replace( "(player)", GameCore.playerName ) ) {
+				text = text.Replace( "(player)", GameCore.playerName );
 			}
 			
-			HUD.ResetConversation();
-			
-			HUD.conversation.name.text = name;
-			HUD.conversation.line.text = text;
-			
-			HUD.UpdateConversation();
+			UIConversation.SetName ( name );
+			UIConversation.SetLine ( text );
 		
 		} else if ( type == "machinima" ) {
 			id = line_array[current_line][1];
 		
-			HUD.ResetConversation();
+			UIConversation.SetName ( type );
+			UIConversation.SetLine ( id );
 		
-			HUD.conversation.name.text = type;
-			HUD.conversation.line.text = id;
-			
-			HUD.UpdateConversation();
-		
-		} else if ( type == "prompt" ) {
+		} else if ( type == "promptzzz" ) { // DISABLE TEMPORARILY
 			title = line_array[current_line][1];
 			text = line_array[current_line][2];
 			cancel = line_array[current_line][3];
@@ -92,21 +88,17 @@ class Conversation extends InteractiveObject {
 			HUD.OpenPrompt();
 		
 		} else if ( type == "group" ) {
-			HUD.ResetConversation();
 			
-			HUD.conversation.name.text = GameCore.player_name;
-			HUD.conversation.line.text = "";
-			
+			UIConversation.SetName ( GameCore.playerName );
+						
 			for ( var i = 1; i < line_array[current_line].Count; i++ ) {
 				text = line_array[current_line][i];
-				if ( text.Replace( "(player)", GameCore.player_name ) ) {
-					text = text.Replace( "(player)", GameCore.player_name );
+				if ( text.Replace( "(player)", GameCore.playerName ) ) {
+					text = text.Replace( "(player)", GameCore.playerName );
 				}
 	
-				HUD.convo_current_options[i-1] = text.Split("|"[0])[0];
+				UIConversation.SetOption ( i-1, text.Split("|"[0])[0] );
 			}
-			
-			HUD.UpdateConversation();
 		}
 		
 		// go to next line
@@ -117,12 +109,12 @@ class Conversation extends InteractiveObject {
 	////////////////////
 	// Choose line
 	////////////////////
-	function ChooseLine () {
-		var attr = line_array[current_line-1][1 + HUD.convo_current_highlight].ToString().Split("|"[0])[1]; 
+	function ChooseLine ( index : int ) {
+		var attr = line_array[current_line-1][1 + index].ToString().Split("|"[0])[1]; 
 		
-		HUD.convo_current_options[0] = "";
-		HUD.convo_current_options[1] = "";
-		HUD.convo_current_options[2] = "";
+		UIConversation.SetOption ( 0, "" );
+		UIConversation.SetOption ( 1, "" );
+		UIConversation.SetOption ( 2, "" );
 		
 		if ( attr == "cancel" ) {
 			LeaveConversation();
@@ -142,13 +134,13 @@ class Conversation extends InteractiveObject {
 			GameCore.ToggleControls( false );
 		
 		   	// send start message to HUD
-			HUD.EnterConversation();
+			OGRoot.GoToPage("Conversation");
 			in_convo = true;
 			var current_convo = 0;
 			
 			// read XML document
 			var xml_data = new XmlDocument();
-			xml_data.Load("Assets/Resources/Conversations/" + id + ".xml");
+			xml_data.Load("Assets/Resources/Conversations/" + chapter.ToString() + "/" + scene.ToString() + "/" + actorName + ".xml");
 	
 			// define XML root
 			var node_list : XmlNodeList;
@@ -274,7 +266,6 @@ class Conversation extends InteractiveObject {
 		   	   
 		   	// go to next line
 		   	NextLine();
-		   	HUD.UpdateConversation();
 		}
 	}
 	
@@ -299,20 +290,28 @@ class Conversation extends InteractiveObject {
 				NextLine();
 			}
 			
-			// Use action key to proceed through convos
-			if ( Input.GetKeyDown(KeyCode.F) ) {
-				if ( HUD.convo_current_options[0] != "" ) {
-					ChooseLine();
-				} else if ( HUD.prompt_current_title == "" ) {
-					NextLine();
+			// check if there are options
+			if ( UIConversation.highlight.activeSelf ) {
+				if ( Input.GetKeyDown(KeyCode.F) ) {
+					ChooseLine ( current_option );
+				} else if ( Input.GetKeyDown(KeyCode.S) && current_option < 2 ) {
+					current_option++;
+					UIConversation.HighlightLine ( current_option );
+					
+				} else if ( Input.GetKeyDown(KeyCode.W) && current_option > 0 ) {
+					current_option--;
+					UIConversation.HighlightLine ( current_option );
+				
+				}
+			} else {
+				if ( Input.GetKeyDown(KeyCode.F) ) {
+					NextLine ();
 				}
 			}
 			
 		// Interact
-		} else if ( HUD.showing && GameCore.GetInteractiveObject() == this.gameObject ) {
-			if ( !HUD.notification.active ) {
-				HUD.ShowNotification ( "Talk [F]" );
-			}
+		} else if ( GameCore.GetInteractiveObject() == this.gameObject ) {
+			UIHUD.ShowNotification ( "Talk [F]" );
 			
 			if ( Input.GetKeyDown(KeyCode.F) ) {
 				EnterConversation();

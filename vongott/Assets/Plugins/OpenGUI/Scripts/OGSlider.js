@@ -2,7 +2,13 @@
 
 @script ExecuteInEditMode
 
+enum SliderType {
+	Horizontal,
+	Vertical
+}
+
 class OGSlider extends OGWidget {
+	var sliderType : SliderType;
 	var sliderValue : float = 1.0;
 	var min : float = 0.0;
 	var max : float = 1.0;
@@ -10,6 +16,10 @@ class OGSlider extends OGWidget {
 	override function Draw ( x : float, y : float ) {	
 		GUI.depth = depth;
 		
-		sliderValue = GUI.HorizontalSlider ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), sliderValue, min, max );
+		if ( sliderType == SliderType.Horizontal ) {
+			sliderValue = GUI.HorizontalSlider ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), sliderValue, min, max );
+		} else {
+			sliderValue = GUI.VerticalSlider ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), sliderValue, max, min );
+		}
 	}
 }
