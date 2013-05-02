@@ -52,11 +52,11 @@ function Update () {
 // Set active
 function SetActive ( state : boolean ) {
 	mouselook_active = state;
-	Screen.lockCursor = state;
+	//Screen.lockCursor = state;
 	GameCore.Print ( "MouseLook | active: " + state );
 }
 
 // Init
 function Start () {
-	Screen.lockCursor = true;
+	//Screen.lockCursor = true;
 }
