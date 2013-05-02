@@ -5,23 +5,28 @@ import System.Collections.Generic;
 // Public vars
 var _workspace : Transform;
 var _gizmo : GameObject;
+var _camera : Transform;
 
 // Static vars
 static var menusActive = false;
 static private var selectedObjects : List.<GameObject> = new List.<GameObject>();
 static var currentLevel : GameObject;
 static var grabMode = false;
+static var playMode = false;
 static var grabRestrict : String;
 static var workspace : Transform;
+static var cam : Transform;
 static var gizmo : GameObject;
 static var selectedMaterial : Material;
 static var previousMaterials : List.< KeyValuePair.< GameObject, Material > >;
 static var inspector : EditorMenuBase;
 static var player : GameObject;
+static var camTarget : GameObject;
+static var root : Transform;
 
 
 ////////////////////
-// Static functions
+// Add
 ////////////////////
 // Add light
 static function AddLight () {
@@ -34,6 +39,10 @@ static function AddLight () {
 	newLight.transform.position = position;
 }
 
+
+////////////////////
+// View
+////////////////////
 // Toggle isometric view
 static function ToggleIsometric () {
 	Camera.main.orthographic = !Camera.main.orthographic;
@@ -54,6 +63,10 @@ static function ToggleTextured () {
 //	DrawCameraMode.Textured = !DrawCameraMode.Textured;
 }
 
+
+////////////////////
+// Select objects
+////////////////////
 // Get selected objects
 static function GetSelectedObjects () : List.<GameObject> {
 	return selectedObjects;
@@ -100,6 +113,33 @@ static function DeselectObject ( obj : GameObject ) {
 	}
 }
 
+// Select object
+static function SelectObject ( obj : GameObject ) {
+	selectedObjects.Add ( obj );
+	
+	previousMaterials.Add ( new KeyValuePair.< GameObject, Material > ( obj, obj.renderer.material ) );
+	
+	obj.renderer.material = selectedMaterial;
+	
+	// Check what to display in the inspector
+	inspector.ClearMenus ();
+		
+	// LightSource
+	if ( obj.GetComponent(LightSource) ) {
+		inspector.SetMenu ( 0, "Light", obj );
+	} else {
+		inspector.SetMenu ( 0, "Actor", obj );
+		inspector.SetMenu ( 1, "Path", obj );
+		inspector.SetMenu ( 2, "Trigger", obj );
+	}
+
+	inspector.SelectSubmenu ( "0" );
+}
+
+
+////////////////////
+// Grab mode
+////////////////////
 // Set grab mode
 static function SetGrabMode ( state : boolean ) {
 	if ( selectedObjects.Count <= 0 ) {
@@ -138,29 +178,10 @@ static function ToggleRestriction ( axis : String ) {
 	}
 }
 
-// Select object
-static function SelectObject ( obj : GameObject ) {
-	selectedObjects.Add ( obj );
-	
-	previousMaterials.Add ( new KeyValuePair.< GameObject, Material > ( obj, obj.renderer.material ) );
-	
-	obj.renderer.material = selectedMaterial;
-	
-	// Check what to display in the inspector
-	inspector.ClearMenus ();
-		
-	// LightSource
-	if ( obj.GetComponent(LightSource) ) {
-		inspector.SetMenu ( 0, "Light" );
-	} else {
-		inspector.SetMenu ( 0, "Actor" );
-		inspector.SetMenu ( 1, "Path" );
-		inspector.SetMenu ( 2, "Trigger" );
-	}
 
-	inspector.SelectSubmenu ( "0" );
-}
-
+////////////////////
+// File I/O
+////////////////////
 // Save file
 static function SaveFile ( path : String ) {
 	Saver.SaveMap ( path, EditorCore.currentLevel );
@@ -178,27 +199,51 @@ static function LoadFile ( path : String ) {
 	currentLevel.transform.localPosition = Vector3.zero;
 }
 
+
+////////////////////
+// Set inspector instance
+////////////////////
 // Set inspector
 static function SetInspector ( i : EditorMenuBase ) {
 	inspector = i;
 }
 
+
+////////////////////
+// Play/Exit
+////////////////////
 // Play level
 static function PlayLevel () {
 	player = Instantiate ( Resources.Load ( "Prefabs/Character/Player" ) ) as GameObject;
 	player.transform.parent = currentLevel.transform;
 	player.transform.localPosition = Vector3.one;
+	
+	camTarget = Instantiate ( Resources.Load ( "Prefabs/Core/CameraTarget" ) ) as GameObject;
+	camTarget.transform.parent = currentLevel.transform;
+	camTarget.GetComponent ( CameraTarget ).player = player;
+	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
+	
+	playMode = true;
 }
 
 // Exit level
 static function ExitLevel () {
+	cam.parent = root;
 	Destroy ( player );
+	Destroy ( camTarget );
+	playMode = false;
 }
 
+
+////////////////////
+// Init/Update
+////////////////////
 // Init
 function Start () {
 	workspace = _workspace;
 	gizmo = _gizmo;
+	cam = _camera;
+	root = this.transform.parent;
 	
 	selectedMaterial = Resources.Load ( "Materials/Editor/editor_outline" );	
 	previousMaterials = new List.< KeyValuePair.< GameObject, Material > > ();

@@ -14,7 +14,7 @@ class EditorMenuBase extends OGPage {
 	var levelName : OGLabel;
 	
 	var inspector : GameObject;
-	var inspectorMenus : GameObject;
+	var inspectorMenus : GameObject[];
 	
 	var pos : VectorDisplay;
 	var rot : VectorDisplay;
@@ -121,6 +121,7 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Inspector
 	////////////////////
+	// Clear the menus
 	function ClearMenus () {
 		for ( var t = 0; t < tabs.tabs.Count; t++ ) {
 			tabs.tabs[t].label = "";
@@ -134,17 +135,18 @@ class EditorMenuBase extends OGPage {
 		}
 	}
 	
-	function SetMenu ( index : int, menu : String ) {
-		var obj : GameObject;
+	// Display the object's relevant menus
+	function SetMenu ( index : int, menu : String, selectedObj : GameObject ) {
+		var menuObj : GameObject;
 		
-		for ( var i = 0; i < inspectorMenus.transform.childCount; i++ ) {		
-			if ( inspectorMenus.transform.GetChild ( i ).gameObject.name == menu ) {
-				obj = inspectorMenus.transform.GetChild ( i ).gameObject;
+		for ( var c : GameObject in inspectorMenus ) {		
+			if ( c.name == menu ) {
+				menuObj = c;
 				continue;
 			}
 		}
 		
-		if ( !obj ) {
+		if ( !menuObj ) {
 			return;
 		}
 		
@@ -153,12 +155,25 @@ class EditorMenuBase extends OGPage {
 			subMenus[index] = null;
 		}
 		
-		subMenus[index] = obj;
+		subMenus[index] = menuObj;
 		subMenus[index].SetActive ( false );
+		
+		if ( menu == "Light" ) {
+			subMenus[index].GetComponent(EditorInspectorLight).Init(selectedObj);
+		} else if ( menu == "Actor" ) {
+			subMenus[index].GetComponent(EditorInspectorActor).Init(selectedObj);
+		/*} else if ( menu == "Path" ) {
+			subMenus[index].GetComponent(EditorInspectorPath).Init(selectedObj);
+		} else if ( menu == "Trigger" ) {
+			subMenus[index].GetComponent(EditorInspectorTrigger).Init(selectedObj);
+		*/} else if ( menu == "Tween" ) {
+			subMenus[index].GetComponent(EditorInspectorTween).Init(selectedObj);
+		}
 		
 		tabs.tabs[index].label = menu;
 	}
 	
+	// Activate a menu
 	function SelectSubmenu ( num : String ) {
 		var number = int.Parse ( num );
 		
@@ -188,10 +203,6 @@ class EditorMenuBase extends OGPage {
 		EditorCore.SetInspector ( this );
 		
 		ClearMenus ();
-		SetMenu ( 0, "Actor" );
-		SetMenu ( 1, "Path" );
-		SetMenu ( 2, "Trigger" );
-		SelectSubmenu ( "0" );
 	}
 	
 		
@@ -230,7 +241,7 @@ class EditorMenuBase extends OGPage {
 				objectName.text = t.gameObject.name;
 			
 			} else if ( inspector.activeSelf ) {
-				//inspector.SetActive ( false );
+				inspector.SetActive ( false );
 			}
 		}
 	}

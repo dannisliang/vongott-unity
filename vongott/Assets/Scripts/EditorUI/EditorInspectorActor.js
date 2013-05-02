@@ -15,6 +15,10 @@ class EditorInspectorActor extends MonoBehaviour {
 	var convoControl : ConvoControl;
 	var stateControl : StateControl;
 	
+	function Init ( obj : GameObject ) {
+	
+	}
+	
 	function Update () {
 		for ( var o : GameObject in EditorCore.GetSelectedObjects() ) {
 			if ( o.GetComponent ( Actor ) ) {

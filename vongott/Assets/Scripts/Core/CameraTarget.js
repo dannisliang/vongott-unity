@@ -3,12 +3,13 @@
 ////////////////////
 // Prerequisites
 ////////////////////
-// Inspector items
-var player:GameObject;
-var cam:GameObject;
+// Public vars
+var cam : GameObject;
+var player : GameObject;
 
 // Private vars
 private var runcam = false;
+private var cam_init = false;
 
 // Static vars
 static var instance : Transform;
@@ -49,10 +50,10 @@ private function CheckVisibility ( pos : Vector3 ) : Vector3 {
 private function CheckRunCam ( pos : Vector3 ) : Vector3 {
 	if ( runcam ) {
 		if ( pos.x > 0.0 ) 		{ pos.x -= 0.01; }
-		if ( pos.z > -10.0 ) 	{ pos.z -= 0.1; }
+		if ( pos.z > -6.0 ) 	{ pos.z -= 0.1; }
 	} else {
 		if ( pos.x < 0.5 ) 		{ pos.x += 0.01; }
-		if ( pos.z < -4.5 ) 	{ pos.z += 0.1; }
+		if ( pos.z < -2.0 ) 	{ pos.z += 0.1; }
 	}
 	
 	return pos;
@@ -63,7 +64,6 @@ private function CheckPosition () {
 	var pos : Vector3 = cam.transform.localPosition;
 	
 	pos = CheckRunCam ( pos );
-	//HideObscuringObjects();
 	//pos = CheckVisibility ( pos );
 	
 	cam.transform.localPosition = pos;
@@ -74,16 +74,24 @@ private function CheckPosition () {
 ////////////////////
 // Init
 function Start () {
-	cam.transform.localPosition = new Vector3 ( 0.5, 0.5, -4.5 );
-	cam.transform.localEulerAngles = Vector3.zero;
-	
 	instance = this.gameObject.transform;
 }
 
 // Update
 function Update () {
-	this.transform.localPosition = player.transform.localPosition;
+	if ( !cam_init ) {
+		if ( cam != null ) {
+			cam.transform.parent = this.transform;
+			cam.transform.localPosition = new Vector3 ( 0.5, 0.5, -2.0 );
+			cam.transform.localEulerAngles = Vector3.zero;
+			cam_init = true;
+		} else {
+			return;
+		}
+	}
 	
+	this.transform.localPosition = player.transform.localPosition;
+		
 	// check for menu cam
 	if ( !cam_in_front ) {
 		CheckPosition ();

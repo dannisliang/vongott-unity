@@ -13,6 +13,10 @@ class EditorInspectorTween extends MonoBehaviour {
 		adjusting = 1;
 	}
 	
+	function Init ( obj : GameObject ) {
+	
+	}
+	
 	function Update () {
 		for ( var o : GameObject in EditorCore.GetSelectedObjects() ) {
 			if ( o.GetComponent ( Tween ) ) {

@@ -32,7 +32,7 @@ function Start () {
 
 // Update
 function Update () {
-	if ( EditorCore.menusActive ) {
+	if ( EditorCore.playMode ) {
 		return;
 	}
 	
