@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_0_0;UNITY_4_0;UNITY_STANDALONE_WIN;ENABLE_PROFILER;UNITY_EDITOR;UNITY_TEAM_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_1_2;UNITY_4_1;ENABLE_PROFILER;UNITY_EDITOR;UNITY_TEAM_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -57,7 +57,6 @@
      <None Include="Assets\Demos\LMEmission\LMEmission.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\Temp\TempShader.shader" />
-     <None Include="Assets\Resources\Conversations\1\2\marcel.xml" />
      <None Include="Assets\Shaders\BumpedSpecularEmissive.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (AlphaClip).shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (HardClip).shader" />
@@ -67,7 +66,6 @@
      <None Include="Assets\Shaders\BumpedSpecular.shader" />
      <None Include="Assets\Demos\TexturePan\TexturePan.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (SoftClip).shader" />
-     <None Include="Assets\Resources\Conversations\1\1\marcel.xml" />
      <None Include="Assets\Shaders\RimLighting.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (SoftClip).shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont).shader" />
@@ -81,6 +79,8 @@
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
      <None Include="Assets\Shaders\OutlineDiffuse.shader" />
+     <None Include="Assets\Conversations\1\1\marcel.xml" />
+     <None Include="Assets\Conversations\1\2\marcel.xml" />
      <None Include="Assets\Demos\Distortion(ProOnly)\Distortion.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (HardClip).shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />

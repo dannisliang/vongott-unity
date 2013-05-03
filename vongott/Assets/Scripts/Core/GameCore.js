@@ -56,6 +56,8 @@ static function ToggleControls ( state : boolean ) {
 	playerObject.GetComponent(CharacterController).enabled = state;
 	playerObject.GetComponent(ThirdPersonController).enabled = state;
 	
+	MouseLook.SetActive ( state );
+	
 	if ( state ) {
 		Print ( "GameCore | controls activated" );
 	} else {

@@ -8,8 +8,6 @@ class OGPopUp extends OGWidget {
 	var messageTarget : GameObject;
 	var padding : Vector2 = new Vector2 ( 8.0, 8.0 );
 	
-	var style : GUIStyle;
-	
 	@HideInInspector var selectedOption : String = "(pick)";
 	@HideInInspector var popDepth : int = 0;
 			
@@ -19,19 +17,19 @@ class OGPopUp extends OGWidget {
 		
 		if ( !isUp ) {
 			popDepth = depth;
-			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), style.fontSize + padding.y );
+			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), guiStyle.fontSize + padding.y );
 			GUI.Box ( guiRect, "" );
 			
-			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (padding.x * 2), transform.localScale.y ), selectedOption, style ) ) {
+			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (padding.x * 2), transform.localScale.y ), selectedOption, guiStyle ) ) {
 				isUp = true;
 			}
 		} else {
 			popDepth = depth - 10;
-			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), ( options.Length * (style.fontSize + padding.y) ) + ( padding.y * 2 ) );
+			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), ( options.Length * (guiStyle.fontSize + padding.y) ) + ( padding.y * 2 ) );
 			GUI.Box ( guiRect, "" );
 			
 			for ( var i = 0; i < options.Length; i++ ) {			
-				if ( GUI.Button ( Rect ( x, y + padding.y + ( ( style.fontSize + padding.y ) * i ), transform.localScale.x + ( padding.x * 2 ), style.fontSize + padding.y ), options[i], style ) ) {
+				if ( GUI.Button ( Rect ( x, y + padding.y + ( ( guiStyle.fontSize + padding.y ) * i ), transform.localScale.x + ( padding.x * 2 ), guiStyle.fontSize + padding.y ), options[i], guiStyle ) ) {
 					selectedOption = options[i];
 					isUp = false;
 				}

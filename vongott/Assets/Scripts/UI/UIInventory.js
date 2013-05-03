@@ -17,6 +17,7 @@ private class InventorySlot {
 		btn.message = "SelectSlot";
 		btn.argument = i.ToString();
 		btn.depth = 2;
+		btn.style = "Button";
 	
 		img.depth = 0;
 	
@@ -62,11 +63,18 @@ class UIInventory extends OGPage {
 	////////////////////
 	// Inventory display
 	////////////////////
+	// Clear grid
+	function ClearGrid () {
+		for ( var i = 0; i < grid.childCount; i++ ) {
+			Destroy ( grid.GetChild ( i ).gameObject );
+		}
+		
+		slots.Clear();
+	}
+	
 	// Populate grid
 	function PopulateGrid () {
-		if ( grid.childCount > 0 ) {
-			return;
-		}
+		ClearGrid ();
 		
 		var allSlots : Slot[] = InventoryManager.GetSlots();
 		
@@ -74,7 +82,13 @@ class UIInventory extends OGPage {
 		var row = 0;
 		
 		for ( var i = 0 ; i < allSlots.Length; i++ ) {
-			slots.Add ( new InventorySlot ( i, col, row, grid, this.gameObject ) );
+			var slot : InventorySlot = new InventorySlot ( i, col, row, grid, this.gameObject );
+			
+			if ( allSlots[i].entry ) {
+				slot.image.GetComponent(OGImage).image = allSlots[i].entry.image;
+			}
+			
+			slots.Add ( slot );
 		
 			if ( col < 3 ) {
 				col++;
@@ -83,11 +97,6 @@ class UIInventory extends OGPage {
 				row++;
 			}
 		}
-	}
-	
-	// Splice text
-	function SpliceText ( text : String, lineLength : int ) : String {
-	  	return Regex.Replace( text, "(.{" + lineLength + "})", "$1" + "\n");
 	}
 	
 	// Select slot
@@ -99,7 +108,7 @@ class UIInventory extends OGPage {
 			var entry = allSlots[index].entry;
 		
 			inspector.entryName.text = entry.title;
-			inspector.description.text = SpliceText ( entry.desc, 30 );
+			inspector.description.text = entry.desc;
 			inspector.attrName.text = "";
 			inspector.attrVal.text = "";
 			
@@ -135,23 +144,11 @@ class UIInventory extends OGPage {
 	// Equip entry
 	private function Equip ( entry : Entry, equip : boolean ) {
 		entry.equipped = equip;
-		
-		if ( equip ) {
-			//entry.sprite.alpha = 0.5;
-		} else {
-			//entry.sprite.alpha = 1.0;
-		}
 	}
 	
 	// Install entry
 	private function Install ( entry : Entry, install : boolean ) {
 		entry.installed = install;
-		
-		if ( install ) {
-			//entry.sprite.alpha = 0.5;
-		} else {
-			//entry.sprite.alpha = 1.0;
-		}
 	}
 	
 	// Set buttons
@@ -205,11 +202,12 @@ class UIInventory extends OGPage {
 		PopulateGrid ();*/
 	}
 	
+	
 	////////////////////
 	// Init
 	////////////////////
 	function Start () {
-		MouseLook.SetActive ( false );
+		GameCore.ToggleControls ( false );
 		PopulateGrid ();
 	}
 	
@@ -220,7 +218,7 @@ class UIInventory extends OGPage {
 	function Update () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
 			OGRoot.GoToPage ( "HUD" );
-			MouseLook.SetActive ( true );
+			GameCore.ToggleControls ( true );
 		}
 	}
 }

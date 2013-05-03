@@ -55,6 +55,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		o.AddField ( "Conversation", cnv );
 		
 		return o;
+
 	}
 	
 	// name

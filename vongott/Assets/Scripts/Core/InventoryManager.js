@@ -24,7 +24,7 @@ public class Entry {
 	var eqSlot : Equipment.Slots = Equipment.Slots.Hands;
 	var upgSlot : Upgrade.Slots = Upgrade.Slots.Hands;
 	var sprite : UISprite;
-	var spriteName = "";
+	var image : Texture2D;
 	var title = "";
 	var desc = "";
 	var attr : Item.Attribute[];
@@ -65,7 +65,7 @@ static function AddItem ( item : Item ) {
 				entry.upgSlot = upg.upgSlot;
 			}
 			
-			entry.spriteName = item.spriteName;
+			entry.image = item.image;
 			entry.title = item.title;
 			entry.desc = item.desc;
 			entry.attr = item.attr;

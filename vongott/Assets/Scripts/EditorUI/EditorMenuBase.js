@@ -192,7 +192,6 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	function PlayLevel () {
 		EditorCore.PlayLevel ();
-		OGRoot.GoToPage ( "PlayMode" );
 	}
 	
 	

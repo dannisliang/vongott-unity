@@ -1,11 +1,15 @@
 #pragma strict
 
+@script ExecuteInEditMode
+
 class OGRoot extends MonoBehaviour {
 	var _currentPage : OGPage;
 	var _allPages : OGPage[];
-		
+	var _allStyles : GUIStyle[];
+			
 	static var currentPage : OGPage;
 	static var allPages : OGPage[];
+	static var allStyles : GUIStyle[];
 	static var mouseOver : boolean = false;
 	
 	static function GoToPage ( name : String ) {
@@ -38,6 +42,8 @@ class OGRoot extends MonoBehaviour {
 		
 			mouseOver = anyRects > 0;
 		}
+		
+		allStyles = _allStyles;
 	}
 	
 	function OnGUI () {
@@ -47,6 +53,7 @@ class OGRoot extends MonoBehaviour {
 	function Start () {		
 		currentPage = _currentPage;
 		allPages = _allPages;
+		allStyles = _allStyles;
 		
 		currentPage.gameObject.SetActive ( true );	
 	}

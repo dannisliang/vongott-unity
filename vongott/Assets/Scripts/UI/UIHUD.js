@@ -40,6 +40,8 @@ class UIHUD extends OGPage {
 	function Update () {
 		if ( Input.GetKeyDown(KeyCode.I) ) {
 			OGRoot.GoToPage ( "Inventory" );
+		} else if ( Input.GetKeyDown(KeyCode.Q) ) {
+			OGRoot.GoToPage ( "Quests" );
 		}
 	}
 	
@@ -51,5 +53,7 @@ class UIHUD extends OGPage {
 		if ( msg != notificationBox.text.text ) {
 			notificationBox.text.text = msg;
 		}
+		
+		notificationBox.instance.SetActive ( !(msg == "") );
 	}
 }

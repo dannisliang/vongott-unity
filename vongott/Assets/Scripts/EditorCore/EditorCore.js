@@ -12,7 +12,6 @@ static var menusActive = false;
 static private var selectedObjects : List.<GameObject> = new List.<GameObject>();
 static var currentLevel : GameObject;
 static var grabMode = false;
-static var playMode = false;
 static var grabRestrict : String;
 static var workspace : Transform;
 static var cam : Transform;
@@ -103,24 +102,12 @@ static function DeselectAllObjects () {
 // Deselect object
 static function DeselectObject ( obj : GameObject ) {
 	selectedObjects.Remove ( obj );
-	
-	for ( var kvp : KeyValuePair.< GameObject, Material > in previousMaterials ) {
-		if ( kvp.Key == obj ) {
-			obj.renderer.material = kvp.Value;
-			previousMaterials.Remove ( kvp );
-			return;
-		}
-	}
 }
 
 // Select object
 static function SelectObject ( obj : GameObject ) {
 	selectedObjects.Add ( obj );
-	
-	previousMaterials.Add ( new KeyValuePair.< GameObject, Material > ( obj, obj.renderer.material ) );
-	
-	obj.renderer.material = selectedMaterial;
-	
+			
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 		
@@ -214,24 +201,7 @@ static function SetInspector ( i : EditorMenuBase ) {
 ////////////////////
 // Play level
 static function PlayLevel () {
-	player = Instantiate ( Resources.Load ( "Prefabs/Character/Player" ) ) as GameObject;
-	player.transform.parent = currentLevel.transform;
-	player.transform.localPosition = Vector3.one;
-	
-	camTarget = Instantiate ( Resources.Load ( "Prefabs/Core/CameraTarget" ) ) as GameObject;
-	camTarget.transform.parent = currentLevel.transform;
-	camTarget.GetComponent ( CameraTarget ).player = player;
-	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
-	
-	playMode = true;
-}
-
-// Exit level
-static function ExitLevel () {
-	cam.parent = root;
-	Destroy ( player );
-	Destroy ( camTarget );
-	playMode = false;
+	Application.LoadLevel ( "game" );
 }
 
 

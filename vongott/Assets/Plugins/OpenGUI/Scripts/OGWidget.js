@@ -22,70 +22,6 @@ enum ScreenSize {
 	ScreenHeight
 }
 
-public class TextProperties {
-	var font : Font;
-	var style : FontStyle;
-	var size : int = 12;
-	var alignment : TextAnchor;
-	var normal : Color = Color.white;
-	var hover : Color = Color.white;
-	var active : Color = Color.white;	
-
-	@HideInInspector var guiStyle : GUIStyle;
-	
-	function Init () {
-		guiStyle = new GUIStyle ();
-		guiStyle.font = font;
-		guiStyle.fontStyle = style;
-		guiStyle.fontSize = size;
-		guiStyle.alignment = alignment;
-		guiStyle.normal.textColor = normal;
-		guiStyle.hover.textColor = hover;
-		guiStyle.active.textColor = active;
-	}
-}
-
-public class ButtonProperties extends TextProperties {
-	var normalBg : Color = Color.black;
-	var hoverBg : Color = Color.black;
-	var activeBg : Color = Color.black;
-	var padding : Vector2 = Vector2.zero;
-	
-	@HideInInspector var bg1 : Texture2D;
-	@HideInInspector var bg2 : Texture2D;
-	@HideInInspector var bg3 : Texture2D;
-	
-	override function Init () {
-		bg1 = new Texture2D(2,2);
-		bg1.SetPixels([normalBg,normalBg,normalBg,normalBg]);
-		bg1.Apply();
-	
-		bg2 = new Texture2D(2,2);
-		bg2.SetPixels([hoverBg,hoverBg,hoverBg,hoverBg]);
-		bg2.Apply();
-		
-		bg3 = new Texture2D(2,2);
-		bg3.SetPixels([activeBg,activeBg,activeBg,activeBg]);
-		bg3.Apply();
-	
-		guiStyle = new GUIStyle ();
-		guiStyle.font = font;
-		guiStyle.fontStyle = style;
-		guiStyle.fontSize = size;
-		guiStyle.alignment = alignment;
-		guiStyle.normal.textColor = normal;
-		guiStyle.hover.textColor = hover;
-		guiStyle.active.textColor = active;
-		guiStyle.normal.background = bg1;
-		guiStyle.hover.background = bg2;
-		guiStyle.active.background = bg3;
-		guiStyle.padding.top = padding.y;
-		guiStyle.padding.bottom = padding.y;
-		guiStyle.padding.left = padding.x;
-		guiStyle.padding.right = padding.x;
-	}
-}
-
 private class Stretch {
 	var width : ScreenSize = ScreenSize.None;
 	var widthFactor : float = 1.0;
@@ -112,8 +48,11 @@ class OGWidget extends MonoBehaviour {
 	var manualDraw = false;
 	var anchor : Anchor;	
 	var stretch : Stretch;
+	var style : String = "body";
 	
 	@HideInInspector var guiRect : Rect;
+	@HideInInspector var guiStyle : GUIStyle;
+	@HideInInspector var emptyStyle : GUIStyle = new GUIStyle();
 	
 	function SetX ( x : float ) {
 		transform.localPosition = new Vector3 ( x, transform.localPosition.y, 0.0 );
@@ -194,6 +133,24 @@ class OGWidget extends MonoBehaviour {
 		}
 	}
 	
+	function CheckStyle () : GUIStyle {
+		if ( !OGRoot.allStyles ) {
+			return emptyStyle;
+		}
+		
+		for ( var s : GUIStyle in OGRoot.allStyles ) {
+			if ( s.name == style ) {
+				return s;
+			}
+		}
+		
+		if ( GUI.skin.GetStyle ( style ) ) {	
+			return GUI.skin.GetStyle ( style );
+		}
+		
+		return emptyStyle;
+	}
+	
 	function UpdateWidget () {}
 	
 	function Draw ( x : float, y : float ) {}
@@ -201,6 +158,8 @@ class OGWidget extends MonoBehaviour {
 	function Start () {}
 	
 	function OnGUI () {
+		guiStyle = CheckStyle ();
+		
 		if ( !manualDraw ) {
 			if ( drawLocalPosition ) {
 				Draw ( transform.localPosition.x, transform.localPosition.y );
@@ -208,13 +167,9 @@ class OGWidget extends MonoBehaviour {
 				Draw ( transform.position.x, transform.position.y );
 			}
 		}
-		
-		if ( guiRect.Contains ( Input.mousePosition ) ) {
-			// DETECT MOUSE RAY STUFF AND THING
-		}
 	}
 	
-	function Update () {	
+	function Update () {			
 		if ( stretch ) {
 			ApplyStretch ();
 			ApplyPosition ();

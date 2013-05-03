@@ -56,7 +56,7 @@ class Item extends InteractiveObject {
 	// Public vars
 	var type : Types;
 	var id : IDs;
-	var spriteName : String;
+	var image : Texture2D;
 	var title : String;
 	var desc : String;
 	var attr : Attribute[];

@@ -32,10 +32,6 @@ function Start () {
 
 // Update
 function Update () {
-	if ( EditorCore.playMode ) {
-		return;
-	}
-	
 	// position
 	var x = transform.localPosition.x;
 	var y = transform.localPosition.y;

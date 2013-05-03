@@ -10,6 +10,7 @@ class Conversation extends InteractiveObject {
 	@HideInInspector private var in_convo = false; 
 	@HideInInspector private var skip_line = false;
 	@HideInInspector private var current_option = 0;
+	@HideInInspector private var current_options = 0;
 	
 	
 	////////////////////
@@ -18,7 +19,6 @@ class Conversation extends InteractiveObject {
 	function LeaveConversation () {
 		GameCore.ToggleControls( true );
 		
-		MouseLook.SetActive ( true );
 		OGRoot.GoToPage ( "HUD" );
 		in_convo = false;
 		current_line = 0;
@@ -29,7 +29,7 @@ class Conversation extends InteractiveObject {
 	////////////////////
 	// Next line
 	////////////////////
-	function NextLine () {
+	function NextLine () {		
 		// check if there are more lines to read
 		if ( current_line >= line_array.Count ) {
 			LeaveConversation();
@@ -88,9 +88,12 @@ class Conversation extends InteractiveObject {
 			HUD.OpenPrompt();
 		
 		} else if ( type == "group" ) {
+			current_option = 0;
+			current_options = 0;
+			UIConversation.HighlightLine ( 0 );
 			
-			UIConversation.SetName ( GameCore.playerName );
-						
+			UIConversation.SetName ( GameCore.playerName );			
+									
 			for ( var i = 1; i < line_array[current_line].Count; i++ ) {
 				text = line_array[current_line][i];
 				if ( text.Replace( "(player)", GameCore.playerName ) ) {
@@ -98,6 +101,7 @@ class Conversation extends InteractiveObject {
 				}
 	
 				UIConversation.SetOption ( i-1, text.Split("|"[0])[0] );
+				current_options++;
 			}
 		}
 		
@@ -140,7 +144,7 @@ class Conversation extends InteractiveObject {
 			
 			// read XML document
 			var xml_data = new XmlDocument();
-			xml_data.Load("Assets/Resources/Conversations/" + chapter.ToString() + "/" + scene.ToString() + "/" + actorName + ".xml");
+			xml_data.Load( Application.dataPath + "/Conversations/" + chapter.ToString() + "/" + scene.ToString() + "/" + actorName + ".xml");
 	
 			// define XML root
 			var node_list : XmlNodeList;
@@ -294,7 +298,7 @@ class Conversation extends InteractiveObject {
 			if ( UIConversation.highlight.activeSelf ) {
 				if ( Input.GetKeyDown(KeyCode.F) ) {
 					ChooseLine ( current_option );
-				} else if ( Input.GetKeyDown(KeyCode.S) && current_option < 2 ) {
+				} else if ( Input.GetKeyDown(KeyCode.S) && current_option < current_options - 1 ) {
 					current_option++;
 					UIConversation.HighlightLine ( current_option );
 					
