@@ -4,7 +4,7 @@
 
 --
 
-This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. The story is parallel to that of the first Deus Ex, although occurence of original characters will be cameos at most. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters, although that is up for discussion. 
+This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. Occurences of original characters will be cameos at most. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters. 
 
 Everything except the framework with which Vongott is developed, Unity 3D, will be open source. In the future, I will try to get this project some traction and invite others to collaborate with me, especially on the story and the look. Before that can happen, though, I will have to create the foundation for this game entirely, writing a new action RPG engine from scratch.
 
