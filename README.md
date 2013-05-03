@@ -22,7 +22,7 @@ I will document the code as I move along. Have a look in the docs for that and e
 - Animation
 	- Male
 	- Female
-	- Conversation poses
+	- Universal conversation poses and lip movement
 - Core
 	- Controls
 	- Infrastructure
