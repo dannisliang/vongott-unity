@@ -550,6 +550,19 @@
 										5.71642065048218,
 										157.528167724609]}},
 				{
+						"LightSource":{
+								"color":[
+										1,
+										1,
+										1,
+										1],
+								"range":10,
+								"intensity":1,
+								"localPosition":[
+										29.2725963592529,
+										5.42046499252319,
+										24.2447185516357]}},
+				{
 						"Actor":{
 								"model":"NPC/TestActor",
 								"affiliation":"ally",
@@ -583,6 +596,27 @@
 										0.168975830078125,
 										5.33380222320557,
 										103.908088684082],
+								"localEulerAngles":[
+										0,
+										0,
+										0]},
+						"Conversation":{
+								"chapter":1,
+								"scene":2,
+								"actorName":"marcel"}},
+				{
+						"Actor":{
+								"model":"NPC/TestActor",
+								"affiliation":"ally",
+								"mood":"calm",
+								"localScale":[
+										1,
+										1,
+										1],
+								"localPosition":[
+										29.966194152832,
+										2.70081806182861,
+										22.003755569458],
 								"localEulerAngles":[
 										0,
 										0,

@@ -56,6 +56,18 @@ function DrawZLine () {
 	GL.End();
 }
 
+function DrawPathLine ( path : Vector3[] ) {
+	selectIdle.SetPass ( 0 );
+	
+	GL.Begin( GL.LINES );
+	
+	for ( var node : Vector3 in path ) {
+ 		GL.Vertex3 ( node.x, node.y, node.z );
+	}
+
+	GL.End();
+}
+
 // Rendering
 function OnPreRender () {
 	// wireframe
@@ -66,7 +78,12 @@ function OnPostRender () {
 	// wireframe
 	GL.wireframe = false;
 	
-	// gizmo{
+	// path
+	if ( EditorCore.drawPath ) {
+		DrawPathLine ( EditorCore.drawPath );
+	}
+	
+	// gizmo
     if ( EditorCore.grabRestrict == "x" ) {		
 	    DrawXLine();
 	} else if ( EditorCore.grabRestrict == "y" ) {

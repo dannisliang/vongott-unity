@@ -43,7 +43,7 @@ private class Anchor {
 }
 
 class OGWidget extends MonoBehaviour {	
-	var depth : int = 0;
+	var depth : int = 0; // MAKE THIS THE Z AXIS
 	var drawLocalPosition = false;
 	var manualDraw = false;
 	var anchor : Anchor;	

@@ -47,6 +47,7 @@ static var inspector : EditorMenuBase;
 static var player : GameObject;
 static var camTarget : GameObject;
 static var root : Transform;
+static var drawPath : Vector3[];
 
 // undo
 static var actionStages : List.< Action > [] = new List.< Action > [10];
@@ -201,7 +202,6 @@ static function SelectObject ( obj : GameObject ) {
 	// Actor
 	} else if ( obj.GetComponent(Actor) != null ) {
 		inspector.SetMenu ( 0, "Actor", obj );
-		inspector.SetMenu ( 1, "Path", obj );
 		inspector.SetMenu ( 2, "Trigger", obj );
 	
 	// Item
