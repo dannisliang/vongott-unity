@@ -41,7 +41,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var cnv : JSONObject = obj.GetField("Conversation");
 		var newAct : GameObject;
 		
-		newAct = Instantiate ( Resources.Load ( "Characters/" + act.GetField("model").str ) as GameObject );
+		newAct = Instantiate ( Resources.Load ( "Actors/" + act.GetField("model").str ) as GameObject );
 		
 		newAct.GetComponent(Actor).affiliation = act.GetField ( "affiliation" ).str;
 		newAct.GetComponent(Actor).mood = act.GetField ( "mood" ).str;
@@ -57,6 +57,22 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.name = act.GetField("model").str;
 	
 		return newAct;
+	
+	// check if item
+	} else if ( obj.HasField("Item") ) {
+		var itm : JSONObject = obj.GetField("Item");
+		var newItm : GameObject;
+		
+		newItm = Instantiate ( Resources.Load ( "Items/" + itm.GetField("model").str ) as GameObject );
+								
+		newItm.transform.localScale = DeserializeVector3 ( itm.GetField("localScale") );
+		newItm.transform.localPosition = DeserializeVector3 ( itm.GetField("localPosition") );
+		newItm.transform.localEulerAngles = DeserializeVector3 ( itm.GetField("localEulerAngles") );
+	
+		newItm.name = itm.GetField("model").str;
+	
+		return newItm;
+	
 	}
 	
 	var o : GameObject = new GameObject ( obj.GetField ( "name" ).str );

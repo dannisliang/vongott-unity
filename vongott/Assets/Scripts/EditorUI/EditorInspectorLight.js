@@ -17,7 +17,7 @@ class EditorInspectorLight extends MonoBehaviour {
 	var intensity : ValueSlider;
 
 	function Init ( obj : GameObject ) {
-		var lgt = obj.GetComponent( LightSource );
+		var lgt : LightSource = obj.GetComponent ( LightSource );
 		
 		colorSliders.r.sliderValue = lgt.color.r;
 		colorSliders.g.sliderValue = lgt.color.g;

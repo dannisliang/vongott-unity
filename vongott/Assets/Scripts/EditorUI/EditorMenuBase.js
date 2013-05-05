@@ -62,20 +62,17 @@ class EditorMenuBase extends OGPage {
 	// View menu
 	////////////////////
 	// Toggle isometric view
-	function ToggleIsometric () 
-	{
+	function ToggleIsometric () {
 		EditorCore.ToggleIsometric();
 	}
 	
 	// Toggle wireframe view
-	function ToggleWireframe () 
-	{
+	function ToggleWireframe () {
 		EditorCore.ToggleWireframe();
 	}
 	
 	// Toggle wireframe view
-	function ToggleTextured () 
-	{
+	function ToggleTextured () {
 		EditorCore.ToggleTextured();
 	}
 	
@@ -84,18 +81,19 @@ class EditorMenuBase extends OGPage {
 	// Add menu
 	////////////////////
 	// Prefabs
-	function AddPrefab () 
-	{
+	function AddPrefab () {
 		OGRoot.GoToPage ( "Prefabs" );
 	}
 	
-	function AddCharacter () 
-	{
-		OGRoot.GoToPage ( "Characters" );
+	function AddActor () {
+		OGRoot.GoToPage ( "Actors" );
 	}
 	
-	function AddLight () 
-	{
+	function AddItem () {
+		OGRoot.GoToPage ( "Items" );
+	}
+	
+	function AddLight () {
 		EditorCore.AddLight ();
 	}
 	
@@ -118,11 +116,12 @@ class EditorMenuBase extends OGPage {
 		OGRoot.GoToPage ( "Flags" );
 	}
 		
+		
 	////////////////////
 	// Inspector
 	////////////////////
 	// Clear the menus
-	function ClearMenus () {
+	function ClearMenus () {		
 		for ( var t = 0; t < tabs.tabs.Count; t++ ) {
 			tabs.tabs[t].label = "";
 		}
@@ -191,6 +190,13 @@ class EditorMenuBase extends OGPage {
 	// Play level
 	////////////////////
 	function PlayLevel () {
+		if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
+			RenameLevel ();
+			return;
+		}
+	
+		EditorCore.SaveFile ( EditorCore.currentLevel.name );
+		
 		EditorCore.PlayLevel ();
 	}
 	

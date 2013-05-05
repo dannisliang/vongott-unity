@@ -56,6 +56,18 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		return o;
 
+	// check if item
+	} else if ( obj.GetComponent(Item) ) {
+		var itm : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		itm.AddField ( "model", obj.GetComponent(Item).model );
+		itm.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
+		itm.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		itm.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+		
+		o.AddField ( "Item", itm );
+		
+		return o;
+
 	}
 	
 	// name

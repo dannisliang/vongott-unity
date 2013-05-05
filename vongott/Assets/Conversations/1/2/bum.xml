@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<scene>
+	<convo setflag="2_talked_to_marcel" endquest="1_go_upstairs" startquest="2_get_back_to_marcel">
+		<machinima id="2_marcel_talking"/>
+		
+		<line name="Marcel">There you are Pinnochio, say hello to everybody.</line>
+	    
+		<group>
+	        <option setflag="2_marcel_child_1">Who are you?</option>
+	        <option setflag="2_marcel_dick_1">I don't need this!</option>
+	        <option setflag="2_marcel_nice_1">Hi. I'm (player).</option>
+	    </group>
+		
+		<line name="Marcel" flag="2_marcel_child_1">You are understandably confused.</line>
+   		<line name="Marcel" flag="2_marcel_dick_1">Calm down, cabron. You've been alive for 10 minutes and this is your attitude already?</line>
+    	<line name="Marcel" flag="2_marcel_nice_1">Good to see that you've calmed down, amigo.</line>
+	    
+		<line name="Marcel">We are the National Revolutionst Front, and you work with us now.</line>
+	   	<line name="Marcel">The bunker we are in now is one of our many hideouts.</line>
+	   	<line name="Marcel">Feel free to look around and talk to some of your fellow activists.</line>
+	    <line name="Marcel">Come back to me when you're ready to see some action.</line>
+		
+		<line name="(player)">All right.</line>
+	</convo>
+	
+	<convo flag="2_talked_to_marcel" endquest="2_get_back_to_marcel">
+    	<line name="Marcel">You ready to do some field work?</line>
+    
+		<group>
+        	<option action="cancel">Nope.</option>
+        	<option>Sure.</option>
+		</group>
+        
+		<line name="Marcel">All right Robocop, let me explain our situation.</line>
+	    <line name="Marcel">For now, all you need to know is that there is a big ass plague going on.</line>
+	    <line name="Marcel">Everyone is dying around us, and we know who is responsible.</line>
+	    <line name="Marcel">These pigs have been synthesizing the chemical that causes the plague to spread...</line>
+	    <line name="Marcel">...while also taking charge of distributing the cure to a select few.</line>
+	    <line name="Marcel">We know of a vaccine shipment that is ours for the taking, if we can first create a diversion...</line>
+	    <line name="Marcel">...so you're going to help us occupy the Statue of Awesome and capture the shipment afterwards.</line>
+	    
+		<group>
+	        <option setflag="2_marcel_child_2">How to do that?</option>
+	        <option setflag="2_marcel_dick_2">No way! I have no reason to help you at all!</option>
+	        <option setflag="2_marcel_nice_2">Yes, sir!</option>
+	    </group>
+		
+		<line name="Marcel" flag="2_marcel_child_2">Don't worry, my man.</line>
+	    <line name="Marcel" flag="2_marcel_dick_2">I can kill you by flipping a switch, so don't think for a second that you have a choice.</line>
+	    <line name="Marcel" flag="2_marcel_nice_2">That's the spirit!</line>
+	    
+		<line name="Marcel">I've taken the liberty of implementing some basic field training in your memory...</line>
+		<line name="Marcel">...it should be more than enough to complete this mission. Let's head out.</line>
+	</convo>
+</scene>

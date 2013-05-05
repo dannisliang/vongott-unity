@@ -2,6 +2,27 @@
 
 import System.Collections.Generic;
 
+// Private classes
+private class Action {
+	var object : GameObject;
+	var position : Vector3;
+	var rotation : Vector3;
+	var scale : Vector3;
+	
+	function Action ( obj : GameObject ) {
+		object = obj;
+		position = obj.transform.localPosition;
+		rotation = obj.transform.localEulerAngles;
+		scale = obj.transform.localScale;
+	}
+	
+	function UndoAction () {
+		object.transform.localPosition = position;
+		object.transform.localEulerAngles = rotation;
+		object.transform.localScale = scale;
+	}
+}
+
 // Public vars
 var _workspace : Transform;
 var _gizmo : GameObject;
@@ -9,33 +30,88 @@ var _camera : Transform;
 
 // Static vars
 static var menusActive = false;
-static private var selectedObjects : List.<GameObject> = new List.<GameObject>();
+static var selectedObjects : List.<GameObject> = new List.<GameObject>();
 static var currentLevel : GameObject;
+
+// modes
 static var grabMode = false;
+static var rotateMode = false;
+static var scaleMode = false;
 static var grabRestrict : String;
+
+// editor essentials
 static var workspace : Transform;
 static var cam : Transform;
 static var gizmo : GameObject;
-static var selectedMaterial : Material;
-static var previousMaterials : List.< KeyValuePair.< GameObject, Material > >;
 static var inspector : EditorMenuBase;
 static var player : GameObject;
 static var camTarget : GameObject;
 static var root : Transform;
 
+// undo
+static var actionStages : List.< Action > [] = new List.< Action > [10];
+static var currentActionStage : int = 0;
+
+
+////////////////////
+// Undo buffer
+////////////////////
+function InitStages () {
+	for ( var a : List.< Action > in actionStages ) {
+		a = new List.< Action >();
+	}
+}
+
+static function ClearStage ( stage : int ) {
+	actionStages[stage].Clear();
+}
+
+static function AddToStage ( stage : int, obj : GameObject ) {
+	actionStages[stage].Add ( new Action ( obj ) );
+}
+
+static function UndoStage ( stage : int ) {
+	for ( var a : Action in actionStages[stage] ) {
+		a.UndoAction();
+	}
+}
+
+static function UndoCurrentStage () {
+	UndoStage ( currentActionStage );	
+}
+
 
 ////////////////////
 // Add
 ////////////////////
-// Add light
-static function AddLight () {
+// Get spawn position
+static function GetSpawnPosition () : Vector3 {
 	var distance : float = 10.0;
 	var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
 	var position = Camera.main.transform.position + forward * distance;
 	
+	return position;
+}
+
+// Add light
+static function AddLight () {
 	var newLight : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/light_source" ) as GameObject );
 	newLight.transform.parent = currentLevel.transform;
-	newLight.transform.position = position;
+	newLight.transform.position = GetSpawnPosition();
+}
+
+// Add actor
+static function AddActor ( dir : String, name : String ) {
+	var newActor : GameObject = Instantiate ( Resources.Load ( "Actors/" + dir + "/" + name ) as GameObject );
+	newActor.transform.parent = currentLevel.transform;
+	newActor.transform.position = GetSpawnPosition();
+}
+
+// Add item
+static function AddItem ( dir : String, name : String ) {
+	var newItem : GameObject = Instantiate ( Resources.Load ( "Items/" + dir + "/" + name ) as GameObject );
+	newItem.transform.parent = currentLevel.transform;
+	newItem.transform.position = GetSpawnPosition();
 }
 
 
@@ -99,6 +175,13 @@ static function DeselectAllObjects () {
 	}
 }
 
+// Duplicate object
+static function DuplicateObject () {
+	for ( var obj : GameObject in selectedObjects ) {
+		Instantiate ( obj );
+	}
+}
+
 // Deselect object
 static function DeselectObject ( obj : GameObject ) {
 	selectedObjects.Remove ( obj );
@@ -107,17 +190,25 @@ static function DeselectObject ( obj : GameObject ) {
 // Select object
 static function SelectObject ( obj : GameObject ) {
 	selectedObjects.Add ( obj );
-			
+							
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
-		
+	
 	// LightSource
-	if ( obj.GetComponent(LightSource) ) {
+	if ( obj.GetComponent(LightSource) != null ) {
 		inspector.SetMenu ( 0, "Light", obj );
-	} else {
+	
+	// Actor
+	} else if ( obj.GetComponent(Actor) != null ) {
 		inspector.SetMenu ( 0, "Actor", obj );
 		inspector.SetMenu ( 1, "Path", obj );
 		inspector.SetMenu ( 2, "Trigger", obj );
+	
+	// Item
+	} else if ( obj.GetComponent(Item) != null ) {
+		inspector.SetMenu ( 0, "Item", obj );
+		inspector.SetMenu ( 1, "Trigger", obj );
+	
 	}
 
 	inspector.SelectSubmenu ( "0" );
@@ -125,7 +216,7 @@ static function SelectObject ( obj : GameObject ) {
 
 
 ////////////////////
-// Grab mode
+// Modes
 ////////////////////
 // Set grab mode
 static function SetGrabMode ( state : boolean ) {
@@ -136,33 +227,89 @@ static function SetGrabMode ( state : boolean ) {
 	grabMode = state;
 	
 	if ( grabMode ) {
+		currentActionStage++;
+		for ( var o : GameObject in selectedObjects ) {
+			AddToStage ( currentActionStage, o );
+		}
+		
+		OGRoot.GoToPage ( "Modes" );
+		EditorModes.SetTitle ( "Grab Mode" );
+		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to move\nHold Shift or Ctrl to change speed" );
+		EditorModes.SetHeight ( 90 );
+		
 		gizmo.SetActive ( true );
 		gizmo.transform.parent = selectedObjects[selectedObjects.Count-1].transform;
 		gizmo.transform.localPosition = Vector3.zero;
+	
 	} else {
-		ToggleRestriction ( null );
+		OGRoot.GoToPage ( "MenuBase" );
+		
+		SetRestriction ( null );
 		gizmo.SetActive ( false );
 		gizmo.transform.parent = workspace;
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
 	}
 }
 
-// Toggle grab mode
-static function ToggleGrabMode () {
-	SetGrabMode ( !grabMode );
+// Set rotate mode
+static function SetRotateMode ( state : boolean ) {
+	if ( selectedObjects.Count <= 0 ) {
+		return;
+	}
+		
+	rotateMode = state;
+	
+	if ( rotateMode ) {
+		OGRoot.GoToPage ( "Modes" );
+		EditorModes.SetTitle ( "Rotate Mode" );
+		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to rotate\nHold Shift or Ctrl to change speed" );
+		EditorModes.SetHeight ( 90 );
+		
+		gizmo.SetActive ( true );
+		gizmo.transform.parent = selectedObjects[selectedObjects.Count-1].transform;
+		gizmo.transform.localPosition = Vector3.zero;
+	
+	} else {
+		OGRoot.GoToPage ( "MenuBase" );
+		
+		SetRestriction ( null );
+		gizmo.SetActive ( false );
+		gizmo.transform.parent = workspace;
+		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
+	}
+}
+
+// Set scale mode
+static function SetScaleMode ( state : boolean ) {
+	if ( selectedObjects.Count <= 0 ) {
+		return;
+	}
+		
+	scaleMode = state;
+	
+	if ( scaleMode ) {
+		OGRoot.GoToPage ( "Modes" );
+		EditorModes.SetTitle ( "Scale Mode" );
+		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to scale\nHold Shift or Ctrl to change speed" );
+		EditorModes.SetHeight ( 90 );
+		
+		gizmo.SetActive ( true );
+		gizmo.transform.parent = selectedObjects[selectedObjects.Count-1].transform;
+		gizmo.transform.localPosition = Vector3.zero;
+	
+	} else {
+		OGRoot.GoToPage ( "MenuBase" );
+		
+		SetRestriction ( null );
+		gizmo.SetActive ( false );
+		gizmo.transform.parent = workspace;
+		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
+	}
 }
 
 // Toggle grab restriction
-static function ToggleRestriction ( axis : String ) {
+static function SetRestriction ( axis : String ) {
 	grabRestrict = axis;
-	
-	for ( var i = 0; i < gizmo.transform.childCount; i++ ) {
-		gizmo.transform.GetChild(i).gameObject.SetActive ( axis == null );
-	}
-	
-	if ( axis ) {
-		gizmo.transform.FindChild( axis ).gameObject.SetActive ( true );
-	}
 }
 
 
@@ -184,6 +331,19 @@ static function LoadFile ( path : String ) {
 	
 	currentLevel.transform.parent = parent;
 	currentLevel.transform.localPosition = Vector3.zero;
+}
+
+// Load conversations from library
+static function GetConvoChapters () : String[] {
+	return Directory.GetDirectories ( Application.dataPath + "/Conversations", "*" );;
+}
+
+static function GetConvoScenes ( chapter : int ) : String[] {
+	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter.ToString(), "*" );;
+}
+
+static function GetConvos ( chapter : int, scene: int ) : String[] {
+	return Directory.GetFiles ( Application.dataPath + "/Conversations/" + chapter.ToString() + "/" + scene.ToString(), "*" );;
 }
 
 
@@ -214,11 +374,11 @@ function Start () {
 	gizmo = _gizmo;
 	cam = _camera;
 	root = this.transform.parent;
-	
-	selectedMaterial = Resources.Load ( "Materials/Editor/editor_outline" );	
-	previousMaterials = new List.< KeyValuePair.< GameObject, Material > > ();
+
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	gizmo.SetActive ( false );
+
+	InitStages();
 }
 
 // Update

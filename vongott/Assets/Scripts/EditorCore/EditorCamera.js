@@ -7,6 +7,12 @@
 var sensitivity : float = 2.5;
 var speed : float = 10.0;
 var renderMode : int = 0;
+var gizmo : Transform;
+var gizmoX : Material;
+var gizmoY : Material;
+var gizmoZ : Material;
+var selectIdle : Material;
+var selectModifying : Material;
 
 // Private vars
 private var mouselook_active = true;
@@ -16,13 +22,58 @@ private var rotationY : float = 0.0;
 ////////////////////
 // Public functions
 ////////////////////
+// Gizmo
+function DrawXLine () {
+	gizmoX.SetPass( 0 );
+	
+	GL.Begin( GL.LINES );
+	
+	GL.Vertex3( gizmo.position.x - 9999, gizmo.position.y, gizmo.position.z );
+ 	GL.Vertex3( gizmo.position.x + 9999, gizmo.position.y, gizmo.position.z );
+
+	GL.End();
+}
+
+function DrawYLine () {
+	gizmoY.SetPass( 0 );
+	
+	GL.Begin( GL.LINES );
+	
+	GL.Vertex3( gizmo.position.x, gizmo.position.y - 9999, gizmo.position.z );
+	GL.Vertex3( gizmo.position.x, gizmo.position.y + 9999, gizmo.position.z );
+
+	GL.End();
+}
+
+function DrawZLine () {
+	gizmoZ.SetPass( 0 );
+	
+	GL.Begin( GL.LINES );
+	
+	GL.Vertex3( gizmo.position.x, gizmo.position.y, gizmo.position.z - 9999 );
+ 	GL.Vertex3( gizmo.position.x, gizmo.position.y, gizmo.position.z + 9999 );
+
+	GL.End();
+}
+
 // Rendering
 function OnPreRender () {
+	// wireframe
 	GL.wireframe = ( renderMode == 1 );
 }
 
 function OnPostRender () {
+	// wireframe
 	GL.wireframe = false;
+	
+	// gizmo{
+    if ( EditorCore.grabRestrict == "x" ) {		
+	    DrawXLine();
+	} else if ( EditorCore.grabRestrict == "y" ) {
+		DrawYLine();
+	} else if ( EditorCore.grabRestrict == "z" ) {
+		DrawZLine();
+	}
 }
 
 // Init
@@ -40,47 +91,66 @@ function Update () {
 	var horizontal = Camera.main.transform.TransformDirection ( Vector3.left );
 	var vertical = Camera.main.transform.TransformDirection ( Vector3.down );
 	
-	// grab mode
-	if ( EditorCore.grabMode ) {	
+	// scroll wheel
+	var translation = Input.GetAxis("Mouse ScrollWheel");
+	var spd : float = speed;
+	
+	// modes
+	if ( EditorCore.grabMode || EditorCore.rotateMode || EditorCore.scaleMode ) {		
+		if ( Input.GetKey ( KeyCode.LeftShift ) ) {
+			spd = spd / 16;
+		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+			spd = spd * 4;
+		} 
+		
 		if ( EditorCore.grabRestrict == "y" ) {
 			x = 0;
-			y = Input.GetAxis("Mouse Y") * sensitivity / 4;
+			y = translation * spd;
 			z = 0;
 		} else if ( EditorCore.grabRestrict == "x" ) {
-			x = (Input.GetAxis("Mouse X")) * sensitivity / 4;
+			x = translation * spd;
 			y = 0;
 			z = 0;
 		} else if ( EditorCore.grabRestrict == "z" ) {
 			x = 0;
 			y = 0;
-			z = (Input.GetAxis("Mouse X")) * sensitivity / 4;
+			z = translation * spd;
+		} else if ( EditorCore.scaleMode && EditorCore.grabRestrict == null ) {
+			x = translation * spd;
+			y = translation * spd;
+			z = translation * spd;
 		} else {
-			x = (Input.GetAxis("Mouse X")) * sensitivity / 4;
-			y = Input.GetAxis("Mouse Y") * sensitivity / 4;
-			z = (Input.GetAxis("Mouse X")) * sensitivity / 4;
+			x = 0;
+			y = 0;
+			z = 0;
 		}
 		
 		for ( var o : GameObject in EditorCore.GetSelectedObjects() ) {
-			o.transform.localPosition = new Vector3 ( o.transform.localPosition.x + x, o.transform.localPosition.y + y, o.transform.localPosition.z + z );
+			if ( EditorCore.grabMode ) {
+				o.transform.localPosition = new Vector3 ( o.transform.localPosition.x + x, o.transform.localPosition.y + y, o.transform.localPosition.z + z );
+			} else if ( EditorCore.rotateMode ) {
+				o.transform.localEulerAngles = new Vector3 ( o.transform.localEulerAngles.x + ( x * 2 ), o.transform.localEulerAngles.y + ( y * 2 ), o.transform.localEulerAngles.z + ( z * 2 ) );
+			} else if ( EditorCore.scaleMode ) {
+				o.transform.localScale = new Vector3 ( o.transform.localScale.x + x, o.transform.localScale.y + y, o.transform.localScale.z + z );
+			} 
 		}
-				
-		// end grab mode
+		
+		// end mode
 		if ( Input.GetMouseButtonDown(0) ) {
 			EditorCore.SetGrabMode ( false );
+			EditorCore.SetRotateMode ( false );
+			EditorCore.SetScaleMode ( false );
 		}
 		
 	// camera mode	
-	} else {		
-		// scroll wheel
-		var translation = Input.GetAxis("Mouse ScrollWheel") * speed;
-		
+	} else {				
 		if ( translation != 0.0 ) {				
 			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-				transform.localPosition = new Vector3 ( x, y + translation, z );
+				transform.localPosition = new Vector3 ( x, y + ( translation * speed ), z );
 			} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				transform.position = transform.position + horizontal * translation;
+				transform.position = transform.position + horizontal * ( translation * speed );
 			} else {		
-				transform.position = transform.position + forward * translation * 10;
+				transform.position = transform.position + forward * ( translation * speed ) * 10;
 			}
 		}
 		
@@ -124,9 +194,10 @@ function Update () {
 					EditorCore.SelectObject ( obj );
 				}
 						
+			
 			} else {
 				EditorCore.DeselectAllObjects ();
-				EditorCore.ToggleGrabMode();
+			
 			}
 		}
 	}

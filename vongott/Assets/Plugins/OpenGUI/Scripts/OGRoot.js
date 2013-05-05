@@ -4,15 +4,20 @@
 
 class OGRoot extends MonoBehaviour {
 	var _currentPage : OGPage;
-	var _allPages : OGPage[];
 	var _allStyles : GUIStyle[];
 			
 	static var currentPage : OGPage;
-	static var allPages : OGPage[];
 	static var allStyles : GUIStyle[];
 	static var mouseOver : boolean = false;
+	static var thisTransform : Transform;
+	
+	@HideInInspector static var allPages : List.< OGPage > = new List.< OGPage >();
 	
 	static function GoToPage ( name : String ) {
+		if ( name == currentPage.pageName ) {
+			return;
+		}
+		
 		currentPage.gameObject.SetActive ( false );
 		currentPage = null;
 		
@@ -52,8 +57,13 @@ class OGRoot extends MonoBehaviour {
 	
 	function Start () {		
 		currentPage = _currentPage;
-		allPages = _allPages;
 		allStyles = _allStyles;
+		
+		for ( var i = 0; i < this.transform.childCount; i++ ) {
+			if ( this.transform.GetChild ( i ).GetComponent ( OGPage ) ) {
+				allPages.Add ( this.transform.GetChild ( i ).GetComponent ( OGPage ) );
+			}
+		}
 		
 		currentPage.gameObject.SetActive ( true );	
 	}

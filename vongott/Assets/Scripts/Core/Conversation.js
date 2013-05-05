@@ -75,17 +75,13 @@ class Conversation extends InteractiveObject {
 			UIConversation.SetName ( type );
 			UIConversation.SetLine ( id );
 		
-		} else if ( type == "promptzzz" ) { // DISABLE TEMPORARILY
+		} else if ( type == "prompt" ) {
 			title = line_array[current_line][1];
 			text = line_array[current_line][2];
 			cancel = line_array[current_line][3];
-		
-			HUD.prompt_current_title = title;
-			HUD.prompt_current_instructions = text;
-			HUD.prompt_current_cancel = ( cancel == "true" );
-			HUD.prompt_current_convo = this;
 			
-			HUD.OpenPrompt();
+			OGRoot.GoToPage ( "DialogBox" );
+			UIDialogBox.Open ( title, text, true, ( cancel == "true" ), this );
 		
 		} else if ( type == "group" ) {
 			current_option = 0;
@@ -298,17 +294,19 @@ class Conversation extends InteractiveObject {
 			if ( UIConversation.highlight.activeSelf ) {
 				if ( Input.GetKeyDown(KeyCode.F) ) {
 					ChooseLine ( current_option );
-				} else if ( Input.GetKeyDown(KeyCode.S) && current_option < current_options - 1 ) {
+				} else if ( ( Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) ) && current_option < current_options - 1 ) {
 					current_option++;
 					UIConversation.HighlightLine ( current_option );
 					
-				} else if ( Input.GetKeyDown(KeyCode.W) && current_option > 0 ) {
+				} else if ( ( Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) ) && current_option > 0 ) {
 					current_option--;
 					UIConversation.HighlightLine ( current_option );
 				
 				}
+			
+			// if not, just go to next line
 			} else {
-				if ( Input.GetKeyDown(KeyCode.F) ) {
+				if ( Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) ) {
 					NextLine ();
 				}
 			}

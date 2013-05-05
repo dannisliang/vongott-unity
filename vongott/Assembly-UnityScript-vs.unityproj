@@ -79,12 +79,15 @@
      <Compile Include="Assets\Scripts\EditorCore\EditorBillboard.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorCamera.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorCore.js" />
+     <Compile Include="Assets\Scripts\EditorCore\EditorGizmo.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorInput.js" />
-     <Compile Include="Assets\Scripts\EditorUI\EditorCharacters.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorActors.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorInspectorActor.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorInspectorLight.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorInspectorTween.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorItems.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorMenuBase.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorModes.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorOpenFile.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorPrefabs.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorRenameLevel.js" />
@@ -97,6 +100,7 @@
      <Compile Include="Assets\Scripts\UI\OLD\PageManager.js" />
      <Compile Include="Assets\Scripts\UI\OLD\QuestLog.js" />
      <Compile Include="Assets\Scripts\UI\UIConversation.js" />
+     <Compile Include="Assets\Scripts\UI\UIDialogBox.js" />
      <Compile Include="Assets\Scripts\UI\UIHUD.js" />
      <Compile Include="Assets\Scripts\UI\UIInventory.js" />
      <Compile Include="Assets\Scripts\UI\UIQuests.js" />
@@ -143,6 +147,7 @@
      <None Include="Assets\Shaders\BumpedRim.shader" />
      <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
+     <None Include="Assets\Conversations\1\2\bum.xml" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\TextureCopy.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>

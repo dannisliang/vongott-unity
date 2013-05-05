@@ -5,6 +5,7 @@
 class OGPopUp extends OGWidget {	
 	var isUp = false;
 	var options : String[];
+	var message : String;
 	var messageTarget : GameObject;
 	var padding : Vector2 = new Vector2 ( 8.0, 8.0 );
 	
@@ -32,6 +33,10 @@ class OGPopUp extends OGWidget {
 				if ( GUI.Button ( Rect ( x, y + padding.y + ( ( guiStyle.fontSize + padding.y ) * i ), transform.localScale.x + ( padding.x * 2 ), guiStyle.fontSize + padding.y ), options[i], guiStyle ) ) {
 					selectedOption = options[i];
 					isUp = false;
+					
+					if ( messageTarget && message ) {
+						messageTarget.SendMessage ( message );
+					}
 				}
 			}
 		}

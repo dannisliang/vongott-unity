@@ -61,6 +61,9 @@ class Item extends InteractiveObject {
 	var desc : String;
 	var attr : Attribute[];
 
+	// Prefab path
+	var model : String;
+
 	// Handle pick-up
 	function Update () {
 		if ( GameCore.GetInteractiveObject() == this.gameObject ) {

@@ -9,18 +9,14 @@ class OGScrollView extends OGWidget {
 	var inset : float = 10;
 	var position : Vector2 = Vector2.zero;
 	
-	@HideInInspector var widgets : Component[];
-	
 	// Init
 	function Start () {
 	
 	}
 	
 	// Update
-	override function UpdateWidget () {
-		widgets = transform.GetComponentsInChildren (OGWidget);
-		
-		for ( var w : OGWidget in widgets ) {			
+	override function UpdateWidget () {		
+		for ( var w : OGWidget in transform.GetComponentsInChildren (OGWidget) ) {			
 			if ( w != this ) {
 				if ( !w.manualDraw ) {
 					w.manualDraw = true;
@@ -44,7 +40,7 @@ class OGScrollView extends OGWidget {
 			alwaysVertical
 		);
 		
-		for ( var w : OGWidget in widgets ) {
+		for ( var w : OGWidget in transform.GetComponentsInChildren (OGWidget) ) {
 			if ( w != this ) {
 				w.Draw ( w.transform.localPosition.x, w.transform.localPosition.y );
 			}
