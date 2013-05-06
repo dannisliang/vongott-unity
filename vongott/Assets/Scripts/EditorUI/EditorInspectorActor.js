@@ -251,8 +251,12 @@ class EditorInspectorActor extends MonoBehaviour {
 	function Update () {
 		var o : GameObject = EditorCore.GetSelectedObject();
 		
+		if ( !o ) { return; }
+		
 		if ( o.GetComponent ( Actor ) ) {
 			var a : Actor = o.GetComponent ( Actor );
+			//var drawPath : Vector3[] = new Vector3[a.path.Count];
+		
 		
 			for ( var i = 0; i < a.path.Count; i++ ) {
 				var str : String = nodes[i].GetComponentInChildren(OGTextField).text;
@@ -260,7 +264,11 @@ class EditorInspectorActor extends MonoBehaviour {
 				if ( str != "" ) {
 					a.path[i].GetComponent(PathNode).duration = int.Parse ( str );
 				}
+			
+				//drawPath[i] = a.path[i].transform.localPosition;
 			}
+			
+			//EditorCore.drawPath = drawPath;
 		}
 	}
 	

@@ -9,6 +9,33 @@ class OGTextField extends OGWidget {
 	var restrictSpaces : boolean = false;
 	var restrictNumbers : boolean = false;
 
+	// Because fuck regex
+	function RestrictNumbers ( str : String ) : String {
+		var newStr : String;
+		var periodCounter : int = 0;
+		
+		for ( var i = 0; i < str.Length; i++ ) {
+			var c : String = str[i].ToString();
+			
+			// numbers
+			if ( c == "0" || c == "1" || c == "2" ||  c == "3" ||  c == "4" ||  c == "5" ||  c == "6" ||  c == "7" ||  c == "8" ||  c == "9" ) {
+				newStr += c;
+			
+			// periods
+			} else if ( c == "." && periodCounter == 0 ) { 
+				newStr += c;
+				periodCounter = 1;
+				
+			// dashes
+			} else if ( c == "-" && i == 0 ) {
+				newStr = c;
+			
+			}
+		}
+		
+		return newStr;
+	}
+
 	override function Draw ( x : float, y : float ) {
 		GUI.depth = depth;
 		
@@ -23,7 +50,7 @@ class OGTextField extends OGWidget {
 		}
 	
 		if ( restrictNumbers ) {
-			text = Regex.Replace(text, "[^0-9]", "");
+			text = RestrictNumbers ( text );
 		}
 	}
 }

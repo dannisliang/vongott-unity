@@ -23,10 +23,22 @@ class Actor extends MonoBehaviour {
 		
 		var forward = transform.TransformDirection (Vector3.forward);
 		
-		if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) < 20 ) {
-			target = GameCore.playerObject.transform;
-		} else if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) > 40 ) {
-			target = null;
+		// use affiliation
+		if ( affiliation == "enemy" ) {
+			// detect player
+			if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) < 20 ) {
+				target = GameCore.playerObject.transform;
+			} else if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) > 40 ) {
+				target = null;
+			}
+			
+			// disable conversation
+			this.gameObject.GetComponent(Conversation).enabled = false;
+		
+		} else {
+			
+			// enable conversation
+			this.gameObject.GetComponent(Conversation).enabled = true;
 		}
 		
 		// follow the player

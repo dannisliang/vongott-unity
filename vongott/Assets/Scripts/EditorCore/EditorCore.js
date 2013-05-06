@@ -143,6 +143,11 @@ static function ToggleTextured () {
 ////////////////////
 // Select objects
 ////////////////////
+// Reselect object
+static function ReselectObject () {
+	SelectObject ( selectedObject );
+}
+
 // Get selected objects
 static function GetSelectedObject () : GameObject {
 	return selectedObject;
@@ -166,11 +171,13 @@ static function DuplicateObject () {
 
 // Deselect object
 static function DeselectObject () {
+	drawPath = null;
 	selectedObject = null;
 }
 
 // Select object
 static function SelectObject ( obj : GameObject ) {
+	drawPath = null;
 	selectedObject = obj;
 							
 	// Check what to display in the inspector

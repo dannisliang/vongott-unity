@@ -61,7 +61,8 @@ function DrawPathLine ( path : Vector3[] ) {
 	
 	GL.Begin( GL.LINES );
 	
-	for ( var node : Vector3 in path ) {
+	for ( var i = 0; i < path.Length; i++ ) {
+ 		var node : Vector3 = path[i];
  		GL.Vertex3 ( node.x, node.y, node.z );
 	}
 
@@ -157,6 +158,8 @@ function Update () {
 			EditorCore.SetGrabMode ( false );
 			EditorCore.SetRotateMode ( false );
 			EditorCore.SetScaleMode ( false );
+			
+			EditorCore.ReselectObject();
 		}
 		
 	// camera mode	
@@ -194,7 +197,7 @@ function Update () {
 	   		}
 			
 		// left mouse button
-		} else if ( Input.GetMouseButtonDown(0) && !OGRoot.mouseOver ) {
+		} else if ( Input.GetMouseButtonDown(0) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {
 			var ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
 			var hit : RaycastHit;
 			

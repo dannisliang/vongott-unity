@@ -120,6 +120,24 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Inspector
 	////////////////////
+	// Adjust position
+	function AdjustPosition () {
+		EditorAdjust.adjust = "position";
+		OGRoot.GoToPage ( "Adjust" );
+	}
+	
+	// Adjust rotation
+	function AdjustRotation () {
+		EditorAdjust.adjust = "rotation";
+		OGRoot.GoToPage ( "Adjust" );
+	}
+	
+	// Adjust scale
+	function AdjustScale () {
+		EditorAdjust.adjust = "scale";
+		OGRoot.GoToPage ( "Adjust" );
+	}
+	
 	// Clear the menus
 	function ClearMenus () {		
 		for ( var t = 0; t < tabs.tabs.Count; t++ ) {
