@@ -42,6 +42,10 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		act.AddField ( "model", obj.GetComponent(Actor).model );
 		act.AddField ( "affiliation", obj.GetComponent(Actor).affiliation );
 		act.AddField ( "mood", obj.GetComponent(Actor).mood );
+		
+		act.AddField ( "speed", obj.GetComponent(Actor).speed );
+		act.AddField ( "path", SerializePath ( obj.GetComponent(Actor).path ) );
+		
 		act.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
 		act.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		act.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
@@ -90,8 +94,12 @@ static function SerializeGameObjectChildren ( obj : GameObject ) : JSONObject {
 	
 	for ( var i = 0; i < obj.transform.GetChildCount(); i++ ) {
 		var c = obj.transform.GetChild ( i ).gameObject;
-		var o = SerializeGameObject ( c );
-		chl.Add ( o );
+		
+		// path nodes are not serialized on their own
+		if ( !c.GetComponent(PathNode) ) {
+			var o = SerializeGameObject ( c );
+			chl.Add ( o );
+		}
 	}
 	
 	return chl;
@@ -112,10 +120,37 @@ static function SerializeGameObjectComponents ( obj : GameObject ) : JSONObject 
 	return com;
 }
 
+// path
+static function SerializePath ( nodes : List.< GameObject > ) : JSONObject {
+	var pth : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+	
+	for ( var p : GameObject in nodes ) {
+		pth.Add ( SerializePathNode ( p ) );
+	}
+	
+	return pth;
+}
+
 
 ////////////////////
 // Serialize components individually
 ////////////////////
+// PathNode
+static function SerializePathNode ( p : GameObject ) : JSONObject {
+	var component : JSONObject = JSONObject (JSONObject.Type.OBJECT);
+	
+	// position
+	component.AddField ( "localPosition", SerializeVector3 ( p.transform.localPosition ) );
+	
+	// rotation
+	component.AddField ( "localEulerAngles", SerializeVector3 ( p.transform.localEulerAngles ) );
+	
+	// duration
+	component.AddField ( "duration", p.GetComponent(PathNode).duration );
+	
+	return component;
+}
+
 // Transform
 static function SerializeTransform ( c : Transform ) : JSONObject {
 	var component : JSONObject = JSONObject (JSONObject.Type.OBJECT); 

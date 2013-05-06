@@ -30,7 +30,7 @@ var _camera : Transform;
 
 // Static vars
 static var menusActive = false;
-static var selectedObjects : List.<GameObject> = new List.<GameObject>();
+static var selectedObject : GameObject;
 static var currentLevel : GameObject;
 
 // modes
@@ -144,68 +144,49 @@ static function ToggleTextured () {
 // Select objects
 ////////////////////
 // Get selected objects
-static function GetSelectedObjects () : List.<GameObject> {
-	return selectedObjects;
+static function GetSelectedObject () : GameObject {
+	return selectedObject;
 }
 
 // Delete selected objects
 static function DeleteSelected () {
-	for ( var i = 0; i < selectedObjects.Count; i++ ) {
-		var obj : GameObject = selectedObjects[i];
-		
-		DeselectObject ( obj );
-		Destroy ( obj );
-	}
+	Destroy ( selectedObject );
+	DeselectObject ();
 }
 
 // Is object selected?
 static function IsObjectSelected ( obj : GameObject ) : boolean {
-	for ( var o in selectedObjects ) {
-		if ( o == obj ) {
-			return true;
-		}
-	}
-	
-	return false;
-}
-
-// Deselect all
-static function DeselectAllObjects () {
-	for ( var i = 0; i < selectedObjects.Count; i++ ) {
-		DeselectObject ( selectedObjects[i] );
-	}
+	return ( selectedObject == obj );
 }
 
 // Duplicate object
 static function DuplicateObject () {
-	for ( var obj : GameObject in selectedObjects ) {
-		Instantiate ( obj );
-	}
+	Instantiate ( selectedObject );
 }
 
 // Deselect object
-static function DeselectObject ( obj : GameObject ) {
-	selectedObjects.Remove ( obj );
+static function DeselectObject () {
+	selectedObject = null;
 }
 
 // Select object
 static function SelectObject ( obj : GameObject ) {
-	selectedObjects.Add ( obj );
+	selectedObject = obj;
 							
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 	
 	// LightSource
-	if ( obj.GetComponent(LightSource) != null ) {
+	if ( obj.GetComponent(LightSource) ) {
 		inspector.SetMenu ( 0, "Light", obj );
 	
 	// Actor
-	} else if ( obj.GetComponent(Actor) != null ) {
+	} else if ( obj.GetComponent(Actor) ) {
 		inspector.SetMenu ( 0, "Actor", obj );
-		inspector.SetMenu ( 2, "Trigger", obj );
+		inspector.SetMenu ( 1, "Trigger", obj );
 	
 	// Item
-	} else if ( obj.GetComponent(Item) != null ) {
+	} else if ( obj.GetComponent(Item) ) {
 		inspector.SetMenu ( 0, "Item", obj );
 		inspector.SetMenu ( 1, "Trigger", obj );
 	
@@ -220,7 +201,7 @@ static function SelectObject ( obj : GameObject ) {
 ////////////////////
 // Set grab mode
 static function SetGrabMode ( state : boolean ) {
-	if ( selectedObjects.Count <= 0 ) {
+	if ( !selectedObject ) {
 		return;
 	}
 		
@@ -228,9 +209,7 @@ static function SetGrabMode ( state : boolean ) {
 	
 	if ( grabMode ) {
 		currentActionStage++;
-		for ( var o : GameObject in selectedObjects ) {
-			AddToStage ( currentActionStage, o );
-		}
+		AddToStage ( currentActionStage, selectedObject );
 		
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Grab Mode" );
@@ -238,7 +217,7 @@ static function SetGrabMode ( state : boolean ) {
 		EditorModes.SetHeight ( 90 );
 		
 		gizmo.SetActive ( true );
-		gizmo.transform.parent = selectedObjects[selectedObjects.Count-1].transform;
+		gizmo.transform.parent = selectedObject.transform;
 		gizmo.transform.localPosition = Vector3.zero;
 	
 	} else {
@@ -248,12 +227,16 @@ static function SetGrabMode ( state : boolean ) {
 		gizmo.SetActive ( false );
 		gizmo.transform.parent = workspace;
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
+		
+		if ( selectedObject.GetComponent(PathNode) ) {
+			SelectObject ( selectedObject.GetComponent(PathNode).owner );
+		}
 	}
 }
 
 // Set rotate mode
 static function SetRotateMode ( state : boolean ) {
-	if ( selectedObjects.Count <= 0 ) {
+	if ( !selectedObject ) {
 		return;
 	}
 		
@@ -266,7 +249,7 @@ static function SetRotateMode ( state : boolean ) {
 		EditorModes.SetHeight ( 90 );
 		
 		gizmo.SetActive ( true );
-		gizmo.transform.parent = selectedObjects[selectedObjects.Count-1].transform;
+		gizmo.transform.parent = selectedObject.transform;
 		gizmo.transform.localPosition = Vector3.zero;
 	
 	} else {
@@ -276,12 +259,16 @@ static function SetRotateMode ( state : boolean ) {
 		gizmo.SetActive ( false );
 		gizmo.transform.parent = workspace;
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
+		
+		if ( selectedObject.GetComponent(PathNode) ) {
+			SelectObject ( selectedObject.GetComponent(PathNode).owner );
+		}
 	}
 }
 
 // Set scale mode
 static function SetScaleMode ( state : boolean ) {
-	if ( selectedObjects.Count <= 0 ) {
+	if ( !selectedObject ) {
 		return;
 	}
 		
@@ -294,7 +281,7 @@ static function SetScaleMode ( state : boolean ) {
 		EditorModes.SetHeight ( 90 );
 		
 		gizmo.SetActive ( true );
-		gizmo.transform.parent = selectedObjects[selectedObjects.Count-1].transform;
+		gizmo.transform.parent = selectedObject.transform;
 		gizmo.transform.localPosition = Vector3.zero;
 	
 	} else {

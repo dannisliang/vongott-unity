@@ -1,39 +1,33 @@
 #pragma strict
 
-private class PathNode {
-	var position : Vector3;
-	var duration : float;
-
-	function PathNode ( p : Vector3, d : float ) {
-		position = p;
-		duration = d;
-	}
-}
-
 class Actor extends MonoBehaviour {
 	var model : String;
 	var affiliation : String;
 	var mood : String;
 
 	var speed : float = 4.0;
-	var path : List.< PathNode > = new List.< PathNode >();
+	var path : List.< GameObject >;
 	var target : Transform;
 
 	@HideInInspector var currentNode : int = 0;
+	@HideInInspector var nodeTimer : float = 0;
 
 	function Start () {
-		path.Clear ();
-		path.Add ( new PathNode ( transform.position, 0 ) );
+		if ( !path ) {
+			path = new List.< GameObject >();
+		}
 	}
 	
 	function Update () {
+		if ( !GameCore.started ) { return; }
+		
 		var forward = transform.TransformDirection (Vector3.forward);
 		
-/*		if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) < 100 ) {
+		if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) < 20 ) {
 			target = GameCore.playerObject.transform;
-		} else {
+		} else if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) > 40 ) {
 			target = null;
-		}*/
+		}
 		
 		// follow the player
 		if ( target ) {	
@@ -54,7 +48,12 @@ class Actor extends MonoBehaviour {
 		
 		// follow path
 		} else if ( path.Count > 1 ) {
-			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 1 ) {
+			if ( Vector3.Distance ( transform.position, path[currentNode].transform.position ) < 0.1 ) {
+				transform.localEulerAngles = path[currentNode].transform.localEulerAngles;
+				
+				nodeTimer = path[currentNode].GetComponent(PathNode).duration;
+				
+				
 				if ( currentNode < path.Count - 1 ) {
 					currentNode++;
 				} else {
@@ -62,9 +61,12 @@ class Actor extends MonoBehaviour {
 				}
 			}
 			
-			transform.LookAt ( path[currentNode].position );
-			
-			transform.position += transform.forward * speed * Time.deltaTime;
+			if ( nodeTimer <= 0 ) {
+				transform.LookAt ( path[currentNode].transform.position );
+				transform.position += transform.forward * speed * Time.deltaTime;
+			} else {
+				nodeTimer -= Time.deltaTime;
+			}
 		}
 	}
 }

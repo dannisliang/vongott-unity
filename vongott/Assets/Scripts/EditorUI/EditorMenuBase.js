@@ -218,9 +218,7 @@ class EditorMenuBase extends OGPage {
 		if ( EditorCore.currentLevel ) {
 			levelName.text = EditorCore.currentLevel.name;
 			
-			var count = EditorCore.GetSelectedObjects().Count;
-			
-			if ( count > 0 && EditorCore.GetSelectedObjects()[count-1] ) {
+			if ( EditorCore.GetSelectedObject() ) {
 				if ( !inspector.activeSelf ) {
 					inspector.SetActive ( true );
 				}
@@ -229,7 +227,7 @@ class EditorMenuBase extends OGPage {
 				rot.x.transform.parent.gameObject.SetActive ( true );
 				scl.x.transform.parent.gameObject.SetActive ( true );
 				
-				var t = EditorCore.GetSelectedObjects()[count-1].transform;
+				var t = EditorCore.GetSelectedObject().transform;
 				
 				pos.x.text = "X: " + t.localPosition.x.ToString("f1");
 				pos.y.text = "Y: " + t.localPosition.y.ToString("f1");

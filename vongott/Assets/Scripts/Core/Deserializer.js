@@ -3,6 +3,9 @@
 ////////////////////
 // Deserialize GameObjects with their children and components
 ////////////////////
+// Define root
+static var root : Transform;
+
 // GameObject
 static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject {
 	// check if prefab
@@ -42,9 +45,11 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var newAct : GameObject;
 		
 		newAct = Instantiate ( Resources.Load ( "Actors/" + act.GetField("model").str ) as GameObject );
-		
 		newAct.GetComponent(Actor).affiliation = act.GetField ( "affiliation" ).str;
 		newAct.GetComponent(Actor).mood = act.GetField ( "mood" ).str;
+		
+		newAct.GetComponent(Actor).speed = act.GetField ( "speed" ).n;
+		newAct.GetComponent(Actor).path = DeserializePath ( act.GetField ( "path" ), newAct );
 		
 		newAct.GetComponent(Conversation).chapter = cnv.GetField ( "chapter" ).n;
 		newAct.GetComponent(Conversation).scene = cnv.GetField ( "scene" ).n;
@@ -76,7 +81,12 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 	}
 	
 	var o : GameObject = new GameObject ( obj.GetField ( "name" ).str );
-											
+	
+	// set root
+	if ( !root ) {
+		root = o.transform;
+	}
+																												
 	// components
 	DeserializeGameObjectComponents ( obj.GetField ( "components" ), o );
 	
@@ -121,10 +131,44 @@ static function DeserializeGameObjectComponents ( arr : JSONObject, o : GameObje
 	}
 }
 
+// path
+static function DeserializePath ( pth : JSONObject, act : GameObject ) : List.< GameObject > {
+	var nodes : List.< GameObject > =  new List.< GameObject >();
+
+	for ( var n : JSONObject in pth.list ) {
+		nodes.Add ( DeserializePathNode ( n, act ) );
+	}
+
+	return nodes;
+}
+
 
 ////////////////////
 // Deserialize components individually
 ////////////////////
+// PathNode
+static function DeserializePathNode ( p : JSONObject, o : GameObject ) : GameObject {
+	var obj : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/path_node" ) as GameObject );
+	
+	// position
+	obj.transform.localPosition = DeserializeVector3( p.GetField ( "localPosition" ) );
+	
+	// rotation
+	obj.transform.localEulerAngles = DeserializeVector3( p.GetField ( "localEulerAngles" ) );
+	
+	// duration
+	obj.GetComponent(PathNode).duration = p.GetField ( "duration" ).n;
+	
+	// owner
+	obj.GetComponent(PathNode).owner = o;
+	
+	// parent
+	obj.transform.parent = root;
+	
+	return obj;
+}
+
+
 // Transform
 static function DeserializeTransform ( c : JSONObject, o : GameObject ) {
 	var component : Transform = o.AddComponent ( Transform ); 

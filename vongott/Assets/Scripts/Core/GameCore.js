@@ -116,6 +116,7 @@ function Start () {
 	
 	// signal
 	Print ("GameCore | started");
+	started = true;
 }
 
 

@@ -142,14 +142,14 @@ function Update () {
 			z = 0;
 		}
 		
-		for ( var o : GameObject in EditorCore.GetSelectedObjects() ) {
-			if ( EditorCore.grabMode ) {
-				o.transform.localPosition = new Vector3 ( o.transform.localPosition.x + x, o.transform.localPosition.y + y, o.transform.localPosition.z + z );
-			} else if ( EditorCore.rotateMode ) {
-				o.transform.localEulerAngles = new Vector3 ( o.transform.localEulerAngles.x + ( x * 2 ), o.transform.localEulerAngles.y + ( y * 2 ), o.transform.localEulerAngles.z + ( z * 2 ) );
-			} else if ( EditorCore.scaleMode ) {
-				o.transform.localScale = new Vector3 ( o.transform.localScale.x + x, o.transform.localScale.y + y, o.transform.localScale.z + z );
-			} 
+		var o : GameObject = EditorCore.selectedObject;
+		
+		if ( EditorCore.grabMode ) {
+			o.transform.localPosition = new Vector3 ( o.transform.localPosition.x + x, o.transform.localPosition.y + y, o.transform.localPosition.z + z );
+		} else if ( EditorCore.rotateMode ) {
+			o.transform.localEulerAngles = new Vector3 ( o.transform.localEulerAngles.x + ( x * 2 ), o.transform.localEulerAngles.y + ( y * 2 ), o.transform.localEulerAngles.z + ( z * 2 ) );
+		} else if ( EditorCore.scaleMode ) {
+			o.transform.localScale = new Vector3 ( o.transform.localScale.x + x, o.transform.localScale.y + y, o.transform.localScale.z + z );
 		}
 		
 		// end mode
@@ -201,19 +201,10 @@ function Update () {
 			if ( Physics.Raycast ( ray, hit ) ) {
 				var obj : GameObject = hit.collider.gameObject;
 				
-				if ( !Input.GetKey ( KeyCode.LeftShift ) ) {
-					EditorCore.DeselectAllObjects();
-					EditorCore.SelectObject ( obj );
-					EditorCore.SetGrabMode( false );
-				} else if ( EditorCore.IsObjectSelected ( obj ) ) {
-					EditorCore.DeselectObject ( obj );
-				} else {
-					EditorCore.SelectObject ( obj );
-				}
-						
+				EditorCore.SelectObject ( obj );						
 			
 			} else {
-				EditorCore.DeselectAllObjects ();
+				EditorCore.DeselectObject ();
 			
 			}
 		}
