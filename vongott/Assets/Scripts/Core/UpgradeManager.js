@@ -22,6 +22,11 @@ static function Init () {
 	slots.Add ( Upgrade.Slots.Feet, null );
 }
 
+// Clear
+static function Clear () {
+	slots.Clear ();
+}
+
 // Install entry
 static function InstallEntry ( entry : Entry, install : boolean ) {
 	var player : Player = GameCore.GetPlayerObject().GetComponent(Player);

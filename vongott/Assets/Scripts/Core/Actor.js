@@ -7,15 +7,89 @@ class Actor extends MonoBehaviour {
 
 	var speed : float = 4.0;
 	var path : List.< GameObject >;
+	var viewDistance : float = 20.0;
+	var keepDistance : float = 10.0;
+	
 	var target : Transform;
+	var lastKnownPosition : GameObject;
 
-	@HideInInspector var currentNode : int = 0;
-	@HideInInspector var nodeTimer : float = 0;
+	var currentNode : int = 0;
+	var currentLine : int = 0;
+	var nodeTimer : float = 0;
+	var fireTimer : float = 0;
+	
+	var action : String = "";
+
+	function Say ( msg : String ) {
+		UIHUD.ShowTimedNotification ( msg, 2.0 );
+	}
 
 	function Start () {
 		if ( !path ) {
 			path = new List.< GameObject >();
 		}
+	}
+	
+	
+	function Strike () {
+	
+	}
+	
+	function Shoot () {
+		var w : String[] = new String[5];
+		w[0] = "bang!";
+		w[1] = "boom!";
+		w[2] = "ratatat!";
+		w[3] = "biff!";
+		w[4] = "krakow!";
+		
+		Say ( w [ currentLine ] );
+		fireTimer = 0.5;
+		
+		if ( currentLine < w.Length - 1 ) {
+			currentLine++;
+		} else {
+			currentLine = 0;
+		}
+	}
+	
+	function Detect () {
+		target = GameCore.playerObject.transform;
+		
+		transform.LookAt ( target );
+		
+		if ( lastKnownPosition ) {
+			DestroyImmediate ( lastKnownPosition );
+			lastKnownPosition = null;
+		}
+		
+		action = "chasing";
+		
+		Say ( "Hey! You!" );
+	}	
+	
+	function GiveUp () {
+		target = null;
+		
+		Say ( "Bah! Whatever, man." );
+	}
+	
+	function LostSight () {
+		lastKnownPosition = new GameObject ( "LastKnownPosition" );
+		lastKnownPosition.transform.localPosition = target.localPosition;
+		target = lastKnownPosition.transform;
+	}
+	
+	function GetDirection ( pos : Vector3, direction : Vector3 ) : Vector3 {
+		var hit : RaycastHit;
+		
+		if ( Physics.Raycast ( pos, transform.forward, hit, viewDistance ) ) {
+			if ( hit.transform != transform ) {
+				direction += hit.normal * 20;
+			}
+		}
+		
+		return direction;
 	}
 	
 	function Update () {
@@ -26,10 +100,13 @@ class Actor extends MonoBehaviour {
 		// use affiliation
 		if ( affiliation == "enemy" ) {
 			// detect player
-			if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) < 20 ) {
-				target = GameCore.playerObject.transform;
-			} else if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) > 40 ) {
-				target = null;
+			if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) < 20 && !target ) {
+				Detect();
+			
+			// player too far away
+			} else if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) > 40 && target ) {
+				GiveUp();
+			
 			}
 			
 			// disable conversation
@@ -44,19 +121,48 @@ class Actor extends MonoBehaviour {
 		// follow the player
 		if ( target ) {	
 			var distance = Vector3.Distance ( transform.position, target.position );
-			var hits : RaycastHit[] = Physics.RaycastAll ( transform.position, forward, distance );
+			var direction = (target.position - transform.position).normalized;
 			
-			transform.LookAt(target);
-		 
-		 	for ( var hit : RaycastHit in hits ) {
-				if ( hit.collider != target.collider ) {
-					return;
-				}
-			}
-			
-			if ( distance > 10.0 ) {
+			// chase		
+			if ( action == "chasing" ) {
+				// forward raycast
+				direction = GetDirection ( transform.position, direction );
+				
+				// left raycast
+				var leftR = transform.position;
+				leftR.x -= 2;
+				direction = GetDirection ( leftR, direction );
+				
+				// right raycast
+				var rightR = transform.position;
+				rightR.x += 2;
+				direction = GetDirection ( rightR, direction );
+				
+				// position
+				var rotation = Quaternion.LookRotation ( direction );
+				transform.rotation = Quaternion.Slerp ( transform.rotation, rotation, Time.deltaTime );
 				transform.position += transform.forward * speed * Time.deltaTime;
-			}
+				
+				if ( distance < keepDistance ) {
+					action = "shooting";
+				}
+			
+			// shoot
+			} else if ( action == "shooting" ) {
+				transform.LookAt ( target );
+				
+				if ( fireTimer <= 0.0 ) {
+					fireTimer = 0.5;
+					Shoot ();
+				} else {
+					fireTimer -= Time.deltaTime;
+				}
+				
+				if ( distance > keepDistance ) {
+					action = "chasing";
+				}
+			} 
+		
 		
 		// follow path
 		} else if ( path.Count > 1 ) {
@@ -64,8 +170,7 @@ class Actor extends MonoBehaviour {
 				transform.localEulerAngles = path[currentNode].transform.localEulerAngles;
 				
 				nodeTimer = path[currentNode].GetComponent(PathNode).duration;
-				
-				
+								
 				if ( currentNode < path.Count - 1 ) {
 					currentNode++;
 				} else {

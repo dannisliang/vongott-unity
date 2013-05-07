@@ -162,6 +162,9 @@ static function DeserializePathNode ( p : JSONObject, o : GameObject ) : GameObj
 	// owner
 	obj.GetComponent(PathNode).owner = o;
 	
+	// set invisible
+	obj.GetComponent(MeshRenderer).enabled = false;
+	
 	// parent
 	obj.transform.parent = root;
 	

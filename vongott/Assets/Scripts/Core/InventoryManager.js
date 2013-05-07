@@ -101,3 +101,12 @@ static function Init () {
 		initialized = true;
 	}
 }
+
+// Clear
+static function Clear () {
+	initialized = false;
+	
+	for ( var i = 0; i < slots.Length; i++ ) {
+		slots[i] = null;
+	}
+}

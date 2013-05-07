@@ -177,7 +177,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		
 		var tf : OGTextField = input.AddComponent ( OGTextField );
 		tf.text = "0";
-		tf.maxLength = 2;
+		tf.maxLength = 4;
 		tf.restrictSpaces = true;
 		tf.restrictNumbers = true;
 
@@ -262,7 +262,7 @@ class EditorInspectorActor extends MonoBehaviour {
 				var str : String = nodes[i].GetComponentInChildren(OGTextField).text;
 				
 				if ( str != "" ) {
-					a.path[i].GetComponent(PathNode).duration = int.Parse ( str );
+					a.path[i].GetComponent(PathNode).duration = float.Parse ( str );
 				}
 			
 				//drawPath[i] = a.path[i].transform.localPosition;

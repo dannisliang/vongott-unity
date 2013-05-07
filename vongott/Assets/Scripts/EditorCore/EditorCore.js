@@ -33,6 +33,11 @@ static var menusActive = false;
 static var selectedObject : GameObject;
 static var currentLevel : GameObject;
 
+// Load on init
+static var initMap : String;
+static var initPos : Vector3;
+static var initRot : Vector3;
+
 // modes
 static var grabMode = false;
 static var rotateMode = false;
@@ -58,27 +63,27 @@ static var currentActionStage : int = 0;
 // Undo buffer
 ////////////////////
 function InitStages () {
-	for ( var a : List.< Action > in actionStages ) {
+/*	for ( var a : List.< Action > in actionStages ) {
 		a = new List.< Action >();
-	}
+	}*/
 }
 
 static function ClearStage ( stage : int ) {
-	actionStages[stage].Clear();
+//	actionStages[stage].Clear();
 }
 
 static function AddToStage ( stage : int, obj : GameObject ) {
-	actionStages[stage].Add ( new Action ( obj ) );
+//	actionStages[stage].Add ( new Action ( obj ) );
 }
 
 static function UndoStage ( stage : int ) {
-	for ( var a : Action in actionStages[stage] ) {
+	/*for ( var a : Action in actionStages[stage] ) {
 		a.UndoAction();
-	}
+	}*/
 }
 
 static function UndoCurrentStage () {
-	UndoStage ( currentActionStage );	
+	//UndoStage ( currentActionStage );	
 }
 
 
@@ -166,17 +171,28 @@ static function IsObjectSelected ( obj : GameObject ) : boolean {
 
 // Duplicate object
 static function DuplicateObject () {
-	Instantiate ( selectedObject );
+	var newObj : GameObject = Instantiate ( selectedObject );
+	newObj.transform.parent = currentLevel.transform;
 }
 
 // Deselect object
-static function DeselectObject () {
+static function DeselectObject () {	
+	if ( selectedObject.GetComponent(Actor) ) {
+		for ( var node : GameObject in selectedObject.GetComponent(Actor).path ) {
+			node.GetComponent(MeshRenderer).enabled = false;
+		}
+	}
+	
 	drawPath = null;
 	selectedObject = null;
 }
 
 // Select object
 static function SelectObject ( obj : GameObject ) {
+	if ( selectedObject ) { 
+		DeselectObject ();
+	}
+	
 	drawPath = null;
 	selectedObject = obj;
 							
@@ -191,6 +207,10 @@ static function SelectObject ( obj : GameObject ) {
 	} else if ( obj.GetComponent(Actor) ) {
 		inspector.SetMenu ( 0, "Actor", obj );
 		inspector.SetMenu ( 1, "Trigger", obj );
+		
+		for ( var node : GameObject in obj.GetComponent(Actor).path ) {
+			node.GetComponent(MeshRenderer).enabled = true;
+		}
 	
 	// Item
 	} else if ( obj.GetComponent(Item) ) {
@@ -351,7 +371,7 @@ static function SetInspector ( i : EditorMenuBase ) {
 
 
 ////////////////////
-// Play/Exit
+// Play
 ////////////////////
 // Play level
 static function PlayLevel () {
@@ -373,6 +393,21 @@ function Start () {
 	gizmo.SetActive ( false );
 
 	InitStages();
+	
+	if ( initMap ) {
+		LoadFile ( initMap );
+	}
+	
+	if ( initPos != null ) {
+		Camera.main.transform.position = initPos;
+	}
+	
+	if ( initRot != null ) {
+		Camera.main.transform.eulerAngles = initRot;
+	}
+	
+	// signal
+	GameCore.Print ("EditorCore | started");
 }
 
 // Update

@@ -9,17 +9,17 @@ private class Quest {
 	var title : String;
 	var desc : String;
 	var active = false;
-	var flag_end = "";
-	var is_main_quest = false;
-	var skill_points = 0;
+	var flagEnd = "";
+	var isMainQuest = false;
+	var skillPoints = 0;
 	
 	function Quest ( is_main : boolean, new_id:String, new_title:String, new_desc:String, end:String, points:int ) {
 		id = new_id;
 		title = new_title;
 		desc = new_desc;
-		flag_end = end;
-		is_main_quest = is_main;
-		skill_points = points;
+		flagEnd = end;
+		isMainQuest = is_main;
+		skillPoints = points;
 	}
 	
 	function SetActive ( state : boolean ) {
@@ -32,7 +32,7 @@ private class Quest {
 }
 
 // Static vars
-static var quests = new Quest[2];
+static var quests : List.< Quest > = new List.< Quest >();
 
 
 ////////////////////
@@ -41,19 +41,27 @@ static var quests = new Quest[2];
 // All quests
 static function Init () {	
 	// Chapter 1
-	quests[0] = new Quest ( true, "1_go_upstairs", "Go upstairs", "Go up and say hello", "2_talked_to_marcel", 100 );
+	quests.Add ( new Quest ( true, "1_go_upstairs", "Go upstairs", "Go up and say hello", "2_talked_to_marcel", 100 ) );
 	
 	// Chapter 2
-	quests[1] = new Quest ( true, "2_get_back_to_marcel", "Get back to Marcel", "Hear what Marcel has to say", "2_talked_to_marcel_done", 0 );
+	quests.Add ( new Quest ( true, "2_get_back_to_marcel", "Get back to Marcel", "Hear what Marcel has to say", "2_talked_to_marcel_done", 0 ) );
 }
 
+
+////////////////////
+// Clear
+////////////////////
+// All quests
+static function Clear () {
+	quests.Clear();
+}
 
 ////////////////////
 // Quest info
 ////////////////////
 // Get quest by id
-static function GetQuestByID ( id : String ) {
-	for ( var i = 0; i < quests.Length; i++ ) {
+static function GetQuestByID ( id : String ) : Quest {
+	for ( var i = 0; i < quests.Count; i++ ) {
 		if ( quests[i].GetID() == id ) {
 			return quests[i];
 		}
@@ -64,8 +72,8 @@ static function GetQuestByID ( id : String ) {
 static function GetMainQuests () {
 	var indexes = new Array();
 	
-	for ( var i = 0; i < quests.Length; i++ ) {
-		if ( quests[i].is_main_quest && quests[i].active ) {
+	for ( var i = 0; i < quests.Count; i++ ) {
+		if ( quests[i].isMainQuest && quests[i].active ) {
 			indexes.Push (i);
 		}
 	}
@@ -83,8 +91,8 @@ static function GetMainQuests () {
 static function GetSideQuests () {
 	var indexes = new Array();
 	
-	for ( var i = 0; i < quests.Length; i++ ) {
-		if ( !quests[i].is_main_quest && quests[i].active ) {
+	for ( var i = 0; i < quests.Count; i++ ) {
+		if ( !quests[i].isMainQuest && quests[i].active ) {
 			indexes.Push (i);
 		}
 	}

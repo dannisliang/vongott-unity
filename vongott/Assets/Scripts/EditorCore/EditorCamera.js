@@ -206,7 +206,7 @@ function Update () {
 				
 				EditorCore.SelectObject ( obj );						
 			
-			} else {
+			} else if ( EditorCore.GetSelectedObject() ) {
 				EditorCore.DeselectObject ();
 			
 			}

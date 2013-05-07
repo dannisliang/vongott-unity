@@ -91,6 +91,19 @@ static function LoadLevel ( path : String ) {
 	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
 }
 
+////////////////////
+// Go to editor
+////////////////////
+static function GoToEditor () {
+	EditorCore.initPos = Camera.main.transform.position;
+	EditorCore.initRot = Camera.main.transform.eulerAngles;
+	EditorCore.initMap = currentLevel.name;
+	
+	Stop ();
+	
+	Application.LoadLevel ( "editor" );
+}
+
 
 ////////////////////
 // Init
@@ -117,6 +130,23 @@ function Start () {
 	// signal
 	Print ("GameCore | started");
 	started = true;
+}
+
+
+////////////////////
+// Clear
+////////////////////
+static function Stop () {	
+	// quests
+	QuestManager.Clear();
+	
+	// inventory
+	InventoryManager.Clear();
+	
+	// upgrades
+	UpgradeManager.Clear();
+
+	started = false;
 }
 
 
