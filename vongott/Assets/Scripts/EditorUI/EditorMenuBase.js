@@ -222,7 +222,7 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	function Start () {
+	override function StartPage () {
 		EditorCore.SetInspector ( this );
 		
 		ClearMenus ();
@@ -232,7 +232,7 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Update
 	////////////////////
-	function Update () {
+	override function UpdatePage () {
 		if ( EditorCore.currentLevel ) {
 			levelName.text = EditorCore.currentLevel.name;
 			

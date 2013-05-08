@@ -25,7 +25,7 @@ class OGRoot extends MonoBehaviour {
 			if ( p.pageName == name ) {
 				currentPage = p;
 				p.gameObject.SetActive ( true );
-				p.Start ();
+				p.StartPage ();
 				return;
 			}
 		}
@@ -46,6 +46,8 @@ class OGRoot extends MonoBehaviour {
 			}
 		
 			mouseOver = anyRects > 0;
+			
+			currentPage.UpdatePage ();
 		}
 		
 		allStyles = _allStyles;
@@ -65,6 +67,7 @@ class OGRoot extends MonoBehaviour {
 			}
 		}
 		
-		currentPage.gameObject.SetActive ( true );	
+		currentPage.gameObject.SetActive ( true );
+		currentPage.StartPage ();
 	}
 }

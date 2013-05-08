@@ -40,8 +40,6 @@ class OGTabs extends OGWidget {
 	}
 	
 	override function Draw ( x : float, y : float ) {
-		GUI.depth = depth;
-		
 		if ( direction == TabDirection.Horizontal ) {
 			GUI.Box ( Rect ( x + boxPos.x, y, transform.localScale.x, transform.localScale.y ), "" );
 			for ( var i = 0; i < tabs.Count; i++ ) {				

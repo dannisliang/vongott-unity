@@ -9,8 +9,6 @@ class OGImage extends OGWidget {
 	var aspectRatio : float = 0.0;
 	
 	override function Draw ( x : float, y : float ) {
-		GUI.depth = depth;
-		
 		if ( image ) {
 			GUI.DrawTexture ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), image, scale, alphaBlend, aspectRatio );
 		}

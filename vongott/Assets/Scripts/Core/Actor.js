@@ -9,16 +9,33 @@ class Actor extends MonoBehaviour {
 	var path : List.< GameObject >;
 	var viewDistance : float = 20.0;
 	var keepDistance : float = 10.0;
-	
-	var target : Transform;
-	var lastKnownPosition : GameObject;
+	var inventory : Entry[] = new Entry [4];
+												
+	@HideInInspector var target : Transform;
+	@HideInInspector var lastKnownPosition : GameObject;
 
-	var currentNode : int = 0;
-	var currentLine : int = 0;
-	var nodeTimer : float = 0;
-	var fireTimer : float = 0;
+	@HideInInspector var currentNode : int = 0;
+	@HideInInspector var currentLine : int = 0;
+	@HideInInspector var nodeTimer : float = 0;
+	@HideInInspector var fireTimer : float = 0;
+	@HideInInspector var equippedItem : GameObject;
+	@HideInInspector var action : String = "";
+
+	function Equip ( entry : Entry ) {
+		equippedItem = Instantiate ( Resources.Load ( "Items/" + entry.model ) as GameObject );
+		
+		equippedItem.transform.parent = transform;
+		equippedItem.transform.localPosition = Vector3.zero;
+		equippedItem.transform.localEulerAngles = Vector3.zero;
 	
-	var action : String = "";
+		GameCore.Print ( "Actor | '" + entry.title + "' equipped" );
+	}
+
+	function UnEquip () {
+		Destroy ( equippedItem );
+		
+		GameCore.Print ( "Actor | unequipped" );
+	}
 
 	function Say ( msg : String ) {
 		UIHUD.ShowTimedNotification ( msg, 2.0 );
@@ -65,12 +82,14 @@ class Actor extends MonoBehaviour {
 		
 		action = "chasing";
 		
+		Equip ( inventory[0] );
 		Say ( "Hey! You!" );
 	}	
 	
 	function GiveUp () {
 		target = null;
 		
+		UnEquip ();
 		Say ( "Bah! Whatever, man." );
 	}
 	

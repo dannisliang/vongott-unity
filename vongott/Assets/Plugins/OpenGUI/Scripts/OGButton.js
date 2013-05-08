@@ -7,8 +7,6 @@ class OGButton extends OGWidget {
 	var argument : String;
 
 	override function Draw ( x : float, y : float ) {		
-		GUI.depth = depth;
-		
 		if ( !guiStyle ) {
 			return;
 		}

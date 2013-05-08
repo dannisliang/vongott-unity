@@ -16,17 +16,14 @@ private class InventorySlot {
 		btn.target = target;
 		btn.message = "SelectSlot";
 		btn.argument = i.ToString();
-		btn.depth = 2;
 		btn.style = "Button";
-	
-		img.depth = 0;
 	
 		var x : float = col * 102;
 		var y : float = ( -row * 102 ) - 102;
 	
 		button.transform.parent = parent;	
 		button.transform.localScale = new Vector3 ( 100, 100, 1 );
-		button.transform.localPosition = new Vector3 ( x, y, 0 );
+		button.transform.localPosition = new Vector3 ( x, y, 2 );
 		
 		image.transform.parent = parent;	
 		image.transform.localScale = new Vector3 ( 80, 80, 1 );
@@ -206,7 +203,7 @@ class UIInventory extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	function Start () {
+	override function StartPage () {
 		GameCore.ToggleControls ( false );
 		PopulateGrid ();
 	}
@@ -215,7 +212,7 @@ class UIInventory extends OGPage {
 	////////////////////
 	// Update
 	////////////////////
-	function Update () {
+	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
 			OGRoot.GoToPage ( "HUD" );
 			GameCore.ToggleControls ( true );

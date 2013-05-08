@@ -45,6 +45,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		act.AddField ( "speed", obj.GetComponent(Actor).speed );
 		act.AddField ( "path", SerializePath ( obj.GetComponent(Actor).path ) );
+		act.AddField ( "inventory", SerializeInventory ( obj.GetComponent(Actor).inventory ) );
 		
 		act.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
 		act.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
@@ -129,6 +130,21 @@ static function SerializePath ( nodes : List.< GameObject > ) : JSONObject {
 	}
 	
 	return pth;
+}
+
+// inventory
+static function SerializeInventory ( entries : Entry[] ) : JSONObject {
+	var inv : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+	
+	for ( var e : Entry in entries ) {
+		if ( e ) {
+			var entry : JSONObject = JSONObject (JSONObject.Type.OBJECT );
+			entry.AddField ( "model", e.model );
+			inv.Add ( entry );
+		}
+	}
+	
+	return inv;
 }
 
 

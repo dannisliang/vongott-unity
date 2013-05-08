@@ -14,8 +14,11 @@ private class StateControl {
 class EditorInspectorActor extends MonoBehaviour {
 	var convoControl : ConvoControl;
 	var stateControl : StateControl;
-	var buttonAddNode : Transform;
-	var buttonRemoveNode : Transform;
+	
+	var inventoryBox : GameObject;
+	var inventorySlots : OGImage[];
+
+	var pathBox : GameObject;
 	var nodes : List.< GameObject > = new List.< GameObject >();
 	var nodeGizmo : GameObject;
 	
@@ -83,12 +86,6 @@ class EditorInspectorActor extends MonoBehaviour {
 		 EditorCore.SetRotateMode ( true );
 	}
 	
-	// Set button positions
-	function SetButtonPos () {
-		buttonAddNode.transform.localPosition = new Vector3 ( buttonAddNode.transform.localPosition.x, 150 + ( 50 * (nodes.Count) ), 0 );
-		buttonRemoveNode.transform.localPosition = new Vector3 ( buttonRemoveNode.transform.localPosition.x, 150 + ( 50 * (nodes.Count) ), 0 );	
-	}
-	
 	// Clear nodes
 	function ClearNodes () {
 		for ( var i = 0; i < nodes.Count; i++ ) {
@@ -96,8 +93,6 @@ class EditorInspectorActor extends MonoBehaviour {
 		}
 		
 		nodes.Clear ();
-		
-		SetButtonPos();
 	}
 	
 	// Remove path node
@@ -115,24 +110,21 @@ class EditorInspectorActor extends MonoBehaviour {
 		// delete actual PathNode
 		DestroyImmediate ( EditorCore.GetSelectedObject().GetComponent(Actor).path[i].gameObject );
 		EditorCore.GetSelectedObject().GetComponent(Actor).path.RemoveAt ( i );
-		
-		// set button positions
-		SetButtonPos();
 	}
 	
 	// Create path node
 	function AddNodeMenuItem ( duration ) {
 		// root
 		var node : GameObject = new GameObject ( "PathNode" + nodes.Count.ToString() );
-		node.transform.parent = this.transform;
-		node.transform.localPosition = new Vector3 ( 10, 150 + ( 50 * nodes.Count ), 0 );
+		node.transform.parent = pathBox.transform;
+		node.transform.localPosition = new Vector3 ( 10, 20 + ( 50 * nodes.Count ), 0 );
 		node.transform.localScale = Vector3.one;
 		
 		// label
 		var label : GameObject = new GameObject ( "Label" );
 		label.transform.parent = node.transform;
-		label.transform.localPosition = Vector3.zero;
-		label.transform.localScale = new Vector3 ( 100, 20, 0 );
+		label.transform.localPosition = new Vector3 ( 0, 0, -2 );
+		label.transform.localScale = new Vector3 ( 100, 20, 1 );
 		
 		var l : OGLabel = label.AddComponent ( OGLabel );
 		l.text = "PathNode" + nodes.Count.ToString();
@@ -140,7 +132,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		// grab node
 		var buttonGrab : GameObject = new GameObject ( "ButtonGrab" );
 		buttonGrab.transform.parent = node.transform;
-		buttonGrab.transform.localPosition = new Vector3 ( 230, 0, 0 );
+		buttonGrab.transform.localPosition = new Vector3 ( 230, 18, -2 );
 		buttonGrab.transform.localScale = new Vector3 ( 60, 20, 0 );
 		
 		var bg : OGButton = buttonGrab.AddComponent ( OGButton );
@@ -153,7 +145,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		// rotate node
 		var buttonRot : GameObject = new GameObject ( "ButtonRotate" );
 		buttonRot.transform.parent = node.transform;
-		buttonRot.transform.localPosition = new Vector3 ( 160, 0, 0 );
+		buttonRot.transform.localPosition = new Vector3 ( 160, 18, -2 );
 		buttonRot.transform.localScale = new Vector3 ( 60, 20, 0 );
 		
 		var br : OGButton = buttonRot.AddComponent ( OGButton );
@@ -166,13 +158,13 @@ class EditorInspectorActor extends MonoBehaviour {
 		// idle time
 		var idleTime : GameObject = new GameObject ( "IdleTime" );
 		idleTime.transform.parent = node.transform;
-		idleTime.transform.localPosition = new Vector3 ( 10, 20, 0 );
+		idleTime.transform.localPosition = new Vector3 ( 10, 20, -2 );
 		idleTime.transform.localScale = Vector3.one;
 		
 		// ^ input
 		var input : GameObject = new GameObject ( "Input" );
 		input.transform.parent = idleTime.transform;
-		input.transform.localPosition = new Vector3 ( 100, 0, 0 );
+		input.transform.localPosition = new Vector3 ( 100, 0, -2 );
 		input.transform.localScale = new Vector3 ( 100, 20, 1 );
 		
 		var tf : OGTextField = input.AddComponent ( OGTextField );
@@ -188,7 +180,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		// ^ label
 		var itLabel : GameObject = new GameObject ( "Label" );
 		itLabel.transform.parent = idleTime.transform;
-		itLabel.transform.localPosition = new Vector3 ( 0, 0, 0 );
+		itLabel.transform.localPosition = new Vector3 ( 0, 0, -2 );
 		itLabel.transform.localScale = new Vector3 ( 100, 20, 0 );
 		
 		var il : OGLabel = itLabel.AddComponent ( OGLabel );
@@ -196,9 +188,6 @@ class EditorInspectorActor extends MonoBehaviour {
 
 		// add node
 		nodes.Add ( node );
-	
-		// set button positions
-		SetButtonPos();
 	}
 	
 	function AddNode () {
@@ -219,6 +208,17 @@ class EditorInspectorActor extends MonoBehaviour {
 		
 		actObj.GetComponent(Actor).path.Add ( pathObj );
 	}
+		
+		
+	//////////////////////
+	// Inventory
+	//////////////////////
+	function ChangeInventorySlot ( num : String ) {
+		var i : int = int.Parse ( num );
+		
+		EditorItems.equipping = i;
+		OGRoot.GoToPage ( "Items" );
+	}
 	
 	
 	//////////////////////
@@ -226,14 +226,18 @@ class EditorInspectorActor extends MonoBehaviour {
 	//////////////////////
 	function Init ( obj : GameObject ) {			
 		var a : Actor = obj.GetComponent ( Actor );
+		
+		// state
 		stateControl.affiliation.selectedOption = a.affiliation;
 		stateControl.mood.selectedOption = a.mood;
 		
+		// path nodes
 		ClearNodes();
 		for ( var i = 0; i < a.path.Count; i++ ) {
 			AddNodeMenuItem( a.path[i].GetComponent(PathNode).duration );
 		}
 		
+		// conversation
 		var c : Conversation = obj.GetComponent( Conversation );
 		convoControl.chapter.selectedOption = c.chapter.ToString();
 		convoControl.scene.selectedOption = c.scene.ToString();
@@ -242,6 +246,13 @@ class EditorInspectorActor extends MonoBehaviour {
 		convoControl.chapter.options = TrimFileNames ( EditorCore.GetConvoChapters() );
 		convoControl.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( c.scene ) );
 		convoControl.name.options = TrimFileNames ( EditorCore.GetConvos ( c.scene, c.chapter ) );
+	
+		// inventory
+		for ( var s = 0; s < inventorySlots.Length; s++ ) {
+			if ( a.inventory[s] ) {
+				inventorySlots[s].image = a.inventory[s].image;
+			}
+		}
 	}
 	
 	
@@ -254,21 +265,17 @@ class EditorInspectorActor extends MonoBehaviour {
 		if ( !o ) { return; }
 		
 		if ( o.GetComponent ( Actor ) ) {
-			var a : Actor = o.GetComponent ( Actor );
-			//var drawPath : Vector3[] = new Vector3[a.path.Count];
+			var a : Actor = o.GetComponent ( Actor );		
 		
-		
-			for ( var i = 0; i < a.path.Count; i++ ) {
-				var str : String = nodes[i].GetComponentInChildren(OGTextField).text;
-				
-				if ( str != "" ) {
-					a.path[i].GetComponent(PathNode).duration = float.Parse ( str );
+			if ( pathBox.activeSelf ) {
+				for ( var i = 0; i < a.path.Count; i++ ) {
+					var str : String = nodes[i].GetComponentInChildren(OGTextField).text;
+					
+					if ( str != "" ) {
+						a.path[i].GetComponent(PathNode).duration = float.Parse ( str );
+					}
 				}
-			
-				//drawPath[i] = a.path[i].transform.localPosition;
 			}
-			
-			//EditorCore.drawPath = drawPath;
 		}
 	}
 	

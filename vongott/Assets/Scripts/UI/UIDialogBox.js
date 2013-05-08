@@ -62,7 +62,7 @@ class UIDialogBox extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	function Start () {
+	override function StartPage () {
 		title = _title;
 		instructions = _instructions;
 		buttonOK = _buttonOK;

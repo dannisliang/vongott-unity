@@ -37,8 +37,6 @@ class OGTextField extends OGWidget {
 	}
 
 	override function Draw ( x : float, y : float ) {
-		GUI.depth = depth;
-		
 		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );
 		
 		if ( restrictASCII ) {

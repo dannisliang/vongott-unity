@@ -29,7 +29,7 @@ class UIQuests extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	function Start () {
+	override function StartPage () {
 		GetActiveQuests();
 		GameCore.ToggleControls ( false );
 	}
@@ -37,7 +37,7 @@ class UIQuests extends OGPage {
 	////////////////////
 	// Update
 	////////////////////
-	function Update () {
+	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q) ) {
 			OGRoot.GoToPage ( "HUD" );
 			GameCore.ToggleControls ( true );

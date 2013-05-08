@@ -50,6 +50,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		newAct.GetComponent(Actor).speed = act.GetField ( "speed" ).n;
 		newAct.GetComponent(Actor).path = DeserializePath ( act.GetField ( "path" ), newAct );
+		newAct.GetComponent(Actor).inventory = DeserializeInventory ( act.GetField ( "inventory" ) );
 		
 		newAct.GetComponent(Conversation).chapter = cnv.GetField ( "chapter" ).n;
 		newAct.GetComponent(Conversation).scene = cnv.GetField ( "scene" ).n;
@@ -140,6 +141,24 @@ static function DeserializePath ( pth : JSONObject, act : GameObject ) : List.< 
 	}
 
 	return nodes;
+}
+
+// inventory
+static function DeserializeInventory ( ety : JSONObject ) : Entry[] {
+	var inv : Entry[] = new Entry[4];
+	
+	for ( var i = 0; i < ety.list.Count; i++ ) {
+		var slot : JSONObject = ety.list[i];
+		var model = slot.GetField("model").str;
+		
+		if ( model != "" ) {
+			var obj : GameObject = Instantiate ( Resources.Load ( "Items/" + slot.GetField("model").str ) as GameObject );
+			inv[i] = InventoryManager.ConvertItemToEntry ( obj.GetComponent(Item) );
+			DestroyImmediate ( obj );
+		}
+	}
+	
+	return inv;
 }
 
 

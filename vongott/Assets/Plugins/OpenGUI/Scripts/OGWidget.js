@@ -43,7 +43,6 @@ private class Anchor {
 }
 
 class OGWidget extends MonoBehaviour {	
-	var depth : int = 0; // MAKE THIS THE Z AXIS
 	var drawLocalPosition = false;
 	var manualDraw = false;
 	var anchor : Anchor;	
@@ -55,11 +54,11 @@ class OGWidget extends MonoBehaviour {
 	@HideInInspector var emptyStyle : GUIStyle = new GUIStyle();
 	
 	function SetX ( x : float ) {
-		transform.localPosition = new Vector3 ( x, transform.localPosition.y, 0.0 );
+		transform.localPosition = new Vector3 ( x, transform.localPosition.y, transform.localPosition.z );
 	}
 	
 	function SetY ( y : float ) {
-		transform.localPosition = new Vector3 ( transform.localPosition.x, y, 0.0 );
+		transform.localPosition = new Vector3 ( transform.localPosition.x, y, transform.localPosition.z );
 	}
 	
 	function SetWidth ( w : float ) {
@@ -158,6 +157,8 @@ class OGWidget extends MonoBehaviour {
 	function Start () {}
 	
 	function OnGUI () {
+		GUI.depth = transform.localPosition.z;
+		
 		guiStyle = CheckStyle ();
 		
 		if ( !manualDraw ) {
@@ -170,6 +171,7 @@ class OGWidget extends MonoBehaviour {
 	}
 	
 	function Update () {			
+		
 		if ( stretch ) {
 			ApplyStretch ();
 			ApplyPosition ();

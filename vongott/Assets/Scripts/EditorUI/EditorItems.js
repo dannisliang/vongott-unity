@@ -6,6 +6,7 @@ class EditorItems extends OGPage {
 	var currentDir : String = "";
 	var currentItem : String = "";
 	var title : OGLabel;
+	static var equipping : int = 99;
 
 	function CreateItem ( name : String, x : float, y : float ) {
 		var button : GameObject = new GameObject ( name + "_btn" );
@@ -75,21 +76,29 @@ class EditorItems extends OGPage {
 	
 	function OK () {
 		OGRoot.GoToPage ( "MenuBase" );
+		
+		if ( equipping != 99 ) {
+			EditorCore.ReselectObject();
+			equipping = 99;
+		}
 	}
 	
 	function Add () {
 		if ( currentDir != "" && currentItem != "" ) {
-			EditorCore.AddItem ( currentDir, currentItem );
-			
-			OGRoot.GoToPage ( "MenuBase" );
+			if ( equipping != 99 ) {
+				EditorCore.EquipItem ( currentDir, currentItem, equipping );
+			} else {
+				EditorCore.AddItem ( currentDir, currentItem );		
+				OGRoot.GoToPage ( "MenuBase" );
+			}
 		}
 	}
 	
-	function Start () {
+	override function StartPage () {
 		PopulateList ();
 	}
 	
-	function Update () {
+	override function UpdatePage () {
 		if ( itemSelector.selectedOption != currentDir && itemSelector.selectedOption != null && itemSelector.selectedOption != "<directory>" ) {
 			currentDir = itemSelector.selectedOption;
 			

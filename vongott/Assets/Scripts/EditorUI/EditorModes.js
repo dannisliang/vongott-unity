@@ -21,7 +21,7 @@ class EditorModes extends OGPage {
 		background.transform.localScale = new Vector3 ( background.transform.localScale.x, h, background.transform.localScale.z );
 	}
 	
-	function Start () {
+	override function StartPage () {
 		title = _title;
 		message = _message;
 		background = _background;

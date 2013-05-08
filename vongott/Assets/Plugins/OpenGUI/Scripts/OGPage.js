@@ -10,4 +10,8 @@ class OGPage extends MonoBehaviour {
 			pageName = name;
 		}
 	}
+
+	function StartPage () {}
+
+	function UpdatePage () {}
 }

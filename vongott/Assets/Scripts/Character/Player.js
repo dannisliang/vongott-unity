@@ -2,13 +2,15 @@ class Player extends MonoBehaviour {
 	////////////////////
 	// Prerequisites
 	////////////////////
-	// Inspector items
+	// Public vars
 	var head : GameObject;
 	var hand : GameObject;
 	var torso : GameObject;
 	var foot_r : GameObject;
 	var foot_l : GameObject;
 	
+	// Private vars
+	var equippedItem : GameObject;
 	
 	////////////////////
 	// Public functions
@@ -29,20 +31,15 @@ class Player extends MonoBehaviour {
 		} 
 		
 		if ( equip ) {
-			var instance : GameObject = new GameObject ( entry.title );
-			var mf : MeshFilter = instance.AddComponent(MeshFilter);
-			var mr : MeshRenderer = instance.AddComponent(MeshRenderer);
+			equippedItem = Instantiate ( Resources.Load ( "Items/" + entry.model ) as GameObject );
 			
-			mf.mesh = entry.mesh;
-			mr.materials = entry.materials;
-			
-			instance.transform.parent = target.transform;
-			instance.transform.localPosition = Vector3.zero;
-			instance.transform.localEulerAngles = Vector3.zero;
+			equippedItem.transform.parent = target.transform;
+			equippedItem.transform.localPosition = Vector3.zero;
+			equippedItem.transform.localEulerAngles = Vector3.zero;
 		
 			GameCore.Print ( "Player | item '" + entry.title + "' equipped" );
 		} else {
-			Destroy ( target.transform.FindChild( entry.title ).gameObject );
+			Destroy ( equippedItem );
 			
 			GameCore.Print ( "Player | item '" + entry.title + "' unequipped" );
 		}

@@ -48,7 +48,7 @@ class UIConversation extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	function Start () {
+	override function StartPage () {
 		actorName = _actorName;
 		lines = _lines;
 		highlight = _highlight;

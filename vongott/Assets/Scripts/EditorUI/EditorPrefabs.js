@@ -43,7 +43,7 @@ class EditorPrefabs extends OGPage {
 		}
 	}
 	
-	function Update () {
+	override function UpdatePage () {
 		if ( prefabSelector.selectedOption != currentDir && prefabSelector.selectedOption != null && prefabSelector.selectedOption != "<directory>" ) {
 			currentDir = prefabSelector.selectedOption;
 			

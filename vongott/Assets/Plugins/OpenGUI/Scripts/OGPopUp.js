@@ -10,22 +10,18 @@ class OGPopUp extends OGWidget {
 	var padding : Vector2 = new Vector2 ( 8.0, 8.0 );
 	
 	@HideInInspector var selectedOption : String = "(pick)";
-	@HideInInspector var popDepth : int = 0;
-			
+	@HideInInspector var originalZ : float = 99;
+				
 	// Draw
 	override function Draw ( x : float, y : float ) {	
-		GUI.depth = popDepth;
-		
-		if ( !isUp ) {
-			popDepth = depth;
+		if ( !isUp ) {			
 			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), guiStyle.fontSize + padding.y );
 			GUI.Box ( guiRect, "" );
 			
 			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (padding.x * 2), transform.localScale.y ), selectedOption, guiStyle ) ) {
 				isUp = true;
 			}
-		} else {
-			popDepth = depth - 10;
+		} else {			
 			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), ( options.Length * (guiStyle.fontSize + padding.y) ) + ( padding.y * 2 ) );
 			GUI.Box ( guiRect, "" );
 			
@@ -44,6 +40,16 @@ class OGPopUp extends OGWidget {
 	
 	// Update
 	override function UpdateWidget () {		
+		if ( originalZ == 99 ) {
+			originalZ = transform.localPosition.z;
+		}
+		
+		if ( isUp ) {
+			transform.localPosition.z = -10;
+		} else {
+			transform.localPosition.z = originalZ;
+		}
+		
 		if ( selectedOption == "(pick)" && options.Length > 0 ) {
 			selectedOption = options[0];
 		}

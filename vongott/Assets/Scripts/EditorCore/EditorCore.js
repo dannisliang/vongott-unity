@@ -122,6 +122,22 @@ static function AddItem ( dir : String, name : String ) {
 
 
 ////////////////////
+// Actor
+////////////////////
+// Equip item
+static function EquipItem ( dir : String, name : String, slot : int ) {
+	if ( selectedObject.GetComponent(Actor) ) {
+		var obj : GameObject = Instantiate ( Resources.Load ( "Items/" + dir + "/" + name ) as GameObject );
+		var item : Item = obj.GetComponent(Item);
+		
+		selectedObject.GetComponent(Actor).inventory[slot] = InventoryManager.ConvertItemToEntry ( item );
+		
+		DestroyImmediate ( obj );
+	}
+}
+
+
+////////////////////
 // View
 ////////////////////
 // Toggle isometric view

@@ -42,6 +42,7 @@ class OGScrollView extends OGWidget {
 		
 		for ( var w : OGWidget in transform.GetComponentsInChildren (OGWidget) ) {
 			if ( w != this ) {
+				GUI.depth = w.transform.localPosition.z;
 				w.Draw ( w.transform.localPosition.x, w.transform.localPosition.y );
 			}
 		}

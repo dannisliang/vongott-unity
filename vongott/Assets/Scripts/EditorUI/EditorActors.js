@@ -85,11 +85,11 @@ class EditorActors extends OGPage {
 		}
 	}
 	
-	function Start () {
+	override function StartPage () {
 		PopulateList ();
 	}
 	
-	function Update () {
+	override function UpdatePage () {
 		if ( actorSelector.selectedOption != currentDir && actorSelector.selectedOption != null && actorSelector.selectedOption != "<directory>" ) {
 			currentDir = actorSelector.selectedOption;
 			

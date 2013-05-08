@@ -28,7 +28,7 @@ class UIHUD extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	function Start () {
+	override function StartPage () {
 		statusBar = _statusBar;
 		notificationBox = _notificationBox;
 		
@@ -39,7 +39,7 @@ class UIHUD extends OGPage {
 	////////////////////
 	// Update
 	////////////////////
-	function Update () {
+	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.I) ) {
 			OGRoot.GoToPage ( "Inventory" );
 		} else if ( Input.GetKeyDown(KeyCode.Q) ) {

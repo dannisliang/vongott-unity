@@ -31,8 +31,7 @@ public class Entry {
 	var equipped = false;
 	var installed = false;
 	var slot = 0;
-	var mesh : Mesh;
-	var materials : Material[];
+	var model : String;
 }
 
 // Static vars
@@ -46,14 +45,28 @@ static var initialized = false;
 // Get slots
 static function GetSlots () { return slots; }
 
+// Convert item
+static function ConvertItemToEntry ( item : Item ) : Entry {
+	var entry = new Entry ();
+
+	entry.type = item.type;
+	entry.id = item.id;
+	entry.image = item.image;
+	entry.title = item.title;
+	entry.desc = item.desc;
+	entry.attr = item.attr;
+	entry.model = item.model;		
+	
+	return entry;
+}
 
 // Add item
 static function AddItem ( item : Item ) {
 	for ( var i = 0; i < slots.Length; i++ ) {
 		if ( slots[i].GetEntry() == null ) {
-			var entry = new Entry ();
 			
-			// translate item to entry
+			var entry = new Entry ();
+
 			entry.type = item.type;
 			entry.id = item.id;
 			
@@ -70,10 +83,9 @@ static function AddItem ( item : Item ) {
 			entry.desc = item.desc;
 			entry.attr = item.attr;
 			entry.slot = i;
-			entry.mesh = item.gameObject.GetComponent(MeshFilter).mesh;
-			entry.materials = item.gameObject.GetComponent(MeshRenderer).materials;
-			
-			slots[i].SetEntry ( entry );
+			entry.model = item.model;							
+										
+			slots[i].SetEntry ( ConvertItemToEntry ( item ) );
 			return;
 		}
 	}

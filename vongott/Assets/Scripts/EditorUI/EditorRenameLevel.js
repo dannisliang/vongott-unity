@@ -26,7 +26,7 @@ class EditorRenameLevel extends OGPage {
 	////////////////////
 	// Update
 	////////////////////
-	function Update () {
+	override function UpdatePage () {
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			OGRoot.GoToPage ( "MenuBase" );
 		}

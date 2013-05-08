@@ -65,6 +65,10 @@ class EditorOpenFile extends OGPage {
 	
 	// Populate list
 	function PopulateList () {
+		ClearList ();
+		
+		Debug.Log ( "ASS" );
+		
 		var paths : String[] = ListFiles();
 	
 		for ( var i = 0; i < paths.Length; i++ ) {
@@ -80,7 +84,7 @@ class EditorOpenFile extends OGPage {
 			
 			obj.transform.parent = mapList.transform;
 			obj.transform.localScale = new Vector3 ( 482, 32, 1 );
-			obj.transform.localPosition = new Vector3 ( 0, i * 34, 0 );
+			obj.transform.localPosition = new Vector3 ( 0, i * 34, -2 );
 		}
 	}
 	
@@ -88,8 +92,7 @@ class EditorOpenFile extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	function Start () {
-		ClearList ();
+	override function StartPage () {
 		PopulateList();
 		selectedMap == "";
 		title.text = "Open a map file";
@@ -99,7 +102,7 @@ class EditorOpenFile extends OGPage {
 	////////////////////
 	// Update
 	////////////////////
-	function Update () {
+	override function UpdatePage () {
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			OGRoot.GoToPage ( "MenuBase" );
 		}
