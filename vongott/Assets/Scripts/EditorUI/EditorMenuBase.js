@@ -207,7 +207,7 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Play level
 	////////////////////
-	function PlayLevel () {
+	function PlayLevel () {		
 		if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
 			RenameLevel ();
 			return;

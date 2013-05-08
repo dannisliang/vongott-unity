@@ -67,7 +67,9 @@ class OGRoot extends MonoBehaviour {
 			}
 		}
 		
-		currentPage.gameObject.SetActive ( true );
-		currentPage.StartPage ();
+		if ( currentPage ) {
+			currentPage.gameObject.SetActive ( true );
+			currentPage.StartPage ();
+		}
 	}
 }

@@ -67,8 +67,6 @@ class EditorOpenFile extends OGPage {
 	function PopulateList () {
 		ClearList ();
 		
-		Debug.Log ( "ASS" );
-		
 		var paths : String[] = ListFiles();
 	
 		for ( var i = 0; i < paths.Length; i++ ) {

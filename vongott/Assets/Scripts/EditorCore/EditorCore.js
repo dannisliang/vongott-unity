@@ -391,7 +391,8 @@ static function SetInspector ( i : EditorMenuBase ) {
 ////////////////////
 // Play level
 static function PlayLevel () {
-	Application.LoadLevel ( "game" );
+	UILoading.loadScene = "game";
+	Application.LoadLevel ( "loading" );
 }
 
 
