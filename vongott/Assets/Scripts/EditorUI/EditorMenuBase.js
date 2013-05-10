@@ -54,7 +54,7 @@ class EditorMenuBase extends OGPage {
 	
 	// Exit editor
 	function ExitEditor () {
-		Debug.Log ( "Exited editor" );
+		Application.LoadLevel ( "main_menu" );
 	}
 	
 	

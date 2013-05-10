@@ -45,11 +45,9 @@ class OGRoot extends MonoBehaviour {
 		if ( currentPage ) {
 			var anyRects : int = 0;
 			
-			for ( var i = 0; i < currentPage.transform.GetChildCount(); i++ ) {
-				if ( currentPage.transform.GetChild ( i ).GetComponent( OGWidget ) ) {
-					if ( currentPage.transform.GetChild ( i ).GetComponent( OGWidget ).guiRect.Contains ( Input.mousePosition ) ) {
-						anyRects++;
-					}
+			for ( var w : OGWidget in currentPage.transform.GetComponentsInChildren(OGWidget) ) {
+				if ( w.guiRect.Contains ( Input.mousePosition ) ) {
+					anyRects++;
 				}
 			}
 		

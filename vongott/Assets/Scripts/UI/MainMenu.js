@@ -11,10 +11,6 @@ class MainMenu extends MonoBehaviour {
 		
 	}
 	
-	function NewGame () {
-		Application.LoadLevel ( "game" );
-	}
-	
 	function GoToPage () {
 		OGRoot.GoToPage ( nextPage );
 	}

@@ -2,9 +2,7 @@ Shader "ShaderEditor/EditorShaderCache"
 {
 	Properties 
 	{
-_Tex1("_Tex1", Cube) = "black" {}
-_Tex2("_Tex2", Cube) = "white" {}
-_LerpValue("_LerpValue", Range(0,1) ) = 0.6165803
+_EditorTime("_EditorTime",Vector) = (0.0,0.0,0.0,0.0)
 
 	}
 	
@@ -32,9 +30,7 @@ Fog{
 #pragma target 2.0
 
 
-samplerCUBE _Tex1;
-samplerCUBE _Tex2;
-float _LerpValue;
+float4 _EditorTime;
 
 			struct EditorSurfaceOutput {
 				half3 Albedo;
@@ -74,17 +70,18 @@ return c;
 			}
 			
 			struct Input {
-				float3 sWorldNormal;
+				float4 meshUV;
 
 			};
 
 			void vert (inout appdata_full v, out Input o) {
 float4 VertexOutputMaster0_0_NoInput = float4(0,0,0,0);
-float4 VertexOutputMaster0_1_NoInput = float4(0,0,0,0);
 float4 VertexOutputMaster0_2_NoInput = float4(0,0,0,0);
 float4 VertexOutputMaster0_3_NoInput = float4(0,0,0,0);
+v.color = v.texcoord;
 
-o.sWorldNormal = mul((float3x3)_Object2World, SCALED_NORMAL);
+o.meshUV.xy = v.texcoord.xy;
+o.meshUV.zw = v.texcoord1.xy;
 
 			}
 			
@@ -98,9 +95,18 @@ o.sWorldNormal = mul((float3x3)_Object2World, SCALED_NORMAL);
 				o.Specular = 0.0;
 				o.Custom = 0.0;
 				
-float4 TexCUBE0=texCUBE(_Tex1,float4( IN.sWorldNormal.x, IN.sWorldNormal.y,IN.sWorldNormal.z,1.0 ));
-float4 TexCUBE1=texCUBE(_Tex2,float4( IN.sWorldNormal.x, IN.sWorldNormal.y,IN.sWorldNormal.z,1.0 ));
-float4 Lerp0=lerp(TexCUBE0,TexCUBE1,_LerpValue.xxxx);
+float4 Splat0=_EditorTime.y;
+float4 Frac0=frac(Splat0);
+float4 Lerp1=lerp(float4( -1,-1,-1,-1 ),float4( 1,1,1,1 ),Frac0);
+float4 Splat1=(IN.meshUV.xyxy).x;
+float4 Add1=Lerp1 + Splat1;
+float4 Add0=Add1 + float4( -0.5,-0.5,-0.5,-0.5 );
+float4 Multiply0=float4( -2,-2,-2,-2 ) * Add0;
+float4 Multiply1=Add0 * float4( 2,2,2,2 );
+float4 Multiply2=Add1 * float4( 2,2,2,2 );
+float4 Floor0=floor(Multiply2);
+float4 Lerp0=lerp(Multiply0,Multiply1,Floor0);
+float4 Invert0= float4(1.0, 1.0, 1.0, 1.0) - Lerp0;
 float4 Master0_0_NoInput = float4(0,0,0,0);
 float4 Master0_1_NoInput = float4(0,0,1,1);
 float4 Master0_3_NoInput = float4(0,0,0,0);
@@ -108,7 +114,7 @@ float4 Master0_4_NoInput = float4(0,0,0,0);
 float4 Master0_5_NoInput = float4(1,1,1,1);
 float4 Master0_7_NoInput = float4(0,0,0,0);
 float4 Master0_6_NoInput = float4(1,1,1,1);
-o.Emission = Lerp0;
+o.Emission = Invert0;
 
 				o.Normal = normalize(o.Normal);
 			}

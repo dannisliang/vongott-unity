@@ -1,10 +1,10 @@
 #pragma strict
 
-class MainMenuNew extends OGPage {
+class MainMenuCommunity extends OGPage {
 	var mainMenu : MainMenu;
 		
-	function NewGame () {
-		Application.LoadLevel ( "game" );
+	function StartEditor () {
+		Application.LoadLevel ( "editor" );
 	}
 	
 	function Update () {
