@@ -23,7 +23,6 @@ public class Entry {
 	var id : Item.IDs = Item.IDs.Pistol;
 	var eqSlot : Equipment.Slots = Equipment.Slots.Hands;
 	var upgSlot : Upgrade.Slots = Upgrade.Slots.Hands;
-	var sprite : UISprite;
 	var image : Texture2D;
 	var title = "";
 	var desc = "";

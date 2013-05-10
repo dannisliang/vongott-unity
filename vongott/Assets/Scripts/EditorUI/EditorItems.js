@@ -87,6 +87,8 @@ class EditorItems extends OGPage {
 		if ( currentDir != "" && currentItem != "" ) {
 			if ( equipping != 99 ) {
 				EditorCore.EquipItem ( currentDir, currentItem, equipping );
+				OGRoot.GoToPage ( "MenuBase" );
+				EditorCore.ReselectObject();
 			} else {
 				EditorCore.AddItem ( currentDir, currentItem );		
 				OGRoot.GoToPage ( "MenuBase" );

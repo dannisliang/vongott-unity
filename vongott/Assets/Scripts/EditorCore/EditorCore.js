@@ -136,6 +136,13 @@ static function EquipItem ( dir : String, name : String, slot : int ) {
 	}
 }
 
+// Unequip item
+static function UnequipItem ( slot : int ) {
+	if ( selectedObject.GetComponent(Actor) ) {
+		selectedObject.GetComponent(Actor).inventory[slot] = null;
+	}
+}
+
 
 ////////////////////
 // View

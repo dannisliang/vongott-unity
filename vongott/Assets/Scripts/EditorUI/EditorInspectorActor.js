@@ -216,6 +216,7 @@ class EditorInspectorActor extends MonoBehaviour {
 	function ChangeInventorySlot ( num : String ) {
 		var i : int = int.Parse ( num );
 		
+		EditorCore.UnequipItem ( i );
 		EditorItems.equipping = i;
 		OGRoot.GoToPage ( "Items" );
 	}
@@ -251,6 +252,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		for ( var s = 0; s < inventorySlots.Length; s++ ) {
 			if ( a.inventory[s] ) {
 				inventorySlots[s].image = a.inventory[s].image;
+			} else {
+				inventorySlots[s].image = null;
 			}
 		}
 	}
