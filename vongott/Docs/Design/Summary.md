@@ -3,7 +3,7 @@ Design document for Von Gott
 
 # Production
 ## Tools
-The game will be produced in Unity using various additional libraries such as NGUI.
+The game will be produced in Unity using as few additional libraries as possible. Some will be needed for heavy computations such as AI, though.
 It will be written in JavaScript
 
 ## Team
