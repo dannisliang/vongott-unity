@@ -8,5 +8,8 @@ class EditorConversations extends OGPage {
 		var test : EditorConversationEntry = Instantiate ( entryInstance );
 		test.transform.parent = scrollView.transform;
 		test.transform.localPosition = Vector3.zero;
+	
+		scrollView.viewWidth = Screen.width - 20;
+		scrollView.viewHeight = Screen.height - 160;
 	}
 }
