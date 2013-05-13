@@ -8,19 +8,13 @@ class OGScrollView extends OGWidget {
 	var alwaysHorizontal = false;
 	var inset : float = 10;
 	var position : Vector2 = Vector2.zero;
-	
-	// Init
-	function Start () {
-	
-	}
-	
+		
 	// Update
 	override function UpdateWidget () {		
 		for ( var w : OGWidget in transform.GetComponentsInChildren (OGWidget) ) {			
 			if ( w != this ) {
 				if ( !w.manualDraw ) {
 					w.manualDraw = true;
-					w.drawLocalPosition = true;
 				}
 			
 				if ( scrollLength < inset + w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset ) {
@@ -43,7 +37,7 @@ class OGScrollView extends OGWidget {
 		for ( var w : OGWidget in transform.GetComponentsInChildren (OGWidget) ) {
 			if ( w != this ) {
 				GUI.depth = w.transform.localPosition.z;
-				w.Draw ( w.transform.localPosition.x, w.transform.localPosition.y );
+				w.Draw ( w.transform.position.x - transform.position.x, w.transform.position.y - transform.position.y );
 			}
 		}
 	

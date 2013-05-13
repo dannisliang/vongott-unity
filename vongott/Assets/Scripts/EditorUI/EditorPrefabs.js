@@ -35,11 +35,10 @@ class EditorPrefabs extends OGPage {
 	}
 	
 	private function PopulateList () {
-		var dir : DirectoryInfo = new DirectoryInfo( "Assets/Resources/Prefabs/" + currentDir );
-		var info : FileInfo[] = dir.GetFiles ( "*.prefab" );
+		var files : Object[] = Resources.LoadAll ( "Prefabs/" + currentDir, GameObject );
 		
-		for ( var i : FileInfo in info ) {
-			Debug.Log ( i.Name );
+		for ( var f : GameObject in files ) {
+			Debug.Log ( f.name );
 		}
 	}
 	

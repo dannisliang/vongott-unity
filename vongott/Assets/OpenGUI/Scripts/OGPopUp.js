@@ -3,22 +3,31 @@
 @script ExecuteInEditMode;
 
 class OGPopUp extends OGWidget {	
+	var title : String;
 	var isUp = false;
 	var options : String[];
 	var message : String;
 	var messageTarget : GameObject;
 	var padding : Vector2 = new Vector2 ( 8.0, 8.0 );
 	
-	@HideInInspector var selectedOption : String = "(pick)";
+	@HideInInspector var selectedOption : String;
 	@HideInInspector var originalZ : float = 99;
 				
 	// Draw
 	override function Draw ( x : float, y : float ) {	
 		if ( !isUp ) {			
+			var label : String;
+			
+			if ( selectedOption ) {
+				label = selectedOption;
+			} else {
+				label = title;
+			}
+			
 			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), guiStyle.fontSize + padding.y );
 			GUI.Box ( guiRect, "" );
 			
-			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (padding.x * 2), transform.localScale.y ), selectedOption, guiStyle ) ) {
+			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (padding.x * 2), transform.localScale.y ), label, guiStyle ) ) {
 				isUp = true;
 			}
 		} else {			
@@ -48,10 +57,6 @@ class OGPopUp extends OGWidget {
 			transform.localPosition.z = -10;
 		} else {
 			transform.localPosition.z = originalZ;
-		}
-		
-		if ( selectedOption == "(pick)" && options.Length > 0 ) {
-			selectedOption = options[0];
 		}
 		
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {

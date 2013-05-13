@@ -59,8 +59,8 @@ static function Update () {
 		} else if ( Input.GetKeyDown ( KeyCode.R ) ) {
 			EditorCore.SetRotateMode( true );
 		
-		// X or delete key: delete item
-		} else if ( Input.GetKeyDown ( KeyCode.Delete ) || Input.GetKeyDown ( KeyCode.X ) ) {
+		// delete key: delete item
+		} else if ( Input.GetKeyDown ( KeyCode.Delete ) ) {
 			EditorCore.DeleteSelected();
 		
 		// D key: duplicate object

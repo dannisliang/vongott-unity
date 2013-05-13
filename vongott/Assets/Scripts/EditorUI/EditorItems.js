@@ -54,14 +54,13 @@ class EditorItems extends OGPage {
 	private function PopulateList () {
 		ClearList ();
 		
-		var dir : DirectoryInfo = new DirectoryInfo( "Assets/Resources/Items/" + currentDir );
-		var info : FileInfo[] = dir.GetFiles ( "*.prefab" );
+		var files : Object[] = Resources.LoadAll ( "Items/" + currentDir, GameObject );
 		
 		var col = 0;
 		var row = 0;
 		
-		for ( var i : FileInfo in info ) {
-			CreateItem ( i.Name.Replace ( ".prefab", "" ), col * 110, row * 110 );
+		for ( var f : GameObject in files ) {
+			CreateItem ( f.name, col * 110, row * 110 );
 		
 			if ( col < 3 ) {
 				col++;

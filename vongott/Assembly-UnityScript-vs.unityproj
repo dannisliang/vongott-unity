@@ -44,6 +44,23 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\OpenGUI\Scripts\OGButton.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGButton3D.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGDropDown.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGImage.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGLabel.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGPage.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGPopUp.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGRect.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGRoot.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGRuler.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGScrollView.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGSlider.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGTabs.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGTextField.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGTickBox.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGTween.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGWidget.js" />
      <Compile Include="Assets\Scripts\Character\CharacterMotor.js" />
      <Compile Include="Assets\Scripts\Character\FPSInputController.js" />
      <Compile Include="Assets\Scripts\Character\PlatformInputController.js" />
@@ -82,6 +99,9 @@
      <Compile Include="Assets\Scripts\EditorCore\EditorInput.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorActors.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorAdjust.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorConversationEntry.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorConversationGroupLine.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorConversations.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorInspectorActor.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorInspectorLight.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorInspectorTween.js" />
@@ -93,60 +113,42 @@
      <Compile Include="Assets\Scripts\EditorUI\EditorRenameLevel.js" />
      <Compile Include="Assets\Scripts\Triggers\Door.js" />
      <Compile Include="Assets\Scripts\Triggers\InteractiveObject.js" />
-     <Compile Include="Assets\Scripts\UI\OLD\LevelButton.js" />
-     <Compile Include="Assets\Scripts\UI\OLD\MainMenu.js" />
+     <Compile Include="Assets\Scripts\UI\MainMenu.js" />
+     <Compile Include="Assets\Scripts\UI\MainMenuCommunity.js" />
+     <Compile Include="Assets\Scripts\UI\MainMenuLoad.js" />
+     <Compile Include="Assets\Scripts\UI\MainMenuNew.js" />
      <Compile Include="Assets\Scripts\UI\UIConversation.js" />
      <Compile Include="Assets\Scripts\UI\UIDialogBox.js" />
      <Compile Include="Assets\Scripts\UI\UIHUD.js" />
      <Compile Include="Assets\Scripts\UI\UIInventory.js" />
      <Compile Include="Assets\Scripts\UI\UILoading.js" />
      <Compile Include="Assets\Scripts\UI\UIQuests.js" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Depth.shader" />
      <None Include="Assets\Shaders\CubemapReflection.shader" />
      <None Include="Assets\Shaders\AlphaCutout.shader" />
      <None Include="Assets\Plugins\UnitySteer\License.txt" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
      <None Include="Assets\Fonts\Font_Ubuntu.txt" />
      <None Include="Assets\Plugins\UnitySteer\TickedPriorityQueue\LICENSE.txt" />
+     <None Include="Assets\Shaders\UnlitAlphaColored.shader" />
      <None Include="Assets\Demos\AlphaGlow(ProOnly)\GlowTest.shader" />
      <None Include="Assets\Demos\LMEmission\LMEmission.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\Temp\TempShader.shader" />
      <None Include="Assets\Shaders\BumpedSpecularEmissive.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (AlphaClip).shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (HardClip).shader" />
      <None Include="Assets\Shaders\BumpedCubemapReflection.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
      <None Include="Assets\Shaders\BumpedSpecular.shader" />
      <None Include="Assets\Demos\TexturePan\TexturePan.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont) (SoftClip).shader" />
      <None Include="Assets\Shaders\RimLighting.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (SoftClip).shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\DynamicFonts\Unlit - Transparent Colored (DynamicFont).shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (HardClip).shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored Overlay.shader" />
-     <None Include="Assets\Demos\AlphaGlow(ProOnly)\GlowTest2.shader" />
-     <None Include="Assets\Plugins\NGUI\ReadMe - 2.2.7c.txt" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
-     <None Include="Assets\Demos\Outline\Outline.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
-     <None Include="Assets\Shaders\UnlitDiffuse.shader" />
      <None Include="Assets\Shaders\OutlineDiffuse.shader" />
+     <None Include="Assets\Demos\AlphaGlow(ProOnly)\GlowTest2.shader" />
+     <None Include="Assets\Demos\Outline\Outline.shader" />
+     <None Include="Assets\Shaders\UnlitDiffuse.shader" />
+     <None Include="Assets\Shaders\OutlineSilhouetteBumpedDiffuse.shader" />
      <None Include="Assets\Conversations\1\1\marcel.xml" />
      <None Include="Assets\Conversations\1\2\marcel.xml" />
      <None Include="Assets\Demos\Distortion(ProOnly)\Distortion.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (HardClip).shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\Shaders\BumpedRim.shader" />
-     <None Include="Assets\Plugins\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
      <None Include="Assets\Conversations\1\2\bum.xml" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\TextureCopy.shader" />
- <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
  <Reference Include="TickedPriorityQueue">
  <HintPath>Assets\Plugins\UnitySteer\TickedPriorityQueue\TickedPriorityQueue.dll</HintPath>
  </Reference>

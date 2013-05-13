@@ -42,8 +42,7 @@ private class Anchor {
 	var yOffset : float = 0.0;
 }
 
-class OGWidget extends MonoBehaviour {	
-	var drawLocalPosition = false;
+class OGWidget extends MonoBehaviour {
 	var manualDraw = false;
 	var anchor : Anchor;	
 	var stretch : Stretch;
@@ -162,11 +161,7 @@ class OGWidget extends MonoBehaviour {
 		guiStyle = CheckStyle ();
 		
 		if ( !manualDraw ) {
-			if ( drawLocalPosition ) {
-				Draw ( transform.localPosition.x, transform.localPosition.y );
-			} else {
-				Draw ( transform.position.x, transform.position.y );
-			}
+			Draw ( transform.position.x, transform.position.y );
 		}
 	}
 	
