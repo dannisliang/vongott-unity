@@ -234,3 +234,58 @@ static function SerializeVector2 ( v : Vector2 ) : JSONObject {
 	
 	return vector;
 }
+
+
+////////////////////
+// Serialize conversation
+////////////////////
+static function SerializeConversation ( c : List.< EditorConversationEntry > ) : JSONObject {
+	var conversation : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+	
+	for ( var e : EditorConversationEntry in c ) {
+		var gLine : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		var entry : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		entry.AddField ( "type", e.type.selectedOption );		
+		 
+		// line
+		if ( e.type.selectedOption == "Line" ) {
+			var l = e.line;
+						
+			entry.AddField ( "condition", l.condition.text );
+			entry.AddField ( "consequence", l.consequence.text );
+			entry.AddField ( "speaker", l.speaker.selectedOption );
+			entry.AddField ( "line", l.line.text );			
+		
+		// group
+		} else if ( e.type.selectedOption == "Group" ) {
+			var g = e.group;
+			var options : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+			
+			for ( var i = 0; i < g.container.childCount; i++ ) {
+				var gl : EditorConversationGroupLine = g.container.GetChild ( i ).gameObject.GetComponent ( EditorConversationGroupLine );
+				var groupLine : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+																																																																																																																																																																															
+				groupLine.AddField ( "consequence", gl.consequence.text );
+				groupLine.AddField ( "line", gl.line.text );
+				
+				options.Add ( groupLine );
+			}
+			
+			entry.AddField ( "options", options );
+		
+		// dialog box
+		} else if ( e.type.selectedOption == "DialogBox" ) {
+			var d = e.dialogBox;
+			
+			entry.AddField ( "canCancel", d.canCancel.isChecked.ToString() );
+			entry.AddField ( "useInput", d.useInput.isChecked.ToString() );
+			entry.AddField ( "title", d.title.text );
+			entry.AddField ( "instructions", d.instructions.text );
+			
+		}
+		
+		conversation.Add ( entry );
+	}
+	
+	return conversation;
+}

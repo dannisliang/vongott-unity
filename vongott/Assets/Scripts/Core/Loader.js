@@ -3,27 +3,32 @@
 import System.IO;
 
 class Loader {
-	static function LoadChapter ( c : int ) {
-		/* TODO
-		get chapter from directory
-		var chapter = new Chapter ( index, title, writtenBy );
-		for ( var i = 0; i < [the loaded chapter].Length; i++ ) {
-			var scene = new Scene ( [current scene].index, [current scene].map );
-			
-			chapter.AddScene ( scene );
+	static function LoadConversationToEditor ( path : String ) : List.< EditorConversationEntry > {
+		var entries : List.< EditorConversationEntry >;
+		
+		path = Application.dataPath + "/Conversations/" + path + ".vgconvo";
+				
+		if ( !File.Exists ( path ) ) {
+			Debug.LogError ( "Loader | no such file: " + path );
+			return null;
 		}
-		GameCore.currentChapter = chapter;
-		*/
-	}
+		
+		var sr : StreamReader = new File.OpenText( path );
+		var input : String = "";
+		var line : String = "";
+		
+		line = sr.ReadLine();
+		
+		while ( line != null ) {
+			input += line;
+			line = sr.ReadLine();
+		}
 	
-	static function LoadScene ( s : int ) {
-		if ( GameCore.currentChapter == null ) {
-			GameCore.Print ( "Loader | no chapter loaded!" );
-		} else if ( GameCore.currentChapter.scenes[s] == null ) {
-			GameCore.Print ( "Loader | no scene " + s + " in chapter " + GameCore.currentChapter.title + "!" );
-		} else {
-			GameCore.currentScene = GameCore.currentChapter.scenes[s];
-		}
+		sr.Close();
+		
+		entries = Deserializer.DeserializeConversationToEditor ( input );
+		
+		return entries;
 	}
 		
 	static function LoadMap ( name : String ) : GameObject {

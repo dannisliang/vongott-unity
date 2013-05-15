@@ -4,14 +4,14 @@ class EditorConversationEntry extends MonoBehaviour {
 	////////////////////
 	// Prerequisites
 	////////////////////
-	// Private classes	
-	private class Group {
+	// Public classes	
+	class Group {
 		var instance : GameObject;
 		var options : OGPopUp;
-		@HideInInspector var lines : EditorConversationGroupLine[] = new EditorConversationGroupLine[3];
+		var container : Transform;
 	}
 
-	private class DialogBox {
+	class DialogBox {
 		var instance : GameObject;
 		var instructions : OGTextField;
 		var title : OGTextField;
@@ -19,7 +19,7 @@ class EditorConversationEntry extends MonoBehaviour {
 		var useInput : OGTickBox;
 	}
 
-	private class Line {
+	class Line {
 		var instance : GameObject;
 		var condition : OGButton;
 		var consequence : OGButton;
@@ -34,21 +34,17 @@ class EditorConversationEntry extends MonoBehaviour {
 	var dialogBox : DialogBox;
 	var line : Line;
 	var groupLinePrefab : EditorConversationGroupLine;
-
+	var buttonNewAbove : OGButton;
+	var buttonNewBelow : OGButton;
+	var buttonMoveUp : OGButton;
+	var buttonMoveDown : OGButton;
+	
 
 	// Public functions
 	function RemoveEntry () {
-		Destroy ( this.gameObject );
+		EditorConversations.RemoveEntry ( this );
 	}
 	
-	function MoveUp () {
-	
-	}
-	
-	function MoveDown () {
-	
-	}
-
 	function ShowType ( name : String ) {
 		if ( name == "DialogBox" ) {
 			dialogBox.instance.SetActive ( true );
@@ -72,22 +68,35 @@ class EditorConversationEntry extends MonoBehaviour {
 		}
 	}
 
+	// Group
 	function SelectedLineAmount () {
 		var amount : int = int.Parse ( group.options.selectedOption );
-		var activeLines;
-		
-		for ( var i = 0; i < group.lines.Length; i++ ) {
-			if ( amount-1 < i && group.lines[i] != null ) {
-				Destroy ( group.lines[i].gameObject );
-				group.lines[i] = null;
+		var difference : int = 0;
+							
+		if ( amount > group.container.childCount ) {
+			difference = amount - group.container.childCount;
 			
-			} else if ( amount-1 >= i && group.lines[i] == null ) {
-				group.lines[i] = Instantiate ( groupLinePrefab );
-				group.lines[i].transform.parent = group.instance.transform;
-				group.lines[i].transform.localPosition =  new Vector3 ( 20, (i+1) * 50, 0 );
-				group.lines[i].SetIndex ( i );
-				
+			for ( var x = 0; x < difference; x++ ) {
+				var groupLine : EditorConversationGroupLine = Instantiate ( groupLinePrefab );
+				groupLine.transform.parent = group.container;
 			}
+		
+		} else if ( amount < group.container.childCount ) {
+			difference = group.container.childCount - amount;
+			
+			for ( var y = 0; y < difference; y++ ) {
+				Destroy ( group.container.GetChild(group.container.childCount-1).gameObject );
+			}
+		
+		}
+		
+		// Rearrange lines
+		for ( var i = 0; i < group.container.childCount; i++ ) {
+			var child : Transform = group.container.GetChild ( i );
+			var line : EditorConversationGroupLine = child.gameObject.GetComponent( EditorConversationGroupLine );
+			
+			child.localPosition = new Vector3 ( 20, (i+1) * 50, 0 );
+			line.SetIndex ( i );
 		}
 	}
 
@@ -103,5 +112,10 @@ class EditorConversationEntry extends MonoBehaviour {
 	////////////////////
 	function Update () {
 		ShowType ( type.selectedOption );
+		
+		buttonNewAbove.argument = index.text;
+		buttonNewBelow.argument = index.text;
+		buttonMoveUp.argument = index.text;
+		buttonMoveDown.argument = index.text;
 	}
 }

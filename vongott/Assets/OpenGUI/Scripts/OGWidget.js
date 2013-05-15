@@ -43,11 +43,11 @@ private class Anchor {
 }
 
 class OGWidget extends MonoBehaviour {
-	var manualDraw = false;
 	var anchor : Anchor;	
 	var stretch : Stretch;
 	var style : String = "body";
 	
+	@HideInInspector var manualDraw = false;
 	@HideInInspector var guiRect : Rect;
 	@HideInInspector var guiStyle : GUIStyle;
 	@HideInInspector var emptyStyle : GUIStyle = new GUIStyle();

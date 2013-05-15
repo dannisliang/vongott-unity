@@ -38,7 +38,7 @@ static function Update () {
 		}
 	
 	// camera mode
-	} else {	
+	} else if ( OGRoot.currentPage.pageName == "MenuBase" ) {	
 		// tab key: toggle menu
 		if ( Input.GetKeyDown ( KeyCode.Tab ) ) {
 			EditorCore.menusActive = !EditorCore.menusActive;

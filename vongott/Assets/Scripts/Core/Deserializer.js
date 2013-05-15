@@ -249,3 +249,61 @@ static function DeserializeVector2 ( v : JSONObject ) : Vector2 {
 		
 	return vector;
 }
+
+
+////////////////////
+// Conversations
+////////////////////
+// To editor
+static function DeserializeConversationToEditor ( str : String ) : List.< EditorConversationEntry > {
+	var c : JSONObject = new JSONObject ( str );
+	var conversation : List.< EditorConversationEntry > = new List.< EditorConversationEntry >();
+			
+	for ( var o = 0; o < c.list.Count; o++ ) {
+		var e : JSONObject = c.list[o];
+		var entryObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/UI/EditorConversationEntry" ) ) as GameObject;
+		var entry : EditorConversationEntry = entryObj.GetComponent ( EditorConversationEntry );
+		
+		entry.index.text = o.ToString();
+		entry.type.selectedOption = e.GetField ( "type" ).str;
+		
+		// lines
+		if ( e.GetField ( "type" ).str == "Line" ) {
+			entry.line.condition.text = e.GetField ( "condition" ).str;
+			entry.line.consequence.text = e.GetField ( "consequence" ).str;
+			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
+			entry.line.line.text = e.GetField ( "line" ).str;
+		
+		// groups
+		} else if ( e.GetField ( "type" ).str == "Group" ) {
+			entry.group.options.selectedOption = e.GetField ( "options" ).list.Count.ToString();
+			
+				for ( var i = 0; i < e.GetField ( "options" ).list.Count; i++ ) {
+					var gl : JSONObject = e.GetField ( "options" ).list[i];		
+					var groupLineObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/UI/EditorConversationGroupLine" ) ) as GameObject;
+					var groupLine : EditorConversationGroupLine = groupLineObj.GetComponent ( EditorConversationGroupLine );
+				
+					groupLine.SetIndex ( i );
+					groupLine.consequence.text = gl.GetField ( "consequence" ).str;
+					groupLine.line.text = gl.GetField ( "line" ).str;
+				
+					groupLine.transform.parent = entry.group.container;
+					groupLine.transform.localPosition = new Vector3 ( 20, (i+1) * 50, 0 );
+					groupLine.transform.localScale = Vector3.one;
+				
+				}
+		
+		// dialog boxes
+		} else if ( e.GetField ( "type" ).str == "DialogBox" ) {
+			entry.dialogBox.instructions.text = e.GetField ( "instructions" ).str;
+			entry.dialogBox.title.text = e.GetField ( "title" ).str;
+			entry.dialogBox.useInput.isChecked = e.GetField ( "useInput" ).str == "True";
+			entry.dialogBox.canCancel.isChecked = e.GetField ( "canCancel" ).str == "True";
+		
+		}
+	
+		conversation.Add ( entry );
+	}
+	
+	return conversation;
+}

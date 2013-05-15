@@ -9,6 +9,8 @@ class OGTextField extends OGWidget {
 	var restrictSpaces : boolean = false;
 	var restrictNumbers : boolean = false;
 
+	@HideInInspector var editor : TextEditor;
+
 	// Because fuck regex
 	function RestrictNumbers ( str : String ) : String {
 		var newStr : String;
@@ -42,6 +44,7 @@ class OGTextField extends OGWidget {
 		}
 		
 		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );
+		editor = GUIUtility.GetStateObject ( TextEditor, GUIUtility.keyboardControl );
 		
 		if ( restrictASCII ) {
 			text = Regex.Replace(text, "[^a-zA-Z0-9]", "");
