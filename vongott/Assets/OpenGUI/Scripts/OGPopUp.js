@@ -10,7 +10,7 @@ class OGPopUp extends OGWidget {
 	var messageTarget : GameObject;
 	var padding : Vector2 = new Vector2 ( 8.0, 8.0 );
 	
-	@HideInInspector var selectedOption : String;
+	var selectedOption : String;
 	@HideInInspector var originalZ : float = 99;
 				
 	// Draw

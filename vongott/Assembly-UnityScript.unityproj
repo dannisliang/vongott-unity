@@ -99,6 +99,7 @@
      <Compile Include="Assets\Scripts\EditorCore\EditorInput.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorActors.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorAdjust.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorConfirmDialog.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorConversationEntry.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorConversationGroupLine.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorConversations.js" />
@@ -109,6 +110,7 @@
      <Compile Include="Assets\Scripts\EditorUI\EditorMenuBase.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorModes.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorOpenFile.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorPickFlag.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorPrefabs.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorRenameLevel.js" />
      <Compile Include="Assets\Scripts\Triggers\Door.js" />
@@ -142,8 +144,6 @@
      <None Include="Assets\Demos\Outline\Outline.shader" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
      <None Include="Assets\Shaders\OutlineSilhouetteBumpedDiffuse.shader" />
-     <None Include="Assets\Conversations\1\1\marcel.xml" />
-     <None Include="Assets\Conversations\1\2\marcel.xml" />
      <None Include="Assets\Demos\Distortion(ProOnly)\Distortion.shader" />
      <None Include="Assets\Shaders\BumpedRim.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />

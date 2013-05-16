@@ -55,6 +55,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		cnv.AddField ( "chapter", obj.GetComponent(Conversation).chapter );
 		cnv.AddField ( "scene", obj.GetComponent(Conversation).scene );
 		cnv.AddField ( "actorName", obj.GetComponent(Conversation).actorName );
+		cnv.AddField ( "conversationName", obj.GetComponent(Conversation).conversationName );
 		
 		o.AddField ( "Actor", act );
 		o.AddField ( "Conversation", cnv );

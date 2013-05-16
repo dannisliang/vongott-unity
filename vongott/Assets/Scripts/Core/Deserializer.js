@@ -55,6 +55,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.GetComponent(Conversation).chapter = cnv.GetField ( "chapter" ).n;
 		newAct.GetComponent(Conversation).scene = cnv.GetField ( "scene" ).n;
 		newAct.GetComponent(Conversation).actorName = cnv.GetField ( "actorName" ).str;
+		newAct.GetComponent(Conversation).conversationName = cnv.GetField ( "conversationName" ).str;
 								
 		newAct.transform.localScale = DeserializeVector3 ( act.GetField("localScale") );
 		newAct.transform.localPosition = DeserializeVector3 ( act.GetField("localPosition") );

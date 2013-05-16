@@ -375,12 +375,16 @@ static function GetConvoChapters () : String[] {
 	return Directory.GetDirectories ( Application.dataPath + "/Conversations", "*" );;
 }
 
-static function GetConvoScenes ( chapter : int ) : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter.ToString(), "*" );;
+static function GetConvoScenes ( chapter : String ) : String[] {
+	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter, "*" );;
 }
 
-static function GetConvos ( chapter : int, scene: int ) : String[] {
-	return Directory.GetFiles ( Application.dataPath + "/Conversations/" + chapter.ToString() + "/" + scene.ToString(), "*" );;
+static function GetConvoNames ( chapter : String, scene: String ) : String[] {
+	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter + "/" + scene, "*" );;
+}
+
+static function GetConvos ( chapter : String, scene: String, name: String ) : String[] {
+	return Directory.GetFiles ( Application.dataPath + "/Conversations/" + chapter + "/" + scene + "/" + name, "*" );;
 }
 
 

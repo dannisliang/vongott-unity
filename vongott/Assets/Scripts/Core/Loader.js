@@ -30,7 +30,31 @@ class Loader {
 		
 		return entries;
 	}
+	
+	static function LoadFlags () : JSONObject {
+		var path = Application.dataPath + "/UserData/flags.vgdata";
 		
+		if ( !File.Exists ( path ) ) {
+			Debug.LogError ( "Loader | no such file: " + path );
+			return null;
+		}
+		
+		var sr : StreamReader = new File.OpenText( path );
+		var input : String = "";
+		var line : String = "";
+		
+		line = sr.ReadLine();
+		
+		while ( line != null ) {
+			input += line;
+			line = sr.ReadLine();
+		}
+		
+		sr.Close();
+		
+		return new JSONObject ( input );
+	}
+	
 	static function LoadMap ( name : String ) : GameObject {
 		var map : GameObject;
 		var path = Application.dataPath + "/Maps/" + name + ".vgmap";

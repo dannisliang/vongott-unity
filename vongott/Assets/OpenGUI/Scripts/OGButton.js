@@ -12,7 +12,11 @@ class OGButton extends OGWidget {
 		}
 		
 		if ( GUI.Button ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, guiStyle ) ) {
-			target.SendMessage ( message, argument );
+			if ( argument ) {
+				target.SendMessage ( message, argument );
+			} else {
+				target.SendMessage ( message, this );
+			}
 		}
 	}
 }

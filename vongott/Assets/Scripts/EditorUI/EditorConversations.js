@@ -6,22 +6,42 @@ class EditorConversations extends OGPage {
 	////////////////////
 	// Private classes
 	private class Selector {
+		var instance : GameObject;
 		var chapter : OGPopUp;
 		var scene : OGPopUp;
 		var name : OGPopUp;
+		var conversation : OGPopUp;
+	}
+	
+	private class Creator {
+		var instance : GameObject;
+		var chapter : OGTextField;
+		var scene : OGTextField;
+		var name : OGTextField;
+		var conversation : OGTextField;
+	}
+	
+	private class ConvoInfo {
+		var chapter : String = "";
+		var scene : String = "";
+		var name : String = "";
+		var conversation : String = "";
 	}
 	
 	// Public vars
 	var selector : Selector;
+	var creator : Creator;
 	var entryInstance : EditorConversationEntry;
 	var scrollView : OGScrollView;
+	var currentConvoLabel : OGLabel;
+	
+	@HideInInspector var currentConvo : ConvoInfo = new ConvoInfo();
 	
 	// Static vars
 	static var entries : List.< EditorConversationEntry > = new List.< EditorConversationEntry >();
 		
-		
 	////////////////////
-	// Public functions
+	// File I/O
 	////////////////////
 	// Trim filename
 	function TrimFileNames ( paths : String[] ) : String[] {
@@ -38,33 +58,136 @@ class EditorConversations extends OGPage {
 		return newArray;
 	}
 
-	// Selected chapter
-	function SelectedChapter () {
-		if ( selector.scene.selectedOption != "" ) {			
-			selector.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( int.Parse ( selector.chapter.selectedOption ) ) );
-			
-		}
+	// Selected chapter, scene and name
+	function SelectedChapter () {		
+		selector.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( selector.chapter.selectedOption ) );
 	}
 	
-	// Selected scene
 	function SelectedScene () {
-		if ( selector.scene.selectedOption != "" ) {
-			selector.name.options = TrimFileNames ( EditorCore.GetConvos ( int.Parse ( selector.chapter.selectedOption ), int.Parse ( selector.scene.selectedOption ) ) );
-			
-		}
+		selector.name.options = TrimFileNames ( EditorCore.GetConvoNames ( selector.chapter.selectedOption, selector.scene.selectedOption ) );
 	}
 	
-	// Selected name
 	function SelectedName () {
-		if ( selector.name.selectedOption != "" ) {
-			ClearEntries ();
+		selector.conversation.options = TrimFileNames ( EditorCore.GetConvos ( selector.chapter.selectedOption, selector.scene.selectedOption, selector.name.selectedOption ) );
+	}
+	
+	function SelectedConversation () {
+		
+	}
+	
+	// Update convo info
+	function UpdateConvoInfo () {
+		currentConvoLabel.text = ": " + currentConvo.chapter + "/" + currentConvo.scene + "/" + currentConvo.name + "/" + currentConvo.conversation;
+	}
+	
+	// Is editor empty?
+	function IsEmpty () : boolean {
+		return ( entries.Count <= 0 || ( currentConvo.chapter == "" && currentConvo.scene == "" && currentConvo.name == "" ) );
+	}
+	
+	
+	// Create convo
+	function ForceCreate () {
+		selector.chapter.selectedOption = creator.chapter.text;
+		selector.scene.selectedOption = creator.scene.text;
+		selector.name.selectedOption = creator.name.text;
+		selector.conversation.selectedOption = creator.conversation.text;
+		
+		currentConvo.chapter = selector.chapter.selectedOption;
+		currentConvo.scene = selector.scene.selectedOption;
+		currentConvo.name = selector.name.selectedOption;
+		currentConvo.conversation = selector.conversation.selectedOption;
+		
+		Save ();
+		LoadConversation ();
+		
+		SelectedChapter ();
+		SelectedScene ();
+	}
+	
+	function Create () {
+		if ( creator.chapter.text == "" || creator.chapter.text == "chapter" ) { return; }
+		if ( creator.scene.text == "" || creator.scene.text == "scene" ) { return; }
+		if ( creator.name.text == "" || creator.name.text == "name" ) { return; }
+		if ( creator.conversation.text == "" || creator.conversation.text == "conversation" ) { return; }
+		
+		if ( !IsEmpty() ) {
+			SaveChangesDialog ( function () {
+				Save();
+				ForceCreate ();
+			} );
 			
-			var entryList : List.< EditorConversationEntry > = Loader.LoadConversationToEditor ( selector.chapter.selectedOption + "/" + selector.scene.selectedOption + "/" + selector.name.selectedOption );			
-			PopulateEntries ( entryList );
+		} else {
+			ForceCreate ();
+			
 		}
 	}
 	
-	// Clear entries
+	// Save changes
+	function SaveChangesDialog ( func : Function ) {
+		OGRoot.GoToPage ( "ConfirmDialog" );
+		EditorConfirmDialog.message = "Save your changes first?";
+		EditorConfirmDialog.sender = "Conversations";
+		EditorConfirmDialog.noAction = LoadConversation;
+		EditorConfirmDialog.yesAction = func;
+	}
+	
+	// Load convo
+	function LoadSelection () {
+		if ( selector.chapter.selectedOption == "" || selector.chapter.selectedOption == "<chapter>" ) { return; }
+		if ( selector.scene.selectedOption == "" || selector.scene.selectedOption == "<scene>" ) { return; }
+		if ( selector.name.selectedOption == "" || selector.name.selectedOption == "<name>" ) { return; }
+		if ( selector.conversation.selectedOption == "" || selector.conversation.selectedOption == "<conversation>" ) { return; }
+				
+		if ( !IsEmpty() ) {
+			SaveChangesDialog ( function () {
+				Save();
+				LoadConversation();
+			} );
+		
+		} else {
+			LoadConversation();
+		
+		}
+	}
+	
+	function LoadConversation () {
+		ClearEntries ();
+			
+		var entryList : List.< EditorConversationEntry > = Loader.LoadConversationToEditor ( selector.chapter.selectedOption + "/" + selector.scene.selectedOption + "/" + selector.name.selectedOption + "/" + selector.conversation.selectedOption );			
+		PopulateEntries ( entryList );
+	
+		currentConvo.chapter = selector.chapter.selectedOption;
+		currentConvo.scene = selector.scene.selectedOption;
+		currentConvo.name = selector.name.selectedOption;
+		currentConvo.conversation = selector.conversation.selectedOption;
+
+		UpdateConvoInfo ();
+	}
+	
+	
+	// Save
+	function Save () {	
+		Saver.SaveConversation ( currentConvo.chapter, currentConvo.scene, currentConvo.name, entries );
+	}
+	
+	// Cancel
+	function Cancel () {
+		OGRoot.GoToPage ( "MenuBase" );
+	}
+	
+	
+	////////////////////
+	// Entry arrangement
+	////////////////////
+	// Set flag
+	function SetFlag ( btn : OGButton ) {
+		EditorPickFlag.target = btn;
+		EditorPickFlag.sender = "Conversations";
+		OGRoot.GoToPage ( "PickFlag" );
+	}
+	
+	// Clear and populate entries
 	function ClearEntries () {
 		for ( var i = 0; i < scrollView.transform.childCount; i++ ) {
 			Destroy ( scrollView.transform.GetChild(i).gameObject );
@@ -73,7 +196,6 @@ class EditorConversations extends OGPage {
 		entries.Clear ();
 	}
 	
-	// Populate entries
 	function PopulateEntries ( e : List.< EditorConversationEntry > ) {
 		for ( var entry : EditorConversationEntry in e ) {
 			AddEntry ( entry );
@@ -96,11 +218,15 @@ class EditorConversations extends OGPage {
 				entry.buttonNewBelow.target = this.gameObject;
 				entry.buttonMoveUp.target = this.gameObject;
 				entry.buttonMoveDown.target = this.gameObject;
+				entry.line.condition.target = this.gameObject;
+				entry.line.consequence.target = this.gameObject;
 				
 				child.localPosition = new Vector3 ( 0, bottomLine, 0 );
 			
 				if ( entry.type.selectedOption == "Group" ) {
 					for ( var l = 0; l < entry.group.container.childCount; l++ ) {				
+						entry.group.container.GetChild ( l ).GetComponent ( EditorConversationGroupLine ).consequence.target = this.gameObject;
+						
 						if ( l == 0 ) {
 							bottomLine += 25;
 						} else {
@@ -186,21 +312,7 @@ class EditorConversations extends OGPage {
 		entries.Remove ( entry );
 		Destroy ( entry.gameObject );
 	}
-	
-	// Save
-	function Save () {	
-		if ( selector.chapter.selectedOption == "" || selector.scene.selectedOption == "" || selector.name.selectedOption == "" ) {
-			return;
-		}
 		
-		Saver.SaveConversation ( int.Parse(selector.chapter.selectedOption), int.Parse(selector.scene.selectedOption), selector.name.selectedOption, entries );
-	}
-	
-	// Cancel
-	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
-	}
-	
 	
 	////////////////////
 	// Init

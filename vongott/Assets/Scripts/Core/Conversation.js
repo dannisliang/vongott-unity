@@ -4,6 +4,7 @@ class Conversation extends InteractiveObject {
 	var chapter : int;
 	var scene : int;
 	var actorName : String;
+	var conversationName : String;
 	
 	@HideInInspector private var line_array = new Array();
 	@HideInInspector private var current_line = 0;
@@ -121,7 +122,7 @@ class Conversation extends InteractiveObject {
 		} else if ( attr == "" ) {
 			NextLine();
 		} else {
-			FlagManager.SetFlag ( attr );
+			FlagManager.SetFlag ( attr, true );
 			NextLine();
 		}
 	}
@@ -167,7 +168,7 @@ class Conversation extends InteractiveObject {
 						// if there is a setflag attribute, set it
 						if ( convo.Attributes["setflag"] ) {
 							if ( !FlagManager.GetFlag ( convo.Attributes["setflag"].Value ) ) {
-								FlagManager.SetFlag ( convo.Attributes["setflag"].Value );
+								FlagManager.SetFlag ( convo.Attributes["setflag"].Value, true );
 								current_convo = convo_counter;
 								break;
 							}
@@ -191,7 +192,7 @@ class Conversation extends InteractiveObject {
 					// if there is a setflag attribute and it's not been set already, set it and use this convo
 					if ( convo.Attributes["setflag"] ) {
 						if ( !FlagManager.GetFlag ( convo.Attributes["setflag"].Value ) ) {
-							FlagManager.SetFlag ( convo.Attributes["setflag"].Value );
+							FlagManager.SetFlag ( convo.Attributes["setflag"].Value, true );
 							current_convo = convo_counter;
 							break;
 						}

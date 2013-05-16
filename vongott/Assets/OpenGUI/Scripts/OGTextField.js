@@ -3,7 +3,7 @@
 import System.Text.RegularExpressions;
 
 class OGTextField extends OGWidget {
-	var text : String;
+	var text : String = "";
 	var maxLength : int = 16;
 	var restrictASCII : boolean = false;
 	var restrictSpaces : boolean = false;
@@ -47,7 +47,7 @@ class OGTextField extends OGWidget {
 		editor = GUIUtility.GetStateObject ( TextEditor, GUIUtility.keyboardControl );
 		
 		if ( restrictASCII ) {
-			text = Regex.Replace(text, "[^a-zA-Z0-9]", "");
+			text = Regex.Replace(text, "[^a-zA-Z0-9_]", "");
 		}
 	
 		if ( restrictSpaces ) {

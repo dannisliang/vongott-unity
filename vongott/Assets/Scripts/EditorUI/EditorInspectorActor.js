@@ -4,6 +4,7 @@ private class ConvoControl {
 	var chapter : OGPopUp;
 	var scene : OGPopUp;
 	var name : OGPopUp;
+	var conversation : OGPopUp;
 }
 
 private class StateControl {
@@ -43,25 +44,25 @@ class EditorInspectorActor extends MonoBehaviour {
 	
 	// Selected chapter
 	function SelectedChapter () {
-		if ( convoControl.scene.selectedOption != "<c>" ) {
-			convoControl.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( int.Parse ( convoControl.chapter.selectedOption ) ) );
-			UpdateObject ();
-		}
+		convoControl.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( convoControl.chapter.selectedOption ) );
+		UpdateObject ();
 	}
 	
 	// Selected scene
 	function SelectedScene () {
-		if ( convoControl.scene.selectedOption != "<s>" ) {
-			convoControl.name.options = TrimFileNames ( EditorCore.GetConvos ( int.Parse ( convoControl.chapter.selectedOption ), int.Parse ( convoControl.scene.selectedOption ) ) );
-			UpdateObject ();
-		}
+		convoControl.name.options = TrimFileNames ( EditorCore.GetConvoNames ( convoControl.chapter.selectedOption, convoControl.scene.selectedOption ) );
+		UpdateObject ();
 	}
 	
 	// Selected name
 	function SelectedName () {
-		if ( convoControl.name.selectedOption != "<name>" ) {
-			UpdateObject ();
-		}
+		convoControl.conversation.options = TrimFileNames ( EditorCore.GetConvos ( convoControl.chapter.selectedOption, convoControl.scene.selectedOption, convoControl.name.selectedOption ) );
+		UpdateObject ();
+	}
+	
+	// Selected conversation
+	function SelectedConversation () {
+		UpdateObject ();
 	}
 	
 	
@@ -245,8 +246,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		convoControl.name.selectedOption = c.actorName;
 	
 		convoControl.chapter.options = TrimFileNames ( EditorCore.GetConvoChapters() );
-		convoControl.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( c.scene ) );
-		convoControl.name.options = TrimFileNames ( EditorCore.GetConvos ( c.scene, c.chapter ) );
+		convoControl.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( c.scene.ToString() ) );
+		convoControl.name.options = TrimFileNames ( EditorCore.GetConvoNames ( c.scene.ToString(), c.chapter.ToString() ) );
 	
 		// inventory
 		for ( var s = 0; s < inventorySlots.Length; s++ ) {
