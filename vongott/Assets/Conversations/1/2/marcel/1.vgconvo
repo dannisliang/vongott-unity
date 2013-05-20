@@ -7,34 +7,30 @@
 				"line":"There you are Pinnochio, say hello to everybody."},
 		{
 				"type":"Group",
+				"groupType":"Query",
 				"options":[
 						{
-								"consequence":"<consequence>",
+								"consequence":"child_1 | True",
 								"line":"Who are you people?"},
 						{
-								"consequence":"<consequence>",
+								"consequence":"prick_1 | True",
 								"line":"I don't need this crap! What's going on here?"},
 						{
-								"consequence":"<consequence>",
+								"consequence":"polite_1 | True",
 								"line":"Hi, I'm Player."}]},
 		{
-				"type":"Line",
-				"condition":"<condition>",
-				"consequence":"<consequence>",
-				"speaker":"NPC",
-				"line":"You are understandably confused."},
-		{
-				"type":"Line",
-				"condition":"<condition>",
-				"consequence":"<consequence>",
-				"speaker":"NPC",
-				"line":"Calm down, cabron. You've been alive for 10 minutes and this is your attitude already?"},
-		{
-				"type":"Line",
-				"condition":"<condition>",
-				"consequence":"<consequence>",
-				"speaker":"NPC",
-				"line":"Good to see that you've calmed down, amigo."},
+				"type":"Group",
+				"groupType":"Response",
+				"options":[
+						{
+								"consequence":"child_1 | True",
+								"line":"You are understandably confused."},
+						{
+								"consequence":"prick_1 | True",
+								"line":"Calm down, cabron. You've been alive for 10 minutes and this is your attitude already?"},
+						{
+								"consequence":"polite_1 | True",
+								"line":"Good to see that you've calmed down, amigo."}]},
 		{
 				"type":"Line",
 				"condition":"<condition>",

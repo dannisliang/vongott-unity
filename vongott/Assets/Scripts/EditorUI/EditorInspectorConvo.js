@@ -28,18 +28,33 @@ class EditorInspectorConvo extends MonoBehaviour {
 	// Selected chapter
 	function SelectedChapter () {
 		scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( chapter.selectedOption ) );
+		
+		scene.selectedOption = null;
+		actorName.options = [];
+		actorName.selectedOption = null;
+		conversation.options = [];
+		conversation.selectedOption = null;
+		
 		inspector.SendMessage ( "UpdateObject" );
 	}
 	
 	// Selected scene
 	function SelectedScene () {
 		actorName.options = TrimFileNames ( EditorCore.GetConvoNames ( chapter.selectedOption, scene.selectedOption ) );
+		
+		actorName.selectedOption = null;
+		conversation.options = [];
+		conversation.selectedOption = null;
+		
 		inspector.SendMessage ( "UpdateObject" );
 	}
 	
 	// Selected name
 	function SelectedName () {
 		conversation.options = TrimFileNames ( EditorCore.GetConvos ( chapter.selectedOption, scene.selectedOption, actorName.selectedOption ) );
+		
+		conversation.selectedOption = null;
+		
 		inspector.SendMessage ( "UpdateObject" );
 	}
 	
@@ -51,6 +66,13 @@ class EditorInspectorConvo extends MonoBehaviour {
 	// Init
 	function Init () {
 		chapter.options = TrimFileNames ( EditorCore.GetConvoChapters () );
+	
+		scene.options = [];
+		scene.selectedOption = null;
+		actorName.options = [];
+		actorName.selectedOption = null;
+		conversation.options = [];
+		conversation.selectedOption = null;
 	}
 	
 	// Update all

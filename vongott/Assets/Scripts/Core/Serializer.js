@@ -281,6 +281,7 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 				options.Add ( groupLine );
 			}
 			
+			entry.AddField ( "groupType", g.groupType.selectedOption );
 			entry.AddField ( "options", options );
 		
 		// dialog box

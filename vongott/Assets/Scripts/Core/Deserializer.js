@@ -295,21 +295,22 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 		// groups
 		} else if ( e.GetField ( "type" ).str == "Group" ) {
 			entry.group.options.selectedOption = e.GetField ( "options" ).list.Count.ToString();
+			entry.group.groupType.selectedOption = e.GetField ( "groupType" ).str;
 			
-				for ( var i = 0; i < e.GetField ( "options" ).list.Count; i++ ) {
-					var gl : JSONObject = e.GetField ( "options" ).list[i];		
-					var groupLineObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/UI/EditorConversationGroupLine" ) ) as GameObject;
-					var groupLine : EditorConversationGroupLine = groupLineObj.GetComponent ( EditorConversationGroupLine );
-				
-					groupLine.SetIndex ( i );
-					groupLine.consequence.text = gl.GetField ( "consequence" ).str;
-					groupLine.line.text = gl.GetField ( "line" ).str;
-				
-					groupLine.transform.parent = entry.group.container;
-					groupLine.transform.localPosition = new Vector3 ( 20, (i+1) * 50, 0 );
-					groupLine.transform.localScale = Vector3.one;
-				
-				}
+			for ( var i = 0; i < e.GetField ( "options" ).list.Count; i++ ) {
+				var gl : JSONObject = e.GetField ( "options" ).list[i];		
+				var groupLineObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/UI/EditorConversationGroupLine" ) ) as GameObject;
+				var groupLine : EditorConversationGroupLine = groupLineObj.GetComponent ( EditorConversationGroupLine );
+			
+				groupLine.SetIndex ( i );
+				groupLine.consequence.text = gl.GetField ( "consequence" ).str;
+				groupLine.line.text = gl.GetField ( "line" ).str;
+			
+				groupLine.transform.parent = entry.group.container;
+				groupLine.transform.localPosition = new Vector3 ( 20, (i+1) * 50, 0 );
+				groupLine.transform.localScale = Vector3.one;
+			
+			}
 		
 		// dialog boxes
 		} else if ( e.GetField ( "type" ).str == "DialogBox" ) {

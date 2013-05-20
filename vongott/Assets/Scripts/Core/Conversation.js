@@ -1,8 +1,15 @@
 #pragma strict
 
+import System.Text.RegularExpressions;
+
 class Conversation {
+	////////////////////
+	// Prerequisites
+	////////////////////
+	// Classes
 	private class Entry {
 		var type : String;
+		var groupType : String;
 		
 		var condition : String;
 		var consequence : String;
@@ -19,6 +26,7 @@ class Conversation {
 		var options : List.< Entry > = new List.< Entry >();
 	}
 
+	// Public vars
 	var condition : String;
 	var chapter : String;
 	var scene : String;
@@ -29,6 +37,11 @@ class Conversation {
 	var currentOption : int = 0;
 	var currentEntry : int = 0;
 	
+	
+	////////////////////
+	// Conversation navigation
+	////////////////////
+	// Leave conversation
 	function Exit () {
 		OGRoot.GoToPage ( "HUD" );
 		
@@ -36,19 +49,19 @@ class Conversation {
 		currentEntry = 0;
 	}
 	
+	// Display an entry
 	function DisplayEntry () {
 		var entry : Entry = entries[currentEntry];
+		var speakerName : String;
+		var speakerLine : String;
 		
+		// line
 		if ( entry.type == "Line" ) {
-			var speakerName : String;
-			var speakerLine : String;
-		
 			if ( entries[currentEntry].speaker == "NPC" ) {
 				speakerName = name;
 				
 			} else if ( entries[currentEntry].speaker == "Player" ) {
 				speakerName = GameCore.playerName;
-			
 			}
 		
 			if ( entries[currentEntry].line.Replace ( "Player", GameCore.playerName ) ) {
@@ -59,14 +72,36 @@ class Conversation {
 		
 			UIConversation.SetName ( speakerName );
 			UIConversation.SetLine ( speakerLine );
-				
-		} else if ( entry.type == "Group" ) {
-			UIConversation.SetName ( GameCore.playerName );
 		
-			for ( var i = 0; i < entry.options.Count; i++ ) {
-				UIConversation.SetOption ( i, entry.options[i].line );
+		// group		
+		} else if ( entry.type == "Group" ) {
+			// query
+			if ( entry.groupType == "Query" ) {
+				UIConversation.SetName ( GameCore.playerName );
+			
+				for ( var i = 0; i < entry.options.Count; i++ ) {
+					if ( entry.options[i].line.Replace ( "Player", GameCore.playerName ) ) {
+						speakerLine = entry.options[i].line.Replace ( "Player", GameCore.playerName );
+					} else {
+						speakerLine = entry.options[i].line;
+					}
+					
+					UIConversation.SetOption ( i, speakerLine );
+				}
+			
+			// response
+			} else {
+				speakerName = name;
+				
+				if ( entry.options[currentOption] ) {
+					speakerLine = entry.options[currentOption].line;
+				}
+				
+				UIConversation.SetName ( speakerName );
+				UIConversation.SetLine ( speakerLine );
 			}
 		
+		// dialog box
 		} else if ( entry.type == "DialogBox" ) {
 			UIDialogBox.convo = this;
 			UIDialogBox.action = function () {
@@ -81,27 +116,73 @@ class Conversation {
 		}
 	}
 	
+	// Split string
+	function SplitString ( s : String, i : int ) : String {
+		return Regex.Split ( s, " | " )[i];
+	}
+	
+	// Get flag
+	function GetFlag ( entry : Entry ) : boolean {
+		if ( entry.condition == null || entry.condition == "<condition>" || entry.condition == "" ) { return true; }
+		
+		var flag : String = SplitString ( entry.condition, 0 );
+		var bool : boolean = SplitString ( entry.condition, 2 ) == "True";
+		
+		return FlagManager.GetFlag ( flag, bool );
+	}
+	
+	// Set flag
+	function SetFlag ( entry : Entry ) {		
+		if ( entry.consequence == null || entry.consequence == "<consequence>" || entry.consequence == "" ) { return; }
+		
+		var flag : String = SplitString ( entry.consequence, 0 );
+		var bool : boolean = SplitString ( entry.consequence, 2 ) == "True";
+		
+		FlagManager.SetFlag ( flag, bool );
+	}
+	
+	// Next entry
 	function NextEntry () {		
 		if ( currentEntry < entries.Count - 1 ) {
 			currentEntry++;
-			DisplayEntry ();
+			
+			if ( GetFlag ( entries[currentEntry] ) ) {
+				DisplayEntry ();
+			} else {
+				NextEntry ();
+			}
+		
 		} else {
 			Exit ();
 		}
 	}
 	
+	// Next option
 	function NextOption () {
-	
+		if ( currentOption < entries[currentEntry].options.Count ) {
+			currentOption++;
+			UIConversation.HighlightOption ( currentOption );
+		}
 	}
 	
+	// Previous option
 	function PreviousOption () {
-	
+		if ( currentOption > 0 ) {
+			currentOption--;
+			UIConversation.HighlightOption ( currentOption );
+		}
 	}
 	
+	// Select option
 	function SelectOption () {
-	
+		SetFlag ( entries[currentEntry].options[currentOption] );
+		NextEntry ();
 	}
 	
+	
+	////////////////////
+	// Init
+	////////////////////
 	function Init () {		
 		UIConversation.convo = this;
 				
@@ -125,8 +206,9 @@ class Conversation {
 			// group
 			} else if ( o.GetField ( "type" ).str == "Group" ) {
 				entry.type = o.GetField ( "type" ).str;
+				entry.groupType = o.GetField ( "groupType" ).str;
 				
-				for ( var opt : JSONObject in object.GetField ( "options" ).list ) {
+				for ( var opt : JSONObject in o.GetField ( "options" ).list ) {
 					var option = new Entry ();
 					
 					option.consequence = opt.GetField ( "consequence" ).str;
@@ -134,7 +216,6 @@ class Conversation {
 					
 					entry.options.Add ( option );	
 				}
-
 			
 			// dialog box
 			} else if ( o.GetField ( "type" ).str == "DialogBox" ) {
@@ -154,7 +235,8 @@ class Conversation {
 		
 		GameCore.ToggleControls ( false );
 	
-		DisplayEntry ();
+		currentEntry = -1;
+		NextEntry ();
 	}
 }
 

@@ -6,6 +6,7 @@ class EditorConversationEntry extends MonoBehaviour {
 	////////////////////
 	// Public classes	
 	class Group {
+		var groupType : OGPopUp;
 		var instance : GameObject;
 		var options : OGPopUp;
 		var container : Transform;

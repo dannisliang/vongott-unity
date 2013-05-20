@@ -55,7 +55,7 @@ class Actor extends InteractiveObject {
 		if ( conversations.Count > 0 ) {
 			conversations[currentConvo].Init ();
 			
-			if ( currentConvo < conversations.Count - 2 ) {
+			if ( currentConvo < conversations.Count - 1 ) {
 				currentConvo++;
 			}
 		}

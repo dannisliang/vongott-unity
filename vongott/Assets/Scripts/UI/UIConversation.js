@@ -21,21 +21,21 @@ class UIConversation extends OGPage {
 	// Convo progression
 	////////////////////
 	// Highlight line
-	static function HighlightLine ( index : int ) {
+	static function HighlightOption ( index : int ) {
 		highlight.transform.localPosition = new Vector3 ( lines[index].transform.localPosition.x - 10, lines[index].transform.localPosition.y - 7.5, 0 );
 		currentHighlight = index;
 	}
 
 	// Set option
 	static function SetOption ( index : int, line : String ) {
-		lines[index].text = line;
-		
 		if ( !highlight.activeSelf ) {
 			lines[0].text = "";
 			lines[1].text = "";
 			lines[2].text = "";
 			highlight.SetActive ( true );
 		}
+		
+		lines[index].text = line;
 	}
 	
 	// Set line
@@ -65,8 +65,19 @@ class UIConversation extends OGPage {
 	// Update
 	////////////////////
 	override function UpdatePage () {
-		if ( Input.GetKeyDown ( KeyCode.Return ) ) {
-			convo.NextEntry ();
+		if ( highlight.activeSelf ) {
+			if ( Input.GetKeyDown ( KeyCode.Return ) ) {
+				convo.SelectOption ();
+			} else if ( Input.GetKeyDown ( KeyCode.UpArrow ) ) {
+				convo.PreviousOption ();
+			} else if ( Input.GetKeyDown ( KeyCode.DownArrow ) ) {
+				convo.NextOption ();
+			}
+		
+		} else {
+			if ( Input.GetKeyDown ( KeyCode.Return ) ) {
+				convo.NextEntry ();
+			}
 		}
 	}
 }

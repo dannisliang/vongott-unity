@@ -118,6 +118,9 @@ function Start () {
 	// upgrades
 	UpgradeManager.Init();
 	
+	// flags
+	FlagManager.Init();
+	
 	// main camera
 	cam = Camera.main.transform;
 	

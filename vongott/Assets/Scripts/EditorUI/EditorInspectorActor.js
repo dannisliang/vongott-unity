@@ -55,6 +55,15 @@ class EditorInspectorActor extends MonoBehaviour {
 		UpdateObject ();
 	}
 	
+	function ClearConvos () {
+		for ( var i = 0; i < convos.Count; i++ ) {
+			Destroy ( convos[i].gameObject );
+		}
+		
+		convos.Clear ();
+		convoBottomLine = 0;
+	}
+	
 	
 	//////////////////////
 	// Path nodes
@@ -230,6 +239,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		}
 		
 		// conversation
+		ClearConvos();
 		for ( i = 0; i < a.conversations.Count; i++ ) {
 			var c : Conversation = a.conversations[i];
 			var convo : EditorInspectorConvo = AddConvo ();
@@ -286,7 +296,8 @@ class EditorInspectorActor extends MonoBehaviour {
 			a.mood = mood.selectedOption;
 		
 			a.conversations.Clear ();
-			for ( var control : EditorInspectorConvo in convoContainer.GetComponentsInChildren(EditorInspectorConvo) ) {
+			for ( var i = 0; i < convos.Count; i++ ) {
+				var control : EditorInspectorConvo = convos[i];
 				var c : Conversation = new Conversation ();
 				
 				c.chapter = control.chapter.selectedOption;
