@@ -31,6 +31,32 @@ class Loader {
 		return entries;
 	}
 	
+	static function LoadConversationToGame ( path : String ) : String {
+		var entries : List.< EditorConversationEntry >;
+		
+		path = Application.dataPath + "/Conversations/" + path + ".vgconvo";
+				
+		if ( !File.Exists ( path ) ) {
+			Debug.LogError ( "Loader | no such file: " + path );
+			return null;
+		}
+		
+		var sr : StreamReader = new File.OpenText( path );
+		var input : String = "";
+		var line : String = "";
+		
+		line = sr.ReadLine();
+		
+		while ( line != null ) {
+			input += line;
+			line = sr.ReadLine();
+		}
+	
+		sr.Close();
+		
+		return input;
+	}
+	
 	static function LoadFlags () : JSONObject {
 		var path = Application.dataPath + "/UserData/flags.vgdata";
 		

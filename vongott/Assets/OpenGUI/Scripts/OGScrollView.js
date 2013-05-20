@@ -1,7 +1,7 @@
 #pragma strict
 
 class OGScrollView extends OGWidget {
-	var scrollLength : float;
+	var scrollLength : float = 512;
 	var viewWidth : float = 100;
 	var viewHeight : float = 100;
 	var alwaysVertical = false;
@@ -19,8 +19,8 @@ class OGScrollView extends OGWidget {
 				}
 			
 				// Update the scroll length
-				if ( scrollLength < inset + w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset ) {
-					scrollLength = inset + w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset;
+				if ( scrollLength < w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y ) {
+					scrollLength = w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y;
 				}
 			}
 		}

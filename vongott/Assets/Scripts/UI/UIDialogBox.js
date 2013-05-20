@@ -18,12 +18,11 @@ class UIDialogBox extends OGPage {
 	static var buttonCancel : GameObject;
 	static var input : OGTextField;
 	static var convo : Conversation;
+	static var action : Function;
 	
 	
 	// Open dialog
-	static function Open ( t : String, i : String, useInput : boolean, canCancel : boolean, setConvo : Conversation ) {
-		convo = setConvo;
-	
+	static function Open ( t : String, i : String, useInput : boolean, canCancel : boolean ) {
 		title.text = t;
 		instructions.text = i;
 		
@@ -40,13 +39,13 @@ class UIDialogBox extends OGPage {
 
 	// OK
 	function OK () {
-		if ( input.text != "" ) {
-			GameCore.playerName = input.text;
+		if ( action ) {
+			action ();
 		}
 	
 		if ( convo ) {
 			OGRoot.GoToPage ( "Conversation" );
-			convo.NextLine();
+			convo.NextEntry();
 			
 		} else {
 			OGRoot.GoToPage ( "HUD" );
@@ -55,7 +54,13 @@ class UIDialogBox extends OGPage {
 	
 	// Cancel
 	function Cancel () {
-		OGRoot.GoToPage ( "HUD" );
+		if ( convo ) {
+			OGRoot.GoToPage ( "Conversation" );
+			convo.NextEntry();
+			
+		} else {
+			OGRoot.GoToPage ( "HUD" );
+		}
 	}
 	
 

@@ -168,7 +168,7 @@ class EditorConversations extends OGPage {
 	
 	// Save
 	function Save () {	
-		Saver.SaveConversation ( currentConvo.chapter, currentConvo.scene, currentConvo.name, entries );
+		Saver.SaveConversation ( currentConvo.chapter, currentConvo.scene, currentConvo.name, currentConvo.conversation, entries );
 	}
 	
 	// Cancel

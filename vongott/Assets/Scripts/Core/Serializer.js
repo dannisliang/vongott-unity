@@ -39,6 +39,8 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	// check if actor
 	} else if ( obj.GetComponent(Actor) ) {
 		var act : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		var conversations : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+		
 		act.AddField ( "model", obj.GetComponent(Actor).model );
 		act.AddField ( "affiliation", obj.GetComponent(Actor).affiliation );
 		act.AddField ( "mood", obj.GetComponent(Actor).mood );
@@ -47,18 +49,25 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		act.AddField ( "path", SerializePath ( obj.GetComponent(Actor).path ) );
 		act.AddField ( "inventory", SerializeInventory ( obj.GetComponent(Actor).inventory ) );
 		
+		for ( var c : Conversation in obj.GetComponent(Actor).conversations ) {
+			var convo : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+			
+			convo.AddField ( "condition", c.condition );
+			convo.AddField ( "chapter", c.chapter );
+			convo.AddField ( "scene", c.scene );
+			convo.AddField ( "name", c.name );
+			convo.AddField ( "conversation", c.conversation );
+		
+			conversations.Add ( convo );
+		}
+		
+		act.AddField ( "conversations", conversations );
+		
 		act.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
 		act.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		act.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
 		
-		var cnv : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-		cnv.AddField ( "chapter", obj.GetComponent(Conversation).chapter );
-		cnv.AddField ( "scene", obj.GetComponent(Conversation).scene );
-		cnv.AddField ( "actorName", obj.GetComponent(Conversation).actorName );
-		cnv.AddField ( "conversationName", obj.GetComponent(Conversation).conversationName );
-		
 		o.AddField ( "Actor", act );
-		o.AddField ( "Conversation", cnv );
 		
 		return o;
 

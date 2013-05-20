@@ -474,6 +474,7 @@
 												"model":"Equipment/PunyVest"},
 										{
 												"model":"Equipment/PunyVest"}],
+								"conversations":null,
 								"localScale":[
 										1,
 										1,
@@ -485,9 +486,43 @@
 								"localEulerAngles":[
 										0,
 										0,
-										0]},
-						"Conversation":{
-								"chapter":1,
-								"scene":1,
-								"actorName":"marcel",
-								"conversationName":""}}]}
+										0]}},
+				{
+						"Actor":{
+								"model":"NPC/TestActor",
+								"affiliation":"ally",
+								"mood":"calm",
+								"speed":4,
+								"path":null,
+								"inventory":null,
+								"conversations":[
+										{
+												"condition":"",
+												"chapter":"1",
+												"scene":"1",
+												"name":"marcel",
+												"conversation":"1"},
+										{
+												"condition":"",
+												"chapter":"1",
+												"scene":"1",
+												"name":"marcel",
+												"conversation":"2"},
+										{
+												"condition":"",
+												"chapter":"",
+												"scene":"",
+												"name":"",
+												"conversation":""}],
+								"localScale":[
+										1,
+										1,
+										1],
+								"localPosition":[
+										-4.26073837280273,
+										2.00033783912659,
+										24.1197967529297],
+								"localEulerAngles":[
+										0,
+										183.999877929688,
+										0]}}]}

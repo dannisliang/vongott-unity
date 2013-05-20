@@ -43,7 +43,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var act : JSONObject = obj.GetField("Actor");
 		var cnv : JSONObject = obj.GetField("Conversation");
 		var newAct : GameObject;
-		
+				
 		newAct = Instantiate ( Resources.Load ( "Actors/" + act.GetField("model").str ) as GameObject );
 		newAct.GetComponent(Actor).affiliation = act.GetField ( "affiliation" ).str;
 		newAct.GetComponent(Actor).mood = act.GetField ( "mood" ).str;
@@ -51,12 +51,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.GetComponent(Actor).speed = act.GetField ( "speed" ).n;
 		newAct.GetComponent(Actor).path = DeserializePath ( act.GetField ( "path" ), newAct );
 		newAct.GetComponent(Actor).inventory = DeserializeInventory ( act.GetField ( "inventory" ) );
+		newAct.GetComponent(Actor).conversations = DeserializeConversationsToGame ( act.GetField ( "conversations" ) );
 		
-		newAct.GetComponent(Conversation).chapter = cnv.GetField ( "chapter" ).n;
-		newAct.GetComponent(Conversation).scene = cnv.GetField ( "scene" ).n;
-		newAct.GetComponent(Conversation).actorName = cnv.GetField ( "actorName" ).str;
-		newAct.GetComponent(Conversation).conversationName = cnv.GetField ( "conversationName" ).str;
-								
 		newAct.transform.localScale = DeserializeVector3 ( act.GetField("localScale") );
 		newAct.transform.localPosition = DeserializeVector3 ( act.GetField("localPosition") );
 		newAct.transform.localEulerAngles = DeserializeVector3 ( act.GetField("localEulerAngles") );
@@ -255,6 +251,27 @@ static function DeserializeVector2 ( v : JSONObject ) : Vector2 {
 ////////////////////
 // Conversations
 ////////////////////
+// To game
+static function DeserializeConversationsToGame ( convos : JSONObject ) {
+	var conversations : List.< Conversation > = new List.< Conversation >();
+		
+	if ( convos ) {		
+		for ( var c : JSONObject in convos.list ) {
+			var convo : Conversation = new Conversation ();
+			
+			convo.condition = c.GetField ( "condition" ).str;
+			convo.chapter = c.GetField ( "chapter" ).str;
+			convo.scene = c.GetField ( "scene" ).str;
+			convo.name = c.GetField ( "name" ).str;
+			convo.conversation = c.GetField ( "conversation" ).str;
+						
+			conversations.Add ( convo );
+		}
+	}
+	
+	return conversations;
+}
+
 // To editor
 static function DeserializeConversationToEditor ( str : String ) : List.< EditorConversationEntry > {
 	var c : JSONObject = new JSONObject ( str );

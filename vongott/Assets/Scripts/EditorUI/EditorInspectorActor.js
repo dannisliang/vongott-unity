@@ -1,20 +1,15 @@
 #pragma strict
 
-private class ConvoControl {
-	var chapter : OGPopUp;
-	var scene : OGPopUp;
-	var name : OGPopUp;
-	var conversation : OGPopUp;
-}
-
-private class StateControl {
+class EditorInspectorActor extends MonoBehaviour {
+	var convoBox : GameObject;
+	var convoContainer : Transform;
+	var convoPrefab : EditorInspectorConvo;
+	var convos : List.< EditorInspectorConvo > = new List.< EditorInspectorConvo >();
+	@HideInInspector var convoBottomLine : float = 0;
+	
+	var stateBox : GameObject;
 	var affiliation : OGPopUp;
 	var mood : OGPopUp;
-}
-
-class EditorInspectorActor extends MonoBehaviour {
-	var convoControl : ConvoControl;
-	var stateControl : StateControl;
 	
 	var inventoryBox : GameObject;
 	var inventorySlots : OGImage[];
@@ -27,41 +22,36 @@ class EditorInspectorActor extends MonoBehaviour {
 	//////////////////////
 	// Conversation
 	//////////////////////		
-	// Trim filename
-	function TrimFileNames ( paths : String[] ) : String[] {
-		var newArray : String[] = new String[paths.Length];
+	// Add convo
+	function AddConvo () : EditorInspectorConvo {
+		var convo : EditorInspectorConvo = Instantiate ( convoPrefab );
+		convos.Add ( convo );
+		convo.transform.parent = convoContainer;
+		convo.transform.localPosition = new Vector3 ( 0, convoBottomLine, 0 );
+		convo.label.text = "Convo" + convos.IndexOf ( convo ).ToString();
+		convo.inspector = this.gameObject;
+		convo.Init ();
+				
+		convoBottomLine += 90;
+		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
+	
+		return convo;
+	}
+	
+	function AddConvoAndUpdate () {
+		AddConvo ();
 		
-		for ( var i = 0; i < paths.Length; i++ ) {
-			var path = paths[i].Split("\\"[0]);
-			var fileName = path[path.Length-1];
-			var extention = fileName.Split("."[0]);
-			var name = extention[0];
-			newArray[i] = name;
-		}
+		UpdateObject ();
+	}
+	
+	// Remove convo
+	function RemoveConvo () {
+		convoBottomLine -= 90;
+		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
+	
+		Destroy ( convos[convos.Count-1].gameObject );
+		convos.RemoveAt ( convos.Count-1 );
 		
-		return newArray;
-	}
-	
-	// Selected chapter
-	function SelectedChapter () {
-		convoControl.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( convoControl.chapter.selectedOption ) );
-		UpdateObject ();
-	}
-	
-	// Selected scene
-	function SelectedScene () {
-		convoControl.name.options = TrimFileNames ( EditorCore.GetConvoNames ( convoControl.chapter.selectedOption, convoControl.scene.selectedOption ) );
-		UpdateObject ();
-	}
-	
-	// Selected name
-	function SelectedName () {
-		convoControl.conversation.options = TrimFileNames ( EditorCore.GetConvos ( convoControl.chapter.selectedOption, convoControl.scene.selectedOption, convoControl.name.selectedOption ) );
-		UpdateObject ();
-	}
-	
-	// Selected conversation
-	function SelectedConversation () {
 		UpdateObject ();
 	}
 	
@@ -230,8 +220,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		var a : Actor = obj.GetComponent ( Actor );
 		
 		// state
-		stateControl.affiliation.selectedOption = a.affiliation;
-		stateControl.mood.selectedOption = a.mood;
+		affiliation.selectedOption = a.affiliation;
+		mood.selectedOption = a.mood;
 		
 		// path nodes
 		ClearNodes();
@@ -240,15 +230,18 @@ class EditorInspectorActor extends MonoBehaviour {
 		}
 		
 		// conversation
-		var c : Conversation = obj.GetComponent( Conversation );
-		convoControl.chapter.selectedOption = c.chapter.ToString();
-		convoControl.scene.selectedOption = c.scene.ToString();
-		convoControl.name.selectedOption = c.actorName;
-	
-		convoControl.chapter.options = TrimFileNames ( EditorCore.GetConvoChapters() );
-		convoControl.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( c.scene.ToString() ) );
-		convoControl.name.options = TrimFileNames ( EditorCore.GetConvoNames ( c.scene.ToString(), c.chapter.ToString() ) );
-	
+		for ( i = 0; i < a.conversations.Count; i++ ) {
+			var c : Conversation = a.conversations[i];
+			var convo : EditorInspectorConvo = AddConvo ();
+			if ( c.condition ) { convo.condition.text = c.condition; }
+			convo.chapter.selectedOption = c.chapter;
+			convo.scene.selectedOption = c.scene;
+			convo.actorName.selectedOption = c.name;
+			convo.conversation.selectedOption = c.conversation;
+			
+			convo.UpdateAll ();
+		}
+				
 		// inventory
 		for ( var s = 0; s < inventorySlots.Length; s++ ) {
 			if ( a.inventory[s] ) {
@@ -289,16 +282,20 @@ class EditorInspectorActor extends MonoBehaviour {
 		if ( o.GetComponent ( Actor ) ) {
 			var a : Actor = o.GetComponent ( Actor );
 						
-			a.affiliation = stateControl.affiliation.selectedOption;
-			a.mood = stateControl.mood.selectedOption;
-		} 
+			a.affiliation = affiliation.selectedOption;
+			a.mood = mood.selectedOption;
 		
-		if ( o.GetComponent ( Conversation ) ) {
-			var c : Conversation = o.GetComponent ( Conversation );
-			
-			c.chapter = int.Parse ( convoControl.chapter.selectedOption );
-			c.scene = int.Parse ( convoControl.scene.selectedOption );
-			c.actorName = convoControl.name.selectedOption;
-		}		
+			a.conversations.Clear ();
+			for ( var control : EditorInspectorConvo in convoContainer.GetComponentsInChildren(EditorInspectorConvo) ) {
+				var c : Conversation = new Conversation ();
+				
+				c.chapter = control.chapter.selectedOption;
+				c.scene = control.scene.selectedOption;
+				c.name = control.actorName.selectedOption;
+				c.conversation = control.conversation.selectedOption;
+				
+				a.conversations.Add ( c );
+			}
+		} 	
 	}
 }

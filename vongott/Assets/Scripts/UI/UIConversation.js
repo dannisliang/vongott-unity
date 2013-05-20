@@ -14,6 +14,7 @@ class UIConversation extends OGPage {
 	static var lines : OGLabel[];
 	static var highlight : GameObject;
 	static var currentHighlight : int = 0;
+	static var convo : Conversation;
 	
 	
 	////////////////////
@@ -28,7 +29,13 @@ class UIConversation extends OGPage {
 	// Set option
 	static function SetOption ( index : int, line : String ) {
 		lines[index].text = line;
-		highlight.SetActive ( true );
+		
+		if ( !highlight.activeSelf ) {
+			lines[0].text = "";
+			lines[1].text = "";
+			lines[2].text = "";
+			highlight.SetActive ( true );
+		}
 	}
 	
 	// Set line
@@ -44,7 +51,7 @@ class UIConversation extends OGPage {
 		actorName.text = n;
 	}
 
-
+	
 	////////////////////
 	// Init
 	////////////////////
@@ -52,7 +59,14 @@ class UIConversation extends OGPage {
 		actorName = _actorName;
 		lines = _lines;
 		highlight = _highlight;
-		
-		MouseLook.SetActive ( false );
+	}
+	
+	////////////////////
+	// Update
+	////////////////////
+	override function UpdatePage () {
+		if ( Input.GetKeyDown ( KeyCode.Return ) ) {
+			convo.NextEntry ();
+		}
 	}
 }

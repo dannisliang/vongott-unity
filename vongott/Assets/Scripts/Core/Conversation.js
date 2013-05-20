@@ -1,3 +1,165 @@
+#pragma strict
+
+class Conversation {
+	private class Entry {
+		var type : String;
+		
+		var condition : String;
+		var consequence : String;
+		
+		var speaker : String;
+		var line : String;
+		
+		var canCancel : boolean;
+		var useInput: boolean;
+		
+		var title: String;
+		var instructions: String;
+		
+		var options : List.< Entry > = new List.< Entry >();
+	}
+
+	var condition : String;
+	var chapter : String;
+	var scene : String;
+	var name : String;
+	var conversation : String;
+	
+	var entries : List.< Entry > = new List.< Entry >();
+	var currentOption : int = 0;
+	var currentEntry : int = 0;
+	
+	function Exit () {
+		OGRoot.GoToPage ( "HUD" );
+		
+		GameCore.ToggleControls ( true );
+		currentEntry = 0;
+	}
+	
+	function DisplayEntry () {
+		var entry : Entry = entries[currentEntry];
+		
+		if ( entry.type == "Line" ) {
+			var speakerName : String;
+			var speakerLine : String;
+		
+			if ( entries[currentEntry].speaker == "NPC" ) {
+				speakerName = name;
+				
+			} else if ( entries[currentEntry].speaker == "Player" ) {
+				speakerName = GameCore.playerName;
+			
+			}
+		
+			if ( entries[currentEntry].line.Replace ( "Player", GameCore.playerName ) ) {
+				speakerLine = entries[currentEntry].line.Replace ( "Player", GameCore.playerName );
+			} else {
+				speakerLine = entries[currentEntry].line;
+			}
+		
+			UIConversation.SetName ( speakerName );
+			UIConversation.SetLine ( speakerLine );
+				
+		} else if ( entry.type == "Group" ) {
+			UIConversation.SetName ( GameCore.playerName );
+		
+			for ( var i = 0; i < entry.options.Count; i++ ) {
+				UIConversation.SetOption ( i, entry.options[i].line );
+			}
+		
+		} else if ( entry.type == "DialogBox" ) {
+			UIDialogBox.convo = this;
+			UIDialogBox.action = function () {
+				if ( UIDialogBox.input.text != "" ) {
+					GameCore.playerName = UIDialogBox.input.text;
+				}
+			};
+					
+			OGRoot.GoToPage ( "DialogBox" );
+			UIDialogBox.Open ( entry.title, entry.instructions, entry.useInput, entry.canCancel );
+		
+		}
+	}
+	
+	function NextEntry () {		
+		if ( currentEntry < entries.Count - 1 ) {
+			currentEntry++;
+			DisplayEntry ();
+		} else {
+			Exit ();
+		}
+	}
+	
+	function NextOption () {
+	
+	}
+	
+	function PreviousOption () {
+	
+	}
+	
+	function SelectOption () {
+	
+	}
+	
+	function Init () {		
+		UIConversation.convo = this;
+				
+		entries.Clear ();
+		
+		var file = Loader.LoadConversationToGame ( chapter + "/" + scene + "/" + name + "/" + conversation );
+		var object : JSONObject = new JSONObject ( file );
+		
+		for ( var o : JSONObject in object.list ) {
+			var entry = new Entry ();
+			
+			// line
+			if ( o.GetField ( "type" ).str == "Line" ) {
+				entry.type = o.GetField ( "type" ).str;
+				
+				entry.condition = o.GetField ( "condition" ).str;
+				entry.consequence = o.GetField ( "consequence" ).str;
+				entry.speaker = o.GetField ( "speaker" ).str;
+				entry.line = o.GetField ( "line" ).str;
+			
+			// group
+			} else if ( o.GetField ( "type" ).str == "Group" ) {
+				entry.type = o.GetField ( "type" ).str;
+				
+				for ( var opt : JSONObject in object.GetField ( "options" ).list ) {
+					var option = new Entry ();
+					
+					option.consequence = opt.GetField ( "consequence" ).str;
+					option.line = opt.GetField ( "line" ).str;
+					
+					entry.options.Add ( option );	
+				}
+
+			
+			// dialog box
+			} else if ( o.GetField ( "type" ).str == "DialogBox" ) {
+				entry.type = o.GetField ( "type" ).str;
+			
+				entry.canCancel = o.GetField ( "canCancel" ).str == "True";
+				entry.useInput = o.GetField ( "useInput" ).str == "True";
+				entry.title = o.GetField ( "title" ).str;
+				entry.instructions = o.GetField ( "instructions" ).str;
+				
+			}
+			
+			entries.Add ( entry );
+		}
+		
+		OGRoot.GoToPage ( "Conversation" );
+		
+		GameCore.ToggleControls ( false );
+	
+		DisplayEntry ();
+	}
+}
+
+/* OLD CODE
+
 import System.Xml;
 
 class Conversation extends InteractiveObject {	
@@ -322,3 +484,5 @@ class Conversation extends InteractiveObject {
 		}
 	}
 }
+
+*/

@@ -372,19 +372,19 @@ static function LoadFile ( path : String ) {
 
 // Load conversations from library
 static function GetConvoChapters () : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Conversations", "*" );;
+	return Directory.GetDirectories ( Application.dataPath + "/Conversations", "*" );
 }
 
 static function GetConvoScenes ( chapter : String ) : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter, "*" );;
+	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter, "*" );
 }
 
 static function GetConvoNames ( chapter : String, scene: String ) : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter + "/" + scene, "*" );;
+	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter + "/" + scene, "*" );
 }
 
 static function GetConvos ( chapter : String, scene: String, name: String ) : String[] {
-	return Directory.GetFiles ( Application.dataPath + "/Conversations/" + chapter + "/" + scene + "/" + name, "*" );;
+	return Directory.GetFiles ( Application.dataPath + "/Conversations/" + chapter + "/" + scene + "/" + name, "*" );
 }
 
 

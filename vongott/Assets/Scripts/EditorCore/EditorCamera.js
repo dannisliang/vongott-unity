@@ -184,7 +184,7 @@ function Update () {
 			transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 		
 		// scroll button
-		} else if ( Input.GetMouseButton(2) ) {        
+		} else if ( Input.GetMouseButton(2) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {        
 	        var h = Input.GetAxis("Mouse X") * sensitivity / 8;
 	        var v = Input.GetAxis("Mouse Y") * sensitivity / 8;
 	

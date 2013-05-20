@@ -1,6 +1,7 @@
 #pragma strict
 
-class Actor extends MonoBehaviour {
+class Actor extends InteractiveObject {
+	var name : String = "ActorName";
 	var model : String;
 	var affiliation : String;
 	var mood : String;
@@ -10,10 +11,13 @@ class Actor extends MonoBehaviour {
 	var viewDistance : float = 20.0;
 	var keepDistance : float = 10.0;
 	var inventory : Entry[] = new Entry [4];
-												
+	
+	var conversations : List.< Conversation > = new List.< Conversation >();
+																																									
 	@HideInInspector var target : Transform;
 	@HideInInspector var lastKnownPosition : GameObject;
 
+	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
 	@HideInInspector var currentLine : int = 0;
 	@HideInInspector var nodeTimer : float = 0;
@@ -47,6 +51,15 @@ class Actor extends MonoBehaviour {
 		}
 	}
 	
+	function Talk () {
+		if ( conversations.Count > 0 ) {
+			conversations[currentConvo].Init ();
+			
+			if ( currentConvo < conversations.Count - 2 ) {
+				currentConvo++;
+			}
+		}
+	}
 	
 	function Strike () {
 	
@@ -111,10 +124,23 @@ class Actor extends MonoBehaviour {
 		return direction;
 	}
 	
+	
+	/////////////////////
+	// Update
+	/////////////////////
 	function Update () {
 		if ( !GameCore.started ) { return; }
 		
 		var forward = transform.TransformDirection (Vector3.forward);
+		
+		// check for interaction
+		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == "ally" ) {
+			UIHUD.ShowNotification ( "Talk [F]" );
+			
+			if ( Input.GetKeyDown(KeyCode.F) ) {
+				Talk();
+			}
+		}
 		
 		// use affiliation
 		if ( affiliation == "enemy" ) {
@@ -127,14 +153,6 @@ class Actor extends MonoBehaviour {
 				GiveUp();
 			
 			}
-			
-			// disable conversation
-			this.gameObject.GetComponent(Conversation).enabled = false;
-		
-		} else {
-			
-			// enable conversation
-			this.gameObject.GetComponent(Conversation).enabled = true;
 		}
 		
 		// follow the player

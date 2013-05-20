@@ -33,10 +33,11 @@ class Saver {
 		sw.Close();
 	}
 
-	static function SaveConversation ( chapter : String, scene : String, name : String, conversation : List.< EditorConversationEntry > ) {
+	static function SaveConversation ( chapter : String, scene : String, name : String, conversation : String, entries : List.< EditorConversationEntry > ) {
 		var chapterPath = Application.dataPath + "/Conversations/" + chapter;
 		var scenePath = chapterPath + "/" + scene;
-		var filePath = scenePath + "/" + name + ".vgconvo";
+		var actorPath = scenePath + "/" + name;
+		var filePath = actorPath + "/" + conversation + ".vgconvo";
 		
 		var sw : StreamWriter;
 		
@@ -46,6 +47,10 @@ class Saver {
 		
 		if ( !File.Exists ( scenePath ) ) {
 			Debug.Log ( "Saver | Created directory '" + scenePath + "': " + Directory.CreateDirectory ( scenePath ) );
+		}
+		
+		if ( !File.Exists ( actorPath ) ) {
+			Debug.Log ( "Saver | Created directory '" + actorPath + "': " + Directory.CreateDirectory ( actorPath ) );
 		}
 		
 		if ( !File.Exists ( filePath ) ) {
@@ -60,7 +65,7 @@ class Saver {
 		
 		}
 				
-		sw.WriteLine ( Serializer.SerializeConversation ( conversation ) );
+		sw.WriteLine ( Serializer.SerializeConversation ( entries ) );
 		sw.Flush();
 		sw.Close();
 	}
