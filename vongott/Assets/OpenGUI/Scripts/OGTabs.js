@@ -22,9 +22,7 @@ class OGTabs extends OGWidget {
 	var tabs : List.<Tab> = new List.<Tab>();
 	var direction : TabDirection = TabDirection.Horizontal;
 	var activeTab = 0;
-	
-	var normal : GUIStyle;
-	
+		
 	@HideInInspector var boxPos : Vector2 = Vector2.zero; 
 	
 	public function AddTab ( label : String, message : String, argument : String ) {
@@ -40,10 +38,18 @@ class OGTabs extends OGWidget {
 	}
 	
 	override function Draw ( x : float, y : float ) {
+		if ( !guiStyle ) { guiStyle = GUI.skin.box; }
+		
+		var textStyle : GUIStyle = new GUIStyle();
+		textStyle.font = GUI.skin.label.font;
+		textStyle.normal.textColor = guiStyle.normal.textColor;
+		textStyle.fontSize = guiStyle.fontSize;
+		textStyle.alignment = guiStyle.alignment;
+				
 		if ( direction == TabDirection.Horizontal ) {
-			GUI.Box ( Rect ( x + boxPos.x, y, transform.localScale.x, transform.localScale.y ), "" );
+			GUI.Box ( Rect ( x + boxPos.x, y, transform.localScale.x, transform.localScale.y ), "", guiStyle );
 			for ( var i = 0; i < tabs.Count; i++ ) {				
-				if ( GUI.Button ( Rect ( x + ( i * transform.localScale.x ), y, transform.localScale.x, transform.localScale.y ), tabs[i].label, normal ) ) {
+				if ( GUI.Button ( Rect ( x + ( i * transform.localScale.x ), y, transform.localScale.x, transform.localScale.y ), tabs[i].label, textStyle ) ) {
 					if ( tabs[i].label != "" ) {	
 						messageTarget.SendMessage ( tabs[i].message, tabs[i].argument );
 						activeTab = i;
@@ -51,9 +57,9 @@ class OGTabs extends OGWidget {
 				}
 			}
 		} else {
-			GUI.Box ( Rect ( x, y + boxPos.y, transform.localScale.x, transform.localScale.y ), "" );
+			GUI.Box ( Rect ( x, y + boxPos.y, transform.localScale.x, transform.localScale.y ), "", guiStyle );
 			for ( i = 0; i < tabs.Count; i++ ) {				
-				if ( GUI.Button ( Rect ( x, y + ( i * transform.localScale.y ), transform.localScale.x, transform.localScale.y ), tabs[i].label, normal ) ) {
+				if ( GUI.Button ( Rect ( x, y + ( i * transform.localScale.y ), transform.localScale.x, transform.localScale.y ), tabs[i].label, textStyle ) ) {
 					if ( tabs[i].label != "" ) {
 						messageTarget.SendMessage ( tabs[i].message, tabs[i].argument );
 						activeTab = i;

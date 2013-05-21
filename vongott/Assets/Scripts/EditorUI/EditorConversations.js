@@ -194,6 +194,8 @@ class EditorConversations extends OGPage {
 		}
 		
 		entries.Clear ();
+		
+		scrollView.position = Vector2.zero;
 	}
 	
 	function PopulateEntries ( e : List.< EditorConversationEntry > ) {
@@ -328,8 +330,8 @@ class EditorConversations extends OGPage {
 	////////////////////	
 	override function UpdatePage () {
 		// Resize scroll view
-		scrollView.viewWidth = Screen.width - 20;
-		scrollView.viewHeight = Screen.height - 160;
+		scrollView.viewWidth = Screen.width - 30;
+		scrollView.viewHeight = Screen.height - 170;
 		
 		// Arrange entries
 		RearrangeEntries();

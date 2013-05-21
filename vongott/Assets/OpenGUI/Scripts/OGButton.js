@@ -7,9 +7,7 @@ class OGButton extends OGWidget {
 	var argument : String;
 
 	override function Draw ( x : float, y : float ) {		
-		if ( !guiStyle ) {
-			return;
-		}
+		if ( !guiStyle ) { guiStyle = GUI.skin.button; }
 		
 		if ( GUI.Button ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, guiStyle ) ) {
 			if ( argument ) {

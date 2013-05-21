@@ -15,6 +15,14 @@ class OGPopUp extends OGWidget {
 				
 	// Draw
 	override function Draw ( x : float, y : float ) {	
+		if ( !guiStyle ) { guiStyle = GUI.skin.box; }
+		
+		var textStyle : GUIStyle = new GUIStyle();
+		textStyle.font = GUI.skin.label.font;
+		textStyle.normal.textColor = guiStyle.normal.textColor;
+		textStyle.fontSize = guiStyle.fontSize;
+		textStyle.alignment = guiStyle.alignment;
+								
 		if ( !isUp ) {			
 			var label : String;
 			
@@ -24,18 +32,18 @@ class OGPopUp extends OGWidget {
 				label = title;
 			}
 			
-			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), guiStyle.fontSize + padding.y );
-			GUI.Box ( guiRect, "" );
+			guiRect = Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), transform.localScale.y );
+			GUI.Box ( guiRect, "", guiStyle );
 			
-			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (padding.x * 2), transform.localScale.y ), label, guiStyle ) ) {
+			if ( GUI.Button ( guiRect, label, textStyle ) ) {
 				isUp = true;
 			}
 		} else {			
-			guiRect = Rect ( x, y, transform.localScale.x + (padding.x * 2), ( options.Length * (guiStyle.fontSize + padding.y) ) + ( padding.y * 2 ) );
-			GUI.Box ( guiRect, "" );
+			guiRect = Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), ( options.Length * (guiStyle.fontSize + guiStyle.padding.top) ) + ( guiStyle.padding.top * 2 ) );
+			GUI.Box ( guiRect, "", guiStyle );
 			
 			for ( var i = 0; i < options.Length; i++ ) {			
-				if ( GUI.Button ( Rect ( x, y + padding.y + ( ( guiStyle.fontSize + padding.y ) * i ), transform.localScale.x + ( padding.x * 2 ), guiStyle.fontSize + padding.y ), options[i], guiStyle ) ) {
+				if ( GUI.Button ( Rect ( x + guiStyle.padding.left, y + guiStyle.padding.top + ( ( guiStyle.fontSize + guiStyle.padding.top ) * i ), transform.localScale.x + ( guiStyle.padding.left * 2 ), guiStyle.fontSize + guiStyle.padding.top ), options[i], textStyle ) ) {
 					selectedOption = options[i];
 					isUp = false;
 					

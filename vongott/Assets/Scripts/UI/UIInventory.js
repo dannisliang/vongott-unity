@@ -16,7 +16,6 @@ private class InventorySlot {
 		btn.target = target;
 		btn.message = "SelectSlot";
 		btn.argument = i.ToString();
-		btn.style = "Button";
 	
 		var x : float = col * 102;
 		var y : float = ( -row * 102 ) - 102;

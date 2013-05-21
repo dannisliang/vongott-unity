@@ -10,6 +10,13 @@ class EditorInspectorConvo extends MonoBehaviour {
 	var actorName : OGPopUp;
 	var conversation : OGPopUp;
 	
+	// Pick flag
+	function PickFlag ( btn : OGButton ) {
+		EditorPickFlag.target = btn;
+		EditorPickFlag.sender = "MenuBase";
+		OGRoot.GoToPage ( "PickFlag" );
+	}
+	
 	// Trim filename
 	function TrimFileNames ( paths : String[] ) : String[] {
 		var newArray : String[] = new String[paths.Length];

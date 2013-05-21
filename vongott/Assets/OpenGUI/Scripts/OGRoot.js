@@ -4,12 +4,12 @@
 
 class OGRoot extends MonoBehaviour {
 	var _currentPage : OGPage;
-	var _allStyles : GUIStyle[];
-			
+	var _skin : GUISkin;
+					
 	static var currentPage : OGPage;
-	static var allStyles : GUIStyle[];
 	static var mouseOver : boolean = false;
 	static var thisTransform : Transform;
+	static var skin : GUISkin;
 	
 	static function GoToPage ( name : String ) {				
 		if ( currentPage ) {
@@ -42,30 +42,30 @@ class OGRoot extends MonoBehaviour {
 	}
 	
 	function Update () {
-		if ( currentPage ) {
-			var anyRects : int = 0;
-			
-			for ( var w : OGWidget in currentPage.transform.GetComponentsInChildren(OGWidget) ) {
-				if ( w.guiRect.Contains ( Input.mousePosition ) ) {
-					anyRects++;
-				}
-			}
-		
-			mouseOver = anyRects > 0;
-			
+		if ( currentPage ) {					
 			currentPage.UpdatePage ();
-		}
-		
-		allStyles = _allStyles;
+		}		
 	}
 	
 	function OnGUI () {
-
+		if ( currentPage ) {
+			mouseOver = false;
+			
+			var anyRects : int = 0;
+			
+			for ( var w : OGWidget in currentPage.transform.GetComponentsInChildren ( OGWidget ) ) {
+				if ( w.mouseOver ) {
+					anyRects++;
+				}
+			}
+					
+			mouseOver = anyRects > 0;
+		}
 	}
 	
 	function Start () {		
 		currentPage = _currentPage;
-		allStyles = _allStyles;
+		skin = _skin;
 		thisTransform = this.transform;
 		
 		if ( currentPage ) {

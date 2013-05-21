@@ -74,7 +74,6 @@ class EditorOpenFile extends OGPage {
 			var obj : GameObject = new GameObject ( name );
 			var btn = obj.AddComponent ( OGButton );
 		
-			btn.style = "Button";
 			btn.text = name;
 			btn.target = this.gameObject;
 			btn.message = "SelectFile";

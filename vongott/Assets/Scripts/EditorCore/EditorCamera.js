@@ -164,7 +164,7 @@ function Update () {
 		
 	// camera mode	
 	} else {				
-		if ( translation != 0.0 ) {				
+		if ( translation != 0.0 && !OGRoot.mouseOver ) {				
 			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
 				transform.localPosition = new Vector3 ( x, y + ( translation * speed ), z );
 			} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {

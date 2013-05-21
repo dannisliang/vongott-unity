@@ -30,13 +30,10 @@ class EditorItems extends OGPage {
 		label.transform.localScale = new Vector3 ( 100, 30, 0 );
 		
 		b.target = this.gameObject;
-		b.style = "Button";
 		b.message = "SelectItem";
 		b.argument = name;
 		
-		l.style = "bodyCentered"; 
 		l.text = name;
-		//i.image = ;
 			
 	}
 	

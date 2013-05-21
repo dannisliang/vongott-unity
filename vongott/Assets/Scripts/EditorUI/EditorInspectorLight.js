@@ -33,7 +33,7 @@ class EditorInspectorLight extends MonoBehaviour {
 	
 		var o : GameObject = EditorCore.GetSelectedObject();
 		
-		if ( o.GetComponent ( LightSource ) ) {
+		if ( o != null && o.GetComponent ( LightSource ) ) {
 			var l : LightSource = o.GetComponent ( LightSource );
 			l.SetColor ( new Color ( colorSliders.r.sliderValue, colorSliders.g.sliderValue, colorSliders.b.sliderValue, 1.0 ) );
 			l.SetRange ( range.slider.sliderValue );

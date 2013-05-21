@@ -2,55 +2,55 @@
 
 @script ExecuteInEditMode
 
-enum RelativeX {
-	None,
-	Left,
-	Center,
-	Right
-}
-
-enum RelativeY {
-	None,
-	Top,
-	Center,
-	Bottom
-}
-
-enum ScreenSize {
-	None,
-	ScreenWidth,
-	ScreenHeight
-}
-
-private class Stretch {
-	var width : ScreenSize = ScreenSize.None;
-	var widthFactor : float = 1.0;
-	var widthOffset : float = 0.0;
-	
-	var height : ScreenSize = ScreenSize.None;
-	var heightFactor : float = 1.0;
-	var heightOffset : float = 0.0;
-}
-
-private class Anchor {
-	var object : GameObject;
-	
-	var x : RelativeX = RelativeX.None;
-	var xOffset : float = 0.0;
-	
-	var y : RelativeY = RelativeY.None;
-	var yOffset : float = 0.0;
-}
-
 class OGWidget extends MonoBehaviour {
+	enum RelativeX {
+		None,
+		Left,
+		Center,
+		Right
+	}
+	
+	enum RelativeY {
+		None,
+		Top,
+		Center,
+		Bottom
+	}
+	
+	enum ScreenSize {
+		None,
+		ScreenWidth,
+		ScreenHeight
+	}
+	
+	private class Stretch {
+		var width : ScreenSize = ScreenSize.None;
+		var widthFactor : float = 1.0;
+		var widthOffset : float = 0.0;
+		
+		var height : ScreenSize = ScreenSize.None;
+		var heightFactor : float = 1.0;
+		var heightOffset : float = 0.0;
+	}
+	
+	private class Anchor {
+		var object : GameObject;
+		
+		var x : RelativeX = RelativeX.None;
+		var xOffset : float = 0.0;
+		
+		var y : RelativeY = RelativeY.None;
+		var yOffset : float = 0.0;
+	}
+	
+	var style : String = "";
 	var anchor : Anchor;	
 	var stretch : Stretch;
-	var style : String = "body";
-	
+					
 	@HideInInspector var manualDraw = false;
+	@HideInInspector var mouseOver = false;
 	@HideInInspector var guiRect : Rect;
 	@HideInInspector var guiStyle : GUIStyle;
-	@HideInInspector var emptyStyle : GUIStyle = new GUIStyle();
 	
 	function SetX ( x : float ) {
 		transform.localPosition = new Vector3 ( x, transform.localPosition.y, transform.localPosition.z );
@@ -66,6 +66,14 @@ class OGWidget extends MonoBehaviour {
 	
 	function SetHeight ( h : float ) {
 		transform.localScale = new Vector3 ( transform.localScale.x, h, 1.0 );
+	}
+	
+	function CheckStyle ( skin : GUISkin ) : GUIStyle {
+		if ( skin.FindStyle ( style ) && style != "" ) {
+			return skin.FindStyle ( style );
+		} else {
+			return null;
+		}
 	}
 	
 	function ApplyStretch () {
@@ -130,25 +138,7 @@ class OGWidget extends MonoBehaviour {
 			SetY ( modify_y );
 		}
 	}
-	
-	function CheckStyle () : GUIStyle {
-		if ( !OGRoot.allStyles ) {
-			return emptyStyle;
-		}
 		
-		for ( var s : GUIStyle in OGRoot.allStyles ) {
-			if ( s.name == style ) {
-				return s;
-			}
-		}
-		
-		if ( GUI.skin.GetStyle ( style ) ) {	
-			return GUI.skin.GetStyle ( style );
-		}
-		
-		return emptyStyle;
-	}
-	
 	function UpdateWidget () {}
 	
 	function Draw ( x : float, y : float ) {}
@@ -158,15 +148,19 @@ class OGWidget extends MonoBehaviour {
 	function OnGUI () {
 		GUI.depth = transform.localPosition.z;
 		
-		guiStyle = CheckStyle ();
+		if ( OGRoot.skin ) {
+			GUI.skin = OGRoot.skin;
+			guiStyle = CheckStyle ( OGRoot.skin );
+		}
 		
 		if ( !manualDraw ) {
 			Draw ( transform.position.x, transform.position.y );
 		}
+		
+		mouseOver = guiRect.Contains ( Event.current.mousePosition );
 	}
 	
-	function Update () {			
-		
+	function Update () {		
 		if ( stretch ) {
 			ApplyStretch ();
 			ApplyPosition ();

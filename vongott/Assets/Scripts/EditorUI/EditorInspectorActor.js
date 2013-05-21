@@ -32,7 +32,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		convo.inspector = this.gameObject;
 		convo.Init ();
 				
-		convoBottomLine += 90;
+		convoBottomLine += 100;
 		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
 	
 		return convo;
@@ -132,11 +132,10 @@ class EditorInspectorActor extends MonoBehaviour {
 		// grab node
 		var buttonGrab : GameObject = new GameObject ( "ButtonGrab" );
 		buttonGrab.transform.parent = node.transform;
-		buttonGrab.transform.localPosition = new Vector3 ( 230, 18, -2 );
+		buttonGrab.transform.localPosition = new Vector3 ( 230, 20, -2 );
 		buttonGrab.transform.localScale = new Vector3 ( 60, 20, 0 );
 		
 		var bg : OGButton = buttonGrab.AddComponent ( OGButton );
-		bg.style = "Button";
 		bg.text = "Grab";
 		bg.target = this.gameObject;
 		bg.message = "GrabNode";
@@ -145,11 +144,10 @@ class EditorInspectorActor extends MonoBehaviour {
 		// rotate node
 		var buttonRot : GameObject = new GameObject ( "ButtonRotate" );
 		buttonRot.transform.parent = node.transform;
-		buttonRot.transform.localPosition = new Vector3 ( 160, 18, -2 );
+		buttonRot.transform.localPosition = new Vector3 ( 160, 20, -2 );
 		buttonRot.transform.localScale = new Vector3 ( 60, 20, 0 );
 		
 		var br : OGButton = buttonRot.AddComponent ( OGButton );
-		br.style = "Button";
 		br.text = "Rotate";
 		br.target = this.gameObject;
 		br.message = "RotateNode";
@@ -164,8 +162,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		// ^ input
 		var input : GameObject = new GameObject ( "Input" );
 		input.transform.parent = idleTime.transform;
-		input.transform.localPosition = new Vector3 ( 100, 0, -2 );
-		input.transform.localScale = new Vector3 ( 100, 20, 1 );
+		input.transform.localPosition = new Vector3 ( 50, 0, -2 );
+		input.transform.localScale = new Vector3 ( 80, 20, 1 );
 		
 		var tf : OGTextField = input.AddComponent ( OGTextField );
 		tf.text = "0";
@@ -184,7 +182,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		itLabel.transform.localScale = new Vector3 ( 100, 20, 0 );
 		
 		var il : OGLabel = itLabel.AddComponent ( OGLabel );
-		il.text = "Delay (seconds)";
+		il.text = "Idle (s)";
 
 		// add node
 		nodes.Add ( node );

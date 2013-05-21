@@ -19,18 +19,20 @@ class OGDropDown extends OGWidget {
 	var submenu : DropDownItem[];
 	
 	// Draw
-	override function Draw ( x : float, y : float ) {				
+	override function Draw ( x : float, y : float ) {	
+		if ( !guiStyle ) { guiStyle = GUI.skin.button; }
+		
 		// button
-		if ( GUI.Button ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), title, guiStyle ) ) {
+		if ( GUI.Button ( Rect ( x + guiStyle.padding.left, y, transform.localScale.x, transform.localScale.y ), title, GUI.skin.label ) ) {
 			isDown = !isDown;
 		}
 				
 		// submenu
 		if ( isDown ) {
-			GUI.Box ( Rect ( x - offset.x, y + offset.y, ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, ( submenu.Length * offset.y ) + ( guiStyle.padding.top + guiStyle.padding.bottom ) ), "" );
+			GUI.Box ( Rect ( x - offset.x, y + offset.y, ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, ( submenu.Length * ( 12 + guiStyle.padding.top ) ) + ( guiStyle.padding.top + guiStyle.padding.bottom ) ), "", guiStyle );
 			
 			for ( var i = 0; i < submenu.Length; i++ ) {			
-				if ( GUI.Button ( Rect ( x - offset.x, y + offset.y + 4 + ( offset.y * i ), ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, transform.localScale.y ), submenu[i].name, guiStyle ) ) {
+				if ( GUI.Button ( Rect ( x - offset.x + guiStyle.padding.left, y + offset.y + ( guiStyle.padding.top / 2 ) + ( ( 12 + guiStyle.padding.top ) * i ), ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, transform.localScale.y ), submenu[i].name, GUI.skin.label ) ) {
 					target.SendMessage(submenu[i].message);
 					isDown = false;
 				}

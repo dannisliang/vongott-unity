@@ -9,7 +9,7 @@ class EditorAdjust extends OGPage {
 	
 	static var adjust : String = "position";
 	
-	override function StartPage () {
+	override function StartPage () {		
 		title.text = "Adjust " + adjust;
 		
 		var currentVector : Vector3;

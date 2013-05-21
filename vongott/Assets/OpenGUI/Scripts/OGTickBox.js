@@ -5,10 +5,16 @@ class OGTickBox extends OGWidget {
 	var isChecked : boolean;
 	
 	override function Draw ( x : float, y : float ) {
-		if ( !guiStyle ) {
-			return;
-		}
+		if ( !guiStyle ) { guiStyle = GUI.skin.toggle; }
 		
-		isChecked = GUI.Toggle ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), isChecked, label, guiStyle );
+		var textStyle : GUIStyle = new GUIStyle();
+		textStyle.font = GUI.skin.label.font;
+		textStyle.normal.textColor = guiStyle.normal.textColor;
+		textStyle.fontSize = guiStyle.fontSize;
+		textStyle.alignment = guiStyle.alignment;
+		
+		GUI.Label ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), label, textStyle );
+		
+		isChecked = GUI.Toggle ( Rect ( x + transform.localScale.x + 12, y - 2, transform.localScale.y, transform.localScale.y ), isChecked, "", guiStyle );
 	}
 }

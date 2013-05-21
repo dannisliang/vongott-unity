@@ -22,34 +22,32 @@ class EditorPickFlag extends OGPage {
 			
 			txtName.transform.parent = instance.transform;
 			txtName.transform.localPosition = new Vector3 ( 0, 0, -2 );
-			txtName.transform.localScale = new Vector3 ( 240, 20, 1 );
+			txtName.transform.localScale = new Vector3 ( 300, 20, 1 );
 			
 			textField.maxLength = 24;
 			textField.restrictASCII = true;
 			textField.text = name;
-			textField.style = "textfield";
 			
 			// Toggle
 			var tickToggle : GameObject = new GameObject ( "toggle" );
 			tickBox = tickToggle.AddComponent ( OGTickBox );
 			
 			tickToggle.transform.parent = instance.transform;
-			tickToggle.transform.localPosition = new Vector3 ( 250, 0, -2 );
+			tickToggle.transform.localPosition = new Vector3 ( 310, -1, -2 );
 			tickToggle.transform.localScale = new Vector3 ( 20, 20, 1 );
 			
-			tickBox.style = "toggle";
-			
+			tickBox.label = "bool";
+												
 			// Pick button
 			var btnPick : GameObject = new GameObject ( "btn" );
 			button = btnPick.AddComponent ( OGButton );
 			
 			btnPick.transform.parent = instance.transform;
-			btnPick.transform.localPosition = new Vector3 ( 280, 0, -2 );
+			btnPick.transform.localPosition = new Vector3 ( 372, 0, -2 );
 			btnPick.transform.localScale = new Vector3 ( 80, 20, 1 );
 			
 			button.message = "Pick";
 			button.argument = "0";
-			button.style = "button";
 			button.text = "Pick";
 		}
 	}
