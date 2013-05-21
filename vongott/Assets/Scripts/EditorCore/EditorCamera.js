@@ -13,9 +13,7 @@ var gizmoY : Material;
 var gizmoZ : Material;
 var selectIdle : Material;
 var selectModifying : Material;
-
-// Private vars
-private var rotationY : float = 0.0;
+var rotationY : float = 0.0;
 
 
 ////////////////////
@@ -102,6 +100,33 @@ function Start () {
 function Round ( val : float, factor : float ) : float {
 	return Mathf.Round ( val / factor ) * factor;
 }
+
+// Turn
+function TweenTurn ( angle : Vector3 ) {
+	iTween.RotateTo ( Camera.main.gameObject, angle, 0.5 );
+	rotationY = -angle.x;
+}
+
+// Move
+function TweenMoveToTop ( position : Vector3 ) {
+	var distance : float = Vector3.Distance ( Camera.main.transform.localPosition, position );
+	iTween.MoveTo ( Camera.main.gameObject, new Vector3 ( position.x, position.y + distance, position.z ), 0.5 );
+}
+
+function TweenMoveToFront ( position : Vector3 ) {
+	var distance : float = Vector3.Distance ( Camera.main.transform.localPosition, position );
+	iTween.MoveTo ( Camera.main.gameObject, new Vector3 ( position.x, position.y, position.z - distance ), 0.5 );
+}
+
+function TweenMoveToLeft ( position : Vector3 ) {
+	var distance : float = Vector3.Distance ( Camera.main.transform.localPosition, position );
+	iTween.MoveTo ( Camera.main.gameObject, new Vector3 ( position.x - distance, position.y, position.z ), 0.5 );
+}
+
+function TweenMoveTo ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, position, 0.5 );
+}
+
 
 // Update
 function Update () {
@@ -215,7 +240,7 @@ function Update () {
 			var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
 		
 			rotationY += Input.GetAxis("Mouse Y") * sensitivity;
-			rotationY = Mathf.Clamp (rotationY, -60, 60);
+			rotationY = Mathf.Clamp (rotationY, -90, 90);
 		
 			transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 		

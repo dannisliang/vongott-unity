@@ -29,7 +29,8 @@ class OGDropDown extends OGWidget {
 				
 		// submenu
 		if ( isDown ) {
-			GUI.Box ( Rect ( x - offset.x, y + offset.y, ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, ( submenu.Length * ( 12 + guiStyle.padding.top ) ) + ( guiStyle.padding.top + guiStyle.padding.bottom ) ), "", guiStyle );
+			guiRect = Rect ( x - offset.x, y + offset.y, ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, ( submenu.Length * ( 12 + guiStyle.padding.top ) ) + ( guiStyle.padding.top + guiStyle.padding.bottom ) );
+			GUI.Box ( guiRect, "", guiStyle );
 			
 			for ( var i = 0; i < submenu.Length; i++ ) {			
 				if ( GUI.Button ( Rect ( x - offset.x + guiStyle.padding.left, y + offset.y + ( guiStyle.padding.top / 2 ) + ( ( 12 + guiStyle.padding.top ) * i ), ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, transform.localScale.y ), submenu[i].name, GUI.skin.label ) ) {

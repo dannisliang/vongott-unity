@@ -67,24 +67,39 @@ static function Update () {
 		} else if ( Input.GetKeyDown ( KeyCode.D ) ) {
 			EditorCore.DuplicateObject();
 		
+		// numpad period: zoom to object
+		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) ) {
+			if ( EditorCore.GetSelectedObject() ) {
+				Camera.main.GetComponent ( EditorCamera ).TweenMoveTo ( EditorCore.GetSelectedObject().transform.localPosition );
+			}
+		
 		// numpad 5: orthographic view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad5 ) ) {
 			EditorCore.ToggleIsometric();
 		
 		// numpad 7: top view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) ) {
-			Camera.main.transform.localEulerAngles = new Vector3 ( 90.0, 0.0, 0.0 );
-			Camera.main.transform.localPosition = new Vector3 ( 0.0, 500.0, 0.0 );
+			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 90.0, 0.0, 0.0 ) );
+			
+			if ( EditorCore.GetSelectedObject() ) {
+				Camera.main.GetComponent ( EditorCamera ).TweenMoveToTop ( EditorCore.GetSelectedObject().transform.localPosition );
+			}
 		
-		// numpad 3: left view
-		} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) ) {
-			Camera.main.transform.localEulerAngles = new Vector3 ( 0.0, 90.0, 0.0 );
-			Camera.main.transform.localPosition = new Vector3 ( -500.0, 0.0, 0.0 );
-		
-		// numpad 1: front
+		// numpad 1: left view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad1 ) ) {
-			Camera.main.transform.localEulerAngles = new Vector3 ( 0.0, 0.0, 0.0 );
-			Camera.main.transform.localPosition = new Vector3 ( 0.0, 0.0, -500.0 );
+			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 0.0, 90.0, 0.0 ) );
+		
+			if ( EditorCore.GetSelectedObject() ) {
+				Camera.main.GetComponent ( EditorCamera ).TweenMoveToLeft ( EditorCore.GetSelectedObject().transform.localPosition );
+			}
+		
+		// numpad 3: front
+		} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) ) {
+			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 0.0, 0.0, 0.0 ) );
+		
+			if ( EditorCore.GetSelectedObject() ) {
+				Camera.main.GetComponent ( EditorCamera ).TweenMoveToFront ( EditorCore.GetSelectedObject().transform.localPosition );
+			}
 		
 		// CTRL modifier
 		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {

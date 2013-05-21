@@ -107,7 +107,7 @@ class EditorPickFlag extends OGPage {
 		flagTable = new JSONObject ( JSONObject.Type.OBJECT );
 		
 		for ( var i = 0; i < flags.Count; i++ ) {
-			flagTable.AddField ( flags[i].textField.text, flags[i].tickBox.isChecked );
+			flagTable.AddField ( flags[i].textField.text, false );
 		}
 		
 		Saver.SaveFlags ( flagTable );

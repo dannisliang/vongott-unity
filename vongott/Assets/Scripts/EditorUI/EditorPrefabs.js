@@ -4,29 +4,9 @@ class EditorPrefabs extends OGPage {
 	var prefabList : Transform;
 	var prefabSelector : OGPopUp;
 	var currentDir : String;
-/*
-	private class ListItem {
-		var img : GameObject;
-		var label : GameObject;
-		
-		function ListItem ( name : String, x : float, y : float ) {
-			img = new GameObject ( name + "_img" );
-			label = new GameObject ( name + "_label" );
-			
-			var i : OGImage = img.AddComponent ( OGImage );
-			var l : OGLabel = img.AddComponent ( OGLabel );
-						
-			img.transform.parent = prefabList;
-			label.transform.parent = prefabList;
-			
-			img.transform.localPosition = new Vector3 ( x, y, 0.0 );
-			label.transform.localPosition = new Vector3 ( x, y, 0.0 );
-			
-			l.text = name;
-			//i.image = ;
-			
-		}
-	}	*/
+	var listItemPrefab : EditorListItem;
+	var itemName : OGLabel;
+	var selectedItem : GameObject;
 	
 	private function ClearList () {
 		for ( var i = 0; i < prefabList.childCount; i++ ) {
@@ -37,9 +17,32 @@ class EditorPrefabs extends OGPage {
 	private function PopulateList () {
 		var files : Object[] = Resources.LoadAll ( "Prefabs/" + currentDir, GameObject );
 		
+		var col : float = 0;
+		var row : float = 0;
+		
 		for ( var f : GameObject in files ) {
-			Debug.Log ( f.name );
+			var item : EditorListItem = Instantiate ( listItemPrefab );
+			item.transform.parent = prefabList;
+			item.transform.localScale = Vector3.one;
+			item.transform.localPosition = new Vector3 ( col * 110, row * 110, 0 );
+		
+			item.gameObject.name = f.name;
+			item.label.text = "";
+			item.button.target = this.gameObject;
+			item.button.argument = f.name;
+		
+			if ( col < 3 ) {
+				col++;
+			} else {
+				col = 0;
+				row++;
+			}
 		}
+	}
+	
+	function SelectItem ( n : String ) {
+		itemName.text = n;
+		selectedItem = Resources.Load ( "Prefabs/" + currentDir + "/" + n );
 	}
 	
 	override function UpdatePage () {
@@ -56,6 +59,7 @@ class EditorPrefabs extends OGPage {
 	}
 	
 	function Add () {
+		EditorCore.SpawnObject ( selectedItem );
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 }

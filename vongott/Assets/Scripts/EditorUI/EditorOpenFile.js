@@ -24,19 +24,10 @@ class EditorOpenFile extends OGPage {
 		return files;
 	}
 	
-	// Set selected map
+	// Select map
 	function SelectFile ( name : String ) {
 		selectedMap = name;
 		title.text = "Open a map file ( " + name + " )";
-		
-	}
-	
-	// OK
-	function OK () {		
-		if ( selectedMap == "" ) {
-			return;
-		}
-		
 		EditorCore.LoadFile ( selectedMap );
 		OGRoot.GoToPage ( "MenuBase" );
 	}
@@ -80,8 +71,8 @@ class EditorOpenFile extends OGPage {
 			btn.argument = name;
 			
 			obj.transform.parent = mapList.transform;
-			obj.transform.localScale = new Vector3 ( 482, 32, 1 );
-			obj.transform.localPosition = new Vector3 ( 0, i * 34, -2 );
+			obj.transform.localScale = new Vector3 ( 468, 30, 1 );
+			obj.transform.localPosition = new Vector3 ( 0, i * 32, -2 );
 		}
 	}
 	

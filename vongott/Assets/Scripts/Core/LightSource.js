@@ -30,8 +30,12 @@ class LightSource extends MonoBehaviour {
 	}
 	
 	function Update () {
-		if ( GameCore.started && this.GetComponent(MeshRenderer).enabled ) {
+		if ( ( EditorCore.noGizmos || GameCore.started ) && this.GetComponent(MeshRenderer).enabled ) {
 			this.GetComponent(MeshRenderer).enabled = false;
+		
+		} else if ( !GameCore.started && !EditorCore.noGizmos && !this.GetComponent(MeshRenderer).enabled ) {
+			this.GetComponent(MeshRenderer).enabled = true;
+			
 		}
 	}
 	

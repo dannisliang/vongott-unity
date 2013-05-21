@@ -63,23 +63,28 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Toggle isometric view
 	function ToggleIsometric () {
-		EditorCore.ToggleIsometric();
+		EditorCore.ToggleIsometric ();
 	}
 	
 	// Toggle wireframe view
 	function ToggleWireframe () {
-		EditorCore.ToggleWireframe();
+		EditorCore.ToggleWireframe ();
 	}
 	
 	// Toggle wireframe view
 	function ToggleTextured () {
-		EditorCore.ToggleTextured();
+		EditorCore.ToggleTextured ();
 	}
 	
 	// Set grid
 	function AdjustGrid () {
 		EditorAdjust.adjust = "grid";
 		OGRoot.GoToPage ( "Adjust" );
+	}
+	
+	// Toggle gizmos
+	function ToggleGizmos () {
+		EditorCore.ToggleGizmos ();
 	}
 	
 	////////////////////

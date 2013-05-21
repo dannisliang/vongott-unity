@@ -58,6 +58,7 @@ static var snap : Vector3 = Vector3.zero;
 static var snapEnabled = true;
 static var selectedShader : Shader;
 static var origShaders : List.< KeyValuePair.< Material, Shader > > = new List.< KeyValuePair.< Material, Shader > > ();
+static var noGizmos : boolean = false;
 
 // undo
 static var actionStages : List.< Action > [] = new List.< Action > [10];
@@ -172,9 +173,24 @@ static function ToggleTextured () {
 //	DrawCameraMode.Textured = !DrawCameraMode.Textured;
 }
 
+// Toggle gizmos
+static function ToggleGizmos () {
+	noGizmos = !noGizmos;
+}
+
 // Set grid
 static function SetSnap ( vector : Vector3 ) {
 	snap = vector;
+}
+
+
+////////////////////
+// Spawn objects
+////////////////////
+static function SpawnObject ( obj : GameObject ) {
+	var newObject : GameObject = Instantiate ( obj );
+	newObject.transform.parent = currentLevel.transform;
+	newObject.transform.position = GetSpawnPosition();
 }
 
 
