@@ -76,6 +76,11 @@ class EditorMenuBase extends OGPage {
 		EditorCore.ToggleTextured();
 	}
 	
+	// Set grid
+	function AdjustGrid () {
+		EditorAdjust.adjust = "grid";
+		OGRoot.GoToPage ( "Adjust" );
+	}
 	
 	////////////////////
 	// Add menu

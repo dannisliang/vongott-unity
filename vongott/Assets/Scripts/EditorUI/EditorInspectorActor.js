@@ -15,6 +15,8 @@ class EditorInspectorActor extends MonoBehaviour {
 	var inventorySlots : OGImage[];
 
 	var pathBox : GameObject;
+	var pathContainer : Transform;
+	@HideInInspector var pathBottomLine : float = 0;
 	var nodes : List.< GameObject > = new List.< GameObject >();
 	var nodeGizmo : GameObject;
 	
@@ -46,7 +48,7 @@ class EditorInspectorActor extends MonoBehaviour {
 	
 	// Remove convo
 	function RemoveConvo () {
-		convoBottomLine -= 90;
+		convoBottomLine -= 100;
 		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
 	
 		Destroy ( convos[convos.Count-1].gameObject );
@@ -62,6 +64,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		
 		convos.Clear ();
 		convoBottomLine = 0;
+		convoContainer.GetComponent ( OGScrollView ).scrollLength = 0;
 	}
 	
 	
@@ -93,6 +96,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		}
 		
 		nodes.Clear ();
+		pathBottomLine = 0;
+		pathContainer.GetComponent ( OGScrollView ).scrollLength = 0;
 	}
 	
 	// Remove path node
@@ -116,8 +121,8 @@ class EditorInspectorActor extends MonoBehaviour {
 	function AddNodeMenuItem ( duration ) {
 		// root
 		var node : GameObject = new GameObject ( "PathNode" + nodes.Count.ToString() );
-		node.transform.parent = pathBox.transform;
-		node.transform.localPosition = new Vector3 ( 10, 20 + ( 50 * nodes.Count ), 0 );
+		node.transform.parent = pathContainer;
+		node.transform.localPosition = new Vector3 ( 0, pathBottomLine, 0 );
 		node.transform.localScale = Vector3.one;
 		
 		// label
@@ -132,8 +137,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		// grab node
 		var buttonGrab : GameObject = new GameObject ( "ButtonGrab" );
 		buttonGrab.transform.parent = node.transform;
-		buttonGrab.transform.localPosition = new Vector3 ( 230, 20, -2 );
-		buttonGrab.transform.localScale = new Vector3 ( 60, 20, 0 );
+		buttonGrab.transform.localPosition = new Vector3 ( 220, 20, -2 );
+		buttonGrab.transform.localScale = new Vector3 ( 70, 20, 0 );
 		
 		var bg : OGButton = buttonGrab.AddComponent ( OGButton );
 		bg.text = "Grab";
@@ -144,8 +149,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		// rotate node
 		var buttonRot : GameObject = new GameObject ( "ButtonRotate" );
 		buttonRot.transform.parent = node.transform;
-		buttonRot.transform.localPosition = new Vector3 ( 160, 20, -2 );
-		buttonRot.transform.localScale = new Vector3 ( 60, 20, 0 );
+		buttonRot.transform.localPosition = new Vector3 ( 140, 20, -2 );
+		buttonRot.transform.localScale = new Vector3 ( 70, 20, 0 );
 		
 		var br : OGButton = buttonRot.AddComponent ( OGButton );
 		br.text = "Rotate";
@@ -163,7 +168,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		var input : GameObject = new GameObject ( "Input" );
 		input.transform.parent = idleTime.transform;
 		input.transform.localPosition = new Vector3 ( 50, 0, -2 );
-		input.transform.localScale = new Vector3 ( 80, 20, 1 );
+		input.transform.localScale = new Vector3 ( 70, 20, 1 );
 		
 		var tf : OGTextField = input.AddComponent ( OGTextField );
 		tf.text = "0";
@@ -178,7 +183,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		// ^ label
 		var itLabel : GameObject = new GameObject ( "Label" );
 		itLabel.transform.parent = idleTime.transform;
-		itLabel.transform.localPosition = new Vector3 ( 0, 0, -2 );
+		itLabel.transform.localPosition = new Vector3 ( 0, 2, -2 );
 		itLabel.transform.localScale = new Vector3 ( 100, 20, 0 );
 		
 		var il : OGLabel = itLabel.AddComponent ( OGLabel );
@@ -186,6 +191,10 @@ class EditorInspectorActor extends MonoBehaviour {
 
 		// add node
 		nodes.Add ( node );
+		
+		pathBottomLine += 60;
+		pathContainer.GetComponent ( OGScrollView ).scrollLength = pathBottomLine;
+		
 	}
 	
 	function AddNode () {
@@ -232,6 +241,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		
 		// path nodes
 		ClearNodes();
+		pathContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - pathContainer.position.y;
 		for ( var i = 0; i < a.path.Count; i++ ) {
 			AddNodeMenuItem( a.path[i].GetComponent(PathNode).duration );
 		}

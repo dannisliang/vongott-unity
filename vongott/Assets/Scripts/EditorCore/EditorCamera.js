@@ -15,7 +15,6 @@ var selectIdle : Material;
 var selectModifying : Material;
 
 // Private vars
-private var mouselook_active = true;
 private var rotationY : float = 0.0;
 
 
@@ -99,6 +98,11 @@ function Start () {
 	
 }
 
+// Round value
+function Round ( val : float, factor : float ) : float {
+	return Mathf.Round ( val / factor ) * factor;
+}
+
 // Update
 function Update () {
 	// position
@@ -145,12 +149,44 @@ function Update () {
 		
 		var o : GameObject = EditorCore.selectedObject;
 		
+		var xGrab : float = o.transform.localPosition.x + x;
+		var yGrab : float = o.transform.localPosition.y + y;
+		var zGrab : float = o.transform.localPosition.z + z;
+		
+		var xRotate : float = o.transform.localEulerAngles.x + ( x * 2 );
+		var yRotate : float = o.transform.localEulerAngles.y + ( y * 2 );
+		var zRotate : float = o.transform.localEulerAngles.z + ( z * 2 );
+		
+		var xScale : float = o.transform.localScale.x + x;
+		var yScale : float = o.transform.localScale.y + y;
+		var zScale : float = o.transform.localScale.z + z;
+		
+		if ( EditorCore.snapEnabled ) {
+			if ( EditorCore.snap.x > 0 ) {
+				xGrab = Round ( xGrab, EditorCore.snap.x );
+				xRotate = Round ( xRotate, EditorCore.snap.x );
+				xScale = Round ( xScale, EditorCore.snap.x );
+			}
+			
+			if ( EditorCore.snap.y > 0 ) {
+				yGrab = Round ( yGrab, EditorCore.snap.y );
+				yRotate = Round ( yRotate, EditorCore.snap.y );
+				yScale = Round ( yScale, EditorCore.snap.y );
+			}
+			
+			if ( EditorCore.snap.z > 0 ) {
+				zGrab = Round ( zGrab, EditorCore.snap.z );
+				zRotate = Round ( zRotate, EditorCore.snap.z );
+				zScale = Round ( zScale, EditorCore.snap.z );
+			}
+		}		
+		
 		if ( EditorCore.grabMode ) {
-			o.transform.localPosition = new Vector3 ( o.transform.localPosition.x + x, o.transform.localPosition.y + y, o.transform.localPosition.z + z );
+			o.transform.localPosition = new Vector3 ( xGrab, yGrab, zGrab );
 		} else if ( EditorCore.rotateMode ) {
-			o.transform.localEulerAngles = new Vector3 ( o.transform.localEulerAngles.x + ( x * 2 ), o.transform.localEulerAngles.y + ( y * 2 ), o.transform.localEulerAngles.z + ( z * 2 ) );
+			o.transform.localEulerAngles = new Vector3 ( xRotate, yRotate, zRotate );
 		} else if ( EditorCore.scaleMode ) {
-			o.transform.localScale = new Vector3 ( o.transform.localScale.x + x, o.transform.localScale.y + y, o.transform.localScale.z + z );
+			o.transform.localScale = new Vector3 ( xScale, yScale, zScale );
 		}
 		
 		// end mode

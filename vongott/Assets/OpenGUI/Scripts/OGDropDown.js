@@ -23,7 +23,7 @@ class OGDropDown extends OGWidget {
 		if ( !guiStyle ) { guiStyle = GUI.skin.button; }
 		
 		// button
-		if ( GUI.Button ( Rect ( x + guiStyle.padding.left, y, transform.localScale.x, transform.localScale.y ), title, GUI.skin.label ) ) {
+		if ( GUI.Button ( Rect ( x + guiStyle.padding.left, y, ( title.Length * 8 ), transform.localScale.y ), title, GUI.skin.label ) ) {
 			isDown = !isDown;
 		}
 				

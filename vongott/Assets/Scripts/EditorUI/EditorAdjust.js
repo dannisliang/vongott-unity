@@ -20,6 +20,8 @@ class EditorAdjust extends OGPage {
 			currentVector = EditorCore.GetSelectedObject().transform.localEulerAngles;
 		} else if ( adjust == "scale" ) {
 			currentVector = EditorCore.GetSelectedObject().transform.localScale;
+		} else if ( adjust == "grid" ) {
+			currentVector = EditorCore.snap;
 		}
 	
 		x.text = currentVector.x.ToString("f1");
@@ -38,6 +40,8 @@ class EditorAdjust extends OGPage {
 			EditorCore.GetSelectedObject().transform.localEulerAngles = new Vector3 ( newX, newY, newZ );
 		} else if ( adjust == "scale" ) {
 			EditorCore.GetSelectedObject().transform.localScale = new Vector3 ( newX, newY, newZ );
+		} else if ( adjust == "grid" ) {
+			EditorCore.SetSnap ( new Vector3 ( newX, newY, newZ ) );
 		}
 		
 		OGRoot.GoToPage ( "MenuBase" );

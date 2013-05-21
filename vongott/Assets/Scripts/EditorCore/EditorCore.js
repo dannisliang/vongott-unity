@@ -27,6 +27,7 @@ private class Action {
 var _workspace : Transform;
 var _gizmo : GameObject;
 var _camera : Transform;
+var _selectedShader : Shader;
 
 // Static vars
 static var menusActive = false;
@@ -53,6 +54,10 @@ static var player : GameObject;
 static var camTarget : GameObject;
 static var root : Transform;
 static var drawPath : Vector3[];
+static var snap : Vector3 = Vector3.zero;
+static var snapEnabled = true;
+static var selectedShader : Shader;
+static var origShaders : List.< KeyValuePair.< Material, Shader > > = new List.< KeyValuePair.< Material, Shader > > ();
 
 // undo
 static var actionStages : List.< Action > [] = new List.< Action > [10];
@@ -167,10 +172,35 @@ static function ToggleTextured () {
 //	DrawCameraMode.Textured = !DrawCameraMode.Textured;
 }
 
+// Set grid
+static function SetSnap ( vector : Vector3 ) {
+	snap = vector;
+}
+
 
 ////////////////////
 // Select objects
 ////////////////////
+// Pin materials
+static function PinShader ( mat : Material, shader : Shader ) {
+	origShaders.Add ( new KeyValuePair. < Material, Shader > ( mat, shader ) );
+}
+
+// Unpin materials
+static function UnpinShader ( obj : Material ) : Shader {
+	var shader : Shader;
+	
+	for ( var kvp : KeyValuePair. < Material, Shader > in origShaders ) {
+		if ( kvp.Key == obj ) {
+			shader = kvp.Value;
+			origShaders.Remove ( kvp );
+			break;
+		}
+	}
+	
+	return shader;
+}
+
 // Reselect object
 static function ReselectObject () {
 	SelectObject ( selectedObject );
@@ -206,6 +236,12 @@ static function DeselectObject () {
 		}
 	}
 	
+	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
+	
+	for ( var mat : Material in renderer.materials ) {
+	 	mat.shader = UnpinShader ( mat );
+	}
+	
 	drawPath = null;
 	selectedObject = null;
 }
@@ -221,6 +257,20 @@ static function SelectObject ( obj : GameObject ) {
 							
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
+	
+	// Change material
+	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
+	var newMaterials : Material[] = new Material[renderer.materials.Length];
+		
+	for ( var i = 0; i < newMaterials.Length; i++ ) {
+		PinShader ( renderer.materials[i], renderer.materials[i].shader );
+		newMaterials[i] = renderer.materials[i];
+		newMaterials[i].shader = selectedShader;
+		newMaterials[i].SetColor ( "_OutlineColor", Color.cyan );
+		newMaterials[i].SetFloat ( "_Outline", 0.0025 );
+	}
+	
+	renderer.materials = newMaterials;
 	
 	// LightSource
 	if ( obj.GetComponent(LightSource) ) {
@@ -415,6 +465,7 @@ function Start () {
 	workspace = _workspace;
 	gizmo = _gizmo;
 	cam = _camera;
+	selectedShader = _selectedShader;
 	root = this.transform.parent;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;
