@@ -95,6 +95,7 @@ class Conversation {
 				
 				if ( entry.options[currentOption] ) {
 					speakerLine = entry.options[currentOption].line;
+					SetFlag ( entry.options[currentOption] );
 				}
 				
 				UIConversation.SetName ( speakerName );
