@@ -4,42 +4,16 @@ class EditorItems extends OGPage {
 	var itemList : Transform;
 	var itemSelector : OGPopUp;
 	var currentDir : String = "";
+	
+	var listItemPrefab : EditorListItem;
+	
 	var currentItem : String = "";
 	var title : OGLabel;
-	static var equipping : int = 99;
-
-	function CreateItem ( name : String, x : float, y : float ) {
-		var button : GameObject = new GameObject ( name + "_btn" );
-		var img : GameObject = new GameObject ( name + "_img" );
-		var label : GameObject = new GameObject ( name + "_label" );
-		
-		var b : OGButton = button.AddComponent ( OGButton );
-		var i : OGImage = img.AddComponent ( OGImage );
-		var l : OGLabel = label.AddComponent ( OGLabel );
-		
-		button.transform.parent = itemList;			
-		img.transform.parent = itemList;
-		label.transform.parent = itemList;
-		
-		button.transform.localPosition = new Vector3 ( x, y, 0.0 );
-		img.transform.localPosition = new Vector3 ( x+10, y+10, 0.0 );
-		label.transform.localPosition = new Vector3 ( x, y+80, 0.0 );
-		
-		button.transform.localScale = new Vector3 ( 100, 100, 0 );
-		img.transform.localScale = new Vector3 ( 80, 80, 0 );
-		label.transform.localScale = new Vector3 ( 100, 30, 0 );
-		
-		b.target = this.gameObject;
-		b.message = "SelectItem";
-		b.argument = name;
-		
-		l.text = name;
-			
-	}
 	
-	function SelectItem ( name : String ) {
-		title.text = "Select an item ( " + name + " )";
-		currentItem = name;
+	static var equipping : int = 99;
+	
+	function SelectItem ( n : String ) {
+		currentItem = n;
 	}
 	
 	private function ClearList () {
@@ -53,20 +27,22 @@ class EditorItems extends OGPage {
 		
 		var files : Object[] = Resources.LoadAll ( "Items/" + currentDir, GameObject );
 		
-		var col = 0;
-		var row = 0;
+		var i : int = 0;
 		
 		for ( var f : GameObject in files ) {
-			CreateItem ( f.name, col * 110, row * 110 );
+			var obj : GameObject = new GameObject ( f.name );
+			var btn = obj.AddComponent ( OGButton );
 		
-			if ( col < 3 ) {
-				col++;
-				
-			} else {
-				col = 0;
-				row++;
+			btn.text = f.name;
+			btn.target = this.gameObject;
+			btn.message = "SelectFile";
+			btn.argument = f.name;
 			
-			}
+			obj.transform.parent = itemList;
+			obj.transform.localScale = new Vector3 ( 468, 30, 1 );
+			obj.transform.localPosition = new Vector3 ( 0, i * 32, -2 );
+			
+			i++;
 		}
 	}
 	

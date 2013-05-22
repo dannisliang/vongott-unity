@@ -44,27 +44,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGButton.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGButton3D.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGDropDown.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGImage.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGLabel.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGPage.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGPopUp.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGRect.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGRoot.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGRuler.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGScrollView.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGSlider.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGTabs.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGTextField.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGTween.js" />
-     <Compile Include="Assets\Plugins\OpenGUI\Scripts\OGWidget.js" />
+     <Compile Include="Assets\Plugins\TextureScale.js" />
      <None Include="Assets\Shaders\CubemapReflection.shader" />
      <None Include="Assets\Shaders\AlphaCutout.shader" />
      <None Include="Assets\Plugins\UnitySteer\License.txt" />
      <None Include="Assets\Fonts\Font_Ubuntu.txt" />
      <None Include="Assets\Plugins\UnitySteer\TickedPriorityQueue\LICENSE.txt" />
+     <None Include="Assets\Shaders\UnlitAlphaColored.shader" />
      <None Include="Assets\Demos\AlphaGlow(ProOnly)\GlowTest.shader" />
      <None Include="Assets\Demos\LMEmission\LMEmission.shader" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\Temp\TempShader.shader" />
@@ -73,16 +59,14 @@
      <None Include="Assets\Shaders\BumpedSpecular.shader" />
      <None Include="Assets\Demos\TexturePan\TexturePan.shader" />
      <None Include="Assets\Shaders\RimLighting.shader" />
+     <None Include="Assets\Shaders\OutlineDiffuse.shader" />
      <None Include="Assets\Demos\AlphaGlow(ProOnly)\GlowTest2.shader" />
      <None Include="Assets\Demos\Outline\Outline.shader" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
-     <None Include="Assets\Shaders\OutlineDiffuse.shader" />
-     <None Include="Assets\Conversations\1\1\marcel.xml" />
-     <None Include="Assets\Conversations\1\2\marcel.xml" />
+     <None Include="Assets\Shaders\OutlineSilhouetteBumpedDiffuse.shader" />
      <None Include="Assets\Demos\Distortion(ProOnly)\Distortion.shader" />
      <None Include="Assets\Shaders\BumpedRim.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
-     <None Include="Assets\Conversations\1\2\bum.xml" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\TextureCopy.shader" />
  <Reference Include="TickedPriorityQueue">
  <HintPath>Assets\Plugins\UnitySteer\TickedPriorityQueue\TickedPriorityQueue.dll</HintPath>

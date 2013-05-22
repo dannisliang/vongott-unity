@@ -43,6 +43,7 @@ class OGWidget extends MonoBehaviour {
 		var yOffset : float = 0.0;
 	}
 	
+	var extraCamera : Camera;
 	var style : String = "";
 	var anchor : Anchor;	
 	var stretch : Stretch;
@@ -158,6 +159,19 @@ class OGWidget extends MonoBehaviour {
 		}
 		
 		mouseOver = guiRect.Contains ( Event.current.mousePosition );
+	
+		if ( extraCamera ) {
+			if (Event.current.type == EventType.Repaint) {
+				var w : float = transform.localScale.x / Screen.width;
+				var h : float = transform.localScale.y / Screen.height;
+				var x : float = transform.position.x / Screen.width;
+				var y : float = 1 - ( transform.position.y / Screen.height ) - h;
+				
+				extraCamera.rect = new Rect ( x, y, w, h );
+				
+				extraCamera.Render();
+			}
+		}
 	}
 	
 	function Update () {		

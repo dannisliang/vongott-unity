@@ -1,6 +1,7 @@
 #pragma strict
 
 import System.Collections.Generic;
+import System.IO;
 
 // Private classes
 private class Action {
@@ -26,7 +27,7 @@ private class Action {
 // Public vars
 var _workspace : Transform;
 var _gizmo : GameObject;
-var _camera : Transform;
+var _previewCamera : Camera;
 var _selectedShader : Shader;
 
 // Static vars
@@ -59,6 +60,8 @@ static var snapEnabled = true;
 static var selectedShader : Shader;
 static var origShaders : List.< KeyValuePair.< Material, Shader > > = new List.< KeyValuePair.< Material, Shader > > ();
 static var noGizmos : boolean = false;
+static var previewObject : GameObject;
+static var previewCamera : Camera;
 
 // undo
 static var actionStages : List.< Action > [] = new List.< Action > [10];
@@ -126,6 +129,41 @@ static function AddItem ( dir : String, name : String ) {
 	newItem.transform.position = GetSpawnPosition();
 }
 
+// Add prefab
+static function AddPrefab ( dir : String, name : String ) {
+	var newPrefab : GameObject = Instantiate ( Resources.Load ( "Prefabs/" + dir + "/" + name ) as GameObject );
+	newPrefab.transform.parent = currentLevel.transform;
+	newPrefab.transform.position = GetSpawnPosition();
+}
+
+// Add any object
+static function AddObject ( root : String, dir : String, name : String ) {
+	var newObject : GameObject = Instantiate ( Resources.Load ( root + "/" + dir + "/" + name ) as GameObject );
+	newObject.transform.parent = currentLevel.transform;
+	newObject.transform.position = GetSpawnPosition();
+}
+
+// Preview any object
+static function ClearPreview () {
+	if ( previewObject ) {
+		Destroy ( previewObject );
+	}
+}
+
+static function PreviewObject ( path ) {
+	ClearPreview ();
+	
+	previewObject = Instantiate ( Resources.Load ( path ) as GameObject );
+	
+	previewObject.transform.localPosition = new Vector3 ( 0, 0, 5 );
+	
+	var scal = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
+	previewObject.transform.localScale = 0.25 * Vector3 ( scal, scal, scal );
+	
+	previewObject.transform.localEulerAngles = new Vector3 ( 45, 0, 45 );
+	previewObject.layer = 8;
+}
+
 
 ////////////////////
 // Actor
@@ -185,16 +223,6 @@ static function SetSnap ( vector : Vector3 ) {
 
 
 ////////////////////
-// Spawn objects
-////////////////////
-static function SpawnObject ( obj : GameObject ) {
-	var newObject : GameObject = Instantiate ( obj );
-	newObject.transform.parent = currentLevel.transform;
-	newObject.transform.position = GetSpawnPosition();
-}
-
-
-////////////////////
 // Select objects
 ////////////////////
 // Pin materials
@@ -242,6 +270,9 @@ static function IsObjectSelected ( obj : GameObject ) : boolean {
 static function DuplicateObject () {
 	var newObj : GameObject = Instantiate ( selectedObject );
 	newObj.transform.parent = currentLevel.transform;
+
+	DeselectObject ();
+	SelectObject ( newObj );
 }
 
 // Deselect object
@@ -255,7 +286,11 @@ static function DeselectObject () {
 	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
 	
 	for ( var mat : Material in renderer.materials ) {
-	 	mat.shader = UnpinShader ( mat );
+	 	var origShader : Shader = UnpinShader ( mat );
+	
+		if ( origShader ) {
+			mat.shader = origShader;
+		}
 	}
 	
 	drawPath = null;
@@ -419,9 +454,52 @@ static function SetRestriction ( axis : String ) {
 ////////////////////
 // File I/O
 ////////////////////
+// Take screenshot
+static function SaveScreenshot ( filePath : String ) : IEnumerator {
+	var tex : Texture2D = new Texture2D(Screen.width, Screen.height);
+	tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
+	TextureScale.Bilinear ( tex, tex.width * 0.25, tex.height * 0.25 );	
+				
+	var bytes = tex.EncodeToPNG();
+	Destroy ( tex );
+		
+	File.WriteAllBytes ( filePath, bytes );
+}
+
+static function TakeScreenshot () {
+	var origPos : Vector3 = Camera.main.transform.localPosition;
+	var origRot : Vector3 = Camera.main.transform.localEulerAngles;
+
+	Camera.main.orthographic = true;
+	Camera.main.orthographicSize = 400;
+	
+	Camera.main.transform.localPosition = new Vector3 ( 0, 90, 0 );
+	Camera.main.transform.localEulerAngles = new Vector3 ( 90, 0, 0 );
+	
+	OGRoot.GoToPage ( "Empty" );
+	
+	var path : String = Application.dataPath + "/Maps/screenshots";
+	var filePath : String = path + "/" + currentLevel.name + ".png";
+	
+	if ( !File.Exists ( path ) ) {
+		Directory.CreateDirectory ( path );
+	}
+	
+	SaveScreenshot ( filePath );
+	
+	Camera.main.orthographic = false;
+	Camera.main.transform.localPosition = origPos;
+	Camera.main.transform.localEulerAngles = origRot;
+	
+	OGRoot.GoToPage ( "MenuBase" );
+	
+	Debug.Log ( "Editor | saved screenshot for " + currentLevel.name );
+}
+
 // Save file
 static function SaveFile ( path : String ) {
 	Saver.SaveMap ( path, EditorCore.currentLevel );
+	TakeScreenshot ();
 }
 
 // Load file
@@ -480,7 +558,7 @@ static function PlayLevel () {
 function Start () {
 	workspace = _workspace;
 	gizmo = _gizmo;
-	cam = _camera;
+	previewCamera = _previewCamera;
 	selectedShader = _selectedShader;
 	root = this.transform.parent;
 

@@ -6,39 +6,13 @@ class EditorActors extends OGPage {
 	var currentDir : String = "";
 	var currentActor : String = "";
 	var title : OGLabel;
+	var actorName : OGLabel;
 
-	function CreateItem ( name : String, x : float, y : float ) {
-		var button : GameObject = new GameObject ( name + "_btn" );
-		var img : GameObject = new GameObject ( name + "_img" );
-		var label : GameObject = new GameObject ( name + "_label" );
+	var listItemPrefab : EditorListItem;
 		
-		var b : OGButton = button.AddComponent ( OGButton );
-		var i : OGImage = img.AddComponent ( OGImage );
-		var l : OGLabel = label.AddComponent ( OGLabel );
-		
-		button.transform.parent = actorList;			
-		img.transform.parent = actorList;
-		label.transform.parent = actorList;
-		
-		button.transform.localPosition = new Vector3 ( x, y, 0.0 );
-		img.transform.localPosition = new Vector3 ( x+10, y+10, 0.0 );
-		label.transform.localPosition = new Vector3 ( x, y+80, 0.0 );
-		
-		button.transform.localScale = new Vector3 ( 100, 100, 0 );
-		img.transform.localScale = new Vector3 ( 80, 80, 0 );
-		label.transform.localScale = new Vector3 ( 100, 30, 0 );
-		
-		b.target = this.gameObject;
-		b.message = "SelectActor";
-		b.argument = name;
-		
-		l.text = name;
-			
-	}
-	
-	function SelectActor ( name : String ) {
-		title.text = "Select an actor ( " + name + " )";
-		currentActor = name;
+	function SelectItem ( n : String ) {
+		actorName.text = n;
+		currentActor = n;
 	}
 	
 	private function ClearList () {
@@ -56,15 +30,20 @@ class EditorActors extends OGPage {
 		var row = 0;
 		
 		for ( var f : GameObject in files ) {
-			CreateItem ( f.name, col * 110, row * 110 );
+			var item : EditorListItem = Instantiate ( listItemPrefab );
+			item.transform.parent = actorList;
+			item.transform.localScale = Vector3.one;
+			item.transform.localPosition = new Vector3 ( col * 116, row * 116, 0 );
+		
+			item.gameObject.name = f.name;
+			item.button.target = this.gameObject;
+			item.button.argument = f.name;
 		
 			if ( col < 3 ) {
 				col++;
-				
 			} else {
 				col = 0;
 				row++;
-			
 			}
 		}
 	}

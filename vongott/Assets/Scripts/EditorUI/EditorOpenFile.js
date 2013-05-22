@@ -10,9 +10,6 @@ class EditorOpenFile extends OGPage {
 	var mapList : OGScrollView;
 	var title : OGLabel;
 	
-	// Static vars
-	static var selectedMap : String = "";
-	
 		
 	////////////////////
 	// Navigation
@@ -26,9 +23,7 @@ class EditorOpenFile extends OGPage {
 	
 	// Select map
 	function SelectFile ( name : String ) {
-		selectedMap = name;
-		title.text = "Open a map file ( " + name + " )";
-		EditorCore.LoadFile ( selectedMap );
+		EditorCore.LoadFile ( name );
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 	
@@ -82,7 +77,6 @@ class EditorOpenFile extends OGPage {
 	////////////////////
 	override function StartPage () {
 		PopulateList();
-		selectedMap == "";
 		title.text = "Open a map file";
 	}
 	

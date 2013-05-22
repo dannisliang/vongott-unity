@@ -92,15 +92,41 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Prefabs
 	function AddPrefab () {
-		OGRoot.GoToPage ( "Prefabs" );
+		var folders : String[] = new String[2];
+		folders[0] = "Levels/AwesomeIsland";
+		folders[1] = "Interior/Furniture";
+		
+		EditorBrowser.mode = "Add";
+		EditorBrowser.rootFolder = "Prefabs";
+		EditorBrowser.folders = folders;
+		
+		OGRoot.GoToPage ( "Browser" );
 	}
 	
 	function AddActor () {
-		OGRoot.GoToPage ( "Actors" );
+		var folders : String[] = new String[3];
+		folders[0] = "NPC";
+		folders[1] = "Player";
+		folders[2] = "Animals";
+		
+		EditorBrowser.mode = "Add";
+		EditorBrowser.rootFolder = "Actors";
+		EditorBrowser.folders = folders;
+		
+		OGRoot.GoToPage ( "Browser" );
 	}
 	
 	function AddItem () {
-		OGRoot.GoToPage ( "Items" );
+		var folders : String[] = new String[3];
+		folders[0] = "Equipment";
+		folders[1] = "Consumables";
+		folders[2] = "Upgrades";
+		
+		EditorBrowser.mode = "Add";
+		EditorBrowser.rootFolder = "Items";
+		EditorBrowser.folders = folders;
+		
+		OGRoot.GoToPage ( "Browser" );
 	}
 	
 	function AddLight () {

@@ -20,6 +20,7 @@ static var started = false;
 static var currentChapter : Chapter;
 static var currentScene : Scene;
 static var currentLevel : GameObject;
+static var nextLevel : String;
 
 static var levelContainer : Transform;
 
@@ -91,6 +92,7 @@ static function LoadLevel ( path : String ) {
 	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
 }
 
+
 ////////////////////
 // Go to editor
 ////////////////////
@@ -127,8 +129,9 @@ function Start () {
 	// level container
 	levelContainer = _levelContainer;
 	
-	// test level
-	LoadLevel ( "DudeMeister" );
+	// load level
+	if ( nextLevel == "" ) { nextLevel == "DudeMeister"; }
+	LoadLevel ( nextLevel );
 	
 	// signal
 	Print ("GameCore | started");

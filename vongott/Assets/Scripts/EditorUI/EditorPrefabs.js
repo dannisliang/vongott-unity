@@ -4,9 +4,8 @@ class EditorPrefabs extends OGPage {
 	var prefabList : Transform;
 	var prefabSelector : OGPopUp;
 	var currentDir : String;
-	var listItemPrefab : EditorListItem;
-	var itemName : OGLabel;
-	var selectedItem : GameObject;
+	
+	@HideInInspector var currentPrefab : String;
 	
 	private function ClearList () {
 		for ( var i = 0; i < prefabList.childCount; i++ ) {
@@ -17,32 +16,29 @@ class EditorPrefabs extends OGPage {
 	private function PopulateList () {
 		var files : Object[] = Resources.LoadAll ( "Prefabs/" + currentDir, GameObject );
 		
-		var col : float = 0;
-		var row : float = 0;
+		var i : int = 0;
 		
 		for ( var f : GameObject in files ) {
-			var item : EditorListItem = Instantiate ( listItemPrefab );
-			item.transform.parent = prefabList;
-			item.transform.localScale = Vector3.one;
-			item.transform.localPosition = new Vector3 ( col * 110, row * 110, 0 );
+			var obj : GameObject = new GameObject ( f.name );
+			var btn = obj.AddComponent ( OGButton );
 		
-			item.gameObject.name = f.name;
-			item.label.text = "";
-			item.button.target = this.gameObject;
-			item.button.argument = f.name;
-		
-			if ( col < 3 ) {
-				col++;
-			} else {
-				col = 0;
-				row++;
-			}
+			btn.text = f.name;
+			btn.target = this.gameObject;
+			btn.message = "SelectPrefab";
+			btn.argument = f.name;
+			
+			obj.transform.parent = prefabList;
+			obj.transform.localScale = new Vector3 ( 468, 30, 1 );
+			obj.transform.localPosition = new Vector3 ( 0, i * 32, -2 );
+			
+			i++;
 		}
 	}
 	
-	function SelectItem ( n : String ) {
-		itemName.text = n;
-		selectedItem = Resources.Load ( "Prefabs/" + currentDir + "/" + n );
+	function SelectPrefab ( n : String ) {
+		currentPrefab = n;
+		
+		EditorCore.PreviewObject ( "Prefabs/" + currentDir + "/" + currentPrefab );
 	}
 	
 	override function UpdatePage () {
@@ -59,7 +55,8 @@ class EditorPrefabs extends OGPage {
 	}
 	
 	function Add () {
-		EditorCore.SpawnObject ( selectedItem );
+		EditorCore.ClearPreview ();
+		EditorCore.AddPrefab ( currentDir, currentPrefab );
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 }

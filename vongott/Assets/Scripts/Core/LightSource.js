@@ -1,17 +1,13 @@
 #pragma strict
 
 class LightSource extends MonoBehaviour {
-	var color : Color = Color.white;
+	var color : Color = new Color ( 1, 1, 1, 1 );
 	var range : float = 10.0;
 	var intensity : float = 1.0;
-	var visible = true;
-	
-	function SetVisible ( v : boolean ) {
-		visible = v;
-	}		
 	
 	function SetColor ( c : Color ) {
 		color = c;
+		color.a = 1;
 	
 		this.GetComponent(Light).color = color;
 		this.GetComponent(MeshRenderer).material.color = color;
@@ -40,9 +36,8 @@ class LightSource extends MonoBehaviour {
 	}
 	
 	function Start () {
-		this.GetComponent(Light).color = color;
-		this.GetComponent(MeshRenderer).material.color = color;
-		this.GetComponent(Light).range = range;
-		this.GetComponent(Light).intensity = intensity;
+		SetColor ( color );
+		SetRange ( range );
+		SetIntensity ( intensity );
 	}
 }
