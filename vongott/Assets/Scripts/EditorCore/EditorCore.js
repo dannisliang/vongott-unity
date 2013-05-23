@@ -3,6 +3,12 @@
 import System.Collections.Generic;
 import System.IO;
 
+// Public classes
+public class ObjectAttributes {
+	var keys : String = "";
+	var values : String = "";
+}
+
 // Private classes
 private class Action {
 	var object : GameObject;
@@ -150,8 +156,10 @@ static function ClearPreview () {
 	}
 }
 
-static function PreviewObject ( path ) {
+static function PreviewObject ( path ) : ObjectAttributes {
 	ClearPreview ();
+	
+	Debug.Log ( path );
 	
 	previewObject = Instantiate ( Resources.Load ( path ) as GameObject );
 	
@@ -160,10 +168,27 @@ static function PreviewObject ( path ) {
 	var scal = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
 	previewObject.transform.localScale = 0.25 * Vector3 ( scal, scal, scal );
 	
-	previewObject.transform.localEulerAngles = new Vector3 ( 45, 0, 45 );
+	previewObject.transform.localEulerAngles = new Vector3 ( -45, 45, 0 );
 	previewObject.layer = 8;
-}
 
+	// attributes
+	var attributes : ObjectAttributes = new ObjectAttributes();
+
+	// ^ equipment
+	if ( previewObject.GetComponent ( Item ) ) {
+		var itm : Item = previewObject.GetComponent ( Item );
+		
+		attributes.keys = itm.title + "\n\n";
+		attributes.values = "\n\n";
+		
+		for ( var attr : Item.Attribute in itm.attr ) {
+			attributes.keys += attr.type.ToString() + "\n";
+			attributes.values += attr.val.ToString() + "\n";
+		}
+	}
+	
+	return attributes;
+}
 
 ////////////////////
 // Actor

@@ -6,6 +6,8 @@ class EditorBrowser extends OGPage {
 	var currentDir : String;
 	var addButton : OGButton;
 	var title : OGLabel;
+	var fileAttr : OGLabel;
+	var fileInfo : OGLabel;
 	
 	static var rootFolder : String;
 	static var mode : String = "Add";
@@ -15,6 +17,11 @@ class EditorBrowser extends OGPage {
 	@HideInInspector var folders : String[];
 	
 	private function ClearList () {
+		EditorCore.ClearPreview ();
+		
+		fileAttr.text = "";
+		fileInfo.text = "";
+		
 		for ( var i = 0; i < fileList.childCount; i++ ) {
 			Destroy ( fileList.GetChild ( i ).gameObject );
 		}
@@ -28,6 +35,8 @@ class EditorBrowser extends OGPage {
 	}
 	
 	private function PopulateList () {
+		ClearList ();
+		
 		var files : Object[] = Resources.LoadAll ( rootFolder + "/" + currentDir, GameObject );
 		
 		var i : int = 0;
@@ -55,7 +64,11 @@ class EditorBrowser extends OGPage {
 		currentFile = btn.text;
 		btn.style = "listitemselected";
 		
-		EditorCore.PreviewObject ( rootFolder + "/" + currentDir + "/" + currentFile );
+		var attributes : ObjectAttributes = EditorCore.PreviewObject ( rootFolder + "/" + currentDir + "/" + currentFile );
+		
+		fileAttr.text = attributes.keys;
+		fileInfo.text = attributes.values;
+
 	}
 	
 	function SetFolders () {
@@ -101,6 +114,8 @@ class EditorBrowser extends OGPage {
 	}
 	
 	function OK () {
+		EditorCore.ClearPreview ();
+		
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 	
