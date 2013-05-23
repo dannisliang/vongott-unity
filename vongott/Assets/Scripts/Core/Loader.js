@@ -57,6 +57,28 @@ class Loader {
 		return input;
 	}
 	
+	static function LoadScreenshot ( path : String ) : Texture2D {
+		if ( !File.Exists ( path ) ) {
+			Debug.LogError ( "Loader | no such file: " + path );
+			return null;
+		}
+		
+		var sr : StreamReader = new File.OpenText( path );
+		var input : String = "";
+		var line : String = "";
+		
+		line = sr.ReadLine();
+		
+		while ( line != null ) {
+			input += line;
+			line = sr.ReadLine();
+		}
+	
+		sr.Close();
+		
+		return Deserializer.DeserializeScreenshot ( input );
+	}
+	
 	static function LoadFlags () : JSONObject {
 		var path = Application.dataPath + "/UserData/flags.vgdata";
 		

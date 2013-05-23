@@ -299,6 +299,10 @@ static function DeselectObject () {
 
 // Select object
 static function SelectObject ( obj : GameObject ) {
+	if ( !obj ) {
+		return;
+	}
+	
 	if ( selectedObject ) { 
 		DeselectObject ();
 	}
@@ -454,52 +458,20 @@ static function SetRestriction ( axis : String ) {
 ////////////////////
 // File I/O
 ////////////////////
-// Take screenshot
-static function SaveScreenshot ( filePath : String ) : IEnumerator {
-	var tex : Texture2D = new Texture2D(Screen.width, Screen.height);
-	tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
-	TextureScale.Bilinear ( tex, tex.width * 0.25, tex.height * 0.25 );	
-				
-	var bytes = tex.EncodeToPNG();
-	Destroy ( tex );
-		
-	File.WriteAllBytes ( filePath, bytes );
-}
-
-static function TakeScreenshot () {
-	var origPos : Vector3 = Camera.main.transform.localPosition;
-	var origRot : Vector3 = Camera.main.transform.localEulerAngles;
-
-	Camera.main.orthographic = true;
-	Camera.main.orthographicSize = 400;
-	
-	Camera.main.transform.localPosition = new Vector3 ( 0, 90, 0 );
-	Camera.main.transform.localEulerAngles = new Vector3 ( 90, 0, 0 );
-	
-	OGRoot.GoToPage ( "Empty" );
-	
-	var path : String = Application.dataPath + "/Maps/screenshots";
-	var filePath : String = path + "/" + currentLevel.name + ".png";
-	
-	if ( !File.Exists ( path ) ) {
-		Directory.CreateDirectory ( path );
-	}
-	
-	SaveScreenshot ( filePath );
-	
-	Camera.main.orthographic = false;
-	Camera.main.transform.localPosition = origPos;
-	Camera.main.transform.localEulerAngles = origRot;
-	
-	OGRoot.GoToPage ( "MenuBase" );
-	
-	Debug.Log ( "Editor | saved screenshot for " + currentLevel.name );
+// Screenshot
+static function LoadScreenshot ( path ) : Texture2D {
+	return Loader.LoadScreenshot ( path );
 }
 
 // Save file
 static function SaveFile ( path : String ) {
-	Saver.SaveMap ( path, EditorCore.currentLevel );
-	TakeScreenshot ();
+	yield new WaitForEndOfFrame();
+	
+	var tex : Texture2D = new Texture2D(Screen.width, Screen.height);	
+	tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
+	TextureScale.Bilinear ( tex, tex.width * 0.25, tex.height * 0.25 );	
+	
+	Saver.SaveMap ( path, EditorCore.currentLevel, tex );
 }
 
 // Load file

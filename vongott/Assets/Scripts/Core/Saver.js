@@ -3,7 +3,7 @@
 import System.IO;
 
 class Saver {
-	static function SaveMap ( name : String, obj : GameObject ) {
+	static function SaveMap ( name : String, obj : GameObject, screenshot : Texture2D ) {
 		var path = Application.dataPath + "/Maps/" + name + ".vgmap";
 		var sw : StreamWriter;
 		
@@ -12,10 +12,16 @@ class Saver {
 		} else {
 			sw = new StreamWriter ( path );
 		}
-				
-		sw.WriteLine ( Serializer.SerializeGameObject ( obj ) );
+		
+		var serialized : JSONObject = Serializer.SerializeGameObject ( obj );
+		
+		serialized.AddField ( "screenshot", Serializer.SerializeScreenshot ( screenshot ) );
+		
+		sw.WriteLine ( serialized );
 		sw.Flush();
 		sw.Close();
+		
+		UnityEngine.Object.Destroy ( screenshot );
 	}
 
 	static function SaveFlags ( table : JSONObject ) {

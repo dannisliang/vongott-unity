@@ -9,8 +9,11 @@ class EditorOpenFile extends OGPage {
 	// Public vars
 	var mapList : OGScrollView;
 	var title : OGLabel;
+	var selectedFile : String = "";
+	var previewPane : OGImage;
+	var fileInfo : OGLabel;
 	
-		
+					
 	////////////////////
 	// Navigation
 	////////////////////
@@ -21,9 +24,30 @@ class EditorOpenFile extends OGPage {
 		return files;
 	}
 	
+	// Deselect all
+	function DeselectAll () {
+		for ( var i = 0; i < mapList.transform.childCount; i++ ) {
+			var btn : OGButton = mapList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
+			btn.style = "listitem";		
+		}
+	}
+	
 	// Select map
-	function SelectFile ( name : String ) {
-		EditorCore.LoadFile ( name );
+	function SelectFile ( btn : OGButton ) {
+		DeselectAll ();
+		
+		var name : String = btn.text;
+		selectedFile = name;
+		btn.style = "listitemselected";
+		
+		previewPane.image = Loader.LoadScreenshot ( Application.dataPath + "/Maps/" + name + ".vgmap" );
+	
+		fileInfo.text = "<map name>\n<actor count>\n<item count>\n<trigger count>\n<filesize>";
+	}
+	
+	// Open
+	function OpenFile () {
+		EditorCore.LoadFile ( selectedFile );
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 	
@@ -63,7 +87,7 @@ class EditorOpenFile extends OGPage {
 			btn.text = name;
 			btn.target = this.gameObject;
 			btn.message = "SelectFile";
-			btn.argument = name;
+			btn.style = "listitem";
 			
 			obj.transform.parent = mapList.transform;
 			obj.transform.localScale = new Vector3 ( 468, 30, 1 );

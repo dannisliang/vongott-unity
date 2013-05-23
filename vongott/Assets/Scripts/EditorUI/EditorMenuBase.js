@@ -40,7 +40,7 @@ class EditorMenuBase extends OGPage {
 	// Save file
 	function SaveFile () {
 		if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
-			RenameLevel ();
+			SaveAs ();
 			return;
 		}
 	
@@ -48,8 +48,8 @@ class EditorMenuBase extends OGPage {
 	}
 	
 	// Rename level
-	function RenameLevel () {
-		OGRoot.GoToPage ( "RenameLevel" );
+	function SaveAs () {
+		OGRoot.GoToPage ( "SaveAs" );
 	}
 	
 	// Exit editor
@@ -92,39 +92,22 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Prefabs
 	function AddPrefab () {
-		var folders : String[] = new String[2];
-		folders[0] = "Levels/AwesomeIsland";
-		folders[1] = "Interior/Furniture";
-		
 		EditorBrowser.mode = "Add";
 		EditorBrowser.rootFolder = "Prefabs";
-		EditorBrowser.folders = folders;
 		
 		OGRoot.GoToPage ( "Browser" );
 	}
 	
 	function AddActor () {
-		var folders : String[] = new String[3];
-		folders[0] = "NPC";
-		folders[1] = "Player";
-		folders[2] = "Animals";
-		
 		EditorBrowser.mode = "Add";
 		EditorBrowser.rootFolder = "Actors";
-		EditorBrowser.folders = folders;
 		
 		OGRoot.GoToPage ( "Browser" );
 	}
 	
 	function AddItem () {
-		var folders : String[] = new String[3];
-		folders[0] = "Equipment";
-		folders[1] = "Consumables";
-		folders[2] = "Upgrades";
-		
 		EditorBrowser.mode = "Add";
 		EditorBrowser.rootFolder = "Items";
-		EditorBrowser.folders = folders;
 		
 		OGRoot.GoToPage ( "Browser" );
 	}
@@ -245,7 +228,7 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	function PlayLevel () {		
 		if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
-			RenameLevel ();
+			SaveAs ();
 			return;
 		}
 	
@@ -260,8 +243,10 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	override function StartPage () {
 		EditorCore.SetInspector ( this );
-		
+				
 		ClearMenus ();
+	
+		EditorCore.ReselectObject ();
 	}
 	
 		

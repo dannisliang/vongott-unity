@@ -224,8 +224,10 @@ class EditorInspectorActor extends MonoBehaviour {
 		var i : int = int.Parse ( num );
 		
 		EditorCore.UnequipItem ( i );
-		EditorItems.equipping = i;
-		OGRoot.GoToPage ( "Items" );
+		EditorBrowser.rootFolder = "Items";
+		EditorBrowser.mode = "Equip";
+		EditorBrowser.argument = i.ToString();
+		OGRoot.GoToPage ( "Browser" );
 	}
 	
 	

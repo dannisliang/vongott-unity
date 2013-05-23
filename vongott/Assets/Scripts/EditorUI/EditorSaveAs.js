@@ -1,6 +1,6 @@
 #pragma strict
 
-class EditorRenameLevel extends OGPage {	
+class EditorSaveAs extends OGPage {	
 	////////////////////
 	// Prerequisites
 	////////////////////

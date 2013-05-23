@@ -9,14 +9,21 @@ class EditorBrowser extends OGPage {
 	
 	static var rootFolder : String;
 	static var mode : String = "Add";
-	static var folders : String[];
 	static var argument : String;
 	
 	@HideInInspector var currentFile : String;
+	@HideInInspector var folders : String[];
 	
 	private function ClearList () {
 		for ( var i = 0; i < fileList.childCount; i++ ) {
 			Destroy ( fileList.GetChild ( i ).gameObject );
+		}
+	}
+	
+	function DeselectAll () {
+		for ( var i = 0; i < fileList.transform.childCount; i++ ) {
+			var btn : OGButton = fileList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
+			btn.style = "listitem";		
 		}
 	}
 	
@@ -32,7 +39,7 @@ class EditorBrowser extends OGPage {
 			btn.text = f.name;
 			btn.target = this.gameObject;
 			btn.message = "SelectFile";
-			btn.argument = f.name;
+			btn.style = "listitem";
 			
 			obj.transform.parent = fileList;
 			obj.transform.localScale = new Vector3 ( 468, 30, 1 );
@@ -42,16 +49,46 @@ class EditorBrowser extends OGPage {
 		}
 	}
 	
-	function SelectFile ( n : String ) {
-		currentFile = n;
+	function SelectFile ( btn : OGButton ) {
+		DeselectAll ();
+		
+		currentFile = btn.text;
+		btn.style = "listitemselected";
 		
 		EditorCore.PreviewObject ( rootFolder + "/" + currentDir + "/" + currentFile );
 	}
+	
+	function SetFolders () {
+		folders = null;
+		
+		if ( rootFolder == "Prefabs" ) {
+			folders = new String[2];
+			folders[0] = "Levels/AwesomeIsland";
+			folders[1] = "Interior/Furniture";
+		
+		} else if ( rootFolder == "Items" ) {
+			folders = new String[3];
+			folders[0] = "Equipment";
+			folders[1] = "Consumables";
+			folders[2] = "Upgrades";
+		
+		} else if ( rootFolder == "Actors" ) {
+			folders = new String[3];
+			folders[0] = "NPC";
+			folders[1] = "Player";
+			folders[2] = "Animals";
+		
+		}
+	
+		dirSelector.options = folders;
+	
+	}
 		
 	override function StartPage () {
+		ClearList ();
 		addButton.text = mode;
 		title.text = mode + " " + rootFolder.ToLower();
-		dirSelector.options = folders;
+		SetFolders ();
 	}
 	
 	override function UpdatePage () {

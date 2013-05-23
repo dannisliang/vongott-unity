@@ -1,5 +1,8 @@
 #pragma strict
 
+import System;
+import System.Text;
+
 ////////////////////
 // Serialize GameObjects with their children and components
 ////////////////////
@@ -299,4 +302,17 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 	}
 	
 	return conversation;
+}
+
+
+////////////////////
+// Serialize screenshot
+////////////////////
+static function SerializeScreenshot ( tex : Texture2D ) : String {
+	var bytes = tex.EncodeToPNG();
+	var encoded = Convert.ToBase64String ( bytes );
+	
+	File.WriteAllBytes ( Application.dataPath + "/testimage.png", bytes);
+	
+	return encoded;
 }

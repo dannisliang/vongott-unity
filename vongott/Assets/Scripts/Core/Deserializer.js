@@ -1,5 +1,7 @@
 #pragma strict
 
+import System.Text;
+
 ////////////////////
 // Deserialize GameObjects with their children and components
 ////////////////////
@@ -325,4 +327,18 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 	}
 	
 	return conversation;
+}
+
+
+////////////////////
+// Deserialize screenshot
+////////////////////
+static function DeserializeScreenshot ( input : String ) : Texture2D {
+	var map : JSONObject =  new JSONObject ( input );
+	var bytes : byte[] = Convert.FromBase64String ( map.GetField ( "screenshot" ).str );
+	var image : Texture2D = new Texture2D ( 0, 0 );
+	
+	image.LoadImage ( bytes );
+			
+	return image;
 }
