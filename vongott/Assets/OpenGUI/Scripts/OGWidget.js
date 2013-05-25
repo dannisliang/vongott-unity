@@ -33,9 +33,12 @@ class OGWidget extends MonoBehaviour {
 		var heightOffset : float = 0.0;
 	}
 	
-	private class Anchor {
-		var object : GameObject;
-		
+	private class Pivot {
+		var x : RelativeX;
+		var y : RelativeY;
+	}
+	
+	private class Anchor {		
 		var x : RelativeX = RelativeX.None;
 		var xOffset : float = 0.0;
 		
@@ -43,11 +46,12 @@ class OGWidget extends MonoBehaviour {
 		var yOffset : float = 0.0;
 	}
 	
-	var extraCamera : Camera;
 	var style : String = "";
+	var pivot : Pivot;
 	var anchor : Anchor;	
 	var stretch : Stretch;
-					
+	
+	@HideInInspector var adjustPivot : Vector2 = Vector2.zero;				
 	@HideInInspector var manualDraw = false;
 	@HideInInspector var mouseOver = false;
 	@HideInInspector var guiRect : Rect;
@@ -77,6 +81,7 @@ class OGWidget extends MonoBehaviour {
 		}
 	}
 	
+	// Apply stretch
 	function ApplyStretch () {
 		var modify_width = transform.localScale.x;
 		var modify_height = transform.localScale.y;
@@ -93,56 +98,59 @@ class OGWidget extends MonoBehaviour {
 			modify_height = ( Screen.height * stretch.heightFactor ) + stretch.heightOffset;
 		}
 		
-		SetWidth ( modify_width );
-		SetHeight ( modify_height );
+		if ( stretch.width != ScreenSize.None ) { SetWidth ( modify_width ); }
+		if ( stretch.height != ScreenSize.None ) { SetHeight ( modify_height ); }
 	}
 	
-	function ApplyPosition () {
-		if ( !anchor.object && anchor.x == RelativeX.None && anchor.y == RelativeY.None ) {
-			return;
-		}
-		
-		var modify_x = transform.localPosition.x;
-		var modify_y = transform.localPosition.y;
-		
+	// Apply the anchor position
+	function ApplyAnchor () {
 		var anchor_x = 0;
 		var anchor_y = 0;
 		
-		if ( anchor.object ) {
-			anchor_x = anchor.object.transform.localPosition.x;
-			anchor_y = anchor.object.transform.localPosition.y;
+		if ( anchor.x == RelativeX.Center ) {
+			anchor_x = Screen.width / 2;
+		} else if ( anchor.x == RelativeX.Right ) {
+			anchor_x = Screen.width;
+		}
 		
-			anchor.x = RelativeX.None;
-			anchor.y = RelativeY.None;
+		if ( anchor.y == RelativeY.Center ) {
+			anchor_y = Screen.height / 2;
+		} else if ( anchor.y == RelativeY.Bottom ) {
+			anchor_y = Screen.height;
+		}
+
+		if ( anchor.x != RelativeX.None ) { SetX ( anchor_x + anchor.xOffset ); }
+		if ( anchor.y != RelativeY.None ) { SetY ( anchor_y + anchor.yOffset ); }
+	}
+	
+	// Apply the pivot point
+	function ApplyPivot () {		
+		if ( pivot.x == RelativeX.Center ) {
+			adjustPivot.x = -(transform.localScale.x / 2);
+		} else if ( pivot.x == RelativeX.Right ) {
+			adjustPivot.x = -transform.localScale.x;
 		} else {
-			if ( anchor.x == RelativeX.Center ) {
-				anchor_x = Screen.width / 2;
-			} else if ( anchor.x == RelativeX.Right ) {
-				anchor_x = Screen.width;
-			}
-			
-			if ( anchor.y == RelativeY.Center ) {
-				anchor_y = Screen.height / 2;
-			} else if ( anchor.y == RelativeY.Bottom ) {
-				anchor_y = Screen.height;
-			}
+			adjustPivot.x = 0;
 		}
 		
-		modify_x = anchor_x + anchor.xOffset;
-		modify_y = anchor_y + anchor.yOffset;
-		
-		if ( anchor.object || anchor.x != RelativeX.None ) {
-			SetX ( modify_x );
-		}
-		
-		if ( anchor.object || anchor.y != RelativeY.None ) {
-			SetY ( modify_y );
+		if ( pivot.y == RelativeY.Center ) {
+			adjustPivot.y = -(transform.localScale.y / 2);
+		} else if ( pivot.y == RelativeY.Bottom ) {
+			adjustPivot.y = -transform.localScale.y;
+		} else {
+			adjustPivot.y = 0;
 		}
 	}
-		
+	
 	function UpdateWidget () {}
 	
 	function Draw ( x : float, y : float ) {}
+	
+	function CancelZScale () {
+		if ( transform.localScale.z != 1 ) {
+			transform.localScale = new Vector3 ( transform.localScale.x, transform.localScale.y, 1 );
+		}
+	}
 	
 	function Start () {}
 	
@@ -155,31 +163,18 @@ class OGWidget extends MonoBehaviour {
 		}
 		
 		if ( !manualDraw ) {
-			Draw ( transform.position.x, transform.position.y );
+			Draw ( transform.position.x + adjustPivot.x, transform.position.y + adjustPivot.y );
 		}
 		
 		mouseOver = guiRect.Contains ( Event.current.mousePosition );
-	
-		if ( extraCamera ) {
-			if (Event.current.type == EventType.Repaint) {
-				var w : float = transform.localScale.x / Screen.width;
-				var h : float = transform.localScale.y / Screen.height;
-				var x : float = transform.position.x / Screen.width;
-				var y : float = 1 - ( transform.position.y / Screen.height ) - h;
-				
-				extraCamera.rect = new Rect ( x, y, w, h );
-				
-				extraCamera.Render();
-			}
-		}
 	}
 	
 	function Update () {		
-		if ( stretch ) {
-			ApplyStretch ();
-			ApplyPosition ();
-		}
+		ApplyStretch ();
+		ApplyAnchor ();
+		ApplyPivot ();
 		
 		UpdateWidget();
+		CancelZScale ();
 	}
 }

@@ -78,8 +78,7 @@ class EditorMenuBase extends OGPage {
 	
 	// Set grid
 	function AdjustGrid () {
-		EditorAdjust.adjust = "grid";
-		OGRoot.GoToPage ( "Adjust" );
+		OGRoot.GoToPage ( "Grid" );
 	}
 	
 	// Toggle gizmos

@@ -328,11 +328,7 @@ class EditorConversations extends OGPage {
 	////////////////////
 	// Update
 	////////////////////	
-	override function UpdatePage () {
-		// Resize scroll view
-		scrollView.viewWidth = Screen.width - 30;
-		scrollView.viewHeight = Screen.height - 170;
-		
+	override function UpdatePage () {		
 		// Arrange entries
 		RearrangeEntries();
 	}

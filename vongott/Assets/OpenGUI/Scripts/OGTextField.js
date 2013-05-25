@@ -39,6 +39,7 @@ class OGTextField extends OGWidget {
 	}
 
 	override function Draw ( x : float, y : float ) {
+		if ( !text ) { text = ""; }
 		if ( !guiStyle ) { guiStyle = GUI.skin.textField; }
 					
 		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );

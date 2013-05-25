@@ -18,7 +18,7 @@ class EditorBrowser extends OGPage {
 	
 	private function ClearList () {
 		EditorCore.ClearPreview ();
-		
+				
 		fileAttr.text = "";
 		fileInfo.text = "";
 		
@@ -98,6 +98,7 @@ class EditorBrowser extends OGPage {
 	}
 		
 	override function StartPage () {
+		dirSelector.selectedOption = "";
 		ClearList ();
 		addButton.text = mode;
 		title.text = mode + " " + rootFolder.ToLower();

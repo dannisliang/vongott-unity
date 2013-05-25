@@ -52,17 +52,21 @@ static var rotateMode = false;
 static var scaleMode = false;
 static var grabRestrict : String;
 
+// grid / guides
+static var gizmo : GameObject;
+static var snapEnabled = true;
+static var gridEnabled = true;
+static var gridLineDistance : float = 1.0;
+static var gridLineBrightFrequency : int = 5;
+
 // editor essentials
 static var workspace : Transform;
 static var cam : Transform;
-static var gizmo : GameObject;
 static var inspector : EditorMenuBase;
 static var player : GameObject;
 static var camTarget : GameObject;
 static var root : Transform;
 static var drawPath : Vector3[];
-static var snap : Vector3 = Vector3.zero;
-static var snapEnabled = true;
 static var selectedShader : Shader;
 static var origShaders : List.< KeyValuePair.< Material, Shader > > = new List.< KeyValuePair.< Material, Shader > > ();
 static var noGizmos : boolean = false;
@@ -156,20 +160,31 @@ static function ClearPreview () {
 	}
 }
 
+static function SetLayerRecursively ( obj : GameObject, lay : int ) {
+	if ( obj == null ) { return; }
+	
+	obj.layer = lay;
+	
+	for ( var child : Transform in obj.transform ) {
+        if ( child == null ) {
+        	continue;
+        }
+
+        SetLayerRecursively ( child.gameObject, lay );
+    }
+}
+
 static function PreviewObject ( path ) : ObjectAttributes {
 	ClearPreview ();
 	
-	Debug.Log ( path );
-	
 	previewObject = Instantiate ( Resources.Load ( path ) as GameObject );
 	
-	previewObject.transform.localPosition = new Vector3 ( 0, 0, 5 );
-	
 	var scal = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
-	previewObject.transform.localScale = 0.25 * Vector3 ( scal, scal, scal );
-	
+	previewObject.transform.localPosition = new Vector3 ( 0, 0, 5 );
+	previewObject.transform.localScale = Vector3.one;
 	previewObject.transform.localEulerAngles = new Vector3 ( -45, 45, 0 );
-	previewObject.layer = 8;
+	
+	SetLayerRecursively ( previewObject, 8 );
 
 	// attributes
 	var attributes : ObjectAttributes = new ObjectAttributes();
@@ -239,11 +254,6 @@ static function ToggleTextured () {
 // Toggle gizmos
 static function ToggleGizmos () {
 	noGizmos = !noGizmos;
-}
-
-// Set grid
-static function SetSnap ( vector : Vector3 ) {
-	snap = vector;
 }
 
 

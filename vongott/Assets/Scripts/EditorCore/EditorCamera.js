@@ -11,6 +11,8 @@ var gizmo : Transform;
 var gizmoX : Material;
 var gizmoY : Material;
 var gizmoZ : Material;
+var gridDark : Material;
+var gridBright : Material;
 var selectIdle : Material;
 var selectModifying : Material;
 var rotationY : float = 0.0;
@@ -53,17 +55,44 @@ function DrawZLine () {
 	GL.End();
 }
 
-function DrawPathLine ( path : Vector3[] ) {
-	selectIdle.SetPass ( 0 );
+// Grid
+function DrawGrid () {
+	var distance : float = EditorCore.gridLineDistance;
+	var amount : int = ( EditorCore.gridLineBrightFrequency * 10 ) * distance;
+	var mark : int = EditorCore.gridLineBrightFrequency;
 	
-	GL.Begin( GL.LINES );
+	var half : float = amount / 2.0;
+	var counter : int;
 	
-	for ( var i = 0; i < path.Length; i++ ) {
- 		var node : Vector3 = path[i];
- 		GL.Vertex3 ( node.x, node.y, node.z );
+	// draw dark lines
+	gridDark.SetPass ( 0 );
+			
+	GL.Begin ( GL.LINES );
+	
+	for ( var i = 0; i < amount + 1; i++ ) {
+		GL.Vertex3 ( ( i * distance ) - half, 0.0, -half );
+		GL.Vertex3 ( ( i * distance ) - half, 0.0, half );
+		
+		GL.Vertex3 ( -half, 0.0, ( i * distance ) - half );
+		GL.Vertex3 ( half, 0.0, ( i * distance ) - half );
 	}
-
-	GL.End();
+	
+	GL.End ();
+	
+	// draw bright lines
+	gridBright.SetPass ( 0 );
+			
+	GL.Begin ( GL.LINES );
+	
+	for ( i = 0; i < ( amount / mark ) + 1 ; i++ ) {
+		GL.Vertex3 ( ( i * ( distance * mark ) ) - half, 0.0, -half );
+		GL.Vertex3 ( ( i * ( distance * mark ) ) - half, 0.0, half );
+		
+		GL.Vertex3 ( -half, 0.0, ( i * ( distance * mark ) ) - half );
+		GL.Vertex3 ( half, 0.0, ( i * ( distance * mark ) ) - half );
+	}
+	
+	GL.End ();
 }
 
 // Rendering
@@ -76,11 +105,11 @@ function OnPostRender () {
 	// wireframe
 	GL.wireframe = false;
 	
-	// path
-	if ( EditorCore.drawPath ) {
-		DrawPathLine ( EditorCore.drawPath );
+	// grid
+	if ( EditorCore.gridEnabled ) {
+		DrawGrid ();
 	}
-	
+		
 	// gizmo
     if ( EditorCore.grabRestrict == "x" ) {		
 	    DrawXLine();
@@ -187,22 +216,18 @@ function Update () {
 		var zScale : float = o.transform.localScale.z + z;
 		
 		if ( EditorCore.snapEnabled ) {
-			if ( EditorCore.snap.x > 0 ) {
-				xGrab = Round ( xGrab, EditorCore.snap.x );
-				xRotate = Round ( xRotate, EditorCore.snap.x );
-				xScale = Round ( xScale, EditorCore.snap.x );
-			}
+			if ( EditorCore.gridLineDistance > 0 ) {
+				xGrab = Round ( xGrab, EditorCore.gridLineDistance );
+				xRotate = Round ( xRotate, EditorCore.gridLineDistance );
+				xScale = Round ( xScale, EditorCore.gridLineDistance );
 			
-			if ( EditorCore.snap.y > 0 ) {
-				yGrab = Round ( yGrab, EditorCore.snap.y );
-				yRotate = Round ( yRotate, EditorCore.snap.y );
-				yScale = Round ( yScale, EditorCore.snap.y );
-			}
+				yGrab = Round ( yGrab, EditorCore.gridLineDistance );
+				yRotate = Round ( yRotate, EditorCore.gridLineDistance );
+				yScale = Round ( yScale, EditorCore.gridLineDistance );
 			
-			if ( EditorCore.snap.z > 0 ) {
-				zGrab = Round ( zGrab, EditorCore.snap.z );
-				zRotate = Round ( zRotate, EditorCore.snap.z );
-				zScale = Round ( zScale, EditorCore.snap.z );
+				zGrab = Round ( zGrab, EditorCore.gridLineDistance );
+				zRotate = Round ( zRotate, EditorCore.gridLineDistance );
+				zScale = Round ( zScale, EditorCore.gridLineDistance );
 			}
 		}		
 		

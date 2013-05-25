@@ -101,6 +101,8 @@ class EditorPickFlag extends OGPage {
 			target.text = "(none)";
 			OGRoot.GoToPage ( sender );
 		}
+		
+		SaveFlags ();
 	}
 	
 	function SaveFlags () {

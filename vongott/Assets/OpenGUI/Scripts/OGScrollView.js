@@ -11,6 +11,18 @@ class OGScrollView extends OGWidget {
 		
 	// Update
 	override function UpdateWidget () {		
+		// Adopt view width and height from localScale
+		if ( transform.localScale.x != 1 ) {
+			viewWidth = transform.localScale.x;
+		}
+		
+		if ( transform.localScale.y != 1 ) {
+			viewHeight = transform.localScale.y;
+		}
+		
+		transform.localScale = new Vector3 ( 1, 1, 1 );
+		
+		// Update content
 		for ( var w : OGWidget in transform.GetComponentsInChildren (OGWidget) ) {			
 			if ( w != this ) {
 				// Make sure the widgets aren't drawn automatically
@@ -19,8 +31,8 @@ class OGScrollView extends OGWidget {
 				}
 			
 				// Update the scroll length
-				if ( scrollLength < w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y ) {
-					scrollLength = w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y;
+				if ( scrollLength < w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset ) {
+					scrollLength = w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset;
 				}
 			}
 		}
@@ -65,7 +77,7 @@ class OGScrollView extends OGWidget {
 		// Draw widgets
 		for ( var i = 0; i < queue.Count; i++ ) {
 			for ( var item : OGWidget in queue[i] ) {
-				item.Draw ( item.transform.position.x - transform.position.x, item.transform.position.y - transform.position.y );
+				item.Draw ( item.transform.position.x - transform.position.x + item.adjustPivot.x, item.transform.position.y - transform.position.y + item.adjustPivot.y );
 			}
 		}
 	
