@@ -312,7 +312,5 @@ static function SerializeScreenshot ( tex : Texture2D ) : String {
 	var bytes = tex.EncodeToPNG();
 	var encoded = Convert.ToBase64String ( bytes );
 	
-	File.WriteAllBytes ( Application.dataPath + "/testimage.png", bytes);
-	
 	return encoded;
 }

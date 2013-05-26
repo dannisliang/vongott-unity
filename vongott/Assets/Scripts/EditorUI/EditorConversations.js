@@ -29,6 +29,7 @@ class EditorConversations extends OGPage {
 	}
 	
 	// Public vars
+	var fileModeSwitch : OGPopUp;
 	var selector : Selector;
 	var creator : Creator;
 	var entryInstance : EditorConversationEntry;
@@ -43,6 +44,17 @@ class EditorConversations extends OGPage {
 	////////////////////
 	// File I/O
 	////////////////////
+	// Switch mode
+	function SelectFileMode () {
+		if ( fileModeSwitch.selectedOption == "Load" ) {
+			selector.instance.SetActive ( true );
+			creator.instance.SetActive ( false );
+		} else {
+			selector.instance.SetActive ( false );
+			creator.instance.SetActive ( true );
+		}
+	}
+	
 	// Trim filename
 	function TrimFileNames ( paths : String[] ) : String[] {
 		var newArray : String[] = new String[paths.Length];

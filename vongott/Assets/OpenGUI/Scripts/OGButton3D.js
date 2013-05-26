@@ -25,13 +25,14 @@ function SendMessage () {
 
 // Press button
 function PressButton () {
+	if ( executeOn == ButtonExecType.Press ) {
+		SendMessage ();
+		return;
+	}
+	
 	// animate
 	if ( pressBack ) {
 		transform.localPosition = new Vector3 ( transform.localPosition.x, transform.localPosition.y, transform.localPosition.z + pressBack );		
-	}
-	
-	if ( executeOn == ButtonExecType.Press ) {
-		SendMessage ();
 	}
 }
 

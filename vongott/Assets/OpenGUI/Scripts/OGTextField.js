@@ -43,7 +43,7 @@ class OGTextField extends OGWidget {
 		if ( !guiStyle ) { guiStyle = GUI.skin.textField; }
 					
 		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );
-		editor = GUIUtility.GetStateObject ( TextEditor, GUIUtility.keyboardControl );
+		editor = GUIUtility.GetStateObject ( TextEditor, GUIUtility.keyboardControl ) as TextEditor;
 		
 		if ( restrictASCII ) {
 			text = Regex.Replace(text, "[^a-zA-Z0-9_]", "");

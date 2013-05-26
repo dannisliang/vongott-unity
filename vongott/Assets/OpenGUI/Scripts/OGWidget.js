@@ -83,6 +83,8 @@ class OGWidget extends MonoBehaviour {
 	
 	// Apply stretch
 	function ApplyStretch () {
+		if ( !stretch ) { return; }
+		
 		var modify_width = transform.localScale.x;
 		var modify_height = transform.localScale.y;
 		
@@ -104,6 +106,8 @@ class OGWidget extends MonoBehaviour {
 	
 	// Apply the anchor position
 	function ApplyAnchor () {
+		if ( !anchor ) { return; }
+		
 		var anchor_x = 0;
 		var anchor_y = 0;
 		
@@ -125,6 +129,8 @@ class OGWidget extends MonoBehaviour {
 	
 	// Apply the pivot point
 	function ApplyPivot () {		
+		if ( !pivot ) { return; }
+		
 		if ( pivot.x == RelativeX.Center ) {
 			adjustPivot.x = -(transform.localScale.x / 2);
 		} else if ( pivot.x == RelativeX.Right ) {

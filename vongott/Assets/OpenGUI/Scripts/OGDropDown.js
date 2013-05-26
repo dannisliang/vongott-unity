@@ -34,7 +34,7 @@ class OGDropDown extends OGWidget {
 			
 			for ( var i = 0; i < submenu.Length; i++ ) {			
 				if ( GUI.Button ( Rect ( x - offset.x + guiStyle.padding.left, y + offset.y + ( guiStyle.padding.top / 2 ) + ( ( 12 + guiStyle.padding.top ) * i ), ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, transform.localScale.y ), submenu[i].name, GUI.skin.label ) ) {
-					target.SendMessage(submenu[i].message);
+					if ( target ) { target.SendMessage(submenu[i].message); }
 					isDown = false;
 				}
 			}
