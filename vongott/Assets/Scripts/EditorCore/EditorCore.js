@@ -220,7 +220,7 @@ static function PreviewObject ( path ) : ObjectAttributes {
 	var scal = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
 	previewObject.transform.localPosition = new Vector3 ( 0, 0, 5 );
 	previewObject.transform.localScale = Vector3.one;
-	previewObject.transform.localEulerAngles = new Vector3 ( -45, 45, 0 );
+	previewObject.transform.localEulerAngles = new Vector3 ( 0, 225, 0 );
 	
 	SetLayerRecursively ( previewObject, 8 );
 

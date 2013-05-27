@@ -16,6 +16,8 @@ var gridBright : Material;
 var selectIdle : Material;
 var selectModifying : Material;
 var rotationY : float = 0.0;
+var orbitX : float = 0.0;
+var orbitY : float = 0.0;
 
 
 ////////////////////
@@ -151,6 +153,15 @@ function TweenMoveTo ( position : Vector3 ) {
 	iTween.MoveTo ( Camera.main.gameObject, position, 0.5 );
 }
 
+// Clamp angle
+static function ClampAngle (angle : float, min : float, max : float) {
+	if (angle < -360)
+		angle += 360;
+	if (angle > 360)
+		angle -= 360;
+	return Mathf.Clamp (angle, min, max);
+}
+
 // Update
 function Update () {
 	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) { return; }
@@ -179,13 +190,31 @@ function Update () {
 	}
 	
 	// right mouse button
-	if ( Input.GetMouseButton(1) && !OGRoot.mouseOver ) {    
-		var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
-	
-		rotationY += Input.GetAxis("Mouse Y") * sensitivity;
-		rotationY = Mathf.Clamp (rotationY, -90, 90);
-	
-		transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+	if ( Input.GetMouseButton(1) ) {    
+		if ( EditorCore.GetSelectedObject() && Input.GetKey ( KeyCode.LeftControl ) ) { 
+			var target : Transform = EditorCore.GetSelectedObject().transform;	
+			
+			orbitX += Input.GetAxis("Mouse X") * sensitivity;
+	        orbitY -= Input.GetAxis("Mouse Y") * sensitivity;
+	 		
+	 		orbitY = ClampAngle(orbitY, -90, 90);
+	 		rotationY = -orbitY;
+	 		    
+	        var rotation = Quaternion.Euler ( orbitY, orbitX, 0);
+	        var position = rotation * Vector3 ( 0.0, 0.0, -Vector3.Distance(transform.position, target.position) ) + target.position;
+	        
+	        transform.rotation = rotation;
+	        transform.position = position;
+			
+		} else {
+			var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
+		
+			rotationY += Input.GetAxis("Mouse Y") * sensitivity;
+			rotationY = Mathf.Clamp (rotationY, -90, 90);
+		
+			transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+		
+		}
 	
 	// scroll button
 	} else if ( Input.GetMouseButton(2) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {        
