@@ -117,6 +117,15 @@ class EditorMenuBase extends OGPage {
 	
 	
 	////////////////////
+	// Edit menu
+	////////////////////
+	// Undo action
+	function UndoAction () {
+		EditorCore.UndoCurrentAction ();
+	}
+	
+	
+	////////////////////
 	// Editors menu
 	////////////////////
 	// Conversation editor

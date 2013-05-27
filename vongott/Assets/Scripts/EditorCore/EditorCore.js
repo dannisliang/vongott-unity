@@ -11,22 +11,34 @@ public class ObjectAttributes {
 
 // Private classes
 private class Action {
-	var object : GameObject;
+	var obj : GameObject;
+	var objPath : String;
 	var position : Vector3;
 	var rotation : Vector3;
 	var scale : Vector3;
+	var type : String;
 	
-	function Action ( obj : GameObject ) {
-		object = obj;
-		position = obj.transform.localPosition;
-		rotation = obj.transform.localEulerAngles;
-		scale = obj.transform.localScale;
+	function Action ( o : GameObject, t : String ) {
+		obj = o;
+		position = o.transform.localPosition;
+		rotation = o.transform.localEulerAngles;
+		scale = o.transform.localScale;
+		type = t;
+		
+		if ( o.GetComponent ( Prefab ) ) {
+			objPath = "Prefabs/" + o.GetComponent ( Prefab ).path + "/" + o.GetComponent ( Prefab ).id;
+		}
 	}
 	
 	function UndoAction () {
-		object.transform.localPosition = position;
-		object.transform.localEulerAngles = rotation;
-		object.transform.localScale = scale;
+		if ( !obj ) { return; }
+		
+		if ( type == "transform" ) {
+			obj.transform.localPosition = position;
+			obj.transform.localEulerAngles = rotation;
+			obj.transform.localScale = scale;
+		
+		}
 	}
 }
 
@@ -54,8 +66,8 @@ static var grabRestrict : String;
 
 // grid / guides
 static var gizmo : GameObject;
-static var snapEnabled = true;
-static var gridEnabled = true;
+static var snapEnabled = false;
+static var gridEnabled = false;
 static var gridLineDistance : float = 1.0;
 static var gridLineBrightFrequency : int = 5;
 
@@ -74,35 +86,61 @@ static var previewObject : GameObject;
 static var previewCamera : Camera;
 
 // undo
-static var actionStages : List.< Action > [] = new List.< Action > [10];
-static var currentActionStage : int = 0;
+static var actions : List.< Action > = new List.< Action > ();
+static var currentAction : Action;
 
 
 ////////////////////
 // Undo buffer
 ////////////////////
-function InitStages () {
-/*	for ( var a : List.< Action > in actionStages ) {
-		a = new List.< Action >();
-	}*/
+static function UndoAction ( action : Action ) {
+	// Check for lost object
+	if ( action.obj == null ) {
+		for ( var a : Action in actions ) {
+			if ( a.objPath == action.objPath ) {
+				action.obj = a.obj;
+			}
+		}
+	}
+	
+	if ( action.type != "delete" ) {
+		action.UndoAction ();
+	} else {
+		
+		var newObj : GameObject = Instantiate ( Resources.Load ( action.objPath ) ) as GameObject;
+		newObj.transform.parent = currentLevel.transform;
+		newObj.transform.localPosition = action.position;
+		newObj.transform.localEulerAngles = action.rotation;
+		newObj.transform.localScale = action.scale;
+		
+		action.obj = newObj;
+	}
+	
+	actions.Remove ( action );
+	
+	if ( actions.Count > 0 ) {
+		currentAction = actions[actions.Count-1];
+	} else {
+		currentAction = null;
+	}
 }
 
-static function ClearStage ( stage : int ) {
-//	actionStages[stage].Clear();
+static function AddAction ( obj : GameObject, type : String ) {
+	var newAction : Action = new Action ( obj, type );
+	
+	actions.Add ( newAction );
+	
+	if ( actions.Count > 10 ) {
+		actions.RemoveAt ( 0 );
+	}
+	
+	currentAction = newAction;
 }
 
-static function AddToStage ( stage : int, obj : GameObject ) {
-//	actionStages[stage].Add ( new Action ( obj ) );
-}
-
-static function UndoStage ( stage : int ) {
-	/*for ( var a : Action in actionStages[stage] ) {
-		a.UndoAction();
-	}*/
-}
-
-static function UndoCurrentStage () {
-	//UndoStage ( currentActionStage );	
+static function UndoCurrentAction () {
+	if ( currentAction != null ) {
+		UndoAction ( currentAction );
+	};	
 }
 
 
@@ -205,6 +243,7 @@ static function PreviewObject ( path ) : ObjectAttributes {
 	return attributes;
 }
 
+
 ////////////////////
 // Actor
 ////////////////////
@@ -292,6 +331,7 @@ static function GetSelectedObject () : GameObject {
 
 // Delete selected objects
 static function DeleteSelected () {
+	AddAction ( selectedObject, "delete" );
 	Destroy ( selectedObject );
 	DeselectObject ();
 }
@@ -398,13 +438,12 @@ static function SetGrabMode ( state : boolean ) {
 	grabMode = state;
 	
 	if ( grabMode ) {
-		currentActionStage++;
-		AddToStage ( currentActionStage, selectedObject );
+		AddAction ( selectedObject, "transform" );
 		
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Grab Mode" );
-		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to move\nHold Shift or Ctrl to change speed" );
-		EditorModes.SetHeight ( 90 );
+		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse mouse to move" );
+		EditorModes.SetHeight ( 70 );
 		
 		gizmo.SetActive ( true );
 		gizmo.transform.parent = selectedObject.transform;
@@ -433,6 +472,8 @@ static function SetRotateMode ( state : boolean ) {
 	rotateMode = state;
 	
 	if ( rotateMode ) {
+		AddAction ( selectedObject, "transform" );
+		
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Rotate Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to rotate\nHold Shift or Ctrl to change speed" );
@@ -465,6 +506,8 @@ static function SetScaleMode ( state : boolean ) {
 	scaleMode = state;
 	
 	if ( scaleMode ) {
+		AddAction ( selectedObject, "transform" );
+		
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Scale Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to scale\nHold Shift or Ctrl to change speed" );
@@ -572,8 +615,6 @@ function Start () {
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	gizmo.SetActive ( false );
 
-	InitStages();
-	
 	if ( initMap ) {
 		LoadFile ( initMap );
 	}
@@ -591,6 +632,4 @@ function Start () {
 }
 
 // Update
-function Update () {
-	EditorInput.Update ();
-}
+function Update () {}

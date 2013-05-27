@@ -15,6 +15,7 @@ class Saver {
 		
 		var serialized : JSONObject = Serializer.SerializeGameObject ( obj );
 		
+		serialized.AddField ( "Camera", Serializer.SerializeTransform ( Camera.main.transform ) );
 		serialized.AddField ( "screenshot", Serializer.SerializeScreenshot ( screenshot ) );
 		
 		sw.WriteLine ( serialized );

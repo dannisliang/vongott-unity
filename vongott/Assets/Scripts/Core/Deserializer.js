@@ -77,7 +77,6 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newItm.name = itm.GetField("model").str;
 	
 		return newItm;
-	
 	}
 	
 	var o : GameObject = new GameObject ( obj.GetField ( "name" ).str );
@@ -99,6 +98,14 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 static function DeserializeGameObject ( s : String ) : GameObject {
 	var obj : JSONObject = new JSONObject ( s );
 	var o : GameObject = DeserializeGameObjectFromJSON ( obj );
+	
+	// camera
+	if ( obj.HasField ( "Camera" ) ) {
+		var cam : JSONObject = obj.GetField("Camera");
+		
+		Camera.main.transform.localPosition = DeserializeVector3 ( cam.GetField ( "localPosition" ) );
+		Camera.main.transform.localEulerAngles = DeserializeVector3 ( cam.GetField ( "localEulerAngles" ) );
+	}
 	
 	return o;
 }
@@ -192,7 +199,8 @@ static function DeserializePathNode ( p : JSONObject, o : GameObject ) : GameObj
 
 // Transform
 static function DeserializeTransform ( c : JSONObject, o : GameObject ) {
-	var component : Transform = o.AddComponent ( Transform ); 
+	var component : Transform = o.GetComponent ( Transform );
+	
 	component.localPosition = DeserializeVector3( c.GetField ( "localPosition" ) );
 	component.localEulerAngles = DeserializeVector3( c.GetField ( "localRotation" ) );
 	component.localScale = DeserializeVector3( c.GetField ( "localScale" ) );

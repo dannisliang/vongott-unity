@@ -13,103 +13,26 @@ Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott
 Loading C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
 Loading C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
 Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\TickedPriorityQueue.dll (this message is harmless)
 Loading C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\TickedPriorityQueue.dll into Unity Child Domain
-- Completed reload, in  0.192 seconds
+- Completed reload, in  0.456 seconds
 desktop: 1920x1080 59Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\UnityScript.Lang.dll (this message is harmless)
 Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\Boo.Lang.dll (this message is harmless)
 Shader 'Vongott/Outline/Silhouetted Bumped Diffuse': fallback shader 'Outlined/Silhouetted Diffuse' not found
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 27 unused Assets to reduce memory usage. Loaded Objects now: 730.
-Total: 4.546369 ms (FindLiveObjects: 0.095480 ms CreateObjectMapping: 0.123098 ms MarkObjects: 1.316999 ms  DeleteObjects: 0.560257 ms)
+Unloading 39 unused Assets to reduce memory usage. Loaded Objects now: 1097.
+Total: 4.691653 ms (FindLiveObjects: 0.144407 ms CreateObjectMapping: 0.164529 ms MarkObjects: 1.514696 ms  DeleteObjects: 0.442690 ms)
 
+Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\UnityScript.Lang.dll (this message is harmless)
 EditorCore | started
  
 (Filename: C:/BuildAgent/work/7535de4ca26c26ac/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
-
-Shader 'Vongott/Editor/WireFrame': fallback shader 'Vertex Colored' not found
-DirectoryNotFoundException: Directory 'C:/Users/jampe/Documents/GitHub/vongott/vongott/Build/vongott_Data/Conversations/2' not found.
-  at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
-  at System.IO.Directory.GetDirectories (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
-  at EditorCore.GetConvoScenes (Int32 chapter) [0x00000] in <filename unknown>:0 
-  at EditorInspectorActor.Init (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorMenuBase.SetMenu (Int32 index, System.String menu, UnityEngine.GameObject selectedObj) [0x00000] in <filename unknown>:0 
-  at EditorCore.SelectObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorCamera.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-DirectoryNotFoundException: Directory 'C:/Users/jampe/Documents/GitHub/vongott/vongott/Build/vongott_Data/Conversations/2' not found.
-  at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
-  at System.IO.Directory.GetDirectories (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
-  at EditorCore.GetConvoScenes (Int32 chapter) [0x00000] in <filename unknown>:0 
-  at EditorInspectorActor.Init (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorMenuBase.SetMenu (Int32 index, System.String menu, UnityEngine.GameObject selectedObj) [0x00000] in <filename unknown>:0 
-  at EditorCore.SelectObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorCamera.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-DirectoryNotFoundException: Directory 'C:/Users/jampe/Documents/GitHub/vongott/vongott/Build/vongott_Data/Conversations/2' not found.
-  at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
-  at System.IO.Directory.GetDirectories (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
-  at EditorCore.GetConvoScenes (Int32 chapter) [0x00000] in <filename unknown>:0 
-  at EditorInspectorActor.Init (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorMenuBase.SetMenu (Int32 index, System.String menu, UnityEngine.GameObject selectedObj) [0x00000] in <filename unknown>:0 
-  at EditorCore.SelectObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorCamera.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-DirectoryNotFoundException: Directory 'C:/Users/jampe/Documents/GitHub/vongott/vongott/Build/vongott_Data/Conversations/2' not found.
-  at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
-  at System.IO.Directory.GetDirectories (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
-  at EditorCore.GetConvoScenes (Int32 chapter) [0x00000] in <filename unknown>:0 
-  at EditorInspectorActor.Init (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorMenuBase.SetMenu (Int32 index, System.String menu, UnityEngine.GameObject selectedObj) [0x00000] in <filename unknown>:0 
-  at EditorCore.SelectObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorCamera.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-DirectoryNotFoundException: Directory 'C:/Users/jampe/Documents/GitHub/vongott/vongott/Build/vongott_Data/Conversations/2' not found.
-  at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
-  at System.IO.Directory.GetDirectories (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
-  at EditorCore.GetConvoScenes (Int32 chapter) [0x00000] in <filename unknown>:0 
-  at EditorInspectorActor.Init (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorMenuBase.SetMenu (Int32 index, System.String menu, UnityEngine.GameObject selectedObj) [0x00000] in <filename unknown>:0 
-  at EditorCore.SelectObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorCamera.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-DirectoryNotFoundException: Directory 'C:/Users/jampe/Documents/GitHub/vongott/vongott/Build/vongott_Data/Conversations/2' not found.
-  at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
-  at System.IO.Directory.GetDirectories (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
-  at EditorCore.GetConvoScenes (Int32 chapter) [0x00000] in <filename unknown>:0 
-  at EditorInspectorActor.Init (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorMenuBase.SetMenu (Int32 index, System.String menu, UnityEngine.GameObject selectedObj) [0x00000] in <filename unknown>:0 
-  at EditorCore.SelectObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorCamera.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Platform assembly: C:\Users\jampe\Documents\GitHub\vongott\vongott\Build\vongott_Data\Managed\System.dll (this message is harmless)
-DirectoryNotFoundException: Directory 'C:/Users/jampe/Documents/GitHub/vongott/vongott/Build/vongott_Data/Conversations/2' not found.
-  at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
-  at System.IO.Directory.GetDirectories (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
-  at EditorCore.GetConvoScenes (Int32 chapter) [0x00000] in <filename unknown>:0 
-  at EditorInspectorActor.Init (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorMenuBase.SetMenu (Int32 index, System.String menu, UnityEngine.GameObject selectedObj) [0x00000] in <filename unknown>:0 
-  at EditorCore.SelectObject (UnityEngine.GameObject obj) [0x00000] in <filename unknown>:0 
-  at EditorCamera.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 

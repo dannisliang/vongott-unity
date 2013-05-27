@@ -248,7 +248,6 @@ static function SerializeVector2 ( v : Vector2 ) : JSONObject {
 	return vector;
 }
 
-
 ////////////////////
 // Serialize conversation
 ////////////////////

@@ -3,39 +3,161 @@
 ////////////////////
 // Prerequisites
 ////////////////////
-
+static var grabDistance : float;
+static var grabOrigPoint : Vector3;
 
 ////////////////////
 // Static functions
 ////////////////////
+// Round value
+function Round ( val : float, factor : float ) : float {
+	return Mathf.Round ( val / factor ) * factor;
+}
+
 // Update
-static function Update () {
-	// grab mode
+function Update () {
+	// transform modes
 	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) {
-		// esc key: go back
+		var ray : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
+		var point : Vector3 = ray.origin + ( ray.direction * grabDistance );
+		var object : GameObject = EditorCore.GetSelectedObject();
+		
+		// esc key: undo
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-			if ( EditorCore.grabRestrict == null ) {
-				EditorCore.SetGrabMode ( false );
-				EditorCore.SetRotateMode ( false );
-				EditorCore.SetScaleMode ( false );
-			} else {
-				EditorCore.SetRestriction ( null );
-				EditorCore.UndoCurrentStage ();
-			}
+			EditorCore.SetGrabMode ( false );
+			EditorCore.SetRotateMode ( false );
+			EditorCore.SetScaleMode ( false );
+			EditorCore.SetRestriction ( null );
+			EditorCore.UndoCurrentAction ();
+		
+		// mouse click: apply
+		} else if ( Input.GetMouseButtonDown(0) ) {
+			EditorCore.SetGrabMode ( false );
+			EditorCore.SetRotateMode ( false );
+			EditorCore.SetScaleMode ( false );
+			
+			EditorCore.ReselectObject();
 		
 		// X key: x axis
 		} else if ( Input.GetKeyDown ( KeyCode.X ) ) {
-			EditorCore.SetRestriction ( "x" );
+			if ( EditorCore.grabRestrict == "x" ) {
+				EditorCore.SetRestriction ( null );
+			
+			} else {
+				EditorCore.SetRestriction ( "x" );
+			
+			}
 			
 		// Y key: y axis
 		} else if ( Input.GetKeyDown ( KeyCode.Y ) ) {
-			EditorCore.SetRestriction ( "y" );
+			if ( EditorCore.grabRestrict == "y" ) {
+				EditorCore.SetRestriction ( null );
+			
+			} else {
+				EditorCore.SetRestriction ( "y" );
+			
+			}
 			
 		// Z key: z axis
 		} else if ( Input.GetKeyDown ( KeyCode.Z ) ) {
-			EditorCore.SetRestriction ( "z" );
+			if ( EditorCore.grabRestrict == "z" ) {
+				EditorCore.SetRestriction ( null );
 			
+			} else {
+				EditorCore.SetRestriction ( "z" );
+			
+			}
+	
 		}
+
+		// translate
+		if ( EditorCore.grabMode ) {
+			if ( EditorCore.grabRestrict == "x" ) {
+				object.transform.position = new Vector3 ( point.x, grabOrigPoint.y, grabOrigPoint.z );
+			
+			} else if ( EditorCore.grabRestrict == "y" ) {
+				object.transform.position = new Vector3 ( grabOrigPoint.x, point.y, grabOrigPoint.z );
+			
+			} else if ( EditorCore.grabRestrict == "z" ) {
+				object.transform.position = new Vector3 ( grabOrigPoint.x, grabOrigPoint.y, point.z );
+			
+			} else {
+				EditorCore.GetSelectedObject().transform.position = point;
+			
+			}													
+		
+		// scale & rotate
+		} else if ( EditorCore.rotateMode || EditorCore.scaleMode ) {		
+			// position
+			var x = transform.localPosition.x;
+			var y = transform.localPosition.y;
+			var z = transform.localPosition.z;
+			var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
+			var horizontal = Camera.main.transform.TransformDirection ( Vector3.left );
+			var vertical = Camera.main.transform.TransformDirection ( Vector3.down );
+			
+			// scroll wheel
+			var translation = Input.GetAxis("Mouse ScrollWheel");
+			var spd : float = 10;
+			
+			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
+				spd = spd / 16;
+			} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+				spd = spd * 4;
+			} 
+			
+			if ( EditorCore.grabRestrict == "y" ) {
+				x = 0;
+				y = translation * spd;
+				z = 0;
+			} else if ( EditorCore.grabRestrict == "x" ) {
+				x = translation * spd;
+				y = 0;
+				z = 0;
+			} else if ( EditorCore.grabRestrict == "z" ) {
+				x = 0;
+				y = 0;
+				z = translation * spd;
+			} else if ( EditorCore.scaleMode && EditorCore.grabRestrict == null ) {
+				x = translation * ( spd / 2 );
+				y = translation * ( spd / 2 );
+				z = translation * ( spd / 2 );
+			} else {
+				x = 0;
+				y = 0;
+				z = 0;
+			}
+			
+			var o : GameObject = EditorCore.selectedObject;
+			
+			var xRotate : float = o.transform.localEulerAngles.x + ( x * 2 );
+			var yRotate : float = o.transform.localEulerAngles.y + ( y * 2 );
+			var zRotate : float = o.transform.localEulerAngles.z + ( z * 2 );
+			
+			var xScale : float = o.transform.localScale.x + x;
+			var yScale : float = o.transform.localScale.y + y;
+			var zScale : float = o.transform.localScale.z + z;
+			
+			if ( EditorCore.snapEnabled ) {
+				if ( EditorCore.gridLineDistance > 0 ) {
+					xRotate = Round ( xRotate, EditorCore.gridLineDistance );
+					xScale = Round ( xScale, EditorCore.gridLineDistance );
+				
+					yRotate = Round ( yRotate, EditorCore.gridLineDistance );
+					yScale = Round ( yScale, EditorCore.gridLineDistance );
+				
+					zRotate = Round ( zRotate, EditorCore.gridLineDistance );
+					zScale = Round ( zScale, EditorCore.gridLineDistance );
+				}
+			}		
+			
+			if ( EditorCore.rotateMode ) {
+				o.transform.localEulerAngles = new Vector3 ( xRotate, yRotate, zRotate );
+			} else if ( EditorCore.scaleMode ) {
+				o.transform.localScale = new Vector3 ( xScale, yScale, zScale );
+			}
+		}
+	
 	
 	// camera mode
 	} else if ( OGRoot.currentPage.pageName == "MenuBase" ) {	
@@ -49,6 +171,8 @@ static function Update () {
 		
 		// G key: grab mode
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {
+			grabDistance = Vector3.Distance ( Camera.main.transform.position, EditorCore.GetSelectedObject().transform.position );
+			grabOrigPoint = EditorCore.GetSelectedObject().transform.position;
 			EditorCore.SetGrabMode( true );
 		
 		// S key: scale mode
@@ -112,6 +236,11 @@ static function Update () {
 					EditorCore.SaveFile ( EditorCore.currentLevel.name );
 					return;
 				}
+			
+			// Z key: undo
+			} else if ( Input.GetKeyDown ( KeyCode.Z ) ) {
+				EditorCore.UndoCurrentAction ();
+			
 			}
 		}
 	}
