@@ -3,39 +3,7 @@
 import System.IO;
 
 class Loader {
-	static function LoadConversationToEditor ( path : String ) : List.< EditorConversationEntry > {
-		var entries : List.< EditorConversationEntry >;
-		
-		path = Application.dataPath + "/Conversations/" + path + ".vgconvo";
-				
-		if ( !File.Exists ( path ) ) {
-			Debug.LogError ( "Loader | no such file: " + path );
-			return null;
-		}
-		
-		var sr : StreamReader = new File.OpenText( path );
-		var input : String = "";
-		var line : String = "";
-		
-		line = sr.ReadLine();
-		
-		while ( line != null ) {
-			input += line;
-			line = sr.ReadLine();
-		}
-	
-		sr.Close();
-		
-		entries = Deserializer.DeserializeConversationToEditor ( input );
-		
-		return entries;
-	}
-	
-	static function LoadConversationToGame ( path : String ) : String {
-		var entries : List.< EditorConversationEntry >;
-		
-		path = Application.dataPath + "/Conversations/" + path + ".vgconvo";
-				
+	static function ReadFile ( path : String ) : String {
 		if ( !File.Exists ( path ) ) {
 			Debug.LogError ( "Loader | no such file: " + path );
 			return null;
@@ -57,24 +25,33 @@ class Loader {
 		return input;
 	}
 	
-	static function LoadScreenshot ( path : String ) : Texture2D {
-		if ( !File.Exists ( path ) ) {
-			Debug.LogError ( "Loader | no such file: " + path );
-			return null;
-		}
+	static function LoadConversationToEditor ( path : String ) : List.< EditorConversationEntry > {
+		var entries : List.< EditorConversationEntry >;
 		
-		var sr : StreamReader = new File.OpenText( path );
-		var input : String = "";
-		var line : String = "";
+		path = Application.dataPath + "/Conversations/" + path + ".vgconvo";
 		
-		line = sr.ReadLine();
+		var input : String = ReadFile ( path );	
+		if ( !input ) { return null; }
 		
-		while ( line != null ) {
-			input += line;
-			line = sr.ReadLine();
-		}
+		entries = Deserializer.DeserializeConversationToEditor ( input );
+		
+		return entries;
+	}
 	
-		sr.Close();
+	static function LoadConversationToGame ( path : String ) : String {
+		var entries : List.< EditorConversationEntry >;
+		
+		path = Application.dataPath + "/Conversations/" + path + ".vgconvo";
+				
+		var input : String = ReadFile ( path );	
+		if ( !input ) { return null; }
+		
+		return input;
+	}
+	
+	static function LoadScreenshot ( path : String ) : Texture2D {
+		var input : String = ReadFile ( path );	
+		if ( !input ) { return null; }
 		
 		return Deserializer.DeserializeScreenshot ( input );
 	}
@@ -82,25 +59,21 @@ class Loader {
 	static function LoadFlags () : JSONObject {
 		var path = Application.dataPath + "/UserData/flags.vgdata";
 		
-		if ( !File.Exists ( path ) ) {
-			Debug.LogError ( "Loader | no such file: " + path );
-			return null;
-		}
-		
-		var sr : StreamReader = new File.OpenText( path );
-		var input : String = "";
-		var line : String = "";
-		
-		line = sr.ReadLine();
-		
-		while ( line != null ) {
-			input += line;
-			line = sr.ReadLine();
-		}
-		
-		sr.Close();
+		var input : String = ReadFile ( path );	
+		if ( !input ) { return null; }
 		
 		return new JSONObject ( input );
+	}
+	
+	static function LoadQuest ( chapter : String, scene : String, id : String ) : Quest {
+		var path = Application.dataPath + "/Quests/" + chapter + "/" + scene + "/" + id + ".vgquest";
+		
+		var input : String = ReadFile ( path );	
+		if ( !input ) { return null; }
+		
+		var quest : Quest = Deserializer.DeserializeQuest ( input );
+	
+		return quest;
 	}
 	
 	static function LoadMap ( name : String ) : GameObject {

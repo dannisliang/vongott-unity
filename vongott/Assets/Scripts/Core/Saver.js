@@ -25,6 +25,32 @@ class Saver {
 		UnityEngine.Object.Destroy ( screenshot );
 	}
 
+	static function SaveQuest ( chapter : String, scene : String, name : String, quest : Quest ) {
+		var chapterPath = Application.dataPath + "/Quests/" + chapter;
+		var scenePath = chapterPath + "/" + scene;
+		var filePath = scenePath + "/" + name + ".vgquest";
+		
+		var sw : StreamWriter;
+		
+		if ( !File.Exists ( chapterPath ) ) {
+			Debug.Log ( "Saver | Created directory '" + chapterPath + "': " + Directory.CreateDirectory ( chapterPath ) );
+		}
+		
+		if ( !File.Exists ( scenePath ) ) {
+			Debug.Log ( "Saver | Created directory '" + scenePath + "': " + Directory.CreateDirectory ( scenePath ) );
+		}
+		
+		if ( !File.Exists ( filePath ) ) {
+			sw = File.CreateText ( filePath );
+		} else {
+			sw = new StreamWriter ( filePath );
+		}
+				
+		sw.WriteLine ( Serializer.SerializeQuest ( quest ) );
+		sw.Flush();
+		sw.Close();
+	}
+	
 	static function SaveFlags ( table : JSONObject ) {
 		var path = Application.dataPath + "/UserData/flags.vgdata";
 		var sw : StreamWriter;

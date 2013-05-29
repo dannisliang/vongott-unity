@@ -339,6 +339,24 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 
 
 ////////////////////
+// Deserialize quest
+////////////////////
+static function DeserializeQuest ( str : String ) : Quest {
+	var obj : JSONObject = new JSONObject ( str );	
+	var quest : Quest = new Quest ();
+	
+	quest.id = obj.GetField ( "id" ).str;
+	quest.title = obj.GetField ( "title" ).str;
+	quest.desc = obj.GetField ( "desc" ).str;
+	quest.active = obj.GetField ( "active" ).b;
+	quest.isMainQuest = obj.GetField ( "isMainQuest" ).b;
+	quest.skillPoints = obj.GetField ( "skillPoints" ).n;
+	
+	return quest;
+}
+
+
+////////////////////
 // Deserialize screenshot
 ////////////////////
 static function DeserializeScreenshot ( input : String ) : Texture2D {

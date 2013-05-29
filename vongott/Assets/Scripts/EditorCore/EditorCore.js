@@ -404,12 +404,12 @@ static function SelectObject ( obj : GameObject ) {
 	
 	// LightSource
 	if ( obj.GetComponent(LightSource) ) {
-		inspector.SetMenu ( 0, "Light", obj );
+		inspector.AddMenu ( "Light", obj );
 	
 	// Actor
 	} else if ( obj.GetComponent(Actor) ) {
-		inspector.SetMenu ( 0, "Actor", obj );
-		inspector.SetMenu ( 1, "Trigger", obj );
+		inspector.AddMenu ( "Actor", obj );
+		inspector.AddMenu ( "Trigger", obj );
 		
 		for ( var node : GameObject in obj.GetComponent(Actor).path ) {
 			node.GetComponent(MeshRenderer).enabled = true;
@@ -417,12 +417,10 @@ static function SelectObject ( obj : GameObject ) {
 	
 	// Item
 	} else if ( obj.GetComponent(Item) ) {
-		inspector.SetMenu ( 0, "Item", obj );
-		inspector.SetMenu ( 1, "Trigger", obj );
+		inspector.AddMenu ( "Item", obj );
+		inspector.AddMenu ( "Trigger", obj );
 	
 	}
-
-	inspector.SelectSubmenu ( "0" );
 }
 
 
@@ -579,6 +577,19 @@ static function GetConvoNames ( chapter : String, scene: String ) : String[] {
 
 static function GetConvos ( chapter : String, scene: String, name: String ) : String[] {
 	return Directory.GetFiles ( Application.dataPath + "/Conversations/" + chapter + "/" + scene + "/" + name, "*" );
+}
+
+// Load quests from library
+static function GetQuestChapters () : String[] {
+	return Directory.GetDirectories ( Application.dataPath + "/Quests", "*" );
+}
+
+static function GetQuestScenes ( chapter : String ) : String[] {
+	return Directory.GetDirectories ( Application.dataPath + "/Quests/" + chapter, "*" );
+}
+
+static function GetQuests ( chapter : String, scene: String ) : String[] {
+	return Directory.GetFiles ( Application.dataPath + "/Quests/" + chapter + "/" + scene, "*" );
 }
 
 

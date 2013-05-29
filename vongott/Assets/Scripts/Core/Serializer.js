@@ -305,6 +305,23 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 
 
 ////////////////////
+// Serialize quest
+////////////////////
+static function SerializeQuest ( q : Quest ) : JSONObject {
+	var quest : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+	
+	quest.AddField ( "id", q.id );
+	quest.AddField ( "title", q.title );
+	quest.AddField ( "desc", q.desc );
+	quest.AddField ( "active", q.active );
+	quest.AddField ( "isMainQuest", q.isMainQuest );
+	quest.AddField ( "skillPoints", q.skillPoints );
+	
+	return quest;
+}
+
+
+////////////////////
 // Serialize screenshot
 ////////////////////
 static function SerializeScreenshot ( tex : Texture2D ) : String {
