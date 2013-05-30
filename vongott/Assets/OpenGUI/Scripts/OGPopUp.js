@@ -1,6 +1,6 @@
 #pragma strict
 
-@script ExecuteInEditMode;
+@script AddComponentMenu ("OpenGUI/PopUp")
 
 class OGPopUp extends OGWidget {	
 	var title : String;
@@ -32,15 +32,13 @@ class OGPopUp extends OGWidget {
 				label = title;
 			}
 			
-			guiRect = Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), transform.localScale.y );
-			GUI.Box ( guiRect, "", guiStyle );
+			GUI.Box ( Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), transform.localScale.y ), "", guiStyle );
 			
-			if ( GUI.Button ( guiRect, label, textStyle ) ) {
+			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), transform.localScale.y ), label, textStyle ) ) {
 				isUp = true;
 			}
 		} else {			
-			guiRect = Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), ( options.Length * (guiStyle.fontSize + guiStyle.padding.top) ) + ( guiStyle.padding.top * 2 ) );
-			GUI.Box ( guiRect, "", guiStyle );
+			GUI.Box ( Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), ( options.Length * (guiStyle.fontSize + guiStyle.padding.top) ) + ( guiStyle.padding.top * 2 ) ), "", guiStyle );
 			
 			for ( var i = 0; i < options.Length; i++ ) {			
 				if ( GUI.Button ( Rect ( x + guiStyle.padding.left, y + guiStyle.padding.top + ( ( guiStyle.fontSize + guiStyle.padding.top ) * i ), transform.localScale.x + ( guiStyle.padding.left * 2 ), guiStyle.fontSize + guiStyle.padding.top ), options[i], textStyle ) ) {

@@ -194,9 +194,11 @@ class EditorConversations extends OGPage {
 	////////////////////
 	// Set flag
 	function SetFlag ( btn : OGButton ) {
-		EditorPickFlag.target = btn;
-		EditorPickFlag.sender = "Conversations";
-		OGRoot.GoToPage ( "PickFlag" );
+		EditorPicker.mode = "flag";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "Conversations";
+		
+		OGRoot.GoToPage ( "Picker" );
 	}
 	
 	// Clear and populate entries

@@ -4,26 +4,14 @@ class EditorQuests extends OGPage {
 	////////////////////
 	// Prerequisites
 	////////////////////
-	// Private classes
-	private class Selector {
-		var chapter : OGPopUp;
-		var scene : OGPopUp;
-		var name : OGPopUp;
-	}
-	
-	private class Creator {
-		var chapter : OGTextField;
-		var scene : OGTextField;
-		var name : OGTextField;
-	}
 	
 	// Public vars
 	var fileModeSwitch : OGPopUp;
 	var fileModeSelect : GameObject;
 	var fileModeCreate : GameObject;
 	
-	var selector : Selector;
-	var creator : Creator;
+	var selector : OGButton;
+	var creator : OGTextField;
 	
 	@HideInInspector var currentQuest : Quest;
 	
@@ -59,42 +47,28 @@ class EditorQuests extends OGPage {
 			currentQuest.isMainQuest = mainQuest.isChecked;
 			currentQuest.skillPoints = int.Parse ( skillPoints.text );
 			
-			Saver.SaveQuest ( selector.chapter.selectedOption, selector.scene.selectedOption, selector.name.selectedOption, currentQuest );
+			Saver.SaveQuest ( currentQuest );
 		}
 	}
 	
 	// Create quest
-	function CreateQuest () {
-		Saver.SaveQuest ( creator.chapter.text, creator.scene.text, creator.name.text, new Quest () );
-		
-		selector.chapter.selectedOption = creator.chapter.text;
-		selector.scene.selectedOption = creator.scene.text;
-		selector.name.selectedOption = creator.name.text;
-		
-		LoadQuest ();
+	function CreateQuest () {	
+		selector.text = creator.text;
+	
+		fileModeSwitch.selectedOption = "Load";
+		SelectMode();
+		currentQuest = new Quest ();
+		currentQuest.id = creator.text;
 	}
 	
 	// Load quest
 	function LoadQuest () {
-		currentQuest = Loader.LoadQuest ( selector.chapter.selectedOption, selector.scene.selectedOption, selector.name.selectedOption );
+		currentQuest = Loader.LoadQuest ( selector.text );
 	
 		title.text = currentQuest.title;
 		description.text = currentQuest.desc;
 		mainQuest.isChecked = currentQuest.isMainQuest;
 		skillPoints.text = currentQuest.skillPoints.ToString();
-	}
-	
-	// Selected chapter, scene and name
-	function LoadChapters () {
-		selector.chapter.options = TrimFileNames ( EditorCore.GetQuestChapters () );
-	}
-	
-	function SelectedChapter () {		
-		selector.scene.options = TrimFileNames ( EditorCore.GetQuestScenes ( selector.chapter.selectedOption ) );
-	}
-	
-	function SelectedScene () {
-		selector.name.options = TrimFileNames ( EditorCore.GetQuests ( selector.chapter.selectedOption, selector.scene.selectedOption ) );
 	}
 	
 	
@@ -112,9 +86,18 @@ class EditorQuests extends OGPage {
 		}
 	}
 	
+	// Exit
 	function Cancel () {
 		OGRoot.GoToPage ( "MenuBase" );
 	}
+	
+	// Pick quest
+	function PickQuest () {
+		EditorPicker.mode = "quest";
+		EditorPicker.button = selector;
+		EditorPicker.sender = "Quests";
+		OGRoot.GoToPage ( "Picker" );
+	}	
 	
 	
 	////////////////////
@@ -122,6 +105,8 @@ class EditorQuests extends OGPage {
 	////////////////////
 	// Page
 	override function StartPage () {
-		LoadChapters ();
+		if ( selector.text != "(none)" ) {
+			LoadQuest ();
+		}
 	}
 }

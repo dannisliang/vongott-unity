@@ -3,34 +3,6 @@
 ////////////////////
 // Prerequisites
 ////////////////////
-// Private classes
-private class Quest {
-	var id : String;
-	var title : String;
-	var desc : String;
-	var active = false;
-	var flagEnd = "";
-	var isMainQuest = false;
-	var skillPoints = 0;
-	
-	function Quest ( is_main : boolean, new_id:String, new_title:String, new_desc:String, end:String, points:int ) {
-		id = new_id;
-		title = new_title;
-		desc = new_desc;
-		flagEnd = end;
-		isMainQuest = is_main;
-		skillPoints = points;
-	}
-	
-	function SetActive ( state : boolean ) {
-		active = state;
-	}
-	
-	function GetID () {
-		return id;
-	}
-}
-
 // Static vars
 static var quests : List.< Quest > = new List.< Quest >();
 
@@ -40,11 +12,11 @@ static var quests : List.< Quest > = new List.< Quest >();
 ////////////////////
 // All quests
 static function Init () {	
-	// Chapter 1
-	quests.Add ( new Quest ( true, "1_go_upstairs", "Go upstairs", "Go up and say hello", "2_talked_to_marcel", 100 ) );
-	
-	// Chapter 2
-	quests.Add ( new Quest ( true, "2_get_back_to_marcel", "Get back to Marcel", "Hear what Marcel has to say", "2_talked_to_marcel_done", 0 ) );
+	var allQuests : JSONObject = Loader.LoadQuests ();
+
+	for ( var o : JSONObject in allQuests.list ) {
+		quests.Add ( Deserializer.DeserializeQuest ( o ) );
+	}
 }
 
 

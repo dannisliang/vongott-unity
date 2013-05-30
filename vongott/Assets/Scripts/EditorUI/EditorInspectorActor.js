@@ -34,7 +34,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		convo.inspector = this.gameObject;
 		convo.Init ();
 				
-		convoBottomLine += 100;
+		convoBottomLine += 160;
 		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
 	
 		return convo;
@@ -173,8 +173,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		var tf : OGTextField = input.AddComponent ( OGTextField );
 		tf.text = "0";
 		tf.maxLength = 4;
-		tf.restrictSpaces = true;
-		tf.restrictNumbers = true;
+		tf.regex = "^0-9";
 
 		if ( duration ) {
 			tf.text = duration.ToString();
@@ -229,6 +228,24 @@ class EditorInspectorActor extends MonoBehaviour {
 		EditorBrowser.argument = i.ToString();
 		OGRoot.GoToPage ( "Browser" );
 	}
+
+	//////////////////////
+	// Interpretation
+	//////////////////////
+	// Convo path
+	function ReadConvoPath ( path : String ) : Conversation {
+		var c : Conversation = new Conversation ();
+		var split : String[] = Regex.Split ( path, "/" ); 		
+		
+		if ( path != "(none)" ) {		
+			c.chapter = split[0];
+			c.scene = split[1];
+			c.name = split[2];
+			c.conversation = split[3];
+		}
+		
+		return c;
+	}
 	
 	
 	//////////////////////
@@ -250,14 +267,16 @@ class EditorInspectorActor extends MonoBehaviour {
 		
 		// conversation
 		ClearConvos();
+		
 		for ( i = 0; i < a.conversations.Count; i++ ) {
 			var c : Conversation = a.conversations[i];
 			var convo : EditorInspectorConvo = AddConvo ();
 			if ( c.condition ) { convo.condition.text = c.condition; }
-			convo.chapter.selectedOption = c.chapter;
-			convo.scene.selectedOption = c.scene;
-			convo.actorName.selectedOption = c.name;
-			convo.conversation.selectedOption = c.conversation;
+			
+			if ( c.condition != "" ) { convo.condition.text = c.condition; }
+			if ( c.startQuest != "" ) { convo.startQuest.text = c.startQuest; }
+			if ( c.endQuest != "" ) { convo.endQuest.text = c.endQuest; }
+			convo.conversation.text = c.chapter + "/" + c.scene + "/" + c.name + "/" + c.conversation;
 			
 			convo.UpdateAll ();
 		}
@@ -306,16 +325,16 @@ class EditorInspectorActor extends MonoBehaviour {
 			a.mood = mood.selectedOption;
 		
 			a.conversations.Clear ();
+			
 			for ( var i = 0; i < convos.Count; i++ ) {
 				var control : EditorInspectorConvo = convos[i];
-				var c : Conversation = new Conversation ();
+				var newConvo : Conversation = ReadConvoPath ( control.conversation.text );
 				
-				c.chapter = control.chapter.selectedOption;
-				c.scene = control.scene.selectedOption;
-				c.name = control.actorName.selectedOption;
-				c.conversation = control.conversation.selectedOption;
+				newConvo.condition = control.condition.text;
+				newConvo.startQuest = control.startQuest.text;
+				newConvo.endQuest = control.endQuest.text;
 				
-				a.conversations.Add ( c );
+				a.conversations.Add ( newConvo );
 			}
 		} 	
 	}

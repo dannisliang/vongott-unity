@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\Core\Conversation.js" />
      <Compile Include="Assets\Scripts\Core\Deserializer.js" />
      <Compile Include="Assets\Scripts\Core\Equipment.js" />
+     <Compile Include="Assets\Scripts\Core\Flag.js" />
      <Compile Include="Assets\Scripts\Core\FlagManager.js" />
      <Compile Include="Assets\Scripts\Core\GameCore.js" />
      <Compile Include="Assets\Scripts\Core\InventoryManager.js" />
@@ -87,6 +88,7 @@
      <Compile Include="Assets\Scripts\Core\PathNode.js" />
      <Compile Include="Assets\Scripts\Core\Prefab.js" />
      <Compile Include="Assets\Scripts\Core\PrefabManager.js" />
+     <Compile Include="Assets\Scripts\Core\Quest.js" />
      <Compile Include="Assets\Scripts\Core\QuestManager.js" />
      <Compile Include="Assets\Scripts\Core\Saver.js" />
      <Compile Include="Assets\Scripts\Core\Scene.js" />
@@ -106,6 +108,7 @@
      <Compile Include="Assets\Scripts\EditorUI\EditorConversationEntry.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorConversationGroupLine.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorConversations.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorFlags.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorGrid.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorInspectorActor.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorInspectorConvo.js" />
@@ -116,7 +119,7 @@
      <Compile Include="Assets\Scripts\EditorUI\EditorMenuBase.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorModes.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorOpenFile.js" />
-     <Compile Include="Assets\Scripts\EditorUI\EditorPickFlag.js" />
+     <Compile Include="Assets\Scripts\EditorUI\EditorPicker.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorPrefabs.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorQuests.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorSaveAs.js" />

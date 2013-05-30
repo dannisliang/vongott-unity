@@ -1,43 +1,49 @@
 #pragma strict
 
+@script AddComponentMenu ("OpenGUI/TextField")
+
 import System.Text.RegularExpressions;
 
 class OGTextField extends OGWidget {
+	enum RegExPreset {
+		None,
+		OnlyNumbers,
+		OnlyNumbersAndPeriod,
+		OnlyASCII,
+		NoSpaces
+	}
+	
 	var text : String = "";
-	var maxLength : int = 16;
-	var restrictASCII : boolean = false;
-	var restrictSpaces : boolean = false;
-	var restrictNumbers : boolean = false;
-
+	var maxLength : int = 30;
+	var regex : String;
+	var regexPreset : RegExPreset;
+	
 	@HideInInspector var editor : TextEditor;
-
-	// Because fuck regex
-	function RestrictNumbers ( str : String ) : String {
-		var newStr : String;
-		var periodCounter : int = 0;
+	@HideInInspector var currentPreset : RegExPreset = RegExPreset.None;
+	
+	override function UpdateWidget () {		
+		if ( regexPreset != currentPreset ) {
+			currentPreset = regexPreset;
+			
+			if ( currentPreset == RegExPreset.None ) {
+				regex = "";
 		
-		for ( var i = 0; i < str.Length; i++ ) {
-			var c : String = str[i].ToString();
-			
-			// numbers
-			if ( c == "0" || c == "1" || c == "2" ||  c == "3" ||  c == "4" ||  c == "5" ||  c == "6" ||  c == "7" ||  c == "8" ||  c == "9" ) {
-				newStr += c;
-			
-			// periods
-			} else if ( c == "." && periodCounter == 0 ) { 
-				newStr += c;
-				periodCounter = 1;
+			} else if ( currentPreset == RegExPreset.OnlyNumbers ) {
+				regex = "^0-9";
 				
-			// dashes
-			} else if ( c == "-" && i == 0 ) {
-				newStr = c;
-			
+			} else if ( currentPreset == RegExPreset.OnlyASCII ) {
+				regex = "^a-zA-Z0-9";
+				
+			} else if ( currentPreset == RegExPreset.NoSpaces ) {
+				regex = " ";
+				
+			} else if ( currentPreset == RegExPreset.OnlyNumbersAndPeriod) {
+				regex = "^0-9.";
+				
 			}
 		}
-		
-		return newStr;
 	}
-
+	
 	override function Draw ( x : float, y : float ) {
 		if ( !text ) { text = ""; }
 		if ( !guiStyle ) { guiStyle = GUI.skin.textField; }
@@ -45,16 +51,8 @@ class OGTextField extends OGWidget {
 		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );
 		editor = GUIUtility.GetStateObject ( TextEditor, GUIUtility.keyboardControl ) as TextEditor;
 		
-		if ( restrictASCII ) {
-			text = Regex.Replace(text, "[^a-zA-Z0-9_]", "");
-		}
-	
-		if ( restrictSpaces ) {
-			text = Regex.Replace(text, "[ ]", "");
-		}
-	
-		if ( restrictNumbers ) {
-			text = RestrictNumbers ( text );
+		if ( regex != "" && regex != "\\" ) {
+			text = Regex.Replace ( text, "[" + regex + "]", "" );
 		}
 	}
 }

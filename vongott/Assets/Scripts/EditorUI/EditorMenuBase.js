@@ -21,7 +21,6 @@ class EditorMenuBase extends OGPage {
 	var scl : VectorDisplay;
 	
 	var tabs : OGTabs;
-	@HideInInspector var subMenus : GameObject[] = new GameObject[3];
 	
 	
 	////////////////////
@@ -167,20 +166,15 @@ class EditorMenuBase extends OGPage {
 	
 	// Clear the menus
 	function ClearMenus () {		
-		for ( var t = 0; t < tabs.tabs.Count; t++ ) {
-			tabs.tabs[t].label = "";
-		}
+		tabs.tabs.Clear ();
 		
-		for ( var i = 0; i < subMenus.Length; i++ ) {
-			if ( subMenus[i] ) {
-				subMenus[i].SetActive ( false );
-				subMenus[i] = null;
-			}
+		for ( var c : GameObject in inspectorMenus ) {		
+			c.SetActive ( false );
 		}
 	}
 	
 	// Display the object's relevant menus
-	function SetMenu ( index : int, menu : String, selectedObj : GameObject ) {
+	function AddMenu ( menu : String, selectedObj : GameObject ) {
 		var menuObj : GameObject;
 		
 		for ( var c : GameObject in inspectorMenus ) {		
@@ -194,40 +188,19 @@ class EditorMenuBase extends OGPage {
 			return;
 		}
 		
-		if ( subMenus[index] ) {
-			subMenus[index].SetActive ( false );
-			subMenus[index] = null;
-		}
-		
-		subMenus[index] = menuObj;
-		subMenus[index].SetActive ( false );
+		tabs.AddTab ( menu, menuObj );
 		
 		if ( menu == "Light" ) {
-			subMenus[index].GetComponent(EditorInspectorLight).Init(selectedObj);
+			menuObj.GetComponent(EditorInspectorLight).Init(selectedObj);
 		} else if ( menu == "Actor" ) {
-			subMenus[index].GetComponent(EditorInspectorActor).Init(selectedObj);
+			menuObj.GetComponent(EditorInspectorActor).Init(selectedObj);
 		/*} else if ( menu == "Path" ) {
 			subMenus[index].GetComponent(EditorInspectorPath).Init(selectedObj);
 		} else if ( menu == "Trigger" ) {
 			subMenus[index].GetComponent(EditorInspectorTrigger).Init(selectedObj);
 		*/} else if ( menu == "Tween" ) {
-			subMenus[index].GetComponent(EditorInspectorTween).Init(selectedObj);
+			menuObj.GetComponent(EditorInspectorTween).Init(selectedObj);
 		}
-		
-		tabs.tabs[index].label = menu;
-	}
-	
-	// Activate a menu
-	function SelectSubmenu ( num : String ) {
-		var number = int.Parse ( num );
-		
-		for ( var i = 0; i < subMenus.Length; i++ ) {
-			if ( subMenus[i] ) {
-				subMenus[i].SetActive ( number == i );
-			}
-		}
-		
-		tabs.activeTab = number;
 	}
 	
 			
@@ -251,16 +224,12 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	override function StartPage () {
 		EditorCore.SetInspector ( this );
-				
-		ClearMenus ();
-	
-		EditorCore.ReselectObject ();
 	}
 	
 		
 	////////////////////
 	// Update
-	////////////////////
+	////////////////////	
 	override function UpdatePage () {
 		if ( EditorCore.currentLevel ) {
 			levelName.text = EditorCore.currentLevel.name;

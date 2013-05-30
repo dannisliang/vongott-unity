@@ -1,6 +1,7 @@
 #pragma strict
 
 @script ExecuteInEditMode
+@script AddComponentMenu ("OpenGUI/Widget")
 
 class OGWidget extends MonoBehaviour {
 	enum RelativeX {
@@ -54,7 +55,7 @@ class OGWidget extends MonoBehaviour {
 	@HideInInspector var adjustPivot : Vector2 = Vector2.zero;				
 	@HideInInspector var manualDraw = false;
 	@HideInInspector var mouseOver = false;
-	@HideInInspector var guiRect : Rect;
+	@HideInInspector var colliderRect : Rect;
 	@HideInInspector var guiStyle : GUIStyle;
 	
 	function SetX ( x : float ) {
@@ -152,16 +153,30 @@ class OGWidget extends MonoBehaviour {
 	
 	function Draw ( x : float, y : float ) {}
 	
-	function CancelZScale () {
+	function CancelParams () {
 		if ( transform.localScale.z != 1 ) {
 			transform.localScale = new Vector3 ( transform.localScale.x, transform.localScale.y, 1 );
+		}
+		
+		if ( transform.localEulerAngles.x != 0 ) {
+			transform.localEulerAngles = new Vector3 ( 0, transform.localEulerAngles.y, transform.localEulerAngles.z );
+		}
+		
+		if ( transform.localEulerAngles.y != 0 ) {
+			transform.localEulerAngles = new Vector3 ( transform.localEulerAngles.x, 0, transform.localEulerAngles.z );
 		}
 	}
 	
 	function Start () {}
 	
 	function OnGUI () {
+		colliderRect = new Rect ( transform.position.x, transform.position.y, transform.localScale.x, transform.localScale.y );
+		
 		GUI.depth = transform.localPosition.z;
+		
+		var quat : Quaternion = Quaternion.identity;
+		quat.eulerAngles = transform.eulerAngles;
+		GUI.matrix = Matrix4x4.TRS ( new Vector3 ( transform.position.x, transform.position.y, 0 ), quat, Vector3.one );
 		
 		if ( OGRoot.skin ) {
 			GUI.skin = OGRoot.skin;
@@ -169,10 +184,13 @@ class OGWidget extends MonoBehaviour {
 		}
 		
 		if ( !manualDraw ) {
-			Draw ( transform.position.x + adjustPivot.x, transform.position.y + adjustPivot.y );
+			Draw ( adjustPivot.x, adjustPivot.y );
 		}
 		
-		mouseOver = guiRect.Contains ( Event.current.mousePosition );
+		quat.eulerAngles = Vector3.zero;
+		GUI.matrix = Matrix4x4.TRS ( Vector3.zero, quat, Vector3.one );
+	
+		mouseOver = colliderRect.Contains ( Event.current.mousePosition );
 	}
 	
 	function Update () {		
@@ -181,6 +199,6 @@ class OGWidget extends MonoBehaviour {
 		ApplyPivot ();
 		
 		UpdateWidget();
-		CancelZScale ();
+		CancelParams ();
 	}
 }

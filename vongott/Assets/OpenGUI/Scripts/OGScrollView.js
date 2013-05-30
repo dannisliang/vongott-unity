@@ -1,6 +1,9 @@
 #pragma strict
 
+@script AddComponentMenu ("OpenGUI/ScrollView")
+
 class OGScrollView extends OGWidget {
+	var touchControl : boolean = false;
 	var scrollLength : float = 512;
 	var viewWidth : float = 100;
 	var viewHeight : float = 100;
@@ -36,10 +39,20 @@ class OGScrollView extends OGWidget {
 				}
 			}
 		}
+		
+		// Touch control
+		if ( touchControl && colliderRect.Contains ( Input.mousePosition ) ) {
+			if ( Input.GetMouseButton ( 0 ) ) {
+				position.x = Input.mousePosition.x - transform.position.x;
+				position.y = Input.mousePosition.y - transform.position.y;
+			} 
+		}
 	}
 	
 	// Draw
 	override function Draw ( x : float, y : float ) {
+		colliderRect = new Rect ( transform.position.x, transform.position.y, viewWidth, viewHeight );
+		
 		// Start scroll view
 		position = GUI.BeginScrollView (
 			Rect ( x, y, viewWidth, viewHeight ),

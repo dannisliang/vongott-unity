@@ -269,7 +269,10 @@ static function DeserializeConversationsToGame ( convos : JSONObject ) {
 		for ( var c : JSONObject in convos.list ) {
 			var convo : Conversation = new Conversation ();
 			
-			convo.condition = c.GetField ( "condition" ).str;
+			if ( c.HasField ( "condition" ) ) { convo.condition = c.GetField ( "condition" ).str; }
+			if ( c.HasField ( "startQuest" ) ) { convo.startQuest = c.GetField ( "startQuest" ).str; }
+			if ( c.HasField ( "endQuest" ) ) { convo.endQuest = c.GetField ( "endQuest" ).str; }
+			
 			convo.chapter = c.GetField ( "chapter" ).str;
 			convo.scene = c.GetField ( "scene" ).str;
 			convo.name = c.GetField ( "name" ).str;
@@ -341,8 +344,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 ////////////////////
 // Deserialize quest
 ////////////////////
-static function DeserializeQuest ( str : String ) : Quest {
-	var obj : JSONObject = new JSONObject ( str );	
+static function DeserializeQuest ( obj : JSONObject ) : Quest {
 	var quest : Quest = new Quest ();
 	
 	quest.id = obj.GetField ( "id" ).str;

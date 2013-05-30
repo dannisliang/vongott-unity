@@ -1,6 +1,6 @@
 #pragma strict
 
-@script ExecuteInEditMode
+@script AddComponentMenu ("OpenGUI/Page")
 
 class OGPage extends MonoBehaviour {
 	var pageName : String = "";

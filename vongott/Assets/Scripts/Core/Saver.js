@@ -25,19 +25,22 @@ class Saver {
 		UnityEngine.Object.Destroy ( screenshot );
 	}
 
-	static function SaveQuest ( chapter : String, scene : String, name : String, quest : Quest ) {
-		var chapterPath = Application.dataPath + "/Quests/" + chapter;
-		var scenePath = chapterPath + "/" + scene;
-		var filePath = scenePath + "/" + name + ".vgquest";
+	static function SaveQuest ( quest : Quest ) {
+		var basePath = Application.dataPath + "/Story/Quests";
+		var filePath = basePath + "/quests.vgdata";
+		
+		var allQuests : JSONObject = Loader.LoadQuests();
+
+		if ( allQuests.HasField ( quest.id ) ) {
+			allQuests.SetField ( quest.id, Serializer.SerializeQuest ( quest ) );
+		} else {
+			allQuests.AddField ( quest.id, Serializer.SerializeQuest ( quest ) );
+		}
 		
 		var sw : StreamWriter;
 		
-		if ( !File.Exists ( chapterPath ) ) {
-			Debug.Log ( "Saver | Created directory '" + chapterPath + "': " + Directory.CreateDirectory ( chapterPath ) );
-		}
-		
-		if ( !File.Exists ( scenePath ) ) {
-			Debug.Log ( "Saver | Created directory '" + scenePath + "': " + Directory.CreateDirectory ( scenePath ) );
+		if ( !File.Exists ( basePath ) ) {
+			Debug.Log ( "Saver | Created directory '" + basePath + "': " + Directory.CreateDirectory ( basePath ) );
 		}
 		
 		if ( !File.Exists ( filePath ) ) {
@@ -45,8 +48,8 @@ class Saver {
 		} else {
 			sw = new StreamWriter ( filePath );
 		}
-				
-		sw.WriteLine ( Serializer.SerializeQuest ( quest ) );
+		
+		sw.WriteLine ( allQuests );
 		sw.Flush();
 		sw.Close();
 	}

@@ -1,6 +1,6 @@
 #pragma strict
 
-@script ExecuteInEditMode
+@script AddComponentMenu ("OpenGUI/Label")
 
 class OGLabel extends OGWidget {
 	var text : String;

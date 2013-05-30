@@ -27,7 +27,10 @@ class Conversation {
 	}
 
 	// Public vars
-	var condition : String;
+	var condition : String = "";
+	var startQuest : String = "";
+	var endQuest : String = "";
+	
 	var chapter : String;
 	var scene : String;
 	var name : String;
@@ -43,6 +46,10 @@ class Conversation {
 	////////////////////
 	// Leave conversation
 	function Exit () {
+		if ( startQuest != "" && startQuest != "(none)" ) {
+			QuestManager.StartQuest ( startQuest );
+		}
+		
 		OGRoot.GoToPage ( "HUD" );
 		
 		GameCore.ToggleControls ( true );
@@ -185,6 +192,10 @@ class Conversation {
 	// Init
 	////////////////////
 	function Init () {		
+		if ( endQuest != "" && endQuest != "(none)" ) {
+			QuestManager.EndQuest ( endQuest );
+		}
+		
 		UIConversation.convo = this;
 				
 		entries.Clear ();

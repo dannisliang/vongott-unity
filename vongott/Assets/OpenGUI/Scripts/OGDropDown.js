@@ -2,18 +2,20 @@
 
 import System.Collections.Generic;
 
-@script ExecuteInEditMode
+@script AddComponentMenu ("OpenGUI/DropDown")
 
-// Classes
-private class DropDownItem {
-	var name : String;
-	var message : String;
-}
 
 class OGDropDown extends OGWidget {	
+	// Classes
+	private class DropDownItem {
+		var name : String;
+		var message : String;
+	}
+	
+	// Vars
 	var isDown = false;
 	var title : String;
-	var offset : Vector2;
+	var offset : Vector2 = new Vector2 ( 0, 20 );
 	
 	var target : GameObject;
 	var submenu : DropDownItem[];
@@ -29,8 +31,8 @@ class OGDropDown extends OGWidget {
 				
 		// submenu
 		if ( isDown ) {
-			guiRect = Rect ( x - offset.x, y + offset.y, ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, ( submenu.Length * ( 12 + guiStyle.padding.top ) ) + ( guiStyle.padding.top + guiStyle.padding.bottom ) );
-			GUI.Box ( guiRect, "", guiStyle );
+			colliderRect = new Rect ( x - offset.x, y + offset.y, ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, ( submenu.Length * ( 12 + guiStyle.padding.top ) ) + ( guiStyle.padding.top + guiStyle.padding.bottom ) );
+			GUI.Box ( colliderRect, "", guiStyle );
 			
 			for ( var i = 0; i < submenu.Length; i++ ) {			
 				if ( GUI.Button ( Rect ( x - offset.x + guiStyle.padding.left, y + offset.y + ( guiStyle.padding.top / 2 ) + ( ( 12 + guiStyle.padding.top ) * i ), ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, transform.localScale.y ), submenu[i].name, GUI.skin.label ) ) {

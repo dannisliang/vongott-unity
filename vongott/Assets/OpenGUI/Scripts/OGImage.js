@@ -1,6 +1,6 @@
 #pragma strict
 
-@script ExecuteInEditMode
+@script AddComponentMenu ("OpenGUI/Image")
 
 class OGImage extends OGWidget {
 	enum XorY {

@@ -56,6 +56,9 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 			var convo : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 			
 			convo.AddField ( "condition", c.condition );
+			convo.AddField ( "startQuest", c.startQuest );
+			convo.AddField ( "endQuest", c.endQuest );
+			
 			convo.AddField ( "chapter", c.chapter );
 			convo.AddField ( "scene", c.scene );
 			convo.AddField ( "name", c.name );

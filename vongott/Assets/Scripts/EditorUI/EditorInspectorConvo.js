@@ -5,88 +5,50 @@ class EditorInspectorConvo extends MonoBehaviour {
 	
 	var label : OGLabel;
 	var condition : OGButton;
-	var chapter : OGPopUp;
-	var scene : OGPopUp;
-	var actorName : OGPopUp;
-	var conversation : OGPopUp;
+	var startQuest : OGButton;
+	var endQuest : OGButton;
+	var conversation : OGButton;
 	
 	// Pick flag
 	function PickFlag ( btn : OGButton ) {
-		EditorPickFlag.target = btn;
-		EditorPickFlag.sender = "MenuBase";
-		OGRoot.GoToPage ( "PickFlag" );
+		EditorPicker.mode = "flag";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "MenuBase";
+		
+		EditorPicker.func = inspector.GetComponent(EditorInspectorActor).UpdateObject;
+		
+		OGRoot.GoToPage ( "Picker" );
 	}
 	
-	// Trim filename
-	function TrimFileNames ( paths : String[] ) : String[] {
-		var newArray : String[] = new String[paths.Length];
+	// Pick quest
+	function PickQuest ( btn : OGButton ) {
+		EditorPicker.mode = "quest";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "MenuBase";
 		
-		for ( var i = 0; i < paths.Length; i++ ) {
-			var path = paths[i].Split("\\"[0]);
-			var fileName = path[path.Length-1];
-			var extention = fileName.Split("."[0]);
-			var name = extention[0];
-			newArray[i] = name;
-		}
+		EditorPicker.func = inspector.GetComponent(EditorInspectorActor).UpdateObject;
 		
-		return newArray;
+		OGRoot.GoToPage ( "Picker" );
 	}
 	
-	// Selected chapter
-	function SelectedChapter () {
-		scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( chapter.selectedOption ) );
+	// Pick convo
+	function PickConvo ( btn : OGButton ) {
+		EditorPicker.mode = "conversation";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "MenuBase";
 		
-		scene.selectedOption = null;
-		actorName.options = [];
-		actorName.selectedOption = null;
-		conversation.options = [];
-		conversation.selectedOption = null;
+		EditorPicker.func = inspector.GetComponent(EditorInspectorActor).UpdateObject;
 		
-		inspector.SendMessage ( "UpdateObject" );
+		OGRoot.GoToPage ( "Picker" );
 	}
-	
-	// Selected scene
-	function SelectedScene () {
-		actorName.options = TrimFileNames ( EditorCore.GetConvoNames ( chapter.selectedOption, scene.selectedOption ) );
 		
-		actorName.selectedOption = null;
-		conversation.options = [];
-		conversation.selectedOption = null;
-		
-		inspector.SendMessage ( "UpdateObject" );
-	}
-	
-	// Selected name
-	function SelectedName () {
-		conversation.options = TrimFileNames ( EditorCore.GetConvos ( chapter.selectedOption, scene.selectedOption, actorName.selectedOption ) );
-		
-		conversation.selectedOption = null;
-		
-		inspector.SendMessage ( "UpdateObject" );
-	}
-	
-	// Selected conversation
-	function SelectedConversation () {
-		inspector.SendMessage ( "UpdateObject" );
-	}
-	
 	// Init
 	function Init () {
-		chapter.options = TrimFileNames ( EditorCore.GetConvoChapters () );
-	
-		scene.options = [];
-		scene.selectedOption = null;
-		actorName.options = [];
-		actorName.selectedOption = null;
-		conversation.options = [];
-		conversation.selectedOption = null;
+		
 	}
 	
 	// Update all
 	function UpdateAll () {
-		chapter.options = TrimFileNames ( EditorCore.GetConvoChapters () );
-		scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( chapter.selectedOption ) );
-		actorName.options = TrimFileNames ( EditorCore.GetConvoNames ( chapter.selectedOption, scene.selectedOption ) );
-		conversation.options = TrimFileNames ( EditorCore.GetConvos ( chapter.selectedOption, scene.selectedOption, actorName.selectedOption ) );
+		
 	}
 }

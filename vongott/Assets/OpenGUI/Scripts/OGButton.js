@@ -1,5 +1,7 @@
 #pragma strict
 
+@script AddComponentMenu ("OpenGUI/Button")
+
 class OGButton extends OGWidget {
 	var text : String;
 	var target : GameObject;
@@ -10,9 +12,9 @@ class OGButton extends OGWidget {
 		if ( !guiStyle ) { guiStyle = GUI.skin.button; }
 		
 		if ( GUI.Button ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, guiStyle ) ) {
-			if ( argument ) {
+			if ( argument && target ) {
 				target.SendMessage ( message, argument );
-			} else {
+			} else if ( target ) {
 				target.SendMessage ( message, this );
 			}
 		}

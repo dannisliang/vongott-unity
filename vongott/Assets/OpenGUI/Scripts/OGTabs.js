@@ -1,23 +1,23 @@
 #pragma strict
 
-private class Tab {
-	var label : String;
-	var message : String;
-	var argument : String;
-
-	function Tab ( l : String, m : String, a : String ) {
-		label = l;
-		message = m;
-		argument = a;
-	}
-}
-
-enum TabDirection {
-	Horizontal,
-	Vertical
-}
+@script AddComponentMenu ("OpenGUI/Tabs")
 
 class OGTabs extends OGWidget {
+	private class Tab {
+		var label : String;
+		var object : GameObject;
+	
+		function Tab ( l : String, o : GameObject) {
+			label = l;
+			object = o;
+		}
+	}
+	
+	enum TabDirection {
+		Horizontal,
+		Vertical
+	}
+	
 	var messageTarget : GameObject;
 	var tabs : List.<Tab> = new List.<Tab>();
 	var direction : TabDirection = TabDirection.Horizontal;
@@ -25,15 +25,33 @@ class OGTabs extends OGWidget {
 		
 	@HideInInspector var boxPos : Vector2 = Vector2.zero; 
 	
-	public function AddTab ( label : String, message : String, argument : String ) {
-		tabs.Add ( new Tab ( label, message, argument ) );
+	function AddTab ( label : String, object : GameObject ) {
+		tabs.Add ( new Tab ( label, object ) );
+		
+		if ( tabs.Count == 1 ) {
+			Start ();
+		}
 	}
 	
 	override function UpdateWidget () {
+
+	}
+	
+	function ActivateTab ( tab : Tab ) {
+		for ( var t : Tab in tabs ) {
+			if ( t.object ) { t.object.SetActive ( t == tab ); }
+		}
+		
 		if ( direction == TabDirection.Vertical ) {
-			boxPos.y = activeTab * transform.localScale.y;
+			boxPos.y = tabs.IndexOf ( tab ) * ( transform.localScale.y / tabs.Count );
 		} else {
-			boxPos.x = activeTab * transform.localScale.x;
+			boxPos.x = tabs.IndexOf ( tab ) * ( transform.localScale.x / tabs.Count );
+		}
+	}
+	
+	function Start () {
+		if ( tabs.Count > 0 ) {
+			ActivateTab ( tabs[0] );
 		}
 	}
 	
@@ -46,22 +64,23 @@ class OGTabs extends OGWidget {
 		textStyle.fontSize = guiStyle.fontSize;
 		textStyle.alignment = guiStyle.alignment;
 				
-		if ( direction == TabDirection.Horizontal ) {
-			GUI.Box ( Rect ( x + boxPos.x, y, transform.localScale.x, transform.localScale.y ), "", guiStyle );
+		if ( direction == TabDirection.Horizontal && tabs.Count > 0 ) {
+			GUI.Box ( Rect ( x + boxPos.x, y, ( transform.localScale.x / tabs.Count ), transform.localScale.y ), "", guiStyle );
+			
 			for ( var i = 0; i < tabs.Count; i++ ) {				
-				if ( GUI.Button ( Rect ( x + ( i * transform.localScale.x ), y, transform.localScale.x, transform.localScale.y ), tabs[i].label, textStyle ) ) {
+				if ( GUI.Button ( Rect ( x + ( i * ( transform.localScale.x / tabs.Count ) ), y, ( transform.localScale.x / tabs.Count ), transform.localScale.y ), tabs[i].label, textStyle ) ) {
 					if ( tabs[i].label != "" ) {	
-						messageTarget.SendMessage ( tabs[i].message, tabs[i].argument );
+						ActivateTab ( tabs[i] );
 						activeTab = i;
 					}
 				}
 			}
-		} else {
+		} else if ( tabs.Count > 0 ) {
 			GUI.Box ( Rect ( x, y + boxPos.y, transform.localScale.x, transform.localScale.y ), "", guiStyle );
 			for ( i = 0; i < tabs.Count; i++ ) {				
 				if ( GUI.Button ( Rect ( x, y + ( i * transform.localScale.y ), transform.localScale.x, transform.localScale.y ), tabs[i].label, textStyle ) ) {
 					if ( tabs[i].label != "" ) {
-						messageTarget.SendMessage ( tabs[i].message, tabs[i].argument );
+						ActivateTab ( tabs[i] );
 						activeTab = i;
 					}
 				}

@@ -1,5 +1,7 @@
 #pragma strict
 
+@script AddComponentMenu ("OpenGUI/Tween")
+
 class OGTween extends MonoBehaviour {
 	enum TweenMessageSend {
 		Begin,
@@ -22,7 +24,7 @@ class OGTween extends MonoBehaviour {
 	var messageTarget : GameObject;
 	var message : String;
 	var argument : String;
-	var sendMessageOn : TweenMessageSend;
+	var sendMessageOn : TweenMessageSend = TweenMessageSend.Complete;
 	
 	@HideInInspector var timer : float = 0.0;
 	@HideInInspector var timerStarted : boolean = false;

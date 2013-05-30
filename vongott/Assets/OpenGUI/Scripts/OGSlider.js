@@ -1,6 +1,6 @@
 #pragma strict
 
-@script ExecuteInEditMode
+@script AddComponentMenu ("OpenGUI/Slider")
 
 enum SliderType {
 	Horizontal,

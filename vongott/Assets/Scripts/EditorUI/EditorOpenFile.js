@@ -90,7 +90,7 @@ class EditorOpenFile extends OGPage {
 			btn.style = "listitem";
 			
 			obj.transform.parent = mapList.transform;
-			obj.transform.localScale = new Vector3 ( 468, 30, 1 );
+			obj.transform.localScale = new Vector3 ( 456, 30, 1 );
 			obj.transform.localPosition = new Vector3 ( 0, i * 32, -2 );
 		}
 	}

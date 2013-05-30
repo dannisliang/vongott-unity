@@ -370,6 +370,8 @@ static function DeselectObject () {
 	
 	drawPath = null;
 	selectedObject = null;
+	
+	inspector.ClearMenus ();
 }
 
 // Select object
@@ -534,6 +536,21 @@ static function SetRestriction ( axis : String ) {
 ////////////////////
 // File I/O
 ////////////////////
+// Trim filename
+static function TrimFileNames ( paths : String[] ) : String[] {
+	var newArray : String[] = new String[paths.Length];
+	
+	for ( var i = 0; i < paths.Length; i++ ) {
+		var path = paths[i].Split("\\"[0]);
+		var fileName = path[path.Length-1];
+		var extention = fileName.Split("."[0]);
+		var name = extention[0];
+		newArray[i] = name;
+	}
+	
+	return newArray;
+}
+
 // Screenshot
 static function LoadScreenshot ( path ) : Texture2D {
 	return Loader.LoadScreenshot ( path );
@@ -564,32 +581,19 @@ static function LoadFile ( path : String ) {
 
 // Load conversations from library
 static function GetConvoChapters () : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Conversations", "*" );
+	return TrimFileNames ( Directory.GetDirectories ( Application.dataPath + "/Story/Conversations", "*" ) );
 }
 
 static function GetConvoScenes ( chapter : String ) : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter, "*" );
+	return TrimFileNames ( Directory.GetDirectories ( Application.dataPath + "/Story/Conversations/" + chapter, "*" ) );
 }
 
 static function GetConvoNames ( chapter : String, scene: String ) : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Conversations/" + chapter + "/" + scene, "*" );
+	return TrimFileNames ( Directory.GetDirectories ( Application.dataPath + "/Story/Conversations/" + chapter + "/" + scene, "*" ) );
 }
 
 static function GetConvos ( chapter : String, scene: String, name: String ) : String[] {
-	return Directory.GetFiles ( Application.dataPath + "/Conversations/" + chapter + "/" + scene + "/" + name, "*" );
-}
-
-// Load quests from library
-static function GetQuestChapters () : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Quests", "*" );
-}
-
-static function GetQuestScenes ( chapter : String ) : String[] {
-	return Directory.GetDirectories ( Application.dataPath + "/Quests/" + chapter, "*" );
-}
-
-static function GetQuests ( chapter : String, scene: String ) : String[] {
-	return Directory.GetFiles ( Application.dataPath + "/Quests/" + chapter + "/" + scene, "*" );
+	return TrimFileNames ( Directory.GetFiles ( Application.dataPath + "/Story/Conversations/" + chapter + "/" + scene + "/" + name, "*" ) );
 }
 
 

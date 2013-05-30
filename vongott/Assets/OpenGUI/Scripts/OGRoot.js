@@ -1,6 +1,6 @@
 #pragma strict
 
-@script ExecuteInEditMode
+@script AddComponentMenu ("OpenGUI/Root")
 
 class OGRoot extends MonoBehaviour {
 	var _currentPage : OGPage;

@@ -28,7 +28,7 @@ class Loader {
 	static function LoadConversationToEditor ( path : String ) : List.< EditorConversationEntry > {
 		var entries : List.< EditorConversationEntry >;
 		
-		path = Application.dataPath + "/Conversations/" + path + ".vgconvo";
+		path = Application.dataPath + "/Story/Conversations/" + path + ".vgconvo";
 		
 		var input : String = ReadFile ( path );	
 		if ( !input ) { return null; }
@@ -41,7 +41,7 @@ class Loader {
 	static function LoadConversationToGame ( path : String ) : String {
 		var entries : List.< EditorConversationEntry >;
 		
-		path = Application.dataPath + "/Conversations/" + path + ".vgconvo";
+		path = Application.dataPath + "/Story/Conversations/" + path + ".vgconvo";
 				
 		var input : String = ReadFile ( path );	
 		if ( !input ) { return null; }
@@ -65,13 +65,27 @@ class Loader {
 		return new JSONObject ( input );
 	}
 	
-	static function LoadQuest ( chapter : String, scene : String, id : String ) : Quest {
-		var path = Application.dataPath + "/Quests/" + chapter + "/" + scene + "/" + id + ".vgquest";
+	static function LoadQuests () : JSONObject {
+		var path = Application.dataPath + "/Story/Quests/quests.vgdata";
 		
+		var input : String = ReadFile ( path );	
+		if ( !input ) { input = ""; }
+		
+		var quests : JSONObject = new JSONObject ( input );
+	
+		return quests;
+	}
+	
+	static function LoadQuest ( id : String ) : Quest {
+		var path = Application.dataPath + "/Story/Quests/quests.vgdata";
+				
 		var input : String = ReadFile ( path );	
 		if ( !input ) { return null; }
 		
-		var quest : Quest = Deserializer.DeserializeQuest ( input );
+		var object : JSONObject = new JSONObject ( input );
+		if ( !object.HasField ( id ) ) { return null; }
+		
+		var quest : Quest = Deserializer.DeserializeQuest ( object.GetField ( id ) );
 	
 		return quest;
 	}

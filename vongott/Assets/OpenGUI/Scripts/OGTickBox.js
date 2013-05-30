@@ -1,5 +1,7 @@
 #pragma strict
 
+@script AddComponentMenu ("OpenGUI/TickBox")
+
 class OGTickBox extends OGWidget {
 	var label : String;
 	var isChecked : boolean;

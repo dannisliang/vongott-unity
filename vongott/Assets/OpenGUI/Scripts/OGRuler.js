@@ -1,6 +1,7 @@
 #pragma strict
 
 @script ExecuteInEditMode
+@script AddComponentMenu ("OpenGUI/Ruler")
 
 class OGRuler extends OGWidget {
 	var color : Color = Color.white;
