@@ -10,7 +10,7 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Public vars
 	////////////////////
-	var objectName : OGLabel;
+	var objectName : OGTextField;
 	var levelName : OGLabel;
 	
 	var inspector : GameObject;
@@ -90,21 +90,21 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Prefabs
 	function AddPrefab () {
-		EditorBrowser.mode = "Add";
+		EditorBrowser.initMode = "Add";
 		EditorBrowser.rootFolder = "Prefabs";
 		
 		OGRoot.GoToPage ( "Browser" );
 	}
 	
 	function AddActor () {
-		EditorBrowser.mode = "Add";
+		EditorBrowser.initMode = "Add";
 		EditorBrowser.rootFolder = "Actors";
 		
 		OGRoot.GoToPage ( "Browser" );
 	}
 	
 	function AddItem () {
-		EditorBrowser.mode = "Add";
+		EditorBrowser.initMode = "Add";
 		EditorBrowser.rootFolder = "Items";
 		
 		OGRoot.GoToPage ( "Browser" );
@@ -194,12 +194,12 @@ class EditorMenuBase extends OGPage {
 			menuObj.GetComponent(EditorInspectorLight).Init(selectedObj);
 		} else if ( menu == "Actor" ) {
 			menuObj.GetComponent(EditorInspectorActor).Init(selectedObj);
-		/*} else if ( menu == "Path" ) {
-			subMenus[index].GetComponent(EditorInspectorPath).Init(selectedObj);
+		} else if ( menu == "Path" ) {
+			menuObj.GetComponent(EditorInspectorPath).Init(selectedObj);
 		} else if ( menu == "Trigger" ) {
-			subMenus[index].GetComponent(EditorInspectorTrigger).Init(selectedObj);
-		*/} else if ( menu == "Tween" ) {
-			menuObj.GetComponent(EditorInspectorTween).Init(selectedObj);
+		//	menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
+		} else if ( menu == "Tween" ) {
+		//	menuObj.GetComponent(EditorInspectorTween).Init(selectedObj);
 		}
 	}
 	

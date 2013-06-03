@@ -185,8 +185,8 @@ static function AddPrefab ( dir : String, name : String ) {
 }
 
 // Add any object
-static function AddObject ( root : String, dir : String, name : String ) {
-	var newObject : GameObject = Instantiate ( Resources.Load ( root + "/" + dir + "/" + name ) as GameObject );
+static function AddObject ( obj : GameObject ) {
+	var newObject : GameObject = Instantiate ( obj );
 	newObject.transform.parent = currentLevel.transform;
 	newObject.transform.position = GetSpawnPosition();
 }
@@ -212,10 +212,10 @@ static function SetLayerRecursively ( obj : GameObject, lay : int ) {
     }
 }
 
-static function PreviewObject ( path ) : ObjectAttributes {
+static function PreviewObject ( obj : GameObject ) : ObjectAttributes {
 	ClearPreview ();
 	
-	previewObject = Instantiate ( Resources.Load ( path ) as GameObject );
+	previewObject = Instantiate ( obj );
 	
 	var scal = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
 	previewObject.transform.localPosition = new Vector3 ( 0, 0, 5 );
@@ -248,9 +248,8 @@ static function PreviewObject ( path ) : ObjectAttributes {
 // Actor
 ////////////////////
 // Equip item
-static function EquipItem ( dir : String, name : String, slot : int ) {
+static function EquipItem ( obj : GameObject, slot : int ) {
 	if ( selectedObject.GetComponent(Actor) ) {
-		var obj : GameObject = Instantiate ( Resources.Load ( "Items/" + dir + "/" + name ) as GameObject );
 		var item : Item = obj.GetComponent(Item);
 		
 		selectedObject.GetComponent(Actor).inventory[slot] = InventoryManager.ConvertItemToEntry ( item );
@@ -411,7 +410,7 @@ static function SelectObject ( obj : GameObject ) {
 	// Actor
 	} else if ( obj.GetComponent(Actor) ) {
 		inspector.AddMenu ( "Actor", obj );
-		inspector.AddMenu ( "Trigger", obj );
+		inspector.AddMenu ( "Path", obj );
 		
 		for ( var node : GameObject in obj.GetComponent(Actor).path ) {
 			node.GetComponent(MeshRenderer).enabled = true;
@@ -422,6 +421,9 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "Item", obj );
 		inspector.AddMenu ( "Trigger", obj );
 	
+	// Prefab
+	} else if ( obj.GetComponent ( Prefab ) ) {
+		inspector.AddMenu ( "Prefab", obj );
 	}
 }
 
