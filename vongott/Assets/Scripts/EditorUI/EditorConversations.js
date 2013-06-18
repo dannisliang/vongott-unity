@@ -5,14 +5,6 @@ class EditorConversations extends OGPage {
 	// Prerequisites
 	////////////////////
 	// Private classes
-	private class Selector {
-		var instance : GameObject;
-		var chapter : OGPopUp;
-		var scene : OGPopUp;
-		var name : OGPopUp;
-		var conversation : OGPopUp;
-	}
-	
 	private class Creator {
 		var instance : GameObject;
 		var chapter : OGTextField;
@@ -30,7 +22,7 @@ class EditorConversations extends OGPage {
 	
 	// Public vars
 	var fileModeSwitch : OGPopUp;
-	var selector : Selector;
+	var selector : OGButton;
 	var creator : Creator;
 	var entryInstance : EditorConversationEntry;
 	var scrollView : OGScrollView;
@@ -40,17 +32,18 @@ class EditorConversations extends OGPage {
 	
 	// Static vars
 	static var entries : List.< EditorConversationEntry > = new List.< EditorConversationEntry >();
-		
+	static var pickBtn : OGButton = null;
+			
 	////////////////////
 	// File I/O
 	////////////////////
 	// Switch mode
 	function SelectFileMode () {
 		if ( fileModeSwitch.selectedOption == "Load" ) {
-			selector.instance.SetActive ( true );
+			selector.gameObject.SetActive ( true );
 			creator.instance.SetActive ( false );
 		} else {
-			selector.instance.SetActive ( false );
+			selector.gameObject.SetActive ( false );
 			creator.instance.SetActive ( true );
 		}
 	}
@@ -70,23 +63,6 @@ class EditorConversations extends OGPage {
 		return newArray;
 	}
 
-	// Selected chapter, scene and name
-	function SelectedChapter () {		
-		selector.scene.options = TrimFileNames ( EditorCore.GetConvoScenes ( selector.chapter.selectedOption ) );
-	}
-	
-	function SelectedScene () {
-		selector.name.options = TrimFileNames ( EditorCore.GetConvoNames ( selector.chapter.selectedOption, selector.scene.selectedOption ) );
-	}
-	
-	function SelectedName () {
-		selector.conversation.options = TrimFileNames ( EditorCore.GetConvos ( selector.chapter.selectedOption, selector.scene.selectedOption, selector.name.selectedOption ) );
-	}
-	
-	function SelectedConversation () {
-		
-	}
-	
 	// Update convo info
 	function UpdateConvoInfo () {
 		currentConvoLabel.text = ": " + currentConvo.chapter + "/" + currentConvo.scene + "/" + currentConvo.name + "/" + currentConvo.conversation;
@@ -100,21 +76,15 @@ class EditorConversations extends OGPage {
 	
 	// Create convo
 	function ForceCreate () {
-		selector.chapter.selectedOption = creator.chapter.text;
-		selector.scene.selectedOption = creator.scene.text;
-		selector.name.selectedOption = creator.name.text;
-		selector.conversation.selectedOption = creator.conversation.text;
+		selector.text = creator.chapter.text + "/" + creator.scene.text + "/" + creator.name.text + "/" + creator.conversation.text;
 		
-		currentConvo.chapter = selector.chapter.selectedOption;
-		currentConvo.scene = selector.scene.selectedOption;
-		currentConvo.name = selector.name.selectedOption;
-		currentConvo.conversation = selector.conversation.selectedOption;
+		currentConvo.chapter = creator.chapter.text;
+		currentConvo.scene = creator.scene.text;
+		currentConvo.name = creator.name.text;
+		currentConvo.conversation = creator.conversation.text;
 		
 		Save ();
 		LoadConversation ();
-		
-		SelectedChapter ();
-		SelectedScene ();
 	}
 	
 	function Create () {
@@ -123,42 +93,41 @@ class EditorConversations extends OGPage {
 		if ( creator.name.text == "" || creator.name.text == "name" ) { return; }
 		if ( creator.conversation.text == "" || creator.conversation.text == "conversation" ) { return; }
 		
-		if ( !IsEmpty() ) {
-			SaveChangesDialog ( function () {
-				Save();
-				ForceCreate ();
-			} );
-			
-		} else {
-			ForceCreate ();
-			
-		}
+		ForceCreate ();
 	}
 	
 	// Save changes
-	function SaveChangesDialog ( func : Function ) {
-		OGRoot.GoToPage ( "ConfirmDialog" );
+	function SaveChangesDialog () {
 		EditorConfirmDialog.message = "Save your changes first?";
 		EditorConfirmDialog.sender = "Conversations";
-		EditorConfirmDialog.noAction = LoadConversation;
-		EditorConfirmDialog.yesAction = func;
+		EditorConfirmDialog.noAction = GoToPicker;
+		EditorConfirmDialog.yesAction = function () {
+			Save();
+			GoToPicker ();
+		};
+		
+		OGRoot.GoToPage ( "ConfirmDialog" );
 	}
 	
-	// Load convo
-	function LoadSelection () {
-		if ( selector.chapter.selectedOption == "" || selector.chapter.selectedOption == "<chapter>" ) { return; }
-		if ( selector.scene.selectedOption == "" || selector.scene.selectedOption == "<scene>" ) { return; }
-		if ( selector.name.selectedOption == "" || selector.name.selectedOption == "<name>" ) { return; }
-		if ( selector.conversation.selectedOption == "" || selector.conversation.selectedOption == "<conversation>" ) { return; }
-				
+	// Pick convo
+	function GoToPicker () {
+		EditorPicker.mode = "conversation";
+		EditorPicker.button = pickBtn;
+		EditorPicker.sender = "Conversations";
+		
+		EditorPicker.func = LoadConversation;
+		
+		OGRoot.GoToPage ( "Picker" );
+	}
+	
+	function PickConvo ( btn : OGButton ) {
+		pickBtn = btn;
+		
 		if ( !IsEmpty() ) {
-			SaveChangesDialog ( function () {
-				Save();
-				LoadConversation();
-			} );
+			SaveChangesDialog ();
 		
 		} else {
-			LoadConversation();
+			GoToPicker ();
 		
 		}
 	}
@@ -166,13 +135,15 @@ class EditorConversations extends OGPage {
 	function LoadConversation () {
 		ClearEntries ();
 			
-		var entryList : List.< EditorConversationEntry > = Loader.LoadConversationToEditor ( selector.chapter.selectedOption + "/" + selector.scene.selectedOption + "/" + selector.name.selectedOption + "/" + selector.conversation.selectedOption );			
+		var entryList : List.< EditorConversationEntry > = Loader.LoadConversationToEditor ( selector.text );			
 		PopulateEntries ( entryList );
 	
-		currentConvo.chapter = selector.chapter.selectedOption;
-		currentConvo.scene = selector.scene.selectedOption;
-		currentConvo.name = selector.name.selectedOption;
-		currentConvo.conversation = selector.conversation.selectedOption;
+		var splitString : String[] = selector.text.Split("/"[0]);
+	
+		currentConvo.chapter = splitString[0];
+		currentConvo.scene = splitString[1];
+		currentConvo.name = splitString[2];
+		currentConvo.conversation = splitString[3];
 
 		UpdateConvoInfo ();
 	}
@@ -334,8 +305,7 @@ class EditorConversations extends OGPage {
 	// Init
 	////////////////////	
 	override function StartPage () {
-		// List chapters
-		selector.chapter.options = TrimFileNames ( EditorCore.GetConvoChapters() );
+
 	}
 	
 	

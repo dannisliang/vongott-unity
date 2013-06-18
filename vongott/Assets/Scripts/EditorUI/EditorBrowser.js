@@ -60,6 +60,7 @@ class EditorBrowser extends OGPage {
 	static var rootFolder : String = "Actors";
 	static var initMode : String = "Add";
 	static var argument : String;
+	static var button : OGButton;
 	
 	// Hidden vars
 	@HideInInspector var currentFolder : Folder;

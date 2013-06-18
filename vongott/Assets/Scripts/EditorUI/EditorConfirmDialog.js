@@ -10,15 +10,15 @@ class EditorConfirmDialog extends OGPage {
 
 	function Yes () {
 		if ( yesAction != null ) {
-			yesAction ();
 			OGRoot.GoToPage ( sender );
+			yesAction ();
 		} 
 	}
 	
 	function No () {
 		if ( noAction != null && sender != "" ) {
-			noAction ();
 			OGRoot.GoToPage ( sender );
+			noAction ();
 			Clear ();
 		} else if ( sender != "" ) {
 			OGRoot.GoToPage ( sender );

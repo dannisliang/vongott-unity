@@ -70,7 +70,7 @@ class Saver {
 	}
 
 	static function SaveConversation ( chapter : String, scene : String, name : String, conversation : String, entries : List.< EditorConversationEntry > ) {
-		var chapterPath = Application.dataPath + "/Conversations/" + chapter;
+		var chapterPath = Application.dataPath + "/Story/Conversations/" + chapter;
 		var scenePath = chapterPath + "/" + scene;
 		var actorPath = scenePath + "/" + name;
 		var filePath = actorPath + "/" + conversation + ".vgconvo";

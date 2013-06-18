@@ -134,11 +134,12 @@ class Actor extends InteractiveObject {
 		var forward = transform.TransformDirection (Vector3.forward);
 		
 		// check for interaction
-		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == "ally" ) {
+		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == "ally" && GameCore.controlsActive ) {
 			UIHUD.ShowNotification ( "Talk [F]" );
 			
 			if ( Input.GetKeyDown(KeyCode.F) ) {
 				Talk();
+				UIHUD.ShowNotification ( "" );
 			}
 		}
 		

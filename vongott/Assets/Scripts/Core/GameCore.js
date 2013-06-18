@@ -16,6 +16,7 @@ static var camTarget:GameObject;
 static var cam:Transform;
 
 static var started = false;
+static var controlsActive = true;
 
 static var currentChapter : Chapter;
 static var currentScene : Scene;
@@ -58,6 +59,8 @@ static function ToggleControls ( state : boolean ) {
 	playerObject.GetComponent(ThirdPersonController).enabled = state;
 	
 	MouseLook.SetActive ( state );
+	
+	controlsActive = state;
 	
 	if ( state ) {
 		Print ( "GameCore | controls activated" );
