@@ -2,7 +2,7 @@ Shader "Vongott/Bumped Specular" {
 	Properties {
 		_MainTex("Texture", 2D) = "white" {}
 		_BumpTex("Normal Map", 2D ) = "bump" {}
-		_SpecColor("Specular Color", Color) = (1,1,1,1)
+		_SpecColor("_Color", Color) = (1,1,1,1)
 		_SpecPower("Specular Power", Range(0,2)) = 0.5
 	}
 	

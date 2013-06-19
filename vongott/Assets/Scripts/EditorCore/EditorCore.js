@@ -80,7 +80,7 @@ static var camTarget : GameObject;
 static var root : Transform;
 static var drawPath : Vector3[];
 static var selectedShader : Shader;
-static var origShaders : List.< KeyValuePair.< Material, Shader > > = new List.< KeyValuePair.< Material, Shader > > ();
+static var origColors : List.< KeyValuePair.< Material, Color > > = new List.< KeyValuePair.< Material, Color > > ();
 static var noGizmos : boolean = false;
 static var previewObject : GameObject;
 static var previewCamera : Camera;
@@ -272,7 +272,6 @@ static function UnequipItem ( slot : int ) {
 // Toggle isometric view
 static function ToggleIsometric () {
 	Camera.main.orthographic = !Camera.main.orthographic;
-	Camera.main.orthographicSize = 50;
 }
 
 // Toggle wireframe view
@@ -299,23 +298,23 @@ static function ToggleGizmos () {
 // Select objects
 ////////////////////
 // Pin materials
-static function PinShader ( mat : Material, shader : Shader ) {
-	origShaders.Add ( new KeyValuePair. < Material, Shader > ( mat, shader ) );
+static function PinColor ( mat : Material ) {
+	origColors.Add ( new KeyValuePair. < Material, Color > ( mat, mat.color ) );
 }
 
 // Unpin materials
-static function UnpinShader ( obj : Material ) : Shader {
-	var shader : Shader;
+static function UnpinColor ( mat : Material ) : Color {
+	var color : Color;
 	
-	for ( var kvp : KeyValuePair. < Material, Shader > in origShaders ) {
-		if ( kvp.Key == obj ) {
-			shader = kvp.Value;
-			origShaders.Remove ( kvp );
+	for ( var kvp : KeyValuePair. < Material, Color > in origColors ) {
+		if ( kvp.Key == mat ) {
+			color = kvp.Value;
+			origColors.Remove ( kvp );
 			break;
 		}
 	}
 	
-	return shader;
+	return color;
 }
 
 // Reselect object
@@ -360,11 +359,7 @@ static function DeselectObject () {
 	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
 	
 	for ( var mat : Material in renderer.materials ) {
-	 	var origShader : Shader = UnpinShader ( mat );
-	
-		if ( origShader ) {
-			mat.shader = origShader;
-		}
+	 	mat.color = UnpinColor ( mat );
 	}
 	
 	drawPath = null;
@@ -391,17 +386,11 @@ static function SelectObject ( obj : GameObject ) {
 	
 	// Change material
 	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
-	var newMaterials : Material[] = new Material[renderer.materials.Length];
 		
-	for ( var i = 0; i < newMaterials.Length; i++ ) {
-		PinShader ( renderer.materials[i], renderer.materials[i].shader );
-		newMaterials[i] = renderer.materials[i];
-		newMaterials[i].shader = selectedShader;
-		newMaterials[i].SetColor ( "_OutlineColor", Color.cyan );
-		newMaterials[i].SetFloat ( "_Outline", 0.0025 );
+	for ( var i = 0; i < renderer.materials.Length; i++ ) {
+		PinColor ( renderer.materials[i] );
+		renderer.materials[i].color = Color.green;
 	}
-	
-	renderer.materials = newMaterials;
 	
 	// LightSource
 	if ( obj.GetComponent(LightSource) ) {

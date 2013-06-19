@@ -36,6 +36,12 @@ function Update () {
 			EditorCore.SetRotateMode ( false );
 			EditorCore.SetScaleMode ( false );
 			
+			if ( EditorCore.snapEnabled ) {
+				EditorCore.GetSelectedObject().transform.localPosition.x = Round ( EditorCore.GetSelectedObject().transform.localPosition.x, EditorCore.gridLineDistance );
+				EditorCore.GetSelectedObject().transform.localPosition.y = Round ( EditorCore.GetSelectedObject().transform.localPosition.y, EditorCore.gridLineDistance );
+				EditorCore.GetSelectedObject().transform.localPosition.z = Round ( EditorCore.GetSelectedObject().transform.localPosition.z, EditorCore.gridLineDistance );
+			}
+			
 			EditorCore.ReselectObject();
 		
 		// X key: x axis

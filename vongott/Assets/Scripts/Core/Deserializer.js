@@ -1,6 +1,7 @@
 #pragma strict
 
 import System.Text;
+import System.Text.RegularExpressions;
 
 ////////////////////
 // Deserialize GameObjects with their children and components
@@ -12,8 +13,10 @@ static var root : Transform;
 static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject {
 	// check if prefab
 	if ( obj.HasField("Prefab") ) {
-		var pfb : JSONObject = obj.GetField("Prefab");
-		var newPfb : GameObject = Instantiate ( Resources.Load ( "Prefabs/" + pfb.GetField("path").str + "/" + pfb.GetField("id").str ) as GameObject );
+		var pfb : JSONObject = obj.GetField("Prefab");		
+		var path : String = "Prefabs/" + pfb.GetField("path").str + "/" + pfb.GetField("id").str;
+		
+		var newPfb : GameObject = Instantiate ( Resources.Load ( path ) as GameObject );
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;

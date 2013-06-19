@@ -184,6 +184,8 @@ function Update () {
 			transform.localPosition = new Vector3 ( x, y + ( translation * speed ), z );
 		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
 			transform.position = transform.position + horizontal * ( translation * speed );
+		} else if ( Camera.main.orthographic ) {
+			Camera.main.orthographicSize += -( translation * speed );
 		} else {		
 			transform.position = transform.position + forward * ( translation * speed ) * 10;
 		}
