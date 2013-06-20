@@ -46,7 +46,6 @@ private class Action {
 var _workspace : Transform;
 var _gizmo : GameObject;
 var _previewCamera : Camera;
-var _selectedShader : Shader;
 
 // Static vars
 static var menusActive = false;
@@ -66,8 +65,9 @@ static var grabRestrict : String;
 
 // grid / guides
 static var gizmo : GameObject;
-static var snapEnabled = false;
+static var snapEnabled = true;
 static var gridEnabled = false;
+static var focusEnabled = false;
 static var gridLineDistance : float = 1.0;
 static var gridLineBrightFrequency : int = 5;
 
@@ -79,7 +79,6 @@ static var player : GameObject;
 static var camTarget : GameObject;
 static var root : Transform;
 static var drawPath : Vector3[];
-static var selectedShader : Shader;
 static var origColors : List.< KeyValuePair.< Material, Color > > = new List.< KeyValuePair.< Material, Color > > ();
 static var noGizmos : boolean = false;
 static var previewObject : GameObject;
@@ -356,6 +355,8 @@ static function DeselectObject () {
 		}
 	}
 	
+	focusEnabled = false;
+	
 	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
 	
 	for ( var mat : Material in renderer.materials ) {
@@ -434,7 +435,7 @@ static function SetGrabMode ( state : boolean ) {
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Grab Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse mouse to move" );
-		EditorModes.SetHeight ( 70 );
+		EditorModes.SetHeight ( 90 );
 		
 		gizmo.SetActive ( true );
 		gizmo.transform.parent = selectedObject.transform;
@@ -468,7 +469,7 @@ static function SetRotateMode ( state : boolean ) {
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Rotate Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to rotate\nHold Shift or Ctrl to change speed" );
-		EditorModes.SetHeight ( 90 );
+		EditorModes.SetHeight ( 110 );
 		
 		gizmo.SetActive ( true );
 		gizmo.transform.parent = selectedObject.transform;
@@ -502,7 +503,7 @@ static function SetScaleMode ( state : boolean ) {
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Scale Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to scale\nHold Shift or Ctrl to change speed" );
-		EditorModes.SetHeight ( 90 );
+		EditorModes.SetHeight ( 110 );
 		
 		gizmo.SetActive ( true );
 		gizmo.transform.parent = selectedObject.transform;
@@ -615,7 +616,6 @@ function Start () {
 	workspace = _workspace;
 	gizmo = _gizmo;
 	previewCamera = _previewCamera;
-	selectedShader = _selectedShader;
 	root = this.transform.parent;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;

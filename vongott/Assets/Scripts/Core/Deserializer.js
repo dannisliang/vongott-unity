@@ -103,11 +103,12 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 	var o : GameObject = DeserializeGameObjectFromJSON ( obj );
 	
 	// camera
-	if ( obj.HasField ( "Camera" ) ) {
+	if ( obj.HasField ( "Camera" ) && Camera.main.GetComponent ( EditorCamera ) ) {
 		var cam : JSONObject = obj.GetField("Camera");
 		
 		Camera.main.transform.localPosition = DeserializeVector3 ( cam.GetField ( "localPosition" ) );
 		Camera.main.transform.localEulerAngles = DeserializeVector3 ( cam.GetField ( "localEulerAngles" ) );
+		Camera.main.GetComponent ( EditorCamera ).rotationY = -Camera.main.transform.localEulerAngles.x;
 	}
 	
 	return o;

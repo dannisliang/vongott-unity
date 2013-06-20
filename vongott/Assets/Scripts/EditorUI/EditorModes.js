@@ -4,10 +4,17 @@ class EditorModes extends OGPage {
 	var _title : OGLabel;
 	var _message : OGLabel;
 	var _background : OGRect;
+	var _data : Transform;
 	
+	var dataX : OGLabel;
+	var dataY : OGLabel;
+	var dataZ : OGLabel;
+	var dataVector : Vector3;
+																	
 	static var title : OGLabel;
 	static var message : OGLabel;
 	static var background : OGRect;
+	static var data : Transform;
 	
 	static function SetTitle ( ttl : String ) {
 		title.text = ttl;
@@ -19,11 +26,28 @@ class EditorModes extends OGPage {
 	
 	static function SetHeight ( h : float ) {
 		background.transform.localScale = new Vector3 ( background.transform.localScale.x, h, background.transform.localScale.z );
+	
+		data.localPosition = new Vector3 ( data.localPosition.x, h - 25, data.localPosition.z );
+	}
+	
+	override function UpdatePage () {
+		if ( title.text == "Grab Mode" ) {
+			dataVector = EditorCore.GetSelectedObject().transform.localPosition;	
+		} else if ( title.text == "Rotate Mode" ) {
+			dataVector = EditorCore.GetSelectedObject().transform.localEulerAngles;
+		} else if ( title.text == "Scale Mode" ) {
+			dataVector = EditorCore.GetSelectedObject().transform.localScale;
+		}
+	
+		dataX.text = "X: " + dataVector.x.ToString("f1");
+		dataY.text = "Y: " + dataVector.y.ToString("f1");
+		dataZ.text = "Z: " + dataVector.z.ToString("f1");
 	}
 	
 	override function StartPage () {
 		title = _title;
 		message = _message;
 		background = _background;
+		data = _data;
 	}
 }

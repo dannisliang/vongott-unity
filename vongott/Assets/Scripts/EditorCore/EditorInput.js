@@ -200,7 +200,7 @@ function Update () {
 		// numpad period: zoom to object
 		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) ) {
 			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).TweenMoveTo ( EditorCore.GetSelectedObject().transform.localPosition );
+				//Camera.main.GetComponent ( EditorCamera ).TweenMoveTo ( EditorCore.GetSelectedObject().transform.localPosition );
 			}
 		
 		// numpad 5: orthographic view
@@ -231,6 +231,12 @@ function Update () {
 				Camera.main.GetComponent ( EditorCamera ).TweenMoveToFront ( EditorCore.GetSelectedObject().transform.localPosition );
 			}
 		
+		// ALT modifier
+		} else if ( Input.GetKeyDown ( KeyCode.LeftAlt ) ) {
+			if ( EditorCore.GetSelectedObject() ) {
+				//Camera.main.GetComponent ( EditorCamera ).TweenTurnTo ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			}
+				
 		// CTRL modifier
 		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
 			
@@ -246,6 +252,21 @@ function Update () {
 			// Z key: undo
 			} else if ( Input.GetKeyDown ( KeyCode.Z ) ) {
 				EditorCore.UndoCurrentAction ();
+			
+			}
+		
+		// left mouse button
+		} else if ( Input.GetMouseButtonDown(0) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {
+			var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
+			var hit : RaycastHit;
+			
+			if ( Physics.Raycast ( newRay, hit ) ) {
+				var obj : GameObject = hit.collider.gameObject;
+				
+				EditorCore.SelectObject ( obj );						
+			
+			} else if ( EditorCore.GetSelectedObject() ) {
+				EditorCore.DeselectObject ();
 			
 			}
 		}

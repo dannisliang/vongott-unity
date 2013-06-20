@@ -133,6 +133,10 @@ function TweenTurn ( angle : Vector3 ) {
 	rotationY = -angle.x;
 }
 
+function TweenTurnTo ( target : Vector3 ) {
+	iTween.LookTo ( Camera.main.gameObject, { "looktarget": target, "time" : 0.5, "onupdate" : "UpdateRotation" } );
+}
+
 // Move
 function TweenMoveToTop ( position : Vector3 ) {
 	var distance : float = Vector3.Distance ( Camera.main.transform.localPosition, position );
@@ -163,6 +167,10 @@ static function ClampAngle (angle : float, min : float, max : float) {
 }
 
 // Update
+function UpdateRotation () {
+	rotationY = -transform.localEulerAngles.x;
+}
+
 function Update () {
 	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) { return; }
 	
@@ -180,30 +188,29 @@ function Update () {
 	
 	// camera mode			
 	if ( translation != 0.0 && !OGRoot.mouseOver ) {				
-		if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-			transform.localPosition = new Vector3 ( x, y + ( translation * speed ), z );
-		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-			transform.position = transform.position + horizontal * ( translation * speed );
-		} else if ( Camera.main.orthographic ) {
-			Camera.main.orthographicSize += -( translation * speed );
-		} else {		
-			transform.position = transform.position + forward * ( translation * speed ) * 10;
+		if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) ) {
+			spd = spd / 4;
+		} else if ( Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.RightControl ) ) {
+			spd = spd * 4;
 		}
+		
+		Camera.main.orthographicSize += -( translation * speed );
+		transform.position = transform.position + forward * ( translation * spd );
 	}
 	
 	// right mouse button
 	if ( Input.GetMouseButton(1) ) {    
-		if ( EditorCore.GetSelectedObject() && Input.GetKey ( KeyCode.LeftControl ) ) { 
-			var target : Transform = EditorCore.GetSelectedObject().transform;	
-			
+		if ( Input.GetKey ( KeyCode.LeftAlt ) && EditorCore.GetSelectedObject() ) { 
+			var target : Vector3 = EditorCore.GetSelectedObject().transform.renderer.bounds.center;	
+						
 			orbitX += Input.GetAxis("Mouse X") * sensitivity;
 	        orbitY -= Input.GetAxis("Mouse Y") * sensitivity;
 	 		
 	 		orbitY = ClampAngle(orbitY, -90, 90);
 	 		rotationY = -orbitY;
 	 		    
-	        var rotation = Quaternion.Euler ( orbitY, orbitX, 0);
-	        var position = rotation * Vector3 ( 0.0, 0.0, -Vector3.Distance(transform.position, target.position) ) + target.position;
+	        var rotation : Quaternion = Quaternion.Euler ( orbitY, orbitX, 0);
+	        var position : Vector3 = rotation * Vector3 ( 0.0, 0.0, -Vector3.Distance(transform.position, target) ) + target;
 	        
 	        transform.rotation = rotation;
 	        transform.position = position;
@@ -224,26 +231,15 @@ function Update () {
         var v = Input.GetAxis("Mouse Y") * sensitivity / 8;
 
         if ( Input.GetKey( KeyCode.LeftControl ) ) {
-        	transform.position = transform.position + forward * v * 10;
-        	transform.position = transform.position + horizontal * -h;
-        } else {
-        	transform.position = transform.position + vertical * v;
-        	transform.position = transform.position + horizontal * h;
-   		}
+        	h = h * 4;
+        	v = v * 4;
+        } else if ( Input.GetKey( KeyCode.LeftShift ) ) {
+        	h = h / 4;
+        	v = v / 4;
+        } 
+        
+    	transform.position = transform.position + vertical * v;
+    	transform.position = transform.position + horizontal * h;
 		
-	// left mouse button
-	} else if ( Input.GetMouseButtonDown(0) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {
-		var ray : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
-		var hit : RaycastHit;
-		
-		if ( Physics.Raycast ( ray, hit ) ) {
-			var obj : GameObject = hit.collider.gameObject;
-			
-			EditorCore.SelectObject ( obj );						
-		
-		} else if ( EditorCore.GetSelectedObject() ) {
-			EditorCore.DeselectObject ();
-		
-		}
 	}
 }
