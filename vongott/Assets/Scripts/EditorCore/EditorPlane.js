@@ -4,6 +4,11 @@ class EditorPlane extends MonoBehaviour {
 	var defaultMaterial : Material;	
 	var buttons : List.< OGButton > = new List.< OGButton > ();
 	
+	var mesh : Mesh;
+	var vertices : Vector3[];
+	var uv : Vector2[];
+	var triangles : int[];
+	
 	function CreateVertexButton ( pos : Vector3 ) {
 		var obj : GameObject = new GameObject ( "VertexButton" );
 		var btn : OGButton = obj.AddComponent ( OGButton );
@@ -30,23 +35,24 @@ class EditorPlane extends MonoBehaviour {
 		defaultMaterial = Resources.Load ( "Materials/Editor/editor_checker" ) as Material;
 		
 		var size : float = 4.0;
-	    var mesh : Mesh = new Mesh ();    
-	        
-	    var vertices : Vector3[] = [
+	    
+	    mesh = new Mesh ();
+	     
+	    vertices = [
 	    	Vector3 ( 0, 0, 0 ),
 	    	Vector3 ( size, 0, 0 ),
 	    	Vector3 ( size, 0, size ),
 	    	Vector3 ( 0, 0, size )
 	    ];
 	    
-	    var uv : Vector2[] = [
+	    uv = [
 	    	Vector2 ( 0, 0 ),
 	    	Vector2 ( 1, 0 ),
 	    	Vector2 ( 1, 1 ),
 	    	Vector2 ( 0, 1 )    	
 	    ];
 		
-		var triangles : int[] = [
+		triangles = [
 			0,
 			3,
 			2,
@@ -85,6 +91,13 @@ class EditorPlane extends MonoBehaviour {
 					buttons[i].transform.localPosition = newVertex;
 				}
 			}
+		} else if ( buttons.Count > 0 ) {
+			for ( var btn : OGButton in buttons ) {
+				Destroy ( btn.gameObject );
+			}
+			
+			buttons.Clear();
+			
 		}
 	}
 }
