@@ -13,11 +13,7 @@ var gizmoY : Material;
 var gizmoZ : Material;
 var gridDark : Material;
 var gridBright : Material;
-var selectIdle : Material;
-var selectModifying : Material;
 var rotationY : float = 0.0;
-var orbitX : float = 0.0;
-var orbitY : float = 0.0;
 
 
 ////////////////////
@@ -202,18 +198,12 @@ function Update () {
 	if ( Input.GetMouseButton(1) ) {    
 		if ( Input.GetKey ( KeyCode.LeftAlt ) && EditorCore.GetSelectedObject() ) { 
 			var target : Vector3 = EditorCore.GetSelectedObject().transform.renderer.bounds.center;	
-						
-			orbitX += Input.GetAxis("Mouse X") * sensitivity;
-	        orbitY -= Input.GetAxis("Mouse Y") * sensitivity;
-	 		
-	 		orbitY = ClampAngle(orbitY, -90, 90);
-	 		rotationY = -orbitY;
-	 		    
-	        var rotation : Quaternion = Quaternion.Euler ( orbitY, orbitX, 0);
-	        var position : Vector3 = rotation * Vector3 ( 0.0, 0.0, -Vector3.Distance(transform.position, target) ) + target;
-	        
-	        transform.rotation = rotation;
-	        transform.position = position;
+			
+	       	transform.RotateAround ( target, Quaternion.Euler(0, -45, 0) * ( target - this.transform.position ), Input.GetAxis("Mouse Y") * sensitivity );
+	       	transform.RotateAround ( target, Vector3.up, Input.GetAxis("Mouse X") * sensitivity );
+	        transform.LookAt ( target );
+			
+			rotationY = -transform.eulerAngles.x;
 			
 		} else {
 			var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
