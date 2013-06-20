@@ -125,6 +125,15 @@ class EditorMenuBase extends OGPage {
 	
 	
 	////////////////////
+	// Create menu
+	////////////////////
+	// Plane
+	function CreatePlane () {
+		EditorCore.CreatePlane ();
+	}
+	
+	
+	////////////////////
 	// Editors menu
 	////////////////////
 	// Conversation editor
@@ -200,6 +209,8 @@ class EditorMenuBase extends OGPage {
 		//	menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
 		} else if ( menu == "Tween" ) {
 		//	menuObj.GetComponent(EditorInspectorTween).Init(selectedObj);
+		} else if ( menu == "Plane" ) {
+			menuObj.GetComponent(EditorInspectorPlane).Init(selectedObj);
 		}
 	}
 	

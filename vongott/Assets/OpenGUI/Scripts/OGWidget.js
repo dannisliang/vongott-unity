@@ -48,9 +48,9 @@ class OGWidget extends MonoBehaviour {
 	}
 	
 	var style : String = "";
-	var pivot : Pivot;
-	var anchor : Anchor;	
-	var stretch : Stretch;
+	var pivot : Pivot = new Pivot();
+	var anchor : Anchor = new Anchor();	
+	var stretch : Stretch = new Stretch();
 	
 	@HideInInspector var adjustPivot : Vector2 = Vector2.zero;				
 	@HideInInspector var manualDraw = false;

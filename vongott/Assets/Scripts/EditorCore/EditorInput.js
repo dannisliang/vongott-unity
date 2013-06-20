@@ -212,7 +212,7 @@ function Update () {
 			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 90.0, 0.0, 0.0 ) );
 			
 			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).TweenMoveToTop ( EditorCore.GetSelectedObject().transform.localPosition );
+				Camera.main.GetComponent ( EditorCamera ).TweenMoveToTop ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 			}
 		
 		// numpad 1: left view
@@ -220,7 +220,7 @@ function Update () {
 			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 0.0, 90.0, 0.0 ) );
 		
 			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).TweenMoveToLeft ( EditorCore.GetSelectedObject().transform.localPosition );
+				Camera.main.GetComponent ( EditorCamera ).TweenMoveToLeft ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 			}
 		
 		// numpad 3: front
@@ -228,7 +228,7 @@ function Update () {
 			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 0.0, 0.0, 0.0 ) );
 		
 			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).TweenMoveToFront ( EditorCore.GetSelectedObject().transform.localPosition );
+				Camera.main.GetComponent ( EditorCamera ).TweenMoveToFront ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 			}
 		
 		// ALT modifier
@@ -263,7 +263,7 @@ function Update () {
 			if ( Physics.Raycast ( newRay, hit ) ) {
 				var obj : GameObject = hit.collider.gameObject;
 				
-				EditorCore.SelectObject ( obj );						
+				EditorCore.SelectObject ( obj );
 			
 			} else if ( EditorCore.GetSelectedObject() ) {
 				EditorCore.DeselectObject ();
