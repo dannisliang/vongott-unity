@@ -5,9 +5,12 @@ class EditorPlane extends MonoBehaviour {
 	// Prerequisites
 	////////////////////
 	// Private vars
-	var defaultMaterial : Material;	
+	var material : Material;	
 	var buttons : List.< Button > = new List.< Button > ();
 	
+	var vertexList : Vector3[,] = new Vector3 [ 100, 100 ];;
+	
+	var size : float = 4.0;
 	var mesh : Mesh;
 	var vertices : Vector3[];
 	var uv : Vector2[];
@@ -63,6 +66,7 @@ class EditorPlane extends MonoBehaviour {
 		
 			obj.name = "PlusButton";
 			btn.text = "+";
+			btn.transform.localScale = new Vector3 ( 30, 30, 0 );
 		}
 	}
 	
@@ -82,6 +86,7 @@ class EditorPlane extends MonoBehaviour {
 		
 			obj.name = "MinusButton";
 			btn.text = "-";
+			btn.transform.localScale = new Vector3 ( 40, 40, 0 );
 		}
 	}
 	
@@ -96,6 +101,8 @@ class EditorPlane extends MonoBehaviour {
 	
 	// Plus
 	function PlusPlane ( a : Vector3, b : Vector3 ) {
+		
+		
 		Debug.Log ( "Plus: " + a + " | " + b );
 	}
 	
@@ -107,6 +114,33 @@ class EditorPlane extends MonoBehaviour {
 	////////////////////
 	// Core functions
 	////////////////////
+	// Add plane
+	function AddPlane () {
+		vertexList[0,0] = new Vector3 ( 0, 0, 0 );
+		vertexList[1,0] = new Vector3 ( size, 0, 0 );
+		vertexList[1,1] = new Vector3 ( size, 0, size );
+		vertexList[0,1] = new Vector3 ( 0, 0, size );
+	    
+	    vertices = [
+	    	vertexList[0,0],
+	    	vertexList[1,0],
+	    	vertexList[1,1],
+	    	vertexList[0,1]
+	    ];
+	    
+	    uv = [
+	    	Vector2 ( 0, 0 ),
+	    	Vector2 ( 1, 0 ),
+	    	Vector2 ( 1, 1 ),
+	    	Vector2 ( 0, 1 )
+	    ];
+		
+		triangles = [
+			0, 3, 2,
+			2, 1, 0
+		];
+	}
+	
 	// Clear all buttons
 	function ClearButtons () {
 		for ( b in buttons ) {
@@ -155,34 +189,11 @@ class EditorPlane extends MonoBehaviour {
 	
 	// Init
 	function Start () {
-		defaultMaterial = Resources.Load ( "Materials/Editor/editor_checker" ) as Material;
+		material = Resources.Load ( "Materials/Editor/editor_checker" ) as Material;
 		
-		var size : float = 4.0;
+		mesh = new Mesh ();
 	    
-	    mesh = new Mesh ();
-	     
-	    vertices = [
-	    	Vector3 ( 0, 0, 0 ),
-	    	Vector3 ( size, 0, 0 ),
-	    	Vector3 ( size, 0, size ),
-	    	Vector3 ( 0, 0, size )
-	    ];
-	    
-	    uv = [
-	    	Vector2 ( 0, 0 ),
-	    	Vector2 ( 1, 0 ),
-	    	Vector2 ( 1, 1 ),
-	    	Vector2 ( 0, 1 )    	
-	    ];
-		
-		triangles = [
-			0,
-			3,
-			2,
-			2,
-			1,
-			0
-		]; 
+		AddPlane (); 
 	    
 	    mesh.name = "Plane";
 	    mesh.vertices = vertices;
@@ -191,11 +202,11 @@ class EditorPlane extends MonoBehaviour {
 	    
 	    this.GetComponent(MeshFilter).mesh = mesh;
    	 	this.GetComponent(MeshCollider).mesh = mesh;
-    	this.GetComponent(MeshRenderer).material = defaultMaterial;
+    	this.GetComponent(MeshRenderer).material = material;
 	    
 	    this.GetComponent(MeshFilter).mesh = mesh;
 	    this.GetComponent(MeshCollider).mesh = mesh;
-	    this.GetComponent(MeshRenderer).material = defaultMaterial;
+	    this.GetComponent(MeshRenderer).material = material;
 	    
 		this.transform.position = EditorCore.GetSpawnPosition();
 		this.transform.parent = EditorCore.currentLevel.transform;
