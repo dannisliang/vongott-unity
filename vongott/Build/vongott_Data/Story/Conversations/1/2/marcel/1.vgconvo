@@ -1,0 +1,57 @@
+[
+		{
+				"type":"Line",
+				"condition":"<condition>",
+				"consequence":"<consequence>",
+				"speaker":"NPC",
+				"line":"There you are Pinnochio, say hello to everybody."},
+		{
+				"type":"Group",
+				"groupType":"Query",
+				"options":[
+						{
+								"consequence":"(none)",
+								"line":"Who are you people?"},
+						{
+								"consequence":"(none)",
+								"line":"I don't need this crap! What's going on here?"},
+						{
+								"consequence":"(none)",
+								"line":"Hi, I'm Player."}]},
+		{
+				"type":"Group",
+				"groupType":"Response",
+				"options":[
+						{
+								"consequence":"child_1 | True",
+								"line":"You are understandably confused."},
+						{
+								"consequence":"prick_1 | True",
+								"line":"Calm down, cabron. You've been alive for 10 minutes and this is your attitude already?"},
+						{
+								"consequence":"polite_1 | True",
+								"line":"Good to see that you've calmed down, amigo."}]},
+		{
+				"type":"Line",
+				"condition":"<condition>",
+				"consequence":"<consequence>",
+				"speaker":"NPC",
+				"line":"We are the National Revolutionst Front, and you work with us now."},
+		{
+				"type":"Line",
+				"condition":"<condition>",
+				"consequence":"<consequence>",
+				"speaker":"NPC",
+				"line":"The bunker we are in now is one of our many hideouts. Feel free to look around and talk to some of your fellow activists."},
+		{
+				"type":"Line",
+				"condition":"<condition>",
+				"consequence":"<consequence>",
+				"speaker":"NPC",
+				"line":"Come back to me when you're ready to see some action."},
+		{
+				"type":"Line",
+				"condition":"<condition>",
+				"consequence":"<consequence>",
+				"speaker":"Player",
+				"line":"All right."}]

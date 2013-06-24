@@ -127,9 +127,9 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Create menu
 	////////////////////
-	// Plane
-	function CreatePlane () {
-		EditorCore.CreatePlane ();
+	// Surface
+	function CreateSurface () {
+		EditorCore.CreateSurface ();
 	}
 	
 	
@@ -209,8 +209,8 @@ class EditorMenuBase extends OGPage {
 		//	menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
 		} else if ( menu == "Tween" ) {
 		//	menuObj.GetComponent(EditorInspectorTween).Init(selectedObj);
-		} else if ( menu == "Plane" ) {
-			menuObj.GetComponent(EditorInspectorPlane).Init(selectedObj);
+		} else if ( menu == "Surface" ) {
+			menuObj.GetComponent(EditorInspectorSurface).Init(selectedObj);
 		}
 	}
 	

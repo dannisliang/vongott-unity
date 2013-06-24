@@ -246,13 +246,12 @@ static function PreviewObject ( obj : GameObject ) : ObjectAttributes {
 ////////////////////
 // Create
 ////////////////////
-// Create plane
-static function CreatePlane () {   
-    var newObject : GameObject = new GameObject("Plane", MeshRenderer, MeshFilter, MeshCollider, EditorPlane);
+// Create surface
+static function CreateSurface () {   
+    var newObject : GameObject = new GameObject("Surface", MeshRenderer, MeshFilter, MeshCollider, Surface );
         
 	newObject.transform.position = GetSpawnPosition();
 	newObject.transform.parent = currentLevel.transform;
-	
 }
 
 
@@ -429,8 +428,8 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "Prefab", obj );
 	
 	// Plane
-	} else if ( obj.GetComponent ( EditorPlane ) ) {
-		inspector.AddMenu ( "Plane", obj );
+	} else if ( obj.GetComponent ( Surface ) ) {
+		inspector.AddMenu ( "Surface", obj );
 	
 	}
 }
