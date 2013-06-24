@@ -23,17 +23,18 @@ class Surface extends MonoBehaviour {
 		
 		function SurfacePlane ( v : Vector3[] ) {
 			vertices = v;
+		}
+		
+		function Update ( indexes : int[] ) {
+			uv = new Vector2[vertices.Length];
 			
-			uv = [
-		    	Vector2 ( 0, 0 ),
-		    	Vector2 ( 1, 0 ),
-		    	Vector2 ( 1, 1 ),
-		    	Vector2 ( 0, 1 )
-		    ];
+			for ( var i = 0; i < vertices.Length; i++ ) {
+				uv[i] = new Vector2 ( vertices[i].x, vertices[i].z );
+			}
 			
 			triangles = [
-				0, 3, 2,
-				2, 1, 0
+				indexes[0], indexes[3], indexes[2],
+				indexes[2], indexes[1], indexes[0]
 			];
 		}
 	}
@@ -84,7 +85,6 @@ class Surface extends MonoBehaviour {
 		
 			obj.name = "PlusButton";
 			btn.text = "+";
-			btn.transform.localScale = new Vector3 ( 30, 30, 0 );
 		}
 	}
 	
@@ -94,7 +94,6 @@ class Surface extends MonoBehaviour {
 		
 			obj.name = "MinusButton";
 			btn.text = "-";
-			btn.transform.localScale = new Vector3 ( 40, 40, 0 );
 		}
 	}
 	
@@ -109,7 +108,15 @@ class Surface extends MonoBehaviour {
 	
 	// Plus
 	function PlusPlane ( plane : SurfacePlane, dir : Vector3 ) {
-
+		if ( dir == Vector3.left ) {
+			AddPlane ( plane.index.x - 1, plane.index.y );
+		} else if ( dir == Vector3.right ) {
+			AddPlane ( plane.index.x + 1, plane.index.y );
+		} else if ( dir == Vector3.forward ) {
+			AddPlane ( plane.index.x, plane.index.y + 1 );
+		} else if ( dir == Vector3.back ) {
+			AddPlane ( plane.index.x, plane.index.y - 1 );
+		}
 	}
 	
 	// Minus
@@ -117,9 +124,111 @@ class Surface extends MonoBehaviour {
 
 	}
 	
+	
+	////////////////////
+	// Conversions
+	////////////////////
+	// Vertices to array
+	function VerticesToArray ( list : List.< Vector3 > ) : Vector3[] {
+		var verts : Vector3[] = new Vector3[list.Count];
+		
+		for ( var i = 0; i < list.Count; i++ ) {
+			verts[i] = list[i];
+		}
+		
+		return verts;
+	}
+	
+	// UVs to array
+	function UVsToArray ( list : List.< Vector2 > ) : Vector2[] {
+		var uvs : Vector2[] = new Vector2[list.Count];
+		
+		for ( var i = 0; i < list.Count; i++ ) {
+			uvs[i] = list[i];
+		}
+		
+		return uvs;
+	}
+	
+	// Triangles to array
+	function TrianglesToArray ( list : List.< int > ) : int[] {
+		var triangles : int[] = new int[list.Count];
+		
+		for ( var i = 0; i < list.Count; i++ ) {
+			triangles[i] = list[i];
+		}
+		
+		return triangles;
+	}
+	
+	
 	////////////////////
 	// Core functions
 	////////////////////
+	// Apply
+	function Apply () {
+		var i : int = 0;
+		
+		// Vertices
+		// ^ temporary list
+		var tempVertices : List.< Vector3 > = new List.< Vector3 >();
+		
+		// ^ add vertices from every plane
+		for ( i = 0; i < planes.Count; i++ ) {
+			for ( var v : Vector3 in planes[i].vertices ) {
+				tempVertices.Add ( v );
+			}
+		}
+		
+		// ^ convert the temporary list back into a built-in array
+		mesh.vertices = VerticesToArray ( tempVertices );
+		
+		// Update all planes with new indexes
+		for ( i = 0; i < planes.Count; i++ ) {
+			planes[i].Update ( [
+				System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[0] ),
+				System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[1] ),
+				System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[2] ),
+				System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[3] )
+			] );
+		}
+				
+		// UVs
+		// ^ temporary list
+		var tempUVs : List.< Vector2 > = new List.< Vector2 >();
+		
+		// ^ add uvs from every plane
+		for ( i = 0; i < planes.Count; i++ ) {
+			for ( var u : Vector2 in planes[i].uv ) {
+				tempUVs.Add ( u );
+			}
+		}
+		
+		// ^ convert the temporary list back into a built-in array
+		mesh.uv = UVsToArray ( tempUVs );
+		
+		// Triangles
+		// ^ temporary list
+		var tempTriangles : List.< int > = new  List.< int >();
+		
+		// ^ add triangles from every plane
+		for ( i = 0; i < planes.Count; i++ ) {
+			for ( var t : int in planes[i].triangles ) {
+				tempTriangles.Add ( t );
+			}
+		}
+		
+		// ^ convert the temporary list back into a built-in array
+		mesh.triangles = TrianglesToArray ( tempTriangles );
+		
+		// Redo buttons
+		CreateButtons ();
+		
+		// Reapply collider
+		this.GetComponent(MeshFilter).mesh = mesh;
+   	 	this.GetComponent(MeshCollider).mesh = mesh;
+	}
+	
 	// Add plane
 	function AddPlane ( x : int, y : int ) {
 		var xPos : float = x * size;
@@ -154,10 +263,10 @@ class Surface extends MonoBehaviour {
 		}
 		
 		// Fill necessary vertices
-		if ( vertices[0] == null ) { vertices[0] = new Vector3 ( xPos, 0, yPos ); }
-		if ( vertices[1] == null ) { vertices[0] = new Vector3 ( xPos + size, 0, yPos ); }
-		if ( vertices[2] == null ) { vertices[0] = new Vector3 ( xPos + size, 0, yPos + size ); }
-		if ( vertices[3] == null ) { vertices[0] = new Vector3 ( xPos, 0, yPos + size ); }
+		if ( vertices[0] == Vector3.zero ) { vertices[0] = new Vector3 ( xPos, 0, yPos ); }
+		if ( vertices[1] == Vector3.zero ) { vertices[1] = new Vector3 ( xPos + size, 0, yPos ); }
+		if ( vertices[2] == Vector3.zero ) { vertices[2] = new Vector3 ( xPos + size, 0, yPos + size ); }
+		if ( vertices[3] == Vector3.zero ) { vertices[3] = new Vector3 ( xPos, 0, yPos + size ); }
 		
 		var plane : SurfacePlane = new SurfacePlane ( [
 			vertices[0],
@@ -173,11 +282,9 @@ class Surface extends MonoBehaviour {
   		plane.position.y = 0;
   		plane.position.z = yPos;
   		
-  		mesh.vertices = plane.vertices;
-  		mesh.triangles = plane.triangles;
-  		mesh.uv = plane.uv;
-  		
   		planes.Add ( plane );
+	
+		Apply ();
 	}
 	
 	// Clear all buttons
@@ -229,10 +336,6 @@ class Surface extends MonoBehaviour {
 	    this.GetComponent(MeshFilter).mesh = mesh;
    	 	this.GetComponent(MeshCollider).mesh = mesh;
     	this.GetComponent(MeshRenderer).material = material;
-	    
-	    this.GetComponent(MeshFilter).mesh = mesh;
-	    this.GetComponent(MeshCollider).mesh = mesh;
-	    this.GetComponent(MeshRenderer).material = material;
 	    
 		this.transform.position = EditorCore.GetSpawnPosition() + Vector3( -50 * size, 0, -50 * size );
 		this.transform.parent = EditorCore.currentLevel.transform;
