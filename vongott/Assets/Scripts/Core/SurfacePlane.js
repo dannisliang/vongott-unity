@@ -6,7 +6,7 @@ class SurfacePlane {
 	var triangles : int[];
 	var index : Vector2 = new Vector2();
 	var position : Vector3 = new Vector3();
-	var materialSize : float;
+	var materialSize : float = 1.0;
 	
 	function SurfacePlane ( v : Vector3[] ) {
 		vertices = v;
@@ -16,7 +16,7 @@ class SurfacePlane {
 		uv = new Vector2[vertices.Length];
 		
 		for ( var i = 0; i < vertices.Length; i++ ) {
-			uv[i] = new Vector2 ( vertices[i].x / materialSize, vertices[i].z / materialSize );
+			uv[i] = new Vector2 ( vertices[i].x * materialSize, vertices[i].z * materialSize );
 		}
 		
 		triangles = [
