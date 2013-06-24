@@ -88,9 +88,13 @@ function Update () {
 				object.transform.position = new Vector3 ( grabOrigPoint.x, grabOrigPoint.y, point.z );
 			
 			} else {
-				EditorCore.GetSelectedObject().transform.position = point;
+				object.transform.position = point;
 			
-			}													
+			}
+			
+			if ( EditorCore.selectedVertex != Vector3.zero ) {
+				EditorCore.selectedVertex = object.transform.position;
+			}						
 		
 		// scale & rotate
 		} else if ( EditorCore.rotateMode || EditorCore.scaleMode ) {		
@@ -200,7 +204,7 @@ function Update () {
 		// numpad period: zoom to object
 		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) ) {
 			if ( EditorCore.GetSelectedObject() ) {
-				//Camera.main.GetComponent ( EditorCamera ).TweenMoveTo ( EditorCore.GetSelectedObject().transform.localPosition );
+				Camera.main.GetComponent ( EditorCamera ).TweenTurnTo ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 			}
 		
 		// numpad 5: orthographic view

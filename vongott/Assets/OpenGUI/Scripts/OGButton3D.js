@@ -8,6 +8,7 @@ class OGButton3D extends MonoBehaviour {
 		Release
 	}
 	
+	var func : Function;
 	var messageTarget : GameObject;
 	var message : String;
 	var argument : String;
@@ -16,6 +17,11 @@ class OGButton3D extends MonoBehaviour {
 	
 	// Send message
 	function SendMessage () {
+		if ( func ) {
+			func ();
+			return;
+		}
+		
 		if ( !messageTarget ) { Debug.LogError ( "No message target set" ); return; }
 		if ( !message ) { Debug.LogError ( "No message set" ); return; }
 			

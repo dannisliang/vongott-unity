@@ -46,10 +46,12 @@ private class Action {
 var _workspace : Transform;
 var _gizmo : GameObject;
 var _previewCamera : Camera;
+var _dummy : GameObject;
 
 // Static vars
 static var menusActive = false;
 static var selectedObject : GameObject;
+static var selectedVertex : Vector3;
 static var currentLevel : GameObject;
 
 // Load on init
@@ -72,6 +74,7 @@ static var gridLineDistance : float = 1.0;
 static var gridLineBrightFrequency : int = 5;
 
 // editor essentials
+static var dummy : GameObject;
 static var workspace : Transform;
 static var cam : Transform;
 static var inspector : EditorMenuBase;
@@ -371,14 +374,22 @@ static function DeselectObject () {
 	
 	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
 	
-	for ( var mat : Material in renderer.materials ) {
-	 	mat.color = UnpinColor ( mat );
+	if ( renderer ) {
+		for ( var mat : Material in renderer.materials ) {
+		 	mat.color = UnpinColor ( mat );
+		}
 	}
 	
 	drawPath = null;
 	selectedObject = null;
+	selectedVertex = Vector3.zero;
 	
 	inspector.ClearMenus ();
+}
+
+// Select vertex
+static function SelectVertex ( plane : SurfacePlane, vertex : int ) {
+	plane.vertices[vertex] += new Vector3( 0, 1, 0 );
 }
 
 // Select object
@@ -399,10 +410,12 @@ static function SelectObject ( obj : GameObject ) {
 	
 	// Change material
 	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
-		
-	for ( var i = 0; i < renderer.materials.Length; i++ ) {
-		PinColor ( renderer.materials[i] );
-		renderer.materials[i].color = Color.green;
+	
+	if ( renderer ) {
+		for ( var i = 0; i < renderer.materials.Length; i++ ) {
+			PinColor ( renderer.materials[i] );
+			renderer.materials[i].color = Color.green;
+		}
 	}
 	
 	// LightSource
@@ -632,6 +645,7 @@ static function PlayLevel () {
 function Start () {
 	workspace = _workspace;
 	gizmo = _gizmo;
+	dummy = _dummy;
 	previewCamera = _previewCamera;
 	root = this.transform.parent;
 

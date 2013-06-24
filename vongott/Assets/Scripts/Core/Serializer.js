@@ -89,6 +89,12 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		return o;
 
+	// check if surface
+	} else if ( obj.GetComponent(Surface) ) {
+		
+		
+		return o;
+	
 	}
 	
 	// name
@@ -183,6 +189,34 @@ static function SerializePathNode ( p : GameObject ) : JSONObject {
 	return component;
 }
 
+// SurfacePlane
+static function SerializeSurfacePlane ( p : SurfacePlane ) : JSONObject {
+	var plane : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+	var vertices : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+	var uv : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+	var triangles : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+	
+	for ( var v : Vector3 in p.vertices ) {
+		vertices.Add ( SerializeVector3 ( v ) );
+	}
+	
+	for ( var u : Vector2 in p.uv ) {
+		uv.Add ( SerializeVector2 ( u ) );
+	}
+	
+	for ( var t : int in p.triangles ) {
+		triangles.Add ( t );
+	}
+	
+	plane.AddField ( "vertices", vertices );
+	plane.AddField ( "uv", uv );
+	plane.AddField ( "triangles", triangles );
+	plane.AddField ( "index", SerializeVector2 ( p.index ) );
+	plane.AddField ( "position", SerializeVector3 ( p.position ) );
+	
+	return plane;
+}
+
 // Transform
 static function SerializeTransform ( c : Transform ) : JSONObject {
 	var component : JSONObject = JSONObject (JSONObject.Type.OBJECT); 
@@ -249,6 +283,32 @@ static function SerializeVector2 ( v : Vector2 ) : JSONObject {
 	vector.Add ( v.y );
 	
 	return vector;
+}
+
+// Mesh
+static function SerializeMesh ( m : Mesh ) : JSONObject {
+	var mesh : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+	var vertices : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+	var uv : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+	var triangles : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+	
+	for ( var v : Vector3 in m.vertices ) {
+		vertices.Add ( SerializeVector3 ( v ) );
+	}
+	
+	for ( var u : Vector2 in m.uv ) {
+		uv.Add ( SerializeVector2 ( u ) );
+	}
+	
+	for ( var t : int in m.triangles ) {
+		triangles.Add ( t );
+	}
+	
+	mesh.AddField ( "vertices", vertices );
+	mesh.AddField ( "uv", uv );
+	mesh.AddField ( "triangles", triangles );
+	
+	return mesh;
 }
 
 ////////////////////
