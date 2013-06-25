@@ -322,10 +322,10 @@ class Surface extends MonoBehaviour {
 					b.Update ( this.transform.position );
 				}
 			}
-		}/* else if ( buttons.Count > 0 ) {
+		} else if ( buttons.Count > 0 ) {
 			ClearButtons ();
 			
-		}*/
+		}
 		
 		/*if ( this.GetComponent(MeshFilter).mesh.vertices.Length <= 0 ) {
 			Destroy ( this.gameObject );

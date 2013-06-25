@@ -1,7 +1,9 @@
 #pragma strict
 
 class EditorInspectorSurface extends MonoBehaviour {
+	var previewImage : OGImage;
 	var tilingValue : OGLabel;
+	var materialButton : OGButton;
 	@HideInInspector var selectedSurface : Surface;
 	
 	//////////////////////
@@ -10,12 +12,37 @@ class EditorInspectorSurface extends MonoBehaviour {
 	function Init ( obj : GameObject ) {			
 		selectedSurface = obj.GetComponent ( Surface );
 		tilingValue.text = selectedSurface.planes[0].materialSize.ToString("f1");
+		
+		materialButton.func = function () {
+			EditorBrowser.rootFolder = "Materials";
+			EditorBrowser.initMode = "Use";
+			EditorBrowser.callback = GetMaterial;
+			OGRoot.GoToPage ( "Browser" );
+		};
+		
+		materialButton.text = "";
+		for ( var i = 0; i < selectedSurface.GetComponent(MeshRenderer).material.name.Length; i++ ) {
+			if ( i < 12 ) {
+				materialButton.text += selectedSurface.GetComponent(MeshRenderer).material.name[i];
+			}
+		}
+		materialButton.text += "...";
+		
+		if ( selectedSurface.GetComponent(MeshRenderer).material.mainTexture ) {
+			previewImage.image = selectedSurface.GetComponent(MeshRenderer).material.mainTexture;
+		} else {
+			previewImage.image = null;
+		}
 	}
 	
 	
 	//////////////////////
 	// Update
 	//////////////////////
+	function GetMaterial ( mat : Material ) {
+		selectedSurface.GetComponent(MeshRenderer).material = mat;
+	}
+	
 	function TileDown () {
 		var val : float = float.Parse ( tilingValue.text );
 		

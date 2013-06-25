@@ -35,12 +35,23 @@ class EditorBrowser extends OGPage {
 			return null;
 		}
 		
-		function FindFile ( n : String ) : GameObject {
+		function FindFile ( n : String ) : Object {
 			for ( var f : Object in files ) {
-				var obj : GameObject = f as GameObject;
 				
-				if ( n == obj.name ) {
-					return obj;
+				if ( f.GetType() == GameObject ) {
+					var obj : GameObject = f as GameObject;
+				
+					if ( n == obj.name ) {
+						return obj;
+					}
+				
+				} else if ( f.GetType() == Material ) {
+					var mat : Material = f as Material;
+				
+					if ( n == mat.name ) {
+						return mat;
+					}
+				
 				}
 			}
 			
@@ -55,18 +66,20 @@ class EditorBrowser extends OGPage {
 	var fileAttr : OGLabel;
 	var fileInfo : OGLabel;
 	var breadCrumbs : Transform;
-	
+	var preview2D : OGImage;
+			
 	// Static vars
 	static var rootFolder : String = "Actors";
 	static var initMode : String = "Add";
 	static var argument : String;
 	static var button : OGButton;
+	static var callback : Function;
 	
 	// Hidden vars
 	@HideInInspector var currentFolder : Folder;
 	@HideInInspector var selectedFolder : Folder;
 	@HideInInspector var resourcesFolder : Folder = new Folder( "Resources" );
-	@HideInInspector var selectedFile : GameObject;
+	@HideInInspector var selectedFile : Object;
 	@HideInInspector var mode : String;
 	@HideInInspector var breadPos : float = 0;
 	
@@ -78,6 +91,7 @@ class EditorBrowser extends OGPage {
 	////////////////////
 	// Folders
 	private function InitFolders () {
+				
 		// Actors
 		var actorsFolder : Folder = new Folder ( "Actors" );
 		actorsFolder.AddFolder ( new Folder ( "Animals" ) );
@@ -89,6 +103,13 @@ class EditorBrowser extends OGPage {
 		itemsFolder.AddFolder ( new Folder ( "Consumables" ) );
 		itemsFolder.AddFolder ( new Folder ( "Equipment" ) );
 		itemsFolder.AddFolder ( new Folder ( "Upgrades" ) );
+		
+		// Materials
+		var materialsFolder : Folder = new Folder ( "Materials" );
+		materialsFolder.AddFolder ( new Folder ("Brick") );
+		materialsFolder.AddFolder ( new Folder ("Concrete") );
+		materialsFolder.AddFolder ( new Folder ("Foliage") );
+		materialsFolder.AddFolder ( new Folder ("Wood") );
 		
 		// Prefabs
 		var prefabsFolder : Folder = new Folder ( "Prefabs" );
@@ -111,6 +132,7 @@ class EditorBrowser extends OGPage {
 		// Add to master list
 		resourcesFolder.AddFolder ( actorsFolder );
 		resourcesFolder.AddFolder ( itemsFolder );
+		resourcesFolder.AddFolder ( materialsFolder );
 		resourcesFolder.AddFolder ( prefabsFolder );
 	}
 	
@@ -247,9 +269,15 @@ class EditorBrowser extends OGPage {
 		// List files
 		if ( currentFolder.files && currentFolder.files.Length > 0 ) {
 			for ( var f : Object in currentFolder.files ) {
-				var obj : GameObject = f as GameObject;
-				
-				CreateButton ( obj.name, i, "File" );
+				if ( f.GetType() == GameObject ) {
+					var obj : GameObject = f as GameObject;
+					CreateButton ( obj.name, i, "File" );
+									
+				} else if ( f.GetType() == Material ) {
+					var mat : Material = f as Material;
+					CreateButton ( mat.name, i, "File" );
+									
+				} 
 				
 				i++;
 			}
@@ -273,11 +301,24 @@ class EditorBrowser extends OGPage {
 		
 		selectedFile = currentFolder.FindFile ( btn.text );
 		btn.style = "listitemselected";
+	
+		if ( selectedFile.GetType() == GameObject ) {	
+			var obj : GameObject = selectedFile as GameObject;
+			var attributes : ObjectAttributes = EditorCore.PreviewObject ( obj );
+			fileAttr.text = attributes.keys;
+			fileInfo.text = attributes.values;
 		
-		var attributes : ObjectAttributes = EditorCore.PreviewObject ( selectedFile );
+		} else if ( selectedFile.GetType() == Material ) {
+			var mat : Material = selectedFile as Material;
+			
+			if ( mat.mainTexture ) {
+				preview2D.image = mat.mainTexture;
+			}
+			
+			fileAttr.text = "Name";
+			fileInfo.text = mat.name;
 		
-		fileAttr.text = attributes.keys;
-		fileInfo.text = attributes.values;
+		}
 
 		SetMode ( initMode );
 	}
@@ -327,8 +368,14 @@ class EditorBrowser extends OGPage {
 		} else if ( mode == "Open" ) {
 			PopulateList ( selectedFolder );
 			
+		} else if ( mode == "Use" ) {
+			if ( rootFolder == "Materials" ) {
+				callback ( selectedFile as Material );
+			}
+			
+			EditorCore.ReselectObject();
+			OGRoot.GoToPage ( "MenuBase" );
 		}
-		
 		
 	}
 }

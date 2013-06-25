@@ -255,6 +255,8 @@ static function CreateSurface () {
         
 	newObject.transform.position = GetSpawnPosition();
 	newObject.transform.parent = currentLevel.transform;
+	
+	//SelectObject ( newObject );
 }
 
 
