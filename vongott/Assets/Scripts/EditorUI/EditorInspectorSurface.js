@@ -39,6 +39,32 @@ class EditorInspectorSurface extends MonoBehaviour {
 	//////////////////////
 	// Update
 	//////////////////////
+	function FlipNormals () {
+		var filter : MeshFilter = selectedSurface.GetComponent(MeshFilter);
+		
+		if (filter != null) {
+			var mesh : Mesh = filter.mesh;
+ 
+			var normals : Vector3[] = mesh.normals;
+			for ( var i = 0; i < normals.Length; i++ ) {
+				normals[i] = -normals[i];
+			}
+				
+			mesh.normals = normals;
+ 
+			for ( var m = 0; m < mesh.subMeshCount; m++ ) {
+				var triangles : int[] = mesh.GetTriangles(m);
+				for ( var x = 0; x < triangles.Length; x += 3 ) {
+					var temp : int = triangles[x + 0];
+					triangles[x + 0] = triangles[x + 1];
+					triangles[x + 1] = temp;
+				}
+				
+				mesh.SetTriangles(triangles, m);
+			}
+		}		
+	}
+	
 	function GetMaterial ( mat : Material ) {
 		selectedSurface.GetComponent(MeshRenderer).material = mat;
 	}
