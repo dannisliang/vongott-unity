@@ -87,6 +87,8 @@ static var origColors : List.< KeyValuePair.< Material, Color > > = new List.< K
 static var noGizmos : boolean = false;
 static var previewObject : GameObject;
 static var previewCamera : Camera;
+static var transformUpdate : Function;
+static var transformEnd : Function;
 static var grabDistance : float;
 static var grabOrigPoint : Vector3;
 
@@ -338,6 +340,8 @@ static function UnpinColor ( mat : Material ) : Color {
 
 // Reselect object
 static function ReselectObject () {
+	if ( selectedObject == dummy ) { return; }
+	
 	SelectObject ( selectedObject );
 }
 
@@ -375,6 +379,7 @@ static function DeselectObject () {
 		}
 	} else if ( selectedObject == dummy ) {
 		selectedObject.SetActive ( false );
+		transformUpdate = null;
 	}
 	
 	focusEnabled = false;
@@ -395,11 +400,20 @@ static function DeselectObject () {
 
 // Select vertex
 static function SelectVertex ( plane : SurfacePlane, vertex : int ) {
-	/*dummy.transform.position = selectedObject.transform + plane.vertices[vertex];
-	SelectObject ( dummy );
-	SetGrabMode ( true );*/
+	var surface : Surface = selectedObject.GetComponent( Surface );
 	
-	plane.vertices[vertex] += new Vector3 ( 0, 1, 0 );
+	dummy.transform.position = surface.transform.position + plane.vertices[vertex];
+	SelectObject ( dummy );
+	SetGrabMode ( true );
+	
+	transformUpdate = function () {
+		plane.vertices[vertex] = dummy.transform.position - surface.transform.position;
+		surface.Apply ();
+	};
+
+	transformEnd = function () {
+		SelectObject ( surface.gameObject );
+	};
 }
 
 // Select object
@@ -686,4 +700,8 @@ function Start () {
 }
 
 // Update
-function Update () {}
+function Update () {
+	if ( transformUpdate ) {
+		transformUpdate ();
+	}
+}

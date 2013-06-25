@@ -204,11 +204,44 @@ class Surface extends MonoBehaviour {
 		var yPos : float = y * size;
 		var vertices : Vector3[] = new Vector3[4];
 		
+		// Vertices
+		vertices[0] = new Vector3 ( xPos, 0, yPos );
+		vertices[1] = new Vector3 ( xPos + size, 0, yPos );
+		vertices[2] = new Vector3 ( xPos + size, 0, yPos + size );
+		vertices[3] = new Vector3 ( xPos, 0, yPos + size );
+						
+		// Check for neighbours
+		for ( var p : SurfacePlane in planes ) {
+			// Left
+			if ( x - 1 == p.index.x && y == p.index.y ) {
+				vertices[0] = p.vertices[1];
+				vertices[3] = p.vertices[2];
+			}
+			
+			// Right
+			if ( x + 1 == p.index.x && y == p.index.y ) {
+				vertices[1] = p.vertices[0];
+				vertices[2] = p.vertices[3];
+			}
+			
+			// Forward
+			if ( x == p.index.x && y + 1 == p.index.y ) {
+				vertices[3] = p.vertices[0];
+				vertices[2] = p.vertices[1];
+			}
+			
+			// Back
+			if ( x == p.index.x && y - 1 == p.index.y ) {
+				vertices[0] = p.vertices[3];
+				vertices[1] = p.vertices[2];
+			}
+		}
+		
 		var plane : SurfacePlane = new SurfacePlane ( [
-			Vector3 ( xPos, 0, yPos ),
-			Vector3 ( xPos + size, 0, yPos ),
-			Vector3 ( xPos + size, 0, yPos + size ),
-			Vector3 ( xPos, 0, yPos + size )
+			vertices[0],
+			vertices[1],
+			vertices[2],
+			vertices[3]
 		] );
 	    
   		plane.index.x = x;

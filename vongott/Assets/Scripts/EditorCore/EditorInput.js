@@ -35,8 +35,16 @@ function Update () {
 				EditorCore.GetSelectedObject().transform.localPosition.y = Round ( EditorCore.GetSelectedObject().transform.localPosition.y, EditorCore.gridLineDistance );
 				EditorCore.GetSelectedObject().transform.localPosition.z = Round ( EditorCore.GetSelectedObject().transform.localPosition.z, EditorCore.gridLineDistance );
 			}
-			
+
 			EditorCore.ReselectObject();
+			
+			
+			if ( EditorCore.transformEnd ) {
+				EditorCore.transformEnd ();
+			}
+			
+			EditorCore.transformEnd = null;
+
 		
 		// X key: x axis
 		} else if ( Input.GetKeyDown ( KeyCode.X ) ) {
