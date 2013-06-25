@@ -399,15 +399,28 @@ static function DeselectObject () {
 }
 
 // Select vertex
-static function SelectVertex ( plane : SurfacePlane, vertex : int ) {
-	var surface : Surface = selectedObject.GetComponent( Surface );
+static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex : int ) {
+	var planes : List.< SurfacePlane > = new List.< SurfacePlane >();
+	var vertices : List.< int > = new List.< int >();
+	
+	for ( var p : SurfacePlane in surface.planes ) {
+		for ( var i = 0; i < p.vertices.Length; i++ ) {
+			if ( p.vertices[i] == plane.vertices[vertex] ) {
+				planes.Add ( p );
+				vertices.Add ( i );
+			}
+		}
+	}
 	
 	dummy.transform.position = surface.transform.position + plane.vertices[vertex];
 	SelectObject ( dummy );
 	SetGrabMode ( true );
 	
 	transformUpdate = function () {
-		plane.vertices[vertex] = dummy.transform.position - surface.transform.position;
+		for ( var x = 0; x < planes.Count; x++ ) {
+			planes[x].vertices[vertices[x]] = dummy.transform.position - surface.transform.position;
+		}
+		
 		surface.Apply ();
 	};
 

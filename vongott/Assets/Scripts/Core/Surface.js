@@ -280,7 +280,7 @@ class Surface extends MonoBehaviour {
 			for ( var vertex : Vector3 in plane.vertices ) {
 				var vb : VertexButton = new VertexButton ( vertex, System.Array.LastIndexOf ( plane.vertices, vertex ) );
 				vb.btn.func = function () { 
-					EditorCore.SelectVertex ( plane, System.Array.LastIndexOf ( plane.vertices, vertex ) );
+					EditorCore.SelectVertex ( this, plane, System.Array.LastIndexOf ( plane.vertices, vertex ) );
 					Apply();
 				};
 				buttons.Add ( vb );
