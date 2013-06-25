@@ -11,7 +11,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 	//////////////////////
 	function Init ( obj : GameObject ) {			
 		selectedSurface = obj.GetComponent ( Surface );
-		tilingValue.text = selectedSurface.planes[0].materialSize.ToString("f1");
+		tilingValue.text = selectedSurface.materialSize.ToString("f1");
 		
 		materialButton.func = function () {
 			EditorBrowser.rootFolder = "Materials";
@@ -69,9 +69,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 	
 	function UpdateObject () {
 		if ( selectedSurface ) {
-			for ( var plane : SurfacePlane in selectedSurface.planes ) {
-				plane.materialSize = float.Parse ( tilingValue.text );
-			}
+			selectedSurface.materialSize = float.Parse ( tilingValue.text );
 			selectedSurface.Apply ();
 		}
 	}

@@ -9,6 +9,7 @@ class Surface extends MonoBehaviour {
 	var buttons : List.< Button > = new List.< Button > ();
 	var gizmos : List.< GameObject > = new List.< GameObject > ();
 	var planes : List.< SurfacePlane > = new List.< SurfacePlane> ();
+	var materialSize : float = 1.0;
 	
 	static var size : float = 4.0;
 	var mesh : Mesh;
@@ -62,8 +63,8 @@ class Surface extends MonoBehaviour {
 	}
 	
 	private class MinusButton extends Button {
-		function MinusButton ( pos : Vector3 ) {
-			Create ( pos + Vector3 ( (size/2), 0, (size/2) ) );
+		function MinusButton ( a : Vector3, b : Vector3, c : Vector3, d : Vector3 ) {
+			Create ( (a/4) + (b/4) + (c/4) + (d/4) );
 		
 			obj.name = "MinusButton";
 			btn.text = "-";
@@ -151,15 +152,6 @@ class Surface extends MonoBehaviour {
 		// ^ convert the temporary list back into a built-in array
 		mesh.vertices = VerticesToArray ( tempVertices );
 		
-		// Update all planes with new indexes
-		for ( i = 0; i < planes.Count; i++ ) {
-			planes[i].Update ( [
-				System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[0] ),
-				System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[1] ),
-				System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[2] ),
-				System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[3] )
-			] );
-		}
 				
 		// UVs
 		// ^ temporary list
@@ -167,8 +159,8 @@ class Surface extends MonoBehaviour {
 		
 		// ^ add uvs from every plane
 		for ( i = 0; i < planes.Count; i++ ) {
-			for ( var u : Vector2 in planes[i].uv ) {
-				tempUVs.Add ( u );
+			for ( var u : Vector3 in planes[i].vertices ) {
+				tempUVs.Add ( new Vector2 ( u.x * materialSize, u.z * materialSize ) );
 			}
 		}
 		
@@ -181,9 +173,13 @@ class Surface extends MonoBehaviour {
 		
 		// ^ add triangles from every plane
 		for ( i = 0; i < planes.Count; i++ ) {
-			for ( var t : int in planes[i].triangles ) {
-				tempTriangles.Add ( t );
-			}
+			tempTriangles.Add ( System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[0] ) );
+			tempTriangles.Add ( System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[3] ) );
+			tempTriangles.Add ( System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[2] ) );
+				
+			tempTriangles.Add ( System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[2] ) );
+			tempTriangles.Add ( System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[1] ) );
+			tempTriangles.Add ( System.Array.LastIndexOf ( mesh.vertices, planes[i].vertices[0] ) );
 		}
 		
 		// ^ convert the temporary list back into a built-in array
@@ -276,7 +272,7 @@ class Surface extends MonoBehaviour {
 			}
 					
 			// Minus buttons
-			var mb : MinusButton = new MinusButton ( plane.position );
+			var mb : MinusButton = new MinusButton ( plane.vertices[0], plane.vertices[1], plane.vertices[2], plane.vertices[3] );
 			mb.btn.func = function () { MinusPlane ( plane ); };
 			buttons.Add ( mb );
 		}
@@ -322,9 +318,14 @@ class Surface extends MonoBehaviour {
 					b.Update ( this.transform.position );
 				}
 			}
-		} else if ( buttons.Count > 0 ) {
-			ClearButtons ();
+		} else {
+			if ( buttons.Count > 0 ) {
+				ClearButtons ();
+			}
 			
+			if ( this.GetComponent(MeshRenderer).material.color != Color.white ) {
+				this.GetComponent(MeshRenderer).material.color = Color.white;
+			}
 		}
 		
 		/*if ( this.GetComponent(MeshFilter).mesh.vertices.Length <= 0 ) {

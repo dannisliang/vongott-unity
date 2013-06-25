@@ -1,12 +1,6 @@
 #pragma strict
 
 ////////////////////
-// Prerequisites
-////////////////////
-static var grabDistance : float;
-static var grabOrigPoint : Vector3;
-
-////////////////////
 // Static functions
 ////////////////////
 // Round value
@@ -19,7 +13,7 @@ function Update () {
 	// transform modes
 	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) {
 		var ray : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
-		var point : Vector3 = ray.origin + ( ray.direction * grabDistance );
+		var point : Vector3 = ray.origin + ( ray.direction * EditorCore.grabDistance );
 		var object : GameObject = EditorCore.GetSelectedObject();
 		
 		// esc key: undo
@@ -79,21 +73,17 @@ function Update () {
 		// translate
 		if ( EditorCore.grabMode ) {
 			if ( EditorCore.grabRestrict == "x" ) {
-				object.transform.position = new Vector3 ( point.x, grabOrigPoint.y, grabOrigPoint.z );
+				object.transform.position = new Vector3 ( point.x, EditorCore.grabOrigPoint.y, EditorCore.grabOrigPoint.z );
 			
 			} else if ( EditorCore.grabRestrict == "y" ) {
-				object.transform.position = new Vector3 ( grabOrigPoint.x, point.y, grabOrigPoint.z );
+				object.transform.position = new Vector3 ( EditorCore.grabOrigPoint.x, point.y, EditorCore.grabOrigPoint.z );
 			
 			} else if ( EditorCore.grabRestrict == "z" ) {
-				object.transform.position = new Vector3 ( grabOrigPoint.x, grabOrigPoint.y, point.z );
+				object.transform.position = new Vector3 ( EditorCore.grabOrigPoint.x, EditorCore.grabOrigPoint.y, point.z );
 			
 			} else {
 				object.transform.position = point;
 			
-			}
-			
-			if ( EditorCore.selectedVertex != Vector3.zero ) {
-				EditorCore.selectedVertex = object.transform.position;
 			}						
 		
 		// scale & rotate
@@ -181,8 +171,6 @@ function Update () {
 		
 		// G key: grab mode
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {
-			grabDistance = Vector3.Distance ( Camera.main.transform.position, EditorCore.GetSelectedObject().transform.position );
-			grabOrigPoint = EditorCore.GetSelectedObject().transform.position;
 			EditorCore.SetGrabMode( true );
 		
 		// S key: scale mode

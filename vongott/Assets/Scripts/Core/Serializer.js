@@ -200,17 +200,7 @@ static function SerializeSurfacePlane ( p : SurfacePlane ) : JSONObject {
 		vertices.Add ( SerializeVector3 ( v ) );
 	}
 	
-	for ( var u : Vector2 in p.uv ) {
-		uv.Add ( SerializeVector2 ( u ) );
-	}
-	
-	for ( var t : int in p.triangles ) {
-		triangles.Add ( t );
-	}
-	
 	plane.AddField ( "vertices", vertices );
-	plane.AddField ( "uv", uv );
-	plane.AddField ( "triangles", triangles );
 	plane.AddField ( "index", SerializeVector2 ( p.index ) );
 	plane.AddField ( "position", SerializeVector3 ( p.position ) );
 	

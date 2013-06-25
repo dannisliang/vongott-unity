@@ -51,7 +51,8 @@ var _dummy : GameObject;
 // Static vars
 static var menusActive = false;
 static var selectedObject : GameObject;
-static var selectedVertex : Vector3;
+static var selectedPlane : SurfacePlane;
+static var selectedVertex : int;
 static var currentLevel : GameObject;
 
 // Load on init
@@ -86,6 +87,8 @@ static var origColors : List.< KeyValuePair.< Material, Color > > = new List.< K
 static var noGizmos : boolean = false;
 static var previewObject : GameObject;
 static var previewCamera : Camera;
+static var grabDistance : float;
+static var grabOrigPoint : Vector3;
 
 // undo
 static var actions : List.< Action > = new List.< Action > ();
@@ -370,6 +373,8 @@ static function DeselectObject () {
 		for ( var node : GameObject in selectedObject.GetComponent(Actor).path ) {
 			node.GetComponent(MeshRenderer).enabled = false;
 		}
+	} else if ( selectedObject == dummy ) {
+		selectedObject.SetActive ( false );
 	}
 	
 	focusEnabled = false;
@@ -384,20 +389,25 @@ static function DeselectObject () {
 	
 	drawPath = null;
 	selectedObject = null;
-	selectedVertex = Vector3.zero;
 	
 	inspector.ClearMenus ();
 }
 
 // Select vertex
 static function SelectVertex ( plane : SurfacePlane, vertex : int ) {
-	plane.vertices[vertex] += new Vector3( 0, 1, 0 );
+	/*dummy.transform.position = selectedObject.transform + plane.vertices[vertex];
+	SelectObject ( dummy );
+	SetGrabMode ( true );*/
+	
+	plane.vertices[vertex] += new Vector3 ( 0, 1, 0 );
 }
 
 // Select object
 static function SelectObject ( obj : GameObject ) {
 	if ( !obj ) {
 		return;
+	} else if ( obj == dummy ) {
+		obj.SetActive ( true );
 	}
 	
 	if ( selectedObject ) { 
@@ -406,7 +416,10 @@ static function SelectObject ( obj : GameObject ) {
 	
 	drawPath = null;
 	selectedObject = obj;
-							
+	
+	grabDistance = Vector3.Distance ( Camera.main.transform.position, selectedObject.transform.position );
+	grabOrigPoint = selectedObject.transform.position;
+																			
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 	
@@ -652,7 +665,9 @@ function Start () {
 	root = this.transform.parent;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;
+	
 	gizmo.SetActive ( false );
+	dummy.SetActive ( false );
 
 	if ( initMap ) {
 		LoadFile ( initMap );

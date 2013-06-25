@@ -315,8 +315,7 @@ class EditorBrowser extends OGPage {
 				preview2D.image = mat.mainTexture;
 			}
 			
-			fileAttr.text = "Name";
-			fileInfo.text = mat.name;
+			fileAttr.text = mat.name;
 		
 		}
 
