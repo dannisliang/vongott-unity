@@ -114,6 +114,13 @@ class EditorMenuBase extends OGPage {
 		EditorCore.AddLight ();
 	}
 	
+	function AddSurface () {
+		EditorCore.CreateSurface ();
+	}
+	
+	function AddSpawnPoint () {
+		EditorCore.AddSpawnPoint ();
+	}
 	
 	////////////////////
 	// Edit menu
@@ -122,16 +129,7 @@ class EditorMenuBase extends OGPage {
 	function UndoAction () {
 		EditorCore.UndoCurrentAction ();
 	}
-	
-	
-	////////////////////
-	// Create menu
-	////////////////////
-	// Surface
-	function CreateSurface () {
-		EditorCore.CreateSurface ();
-	}
-	
+		
 	
 	////////////////////
 	// Editors menu

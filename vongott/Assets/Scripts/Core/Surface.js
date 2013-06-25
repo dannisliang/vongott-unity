@@ -6,10 +6,11 @@ class Surface extends MonoBehaviour {
 	////////////////////
 	// Public vars
 	var material : Material;	
-	var buttons : List.< Button > = new List.< Button > ();
-	var gizmos : List.< GameObject > = new List.< GameObject > ();
-	var planes : List.< SurfacePlane > = new List.< SurfacePlane> ();
+	var materialPath : String = "Materials/Editor/editor_checker";
 	var materialSize : float = 1.0;
+	var buttons : List.< Button > = new List.< Button > ();
+	var planes : List.< SurfacePlane > = new List.< SurfacePlane> ();
+	var flipped : boolean = false;
 	
 	static var size : float = 4.0;
 	var mesh : Mesh;
@@ -34,10 +35,12 @@ class Surface extends MonoBehaviour {
 		}
 		
 		function Update ( pos : Vector3 ) {
-			var newVertex : Vector3 = pos + vertex;
-			newVertex = Camera.main.WorldToScreenPoint ( newVertex );
-			newVertex = new Vector3 ( newVertex.x, Screen.height - newVertex.y, newVertex.z );
-			obj.transform.localPosition = newVertex;
+			if ( obj ) {
+				var newVertex : Vector3 = pos + vertex;
+				newVertex = Camera.main.WorldToScreenPoint ( newVertex );
+				newVertex = new Vector3 ( newVertex.x, Screen.height - newVertex.y, newVertex.z );
+				obj.transform.localPosition = newVertex;
+			}
 		}	
 	}
 	
@@ -98,6 +101,27 @@ class Surface extends MonoBehaviour {
 	////////////////////
 	// Conversions
 	////////////////////
+	// Flip surface
+	function FlipNormals () {
+		var normals : Vector3[] = mesh.normals;
+		for ( var i = 0; i < normals.Length; i++ ) {
+			normals[i] = -normals[i];
+		}
+			
+		mesh.normals = normals;
+
+		for ( var m = 0; m < mesh.subMeshCount; m++ ) {
+			var triangles : int[] = mesh.GetTriangles(m);
+			for ( var x = 0; x < triangles.Length; x += 3 ) {
+				var temp : int = triangles[x + 0];
+				triangles[x + 0] = triangles[x + 1];
+				triangles[x + 1] = temp;
+			}
+			
+			mesh.SetTriangles(triangles, m);
+		}		
+	}
+	
 	// Vertices to array
 	function VerticesToArray ( list : List.< Vector3 > ) : Vector3[] {
 		var verts : Vector3[] = new Vector3[list.Count];
@@ -196,6 +220,11 @@ class Surface extends MonoBehaviour {
 		// Reapply collider
 		this.GetComponent(MeshCollider).enabled = false;
 		this.GetComponent(MeshCollider).enabled = true;
+		
+		// Flip normals
+		if ( flipped ) {
+			FlipNormals ();
+		}
 	}
 	
 	// Add plane
@@ -263,12 +292,6 @@ class Surface extends MonoBehaviour {
 		}
 		
 		buttons.Clear();
-		
-		for ( var g : GameObject in gizmos ) {
-			Destroy ( g );
-		}
-		
-		gizmos.Clear();
 	}
 	
 	// Create all buttons
@@ -313,27 +336,31 @@ class Surface extends MonoBehaviour {
 	}
 	
 	// Init
-	function FirstPlane () {
+	function ReloadMaterial () {
+		material = Resources.Load ( materialPath ) as Material;
+		this.GetComponent(MeshRenderer).material = material;
+	}
+	
+	function Init () {
 		mesh = new Mesh ();
-		
-		AddPlane ( 0, 0 );
-		
 		mesh.name = "Surface";
-	    
+	   	    
 	    this.GetComponent(MeshFilter).mesh = mesh;
    	 	this.GetComponent(MeshCollider).mesh = mesh;
-    	this.GetComponent(MeshRenderer).material = material;
-	    
-		this.transform.position = EditorCore.GetSpawnPosition();
-		this.transform.parent = EditorCore.currentLevel.transform;
+		 
+	    if ( material == null ) {
+			ReloadMaterial ();
+		}
+	}
+	
+	function FirstPlane () {
+		Init ();
+		
+		AddPlane ( 0, 0 );
 	}
 	
 	function Start () {
-		if ( material == null ) {
-			material = Resources.Load ( "Materials/Editor/editor_checker" ) as Material;
-		}
-			    
-	    if ( planes.Count == 0 ) {
+		if ( planes.Count == 0 ) {
 	    	FirstPlane ();
 	    }
 	    
@@ -351,11 +378,7 @@ class Surface extends MonoBehaviour {
 					b.Update ( this.transform.position );
 				}
 			}
-		} else {
-			if ( buttons.Count > 0 ) {
-				ClearButtons ();
-			}
-			
+		} else {			
 			if ( this.GetComponent(MeshRenderer).material.color != Color.white ) {
 				this.GetComponent(MeshRenderer).material.color = Color.white;
 			}

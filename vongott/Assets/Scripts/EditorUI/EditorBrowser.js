@@ -138,6 +138,8 @@ class EditorBrowser extends OGPage {
 	
 	// Page	
 	override function StartPage () {
+		preview2D.image = null;
+		
 		SetMode ( initMode );
 		
 		InitFolders ();
@@ -369,7 +371,7 @@ class EditorBrowser extends OGPage {
 			
 		} else if ( mode == "Use" ) {
 			if ( rootFolder == "Materials" ) {
-				callback ( selectedFile as Material );
+				callback ( selectedFolder.path + "/" + (selectedFile as Material ).name );
 			}
 			
 			EditorCore.ReselectObject();

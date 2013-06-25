@@ -84,10 +84,16 @@ static function LoadLevel ( path : String ) {
 	currentLevel.transform.parent = levelContainer;
 	currentLevel.transform.localPosition = Vector3.zero;
 	
-	/// BLAAAA
 	playerObject = Instantiate ( Resources.Load ( "Actors/Player/Player" ) ) as GameObject;
 	playerObject.transform.parent = currentLevel.transform;
+	
 	playerObject.transform.localPosition = Vector3.one;
+	
+	for ( var spt : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
+		playerObject.transform.localPosition = spt.transform.localPosition;
+		playerObject.transform.localEulerAngles = spt.transform.localEulerAngles;
+		spt.gameObject.SetActive ( false );
+	}
 	
 	camTarget = Instantiate ( Resources.Load ( "Prefabs/Core/CameraTarget" ) ) as GameObject;
 	camTarget.transform.parent = currentLevel.transform;

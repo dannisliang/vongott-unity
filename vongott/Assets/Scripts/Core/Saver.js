@@ -9,6 +9,7 @@ class Saver {
 		
 		if ( !File.Exists ( path ) ) {
 			sw = File.CreateText ( path );
+			Debug.Log ( "Saver | Created file '" + path + "': " + sw );
 		} else {
 			sw = new StreamWriter ( path );
 		}

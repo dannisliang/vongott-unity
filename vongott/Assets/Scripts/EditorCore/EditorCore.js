@@ -170,6 +170,17 @@ static function AddLight () {
 	newLight.transform.position = GetSpawnPosition();
 }
 
+// Add spawnpoint
+static function AddSpawnPoint () {
+	for ( var spawnPoint : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
+		Destroy ( spawnPoint.gameObject );
+	}
+	
+	var newLight : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/spawnpoint" ) as GameObject );
+	newLight.transform.parent = currentLevel.transform;
+	newLight.transform.position = GetSpawnPosition();
+}
+
 // Add actor
 static function AddActor ( dir : String, name : String ) {
 	var newActor : GameObject = Instantiate ( Resources.Load ( "Actors/" + dir + "/" + name ) as GameObject );
@@ -352,9 +363,10 @@ static function GetSelectedObject () : GameObject {
 
 // Delete selected objects
 static function DeleteSelected () {
-	AddAction ( selectedObject, "delete" );
-	Destroy ( selectedObject );
+	var obj : GameObject = selectedObject;
+	AddAction ( obj, "delete" );
 	DeselectObject ();
+	Destroy ( obj );	
 }
 
 // Is object selected?
@@ -377,9 +389,14 @@ static function DeselectObject () {
 		for ( var node : GameObject in selectedObject.GetComponent(Actor).path ) {
 			node.GetComponent(MeshRenderer).enabled = false;
 		}
+	
 	} else if ( selectedObject == dummy ) {
 		selectedObject.SetActive ( false );
 		transformUpdate = null;
+	
+	} else if ( selectedObject.GetComponent(Surface) ) {
+		selectedObject.GetComponent(Surface).ClearButtons();
+	
 	}
 	
 	focusEnabled = false;
@@ -622,7 +639,7 @@ static function LoadScreenshot ( path ) : Texture2D {
 
 // Save file
 static function SaveFile ( path : String ) {
-	yield new WaitForEndOfFrame();
+	//yield new WaitForEndOfFrame();
 	
 	var tex : Texture2D = new Texture2D(Screen.width, Screen.height);	
 	tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);

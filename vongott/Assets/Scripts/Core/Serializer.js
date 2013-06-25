@@ -91,10 +91,35 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 
 	// check if surface
 	} else if ( obj.GetComponent(Surface) ) {
+		var srf : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		var planes : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 		
+		for ( var p : SurfacePlane in obj.GetComponent ( Surface ).planes ) {
+			planes.Add ( SerializeSurfacePlane ( p ) );
+		}
+		
+		srf.AddField ( "materialPath", obj.GetComponent(Surface).materialPath );
+		srf.AddField ( "materialSize", obj.GetComponent(Surface).materialSize );
+		srf.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
+		srf.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		srf.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+		srf.AddField ( "planes", planes );
+		srf.AddField ( "flipped", obj.GetComponent(Surface).flipped );
+		
+		o.AddField ( "Surface", srf );
 		
 		return o;
 	
+	// check if spawnpoint
+	} else if ( obj.GetComponent(SpawnPoint) ) {
+		var spt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		
+		spt.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		spt.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+	
+		o.AddField ( "SpawnPoint", spt );
+	
+		return o;
 	}
 	
 	// name
@@ -193,8 +218,6 @@ static function SerializePathNode ( p : GameObject ) : JSONObject {
 static function SerializeSurfacePlane ( p : SurfacePlane ) : JSONObject {
 	var plane : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 	var vertices : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
-	var uv : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
-	var triangles : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 	
 	for ( var v : Vector3 in p.vertices ) {
 		vertices.Add ( SerializeVector3 ( v ) );

@@ -80,6 +80,41 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newItm.name = itm.GetField("model").str;
 	
 		return newItm;
+	
+	// check if surface
+	} else if ( obj.HasField("Surface") ) {
+		var srf : JSONObject = obj.GetField("Surface");
+		var newSrfObj : GameObject = new GameObject("Surface", MeshRenderer, MeshFilter, MeshCollider);
+		var newSrf : Surface = newSrfObj.AddComponent(Surface);
+		
+		for ( var p : JSONObject in srf.GetField("planes").list ) {
+			newSrf.planes.Add ( DeserializeSurfacePlane ( p ) );
+		}
+		
+		newSrf.materialPath = srf.GetField("materialPath").str;
+		newSrf.materialSize = srf.GetField ( "materialSize" ).n;
+		newSrf.flipped = srf.GetField ( "flipped" ).b;
+		newSrfObj.transform.localScale = DeserializeVector3 ( srf.GetField ( "localScale" ) );
+		newSrfObj.transform.localPosition = DeserializeVector3 ( srf.GetField ( "localPosition" ) );
+		newSrfObj.transform.localEulerAngles = DeserializeVector3 ( srf.GetField ( "localEulerAngles" ) );
+	
+		newSrf.Init ();
+		newSrf.Apply ();
+	
+		return newSrfObj;
+	
+	// check if spawnpoint
+	} else if ( obj.HasField("SpawnPoint") ) {
+		var spt : JSONObject = obj.GetField("SpawnPoint");
+		var newSpt : GameObject;
+		
+		newSpt = Instantiate ( Resources.Load ( "Prefabs/Editor/spawnpoint" ) as GameObject );
+		newSpt.transform.localEulerAngles = DeserializeVector3 ( spt.GetField("localEulerAngles") );
+		newSpt.transform.localPosition = DeserializeVector3 ( spt.GetField("localPosition") );
+	
+		newSpt.name = newSpt.name.Replace( "(Clone)", "" );
+	
+		return newSpt;
 	}
 	
 	var o : GameObject = new GameObject ( obj.GetField ( "name" ).str );
@@ -200,6 +235,20 @@ static function DeserializePathNode ( p : JSONObject, o : GameObject ) : GameObj
 	return obj;
 }
 
+// SurfacePlane
+static function DeserializeSurfacePlane ( p : JSONObject ) : SurfacePlane {
+	var vertices : Vector3[] = new Vector3[4];
+	
+	for ( var i = 0; i < p.GetField ("vertices").list.Count; i++ ) {
+		vertices[i] = DeserializeVector3 ( p.GetField ("vertices").list[i] );
+	}
+	
+	var plane : SurfacePlane = new SurfacePlane ( vertices );
+	plane.index = DeserializeVector2 ( p.GetField("index") );
+	plane.position = DeserializeVector3 ( p.GetField("position") );
+	
+	return plane;
+}
 
 // Transform
 static function DeserializeTransform ( c : JSONObject, o : GameObject ) {
