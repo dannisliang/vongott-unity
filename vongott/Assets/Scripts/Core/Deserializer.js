@@ -93,7 +93,6 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		newSrf.materialPath = srf.GetField("materialPath").str;
 		newSrf.materialSize = srf.GetField ( "materialSize" ).n;
-		newSrf.flipped = srf.GetField ( "flipped" ).b;
 		newSrfObj.transform.localScale = DeserializeVector3 ( srf.GetField ( "localScale" ) );
 		newSrfObj.transform.localPosition = DeserializeVector3 ( srf.GetField ( "localPosition" ) );
 		newSrfObj.transform.localEulerAngles = DeserializeVector3 ( srf.GetField ( "localEulerAngles" ) );

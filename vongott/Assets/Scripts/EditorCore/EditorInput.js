@@ -36,9 +36,10 @@ function Update () {
 				EditorCore.GetSelectedObject().transform.localPosition.z = Round ( EditorCore.GetSelectedObject().transform.localPosition.z, EditorCore.gridLineDistance );
 			}
 
-			EditorCore.ReselectObject();
-			
-			
+			if ( !EditorCore.GetSelectedObject().GetComponent(EditorVertexGizmo) ) {
+				EditorCore.ReselectObject();
+			}
+						
 			if ( EditorCore.transformEnd ) {
 				EditorCore.transformEnd ();
 			}
@@ -180,6 +181,10 @@ function Update () {
 		// G key: grab mode
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {
 			EditorCore.SetGrabMode( true );
+		
+		// E key: edit
+		} else if ( Input.GetKeyDown ( KeyCode.E ) ) {
+			EditorCore.ToggleEditMeshMode();
 		
 		// S key: scale mode
 		} else if ( Input.GetKeyDown ( KeyCode.S ) ) {

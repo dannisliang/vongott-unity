@@ -46,7 +46,6 @@ private class Action {
 var _workspace : Transform;
 var _gizmo : GameObject;
 var _previewCamera : Camera;
-var _dummy : GameObject;
 
 // Static vars
 static var menusActive = false;
@@ -65,6 +64,7 @@ static var grabMode = false;
 static var rotateMode = false;
 static var scaleMode = false;
 static var grabRestrict : String;
+static var editMeshMode = false;
 
 // grid / guides
 static var gizmo : GameObject;
@@ -75,7 +75,6 @@ static var gridLineDistance : float = 1.0;
 static var gridLineBrightFrequency : int = 5;
 
 // editor essentials
-static var dummy : GameObject;
 static var workspace : Transform;
 static var cam : Transform;
 static var inspector : EditorMenuBase;
@@ -351,8 +350,6 @@ static function UnpinColor ( mat : Material ) : Color {
 
 // Reselect object
 static function ReselectObject () {
-	if ( selectedObject == dummy ) { return; }
-	
 	SelectObject ( selectedObject );
 }
 
@@ -385,18 +382,17 @@ static function DuplicateObject () {
 
 // Deselect object
 static function DeselectObject () {	
+	var selectNextObject : GameObject;
+	
 	if ( selectedObject.GetComponent(Actor) ) {
 		for ( var node : GameObject in selectedObject.GetComponent(Actor).path ) {
 			node.GetComponent(MeshRenderer).enabled = false;
 		}
 	
-	} else if ( selectedObject == dummy ) {
-		selectedObject.SetActive ( false );
+	} else if ( selectedObject.GetComponent ( EditorVertexGizmo ) ) {
+		selectNextObject = selectedObject.GetComponent ( EditorVertexGizmo ).surface.gameObject;
 		transformUpdate = null;
-	
-	} else if ( selectedObject.GetComponent(Surface) ) {
-		selectedObject.GetComponent(Surface).ClearButtons();
-	
+		
 	}
 	
 	focusEnabled = false;
@@ -413,47 +409,39 @@ static function DeselectObject () {
 	selectedObject = null;
 	
 	inspector.ClearMenus ();
+	
+	if ( selectNextObject ) {
+		SelectObject ( selectNextObject );
+	}
 }
 
 // Select vertex
-static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex : int ) {
-	var planes : List.< SurfacePlane > = new List.< SurfacePlane >();
-	var vertices : List.< int > = new List.< int >();
-	
-	for ( var p : SurfacePlane in surface.planes ) {
-		for ( var i = 0; i < p.vertices.Length; i++ ) {
-			if ( p.vertices[i] == plane.vertices[vertex] ) {
-				planes.Add ( p );
-				vertices.Add ( i );
-			}
-		}
-	}
-	
-	dummy.transform.position = surface.transform.position + plane.vertices[vertex];
-	SelectObject ( dummy );
+static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex : int, gizmo : Transform ) {
 	SetGrabMode ( true );
 	
 	transformUpdate = function () {
-		for ( var x = 0; x < planes.Count; x++ ) {
-			planes[x].vertices[vertices[x]] = dummy.transform.position - surface.transform.position;
-		}
-		
+		plane.vertices[vertex] = gizmo.position - surface.transform.position;
 		surface.Apply ();
 	};
 
 	transformEnd = function () {
+		plane.vertices[vertex] = gizmo.position - surface.transform.position;
+		surface.Apply ();
+		
 		SelectObject ( surface.gameObject );
 	};
 }
 
 // Select object
 static function SelectObject ( obj : GameObject ) {
-	if ( !obj ) {
+	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
 		return;
-	} else if ( obj == dummy ) {
-		obj.SetActive ( true );
+	} else if ( obj.GetComponent ( EditorVertexGizmo ) ) {
+		var gizmo : EditorVertexGizmo = obj.GetComponent ( EditorVertexGizmo );
+		
+		SelectVertex ( gizmo.surface, gizmo.plane, gizmo.vertex, gizmo.transform );
 	}
-	
+				
 	if ( selectedObject ) { 
 		DeselectObject ();
 	}
@@ -576,6 +564,11 @@ static function SetRotateMode ( state : boolean ) {
 			SelectObject ( selectedObject.GetComponent(PathNode).owner );
 		}
 	}
+}
+
+// Edit mesh mode
+static function ToggleEditMeshMode () {
+	editMeshMode = !editMeshMode;
 }
 
 // Set scale mode
@@ -704,14 +697,12 @@ static function PlayLevel () {
 function Start () {
 	workspace = _workspace;
 	gizmo = _gizmo;
-	dummy = _dummy;
 	previewCamera = _previewCamera;
 	root = this.transform.parent;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	
 	gizmo.SetActive ( false );
-	dummy.SetActive ( false );
 
 	if ( initMap ) {
 		LoadFile ( initMap );

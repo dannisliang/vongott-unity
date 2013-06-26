@@ -56,7 +56,7 @@ class Saver {
 	}
 	
 	static function SaveFlags ( table : JSONObject ) {
-		var path = Application.dataPath + "/UserData/flags.vgdata";
+		var path = Application.dataPath + "/Story/flags.vgdata";
 		var sw : StreamWriter;
 		
 		if ( !File.Exists ( path ) ) {

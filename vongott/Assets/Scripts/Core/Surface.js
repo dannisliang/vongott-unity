@@ -10,7 +10,6 @@ class Surface extends MonoBehaviour {
 	var materialSize : float = 1.0;
 	var buttons : List.< Button > = new List.< Button > ();
 	var planes : List.< SurfacePlane > = new List.< SurfacePlane> ();
-	var flipped : boolean = false;
 	
 	static var size : float = 4.0;
 	var mesh : Mesh;
@@ -19,6 +18,7 @@ class Surface extends MonoBehaviour {
 	private class Button {
 		var obj : GameObject;
 		var btn : OGButton;
+		var giz : EditorVertexGizmo;
 		var vertex : Vector3;
 		
 		function Create ( vert : Vector3 ) {
@@ -35,7 +35,7 @@ class Surface extends MonoBehaviour {
 		}
 		
 		function Update ( pos : Vector3 ) {
-			if ( obj ) {
+			if ( obj && !giz ) {
 				var newVertex : Vector3 = pos + vertex;
 				newVertex = Camera.main.WorldToScreenPoint ( newVertex );
 				newVertex = new Vector3 ( newVertex.x, Screen.height - newVertex.y, newVertex.z );
@@ -45,11 +45,13 @@ class Surface extends MonoBehaviour {
 	}
 	
 	private class VertexButton extends Button {
-		function VertexButton ( pos : Vector3, index : int ) {
-			Create ( pos );
+		function VertexButton ( surface : Transform, pos : Vector3 ) {
+			obj = Instantiate ( Resources.Load ( "Prefabs/Editor/vertex_gizmo" ) );
+			giz = obj.GetComponent ( EditorVertexGizmo );
 			
-			obj.name = "VertexButton_" + index;
-			btn.text = index.ToString();
+			obj.name = "VertexGizmo";
+			obj.transform.parent = surface;
+			obj.transform.localPosition = pos;
 		}
 	}
 	
@@ -80,14 +82,37 @@ class Surface extends MonoBehaviour {
 	////////////////////
 	// Plus
 	function PlusPlane ( plane : SurfacePlane, dir : Vector3 ) {
+		var x : Vector3 = Vector3 ( size, 0, 0 );
+		var y : Vector3 = Vector3 ( 0, 0, size );
+		
 		if ( dir == Vector3.left ) {
-			AddPlane ( plane.index.x - 1, plane.index.y );
+			AddPlane ( [
+				plane.vertices[0] - x,
+				plane.vertices[0],
+				plane.vertices[3],
+				plane.vertices[3] - x
+			] );
 		} else if ( dir == Vector3.right ) {
-			AddPlane ( plane.index.x + 1, plane.index.y );
+			AddPlane ( [
+				plane.vertices[1],
+				plane.vertices[1] + x,
+				plane.vertices[2] + x,
+				plane.vertices[2]
+			] );
 		} else if ( dir == Vector3.forward ) {
-			AddPlane ( plane.index.x, plane.index.y + 1 );
+			AddPlane ( [
+				plane.vertices[3],
+				plane.vertices[2],
+				plane.vertices[2] + y,
+				plane.vertices[3] + y
+			] );
 		} else if ( dir == Vector3.back ) {
-			AddPlane ( plane.index.x, plane.index.y - 1 );
+			AddPlane ( [
+				plane.vertices[0] - y,
+				plane.vertices[1] - y,
+				plane.vertices[1],
+				plane.vertices[0]
+			] );
 		}
 	}
 	
@@ -220,65 +245,11 @@ class Surface extends MonoBehaviour {
 		// Reapply collider
 		this.GetComponent(MeshCollider).enabled = false;
 		this.GetComponent(MeshCollider).enabled = true;
-		
-		// Flip normals
-		if ( flipped ) {
-			FlipNormals ();
-		}
 	}
 	
 	// Add plane
-	function AddPlane ( x : int, y : int ) {
-		var xPos : float = x * size;
-		var yPos : float = y * size;
-		var vertices : Vector3[] = new Vector3[4];
-		
-		// Vertices
-		vertices[0] = new Vector3 ( xPos, 0, yPos );
-		vertices[1] = new Vector3 ( xPos + size, 0, yPos );
-		vertices[2] = new Vector3 ( xPos + size, 0, yPos + size );
-		vertices[3] = new Vector3 ( xPos, 0, yPos + size );
-						
-		// Check for neighbours
-		for ( var p : SurfacePlane in planes ) {
-			// Left
-			if ( x - 1 == p.index.x && y == p.index.y ) {
-				vertices[0] = p.vertices[1];
-				vertices[3] = p.vertices[2];
-			}
-			
-			// Right
-			if ( x + 1 == p.index.x && y == p.index.y ) {
-				vertices[1] = p.vertices[0];
-				vertices[2] = p.vertices[3];
-			}
-			
-			// Forward
-			if ( x == p.index.x && y + 1 == p.index.y ) {
-				vertices[3] = p.vertices[0];
-				vertices[2] = p.vertices[1];
-			}
-			
-			// Back
-			if ( x == p.index.x && y - 1 == p.index.y ) {
-				vertices[0] = p.vertices[3];
-				vertices[1] = p.vertices[2];
-			}
-		}
-		
-		var plane : SurfacePlane = new SurfacePlane ( [
-			vertices[0],
-			vertices[1],
-			vertices[2],
-			vertices[3]
-		] );
-	    
-  		plane.index.x = x;
-  		plane.index.y = y;
-  		
-  		plane.position.x = xPos;
-  		plane.position.y = 0;
-  		plane.position.z = yPos;
+	function AddPlane ( vertices : Vector3[] ) {
+		var plane : SurfacePlane = new SurfacePlane ( vertices );
   		
   		planes.Add ( plane );
 	
@@ -296,18 +267,20 @@ class Surface extends MonoBehaviour {
 	
 	// Create all buttons
 	function CreateButtons () {
-		if ( Application.loadedLevel != 1 ) { return; }
+		if ( Application.loadedLevel != 1 || EditorCore.GetSelectedObject() != this.gameObject ) { return; }
 		
-		ClearButtons ();
+		if ( !EditorCore.editMeshMode ) {
+			ClearButtons ();
+			return;
+		}
 		
 		for ( var plane : SurfacePlane in planes ) {
 			// Vertex buttons
 			for ( var vertex : Vector3 in plane.vertices ) {
-				var vb : VertexButton = new VertexButton ( vertex, System.Array.LastIndexOf ( plane.vertices, vertex ) );
-				vb.btn.func = function () { 
-					EditorCore.SelectVertex ( this, plane, System.Array.LastIndexOf ( plane.vertices, vertex ) );
-					Apply();
-				};
+				var vb : VertexButton = new VertexButton ( this.transform, vertex );
+				vb.giz.surface = this;
+				vb.giz.plane = plane;
+				vb.giz.vertex = System.Array.LastIndexOf ( plane.vertices, vertex );
 				buttons.Add ( vb );
 			}
 			
@@ -315,16 +288,24 @@ class Surface extends MonoBehaviour {
 			for ( var direction : Vector3 in [ Vector3.left, Vector3.right, Vector3.forward, Vector3.back ] ) {
 				var pb : PlusButton;
 				
+				var a : Vector3;
+				var b : Vector3;
+				
 				if ( direction == Vector3.left ) {
-					pb = new PlusButton ( plane.vertices[0], plane.vertices[3] );
+					a = plane.vertices[0];
+					b = plane.vertices[3];
 				} else if ( direction == Vector3.right ) {
-					pb = new PlusButton ( plane.vertices[1], plane.vertices[2] );
+					a = plane.vertices[1];
+					b = plane.vertices[2];
 				} else if ( direction == Vector3.back) {
-					pb = new PlusButton ( plane.vertices[0], plane.vertices[1] );
+					a = plane.vertices[0];
+					b = plane.vertices[1];
 				} else if ( direction == Vector3.forward ) {
-					pb = new PlusButton ( plane.vertices[2], plane.vertices[3] );
+					a = plane.vertices[2];
+					b = plane.vertices[3];
 				}
-								
+				
+				pb = new PlusButton	( a, b );
 				pb.btn.func = function () { PlusPlane ( plane, direction ); };
 				buttons.Add ( pb );
 			}
@@ -358,7 +339,12 @@ class Surface extends MonoBehaviour {
 	function FirstPlane () {
 		Init ();
 		
-		AddPlane ( 0, 0 );
+		AddPlane ( [ 
+			Vector3(0,0,0),
+			Vector3(size,0,0),
+			Vector3(size,0,size),
+			Vector3(0,0,size)
+		] );
 	}
 	
 	function Start () {
@@ -373,14 +359,21 @@ class Surface extends MonoBehaviour {
 		var b : Button;
 		
 		if ( EditorCore.GetSelectedObject() == this.gameObject ) {
-			if ( buttons.Count == 0 ) {
-				CreateButtons ();
-			} else {
+			if ( buttons.Count > 0 ) {
+				if ( !EditorCore.editMeshMode ) {
+					ClearButtons ();
+				}
+				
 				for ( b in buttons ) {
 					b.Update ( this.transform.position );
 				}
+			
+			} else if ( EditorCore.editMeshMode ) {
+				CreateButtons ();
+			
 			}
-		} else {			
+			
+		} else {
 			if ( this.GetComponent(MeshRenderer).material.color != Color.white ) {
 				this.GetComponent(MeshRenderer).material.color = Color.white;
 			}

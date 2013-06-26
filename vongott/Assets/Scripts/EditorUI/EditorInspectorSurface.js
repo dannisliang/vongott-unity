@@ -40,8 +40,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 	// Update
 	//////////////////////
 	function FlipNormals () {
-		selectedSurface.flipped = !selectedSurface.flipped;
-		selectedSurface.Apply ();		
+		selectedSurface.transform.localScale = new Vector3 ( selectedSurface.transform.localScale.x, -selectedSurface.transform.localScale.y, selectedSurface.transform.localScale.z );		
 	}
 	
 	function GetMaterial ( matPath : String ) {

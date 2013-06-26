@@ -104,7 +104,6 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		srf.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		srf.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
 		srf.AddField ( "planes", planes );
-		srf.AddField ( "flipped", obj.GetComponent(Surface).flipped );
 		
 		o.AddField ( "Surface", srf );
 		

@@ -57,7 +57,7 @@ class Loader {
 	}
 	
 	static function LoadFlags () : JSONObject {
-		var path = Application.dataPath + "/UserData/flags.vgdata";
+		var path = Application.dataPath + "/Story/flags.vgdata";
 		
 		var input : String = ReadFile ( path );	
 		if ( !input ) { return null; }
