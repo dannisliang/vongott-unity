@@ -126,6 +126,7 @@ class EditorBrowser extends OGPage {
 		
 		prefabsFolder.AddFolder ( new Folder ( "Airducts" ) );
 		prefabsFolder.AddFolder ( new Folder ( "Doors" ) );
+		prefabsFolder.AddFolder ( new Folder ( "Stairs" ) );
 		prefabsFolder.AddFolder ( new Folder ( "Walls" ) );
 		prefabsFolder.AddFolder ( new Folder ( "Windows" ) );
 		
