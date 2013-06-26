@@ -269,6 +269,8 @@ class Surface extends MonoBehaviour {
 	function CreateButtons () {
 		if ( Application.loadedLevel != 1 || EditorCore.GetSelectedObject() != this.gameObject ) { return; }
 		
+		ClearButtons ();
+		
 		if ( !EditorCore.editMeshMode ) {
 			ClearButtons ();
 			return;
@@ -374,6 +376,10 @@ class Surface extends MonoBehaviour {
 			}
 			
 		} else {
+			if ( !EditorCore.editMeshMode ) {
+				ClearButtons ();
+			}
+		
 			if ( this.GetComponent(MeshRenderer).material.color != Color.white ) {
 				this.GetComponent(MeshRenderer).material.color = Color.white;
 			}

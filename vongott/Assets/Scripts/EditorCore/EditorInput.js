@@ -272,6 +272,7 @@ function Update () {
 			
 			} else if ( EditorCore.GetSelectedObject() ) {
 				EditorCore.DeselectObject ();
+				EditorCore.editMeshMode = false;
 			
 			}
 		}

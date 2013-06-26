@@ -429,6 +429,8 @@ static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex :
 		surface.Apply ();
 		
 		SelectObject ( surface.gameObject );
+		
+		surface.CreateButtons ();
 	};
 }
 
