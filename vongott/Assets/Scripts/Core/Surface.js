@@ -296,6 +296,8 @@ class Surface extends MonoBehaviour {
 	
 	// Create all buttons
 	function CreateButtons () {
+		if ( Application.loadedLevel != 1 ) { return; }
+		
 		ClearButtons ();
 		
 		for ( var plane : SurfacePlane in planes ) {

@@ -189,6 +189,14 @@ function UpdateSmoothedMovementDirection ()
 	
 		_characterState = CharacterState.Idle;
 		
+		if ( Input.GetKey ( KeyCode.C ) ) {
+			this.GetComponent(CharacterController).height = 0.5;
+			this.GetComponent(CharacterController).center = new Vector3 ( 0, -0.65, 0 );
+		} else {
+			this.GetComponent(CharacterController).height = 1.8;
+			this.GetComponent(CharacterController).center = new Vector3 ( 0, 0, 0 );
+		}
+		
 		// Pick speed modifier
 		if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift))
 		{

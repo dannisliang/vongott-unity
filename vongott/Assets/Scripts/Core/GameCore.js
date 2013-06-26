@@ -73,6 +73,23 @@ static function ToggleControls ( state : boolean ) {
 ////////////////////
 // Load level
 ////////////////////
+static function MergeMeshes () {
+	var meshFilters = currentLevel.GetComponentsInChildren.<MeshFilter>();
+    var combine : CombineInstance[] = new CombineInstance[meshFilters.Length];
+    for (var i = 0; i < meshFilters.Length; i++){
+        combine[i].mesh = meshFilters[i].sharedMesh;
+        combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+        meshFilters[i].gameObject.SetActive( false );
+    }
+    var mesh : Mesh = new Mesh();
+    mesh.CombineMeshes(combine);
+    
+    currentLevel.AddComponent(MeshFilter).mesh = mesh;
+	currentLevel.AddComponent(MeshRenderer);
+	currentLevel.AddComponent(MeshCollider).mesh = mesh;
+    currentLevel.SetActive ( true );
+}
+
 static function LoadLevel ( path : String ) {
 	if ( currentLevel != null ) {
 		Destroy ( currentLevel );
@@ -99,6 +116,8 @@ static function LoadLevel ( path : String ) {
 	camTarget.transform.parent = currentLevel.transform;
 	camTarget.GetComponent ( CameraTarget ).player = playerObject;
 	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
+	
+	//MergeMeshes ();
 }
 
 
