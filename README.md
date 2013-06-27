@@ -12,7 +12,7 @@ Everything except the framework with which Vongott is developed, Unity 3D, will 
 
 I will document the code as I move along. Have a look in the docs for that and everything else about Vongott.
 
-### Progress!
+### Updates!
 
 I have spent my time doing my own GUI framework for Unity called OpenGUI, and I have managed to build a pretty capable level editor with an inspector, save/load features, adding prefabs, editing conversations, quests and flags, editing surface vectors, and probably a few more things. The editor is at this point capable of building a coherent, if very rudimentary, action RPG :)
 <img src="https://raw.github.com/mrzapp/vongott/master/img/demo_windows.png" />
@@ -23,11 +23,61 @@ The level shown below was made exclusively with this editor, without using Unity
 The conversation editor and logic is fully functional, apart from playing audio clips.
 <img src="https://raw.github.com/mrzapp/vongott/master/img/demo_convo.png" />
 
-### What needs to be done
+## Development goals
+
+### First iteration &#x2713;
+- Game Core
+	- Conversations &#x2713;
+	- Quests &#x2713;
+	- Flags &#x2713;
+	- Basic object interaction &#x2713;
+	- Inventory &#x2713;
+	- Project structure &#x2713;
+- Editor
+	- Basic level building &#x2713;
+	- Conversation editor &#x2713;
+	- Quest editor &#x2713;
+	- Flag editor &#x2713;
+	- Object and actor editing &#x2713;
+
+### Second iteration
+- Game core
+	- Optimisations
+	- UnitySteer implementation
+	- Proper character controls
+	- Camera movement and raycasting
+- Editor
+	- Optimisations
+- Content
+	- Prefabs
+	- Materials
 - Story
-	- Outline
-	- Script
+	- Chapter 1 outline
+	- First scene core conversations
+- Level design
+	- Scene 1 concept art + initial level build
+
+### Third iteration
+- Game core
+	- Optimisations
+	- Reduce draw calls with combined meshes
+	- Human AI behaviours
+- Editor
+	- Optimisations
+- Story
+	- Chapter 1 complete script and quests
+	- More core conversations
 	- Main quests and sidequests
+- Content
+	- More prefabs
+	- More materials
+	- Player & NPC initial models
+
+### Fourth iteration
+- Game core
+	
+
+
 - Audio
 	- Music
 	- Sound effects
@@ -48,7 +98,6 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Player
 	- Standard male
 	- Standard female
-	- Marcel
 - Level design
 - UI
 	- Main menu 
