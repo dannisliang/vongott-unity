@@ -10,6 +10,10 @@ Everything except the framework with which Vongott is developed, Unity 3D, will 
 
 I will document the code as I move along. Have a look in the docs for that and everything else about Vongott.
 
+### Progress!
+
+
+
 ### What needs to be done
 - Story
 	- Outline
@@ -31,20 +35,12 @@ I will document the code as I move along. Have a look in the docs for that and e
 		- AI (path finding, friend/foe system, awareness levels)
 		- Inventory
 	- New UI plugin for Unity
-- SDK
-	- Level Editor
-	- import and save file formats
-	- Dialogue Editor
-	- Quest Editor
 - Modeling
 	- Player
 	- Standard male
 	- Standard female
 	- Marcel
 - Level design
-	- Awesome Island
-	- NRF bunker
-	- Ship
 - UI
 	- Main menu 
 	- Quest log

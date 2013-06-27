@@ -170,9 +170,9 @@ function Update () {
 	
 	// camera mode
 	} else if ( OGRoot.currentPage.pageName == "MenuBase" ) {	
-		// tab key: toggle menu
-		if ( Input.GetKeyDown ( KeyCode.Tab ) ) {
-			EditorCore.menusActive = !EditorCore.menusActive;
+		// E key: edit
+		if ( Input.GetKeyDown ( KeyCode.E ) ) {
+			EditorCore.ToggleEditMeshMode();
 		
 		// Z key: wireframe toggle
 		} else if ( Input.GetKeyDown ( KeyCode.Z ) ) {
@@ -181,11 +181,7 @@ function Update () {
 		// G key: grab mode
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {
 			EditorCore.SetGrabMode( true );
-		
-		// E key: edit
-		} else if ( Input.GetKeyDown ( KeyCode.E ) ) {
-			EditorCore.ToggleEditMeshMode();
-		
+
 		// S key: scale mode
 		} else if ( Input.GetKeyDown ( KeyCode.S ) ) {
 			EditorCore.SetScaleMode( true );
@@ -202,7 +198,7 @@ function Update () {
 		} else if ( Input.GetKeyDown ( KeyCode.D ) ) {
 			EditorCore.DuplicateObject();
 		
-		// numpad period: zoom to object
+		// numpad period: center object
 		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) ) {
 			if ( EditorCore.GetSelectedObject() ) {
 				Camera.main.GetComponent ( EditorCamera ).TweenTurnTo ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
@@ -212,35 +208,22 @@ function Update () {
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad5 ) ) {
 			EditorCore.ToggleIsometric();
 		
-		// numpad 7: top view
-		} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) ) {
-			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 90.0, 0.0, 0.0 ) );
-			
-			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).TweenMoveToTop ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
-			}
+		// numpad 8: top view
+		} else if ( Input.GetKeyDown ( KeyCode.Keypad8 ) && EditorCore.GetSelectedObject() ) {
+			Camera.main.GetComponent ( EditorCamera ).GoToTopOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 		
-		// numpad 1: left view
-		} else if ( Input.GetKeyDown ( KeyCode.Keypad1 ) ) {
-			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 0.0, 90.0, 0.0 ) );
+		// numpad 4: left turn
+		} else if ( Input.GetKeyDown ( KeyCode.Keypad4 ) && EditorCore.GetSelectedObject() ) {
+			Camera.main.GetComponent ( EditorCamera ).RotateAround ( EditorCore.GetSelectedObject().transform.renderer.bounds.center, "left" );
+	
 		
-			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).TweenMoveToLeft ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
-			}
+		// numpad 6: right turn
+		} else if ( Input.GetKeyDown ( KeyCode.Keypad6 ) && EditorCore.GetSelectedObject() ) {
+			Camera.main.GetComponent ( EditorCamera ).RotateAround ( EditorCore.GetSelectedObject().transform.renderer.bounds.center, "right" );
 		
-		// numpad 3: front
-		} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) ) {
-			Camera.main.GetComponent ( EditorCamera ).TweenTurn ( new Vector3 ( 0.0, 0.0, 0.0 ) );
-		
-			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).TweenMoveToFront ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
-			}
-		
-		// ALT modifier
-		} else if ( Input.GetKeyDown ( KeyCode.LeftAlt ) ) {
-			if ( EditorCore.GetSelectedObject() ) {
-				//Camera.main.GetComponent ( EditorCamera ).TweenTurnTo ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
-			}
+		// numpad 2: bottom view
+		} else if ( Input.GetKeyDown ( KeyCode.Keypad2 ) && EditorCore.GetSelectedObject() ) {
+			Camera.main.GetComponent ( EditorCamera ).GoToBottomOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 				
 		// CTRL modifier
 		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {

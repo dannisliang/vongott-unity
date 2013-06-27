@@ -21,6 +21,7 @@ enum CharacterState {
 	Trotting = 2,
 	Running = 3,
 	Jumping = 4,
+	Crouching = 5
 }
 
 private var _characterState : CharacterState;
@@ -189,14 +190,6 @@ function UpdateSmoothedMovementDirection ()
 	
 		_characterState = CharacterState.Idle;
 		
-		if ( Input.GetKey ( KeyCode.C ) ) {
-			this.GetComponent(CharacterController).height = 0.5;
-			this.GetComponent(CharacterController).center = new Vector3 ( 0, -0.65, 0 );
-		} else {
-			this.GetComponent(CharacterController).height = 1.8;
-			this.GetComponent(CharacterController).center = new Vector3 ( 0, 0, 0 );
-		}
-		
 		// Pick speed modifier
 		if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift))
 		{
@@ -207,9 +200,16 @@ function UpdateSmoothedMovementDirection ()
 		{
 			targetSpeed *= trotSpeed;
 			_characterState = CharacterState.Trotting;
-		}
-		else
+		} else if ( Input.GetKey ( KeyCode.C ) ) {
+			this.GetComponent(CharacterController).height = 0.5;
+			this.GetComponent(CharacterController).center = new Vector3 ( 0, -0.65, 0 );
+			_characterState = CharacterState.Crouching;
+			targetSpeed *= walkSpeed;
+			
+		} else
 		{
+			this.GetComponent(CharacterController).height = 1.8;
+			this.GetComponent(CharacterController).center = new Vector3 ( 0, 0, 0 );
 			targetSpeed *= walkSpeed;
 			_characterState = CharacterState.Walking;
 		}
@@ -349,6 +349,9 @@ function Update() {
 				if(_characterState == CharacterState.Running) {
 					_animation[runAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0, runMaxAnimationSpeed);
 					_animation.CrossFade(runAnimation.name);	
+				}
+				else if(_characterState == CharacterState.Crouching) {
+					_animation.CrossFade(jumpPoseAnimation.name);	
 				}
 				else if(_characterState == CharacterState.Trotting) {
 					_animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0, trotMaxAnimationSpeed);

@@ -1,6 +1,8 @@
 class InteractiveObject extends MonoBehaviour {
 	function OnTriggerEnter ( other:Collider ) {
-		GameCore.SetInteractiveObject ( this.gameObject );
+		if ( GameCore.GetInteractiveObject() != this.gameObject ) {
+			GameCore.SetInteractiveObject ( this.gameObject );
+		}
 	}
 	
 	function OnTriggerExit ( other:Collider ) {

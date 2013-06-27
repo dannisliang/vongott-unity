@@ -123,30 +123,89 @@ function Start () {
 	
 }
 
-// Turn
-function TweenTurn ( angle : Vector3 ) {
-	iTween.RotateTo ( Camera.main.gameObject, angle, 0.5 );
-	rotationY = -angle.x;
+// Tweens
+function GetDist ( vector : Vector3 ) : float {
+	return Vector3.Distance ( Camera.main.transform.localPosition, vector );
+}
+
+function GetAngle ( vector : Vector3 ) : float {
+	return Vector3.Angle ( vector, Camera.main.transform.position );
+}
+
+function GoToTopOf ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x, position.y + GetDist(position), position.z ), 0.5 );
+	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 90, 0, 0 ), 0.5 );
+}
+
+function GoToBottomOf ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x, position.y - GetDist(position), position.z ), 0.5 );
+	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 270, 0, 0 ), 0.5 );
+}
+
+function GoToLeftOf ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x - GetDist(position), position.y, position.z ), 0.5 );
+	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 0, 90, 0 ), 0.5 );
+}
+
+function GoToRightOf ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x + GetDist(position), position.y, position.z ), 0.5 );
+	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 0, 270, 0 ), 0.5 );
+}
+
+function GoToFrontOf ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x, position.y, position.z - GetDist(position) ), 0.5 );
+	iTween.LookTo ( Camera.main.gameObject, position, 0.5 );
+	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 0, 0, 0 ), 0.5 );
+}
+
+function GoToBackOf ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x, position.y, position.z + GetDist(position) ), 0.5 );
+	iTween.LookTo ( Camera.main.gameObject, position, 0.5 );
+	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 0, 180, 0 ), 0.5 );
+}
+
+function RotateAround ( position : Vector3, direction : String ) {
+	var camPos : Vector3 = Camera.main.transform.position;
+	
+	if ( direction == "right" ) {
+		if ( camPos.z <= position.z && camPos.x < position.x ) {
+			GoToFrontOf ( position );	
+		
+		} else if ( camPos.z > position.z && camPos.x <= position.x ) {
+			GoToLeftOf ( position );
+			
+		} else if ( camPos.z >= position.z && camPos.x > position.x ) {
+			GoToBackOf ( position ); 
+	
+		} else if ( camPos.z < position.z && camPos.x >= position.x ) {
+			GoToRightOf ( position ); 
+		
+		} else {
+			GoToRightOf ( position );
+		}
+	
+	} else if ( direction == "left" ) {
+		if ( camPos.z < position.z && camPos.x <= position.x ) {
+			GoToLeftOf ( position );	
+		
+		} else if ( camPos.z >= position.z && camPos.x < position.x ) {
+			GoToBackOf ( position );
+			
+		} else if ( camPos.z > position.z && camPos.x >= position.x ) {
+			GoToRightOf ( position ); 
+	
+		} else if ( camPos.z <= position.z && camPos.x > position.x ) {
+			GoToFrontOf ( position ); 
+		
+		} else {
+			GoToLeftOf ( position );
+		}
+	
+	}
 }
 
 function TweenTurnTo ( target : Vector3 ) {
 	iTween.LookTo ( Camera.main.gameObject, { "looktarget": target, "time" : 0.5, "onupdate" : "UpdateRotation" } );
-}
-
-// Move
-function TweenMoveToTop ( position : Vector3 ) {
-	var distance : float = Vector3.Distance ( Camera.main.transform.localPosition, position );
-	iTween.MoveTo ( Camera.main.gameObject, new Vector3 ( position.x, position.y + distance, position.z ), 0.5 );
-}
-
-function TweenMoveToFront ( position : Vector3 ) {
-	var distance : float = Vector3.Distance ( Camera.main.transform.localPosition, position );
-	iTween.MoveTo ( Camera.main.gameObject, new Vector3 ( position.x, position.y, position.z - distance ), 0.5 );
-}
-
-function TweenMoveToLeft ( position : Vector3 ) {
-	var distance : float = Vector3.Distance ( Camera.main.transform.localPosition, position );
-	iTween.MoveTo ( Camera.main.gameObject, new Vector3 ( position.x - distance, position.y, position.z ), 0.5 );
 }
 
 function TweenMoveTo ( position : Vector3 ) {
@@ -215,7 +274,7 @@ function Update () {
 		
 		}
 	
-	// scroll button
+	// middle mouse
 	} else if ( Input.GetMouseButton(2) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {        
         var h = Input.GetAxis("Mouse X") * sensitivity / 8;
         var v = Input.GetAxis("Mouse Y") * sensitivity / 8;

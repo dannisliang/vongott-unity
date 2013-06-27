@@ -148,7 +148,15 @@ class EditorMenuBase extends OGPage {
 	function FlagEditor () {
 		OGRoot.GoToPage ( "Flags" );
 	}
-		
+	
+	
+	////////////////////
+	// Help menu
+	////////////////////
+	function ShowHelp () {
+		OGRoot.GoToPage ( "Help" );
+	}
+							
 		
 	////////////////////
 	// Inspector
