@@ -12,7 +12,7 @@ I will document the code as I move along. Have a look in the docs for that and e
 
 ### Progress!
 
-I have spent my time doing my own GUI framework for Unity called OpenGUI, and I have managed to build a pretty capable level editor with an inspector, save/load features, adding prefabs, editing conversations, quests and flags, editing surface vectors, and probably a few more things.
+I have spent my time doing my own GUI framework for Unity called OpenGUI, and I have managed to build a pretty capable level editor with an inspector, save/load features, adding prefabs, editing conversations, quests and flags, editing surface vectors, and probably a few more things. The editor is at this point capable of building a coherent, if very rudimentary, action RPG :)
 <img src="https://raw.github.com/mrzapp/vongott/master/img/demo_windows.png" />
 
 The level shown below was made exclusively with this editor, without using Unity.
