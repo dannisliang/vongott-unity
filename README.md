@@ -18,7 +18,7 @@ I have spent my time doing my own GUI framework for Unity called OpenGUI, and I 
 The level shown below was made exclusively with this editor, without using Unity.
 <img src="https://raw.github.com/mrzapp/vongott/master/img/demo_level.png" />
 
-The conversation editor and game logic is fully functional, apart from playing audio clips.
+The conversation editor and logic is fully functional, apart from playing audio clips.
 <img src="https://raw.github.com/mrzapp/vongott/master/img/demo_convo.png" />
 
 ### What needs to be done
