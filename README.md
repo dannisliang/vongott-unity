@@ -39,6 +39,8 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Quest editor &#x2713;
 	- Flag editor &#x2713;
 	- Object and actor editing &#x2713;
+- GUI
+	- New UI plugin for Unity &#x2713;
 
 ### Second iteration
 - Game core
@@ -75,43 +77,35 @@ The conversation editor and logic is fully functional, apart from playing audio 
 
 ### Fourth iteration
 - Game core
-	
-
-
-- Audio
-	- Music
-	- Sound effects
-	- Dialogue?
+	- Optimisations
+	- Play testing
 - Animation
 	- Male
 	- Female
-	- Universal conversation poses and lip movement
-- Core
-	- Controls
-	- Infrastructure
-		- Flag system (almost done)
-		- Quest system (almost done)
-		- AI (path finding, friend/foe system, awareness levels)
-		- Inventory
-	- New UI plugin for Unity
-- Modeling
-	- Player
-	- Standard male
-	- Standard female
-- Level design
-- UI
+- Audio
+	- Sound effects
+- GUI polishing
 	- Main menu 
 	- Quest log
 	- Inventory
 	- HUD
-	- Conversation interface (almost done)
+
+### Fifth iteration
+- Game core
+	- Optimisations
+	- Play testing
+- Editor
+	- Optimisations
+	- Alpha deployment 
+- Audio
+	- Music
+	- Recording of implemented dialogue
+- Animation
+	- Universal conversation poses and lip movement
 - Graphics
-	- UI
-	- Environment textures
-	- Humans
-	- Animals
 	- Skyboxes
-	- Shaders
+	- Proper shaders
+	
 
 <p align=right>
   <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
