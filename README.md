@@ -11,7 +11,10 @@ Everything except the framework with which Vongott is developed, Unity 3D, will 
 I will document the code as I move along. Have a look in the docs for that and everything else about Vongott.
 
 ### Progress!
-
+I have spent my time doing my own GUI framework for Unity called OpenGUI, and I have managed to build a pretty capable level editor with an inspector, save/load features, adding prefabs, editing conversations, quests and flags, editing surface vectors, and probably a few more things. The level shown below was made exclusively with this editor, without using Unity.
+<img src="https://raw.github.com/mrzapp/vongott/master/img/demo_level.png" />
+<img src="https://raw.github.com/mrzapp/vongott/master/img/demo_convo.png" />
+<img src="https://raw.github.com/mrzapp/vongott/master/img/demo_windows.png" />
 
 
 ### What needs to be done
