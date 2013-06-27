@@ -25,7 +25,7 @@ The conversation editor and logic is fully functional, apart from playing audio 
 
 ## Development goals
 
-### First iteration &#x2713;
+### First iteration ( 2013.03.12 - 2013.06.27 );
 - Game Core
 	- Conversations &#x2713;
 	- Quests &#x2713;
