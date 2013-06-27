@@ -32,7 +32,6 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Flags &#x2713;
 	- Basic object interaction &#x2713;
 	- Inventory &#x2713;
-	- Project structure &#x2713;
 - Editor
 	- Basic level building &#x2713;
 	- Conversation editor &#x2713;
