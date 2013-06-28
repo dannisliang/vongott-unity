@@ -49,9 +49,13 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Camera movement and raycasting
 - Editor
 	- Optimisations
-- Content
-	- Prefabs
-	- Materials
+- In-game objects
+	- Furniture
+		- Basic modelling 
+		- Texturing
+	- Environment
+		- Basic modelling
+		- Texturing
 - Story
 	- Chapter 1 outline
 	- First scene core conversations
@@ -65,6 +69,8 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Human AI behaviours
 - Editor
 	- Optimisations
+- In-game objects
+	- Equipment concept art 
 - Story
 	- Chapter 1 complete script and quests
 	- More core conversations
@@ -78,6 +84,8 @@ The conversation editor and logic is fully functional, apart from playing audio 
 - Game core
 	- Optimisations
 	- Play testing
+- In-game objects
+	- Equipment modelling and texturing
 - Animation
 	- Male
 	- Female
