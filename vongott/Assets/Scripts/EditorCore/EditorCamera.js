@@ -13,7 +13,6 @@ var gizmoY : Material;
 var gizmoZ : Material;
 var gridDark : Material;
 var gridBright : Material;
-var rotationY : float = 0.0;
 
 
 ////////////////////
@@ -222,10 +221,6 @@ static function ClampAngle (angle : float, min : float, max : float) {
 }
 
 // Update
-function UpdateRotation () {
-	rotationY = -transform.localEulerAngles.x;
-}
-
 function Update () {
 	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) { return; }
 	
@@ -262,13 +257,9 @@ function Update () {
 	       	transform.RotateAround ( target, Vector3.up, Input.GetAxis("Mouse X") * sensitivity );
 	        transform.LookAt ( target );
 			
-			rotationY = -transform.eulerAngles.x;
-			
 		} else {
 			var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
-		
-			rotationY += Input.GetAxis("Mouse Y") * sensitivity;
-			rotationY = Mathf.Clamp (rotationY, -90, 90);
+			var rotationY : float = -transform.localEulerAngles.x + Input.GetAxis("Mouse Y") * sensitivity;
 		
 			transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 		

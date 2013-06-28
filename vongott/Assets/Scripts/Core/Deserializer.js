@@ -108,7 +108,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var newSpt : GameObject;
 		
 		newSpt = Instantiate ( Resources.Load ( "Prefabs/Editor/spawnpoint" ) as GameObject );
-		newSpt.transform.localEulerAngles = DeserializeVector3 ( spt.GetField("localEulerAngles") );
+		newSpt.transform.localEulerAngles = new Vector3 ( 0, DeserializeVector3 ( spt.GetField("localEulerAngles") ).y, 0 );
 		newSpt.transform.localPosition = DeserializeVector3 ( spt.GetField("localPosition") );
 	
 		newSpt.name = newSpt.name.Replace( "(Clone)", "" );
@@ -142,7 +142,6 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 		
 		Camera.main.transform.localPosition = DeserializeVector3 ( cam.GetField ( "localPosition" ) );
 		Camera.main.transform.localEulerAngles = DeserializeVector3 ( cam.GetField ( "localEulerAngles" ) );
-		Camera.main.GetComponent ( EditorCamera ).rotationY = -Camera.main.transform.localEulerAngles.x;
 	}
 	
 	return o;

@@ -262,17 +262,17 @@ class EditorMenuBase extends OGPage {
 				
 				var t = EditorCore.GetSelectedObject().transform;
 				
-				pos.x.text = "X: " + t.localPosition.x.ToString("f1");
-				pos.y.text = "Y: " + t.localPosition.y.ToString("f1");
-				pos.z.text = "Z: " + t.localPosition.z.ToString("f1");
+				pos.x.text = "X: " + t.localPosition.x.ToString("f2");
+				pos.y.text = "Y: " + t.localPosition.y.ToString("f2");
+				pos.z.text = "Z: " + t.localPosition.z.ToString("f2");
 				
-				rot.x.text = "X: " + t.localEulerAngles.x.ToString("f1");
-				rot.y.text = "Y: " + t.localEulerAngles.y.ToString("f1");
-				rot.z.text = "Z: " + t.localEulerAngles.z.ToString("f1");
+				rot.x.text = "X: " + t.localEulerAngles.x.ToString("f2");
+				rot.y.text = "Y: " + t.localEulerAngles.y.ToString("f2");
+				rot.z.text = "Z: " + t.localEulerAngles.z.ToString("f2");
 				
-				scl.x.text = "X: " + t.localScale.x.ToString("f1");
-				scl.y.text = "Y: " + t.localScale.y.ToString("f1");
-				scl.z.text = "Z: " + t.localScale.z.ToString("f1");
+				scl.x.text = "X: " + t.localScale.x.ToString("f2");
+				scl.y.text = "Y: " + t.localScale.y.ToString("f2");
+				scl.z.text = "Z: " + t.localScale.z.ToString("f2");
 				
 				objectName.text = t.gameObject.name;
 			

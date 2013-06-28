@@ -55,8 +55,7 @@ static function GetInteractiveObject () {
 // Controls
 ////////////////////
 static function ToggleControls ( state : boolean ) {
-	playerObject.GetComponent(CharacterController).enabled = state;
-	playerObject.GetComponent(ThirdPersonController).enabled = state;
+	playerObject.GetComponent(PlayerController).enabled = state;
 	
 	MouseLook.SetActive ( state );
 	
@@ -101,10 +100,11 @@ static function LoadLevel ( path : String ) {
 	currentLevel.transform.parent = levelContainer;
 	currentLevel.transform.localPosition = Vector3.zero;
 	
-	playerObject = Instantiate ( Resources.Load ( "Actors/Player/Player" ) ) as GameObject;
+	playerObject = Instantiate ( Resources.Load ( "Actors/Player/Beta" ) ) as GameObject;
 	playerObject.transform.parent = currentLevel.transform;
 	
 	playerObject.transform.localPosition = Vector3.one;
+	playerObject.transform.localEulerAngles = Vector3.zero;
 	
 	for ( var spt : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
 		playerObject.transform.localPosition = spt.transform.localPosition;

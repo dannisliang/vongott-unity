@@ -46,27 +46,20 @@ private function CheckVisibility ( pos : Vector3 ) : Vector3 {
 	return pos;
 }
 
-// Check run cam
-private function CheckRunCam ( pos : Vector3 ) : Vector3 {
-	if ( runcam ) {
-		if ( pos.x > 0.0 ) 		{ pos.x -= 0.01; }
-		if ( pos.z > -6.0 ) 	{ pos.z -= 0.1; }
-	} else {
-		if ( pos.x < 0.5 ) 		{ pos.x += 0.01; }
-		if ( pos.z < -2.0 ) 	{ pos.z += 0.1; }
+// Camera distance
+function GetCamDist() : Vector3 {
+	var x : float = 0.5; 
+	var y : float = 0.0; 
+	var z : float = 2.0; 
+	
+	var speed : float = player.GetComponent(Animator).GetFloat("Speed");
+	
+	if ( speed > 0.25 ){
+		z += 4.0 * ( speed - 0.25 );
+		x -= 0.5 * ( speed - 0.25 );
 	}
 	
-	return pos;
-}
-
-// Check position
-private function CheckPosition () {	
-	var pos : Vector3 = cam.transform.localPosition;
-	
-	pos = CheckRunCam ( pos );
-	//pos = CheckVisibility ( pos );
-	
-	cam.transform.localPosition = pos;
+	return new Vector3 ( x, y, z );
 }
 
 ////////////////////
@@ -90,12 +83,8 @@ function Update () {
 		}
 	}
 	
-	this.transform.localPosition = player.transform.localPosition;
-		
-	// check for menu cam
-	if ( !cam_in_front ) {
-		CheckPosition ();
-	}
+	this.transform.position = player.transform.position + Vector3 ( 0, 1, 0 );
+	cam.transform.localPosition = new Vector3 ( GetCamDist().x, 0.5, -GetCamDist().z );
 	
 	// input
 	if ( Input.GetKeyDown(KeyCode.LeftShift) && !runcam ) {

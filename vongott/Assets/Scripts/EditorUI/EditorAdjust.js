@@ -22,9 +22,9 @@ class EditorAdjust extends OGPage {
 			currentVector = EditorCore.GetSelectedObject().transform.localScale;
 		}
 	
-		x.text = currentVector.x.ToString("f1");
-		y.text = currentVector.y.ToString("f1");
-		z.text = currentVector.z.ToString("f1");
+		x.text = currentVector.x.ToString("f2");
+		y.text = currentVector.y.ToString("f2");
+		z.text = currentVector.z.ToString("f2");
 	}
 	
 	function OK () {

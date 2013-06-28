@@ -113,23 +113,28 @@ class EditorBrowser extends OGPage {
 		
 		// Prefabs
 		var prefabsFolder : Folder = new Folder ( "Prefabs" );
-		
-		// ^ levels
-		var prefabsLevelsFolder = new Folder ( "Levels" );
-		prefabsLevelsFolder.AddFolder ( new Folder ( "AwesomeIsland" ) );
-		prefabsFolder.AddFolder ( prefabsLevelsFolder );
-		
-		// ^ interior
-		var prefabsInteriorFolder = new Folder ( "Interior" );
-		prefabsInteriorFolder.AddFolder ( new Folder ( "Furniture" ) );
-		prefabsFolder.AddFolder ( prefabsInteriorFolder );
-		
 		prefabsFolder.AddFolder ( new Folder ( "Airducts" ) );
 		prefabsFolder.AddFolder ( new Folder ( "Doors" ) );
 		prefabsFolder.AddFolder ( new Folder ( "Stairs" ) );
 		prefabsFolder.AddFolder ( new Folder ( "Walls" ) );
 		prefabsFolder.AddFolder ( new Folder ( "Windows" ) );
 		
+		// ^ exterior
+		var prefabsExteriorFolder = new Folder ( "Exterior" );
+		prefabsExteriorFolder.AddFolder ( new Folder ( "City" ) );
+		prefabsFolder.AddFolder ( prefabsExteriorFolder );
+		
+		// ^ interior
+		var prefabsInteriorFolder = new Folder ( "Interior" );
+		prefabsInteriorFolder.AddFolder ( new Folder ( "Furniture" ) );
+		prefabsInteriorFolder.AddFolder ( new Folder ( "Decoration" ) );
+		prefabsFolder.AddFolder ( prefabsInteriorFolder );
+		
+		// ^ levels
+		var prefabsLevelsFolder = new Folder ( "Levels" );
+		prefabsLevelsFolder.AddFolder ( new Folder ( "AwesomeIsland" ) );
+		prefabsFolder.AddFolder ( prefabsLevelsFolder );
+				
 		// Add to master list
 		resourcesFolder.AddFolder ( actorsFolder );
 		resourcesFolder.AddFolder ( itemsFolder );
