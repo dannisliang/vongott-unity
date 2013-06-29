@@ -105,6 +105,7 @@ static function LoadLevel ( path : String ) {
 	
 	playerObject.transform.localPosition = Vector3.one;
 	playerObject.transform.localEulerAngles = Vector3.zero;
+	playerObject.layer = 9;	
 	
 	for ( var spt : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
 		playerObject.transform.localPosition = spt.transform.localPosition;

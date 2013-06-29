@@ -49,7 +49,7 @@ private function CheckVisibility ( pos : Vector3 ) : Vector3 {
 // Camera distance
 function GetCamDist() : Vector3 {
 	var x : float = 0.5; 
-	var y : float = 0.0; 
+	var y : float = 0.5; 
 	var z : float = 2.0; 
 	
 	var speed : float = player.GetComponent(Animator).GetFloat("Speed");
@@ -59,7 +59,21 @@ function GetCamDist() : Vector3 {
 		x -= 0.5 * ( speed - 0.25 );
 	}
 	
-	return new Vector3 ( x, y, z );
+	if ( player.GetComponent(PlayerController).state == PlayerController.PlayerState.Crouching || player.GetComponent(PlayerController).state == PlayerController.PlayerState.Creeping ) {
+		if ( cam.transform.localPosition.y > -0.2 ) {
+			y = cam.transform.localPosition.y - 0.02;
+		} else {
+			y = -0.2;
+		}
+	} else {
+		if ( cam.transform.localPosition.y < 0.5 ) {
+			y = cam.transform.localPosition.y + 0.02;
+		} else {
+			y = 0.5;
+		}
+	}
+	
+	return new Vector3 ( x, y, -z );
 }
 
 ////////////////////
@@ -84,7 +98,7 @@ function Update () {
 	}
 	
 	this.transform.position = player.transform.position + Vector3 ( 0, 1, 0 );
-	cam.transform.localPosition = new Vector3 ( GetCamDist().x, 0.5, -GetCamDist().z );
+	cam.transform.localPosition = GetCamDist();
 	
 	// input
 	if ( Input.GetKeyDown(KeyCode.LeftShift) && !runcam ) {

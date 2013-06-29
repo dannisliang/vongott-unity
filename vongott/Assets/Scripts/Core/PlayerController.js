@@ -5,36 +5,43 @@ class PlayerController extends MonoBehaviour {
 		Idle,
 		Walking,
 		Running,
-		Sprinting,
 		Jumping,
-		Falling
+		Falling,
+		Crouching,
+		Creeping
 	}
 	
 	var state : PlayerState = PlayerState.Idle;
 	var speed : float = 0.0;
-	var jumpVelocity : float = 0.0;
-	var jumpApex : float = 0.5;
 	var distGround : float = 0.0;
 	var isGrounded : boolean = true;
+	var inCrawlspace : boolean = false;
+	var capsule : CapsuleCollider;
+	var crouchMode : boolean = false;
 
 	function Start () {
-		var capsule : CapsuleCollider = transform.collider;
-		distGround = capsule.height / 2 - capsule.center.y;
+		capsule = transform.collider;
+		distGround = collider.bounds.extents.y;
 	}
 
 	function Update () {
 		// Get grounded
-		var hit : RaycastHit;
-		//isGrounded = Physics.Raycast ( transform.position, -transform.up, distGround + 0.1 );
-			
+		isGrounded = Physics.Raycast ( transform.position, -transform.up, distGround + 0.1 );
+		
+		// Get crawlspace
+		inCrawlspace = Physics.Raycast ( transform.position, transform.up, 1.8, 9 );
+								
 		// Set state
-		if ( Input.GetKeyDown ( KeyCode.Space ) && isGrounded ) {
+		if ( !crouchMode && Input.GetKeyDown ( KeyCode.Space ) && state != PlayerState.Jumping && state != PlayerState.Falling ) {
 			state = PlayerState.Jumping;
 		
-		} else if ( Input.GetKey ( KeyCode.LeftShift ) && jumpVelocity == 0 ) {
+		} else if ( !crouchMode && Input.GetKey ( KeyCode.LeftShift ) && state != PlayerState.Jumping && state != PlayerState.Falling ) {
 			state = PlayerState.Running;
 			
-		} else if ( jumpVelocity == 0 ) {
+		} else if ( !inCrawlspace && Input.GetKeyDown ( KeyCode.C ) ) {
+			crouchMode = !crouchMode;
+		
+		} else  {
 			state = PlayerState.Walking;
 		
 		}
@@ -79,17 +86,23 @@ class PlayerController extends MonoBehaviour {
 			
 			}
 			
-			var rotationTarget : Quaternion = Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z );
-									
+			var rotationTarget : Quaternion = Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z );	
 			transform.rotation = Quaternion.Slerp ( transform.rotation, rotationTarget, 5 * Time.deltaTime );
 			
 			if ( speed < 0.1 ) { speed = 0.1; }
 			
-			if ( state == PlayerState.Walking ) {
-				if ( speed < 0.25 ) {
+			if ( state == PlayerState.Creeping ) {
+				if ( speed < 0.25 ) {	
 					speed += 0.01;
 				} else if ( speed > 0.30 ) {
-					speed -= 0.01;
+					speed -= 0.02;
+				}
+							
+			} else if ( state == PlayerState.Walking ) {
+				if ( speed < 0.25 ) {	
+					speed += 0.01;
+				} else if ( speed > 0.30 ) {
+					speed -= 0.02;
 				}
 				
 			} else if ( state == PlayerState.Running ) {
@@ -98,47 +111,60 @@ class PlayerController extends MonoBehaviour {
 				}
 			
 			} else if ( state == PlayerState.Jumping ) {
-				if ( jumpVelocity < jumpApex ) {
-					jumpVelocity += 0.01;
-				} else {
-					state = PlayerState.Falling;
-				}
-				
 				if ( speed < 0.75 ) {	
 					speed += 0.01;
 				} else if ( speed > 0.80 ) {
-					speed -= 0.01;
+					speed -= 0.02;
 				}
 			
 			} else if ( state == PlayerState.Falling ) { 
-				jumpVelocity -= jumpVelocity * 0.01;
-				
-				if ( speed < 0.75 ) {	
-					speed += 0.01;
-				} else if ( speed > 0.80 ) {
+				if ( speed > 0.15 ) {
 					speed -= 0.01;
 				}
 			
 			}
-							
+					
 		} else {
+			if ( state != PlayerState.Jumping ) { state = PlayerState.Idle; }
+			
 			if ( speed > 0.0 ) {
-				speed -= 0.1;
+				speed -= 0.02;
 			}
-		} 
+		
+		}
+		
+		if ( crouchMode ) {
+			if ( speed > 0 ) {
+				state = PlayerState.Creeping;
+			} else {	
+				state = PlayerState.Crouching;
+			}
+		}
+		
+		// Set capsule size
+		if ( state == PlayerState.Creeping || state == PlayerState.Crouching ) {
+			capsule.height = 1.0;
+			capsule.center = new Vector3 ( 0, 0.5, 0 );
+		} else {
+			capsule.height = 1.7;
+			capsule.center = new Vector3 ( 0, 0.85, 0 );
+		}
 		
 		// Detect end of jump
-		if ( isGrounded && state == PlayerState.Falling ) {
+		if ( isGrounded && ( state == PlayerState.Jumping || state == PlayerState.Falling ) ) {
 			state = PlayerState.Running;
-			jumpVelocity = 0.0;
 		
 		}
 		
 		this.GetComponent(Animator).SetFloat("Speed", speed );
-		this.GetComponent(Animator).SetBool("Jumping", state == PlayerState.Jumping || state == PlayerState.Falling );
-	
-		transform.position += new Vector3 ( 0, jumpVelocity, 0 );
 		
-		Debug.Log ( jumpVelocity );
+		this.GetComponent(Animator).SetBool("Jumping", state == PlayerState.Jumping || state == PlayerState.Falling );
+		this.GetComponent(Animator).SetBool("Crouching", state == PlayerState.Crouching );
+		this.GetComponent(Animator).SetBool("Creeping", state == PlayerState.Creeping );
+
+	}
+
+	function FixedUpdate () {
+
 	}
 }
