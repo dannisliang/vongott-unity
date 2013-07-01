@@ -8,7 +8,6 @@ var cam : GameObject;
 var player : GameObject;
 
 // Private vars
-private var runcam = false;
 private var cam_init = false;
 
 // Static vars
@@ -17,68 +16,53 @@ static var cam_in_front = false;
 
 
 ////////////////////
-// Private functions
+// Camera functions
 ////////////////////
-// Check visibility
-private function CheckVisibility ( pos : Vector3 ) : Vector3 {
-	var origin : Vector3 = cam.transform.position;
-	var target : Vector3 = player.transform.position;
-	var direction = cam.transform.forward;
-	var distance = Vector3.Distance ( origin, target );
-		
-	direction.Normalize();
+// Is player crouching?
+function IsCrouching () : boolean {
+	return player.GetComponent(PlayerController).state == PlayerController.PlayerState.Crouching || player.GetComponent(PlayerController).state == PlayerController.PlayerState.Creeping;
+}
 
-	var hits : RaycastHit[] = Physics.RaycastAll ( origin, direction, distance );
-
-	//Debug.DrawRay ( origin, direction, Color.green, 1 );
+// Compensate for walls
+function CompensateForWalls ( newPos : Vector3 ) {
+	var to : Vector3 = cam.transform.TransformPoint(newPos);
+	var from : Vector3 = this.transform.position;
+	var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
 	
-	for ( var i = 0; i < hits.Length; i++ ) {
-		if ( hits[i].collider.gameObject != player ) {
-			pos.z += 0.1;
-			continue;
-		}
-	}
+	var wallHit : RaycastHit = new RaycastHit();		
 
-	if ( hits.Length <= 0 && pos.z > -4.5 ) {
-		pos.z -= 0.1;
+	if ( Physics.Linecast ( from, to, wallHit, 9 ) ) {
+		Debug.DrawLine( from, wallHit.point, Color.red);
+		newPos = Camera.main.transform.InverseTransformPoint( wallHit.point );
+	} else {
+		Debug.DrawLine ( from, to, Color.green );
 	}
-			
-	return pos;
+	
+	return newPos;
 }
 
 // Camera distance
 function GetCamDist() : Vector3 {
 	var x : float = 0.5; 
-	var y : float = 0.5; 
-	var z : float = 2.0; 
+	var y : float = 0.0; 
+	var z : float = -2.0; 
 	
 	var speed : float = player.GetComponent(Animator).GetFloat("Speed");
+	var newPos : Vector3;
 	
 	if ( speed > 0.25 ){
-		z += 4.0 * ( speed - 0.25 );
+		z -= 4.0 * ( speed - 0.25 );
 		x -= 0.5 * ( speed - 0.25 );
-	}
 	
-	if ( player.GetComponent(PlayerController).state == PlayerController.PlayerState.Crouching || player.GetComponent(PlayerController).state == PlayerController.PlayerState.Creeping ) {
-		if ( cam.transform.localPosition.y > -0.2 ) {
-			y = cam.transform.localPosition.y - 0.02;
-		} else {
-			y = -0.2;
-		}
-	} else {
-		if ( cam.transform.localPosition.y < 0.5 ) {
-			y = cam.transform.localPosition.y + 0.02;
-		} else {
-			y = 0.5;
-		}
 	}
+			
+	newPos = new Vector3 ( x, y, z );
+	newPos = CompensateForWalls ( newPos );
 	
-	return new Vector3 ( x, y, -z );
+	return newPos;
 }
 
-////////////////////
-// Public functions
-////////////////////
+
 // Init
 function Start () {
 	instance = this.gameObject.transform;
@@ -89,7 +73,7 @@ function Update () {
 	if ( !cam_init ) {
 		if ( cam != null ) {
 			cam.transform.parent = this.transform;
-			cam.transform.localPosition = new Vector3 ( 0.5, 0.5, -2.0 );
+			cam.transform.localPosition = new Vector3 ( 0.5, 0.0, -2.0 );
 			cam.transform.localEulerAngles = Vector3.zero;
 			cam_init = true;
 		} else {
@@ -97,15 +81,19 @@ function Update () {
 		}
 	}
 	
-	this.transform.position = player.transform.position + Vector3 ( 0, 1, 0 );
-	cam.transform.localPosition = GetCamDist();
+	var adjustment : Vector3;
+	var standCam = new Vector3 ( 0, 1.5, 0 );
+	var crouchCam = new Vector3 ( 0, 0.8, 0 );
 	
-	// input
-	if ( Input.GetKeyDown(KeyCode.LeftShift) && !runcam ) {
-		runcam = true;
-	} else if ( Input.GetKeyUp(KeyCode.LeftShift) && runcam ) {
-		runcam = false;
+	if ( IsCrouching() ) {
+		adjustment = crouchCam;
+	} else {
+		adjustment = standCam;
 	}
+	
+	this.transform.position = Vector3.Slerp ( this.transform.position, player.transform.position + adjustment, 1.0 );
+	cam.transform.localPosition = Vector3.Slerp ( cam.transform.localPosition, GetCamDist(), 0.5 );
+	
 }
 
 

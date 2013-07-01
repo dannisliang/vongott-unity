@@ -19,7 +19,7 @@ class PlayerController extends MonoBehaviour {
 	var capsule : CapsuleCollider;
 	var crouchMode : boolean = false;
 
-	function Start () {
+	function Start () {		
 		capsule = transform.collider;
 		distGround = collider.bounds.extents.y;
 	}

@@ -96,7 +96,6 @@ class EditorBrowser extends OGPage {
 		var actorsFolder : Folder = new Folder ( "Actors" );
 		actorsFolder.AddFolder ( new Folder ( "Animals" ) );
 		actorsFolder.AddFolder ( new Folder ( "NPC" ) );
-		actorsFolder.AddFolder ( new Folder ( "Player" ) );
 	
 		// Items
 		var itemsFolder : Folder = new Folder ( "Items" );
