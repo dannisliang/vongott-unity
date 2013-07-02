@@ -59,44 +59,44 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 Mechanical upgrades enhance the capability of their governing limb area. They need to be installed by a professional mechanic.
 
 #### Legs  
-Kicking damage  
-Running speed
-Jumping height
-Noise reduction
+- Kicking damage  
+- Running speed
+- Jumping height
+- Noise reduction
 
 #### Arms  
-Punching damage  
-Swimming speed
-Takedowns
-- Scripted takedown animation
-- Should be as brief as possible
+- Punching damage  
+- Swimming speed
+- Takedowns
+  - Scripted takedown animation
+  - Should be as brief as possible
 
 #### Back   
-Fall damage reduction
-Cloak
+- Fall damage reduction
+- Cloak
 
 ### Digital
-Digital upgrades govern mental capabilities, such as reflexes and knowledge. They can be installed by the player.
+- Digital upgrades govern mental capabilities, such as reflexes and knowledge. They can be installed by the player.
 
 #### Eyes  
-Auto aim
-Enemy analysis
-- Display target enemy statistics
+- Auto aim
+- Enemy analysis
+  - Display target enemy statistics
 
 #### Hands  
-Lock picking
-Reload speed
-- The factor with which to multiply the reload speed of any weapon
-Punch combo
-- A series of punching attacks
+- Lock picking
+- Reload speed
+  - The factor with which to multiply the reload speed of any weapon
+- Punch combo
+  - A series of punching attacks
 
 #### Feet 
-Kick combo
-- A series of kicking attacks
+- Kick combo
+  - A series of kicking attacks
 
 #### Skull 
-Hacking
-- Interfacing with consoles, cameras and computers without knowing the username and password
-Reflexes
-- Slows down time for everything except the mouse control
-- Get as much Max Payne into this as possible
+- Hacking
+  - Interfacing with consoles, cameras and computers without knowing the username and password
+- Reflexes
+  - Slows down time for everything except the mouse control
+  - Get as much Max Payne into this as possible
