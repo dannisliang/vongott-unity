@@ -1,10 +1,9 @@
-Design document for Von Gott
+Design document for The Vongott Chronicles
 ====
 
 # Production
 ## Tools
-The game will be produced in Unity using as few additional libraries as possible. Some will be needed for heavy computations such as AI, though.
-It will be written in UnityScript
+The game will be produced in Unity using as few additional libraries as possible. Some will be needed for heavy computations such as AI, though. It will be written in UnityScript. There will be a community SDK for constructing levels.
 
 # Features
 ## Flags
