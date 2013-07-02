@@ -1,6 +1,5 @@
 Items 
 =====
-# Functionality
 Items can be found, stolen or purchased throughout the world. 
 
 ## Quest items
