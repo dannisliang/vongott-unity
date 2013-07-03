@@ -9,7 +9,7 @@ var _levelContainer : Transform;
 // Static vars
 static var debuggingEnabled = true;
 static var playerName = "Nameless";
-static var interactiveObject:GameObject;
+static var interactiveObject : GameObject;
 
 static var playerObject:GameObject;
 static var camTarget:GameObject;

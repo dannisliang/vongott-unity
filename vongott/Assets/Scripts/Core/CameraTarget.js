@@ -31,7 +31,7 @@ function CompensateForWalls ( newPos : Vector3 ) {
 	
 	var wallHit : RaycastHit = new RaycastHit();		
 
-	if ( Physics.Linecast ( from, to, wallHit, 9 ) ) {
+	if ( Physics.Linecast ( from, to, wallHit, 9 ) && !wallHit.transform.GetComponent(InteractiveObject) ) {
 		Debug.DrawLine( from, wallHit.point, Color.red);
 		newPos = Camera.main.transform.InverseTransformPoint( wallHit.point );
 	} else {
@@ -45,13 +45,13 @@ function CompensateForWalls ( newPos : Vector3 ) {
 function GetCamDist() : Vector3 {
 	var x : float = 0.5; 
 	var y : float = 0.0; 
-	var z : float = -2.0; 
+	var z : float = -3.0; 
 	
 	var speed : float = player.GetComponent(Animator).GetFloat("Speed");
 	var newPos : Vector3;
 	
 	if ( speed > 0.25 ){
-		z -= 4.0 * ( speed - 0.25 );
+		z -= 3.0 * ( speed - 0.25 );
 		x -= 0.5 * ( speed - 0.25 );
 	
 	}
@@ -82,11 +82,14 @@ function Update () {
 	}
 	
 	var adjustment : Vector3;
-	var standCam = new Vector3 ( 0, 1.5, 0 );
+	var standCam = new Vector3 ( 0, 1.35, 0 );
 	var crouchCam = new Vector3 ( 0, 0.8, 0 );
+	var convoCam = new Vector3 ( 0, 1.65, 0 );
 	
 	if ( IsCrouching() ) {
 		adjustment = crouchCam;
+	} else if ( OGRoot.currentPage.pageName == "Conversation" ) {
+		adjustment = convoCam;
 	} else {
 		adjustment = standCam;
 	}

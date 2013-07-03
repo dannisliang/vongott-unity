@@ -22,6 +22,8 @@ class EditorMenuBase extends OGPage {
 	
 	var tabs : OGTabs;
 	
+	var initName : boolean = false;
+	
 	
 	////////////////////
 	// File menu
@@ -273,11 +275,10 @@ class EditorMenuBase extends OGPage {
 				scl.x.text = "X: " + t.localScale.x.ToString("f2");
 				scl.y.text = "Y: " + t.localScale.y.ToString("f2");
 				scl.z.text = "Z: " + t.localScale.z.ToString("f2");
-				
-				objectName.text = t.gameObject.name;
-			
+							
 			} else if ( inspector.activeSelf ) {
 				inspector.SetActive ( false );
+
 			}
 		}
 	}
