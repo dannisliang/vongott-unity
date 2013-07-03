@@ -92,7 +92,7 @@ Mechanical upgrades enhance the capability of their governing limb area. They ne
 - Cloak
 
 ### Biological
-Biological upgrades govern mental capabilities, such as reflexes and knowledge. They can be installed by the player.
+Biological upgrades govern internal properties, such as reflexes and dexterity. They can be installed by the player.
 
 #### Eyes  
 - Auto aim
