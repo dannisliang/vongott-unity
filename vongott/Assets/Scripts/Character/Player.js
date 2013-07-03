@@ -30,12 +30,13 @@ class Player extends MonoBehaviour {
 			target = foot_r;
 		} 
 		
-		if ( equip ) {
-			equippedItem = Instantiate ( Resources.Load ( "Items/" + entry.model ) as GameObject );
+		if ( equip ) {		
+			equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
 			
 			equippedItem.transform.parent = target.transform;
 			equippedItem.transform.localPosition = Vector3.zero;
 			equippedItem.transform.localEulerAngles = Vector3.zero;
+			equippedItem.collider.enabled = false;
 		
 			GameCore.Print ( "Player | item '" + entry.title + "' equipped" );
 		} else {
@@ -43,6 +44,10 @@ class Player extends MonoBehaviour {
 			
 			GameCore.Print ( "Player | item '" + entry.title + "' unequipped" );
 		}
+	}
+	
+	function GetEquippedItem () : GameObject {
+		return equippedItem;
 	}
 	
 	// Install

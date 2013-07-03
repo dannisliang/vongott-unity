@@ -1,5 +1,7 @@
 #pragma strict
 
+@script ExecuteInEditMode();
+
 class Item extends InteractiveObject {
 	// Types
 	enum Types {
@@ -61,20 +63,17 @@ class Item extends InteractiveObject {
 	var desc : String;
 	var attr : Attribute[];
 
-	// Prefab path
-	var model : String;
-
 	// Handle pick-up
-	function Update () {
-		if ( GameCore.GetInteractiveObject() == this.gameObject ) {
-			UIHUD.ShowNotification ( "Pick up [F]" );
-			
-			if ( Input.GetKeyDown(KeyCode.F) ) {
-				InventoryManager.AddItem(this);
-				Destroy ( this.gameObject );
-				GameCore.SetInteractiveObject ( null );
-				UIHUD.ShowNotification ( "" );
-			}
+	override function InvokePrompt () {
+		UIHUD.ShowNotification ( "Pick up [F]" );
+	}
+	
+	override function Interact () {
+		if ( Input.GetKeyDown(KeyCode.F) ) {
+			InventoryManager.AddItem(this);
+			Destroy ( this.gameObject );
+			GameCore.SetInteractiveObject ( null );
+			UIHUD.ShowNotification ( "" );
 		}
 	}
 }

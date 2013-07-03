@@ -26,11 +26,12 @@ class Actor extends InteractiveObject {
 	@HideInInspector var action : String = "";
 
 	function Equip ( entry : Entry ) {
-		equippedItem = Instantiate ( Resources.Load ( "Items/" + entry.model ) as GameObject );
+		equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
 		
 		equippedItem.transform.parent = transform;
 		equippedItem.transform.localPosition = Vector3.zero;
 		equippedItem.transform.localEulerAngles = Vector3.zero;
+		equippedItem.collider.enabled = false;
 	
 		GameCore.Print ( "Actor | '" + entry.title + "' equipped" );
 	}

@@ -54,7 +54,7 @@ static function ConvertItemToEntry ( item : Item ) : Entry {
 	entry.title = item.title;
 	entry.desc = item.desc;
 	entry.attr = item.attr;
-	entry.model = item.model;		
+	entry.model = item.gameObject.GetComponent(Prefab).path + "/" + item.gameObject.GetComponent(Prefab).id;		
 	
 	return entry;
 }
@@ -82,7 +82,7 @@ static function AddItem ( item : Item ) {
 			entry.desc = item.desc;
 			entry.attr = item.attr;
 			entry.slot = i;
-			entry.model = item.model;							
+			entry.model = item.gameObject.GetComponent(Prefab).path + "/" + item.gameObject.GetComponent(Prefab).id;;							
 										
 			slots[i].SetEntry ( ConvertItemToEntry ( item ) );
 			return;
