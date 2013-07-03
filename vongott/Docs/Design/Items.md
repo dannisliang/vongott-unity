@@ -30,14 +30,25 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 - Stupid
 - Shabby
 - Average
-- Lovely
+- Fancy
 - Grand
 - Awesome
 
 ### Armour
 - Uniform specific
+  - Helmet / Visor
+  - Kevlar Vest
+  - Boots
+
 - Guerilla
+  - Bandana / Mask
+  - Armored Vest
+  - Thigh Pads
+
 - Military grade
+  - Helmet
+  - Bulletproof Vest
+  - Boots
 
 ### Weapons
 #### Melee
@@ -49,11 +60,16 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 
 #### Projectile
 - Pistol
-- Bow
+- Crossbow
 - Assault Rifle
-- Sniper
+- Sniper Rifle
 - Shotgun
 - Dead Badger (with Linux)
+
+#### Grenade
+- Concussion
+- Napalm
+- EMP
 
 ## Upgrades
 ### Mechanical
@@ -76,8 +92,8 @@ Takedowns
 Fall damage reduction
 Cloak
 
-### Digital
-Digital upgrades govern mental capabilities, such as reflexes and knowledge. They can be installed by the player.
+### Biological
+Biological upgrades govern mental capabilities, such as reflexes and knowledge. They can be installed by the player.
 
 #### Eyes  
 Auto aim
