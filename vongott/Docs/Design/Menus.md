@@ -18,6 +18,7 @@ Menus
 - Display
   - Resolution
   - Simple quality level
+  - Post processing effects
 - Audio
   - Music volume
   - Sfx volume
@@ -27,6 +28,7 @@ Menus
 - News
 - Github
 - User content
+- Editor
 
 ## Quit
 - Quits the game
@@ -41,6 +43,11 @@ Menus
 ## Quick inventory
 - only visible upon invocation
 
+## Quick upgrade menu
+- a wheel selection screen
+- activated via middle mouse button
+- option to bind upgrades to keys
+
 # Game menu
 ## Character menu
 - Name
@@ -49,7 +56,7 @@ Menus
 
 ## Upgrades menu
 - Mechanical upgrades
-- Firmware upgrades
+- Biological upgrades
 - Inspector panel
 
 ## Inventory menu

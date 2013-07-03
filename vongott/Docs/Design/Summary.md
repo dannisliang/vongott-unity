@@ -1,54 +1,19 @@
-Design document for Von Gott
+Design document for The Vongott Chronicles
 ====
 
 # Production
 ## Tools
-The game will be produced in Unity using as few additional libraries as possible. Some will be needed for heavy computations such as AI, though.
-It will be written in JavaScript
-
-## Team
-The team consists of me, Jeppe Zapp. Yay!
+The game will be produced in Unity using as few additional libraries as possible. Some will be needed for heavy computations such as AI, though. It will be written in UnityScript. There will be a community SDK for constructing levels.
 
 # Features
 ## Flags
-The game will have a flag system that keeps track of player actions in order to make consequences for them later in the game. The flags will be nested as (chapter)/(map name)/(identifier)
+The game will have a flag system that keeps track of player actions in order to make consequences for them later in the game.
 
 ## Economy
-Weapons, provisions and digital mods can be purchased in shops. The currency is called 'moneys'. Moneys can be found on incapacitated people, in locked containers that require lockpicking and in cash points.
+Weapons, provisions and biological upgrades can be purchased in shops. The currency is called 'credits'. Credits can be found on incapacitated people, in locked containers that require lockpicking and in cash points.
 
-## Mods
-Players can obtain mechanical and digital mods to improve their abilities. Mechanical mods are stat improvements that can be obtained by completing main quests, and digital mods are skills that can be bought or earned via sidequests.
-
-### Mechinal
-- Legs:  
-	- Kicking damage  
-	- Running speed
-	- Jumping height
-- Arms:  
-	- Punching damage  
-	- Swimming speed
-- Back:   
-	- Fall damage reduction
-	- Inventory capacity
-
-### Digital
-- Eyes:  
-	- Auto aim
-- Hands:  
-	- Lock picking
-	- Reload speed
-	- Punch combo tier 1
-	- Punch combo tier 2
-	- Punch combo tier 3
-- Feet:
-	- Run up walls
-	- Kick combo tier 1
-	- Kick combo tier 2
-	- Kick combo tier 3
-- Skull: 
-	- Hacking
-- Chest:
-	- Cloak
+## Upgrades
+Players can obtain mechanical and biological upgrades to improve their abilities. Upgrades are physical and mental improvements that can be found like items in the game.
 
 ## Conversations
 During conversations, the HUD will disappear and black bars come up, the camera zooms in a little. There will be an extensive library of short speaking animations which can be applied to any character. The player can press [enter] to proceed to the next line at any time.
@@ -56,12 +21,11 @@ During conversations, the HUD will disappear and black bars come up, the camera 
 Conversations can happen between NPCs as well.
 
 ## Debug menu
-- Flag editor
+There will be no debug menu, as switching between the editor and the game is petty seamless.
 
 # Gameplay
 ## Genre
-- Isometric view
-- Camera in perspactive mode but with the perspective setting almost orthographical.
+- Shoulder view
 - Action RPG
 
 ## Controls
@@ -70,16 +34,16 @@ Optimised for keyboard+mouse and gamepad
 ### Melee attack
 - Various combat animations based on Oni and Tekken
 - The damage dealt during melee attacks is influenced by mechanical mods
-- The range of combos are influenced by digital mods
+- The range of combos is influenced by biological mods
 
 ### Weapons
 - The player can pick up any weapon within the game and use it
 - Additional weapons can be bought from shops
-- Reload speed is affected by digital mods
+- Reload speed is affected by biological mods
 
 ### Move and look
-- Keyboard+mouse: WASD and aim with mouse like the old GTA games and The Guardian of Light
-- Gamepad: Similar to Guardian of Light
+- Keyboard+mouse: WASD and aim with mouse
+- Gamepad
 - Jumping into specially scripted walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
 	- above 30%: fall
 	- below 30%: wall flip
@@ -95,11 +59,9 @@ The menu system is completely circular. Inspired by mechanical aesthetics of The
 Displays health and energy in the top right and weapons in the bottom. The weapons interface only pops up if activated via scroll wheel or number keys.
 
 ## Enemies
-Enemies will walk patrol routes and have a fairly wide vision cone. 
-
-They will have 3 states: casual, cautious and aggressive. Cautious leads to aggressive, if they spot the player. No NPCs outside of the game screen should be able to see the player, unless they're already chasing him.
-
-If they spot dead bodies, they will become cautious.
+Enemies will walk patrol routes and have a fairly narrow vision cone. 
+They will have 3 states: calm, alert and aggressive. Alert leads to aggressive, if they spot the player.
+If they spot dead bodies, they will become alert.
 
 # Setting
 ## Visuals
@@ -108,7 +70,7 @@ If they spot dead bodies, they will become cautious.
 ## Story
 - In line with the original Deus Ex game
 - Cameos from original characters, but with altered names
-- Side quests unrelated to the main plot will be available
+- Side quests related to the main plot will be available
 
 ## Musical inspiration
 - Trentemøller

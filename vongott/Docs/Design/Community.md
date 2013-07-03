@@ -4,15 +4,27 @@ Community
 # Mods
 ## Community SDK
 An SDK will be developed from scratch for creating game content. This will be used in production and as modding tool.
-- Conversation editor with support for flags, quests, dialogue strings and dialogue audio
+- Conversation editor
+	- Flags
+	- Quests
+	- Dialogue strings
+	- Dialogue audio
 - Quest editor
+	- Main quest boolean
+	- Description
+	- Title
 - Level editor
+	- Select, rotate, scale, translate objects
+	- Inspector menus for all object types
+	- Surface editor for creating custom shapes such as floors and ceilings 
+	- Asset browser
+- Serialisation with JSON
 
 ## Story
-The first few chapters will be developed by the core team, the players will then be encouraged to pitch in with suggestions to make up the next chapter
+The first chapter will be developed by the core team, the players will then be encouraged to pitch in with suggestions to make up the next chapter
 
 ## Structure
-Resource files will be placed externally in /Textures /Prefabs and so on. There will be a /Mods folder as well, and from there users are able to supplement or replace content in the game.
+Resource files will be precompiled with the project, only to be accessible from within the editor. This is mainly because of a limitation with Unity. Mods will be easy to do from within Unity, but we should develop a way for mods to work without it eventually. This is a stretch goal, though.
 
 ## Boards
-There will be community boards for sharing mods, and moderators will test them and include them in an "official" repo to make mods available for download directly from within the game menu
+There will be community boards for discussing and sharing development material, such as story and in-game assets.
