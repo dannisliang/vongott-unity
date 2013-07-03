@@ -1,8 +1,4 @@
-![logo](https://raw.github.com/mrzapp/vongott/master/vongott/Assets/Textures/UI/logo.png)
-
-#The Vongott Chronicles
-
---
+![logo](https://raw.github.com/mrzapp/vongott/master/vongott/Blender/render.png)
 
 <a href="https://www.dropbox.com/s/tw0e3hobxii237k/Build.zip">latest build</a>
 
