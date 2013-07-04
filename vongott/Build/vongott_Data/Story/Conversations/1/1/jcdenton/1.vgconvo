@@ -18,8 +18,40 @@
 				"speaker":"NPC",
 				"line":"Nope. Nuh-uh. Fuck off."},
 		{
+				"type":"Group",
+				"groupType":"Query",
+				"options":[
+						{
+								"consequence":"(none)",
+								"line":"I loved you in The Matrix!"},
+						{
+								"consequence":"(none)",
+								"line":"Fuck you!"},
+						{
+								"consequence":"(none)",
+								"line":"You've changed, man.."}]},
+		{
+				"type":"Group",
+				"groupType":"Response",
+				"options":[
+						{
+								"consequence":"(none)",
+								"line":"Now you're just being mean.."},
+						{
+								"consequence":"(none)",
+								"line":"No thanks, I'm good."},
+						{
+								"consequence":"(none)",
+								"line":"I happen to enjoy crack, so what?"}]},
+		{
 				"type":"Line",
 				"condition":"(none)",
 				"consequence":"(none)",
 				"speaker":"Player",
-				"line":"You've changed, man..."}]
+				"line":"All right then, see you around, I guess.."},
+		{
+				"type":"Line",
+				"condition":"(none)",
+				"consequence":"(none)",
+				"speaker":"NPC",
+				"line":"KTHXBAI!!!"}]

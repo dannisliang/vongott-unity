@@ -1,5 +1,9 @@
 #pragma strict
 
+import UnityEngine;
+import System.Collections;
+/*import UnityEditor;
+	
 // Update path
 @MenuItem ( "Vongott/Prefab/Update Path" )
 static function UpdatePath () {
@@ -26,4 +30,4 @@ static function UpdatePath () {
 		obj.GetComponent(Prefab).id = id;
 		obj.GetComponent(Prefab).path = path;
 	}
-}
+}*/
