@@ -24,8 +24,9 @@ class OGTween extends MonoBehaviour {
 	var messageTarget : GameObject;
 	var message : String;
 	var argument : String;
+	var func : Function;
 	var sendMessageOn : TweenMessageSend = TweenMessageSend.Complete;
-	
+		
 	@HideInInspector var timer : float = 0.0;
 	@HideInInspector var timerStarted : boolean = false;
 	
@@ -34,6 +35,11 @@ class OGTween extends MonoBehaviour {
 	@HideInInspector var startScl : Vector3;
 	
 	function OGCallBack () {
+		if ( func ) {
+			func ();
+			return;
+		}
+		
 		if ( !messageTarget ) { return; }
 		if ( !message ) { return; }
 		

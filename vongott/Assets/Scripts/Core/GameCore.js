@@ -89,17 +89,21 @@ static function MergeMeshes () {
     currentLevel.SetActive ( true );
 }
 
-static function LoadLevel ( path : String ) {
+static function LoadLevel ( path : String, spawnPoint : String ) {
+	// Check if a level is already loaded
 	if ( currentLevel != null ) {
 		Destroy ( currentLevel );
 		currentLevel = null;
 	}
 	
+	// Read .vgmap file
 	currentLevel = Loader.LoadMap ( path );
 	
+	// Nest under level container
 	currentLevel.transform.parent = levelContainer;
 	currentLevel.transform.localPosition = Vector3.zero;
 	
+	// Instantiate and position player
 	playerObject = Instantiate ( Resources.Load ( "Actors/Player/Beta" ) ) as GameObject;
 	playerObject.transform.parent = currentLevel.transform;
 	
@@ -107,12 +111,18 @@ static function LoadLevel ( path : String ) {
 	playerObject.transform.localEulerAngles = Vector3.zero;
 	playerObject.layer = 9;	
 	
+	// Find spawn point
 	for ( var spt : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
-		playerObject.transform.localPosition = spt.transform.localPosition;
-		playerObject.transform.localEulerAngles = spt.transform.localEulerAngles;
-		spt.gameObject.SetActive ( false );
+		//if ( spawnPoint == "" ) { spawnPoint == spt.gameObject.name; }
+		
+		//if ( spt.gameObject.name == spawnPoint ) {
+			playerObject.transform.localPosition = spt.transform.localPosition;
+			playerObject.transform.localEulerAngles = spt.transform.localEulerAngles;
+			spt.gameObject.SetActive ( false );
+		//}
 	}
 	
+	// Instantiate and position camera target
 	camTarget = Instantiate ( Resources.Load ( "Prefabs/Core/CameraTarget" ) ) as GameObject;
 	camTarget.transform.parent = currentLevel.transform;
 	camTarget.GetComponent ( CameraTarget ).player = playerObject;
@@ -121,6 +131,18 @@ static function LoadLevel ( path : String ) {
 	//MergeMeshes ();
 }
 
+
+////////////////////
+// Events
+////////////////////
+static function StartAnimation ( n : String, f : Function ) {
+	for ( var anim : OGTween in currentLevel.transform.GetComponentsInChildren ( OGTween ) ) {
+		if ( anim.gameObject.name == n ) {
+			anim.func = f;
+			anim.Play ( true );
+		}
+	}
+}
 
 ////////////////////
 // Go to editor
@@ -140,29 +162,29 @@ static function GoToEditor () {
 // Init
 ////////////////////
 function Start () {	
-	// quests
+	// Quests
 	QuestManager.Init();
 	
-	// inventory
+	// Inventory
 	InventoryManager.Init();
 	
-	// upgrades
+	// Upgrades
 	UpgradeManager.Init();
 	
-	// flags
+	// Flags
 	FlagManager.Init();
 	
-	// main camera
+	// Main camera
 	cam = Camera.main.transform;
 	
-	// level container
+	// Level container
 	levelContainer = _levelContainer;
 	
-	// load level
-	if ( nextLevel == "" ) { nextLevel == "DudeMeister"; }
-	LoadLevel ( nextLevel );
+	// Load level
+	if ( nextLevel == "" ) { nextLevel == "NewTest"; }
+	LoadLevel ( nextLevel, "" );
 	
-	// signal
+	// Signal
 	Print ("GameCore | started");
 	started = true;
 }
@@ -172,13 +194,13 @@ function Start () {
 // Clear
 ////////////////////
 static function Stop () {	
-	// quests
+	// Quests
 	QuestManager.Clear();
 	
-	// inventory
+	// Inventory
 	InventoryManager.Clear();
 	
-	// upgrades
+	// Upgrades
 	UpgradeManager.Clear();
 
 	started = false;

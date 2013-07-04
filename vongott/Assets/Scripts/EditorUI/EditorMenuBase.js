@@ -124,6 +124,10 @@ class EditorMenuBase extends OGPage {
 		EditorCore.AddSpawnPoint ();
 	}
 	
+	function AddTrigger () {
+		EditorCore.AddTrigger ();
+	}
+	
 	////////////////////
 	// Edit menu
 	////////////////////
@@ -214,7 +218,7 @@ class EditorMenuBase extends OGPage {
 		} else if ( menu == "Path" ) {
 			menuObj.GetComponent(EditorInspectorPath).Init(selectedObj);
 		} else if ( menu == "Trigger" ) {
-		//	menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
+			menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
 		} else if ( menu == "Tween" ) {
 		//	menuObj.GetComponent(EditorInspectorTween).Init(selectedObj);
 		} else if ( menu == "Surface" ) {

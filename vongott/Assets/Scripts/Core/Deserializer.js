@@ -63,6 +63,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.transform.localEulerAngles = DeserializeVector3 ( act.GetField("localEulerAngles") );
 	
 		newAct.name = act.GetField("model").str;
+		newAct.layer = 9;
 	
 		return newAct;
 	
@@ -78,6 +79,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newItm.transform.localEulerAngles = DeserializeVector3 ( itm.GetField("localEulerAngles") );
 	
 		newItm.name = itm.GetField("model").str;
+		newItm.layer = 9;
 	
 		return newItm;
 	
@@ -114,22 +116,45 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newSpt.name = newSpt.name.Replace( "(Clone)", "" );
 	
 		return newSpt;
+	
+	// check trigger
+	} else if ( obj.HasField("Trigger") ) {
+		var trg : JSONObject = obj.GetField("Trigger");
+		
+		var newTrg : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/trigger" ) as GameObject );
+		newTrg.transform.localEulerAngles = DeserializeVector3 ( trg.GetField("localEulerAngles") );
+		newTrg.transform.localPosition = DeserializeVector3 ( trg.GetField("localPosition") );
+		newTrg.transform.localScale = DeserializeVector3 ( trg.GetField("localScale") );
+		newTrg.name = newTrg.name.Replace( "(Clone)", "" );
+		newTrg.layer = 9;
+		
+		newTrg.GetComponent ( Trigger ).fireOnce = trg.GetField ( "fireOnce" ).b;
+		newTrg.GetComponent ( Trigger ).endQuest = trg.GetField ( "endQuest" ).str;
+		newTrg.GetComponent ( Trigger ).startAnimation = trg.GetField ( "startAnimation" ).str;
+		newTrg.GetComponent ( Trigger ).startQuest = trg.GetField ( "startQuest" ).str;
+		newTrg.GetComponent ( Trigger ).setFlag = trg.GetField ( "setFlag" ).str;
+		newTrg.GetComponent ( Trigger ).travelMap = trg.GetField ( "travelMap" ).str;
+		newTrg.GetComponent ( Trigger ).travelPoint = trg.GetField ( "travelPoint" ).str;
+		
+		return newTrg;
+	
+	} else {
+		var o : GameObject = new GameObject ( obj.GetField ( "name" ).str );
+		
+		// set root
+		if ( !root ) {
+			root = o.transform;
+		}
+																													
+		// components
+		DeserializeGameObjectComponents ( obj.GetField ( "components" ), o );
+		
+		// children
+		DeserializeGameObjectChildren ( obj.GetField ( "children" ), o.transform );
+		
+		return o;
+	
 	}
-	
-	var o : GameObject = new GameObject ( obj.GetField ( "name" ).str );
-	
-	// set root
-	if ( !root ) {
-		root = o.transform;
-	}
-																												
-	// components
-	DeserializeGameObjectComponents ( obj.GetField ( "components" ), o );
-	
-	// children
-	DeserializeGameObjectChildren ( obj.GetField ( "children" ), o.transform );
-	
-	return o;
 }
 
 static function DeserializeGameObject ( s : String ) : GameObject {

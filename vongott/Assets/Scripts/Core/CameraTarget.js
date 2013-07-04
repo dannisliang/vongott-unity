@@ -31,7 +31,7 @@ function CompensateForWalls ( newPos : Vector3 ) {
 	
 	var wallHit : RaycastHit = new RaycastHit();		
 
-	if ( Physics.Linecast ( from, to, wallHit, 9 ) && !wallHit.transform.GetComponent(InteractiveObject) ) {
+	if ( Physics.Linecast ( from, to, wallHit, 9 ) ) {
 		Debug.DrawLine( from, wallHit.point, Color.red);
 		newPos = Camera.main.transform.InverseTransformPoint( wallHit.point );
 	} else {

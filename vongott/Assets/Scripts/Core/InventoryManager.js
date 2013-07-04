@@ -99,7 +99,7 @@ static function EquipEntry ( entry : Entry, equip : boolean ) {
 // Remove entry
 static function RemoveEntry ( entry : Entry ) {
 	slots[entry.slot].SetEntry ( null );
-	Debug.Log ( "InventoryManager | removed entry: " + entry.title );
+	GameCore.Print ( "InventoryManager | removed entry: " + entry.title );
 }
 
 // Init inventory
