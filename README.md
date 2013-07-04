@@ -1,6 +1,6 @@
 ![logo](https://raw.github.com/mrzapp/vongott/master/vongott/Blender/render.png)
 
-<a href="https://www.dropbox.com/s/tw0e3hobxii237k/Build.zip">latest build</a>
+<a href="https://www.dropbox.com/s/z12t78ir3dk2wyb/Build.zip">latest build</a>
 
 This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. Occurences of original characters will be cameos at most. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters. 
 
