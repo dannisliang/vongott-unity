@@ -21,7 +21,7 @@ static var controlsActive = true;
 static var currentChapter : Chapter;
 static var currentScene : Scene;
 static var currentLevel : GameObject;
-static var nextLevel : String = "AwesomeIsland";
+static var nextLevel : String = "NewTest";
 
 static var levelContainer : Transform;
 
