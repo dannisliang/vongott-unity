@@ -18,6 +18,22 @@ An SDK will be developed from scratch for creating game content. This will be us
 	- Inspector menus for all object types
 	- Surface editor for creating custom shapes such as floors and ceilings 
 	- Asset browser
+- Game mechanics
+	- Interactive objects
+	- Triggers
+	- Scripted ledges
+	- AI path finding
+	- Conversations
+	- Quests
+	- Flags
+	- Doors
+	- Lifts
+	- Weapons: Projectile, grenade and melee
+	- Armour: Head, torso and feet
+	- Consumables: Snacks, health boosters, energy boosters, toxins
+	- Upgrades: Mechanical (visible on the player), biological
+	- Water: Dynamics and swimming
+	- Weather system: Rain, snow, fog, clouds
 - Serialisation with JSON
 
 ## Story
