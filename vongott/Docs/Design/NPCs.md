@@ -4,13 +4,13 @@ NPCs
 - Mobile NPCs might implement a third party path finding library, such as UnitySteer or A*
   - Although attempts will be made to create one from scratch
 
-## Mechinical
+## Mechanical
 ### Machine Gun Turret
 - The turret detects its opponent automatically
 - Its affiliation can be changed when hacked
 
 ### Patrol Bot
-- The petrol bot follows a predetermined route looking for opponents
+- The patrol bot follows a predetermined route looking for opponents
 - Its affiliation can be changed when hacked
 - Different types: On wheels and on legs
 
@@ -22,10 +22,10 @@ NPCs
 - Biological NPCs will either be stationary or walk a predetermined route
 - Especially scripted humans will converse with one another
 - Properties:
-  - atate: Calm, Alert and Aggressive
+  - state: Calm, Alert and Aggressive
   - attentionSpan: An amount of seconds for which they will stay alert after losing an enemy
-  - hearing: The distance in meters within which an audible sound will be detected
-  - vision: The length of their cone of sight in meters
+  - hearing: The radius in meters within which an audible sound will be detected
+  - vision: The length and radius of their cone of sight in meters
 
 ### Allies
 - Allied humans will be treated as interactive objects and can be talked to upon interaction

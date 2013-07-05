@@ -42,6 +42,10 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- New UI plugin for Unity &#x2713;
 
 ### Second iteration
+- Concept art
+	- Player
+	- Generic male + female
+	- First map
 - Game core
 	- Optimisations
 	- UnitySteer implementation
