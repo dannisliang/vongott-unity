@@ -91,13 +91,8 @@ Mechanical upgrades enhance the capability of their governing limb area. They ne
 - Fall damage reduction
 - Cloak
 
-<<<<<<< HEAD
 ### Biological
-Biological upgrades govern mental capabilities, such as reflexes and knowledge. They can be installed by the player.
-=======
-### Digital
-- Digital upgrades govern mental capabilities, such as reflexes and knowledge. They can be installed by the player.
->>>>>>> 50cbf0178b4fad2ff654be002718819ee5a00b06
+Biological upgrades govern internal properties, such as reflexes and dexterity. They can be installed by the player.
 
 #### Eyes  
 - Auto aim

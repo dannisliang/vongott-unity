@@ -77,18 +77,6 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		return o;
 
-	// check if item
-	} else if ( obj.GetComponent(Item) ) {
-		var itm : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-		itm.AddField ( "model", obj.GetComponent(Item).model );
-		itm.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
-		itm.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
-		itm.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
-		
-		o.AddField ( "Item", itm );
-		
-		return o;
-
 	// check if surface
 	} else if ( obj.GetComponent(Surface) ) {
 		var srf : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
@@ -119,20 +107,42 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		o.AddField ( "SpawnPoint", spt );
 	
 		return o;
-	}
 	
-	// name
-	o.AddField ( "name", obj.name );
+	// check trigger
+	} else if ( obj.GetComponent(Trigger) ) {
+		var trg : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	
+		trg.AddField ( "fireOnce", obj.GetComponent(Trigger).fireOnce );
+		trg.AddField ( "endQuest", obj.GetComponent(Trigger).endQuest );
+		trg.AddField ( "startAnimation", obj.GetComponent(Trigger).startAnimation );
+		trg.AddField ( "startQuest", obj.GetComponent(Trigger).startQuest );
+		trg.AddField ( "setFlag", obj.GetComponent(Trigger).setFlag );
+		trg.AddField ( "travelMap", obj.GetComponent(Trigger).travelMap );
+		trg.AddField ( "travelPoint", obj.GetComponent(Trigger).travelPoint );
+	
+		trg.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		trg.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+		trg.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
+	
+		o.AddField ( "Trigger", trg );
+	
+		return o;
+	
+	// anything else
+	} else {
+		// name
+		o.AddField ( "name", obj.name );
+			
+		// components
+		com = SerializeGameObjectComponents ( obj );
+		o.AddField ( "components", com );
 		
-	// components
-	com = SerializeGameObjectComponents ( obj );
-	o.AddField ( "components", com );
-	
-	// children
-	chl = SerializeGameObjectChildren ( obj );
-	o.AddField ( "children", chl );
-	
-	return o;
+		// children
+		chl = SerializeGameObjectChildren ( obj );
+		o.AddField ( "children", chl );
+		
+		return o;
+	}
 }
 
 // all children

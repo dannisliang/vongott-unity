@@ -23,6 +23,7 @@ class UIHUD extends OGPage {
 	static var statusBar : StatusBar;
 	static var notificationBox : NotificationBox;
 	static var notificationTimer : float = 0.0;
+	static var notificationIndefinite : boolean = true;
 	
 	
 	////////////////////
@@ -50,7 +51,7 @@ class UIHUD extends OGPage {
 		
 		if ( notificationTimer > 0.0 ) {
 			notificationTimer -= Time.deltaTime;
-		} else {
+		} else if ( !notificationIndefinite ) {
 			ShowNotification ( "" );
 		}
 	}
@@ -63,10 +64,13 @@ class UIHUD extends OGPage {
 	static function ShowTimedNotification ( msg : String, seconds : float ) {
 		notificationTimer = seconds;
 		ShowNotification ( msg );
+		notificationIndefinite = false;
 	}
 	
 	// Show notification
 	static function ShowNotification ( msg : String ) {
+		notificationIndefinite = true;
+				
 		if ( msg != notificationBox.text.text ) {
 			notificationBox.text.text = msg;
 		}

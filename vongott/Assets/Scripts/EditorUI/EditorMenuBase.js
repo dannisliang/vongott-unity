@@ -22,6 +22,8 @@ class EditorMenuBase extends OGPage {
 	
 	var tabs : OGTabs;
 	
+	var initName : boolean = false;
+	
 	
 	////////////////////
 	// File menu
@@ -122,6 +124,10 @@ class EditorMenuBase extends OGPage {
 		EditorCore.AddSpawnPoint ();
 	}
 	
+	function AddTrigger () {
+		EditorCore.AddTrigger ();
+	}
+	
 	////////////////////
 	// Edit menu
 	////////////////////
@@ -212,7 +218,7 @@ class EditorMenuBase extends OGPage {
 		} else if ( menu == "Path" ) {
 			menuObj.GetComponent(EditorInspectorPath).Init(selectedObj);
 		} else if ( menu == "Trigger" ) {
-		//	menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
+			menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
 		} else if ( menu == "Tween" ) {
 		//	menuObj.GetComponent(EditorInspectorTween).Init(selectedObj);
 		} else if ( menu == "Surface" ) {
@@ -273,11 +279,10 @@ class EditorMenuBase extends OGPage {
 				scl.x.text = "X: " + t.localScale.x.ToString("f2");
 				scl.y.text = "Y: " + t.localScale.y.ToString("f2");
 				scl.z.text = "Z: " + t.localScale.z.ToString("f2");
-				
-				objectName.text = t.gameObject.name;
-			
+							
 			} else if ( inspector.activeSelf ) {
 				inspector.SetActive ( false );
+
 			}
 		}
 	}

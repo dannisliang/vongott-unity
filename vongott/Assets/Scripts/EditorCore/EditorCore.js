@@ -171,13 +171,16 @@ static function AddLight () {
 
 // Add spawnpoint
 static function AddSpawnPoint () {
-	for ( var spawnPoint : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
-		Destroy ( spawnPoint.gameObject );
-	}
-	
-	var newLight : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/spawnpoint" ) as GameObject );
-	newLight.transform.parent = currentLevel.transform;
-	newLight.transform.position = GetSpawnPosition();
+	var newSpawnPoint : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/spawnpoint" ) as GameObject );
+	newSpawnPoint.transform.parent = currentLevel.transform;
+	newSpawnPoint.transform.position = GetSpawnPosition();
+}
+
+// Add trigger
+static function AddTrigger () {
+	var newTrigger : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/trigger" ) as GameObject );
+	newTrigger.transform.parent = currentLevel.transform;
+	newTrigger.transform.position = GetSpawnPosition();
 }
 
 // Add actor
@@ -470,29 +473,36 @@ static function SelectObject ( obj : GameObject ) {
 	// LightSource
 	if ( obj.GetComponent(LightSource) ) {
 		inspector.AddMenu ( "Light", obj );
+	}
 	
 	// Actor
-	} else if ( obj.GetComponent(Actor) ) {
+	if ( obj.GetComponent(Actor) ) {
 		inspector.AddMenu ( "Actor", obj );
 		inspector.AddMenu ( "Path", obj );
 		
 		for ( var node : GameObject in obj.GetComponent(Actor).path ) {
 			node.GetComponent(MeshRenderer).enabled = true;
 		}
+	}
 	
 	// Item
-	} else if ( obj.GetComponent(Item) ) {
+	if ( obj.GetComponent ( Item ) ) {
 		inspector.AddMenu ( "Item", obj );
-		inspector.AddMenu ( "Trigger", obj );
+	}
 	
 	// Prefab
-	} else if ( obj.GetComponent ( Prefab ) ) {
+	if ( obj.GetComponent ( Prefab ) ) {
 		inspector.AddMenu ( "Prefab", obj );
+	}
 	
 	// Plane
-	} else if ( obj.GetComponent ( Surface ) ) {
+	if ( obj.GetComponent ( Surface ) ) {
 		inspector.AddMenu ( "Surface", obj );
+	}
 	
+	// Trigger
+	if ( obj.GetComponent ( Trigger ) ) {
+		inspector.AddMenu ( "Trigger", obj );
 	}
 }
 

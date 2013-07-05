@@ -19,23 +19,32 @@ class Player extends MonoBehaviour {
 	function Equip ( entry : Entry, equip : boolean ) {
 		var slot : Equipment.Slots = entry.eqSlot;
 		var target : GameObject;
+		var adjustPosition : Vector3;
+		var adjustRotation : Vector3;
 		
 		if ( slot == Equipment.Slots.Hands ) {
 			target = hand;
+		
+			adjustPosition = new Vector3 ( 0.06410789, -0.02394938, -0.05132291 );
+			adjustRotation = new Vector3 ( 345.9895, 4.343473, 342.7763 );
 		} else if ( slot == Equipment.Slots.Torso ) {
 			target = torso;
+		
 		} else if ( slot == Equipment.Slots.Head ) {
 			target = head;
+		
 		} else {
 			target = foot_r;
+		
 		} 
 		
-		if ( equip ) {
-			equippedItem = Instantiate ( Resources.Load ( "Items/" + entry.model ) as GameObject );
+		if ( equip ) {		
+			equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
 			
 			equippedItem.transform.parent = target.transform;
-			equippedItem.transform.localPosition = Vector3.zero;
-			equippedItem.transform.localEulerAngles = Vector3.zero;
+			equippedItem.transform.localPosition = adjustPosition;
+			equippedItem.transform.localEulerAngles = adjustRotation;
+			equippedItem.collider.enabled = false;
 		
 			GameCore.Print ( "Player | item '" + entry.title + "' equipped" );
 		} else {
@@ -43,6 +52,10 @@ class Player extends MonoBehaviour {
 			
 			GameCore.Print ( "Player | item '" + entry.title + "' unequipped" );
 		}
+	}
+	
+	function GetEquippedItem () : GameObject {
+		return equippedItem;
 	}
 	
 	// Install

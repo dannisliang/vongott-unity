@@ -38,6 +38,8 @@ static function GetQuestByID ( id : String ) : Quest {
 			return quests[i];
 		}
 	}
+	
+	return null;
 }
 
 // Get main quests
@@ -89,7 +91,9 @@ static function StartQuest ( id : String ) {
 
 	quest.SetActive ( true );	
 
-	Debug.Log ( "QuestManager |  quest started: " + id );
+	UIHUD.ShowTimedNotification ( quest.title, 4.0 );
+
+	GameCore.Print ( "QuestManager |  quest started: " + id );
 }
 
 // End
@@ -98,5 +102,5 @@ static function EndQuest ( id : String ) {
 
 	quest.SetActive ( false );
 	
-	Debug.Log ( "QuestManager |  quest ended: " + id );
+	GameCore.Print ( "QuestManager |  quest ended: " + id );
 }
