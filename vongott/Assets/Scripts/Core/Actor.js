@@ -131,7 +131,7 @@ class Actor extends InteractiveObject {
 	/////////////////////
 	function Update () {
 		if ( !GameCore.started ) { return; }
-		
+				
 		var forward = transform.TransformDirection (Vector3.forward);
 		
 		// check for interaction
@@ -158,51 +158,8 @@ class Actor extends InteractiveObject {
 		}
 		
 		// follow the player
-		if ( target ) {	
-			var distance = Vector3.Distance ( transform.position, target.position );
-			var direction = (target.position - transform.position).normalized;
+		if ( this.gameObject.GetComponent ( AIPath ).target ) {	
 			
-			// chase		
-			if ( action == "chasing" ) {
-				// forward raycast
-				direction = GetDirection ( transform.position, direction );
-				
-				// left raycast
-				var leftR = transform.position;
-				leftR.x -= 2;
-				direction = GetDirection ( leftR, direction );
-				
-				// right raycast
-				var rightR = transform.position;
-				rightR.x += 2;
-				direction = GetDirection ( rightR, direction );
-				
-				// position
-				var rotation = Quaternion.LookRotation ( direction );
-				transform.rotation = Quaternion.Slerp ( transform.rotation, rotation, Time.deltaTime );
-				transform.position += transform.forward * speed * Time.deltaTime;
-				
-				if ( distance < keepDistance ) {
-					action = "shooting";
-				}
-			
-			// shoot
-			} else if ( action == "shooting" ) {
-				transform.LookAt ( target );
-				
-				if ( fireTimer <= 0.0 ) {
-					fireTimer = 0.5;
-					Shoot ();
-				} else {
-					fireTimer -= Time.deltaTime;
-				}
-				
-				if ( distance > keepDistance ) {
-					action = "chasing";
-				}
-			} 
-		
-		
 		// follow path
 		} else if ( path.Count > 1 ) {
 			if ( Vector3.Distance ( transform.position, path[currentNode].transform.position ) < 0.1 ) {

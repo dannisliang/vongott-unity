@@ -88,7 +88,7 @@ function Update () {
 	
 	if ( IsCrouching() ) {
 		adjustment = crouchCam;
-	} else if ( OGRoot.currentPage.pageName == "Conversation" ) {
+	} else if ( OGRoot.currentPage && OGRoot.currentPage.pageName == "Conversation" ) {
 		adjustment = convoCam;
 	} else {
 		adjustment = standCam;
