@@ -1,10 +1,13 @@
 #pragma strict
 
-var target : Transform;
-var speed : float = 2.0;
-var sight : float = 20;
-var blocked = false;
-var lastKnownPosition : Vector3;
+@script RequireComponent ( Actor );
+
+var speed : float = 4.0;
+var sight : float = 5;
+var attentionSpan : float = 10.0;
+var attentionTimer : float = 0.0;
+var tracingPoints : List.< Vector3 > = new List.< Vector3 > ();
+var tracingTimer : float = 0.0;
 
 function Start () {
 
@@ -40,57 +43,69 @@ function GetBestPoint ( availablePoints : List.< Vector3 >, targetPos : Vector3 
 	return result;
 }
 
-function Update () {
-	var from : Vector3 = this.transform.position;
-	var availablePoints : List.< Vector3 > = new List.< Vector3 > ();
-	var targetPos : Vector3 = target.position + new Vector3 ( 0, 1, 0 );
+function Trace ( target : Transform ) {
+	if ( tracingTimer >= 1.0 ) {
+		tracingTimer = 0.0;
+		tracingPoints.Add ( target.position );
+	} else {
+		tracingTimer += Time.deltaTime;
+	}
+
+	if ( tracingPoints.Count > 0 ) {
+		Debug.DrawLine ( transform.position, tracingPoints[0], Color.cyan );
+	} else {
+		tracingPoints.Add ( target.position );
+	}
+
+	for ( var i = 0; i < tracingPoints.Count; i++ ) {
+		if ( i < tracingPoints.Count - 1 ) {
+			Debug.DrawLine ( tracingPoints[i], tracingPoints[i+1], Color.cyan );
+		}
+	}
+}
+
+function FollowTrace () {
+	if ( tracingPoints.Count > 0 ) {
+		transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.LookRotation ( tracingPoints[0] - transform.position ), 5 * Time.deltaTime );
+		transform.localPosition += transform.forward * speed * Time.deltaTime;		
+		
+		if ( Vector3.Distance ( transform.position, tracingPoints[0] ) < 1.0 ) {
+			tracingPoints.RemoveAt ( 0 );
+		}
+	}
+}
+
+function FollowTarget ( target : Transform ) {
+	transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.LookRotation ( target.position - transform.position ), Time.deltaTime );
+	
+	if ( Vector3.Distance ( transform.position, target.position ) > 3 ) {
+		transform.localPosition += transform.forward * speed * Time.deltaTime;
+	}
+}
+
+function Chase ( target : Transform ) {
+	// Check attention timer
+	if ( attentionTimer >= attentionSpan ) {
+		this.GetComponent(Actor).GiveUp ();
+		attentionTimer = 0;
 	
 	// Player is out of sight
-	if ( Physics.Linecast ( from, targetPos, 9 ) ) {
-		// Check for last known position		
-		if ( Vector3.Distance ( transform.position, lastKnownPosition ) < 2.0 ) { lastKnownPosition = Vector3.zero; }
-		if ( lastKnownPosition == Vector3.zero ) { return; }
-				
-		// Feelers
-		for ( var i = 0; i < 18; i++ ) {
-			var wallHit : RaycastHit = new RaycastHit();	
-			var to : Vector3 = from + PolarToCartesian ( ( i * 10 ) - transform.eulerAngles.y, sight );
-	
-			if ( Physics.Linecast ( from, to, wallHit, 9 ) ) {
-				Debug.DrawLine( from, wallHit.point, Color.red);
-				
-				blocked = ( i == 9 );
-			
-			} else {
-				Debug.DrawLine ( from, to, Color.green );
-				availablePoints.Add ( to );
-			}
-		}
+	} else if ( Physics.Linecast ( this.transform.position + new Vector3 ( 0, 1, 0 ), target.position + new Vector3 ( 0, 1, 0 ), 9 ) ) {
+		attentionTimer += Time.deltaTime;
 		
-		// Determine direction
-		var tempTarget : Vector3 = GetBestPoint ( availablePoints, lastKnownPosition );
-				
-		// Turn towards direction
-		if ( tempTarget != Vector3.zero ) {
-			Debug.DrawLine ( from, tempTarget, Color.magenta );
-			transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.LookRotation ( tempTarget - transform.position ), Time.deltaTime );
-			
-			if ( !blocked ) {		
-				transform.localPosition += transform.forward * speed * Time.deltaTime;
-			}
-		}
+		Trace ( target );
+		FollowTrace ();
 		
-		Debug.DrawLine ( from, lastKnownPosition, Color.white );
+		Debug.DrawLine ( this.transform.position + new Vector3 ( 0, 1, 0 ), target.position + new Vector3 ( 0, 1, 0 ), Color.red );
 	
+	// Player is in sight
 	} else {
-		transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.LookRotation ( target.position - transform.position ), Time.deltaTime );
-		lastKnownPosition = target.position;
-		
-		if ( Vector3.Distance ( transform.position, lastKnownPosition ) > 5 ) {
-			transform.localPosition += transform.forward * speed * Time.deltaTime;
-		}
-		
-		Debug.DrawLine ( from, targetPos, Color.cyan );
+		if ( attentionTimer > 0 ) { attentionTimer = 0.0; }
+		if ( tracingPoints.Count > 0 ) { tracingPoints.Clear(); }
 				
+		FollowTarget ( target );
+				
+		Debug.DrawLine ( this.transform.position + new Vector3 ( 0, 1, 0 ), target.position + new Vector3 ( 0, 1, 0 ), Color.green );
+	
 	}
 }

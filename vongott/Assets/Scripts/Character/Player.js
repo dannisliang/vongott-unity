@@ -8,9 +8,8 @@ class Player extends MonoBehaviour {
 	var torso : GameObject;
 	var foot_r : GameObject;
 	var foot_l : GameObject;
-	
-	// Private vars
 	var equippedItem : GameObject;
+	var followingAgent : NavMeshAgent;
 	
 	////////////////////
 	// Public functions
@@ -74,6 +73,8 @@ class Player extends MonoBehaviour {
 	}
 		
 	function Update () {
-	
+		if ( followingAgent ) {
+			followingAgent.destination = transform.position;
+		}
 	}
 }

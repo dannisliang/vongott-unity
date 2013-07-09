@@ -5,6 +5,7 @@
 ////////////////////
 // Public vars
 var _levelContainer : Transform;
+var _playerObject : GameObject;
 
 // Static vars
 static var debuggingEnabled = true;
@@ -21,7 +22,7 @@ static var controlsActive = true;
 static var currentChapter : Chapter;
 static var currentScene : Scene;
 static var currentLevel : GameObject;
-static var nextLevel : String = "NewTest";
+static var nextLevel : String = "";
 
 static var levelContainer : Transform;
 
@@ -181,8 +182,11 @@ function Start () {
 	levelContainer = _levelContainer;
 	
 	// Load level
-	if ( nextLevel == "" ) { nextLevel == "NewTest"; }
-	LoadLevel ( nextLevel, "" );
+	if ( nextLevel != "" ) {
+		LoadLevel ( nextLevel, "" );
+	} else {
+		playerObject = _playerObject;
+	}
 	
 	// Signal
 	Print ("GameCore | started");

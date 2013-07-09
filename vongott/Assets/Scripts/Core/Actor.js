@@ -6,16 +6,11 @@ class Actor extends InteractiveObject {
 	var affiliation : String;
 	var mood : String;
 
-	var speed : float = 4.0;
 	var path : List.< GameObject >;
-	var viewDistance : float = 20.0;
-	var keepDistance : float = 10.0;
 	var inventory : Entry[] = new Entry [4];
 	
-	var conversations : List.< Conversation > = new List.< Conversation >();
-																																									
-	@HideInInspector var target : Transform;
-	@HideInInspector var lastKnownPosition : GameObject;
+	var conversations : List.< Conversation > = new List.< Conversation >();																																							
+	var target : Transform;
 
 	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
@@ -23,7 +18,6 @@ class Actor extends InteractiveObject {
 	@HideInInspector var nodeTimer : float = 0;
 	@HideInInspector var fireTimer : float = 0;
 	@HideInInspector var equippedItem : GameObject;
-	@HideInInspector var action : String = "";
 
 	function Equip ( entry : Entry ) {
 		equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
@@ -87,16 +81,10 @@ class Actor extends InteractiveObject {
 	function Detect () {
 		target = GameCore.playerObject.transform;
 		
-		transform.LookAt ( target );
-		
-		if ( lastKnownPosition ) {
-			DestroyImmediate ( lastKnownPosition );
-			lastKnownPosition = null;
+		if ( inventory[0].model ) {
+			Equip ( inventory[0] );
 		}
 		
-		action = "chasing";
-		
-		Equip ( inventory[0] );
 		Say ( "Hey! You!" );
 	}	
 	
@@ -106,25 +94,6 @@ class Actor extends InteractiveObject {
 		UnEquip ();
 		Say ( "Bah! Whatever, man." );
 	}
-	
-	function LostSight () {
-		lastKnownPosition = new GameObject ( "LastKnownPosition" );
-		lastKnownPosition.transform.localPosition = target.localPosition;
-		target = lastKnownPosition.transform;
-	}
-	
-	function GetDirection ( pos : Vector3, direction : Vector3 ) : Vector3 {
-		var hit : RaycastHit;
-		
-		if ( Physics.Raycast ( pos, transform.forward, hit, viewDistance ) ) {
-			if ( hit.transform != transform ) {
-				direction += hit.normal * 20;
-			}
-		}
-		
-		return direction;
-	}
-	
 	
 	/////////////////////
 	// Update
@@ -147,18 +116,14 @@ class Actor extends InteractiveObject {
 		// use affiliation
 		if ( affiliation == "enemy" ) {
 			// detect player
-			if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) < 20 && !target ) {
+			if ( !Physics.Linecast ( this.transform.position + new Vector3 ( 0, 1, 0 ), GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, 1, 0 ), 9 ) && !target ) {
 				Detect();
-			
-			// player too far away
-			} else if ( Vector3.Distance ( transform.position, GameCore.playerObject.transform.position ) > 40 && target ) {
-				GiveUp();
-			
 			}
 		}
 		
 		// follow the player
-		if ( this.gameObject.GetComponent ( AIPath ).target ) {	
+		if ( target ) {
+			this.gameObject.GetComponent ( PathFinder ).Chase ( target );
 			
 		// follow path
 		} else if ( path.Count > 1 ) {
@@ -176,7 +141,7 @@ class Actor extends InteractiveObject {
 			
 			if ( nodeTimer <= 0 ) {
 				transform.LookAt ( path[currentNode].transform.position );
-				transform.position += transform.forward * speed * Time.deltaTime;
+				transform.position += transform.forward * 4 * Time.deltaTime;
 			} else {
 				nodeTimer -= Time.deltaTime;
 			}
