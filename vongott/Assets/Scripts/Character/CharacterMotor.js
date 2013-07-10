@@ -2,7 +2,6 @@
 #pragma implicit
 #pragma downcast
 
-
 // Does this script currently respond to input?
 var canControl : boolean = true;
 

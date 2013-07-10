@@ -66,13 +66,15 @@
      <Compile Include="Assets\Scripts\Character\FPSInputController.js" />
      <Compile Include="Assets\Scripts\Character\PlatformInputController.js" />
      <Compile Include="Assets\Scripts\Character\Player.js" />
-     <Compile Include="Assets\Scripts\Character\ThirdPersonCamera.js" />
-     <Compile Include="Assets\Scripts\Character\ThirdPersonController.js" />
      <Compile Include="Assets\Scripts\Core\Actor.js" />
      <Compile Include="Assets\Scripts\Core\CameraTarget.js" />
      <Compile Include="Assets\Scripts\Core\Chapter.js" />
      <Compile Include="Assets\Scripts\Core\Conversation.js" />
      <Compile Include="Assets\Scripts\Core\Deserializer.js" />
+     <Compile Include="Assets\Scripts\Core\Dijkstra.js" />
+     <Compile Include="Assets\Scripts\Core\DijkstraCurrentNode.js" />
+     <Compile Include="Assets\Scripts\Core\DijkstraPathFinder.js" />
+     <Compile Include="Assets\Scripts\Core\DijkstraPathNode.js" />
      <Compile Include="Assets\Scripts\Core\Equipment.js" />
      <Compile Include="Assets\Scripts\Core\Flag.js" />
      <Compile Include="Assets\Scripts\Core\FlagManager.js" />
@@ -85,13 +87,13 @@
      <Compile Include="Assets\Scripts\Core\Loader.js" />
      <Compile Include="Assets\Scripts\Core\Map.js" />
      <Compile Include="Assets\Scripts\Core\MouseLook.js" />
-     <Compile Include="Assets\Scripts\Core\PathFinder.js" />
      <Compile Include="Assets\Scripts\Core\PathNode.js" />
      <Compile Include="Assets\Scripts\Core\PlayerController.js" />
      <Compile Include="Assets\Scripts\Core\Prefab.js" />
      <Compile Include="Assets\Scripts\Core\PrefabManager.js" />
      <Compile Include="Assets\Scripts\Core\Quest.js" />
      <Compile Include="Assets\Scripts\Core\QuestManager.js" />
+     <Compile Include="Assets\Scripts\Core\RayPathFinder.js" />
      <Compile Include="Assets\Scripts\Core\Saver.js" />
      <Compile Include="Assets\Scripts\Core\Scene.js" />
      <Compile Include="Assets\Scripts\Core\SceneManager.js" />
@@ -147,46 +149,21 @@
      <Compile Include="Assets\Scripts\UI\UIQuests.js" />
      <Compile Include="Assets\Scripts\Unity\PrefabActions.js" />
      <None Include="Assets\Shaders\CubemapReflection.shader" />
-     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
      <None Include="Assets\Shaders\AlphaCutout.shader" />
-     <None Include="Assets\Plugins\UnitySteer\License.txt" />
-     <None Include="Assets\Fonts\Font_Ubuntu.txt" />
-     <None Include="Assets\Plugins\UnitySteer\TickedPriorityQueue\LICENSE.txt" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />
      <None Include="Assets\Shaders\UnlitAlphaColored.shader" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\Temp\TempShader.shader" />
      <None Include="Assets\Shaders\BumpedSpecularEmissive.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\Projector Multiply.shader" />
      <None Include="Assets\Shaders\BumpedCubemapReflection.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\DiffuseAlwaysVisible.shader" />
      <None Include="Assets\Shaders\BumpedSpecular.shader" />
-     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\dependencies.txt" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\_Example Scenes.txt" />
      <None Include="Assets\Shaders\RimLighting.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Readme_upgrading.txt" />
      <None Include="Assets\Shaders\OutlineDiffuse.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\Projector Light.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Readme.txt" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
      <None Include="Assets\Shaders\OutlineSilhouetteBumpedDiffuse.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\License.txt" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Readme.txt" />
      <None Include="Assets\Shaders\BumpedRim.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\link.xml" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\TextureCopy.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
- <Reference Include="Ionic.Zip.Reduced">
- <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Ionic.Zip.Reduced.dll</HintPath>
- </Reference>
- <Reference Include="JsonFx.Json">
- <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\JsonFx.Json.dll</HintPath>
- </Reference>
- <Reference Include="TickedPriorityQueue">
- <HintPath>Assets\Plugins\UnitySteer\TickedPriorityQueue\TickedPriorityQueue.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

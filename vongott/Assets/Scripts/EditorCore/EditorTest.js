@@ -2,7 +2,7 @@
 @script RequireComponent(MeshRenderer)
 
 function Start () {
-	var meshFilters = GetComponentsInChildren(MeshFilter);
+	/*var meshFilters = GetComponentsInChildren(MeshFilter);
     var combine : CombineInstance[] = new CombineInstance[meshFilters.Length];
     for (var i = 0; i < meshFilters.Length; i++){
         combine[i].mesh = meshFilters[i].sharedMesh;
@@ -11,5 +11,5 @@ function Start () {
     }
     this.GetComponent(MeshFilter).mesh = new Mesh();
     this.GetComponent(MeshFilter).mesh.CombineMeshes(combine);
-    this.gameObject.active = true;
+    this.gameObject.active = true;*/
 }

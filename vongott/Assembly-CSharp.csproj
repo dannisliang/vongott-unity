@@ -46,47 +46,23 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Character\MouseLook.cs" />
      <Compile Include="Assets\Scripts\Unity\CombineChildren.cs" />
+     <Compile Include="Assets\Scripts\Unity\FindMissingScriptsRecursively.cs" />
      <Compile Include="Assets\Scripts\Unity\MeshCombineUtility.cs" />
      <Compile Include="Assets\Scripts\Unity\MeshMerger.cs" />
      <None Include="Assets\Shaders\CubemapReflection.shader" />
-     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
      <None Include="Assets\Shaders\AlphaCutout.shader" />
-     <None Include="Assets\Plugins\UnitySteer\License.txt" />
-     <None Include="Assets\Fonts\Font_Ubuntu.txt" />
-     <None Include="Assets\Plugins\UnitySteer\TickedPriorityQueue\LICENSE.txt" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />
      <None Include="Assets\Shaders\UnlitAlphaColored.shader" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\Temp\TempShader.shader" />
      <None Include="Assets\Shaders\BumpedSpecularEmissive.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\Projector Multiply.shader" />
      <None Include="Assets\Shaders\BumpedCubemapReflection.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\DiffuseAlwaysVisible.shader" />
      <None Include="Assets\Shaders\BumpedSpecular.shader" />
-     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\dependencies.txt" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\_Example Scenes.txt" />
      <None Include="Assets\Shaders\RimLighting.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Readme_upgrading.txt" />
      <None Include="Assets\Shaders\OutlineDiffuse.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\Projector Light.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Readme.txt" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
      <None Include="Assets\Shaders\OutlineSilhouetteBumpedDiffuse.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\License.txt" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Readme.txt" />
      <None Include="Assets\Shaders\BumpedRim.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
-     <None Include="Assets\Plugins\AstarPathfindingProject\link.xml" />
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\TextureCopy.shader" />
- <Reference Include="Ionic.Zip.Reduced">
- <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Ionic.Zip.Reduced.dll</HintPath>
- </Reference>
- <Reference Include="JsonFx.Json">
- <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\JsonFx.Json.dll</HintPath>
- </Reference>
- <Reference Include="TickedPriorityQueue">
- <HintPath>Assets\Plugins\UnitySteer\TickedPriorityQueue\TickedPriorityQueue.dll</HintPath>
- </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">

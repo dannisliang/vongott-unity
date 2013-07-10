@@ -123,7 +123,7 @@ class Actor extends InteractiveObject {
 		
 		// follow the player
 		if ( target ) {
-			this.gameObject.GetComponent ( PathFinder ).Chase ( target );
+			//this.gameObject.GetComponent ( PathFinder ).Chase ( target );
 			
 		// follow path
 		} else if ( path.Count > 1 ) {
