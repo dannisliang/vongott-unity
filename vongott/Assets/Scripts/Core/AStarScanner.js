@@ -31,18 +31,26 @@ class AStarScanner extends MonoBehaviour {
 	}
 	
 	function Start () {
-		//Init ();
+		Init ();
+	}
+	
+	function CheckPrefab ( obj : GameObject, path : String ) : boolean {
+		if ( obj.GetComponent ( Prefab ) ) {
+			return obj.GetComponent ( Prefab ).path == path;
+		} else {
+			return false;
+		}
 	}
 	
 	function CheckWalkable ( position : Vector3 ) : boolean {
 		var hit : RaycastHit;
 		
 		// Down
-		var colliders : Collider[] = Physics.OverlapSphere ( position, spacing/2, 9 );
+		var colliders : Collider[] = Physics.OverlapSphere ( position - new Vector3 ( 0, spacing/2, 0 ), spacing/2, 9 );
 		
 		if ( colliders.Length > 0 ) {
 			for ( var c : Collider in colliders ) {
-				if ( c.transform.tag != "walkable" ) {
+				if ( c.transform.tag != "walkable" && !CheckPrefab( c.gameObject, "Prefabs/Doors") ) {
 					return false;
 				}
 			}

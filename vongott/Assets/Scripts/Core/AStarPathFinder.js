@@ -9,6 +9,8 @@ class AStarPathFinder extends MonoBehaviour {
 	var speed : float = 4.0;
 	
 	function Update () {
+		if ( scanner == null && GameCore.started ) { scanner = GameCore.scanner; }
+	
 		if ( target && !searching && scanner ) {
 			searching = true;
 
