@@ -1,8 +1,7 @@
 NPCs
 =======
 - All NPCs regardless of affiliation can be killed, with consequences
-- Mobile NPCs might implement a third party path finding library, such as UnitySteer or A*
-  - Although attempts will be made to create one from scratch
+- Mobile NPCs will implement the A* path finding algorithm
 
 ## Mechanical
 ### Machine Gun Turret
