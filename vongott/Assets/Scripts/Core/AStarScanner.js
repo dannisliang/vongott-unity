@@ -31,11 +31,14 @@ class AStarScanner extends MonoBehaviour {
 	}
 	
 	function Start () {
-		Init ();
+		//Init ();
 	}
 	
 	function CheckWalkable ( position : Vector3 ) : boolean {
-		var colliders : Collider[] = Physics.OverlapSphere ( position - new Vector3 ( 0, spacing/2, 0 ), spacing/2, 9 );
+		var hit : RaycastHit;
+		
+		// Down
+		var colliders : Collider[] = Physics.OverlapSphere ( position, spacing/2, 9 );
 		
 		if ( colliders.Length > 0 ) {
 			for ( var c : Collider in colliders ) {
