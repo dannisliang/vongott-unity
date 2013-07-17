@@ -4,31 +4,58 @@ class AStarScanner extends MonoBehaviour {
 	var gridSize : Vector3;
 	var map : AStarMap;
 	var heuristic : float = 10.0;
+	var spacing : float = 1.0;
 	
-	function Start () {
-		map = new AStarGridMap ( transform.position, gridSize );
-		
+	function GetBounds () {
+	    var b : Bounds = new Bounds ( Vector3.zero, Vector3.zero );
+	    var pos : Vector3 = Vector3.zero;
+	    
+	    for ( var r : Renderer in FindObjectsOfType ( Renderer ) ) {
+	    	b.Encapsulate ( r.bounds );
+	    }
+	    
+	    pos = b.min;
+	    
+	    transform.position = pos;
+		gridSize = new Vector3 ( Mathf.Round ( b.size.x / spacing ), Mathf.Round ( b.size.y / spacing ), Mathf.Round ( b.size.z / spacing ) );
+	}
+	
+	function SetMap () {
+		map = new AStarGridMap ( transform.position, gridSize, spacing );
+	}
+	
+	function Init () {
+		GetBounds ();
+		SetMap ();
 		SetFlags ();
 	}
 	
-	function CheckWalkable ( colliders : Collider[] ) : boolean {
-		for ( var c : Collider in colliders ) {
-			if ( c.transform.tag != "walkable" ) { return false; }
-		}
+	function Start () {
+		Init ();
+	}
+	
+	function CheckWalkable ( position : Vector3 ) : boolean {
+		var colliders : Collider[] = Physics.OverlapSphere ( position - new Vector3 ( 0, spacing/2, 0 ), spacing/2, 9 );
 		
-		return true;
+		if ( colliders.Length > 0 ) {
+			for ( var c : Collider in colliders ) {
+				if ( c.transform.tag != "walkable" ) {
+					return false;
+				}
+			}
+			
+			return true;
+			
+		} else {
+			return false;
+		
+		}
 	}
 	
 	function SetFlags () {
-		for ( var n : AStarNode in map.nodes ) {
-			var colliders : Collider[] = Physics.OverlapSphere ( n.position, 1.0, 9 );
-			
-			if ( colliders.Length > 0 ) {
-				n.walkable = CheckWalkable ( colliders );
-			} else {
-				n.inactive = true;
-				n = null;
-			}
+		for ( var n : AStarNode in map.nodes ) {			
+			n.walkable = CheckWalkable ( n.position );
+			n.inactive = !n.walkable;
 		}
 	}
 	

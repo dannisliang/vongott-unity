@@ -15,16 +15,19 @@ class AStarPathFinder extends MonoBehaviour {
 			var start : AStarNode = scanner.GetClosestNode ( this.transform );
 			var goal : AStarNode = scanner.GetClosestNode ( target );
 			nodes = AStar.Search ( start, goal, scanner.map, scanner.heuristic );
-		
+				
 			return;
 		}
 	
-		if ( searching && nodes ) {
-			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < 0.2 && currentNode < nodes.Count - 1 ) {
+		if ( nodes && searching && nodes.Count > 0 ) {
+			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < 2.0 && currentNode < nodes.Count - 1 ) {
 				currentNode++;
 			}
 			
-			transform.LookAt ( ( nodes[currentNode] as AStarNode ).position );
+			var lookPos : Vector3 = ( nodes[currentNode] as AStarNode ).position - transform.position;
+			lookPos.y = 0;
+			
+			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 5 * Time.deltaTime );			
 			transform.localPosition += transform.forward * speed * Time.deltaTime;
 			
 			for ( var i = 0; i < nodes.Count - 1; i++ ) {

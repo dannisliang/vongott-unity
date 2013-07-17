@@ -49,14 +49,14 @@ class AStarMap {
 }
 
 public class AStarGridMap extends AStarMap {	
-	function AStarGridMap ( start : Vector3, size : Vector3 ) {
+	function AStarGridMap ( start : Vector3, size : Vector3, spacing : float ) {
 		nodes = new AStarNode [ size.x, size.y, size.z ];
 		var counter : int = 0;
 		
 		for ( var x = 0; x < size.x; x++ ) {
 			for ( var y = 0; y < size.y; y++ ) {
 				for ( var z = 0; z < size.z; z++ ) {
-					var m : AStarNode = new AStarNode ( start.x + x, start.y + y, start.z + z );
+					var m : AStarNode = new AStarNode ( start.x + ( x * spacing ), start.y + ( y * spacing ), start.z + ( z * spacing ) );
 					nodes [ x, y, z ] = m;
 					counter++;
 				}
@@ -68,12 +68,29 @@ public class AStarGridMap extends AStarMap {
 		var index : Vector3 = GetIndex ( node );
 		
 		var neighborPositions : Vector3[] = [
+			new Vector3 ( index.x,index.y,index.z+1 ),		// front
+			new Vector3 ( index.x,index.y+1,index.z+1 ),	// front up
+			new Vector3 ( index.x,index.y-1,index.z+1 ),	// front down
+			new Vector3 ( index.x-1,index.y,index.z+1 ),	// front left
+			new Vector3 ( index.x+1,index.y,index.z+1 ),	// front right
+			
 			new Vector3 ( index.x-1,index.y,index.z ),		// left
+			new Vector3 ( index.x-1,index.y+1,index.z ),	// left up
+			new Vector3 ( index.x-1,index.y-1,index.z ),	// left down
+			
 			new Vector3 ( index.x+1,index.y,index.z ),		// right
+			new Vector3 ( index.x+1,index.y+1,index.z ),	// right up
+			new Vector3 ( index.x+1,index.y-1,index.z ),	// right down
+			
 			new Vector3 ( index.x,index.y+1,index.z ),		// up
-			new Vector3 ( index.x,index.y-1,index.z ),		// down	
-			new Vector3 ( index.x,index.y,index.z+1 ),		// front	
-			new Vector3 ( index.x,index.y,index.z-1 )		// back		
+			
+			new Vector3 ( index.x,index.y-1,index.z ),		// down
+						
+			new Vector3 ( index.x,index.y,index.z-1 ),		// back
+			new Vector3 ( index.x,index.y+1,index.z-1 ),	// back up
+			new Vector3 ( index.x,index.y-1,index.z-1 ),	// back down
+			new Vector3 ( index.x-1,index.y,index.z-1 ),	// back left
+			new Vector3 ( index.x+1,index.y,index.z-1 )		// back right
 		];
 		
 		

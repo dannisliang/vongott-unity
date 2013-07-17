@@ -97,6 +97,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newSrfObj.transform.localScale = DeserializeVector3 ( srf.GetField ( "localScale" ) );
 		newSrfObj.transform.localPosition = DeserializeVector3 ( srf.GetField ( "localPosition" ) );
 		newSrfObj.transform.localEulerAngles = DeserializeVector3 ( srf.GetField ( "localEulerAngles" ) );
+		newSrfObj.tag = "walkable"; // walkable layer
 	
 		newSrf.Init ();
 		newSrf.Apply ();

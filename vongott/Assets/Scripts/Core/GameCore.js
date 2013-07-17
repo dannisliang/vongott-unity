@@ -6,6 +6,7 @@
 // Public vars
 var _levelContainer : Transform;
 var _playerObject : GameObject;
+var _scanner : AStarScanner;
 
 // Static vars
 static var debuggingEnabled = true;
@@ -15,6 +16,7 @@ static var interactiveObject : GameObject;
 static var playerObject:GameObject;
 static var camTarget:GameObject;
 static var cam:Transform;
+static var scanner:AStarScanner;
 
 static var started = false;
 static var controlsActive = true;
@@ -129,6 +131,7 @@ static function LoadLevel ( path : String, spawnPoint : String ) {
 	camTarget.GetComponent ( CameraTarget ).player = playerObject;
 	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
 	
+	scanner.Init ();
 	//MergeMeshes ();
 }
 
@@ -180,6 +183,9 @@ function Start () {
 	
 	// Level container
 	levelContainer = _levelContainer;
+	
+	// AStar scanner
+	scanner = _scanner;
 	
 	// Load level
 	if ( nextLevel != "" ) {
