@@ -207,7 +207,7 @@ class Surface extends MonoBehaviour {
 		var tempUVs : List.< Vector2 > = new List.< Vector2 >();
 		
 		// ^ add uvs from every plane
-		for ( i = 0; i < planes.Count; i++ ) {
+		for ( i = 0; i < planes.Count; i++ ) {		
 			for ( var u : Vector3 in planes[i].vertices ) {
 				tempUVs.Add ( new Vector2 ( u.x * materialSize, u.z * materialSize ) );
 			}

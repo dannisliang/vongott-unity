@@ -4,8 +4,10 @@ import System.Collections;
 import System.Collections.Generic;
 
 class DijkstraPathNode extends MonoBehaviour {
-	var neighbors : GameObject[];
-	var goal : GameObject;
+	var neighbors : List.< GameObject > = new List.< GameObject > ();
+	var nodeRadius : float = 50.0;
+	var nodeLayerMask : LayerMask;
+	var collisionMask : LayerMask;
 
 	function OnDrawGizmos () {
 		Gizmos.DrawWireCube ( transform.position, Vector3.one );
@@ -13,15 +15,28 @@ class DijkstraPathNode extends MonoBehaviour {
 			Gizmos.DrawLine ( transform.position, neighbor.transform.position );
 			Gizmos.DrawWireSphere ( neighbor.transform.position, 0.25 );
 		}
+	}
+	
+	function Start () {
+		FindNeighbors ();
+	}
+	
+	function FindNeighbors () {
+		neighbors.Clear ();
 		
-		if ( goal && neighbors.Length > 0 ) {
-			Gizmos.color = Color.green;
-			var current : GameObject = gameObject;
-			var path : Stack.<GameObject> = Dijkstra.Run ( GameObject.FindGameObjectsWithTag("Node"), gameObject, goal );
-			for ( var obj : GameObject in path ) {
-				Gizmos.DrawWireSphere (obj.transform.position, 1.0 );
-				Gizmos.DrawLine ( current.transform.position, obj.transform.position );
-				current = obj;
+		var cols : Collider [] = Physics.OverlapSphere ( transform.position, nodeRadius, nodeLayerMask );
+	
+		for ( var node : Collider in cols ) {
+			if ( node.gameObject != gameObject ) {
+				var hit : RaycastHit;
+				
+				Physics.Raycast ( transform.position, ( node.transform.position - transform.position ), hit, nodeRadius, collisionMask );
+				
+				if ( hit.transform != null ) {
+					if ( hit.transform.gameObject == node.gameObject ) {
+						neighbors.Add ( node.gameObject );
+					}
+				}
 			}
 		}
 	}

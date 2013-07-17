@@ -66,6 +66,11 @@
      <Compile Include="Assets\Scripts\Character\FPSInputController.js" />
      <Compile Include="Assets\Scripts\Character\PlatformInputController.js" />
      <Compile Include="Assets\Scripts\Character\Player.js" />
+     <Compile Include="Assets\Scripts\Core\AStar.js" />
+     <Compile Include="Assets\Scripts\Core\AStarMap.js" />
+     <Compile Include="Assets\Scripts\Core\AStarNode.js" />
+     <Compile Include="Assets\Scripts\Core\AStarPathFinder.js" />
+     <Compile Include="Assets\Scripts\Core\AStarScanner.js" />
      <Compile Include="Assets\Scripts\Core\Actor.js" />
      <Compile Include="Assets\Scripts\Core\CameraTarget.js" />
      <Compile Include="Assets\Scripts\Core\Chapter.js" />
@@ -91,6 +96,7 @@
      <Compile Include="Assets\Scripts\Core\PlayerController.js" />
      <Compile Include="Assets\Scripts\Core\Prefab.js" />
      <Compile Include="Assets\Scripts\Core\PrefabManager.js" />
+     <Compile Include="Assets\Scripts\Core\PriorityQueue.js" />
      <Compile Include="Assets\Scripts\Core\Quest.js" />
      <Compile Include="Assets\Scripts\Core\QuestManager.js" />
      <Compile Include="Assets\Scripts\Core\RayPathFinder.js" />
