@@ -2,14 +2,19 @@
 
 <a href="https://www.dropbox.com/s/z12t78ir3dk2wyb/Build.zip">latest build</a>
 
-This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. Occurences of original characters will be cameos at most. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters. 
+### What?
+This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters. 
 
+### Why?
+<a href="http://gamerant.com/deus-ex-the-fall-mobile-ipad-iphone/">This</a> is why.
+
+### How?
 Everything except the framework with which Vongott is developed, Unity 3D, will be open source. In the future, I will try to get this project some traction and invite others to collaborate with me, especially on the story and the look. Before that can happen, though, I will have to create the foundation for this game entirely, writing a new action RPG engine from scratch.
 
 I will document the code as I move along. Have a look in the docs for that and everything else about Vongott.
 
-### Updates!
 
+### Updates!
 I have spent my time doing my own GUI framework for Unity called OpenGUI, and I have managed to build a pretty capable level editor with an inspector, save/load features, adding prefabs, editing conversations, quests and flags, editing surface vectors, and probably a few more things. The editor is at this point capable of building a coherent, if very rudimentary, action RPG :)
 <img src="https://raw.github.com/mrzapp/vongott/master/img/demo_windows.png" />
 
