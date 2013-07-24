@@ -5,19 +5,20 @@ class AStarScanner extends MonoBehaviour {
 	var map : AStarMap;
 	var heuristic : float = 10.0;
 	var spacing : float = 1.0;
+	var bounds : Bounds;
 	
 	function GetBounds () {
-	    var b : Bounds = new Bounds ( Vector3.zero, Vector3.zero );
+	    var bounds : Bounds = new Bounds ( Vector3.zero, Vector3.zero );
 	    var pos : Vector3 = Vector3.zero;
 	    
 	    for ( var r : Renderer in FindObjectsOfType ( Renderer ) ) {
-	    	b.Encapsulate ( r.bounds );
+	    	bounds.Encapsulate ( r.bounds );
 	    }
 	    
-	    pos = b.min;
+	    pos = bounds.min;
 	    
 	    transform.position = pos;
-		gridSize = new Vector3 ( Mathf.Round ( b.size.x / spacing ), Mathf.Round ( b.size.y / spacing ), Mathf.Round ( b.size.z / spacing ) );
+		gridSize = new Vector3 ( Mathf.Round ( bounds.size.x / spacing ), Mathf.Round ( bounds.size.y / spacing ), Mathf.Round ( bounds.size.z / spacing ) );
 	}
 	
 	function SetMap () {
@@ -52,6 +53,12 @@ class AStarScanner extends MonoBehaviour {
 	function OnDrawGizmos () {
 		if ( map == null ) { return; }
 		if ( map.nodes == null ) { return; }
+		
+		if ( bounds != null ) {
+			Gizmos.color = Color.white;
+		
+			Gizmos.DrawWireCube ( bounds.center, bounds.size );
+		}
 		
 		for ( var n : AStarNode in map.nodes ) {
 			if ( n == null ) { continue; }

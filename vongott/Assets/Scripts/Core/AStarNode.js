@@ -8,15 +8,12 @@ class AStarNode implements IComparable {
 	var position : Vector3;
 	var estimatedTotalCost : float;
 	var costSoFar : float;
-	var walkable : boolean;
-	var inactive : boolean;
 	var size : int;	
 	var parent : AStarNode;
 	
 	function AStarNode () {
 		estimatedTotalCost = 0.0;
 		costSoFar = 1.0;
-		walkable = false;
 		parent = null;
 	}
 	
@@ -26,7 +23,6 @@ class AStarNode implements IComparable {
 		position.z = z;
 		estimatedTotalCost = 0.0;
 		costSoFar = 1.0;
-		walkable = false;
 		parent = null;
 	}
 	

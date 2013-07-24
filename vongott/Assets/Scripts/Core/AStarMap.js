@@ -67,15 +67,6 @@ public class AStarGridMap extends AStarMap {
 				}
 			}
 		}
-		
-		/*for ( var x = 0; x < size.x; x++ ) {
-			for ( var y = 0; y < size.y; y++ ) {
-				for ( var z = 0; z < size.z; z++ ) {
-					var m : AStarNode = new AStarNode ( start.x + ( x * spacing ), start.y + ( y * spacing ), start.z + ( z * spacing ) );
-					nodes [ x, y, z ] = m;
-				}
-			}
-		}*/
 	}
 	
 	// Check walkable
@@ -83,7 +74,7 @@ public class AStarGridMap extends AStarMap {
 		var hit : RaycastHit;
 		
 		// Down
-		var colliders : Collider[] = Physics.OverlapSphere ( position, spacing/2, 9 );
+		var colliders : Collider[] = Physics.OverlapSphere ( position, spacing/4, 9 );
 		
 		if ( colliders.Length > 0 ) {
 			for ( var c : Collider in colliders ) {

@@ -26,6 +26,10 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		newPfb.name = pfb.GetField("id").str;
 		
+		if ( newPfb.GetComponent(Prefab).path == "Prefabs/Doors" ) {
+			newPfb.tag = "walkable";
+		}
+		
 		return newPfb;
 
 	// check if lightsource
