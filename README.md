@@ -6,7 +6,7 @@
 This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters. 
 
 ### Why?
-<a href="http://gamerant.com/deus-ex-the-fall-mobile-ipad-iphone/">This</a> is why.
+<a href="http://www.youtube.com/watch?v=p1b8k469DbY#at=188">This</a> aptly named catastrophe is why. And other reasons. Anyway, the point is that we don't like anything new.
 
 ### How?
 Everything except the framework with which Vongott is developed, Unity 3D, will be open source. In the future, I will try to get this project some traction and invite others to collaborate with me, especially on the story and the look. Before that can happen, though, I will have to create the foundation for this game entirely, writing a new action RPG engine from scratch.
