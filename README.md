@@ -51,7 +51,7 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- First map
 - Game core
 	- Optimisations
-	- UnitySteer implementation
+	- AI implementation
 	- Proper character controls
 	- Camera movement and raycasting
 - Editor
