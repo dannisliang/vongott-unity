@@ -27,7 +27,6 @@ class AStarScanner extends MonoBehaviour {
 	function Init () {
 		GetBounds ();
 		SetMap ();
-		SetFlags ();
 	}
 	
 	function Start () {
@@ -39,34 +38,6 @@ class AStarScanner extends MonoBehaviour {
 			return obj.GetComponent ( Prefab ).path == path;
 		} else {
 			return false;
-		}
-	}
-	
-	function CheckWalkable ( position : Vector3 ) : boolean {
-		var hit : RaycastHit;
-		
-		// Down
-		var colliders : Collider[] = Physics.OverlapSphere ( position - new Vector3 ( 0, spacing/2, 0 ), spacing/2, 9 );
-		
-		if ( colliders.Length > 0 ) {
-			for ( var c : Collider in colliders ) {
-				if ( c.transform.tag != "walkable" && !CheckPrefab( c.gameObject, "Prefabs/Doors") ) {
-					return false;
-				}
-			}
-			
-			return true;
-			
-		} else {
-			return false;
-		
-		}
-	}
-	
-	function SetFlags () {
-		for ( var n : AStarNode in map.nodes ) {			
-			n.walkable = CheckWalkable ( n.position );
-			n.inactive = !n.walkable;
 		}
 	}
 	
@@ -83,10 +54,10 @@ class AStarScanner extends MonoBehaviour {
 		if ( map.nodes == null ) { return; }
 		
 		for ( var n : AStarNode in map.nodes ) {
-			if ( n.walkable ) { Gizmos.color = Color.green; }
-			else if ( n.inactive ) { continue; }
-			else { Gizmos.color = Color.red; }
+			if ( n == null ) { continue; }
 			
+			Gizmos.color = Color.green;
+
 			Gizmos.DrawCube ( n.position, new Vector3 ( 0.5, 0.5, 0.5 ) );
 			
 			Gizmos.color = Color.white;
@@ -98,6 +69,8 @@ class AStarScanner extends MonoBehaviour {
 		var node : AStarNode;
 		
 		for ( var n : AStarNode in map.nodes ) {
+			if ( n == null ) { continue; }
+			
 			var currentDistance : float = ( obj.position - (n as AStarNode).position ).magnitude;
 			
 			if ( currentDistance < shortestDistance ) {

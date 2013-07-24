@@ -22,14 +22,14 @@ class AStarPathFinder extends MonoBehaviour {
 		}
 	
 		if ( nodes && searching && nodes.Count > 0 ) {
-			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < 2.0 && currentNode < nodes.Count - 1 ) {
+			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < 0.5 && currentNode < nodes.Count - 1 ) {
 				currentNode++;
 			}
 			
 			var lookPos : Vector3 = ( nodes[currentNode] as AStarNode ).position - transform.position;
 			lookPos.y = 0;
 			
-			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 5 * Time.deltaTime );			
+			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 10 * Time.deltaTime );			
 			transform.localPosition += transform.forward * speed * Time.deltaTime;
 			
 			for ( var i = 0; i < nodes.Count - 1; i++ ) {

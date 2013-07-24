@@ -51,17 +51,62 @@ class AStarMap {
 public class AStarGridMap extends AStarMap {	
 	function AStarGridMap ( start : Vector3, size : Vector3, spacing : float ) {
 		nodes = new AStarNode [ size.x, size.y, size.z ];
-		var counter : int = 0;
 		
 		for ( var x = 0; x < size.x; x++ ) {
+			for ( var z = 0; z < size.z; z++ ) {
+				var from : Vector3 = new Vector3 ( start.x + (x*spacing), start.y + (size.y*spacing), start.z + (z*spacing) );
+				var hits : RaycastHit[] = Physics.RaycastAll ( from, Vector3.down, Mathf.Infinity );
+				
+				for ( var h : RaycastHit in hits ) {										
+					var p : Vector3 = h.point; 
+					if ( CheckWalkable ( p, spacing ) ) {
+						var m : AStarNode = new AStarNode ( p.x, p.y, p.z );
+						var i : Vector3 = Round ( start, p, spacing );
+						nodes [ i.x, i.y, i.z ] = m;
+					}
+				}
+			}
+		}
+		
+		/*for ( var x = 0; x < size.x; x++ ) {
 			for ( var y = 0; y < size.y; y++ ) {
 				for ( var z = 0; z < size.z; z++ ) {
 					var m : AStarNode = new AStarNode ( start.x + ( x * spacing ), start.y + ( y * spacing ), start.z + ( z * spacing ) );
 					nodes [ x, y, z ] = m;
-					counter++;
 				}
 			}
+		}*/
+	}
+	
+	// Check walkable
+	function CheckWalkable ( position : Vector3, spacing : float ) : boolean {
+		var hit : RaycastHit;
+		
+		// Down
+		var colliders : Collider[] = Physics.OverlapSphere ( position, spacing/2, 9 );
+		
+		if ( colliders.Length > 0 ) {
+			for ( var c : Collider in colliders ) {
+				if ( c.transform.tag != "walkable" ) {
+					return false;
+				}
+			}
+			
+			return true;
+			
+		} else {
+			return false;
+		
 		}
+	}
+	
+	// Round value
+	function Round ( start : Vector3, val : Vector3, factor : float ) : Vector3 {
+		val.x = Mathf.Round ( ( Mathf.Abs ( start.x ) + val.x ) / factor );
+		val.y = Mathf.Round ( ( Mathf.Abs ( start.y ) + val.y ) / factor );
+		val.z = Mathf.Round ( ( Mathf.Abs ( start.z ) + val.z ) / factor );
+		
+		return val;
 	}
 	
 	override function GetNeighbors ( node : AStarNode, goal : AStarNode, neighbors : ArrayList ) {
@@ -98,7 +143,7 @@ public class AStarGridMap extends AStarMap {
 			if ( ( pos.x >= 0 && pos.x < nodes.GetLength(0) ) && ( pos.y >= 0 && pos.y < nodes.GetLength(1) ) && ( pos.z >= 0 && pos.z < nodes.GetLength(2) ) ) {
 				var n : AStarNode = nodes [ pos.x, pos.y, pos.z ];
 					
-				if ( n.walkable ) {
+				if ( n != null ) {
 					neighbors.Add ( n );
 				}
 			}
