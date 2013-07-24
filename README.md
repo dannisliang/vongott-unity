@@ -12,7 +12,7 @@ This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. 
 1. Create an action RPG framework from scratch
 2. Create a capable SDK within Unity to take advantage of this framework
 3. Create tons of generic assets
-4. Write the story and create the required assets
+4. Write the first chapter and create the required assets
 5. Build the game with the SDK
 6. Release the SDK and the game for free
 
