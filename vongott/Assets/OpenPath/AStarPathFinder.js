@@ -3,22 +3,32 @@
 class AStarPathFinder extends MonoBehaviour {
 	var target : Transform;
 	var searching : boolean = false;
-	var nodes : ArrayList;
 	var currentNode : int = 0;
 	var scanner : AStarScanner;
 	var speed : float = 4.0;
+	
+	@HideInInspector var nodes : ArrayList;
+	
+	function UpdatePosition () {
+		var start : AStarNode = scanner.GetClosestNode ( this.transform );
+		var goal : AStarNode = scanner.GetClosestNode ( target );
+	
+		Loom.RunAsync ( function () {
+			var newNodes : ArrayList = AStar.Search ( start, goal, scanner.map, scanner.heuristic );
+		
+			Loom.QueueOnMainThread ( function () {
+				nodes = newNodes;
+				currentNode = 0;
+			} );
+		} );
+	}
 	
 	function Update () {
 		if ( scanner == null && GameCore.started ) { scanner = GameCore.scanner; }
 	
 		if ( target && !searching && scanner ) {
 			searching = true;
-
-			var start : AStarNode = scanner.GetClosestNode ( this.transform );
-			var goal : AStarNode = scanner.GetClosestNode ( target );
-			nodes = AStar.Search ( start, goal, scanner.map, scanner.heuristic );
-				
-			return;
+			UpdatePosition ();
 		}
 	
 		if ( nodes && searching && nodes.Count > 0 ) {
