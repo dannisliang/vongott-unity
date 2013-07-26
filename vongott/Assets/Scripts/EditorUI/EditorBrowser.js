@@ -79,7 +79,7 @@ class EditorBrowser extends OGPage {
 	@HideInInspector var currentFolder : Folder;
 	@HideInInspector var selectedFolder : Folder;
 	@HideInInspector var resourcesFolder : Folder = new Folder( "Resources" );
-	@HideInInspector var selectedFile : Object;
+	@HideInInspector var selectedFile : GameObject;
 	@HideInInspector var mode : String;
 	@HideInInspector var breadPos : float = 0;
 	
@@ -306,7 +306,7 @@ class EditorBrowser extends OGPage {
 	function SelectFile ( btn : OGButton ) {
 		DeselectAll ();
 		
-		selectedFile = currentFolder.FindFile ( btn.text );
+		selectedFile = currentFolder.FindFile ( btn.text ) as GameObject;
 		btn.style = "listitemselected";
 	
 		if ( selectedFile.GetType() == GameObject ) {	
@@ -319,7 +319,7 @@ class EditorBrowser extends OGPage {
 			var mat : Material = selectedFile as Material;
 			
 			if ( mat.mainTexture ) {
-				preview2D.image = mat.mainTexture;
+				preview2D.image = mat.mainTexture as Texture2D;
 			}
 			
 			fileAttr.text = mat.name;

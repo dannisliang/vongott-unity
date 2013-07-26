@@ -92,7 +92,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var newSrfObj : GameObject = new GameObject("Surface", MeshRenderer, MeshFilter, MeshCollider);
 		var newSrf : Surface = newSrfObj.AddComponent(Surface);
 		
-		for ( var p : JSONObject in srf.GetField("planes").list ) {
+		for ( var p : JSONObject in srf.GetField("planes").list as JSONObject[] ) {
 			newSrf.planes.Add ( DeserializeSurfacePlane ( p ) );
 		}
 		
@@ -184,7 +184,7 @@ static function DeserializeGameObjectChildren ( obj : JSONObject, parent : Trans
 		return;
 	}
 	
-	for ( var c in obj.list ) {
+	for ( var c in obj.list as JSONObject[] ) {
 		var o : GameObject = DeserializeGameObjectFromJSON ( c );
 		
 		o.transform.parent = parent;
@@ -197,7 +197,7 @@ static function DeserializeGameObjectComponents ( arr : JSONObject, o : GameObje
 		return;
 	}
 	
-	for ( var j : JSONObject in arr.list ) {
+	for ( var j : JSONObject in arr.list as JSONObject[] ) {
 		if ( j.HasField ( "Light" ) ) {
 			DeserializeLight ( j.GetField ( "Light" ), o );
 		} else if ( j.HasField("Transform") ) {
@@ -210,7 +210,7 @@ static function DeserializeGameObjectComponents ( arr : JSONObject, o : GameObje
 static function DeserializePath ( pth : JSONObject, act : GameObject ) : List.< GameObject > {
 	var nodes : List.< GameObject > =  new List.< GameObject >();
 
-	for ( var n : JSONObject in pth.list ) {
+	for ( var n : JSONObject in pth.list as JSONObject[] ) {
 		nodes.Add ( DeserializePathNode ( n, act ) );
 	}
 
@@ -222,7 +222,7 @@ static function DeserializeInventory ( ety : JSONObject ) : Entry[] {
 	var inv : Entry[] = new Entry[4];
 	
 	for ( var i = 0; i < ety.list.Count; i++ ) {
-		var slot : JSONObject = ety.list[i];
+		var slot : JSONObject = ety.list[i] as JSONObject;
 		var model = slot.GetField("model").str;
 		
 		if ( model != "" ) {
@@ -269,7 +269,7 @@ static function DeserializeSurfacePlane ( p : JSONObject ) : SurfacePlane {
 	var vertices : Vector3[] = new Vector3[4];
 	
 	for ( var i = 0; i < p.GetField ("vertices").list.Count; i++ ) {
-		vertices[i] = DeserializeVector3 ( p.GetField ("vertices").list[i] );
+		vertices[i] = DeserializeVector3 ( p.GetField ("vertices").list[i] as JSONObject );
 	}
 	
 	var plane : SurfacePlane = new SurfacePlane ( vertices );
@@ -348,7 +348,7 @@ static function DeserializeConversationsToGame ( convos : JSONObject ) {
 	var conversations : List.< Conversation > = new List.< Conversation >();
 		
 	if ( convos ) {		
-		for ( var c : JSONObject in convos.list ) {
+		for ( var c : JSONObject in convos.list as JSONObject[] ) {
 			var convo : Conversation = new Conversation ();
 			
 			if ( c.HasField ( "condition" ) ) { convo.condition = c.GetField ( "condition" ).str; }
@@ -373,7 +373,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 	var conversation : List.< EditorConversationEntry > = new List.< EditorConversationEntry >();
 			
 	for ( var o = 0; o < c.list.Count; o++ ) {
-		var e : JSONObject = c.list[o];
+		var e : JSONObject = c.list[o] as JSONObject;
 		var entryObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/UI/EditorConversationEntry" ) ) as GameObject;
 		var entry : EditorConversationEntry = entryObj.GetComponent ( EditorConversationEntry );
 		
@@ -393,7 +393,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 			entry.group.groupType.selectedOption = e.GetField ( "groupType" ).str;
 			
 			for ( var i = 0; i < e.GetField ( "options" ).list.Count; i++ ) {
-				var gl : JSONObject = e.GetField ( "options" ).list[i];		
+				var gl : JSONObject = e.GetField ( "options" ).list[i] as JSONObject;		
 				var groupLineObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/UI/EditorConversationGroupLine" ) ) as GameObject;
 				var groupLine : EditorConversationGroupLine = groupLineObj.GetComponent ( EditorConversationGroupLine );
 			

@@ -223,12 +223,12 @@ static function SetLayerRecursively ( obj : GameObject, lay : int ) {
 	
 	obj.layer = lay;
 	
-	for ( var child : Transform in obj.transform ) {
-        if ( child == null ) {
+	for ( var i = 0; i < obj.transform.GetChildCount(); i++ ) {
+        if ( obj.transform.GetChild(i) == null ) {
         	continue;
         }
 
-        SetLayerRecursively ( child.gameObject, lay );
+        SetLayerRecursively ( obj.transform.GetChild(i).gameObject, lay );
     }
 }
 
@@ -638,7 +638,7 @@ static function TrimFileNames ( paths : String[] ) : String[] {
 }
 
 // Screenshot
-static function LoadScreenshot ( path ) : Texture2D {
+static function LoadScreenshot ( path : String ) : Texture2D {
 	return Loader.LoadScreenshot ( path );
 }
 

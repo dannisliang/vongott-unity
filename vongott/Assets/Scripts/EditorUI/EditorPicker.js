@@ -92,7 +92,7 @@ class EditorPicker extends OGPage {
 	
 	// Deselect all
 	function DeselectAll () {
-		for ( var btn : OGButton in scrollView.transform.GetComponentsInChildren ( OGButton ) ) {
+		for ( var btn : OGButton in scrollView.transform.GetComponentsInChildren ( OGButton ) as OGButton[] ) {
 			btn.style = "listitem";		
 		}
 	}
@@ -148,7 +148,7 @@ class EditorPicker extends OGPage {
 	function InitQuests () {
 		var allQuests : JSONObject = Loader.LoadQuests();
 		
-		for ( var obj : JSONObject in allQuests.list ) {
+		for ( var obj : JSONObject in allQuests.list as JSONObject[] ) {
 			CreateButton ( obj.GetField ( "id" ).str );
 		}
 	}
@@ -178,7 +178,7 @@ class EditorPicker extends OGPage {
 		var allFlags : JSONObject = Loader.LoadFlags();
 		
 		for ( var i = 0; i < allFlags.list.Count; i++ ) {
-			CreateButton ( allFlags.keys[i] );
+			CreateButton ( allFlags.keys[i] as String );
 		}
 	}
 	

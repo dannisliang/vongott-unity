@@ -1,8 +1,4 @@
 #pragma strict
-
-import UnityEngine;
-import System.Collections;
-import UnityEditor;
 	
 // Update path
 @MenuItem ( "Vongott/Prefab/Update Path" )

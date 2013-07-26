@@ -21,8 +21,6 @@ static var scanner:AStarScanner;
 static var started = false;
 static var controlsActive = true;
 
-static var currentChapter : Chapter;
-static var currentScene : Scene;
 static var currentLevel : GameObject;
 static var nextLevel : String = "";
 
@@ -75,23 +73,6 @@ static function ToggleControls ( state : boolean ) {
 ////////////////////
 // Load level
 ////////////////////
-static function MergeMeshes () {
-	var meshFilters = currentLevel.GetComponentsInChildren.<MeshFilter>();
-    var combine : CombineInstance[] = new CombineInstance[meshFilters.Length];
-    for (var i = 0; i < meshFilters.Length; i++){
-        combine[i].mesh = meshFilters[i].sharedMesh;
-        combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-        meshFilters[i].gameObject.SetActive( false );
-    }
-    var mesh : Mesh = new Mesh();
-    mesh.CombineMeshes(combine);
-    
-    currentLevel.AddComponent(MeshFilter).mesh = mesh;
-	currentLevel.AddComponent(MeshRenderer);
-	currentLevel.AddComponent(MeshCollider).mesh = mesh;
-    currentLevel.SetActive ( true );
-}
-
 static function LoadLevel ( path : String, spawnPoint : String ) {
 	// Check if a level is already loaded
 	if ( currentLevel != null ) {
@@ -115,7 +96,7 @@ static function LoadLevel ( path : String, spawnPoint : String ) {
 	playerObject.layer = 9;	
 	
 	// Find spawn point
-	for ( var spt : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
+	for ( var spt : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) as SpawnPoint[] ) {
 		//if ( spawnPoint == "" ) { spawnPoint == spt.gameObject.name; }
 		
 		//if ( spt.gameObject.name == spawnPoint ) {
@@ -140,12 +121,14 @@ static function LoadLevel ( path : String, spawnPoint : String ) {
 // Events
 ////////////////////
 static function StartAnimation ( n : String, f : Function ) {
+	/* TODO: Implicit downcast - revise this logic
+	
 	for ( var anim : OGTween in currentLevel.transform.GetComponentsInChildren ( OGTween ) ) {
 		if ( anim.gameObject.name == n ) {
 			anim.func = f;
 			anim.Play ( true );
 		}
-	}
+	}*/
 }
 
 ////////////////////

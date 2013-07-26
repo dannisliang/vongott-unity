@@ -1,8 +1,5 @@
 #pragma strict
 
-import UnityEngine;
-import System.Collections;
-
 class AStar {
 	// Lists
 	static var openList : PriorityQueue;

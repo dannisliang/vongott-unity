@@ -53,7 +53,7 @@ class OGRoot extends MonoBehaviour {
 			
 			var anyRects : int = 0;
 			
-			for ( var w : OGWidget in currentPage.transform.GetComponentsInChildren ( OGWidget ) ) {
+			for ( var w : OGWidget in currentPage.transform.GetComponentsInChildren ( OGWidget ) as OGWidget[] ) {
 				if ( w.mouseOver ) {
 					anyRects++;
 				}

@@ -24,7 +24,7 @@ class AStarPathFinder extends MonoBehaviour {
 	}
 	
 	function Update () {
-		if ( scanner == null && GameCore.started ) { scanner = GameCore.scanner; }
+		if ( scanner == null ) { Debug.LogError ( "No scanner found! Attach an AStarScanner to the scanner variable." ); }
 	
 		if ( target && !searching && scanner ) {
 			searching = true;

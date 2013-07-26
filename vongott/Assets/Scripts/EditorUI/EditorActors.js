@@ -29,15 +29,15 @@ class EditorActors extends OGPage {
 		var col = 0;
 		var row = 0;
 		
-		for ( var f : GameObject in files ) {
+		for ( var f : Object in files ) {
 			var item : EditorListItem = Instantiate ( listItemPrefab );
 			item.transform.parent = actorList;
 			item.transform.localScale = Vector3.one;
 			item.transform.localPosition = new Vector3 ( col * 116, row * 116, 0 );
 		
-			item.gameObject.name = f.name;
+			item.gameObject.name = (f as GameObject).name;
 			item.button.target = this.gameObject;
-			item.button.argument = f.name;
+			item.button.argument = (f as GameObject).name;
 		
 			if ( col < 3 ) {
 				col++;

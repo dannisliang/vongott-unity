@@ -1,8 +1,6 @@
 #pragma strict
 
-import UnityEngine;
 import System;
-import System.Collections;
 
 class AStarNode implements IComparable {
 	var position : Vector3;

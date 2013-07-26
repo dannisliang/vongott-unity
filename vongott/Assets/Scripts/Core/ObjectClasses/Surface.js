@@ -46,7 +46,7 @@ class Surface extends MonoBehaviour {
 	
 	private class VertexButton extends Button {
 		function VertexButton ( surface : Transform, pos : Vector3 ) {
-			obj = Instantiate ( Resources.Load ( "Prefabs/Editor/vertex_gizmo" ) );
+			obj = Instantiate ( Resources.Load ( "Prefabs/Editor/vertex_gizmo" ) as GameObject );
 			giz = obj.GetComponent ( EditorVertexGizmo );
 			
 			obj.name = "VertexGizmo";
@@ -330,8 +330,8 @@ class Surface extends MonoBehaviour {
 		mesh = new Mesh ();
 		mesh.name = "Surface";
 	   	    
-	    this.GetComponent(MeshFilter).mesh = mesh;
-   	 	this.GetComponent(MeshCollider).mesh = mesh;
+	    this.GetComponent(MeshFilter).sharedMesh = mesh;
+   	 	this.GetComponent(MeshCollider).sharedMesh = mesh;
 		 
 	    if ( material == null ) {
 			ReloadMaterial ();

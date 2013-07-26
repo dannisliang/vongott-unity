@@ -14,7 +14,7 @@ static var quests : List.< Quest > = new List.< Quest >();
 static function Init () {	
 	var allQuests : JSONObject = Loader.LoadQuests ();
 
-	for ( var o : JSONObject in allQuests.list ) {
+	for ( var o : JSONObject in allQuests.list as JSONObject[] ) {
 		quests.Add ( Deserializer.DeserializeQuest ( o ) );
 	}
 }
@@ -43,42 +43,29 @@ static function GetQuestByID ( id : String ) : Quest {
 }
 
 // Get main quests
-static function GetMainQuests () {
-	var indexes = new Array();
+static function GetMainQuests () : List.< Quest > {
+	var sideQuests : List.< Quest > = new List.< Quest >();
 	
 	for ( var i = 0; i < quests.Count; i++ ) {
 		if ( quests[i].isMainQuest && quests[i].active ) {
-			indexes.Push (i);
+			sideQuests.Add ( quests[i] );
 		}
 	}
 	
-	var list = new Quest[indexes.length];
-	
-	for ( i = 0; i < indexes.length; i++ ) {
-		list[i] = quests[indexes[i]];
-	}
-	
-	return list;
+	return sideQuests;
 }
 
 // Get side quests
-static function GetSideQuests () {
-	var indexes = new Array();
+static function GetSideQuests () : List.< Quest > {
+	var sideQuests : List.< Quest > = new List.< Quest >();
 	
 	for ( var i = 0; i < quests.Count; i++ ) {
 		if ( !quests[i].isMainQuest && quests[i].active ) {
-			indexes.Push (i);
+			sideQuests.Add ( quests[i] );
 		}
 	}
 	
-	var list = new Quest[indexes.length];
-	
-	for ( i = 0; i < indexes.length; i++ ) {
-		var index : int = indexes[i];
-		list[i] = quests[index];
-	}
-	
-	return list;
+	return sideQuests;
 }
 
 

@@ -203,7 +203,7 @@ class Conversation {
 		var file = Loader.LoadConversationToGame ( chapter + "/" + scene + "/" + name + "/" + conversation );
 		var object : JSONObject = new JSONObject ( file );
 		
-		for ( var o : JSONObject in object.list ) {
+		for ( var o : JSONObject in object.list as JSONObject[] ) {
 			var entry = new Entry ();
 			
 			// line
@@ -220,7 +220,7 @@ class Conversation {
 				entry.type = o.GetField ( "type" ).str;
 				entry.groupType = o.GetField ( "groupType" ).str;
 				
-				for ( var opt : JSONObject in o.GetField ( "options" ).list ) {
+				for ( var opt : JSONObject in o.GetField ( "options" ).list as JSONObject[] ) {
 					var option = new Entry ();
 					
 					option.consequence = opt.GetField ( "consequence" ).str;

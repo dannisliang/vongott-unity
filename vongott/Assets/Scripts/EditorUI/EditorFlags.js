@@ -115,7 +115,7 @@ class EditorFlags extends OGPage {
 		flagTable = Loader.LoadFlags ();
 	
 		for ( var i = 0; i < flagTable.list.Count; i++ ) {
-			NewFlag ( flagTable.keys[i] );
+			NewFlag ( flagTable.keys[i] as String );
 		}
 	}
 	

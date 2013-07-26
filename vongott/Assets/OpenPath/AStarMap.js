@@ -1,8 +1,5 @@
 #pragma strict
 
-import UnityEngine;
-import System.Collections;
-
 class AStarMap {
 	var nodes : AStarNode[,,];
 	var width : int;

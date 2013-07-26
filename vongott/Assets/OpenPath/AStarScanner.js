@@ -34,15 +34,7 @@ class AStarScanner extends MonoBehaviour {
 		Init ();
 	}
 	
-	function CheckPrefab ( obj : GameObject, path : String ) : boolean {
-		if ( obj.GetComponent ( Prefab ) ) {
-			return obj.GetComponent ( Prefab ).path == path;
-		} else {
-			return false;
-		}
-	}
-	
-	function FindPath ( start : AStarNode, goal : AStarNode ) : ArrayList {
+	function FindPath ( start : AStarNode, goal : AStarNode ) {
 		var nodes : ArrayList = AStar.Search ( start, goal, map, heuristic );
 	
 		for ( var i = 0; i < nodes.Count-1; i++ ) {

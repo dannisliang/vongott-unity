@@ -29,7 +29,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 		materialButton.text += "...";
 		
 		if ( selectedSurface.GetComponent(MeshRenderer).material.mainTexture ) {
-			previewImage.image = selectedSurface.GetComponent(MeshRenderer).material.mainTexture;
+			previewImage.image = selectedSurface.GetComponent(MeshRenderer).material.mainTexture as Texture2D;
 		} else {
 			previewImage.image = null;
 		}

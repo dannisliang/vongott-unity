@@ -1,8 +1,5 @@
 #pragma strict
 
-import UnityEngine;
-import System.Collections;
-
 class PriorityQueue implements IComparer {
 	var nodes : ArrayList;
 	

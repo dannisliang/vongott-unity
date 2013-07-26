@@ -15,7 +15,7 @@ class UIQuests extends OGPage {
 	function GetActiveQuests () {
 		mainList.text = "";
 		
-		if ( QuestManager.GetMainQuests().Length <= 0 ) {
+		if ( QuestManager.GetMainQuests().Count <= 0 ) {
 			mainList.text = "( no active quests )";
 			return;
 		}
