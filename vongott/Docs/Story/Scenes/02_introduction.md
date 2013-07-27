@@ -18,7 +18,7 @@ Scene 2: Introduction ( nrf_bunker )
 - Miguel: "Feel free to look around and talk to some of your fellow activists."
 - Miguel: "Come back to me when you're ready to see some action."
 
-### optional: Yoyo Fine
+### optional: JoJo Fine
 - Yoyo: "Hey punk! I'm Yoyo Fine, and you can call me master, biatch!"
 - (player name):
   1. "You seem nice."
@@ -47,28 +47,4 @@ Scene 2: Introduction ( nrf_bunker )
 - (player name): "Riiight... Bye now."
 
 ### Back with Miguel
-- Miguel: "You ready to do some field work?"
-- (player name):
-  1. "Nope."
-  2. "Sure."
-- Miguel:
-  1. "Just let me know when you are ready."
-  2. "All right Robocop, let me explain our situation."
-
-### Head out
-- Miguel: "For now, all you need to know is that there is a big ass plague going on."
-- Miguel: "Everyone is dying around us, and we know who is responsible."
-- Miguel: "These pigs have been synthesizing the chemical that causes the plague to spread..."
-- Miguel: "...while also taking charge of distributing the cure to a select few."
-- Miguel: "We know of a vaccine shipment that is ours for the taking, if we can first create a diversion..."
-- Miguel: "...so you're going to help us occupy the Statue of Awesome and capture the shipment afterwards."
-- (player name):
-  1. "How to do that?"
-  2. "No way! I have no reason to help you at all."
-  3. "Yes, sir!"
-- Miguel:
-  1. "Don't worry, my man."
-  2. "I can kill you by flipping a switch, so don't think for a second that you have a choice."
-  3. "That's the spirit!"
-- Miguel: "I've taken the liberty of implementing some basic field training in your memory..."
-- Miguel: "...it should be more than enough to complete this mission. Let's head out!"
+( sends you out to report to Joseph, the leader from atop the statue in DX1 )
