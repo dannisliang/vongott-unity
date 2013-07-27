@@ -9,11 +9,11 @@ Only government officials and wealthy people seem to be immune.
 The player wakes up in an NRF bunker, welcomed by Miguel.
 They gets introduced to the controls in a small training environment with silly targets as shooting practice.
 There will be options for smalltalk with characters in the bunker that may play larger roles later on.
-
-### Scene 2: First mission - Shipping company
-The player gets sent out to report to their commander, (the leader from atop the statue in DX?), who they then learn is missing.
+- Main quest: The player gets sent out to report to their commander, (the leader from atop the statue in DX?), who they then learn is missing.
 While reporting the news to Miguel, a third character steps in with news of a distress call made by the commander, saying that he has been captured.
 His captors are a shipping company.
+
+### Scene 2: First mission - Shipping company
 - Main quest: Get the commander back alive. Upon meeting the commander, the player learns that he was there investigating a rumor that this company was shipping vaccine for the government, and was captured during.
 - Sidequests:
   - Kill the interrogator of the commander
