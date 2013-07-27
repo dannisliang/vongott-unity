@@ -3,7 +3,7 @@ Items
 Items can be found, stolen or purchased throughout the world. They should have short, accurate descriptions in layman's terms. And silly. Silly as hell. The player should be incentivised to look for items because of their usefulness in the world. 
 
 ## Trigger items
-Some items trigger events, like doors opening. These items should be hinted at through riddles and other clues, a la Silent Hill.
+Some items trigger events, like doors opening and hidden areas being revealed. These items should be hinted at through riddles and other clues, a la Silent Hill.
 
 ## Quest items
 Quest items cannot be used by the player, but are instrumental to solving a quest, i.e. bringing an object to a person or destroying it.
