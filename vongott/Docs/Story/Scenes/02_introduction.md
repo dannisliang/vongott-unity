@@ -19,7 +19,7 @@ Scene 2: Introduction ( nrf_bunker )
 - Miguel: "Come back to me when you're ready to see some action."
 
 ### optional: JoJo Fine
-- Yoyo: "Hey punk! I'm Yoyo Fine, and you can call me master, biatch!"
+- Yoyo: "Hey punk! I'm JoJo Fine, and you can call me master, biatch!"
 - (player name):
   1. "You seem nice."
   2. "Get bent, dickwheel."
