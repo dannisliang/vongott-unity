@@ -174,7 +174,7 @@ class Actor extends InteractiveObject {
 			}
 			
 		} else {
-			attentionTimer = attentionSpan;
+			attentionTimer = 0;
 			updateTimer = 0;
 			
 		}
