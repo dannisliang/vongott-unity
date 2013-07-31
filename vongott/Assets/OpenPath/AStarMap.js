@@ -34,7 +34,7 @@ class AStarMap {
 		return Vector3.zero;
 	}
 	
-	function GetNeighbors ( node : AStarNode, goal : AStarNode, neighbors : ArrayList ) {
+	function GetNeighbors ( node : AStarNode, goal : AStarNode, neighbors : List.<AStarNode> ) {
 		return;
 	}
 	
@@ -97,7 +97,7 @@ public class AStarGridMap extends AStarMap {
 		return val;
 	}
 	
-	override function GetNeighbors ( node : AStarNode, goal : AStarNode, neighbors : ArrayList ) {
+	override function GetNeighbors ( node : AStarNode, goal : AStarNode, neighbors : List.<AStarNode> ) {
 		var index : Vector3 = GetIndex ( node );
 		
 		var neighborPositions : Vector3[] = [

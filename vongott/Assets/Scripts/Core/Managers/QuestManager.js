@@ -14,8 +14,8 @@ static var quests : List.< Quest > = new List.< Quest >();
 static function Init () {	
 	var allQuests : JSONObject = Loader.LoadQuests ();
 
-	for ( var o : JSONObject in allQuests.list as JSONObject[] ) {
-		quests.Add ( Deserializer.DeserializeQuest ( o ) );
+	for ( var o : Object in allQuests.list ) {
+		quests.Add ( Deserializer.DeserializeQuest ( o as JSONObject ) );
 	}
 }
 

@@ -1,37 +1,63 @@
 #pragma strict
 
 class AStarPathFinder extends MonoBehaviour {
-	var target : Transform;
-	var searching : boolean = false;
 	var currentNode : int = 0;
 	var scanner : AStarScanner;
 	var speed : float = 4.0;
 	
-	@HideInInspector var nodes : ArrayList;
+	@HideInInspector var nodes : List.<AStarNode> = new List.<AStarNode>();
+	@HideInInspector var goal : Transform;
+	
+	function ClearNodes () {
+		for ( var node : AStarNode in nodes ) {
+			node.active = false;
+			node.parent = null;
+		}
+		
+		nodes.Clear ();	
+	}
+	
+	function SetGoal ( t : Transform ) {
+		goal = t;
+	}
 	
 	function UpdatePosition () {
-		var start : AStarNode = scanner.GetClosestNode ( this.transform );
-		var goal : AStarNode = scanner.GetClosestNode ( target );
+		var here : AStarNode = scanner.GetClosestNode ( this.transform );
+		var there : AStarNode = scanner.GetClosestNode ( goal );
 	
-		Loom.RunAsync ( function () {
-			var newNodes : ArrayList = AStar.Search ( start, goal, scanner.map, scanner.heuristic );
-		
-			Loom.QueueOnMainThread ( function () {
+		//Loom.RunAsync ( function () {
+			var newNodes : List.<AStarNode> = AStar.Search ( here, there, scanner.map, scanner.heuristic );
+									
+			for ( var node : AStarNode in newNodes ) {
+				node.active = true;
+			}
+			
+			//Loom.QueueOnMainThread ( function () {
 				nodes = newNodes;
 				currentNode = 0;
-			} );
-		} );
+			//} );
+		//} );
 	}
 	
 	function Update () {
-		if ( scanner == null ) { Debug.LogError ( "No scanner found! Attach an AStarScanner to the scanner variable." ); }
-	
-		if ( target && !searching && scanner ) {
-			searching = true;
+		if ( scanner == null ) { Debug.LogError ( "No scanner found! Attach an AStarScanner to the scanner variable." ); return; }
+		
+		// If there is no goal, make sure the nodes are gone
+		if ( goal == null ) {
+			if ( nodes.Count > 0 ) {
+				ClearNodes ();
+			}
+			
+			return;
+			
+		// If there is a goal but no nodes, create them
+		} else if ( nodes.Count <= 0 ) {
 			UpdatePosition ();
+		
 		}
 	
-		if ( nodes && searching && nodes.Count > 0 ) {
+		// If there are nodes to follow
+		if ( nodes.Count > 0 ) {
 			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < 1.0 && currentNode < nodes.Count - 1 ) {
 				currentNode++;
 			}
@@ -41,10 +67,6 @@ class AStarPathFinder extends MonoBehaviour {
 			
 			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
 			transform.localPosition += transform.forward * speed * Time.deltaTime;
-			
-			for ( var i = 0; i < nodes.Count - 1; i++ ) {
-				Debug.DrawLine ( (nodes[i] as AStarNode).position, (nodes[i+1] as AStarNode).position, Color.cyan );
-			}
 		}
 	}
 }

@@ -26,7 +26,9 @@ class OGScrollView extends OGWidget {
 		transform.localScale = new Vector3 ( 1, 1, 1 );
 		
 		// Update content
-		for ( var w : OGWidget in transform.GetComponentsInChildren (OGWidget) as OGWidget[] ) {			
+		for ( var c : Component in transform.GetComponentsInChildren (OGWidget) ) {			
+			var w : OGWidget = c as OGWidget;
+			
 			if ( w != this ) {
 				// Make sure the widgets aren't drawn automatically
 				if ( !w.manualDraw ) {
@@ -71,7 +73,9 @@ class OGScrollView extends OGWidget {
 		}
 		
 		// ^ put widgets into their batches
-		for ( var w : OGWidget in transform.GetComponentsInChildren (OGWidget) as OGWidget[] ) {
+		for ( var c : Component in transform.GetComponentsInChildren (OGWidget) ) {
+			var w : OGWidget = c as OGWidget;
+			
 			if ( w != this ) {
 				// Queue index is based on the Z position
 				var index : int = w.transform.localPosition.z;

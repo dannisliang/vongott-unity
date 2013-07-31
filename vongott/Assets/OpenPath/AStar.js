@@ -6,7 +6,7 @@ class AStar {
 	static var closedList : PriorityQueue;
 	
 	// Find a path and return a list of each step
-	static function Search ( start : AStarNode, goal : AStarNode, map : AStarMap, heuristicWeight : float ) : ArrayList {
+	static function Search ( start : AStarNode, goal : AStarNode, map : AStarMap, heuristicWeight : float ) : List.<AStarNode> {
 		// Add the starting node to the open list
 		openList = new PriorityQueue ();
 		openList.Push ( start );
@@ -27,7 +27,7 @@ class AStar {
 			}
 			
 			// Examine each node adjacent to the current node
-			var neighbors : ArrayList = new ArrayList ();
+			var neighbors : List.<AStarNode> = new List.<AStarNode> ();
 			map.GetNeighbors ( currentNode, goal, neighbors );
 						
 			for ( var nIndex = 0; nIndex != neighbors.Count; nIndex++ ) {		
@@ -74,9 +74,9 @@ class AStar {
 		}
 		
 		if ( !currentNode.Equals ( goal ) ) {
-			Debug.Log("NOT FOUND");
+			Debug.LogError ( "OpenPath | Path not found!" );
 			// Return the empty array
-			return new ArrayList();
+			return new List.<AStarNode>();
 		
 		} else {
 			// Path complete
@@ -94,8 +94,8 @@ class AStar {
 	}
 		
 	// Helper function used to build path for AStar search
-	private static function GetPath ( node : AStarNode ) : ArrayList {
-		var path : ArrayList = new ArrayList ();
+	private static function GetPath ( node : AStarNode ) : List.<AStarNode> {
+		var path : List.<AStarNode> = new List.<AStarNode> ();
 		
 		// Traverse the path from goal to start
 		while ( node != null ) {

@@ -8,6 +8,7 @@ class AStarNode implements IComparable {
 	var costSoFar : float;
 	var size : int;	
 	var parent : AStarNode;
+	var active : boolean = false;
 	
 	function AStarNode () {
 		estimatedTotalCost = 0.0;

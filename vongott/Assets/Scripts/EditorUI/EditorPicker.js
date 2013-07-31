@@ -92,8 +92,8 @@ class EditorPicker extends OGPage {
 	
 	// Deselect all
 	function DeselectAll () {
-		for ( var btn : OGButton in scrollView.transform.GetComponentsInChildren ( OGButton ) as OGButton[] ) {
-			btn.style = "listitem";		
+		for ( var btn : Component in scrollView.transform.GetComponentsInChildren ( OGButton ) ) {
+			( btn as OGButton ).style = "listitem";		
 		}
 	}
 	

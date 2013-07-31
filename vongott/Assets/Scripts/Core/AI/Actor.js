@@ -5,6 +5,9 @@ class Actor extends InteractiveObject {
 	var model : String;
 	var affiliation : String;
 	var mood : String;
+	var attentionSpan : float = 30.0;
+	var updateFrequency : float = 5.0;
+	var speed : float = 4.0;
 
 	var path : List.< GameObject >;
 	var inventory : Entry[] = new Entry [4];
@@ -17,7 +20,9 @@ class Actor extends InteractiveObject {
 	@HideInInspector var currentLine : int = 0;
 	@HideInInspector var nodeTimer : float = 0;
 	@HideInInspector var fireTimer : float = 0;
+	@HideInInspector var attentionTimer : float = 0;
 	@HideInInspector var equippedItem : GameObject;
+	@HideInInspector var updateTimer : float = 0;
 
 	function Equip ( entry : Entry ) {
 		equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
@@ -56,10 +61,6 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	function Strike () {
-	
-	}
-	
 	function Shoot () {
 		var w : String[] = new String[5];
 		w[0] = "bang!";
@@ -78,20 +79,23 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	function Detect () {
-		target = GameCore.playerObject.transform;
+	function Chase ( t : Transform ) {
+		target = t;
 		
 		if ( inventory[0].model ) {
 			Equip ( inventory[0] );
 		}
 		
 		Say ( "Hey! You!" );
-	}	
+	}
 	
 	function GiveUp () {
 		target = null;
 		
+		this.GetComponent ( AStarPathFinder ).SetGoal ( null );
+		
 		UnEquip ();
+		
 		Say ( "Bah! Whatever, man." );
 	}
 	
@@ -113,18 +117,69 @@ class Actor extends InteractiveObject {
 			}
 		}
 		
-		// use affiliation
-		if ( affiliation == "enemy" ) {
-			// detect player
-			if ( !Physics.Linecast ( this.transform.position + new Vector3 ( 0, 1, 0 ), GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, 1, 0 ), 9 ) && !target ) {
-				Detect();
+		// Detect player
+		var here : Vector3 = this.transform.position + new Vector3 ( 0, 1, 0 );
+		var there : Vector3 = GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, 1, 0 );
+		
+		// ^ The player is in sight
+		if ( !Physics.Linecast ( here, there ) ) {
+			if ( this.GetComponent ( AStarPathFinder ).goal ) {
+				this.GetComponent ( AStarPathFinder ).SetGoal ( null );
 			}
+			
+			Debug.DrawLine ( here, there, Color.green );
+			
+			this.GetComponent ( AStarPathFinder ).SetGoal( null );
+			
+			// Enemies chase the player
+			if ( affiliation == "enemy" ) {
+				if ( !target ) {
+					Chase ( GameCore.GetPlayerObject().transform );
+				}
+				
+				var lookPos : Vector3 = target.position - transform.position;
+				transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
+				transform.localPosition += transform.forward * speed * Time.deltaTime;
+							
+			// Allies might call for the player's attention
+			} else if ( affiliation == "ally" ) {
+				//Say ( "Yoohoo!" );
+			
+			}
+		
+		// ^ The player is out of sight
+		} else {
+			if ( this.GetComponent ( AStarPathFinder ).goal == null ) {
+				this.GetComponent ( AStarPathFinder ).SetGoal ( target );
+			} else {
+				if ( updateTimer < updateFrequency ) {
+					updateTimer += Time.deltaTime;
+					
+				} else {
+					updateTimer = 0.0;
+					this.GetComponent ( AStarPathFinder ).ClearNodes ();
+					this.GetComponent ( AStarPathFinder ).SetGoal ( target );
+				
+				}
+			}
+		
 		}
 		
-		// follow the player
+		// Attention span
 		if ( target ) {
-			//this.gameObject.GetComponent ( PathFinder ).Chase ( target );
+			if ( attentionTimer < attentionSpan ) {
+				attentionTimer += Time.deltaTime;
+			} else {
+				attentionTimer = 0;
+				GiveUp ();
+			}
 			
+		} else {
+			attentionTimer = 0;
+			
+		}
+		
+		/*
 		// follow path
 		} else if ( path.Count > 1 ) {
 			if ( Vector3.Distance ( transform.position, path[currentNode].transform.position ) < 0.1 ) {
@@ -145,6 +200,6 @@ class Actor extends InteractiveObject {
 			} else {
 				nodeTimer -= Time.deltaTime;
 			}
-		}
+		}*/
 	}
 }

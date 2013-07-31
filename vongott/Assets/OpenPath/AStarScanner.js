@@ -18,7 +18,7 @@ class AStarScanner extends MonoBehaviour {
 	    pos = bounds.min;
 	    
 	    transform.position = pos;
-		gridSize = new Vector3 ( Mathf.Round ( bounds.size.x / spacing ), Mathf.Round ( bounds.size.y / spacing ), Mathf.Round ( bounds.size.z / spacing ) );
+		gridSize = new Vector3 ( Mathf.Round ( bounds.size.x / spacing ) + 1, Mathf.Round ( bounds.size.y / spacing ) + 1, Mathf.Round ( bounds.size.z / spacing ) + 1 );
 	}
 	
 	function SetMap () {
@@ -35,7 +35,7 @@ class AStarScanner extends MonoBehaviour {
 	}
 	
 	function FindPath ( start : AStarNode, goal : AStarNode ) {
-		var nodes : ArrayList = AStar.Search ( start, goal, map, heuristic );
+		var nodes : List.<AStarNode> = AStar.Search ( start, goal, map, heuristic );
 	
 		for ( var i = 0; i < nodes.Count-1; i++ ) {
 			Debug.DrawLine ( (nodes[i] as AStarNode).position, (nodes[i+1] as AStarNode).position );
@@ -54,8 +54,8 @@ class AStarScanner extends MonoBehaviour {
 		
 		for ( var n : AStarNode in map.nodes ) {
 			if ( n == null ) { continue; }
-			
-			Gizmos.color = Color.green;
+			else if ( n.active ) { Gizmos.color = Color.green; }
+			else { Gizmos.color = new Color ( 1, 1, 1, 0.5 ); }
 
 			Gizmos.DrawCube ( n.position, new Vector3 ( 0.5, 0.5, 0.5 ) );
 			
