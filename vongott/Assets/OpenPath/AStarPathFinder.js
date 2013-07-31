@@ -18,10 +18,18 @@ class AStarPathFinder extends MonoBehaviour {
 	}
 	
 	function SetGoal ( t : Transform ) {
+		ClearNodes ();
 		goal = t;
+		
+		// If there is a goal, create the nodes
+		if ( goal ) {
+			UpdatePosition ();
+		}
 	}
 	
 	function UpdatePosition () {
+		Debug.Log ( "UPDATE" );
+		
 		var here : AStarNode = scanner.GetClosestNode ( this.transform );
 		var there : AStarNode = scanner.GetClosestNode ( goal );
 	
@@ -41,21 +49,7 @@ class AStarPathFinder extends MonoBehaviour {
 	
 	function Update () {
 		if ( scanner == null ) { Debug.LogError ( "No scanner found! Attach an AStarScanner to the scanner variable." ); return; }
-		
-		// If there is no goal, make sure the nodes are gone
-		if ( goal == null ) {
-			if ( nodes.Count > 0 ) {
-				ClearNodes ();
-			}
 			
-			return;
-			
-		// If there is a goal but no nodes, create them
-		} else if ( nodes.Count <= 0 ) {
-			UpdatePosition ();
-		
-		}
-	
 		// If there are nodes to follow
 		if ( nodes.Count > 0 ) {
 			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < 1.0 && currentNode < nodes.Count - 1 ) {

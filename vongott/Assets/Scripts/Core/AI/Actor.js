@@ -79,12 +79,18 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
+	function FindPath () {
+		this.GetComponent ( AStarPathFinder ).SetGoal ( target );
+	}
+	
 	function Chase ( t : Transform ) {
 		target = t;
 		
 		if ( inventory[0].model ) {
 			Equip ( inventory[0] );
 		}
+		
+		FindPath ();
 		
 		Say ( "Hey! You!" );
 	}
@@ -123,23 +129,13 @@ class Actor extends InteractiveObject {
 		
 		// ^ The player is in sight
 		if ( !Physics.Linecast ( here, there ) ) {
-			if ( this.GetComponent ( AStarPathFinder ).goal ) {
-				this.GetComponent ( AStarPathFinder ).SetGoal ( null );
-			}
-			
 			Debug.DrawLine ( here, there, Color.green );
-			
-			this.GetComponent ( AStarPathFinder ).SetGoal( null );
 			
 			// Enemies chase the player
 			if ( affiliation == "enemy" ) {
 				if ( !target ) {
 					Chase ( GameCore.GetPlayerObject().transform );
 				}
-				
-				var lookPos : Vector3 = target.position - transform.position;
-				transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
-				transform.localPosition += transform.forward * speed * Time.deltaTime;
 							
 			// Allies might call for the player's attention
 			} else if ( affiliation == "ally" ) {
@@ -149,24 +145,18 @@ class Actor extends InteractiveObject {
 		
 		// ^ The player is out of sight
 		} else {
-			if ( this.GetComponent ( AStarPathFinder ).goal == null ) {
-				this.GetComponent ( AStarPathFinder ).SetGoal ( target );
-			} else {
-				if ( updateTimer < updateFrequency ) {
-					updateTimer += Time.deltaTime;
-					
-				} else {
-					updateTimer = 0.0;
-					this.GetComponent ( AStarPathFinder ).ClearNodes ();
-					this.GetComponent ( AStarPathFinder ).SetGoal ( target );
-				
-				}
-			}
 		
 		}
 		
-		// Attention span
-		if ( target ) {
+		// Attention span & update frequency
+		if ( target ) {			
+			if ( updateTimer < updateFrequency ) {
+				updateTimer += Time.deltaTime;
+			} else {
+				updateTimer = 0;
+				FindPath ();
+			}
+			
 			if ( attentionTimer < attentionSpan ) {
 				attentionTimer += Time.deltaTime;
 			} else {
@@ -176,6 +166,7 @@ class Actor extends InteractiveObject {
 			
 		} else {
 			attentionTimer = 0;
+			updateTimer = 0;
 			
 		}
 		
