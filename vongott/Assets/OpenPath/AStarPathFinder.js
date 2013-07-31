@@ -27,9 +27,7 @@ class AStarPathFinder extends MonoBehaviour {
 		}
 	}
 	
-	function UpdatePosition () {
-		Debug.Log ( "UPDATE" );
-		
+	function UpdatePosition () {		
 		var here : AStarNode = scanner.GetClosestNode ( this.transform );
 		var there : AStarNode = scanner.GetClosestNode ( goal );
 	
@@ -51,7 +49,7 @@ class AStarPathFinder extends MonoBehaviour {
 		if ( scanner == null ) { Debug.LogError ( "No scanner found! Attach an AStarScanner to the scanner variable." ); return; }
 			
 		// If there are nodes to follow
-		if ( nodes.Count > 0 ) {
+		if ( nodes && nodes.Count > 0 ) {
 			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < 1.0 && currentNode < nodes.Count - 1 ) {
 				currentNode++;
 			}

@@ -98,9 +98,17 @@ class AStar {
 		var path : List.<AStarNode> = new List.<AStarNode> ();
 		
 		// Traverse the path from goal to start
+		var counter : int = 0;
+		
 		while ( node != null ) {
+			if ( counter > 50 ) {
+				Debug.LogError ( "OpenPath | Screech! Failsafe engaged." );
+				return new List.<AStarNode>();
+			};
+			
 			path.Add  ( node );
 			node = node.parent;
+			counter++;
 		}
 		
 		// Reverse it
