@@ -92,8 +92,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var newSrfObj : GameObject = new GameObject("Surface", MeshRenderer, MeshFilter, MeshCollider);
 		var newSrf : Surface = newSrfObj.AddComponent(Surface);
 		
-		for ( var p : JSONObject in srf.GetField("planes").list as JSONObject[] ) {
-			newSrf.planes.Add ( DeserializeSurfacePlane ( p ) );
+		for ( var p : Object in srf.GetField("planes").list ) {
+			newSrf.planes.Add ( DeserializeSurfacePlane ( p as JSONObject ) );
 		}
 		
 		newSrf.materialPath = srf.GetField("materialPath").str;
@@ -184,8 +184,8 @@ static function DeserializeGameObjectChildren ( obj : JSONObject, parent : Trans
 		return;
 	}
 	
-	for ( var c in obj.list as JSONObject[] ) {
-		var o : GameObject = DeserializeGameObjectFromJSON ( c );
+	for ( var c : Object in obj.list) {
+		var o : GameObject = DeserializeGameObjectFromJSON ( c as JSONObject );
 		
 		o.transform.parent = parent;
 	}
@@ -197,7 +197,9 @@ static function DeserializeGameObjectComponents ( arr : JSONObject, o : GameObje
 		return;
 	}
 	
-	for ( var j : JSONObject in arr.list as JSONObject[] ) {
+	for ( var x : Object in arr.list ) {
+		var j : JSONObject = x as JSONObject;
+		
 		if ( j.HasField ( "Light" ) ) {
 			DeserializeLight ( j.GetField ( "Light" ), o );
 		} else if ( j.HasField("Transform") ) {
@@ -210,8 +212,8 @@ static function DeserializeGameObjectComponents ( arr : JSONObject, o : GameObje
 static function DeserializePath ( pth : JSONObject, act : GameObject ) : List.< GameObject > {
 	var nodes : List.< GameObject > =  new List.< GameObject >();
 
-	for ( var n : JSONObject in pth.list as JSONObject[] ) {
-		nodes.Add ( DeserializePathNode ( n, act ) );
+	for ( var o : Object in pth.list ) {
+		nodes.Add ( DeserializePathNode ( (o as JSONObject), act ) );
 	}
 
 	return nodes;
@@ -348,7 +350,9 @@ static function DeserializeConversationsToGame ( convos : JSONObject ) {
 	var conversations : List.< Conversation > = new List.< Conversation >();
 		
 	if ( convos ) {		
-		for ( var c : JSONObject in convos.list as JSONObject[] ) {
+		for ( var o : Object in convos.list ) {
+			var c : JSONObject = o as JSONObject;
+			
 			var convo : Conversation = new Conversation ();
 			
 			if ( c.HasField ( "condition" ) ) { convo.condition = c.GetField ( "condition" ).str; }

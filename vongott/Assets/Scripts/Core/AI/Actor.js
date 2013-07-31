@@ -52,6 +52,12 @@ class Actor extends InteractiveObject {
 		}
 		
 		initPosition = this.transform.position;
+		
+		if ( !GameCore.started ) {
+			this.GetComponent ( AStarPathFinder ).enabled = false;
+		} else {
+			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;
+		}
 	}
 	
 	function Talk () {

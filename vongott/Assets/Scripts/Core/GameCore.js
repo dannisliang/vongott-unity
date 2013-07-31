@@ -96,7 +96,9 @@ static function LoadLevel ( path : String, spawnPoint : String ) {
 	playerObject.layer = 9;	
 	
 	// Find spawn point
-	for ( var spt : SpawnPoint in currentLevel.GetComponentsInChildren ( SpawnPoint ) as SpawnPoint[] ) {
+	for ( var o : Object in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
+		var spt : SpawnPoint = o as SpawnPoint;
+		
 		//if ( spawnPoint == "" ) { spawnPoint == spt.gameObject.name; }
 		
 		//if ( spt.gameObject.name == spawnPoint ) {
