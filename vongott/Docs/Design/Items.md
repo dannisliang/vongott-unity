@@ -1,6 +1,9 @@
 Items 
 =====
-Items can be found, stolen or purchased throughout the world. 
+Items can be found, stolen or purchased throughout the world. They should have short, accurate descriptions in layman's terms. And silly. Silly as hell. The player should be incentivised to look for items because of their usefulness in the world. 
+
+## Trigger items
+Some items trigger events, like doors opening and hidden areas being revealed. These items can either be picked up or not, and should be hinted at through riddles and other clues, a la Silent Hill.
 
 ## Quest items
 Quest items cannot be used by the player, but are instrumental to solving a quest, i.e. bringing an object to a person or destroying it.
@@ -71,6 +74,8 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 - EMP
 
 ## Upgrades
+The upgrades are like equipment, can be found or purchased, and they will replace physical bodyparts pf the player, allowing fro a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs)
+
 ### Mechanical
 Mechanical upgrades enhance the capability of their governing limb area. They need to be installed by a professional mechanic.
 
