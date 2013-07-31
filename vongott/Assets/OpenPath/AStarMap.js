@@ -40,7 +40,9 @@ class AStarMap {
 	
 	function Reset () {
 		for ( var n : AStarNode in nodes ) {
-			n.parent = null;
+			if ( n ) {
+				n.parent = null;
+			}
 		}
 	}
 }

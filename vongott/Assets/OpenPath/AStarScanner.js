@@ -34,12 +34,14 @@ class AStarScanner extends MonoBehaviour {
 		Init ();
 	}
 	
-	function FindPath ( start : AStarNode, goal : AStarNode ) {
-		var nodes : List.<AStarNode> = AStar.Search ( start, goal, map, heuristic );
+	function FindPath ( start : Vector3, goal : Vector3 ) : List.<AStarNode> {
+		var here : AStarNode = GetClosestNode ( start );
+		var there : AStarNode = GetClosestNode ( goal );
+		var list : List.<AStarNode> = AStar.Search ( here, there, map, heuristic );
 	
-		for ( var i = 0; i < nodes.Count-1; i++ ) {
-			Debug.DrawLine ( (nodes[i] as AStarNode).position, (nodes[i+1] as AStarNode).position );
-		}
+		map.Reset ();
+	
+		return list;
 	}
 	
 	function OnDrawGizmos () {
@@ -54,8 +56,10 @@ class AStarScanner extends MonoBehaviour {
 		
 		for ( var n : AStarNode in map.nodes ) {
 			if ( n == null ) { continue; }
-			else if ( n.active ) { Gizmos.color = Color.green; }
-			else { Gizmos.color = new Color ( 1, 1, 1, 0.5 ); }
+			
+			Gizmos.color = new Color ( 1, 1, 1, 0.5 );
+			if ( n.parent ) { Gizmos.color = Color.red; }
+			if ( n.active ) { Gizmos.color = Color.green; }
 
 			Gizmos.DrawCube ( n.position, new Vector3 ( 0.5, 0.5, 0.5 ) );
 			
@@ -63,14 +67,14 @@ class AStarScanner extends MonoBehaviour {
 		}
 	}
 	
-	function GetClosestNode ( obj : Transform ) : AStarNode {
+	function GetClosestNode ( pos : Vector3 ) : AStarNode {
 		var shortestDistance : float = 100;
 		var node : AStarNode;
 		
 		for ( var n : AStarNode in map.nodes ) {
 			if ( n == null ) { continue; }
 			
-			var currentDistance : float = ( obj.position - (n as AStarNode).position ).magnitude;
+			var currentDistance : float = ( pos - (n as AStarNode).position ).magnitude;
 			
 			if ( currentDistance < shortestDistance ) {
 				shortestDistance = currentDistance;

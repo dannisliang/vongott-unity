@@ -23,6 +23,7 @@ class Actor extends InteractiveObject {
 	@HideInInspector var attentionTimer : float = 0;
 	@HideInInspector var equippedItem : GameObject;
 	@HideInInspector var updateTimer : float = 0;
+	@HideInInspector var initPosition : Vector3;
 
 	function Equip ( entry : Entry ) {
 		equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
@@ -49,6 +50,8 @@ class Actor extends InteractiveObject {
 		if ( !path ) {
 			path = new List.< GameObject >();
 		}
+		
+		initPosition = this.transform.position;
 	}
 	
 	function Talk () {
@@ -79,8 +82,8 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	function FindPath () {
-		this.GetComponent ( AStarPathFinder ).SetGoal ( target );
+	function FindPath ( v : Vector3 ) {
+		this.GetComponent ( AStarPathFinder ).SetGoal ( v );
 	}
 	
 	function Chase ( t : Transform ) {
@@ -90,7 +93,7 @@ class Actor extends InteractiveObject {
 			Equip ( inventory[0] );
 		}
 		
-		FindPath ();
+		FindPath ( target.position );
 		
 		Say ( "Hey! You!" );
 	}
@@ -98,7 +101,7 @@ class Actor extends InteractiveObject {
 	function GiveUp () {
 		target = null;
 		
-		this.GetComponent ( AStarPathFinder ).SetGoal ( null );
+		FindPath ( initPosition );
 		
 		UnEquip ();
 		
@@ -154,7 +157,7 @@ class Actor extends InteractiveObject {
 				updateTimer += Time.deltaTime;
 			} else {
 				updateTimer = 0;
-				FindPath ();
+				FindPath ( target.position );
 			}
 			
 			if ( attentionTimer < attentionSpan ) {

@@ -4,9 +4,11 @@ class AStarPathFinder extends MonoBehaviour {
 	var currentNode : int = 0;
 	var scanner : AStarScanner;
 	var speed : float = 4.0;
+	var stoppingDistance : float = 5.0;
+	var nodeDistance : float = 1.0;
 	
 	@HideInInspector var nodes : List.<AStarNode> = new List.<AStarNode>();
-	@HideInInspector var goal : Transform;
+	@HideInInspector var goal : Vector3;
 	
 	function ClearNodes () {
 		for ( var node : AStarNode in nodes ) {
@@ -19,30 +21,35 @@ class AStarPathFinder extends MonoBehaviour {
 	
 	function SetGoal ( t : Transform ) {
 		ClearNodes ();
-		goal = t;
 		
 		// If there is a goal, create the nodes
-		if ( goal ) {
+		if ( t ) {
+			goal = t.position;
 			UpdatePosition ();
 		}
 	}
 	
-	function UpdatePosition () {		
-		var here : AStarNode = scanner.GetClosestNode ( this.transform );
-		var there : AStarNode = scanner.GetClosestNode ( goal );
-	
-		//Loom.RunAsync ( function () {
-			var newNodes : List.<AStarNode> = AStar.Search ( here, there, scanner.map, scanner.heuristic );
+	function SetGoal ( v : Vector3 ) {
+		ClearNodes ();
+		goal = v;
+		UpdatePosition ();
+	}
+		
+	function UpdatePosition () {
+		var start : Vector3 = this.transform.position;
+					
+		Loom.RunAsync ( function () {
+			var newNodes : List.<AStarNode> = scanner.FindPath ( start, goal );
 									
 			for ( var node : AStarNode in newNodes ) {
 				node.active = true;
 			}
 			
-			//Loom.QueueOnMainThread ( function () {
+			Loom.QueueOnMainThread ( function () {
 				nodes = newNodes;
 				currentNode = 0;
-			//} );
-		//} );
+			} );
+		} );
 	}
 	
 	function Update () {
@@ -50,7 +57,7 @@ class AStarPathFinder extends MonoBehaviour {
 			
 		// If there are nodes to follow
 		if ( nodes && nodes.Count > 0 ) {
-			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < 1.0 && currentNode < nodes.Count - 1 ) {
+			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < nodeDistance && currentNode < nodes.Count - 1 ) {
 				currentNode++;
 			}
 			
@@ -59,6 +66,10 @@ class AStarPathFinder extends MonoBehaviour {
 			
 			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
 			transform.localPosition += transform.forward * speed * Time.deltaTime;
+		
+			if ( ( transform.position - goal ).magnitude < stoppingDistance ) {
+				ClearNodes ();
+			}
 		}
 	}
 }

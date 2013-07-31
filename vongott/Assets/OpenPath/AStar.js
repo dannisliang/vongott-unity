@@ -4,7 +4,7 @@ class AStar {
 	// Lists
 	static var openList : PriorityQueue;
 	static var closedList : PriorityQueue;
-	
+			
 	// Find a path and return a list of each step
 	static function Search ( start : AStarNode, goal : AStarNode, map : AStarMap, heuristicWeight : float ) : List.<AStarNode> {
 		// Add the starting node to the open list
@@ -75,11 +75,11 @@ class AStar {
 		
 		if ( !currentNode.Equals ( goal ) ) {
 			Debug.LogError ( "OpenPath | Path not found!" );
-			// Return the empty array
+			// Return the empty array			
 			return new List.<AStarNode>();
 		
 		} else {
-			// Path complete
+			// Path complete			
 			return GetPath ( currentNode );
 
 		}
@@ -101,7 +101,7 @@ class AStar {
 		var counter : int = 0;
 		
 		while ( node != null ) {
-			if ( counter > 50 ) {
+			if ( counter > 100 ) {
 				Debug.LogError ( "OpenPath | Screech! Failsafe engaged." );
 				return new List.<AStarNode>();
 			};
