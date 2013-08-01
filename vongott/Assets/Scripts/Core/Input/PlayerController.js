@@ -8,7 +8,9 @@ class PlayerController extends MonoBehaviour {
 		Jumping,
 		Falling,
 		Crouching,
-		Creeping
+		Creeping,
+		SideStepRight,
+		SideStepLeft
 	}
 	
 	var state : PlayerState = PlayerState.Idle;
@@ -56,8 +58,29 @@ class PlayerController extends MonoBehaviour {
 		
 		// Mouse controls
 		if ( Input.GetMouseButton(1) && ( state == PlayerState.Idle || state == PlayerState.Walking ) ) {
-			if ( !UIHUD.crosshair.activeSelf ) { UIHUD.ToggleCrosshair (); }
 			transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z ), 10 * Time.deltaTime );
+		
+			if ( this.GetComponent(Player).equippedItem ) {
+				// Set crosshair
+				if ( !UIHUD.crosshair.activeSelf ) { UIHUD.ToggleCrosshair (); }
+				
+				// Raycast
+				var here : Vector3 = this.GetComponent(Player).equippedItem.transform.position;
+				var there : Vector3 = Camera.main.transform.position + Camera.main.transform.forward * this.GetComponent(Player).GetEquipmentAttribute( Item.Attributes.FireRange );
+				var hit : RaycastHit;
+			
+				if ( Physics.Linecast ( here, there, hit ) ) {
+					Debug.DrawLine ( here, Camera.main.transform.position + Camera.main.transform.forward * ( here - hit.point).magnitude, Color.green );
+				} else {
+					Debug.DrawLine ( here, there, Color.red );
+				}
+			
+				// Shoot
+				if ( Input.GetMouseButton(0) ) {
+					this.GetComponent(Player).Shoot ();
+				}
+			}
+		
 		} else if ( UIHUD.crosshair.activeSelf ) {
 			UIHUD.crosshair.SetActive ( false );
 		}
@@ -99,6 +122,12 @@ class PlayerController extends MonoBehaviour {
 			
 			if ( !Input.GetMouseButton(1) ) {
 				transform.rotation = Quaternion.Slerp ( transform.rotation, rotationTarget, 5 * Time.deltaTime );
+			} else {
+				if ( h < 0 ) {
+					state = PlayerState.SideStepLeft;
+				} else if ( h > 0 ) {
+					state = PlayerState.SideStepRight;
+				}
 			}
 			
 			if ( speed < 0.1 ) { speed = 0.1; }
@@ -173,6 +202,8 @@ class PlayerController extends MonoBehaviour {
 		this.GetComponent(Animator).SetBool("Jumping", state == PlayerState.Jumping || state == PlayerState.Falling );
 		this.GetComponent(Animator).SetBool("Crouching", state == PlayerState.Crouching );
 		this.GetComponent(Animator).SetBool("Creeping", state == PlayerState.Creeping );
+		this.GetComponent(Animator).SetBool("SideStepLeft", state == PlayerState.SideStepLeft );
+		this.GetComponent(Animator).SetBool("SideStepRight", state == PlayerState.SideStepRight );
 
 	}
 

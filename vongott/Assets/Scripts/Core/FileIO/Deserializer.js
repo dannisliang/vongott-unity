@@ -16,6 +16,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var pfb : JSONObject = obj.GetField("Prefab");		
 		var path : String = pfb.GetField("path").str + "/" + pfb.GetField("id").str;
 		
+		Debug.Log ( "Deserializer | Instantaite " + path );
+		
 		var newPfb : GameObject = Instantiate ( Resources.Load ( path ) as GameObject );
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;

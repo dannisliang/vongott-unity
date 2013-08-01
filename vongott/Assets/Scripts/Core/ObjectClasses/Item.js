@@ -15,6 +15,7 @@ class Item extends InteractiveObject {
 		Damage,
 		Defence,
 		FireRate,
+		FireRange,
 		ReloadSpeed,
 		RunningSpeed,
 		SwimmingSpeed,
@@ -50,7 +51,7 @@ class Item extends InteractiveObject {
 	}
 	
 	// Subclasses
-	class Attribute {
+	public class Attribute {
 		var type = Attributes.Damage;
 		var val = 0.0;
 	}

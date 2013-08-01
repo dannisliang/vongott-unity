@@ -9,8 +9,9 @@ class Player extends MonoBehaviour {
 	var foot_r : GameObject;
 	var foot_l : GameObject;
 	var equippedItem : GameObject;
-	var followingAgent : NavMeshAgent;
-	
+
+	@HideInInspector var shootTimer : float = 0;
+			
 	////////////////////
 	// Public functions
 	////////////////////
@@ -45,16 +46,45 @@ class Player extends MonoBehaviour {
 			equippedItem.transform.localEulerAngles = adjustRotation;
 			equippedItem.collider.enabled = false;
 		
+			ResetFire();
+		
 			GameCore.Print ( "Player | item '" + entry.title + "' equipped" );
+			
 		} else {
 			Destroy ( equippedItem );
 			
 			GameCore.Print ( "Player | item '" + entry.title + "' unequipped" );
+		
 		}
 	}
 	
 	function GetEquippedItem () : GameObject {
 		return equippedItem;
+	}
+	
+	function GetEquipmentAttribute ( a : Item.Attributes ) : float {
+		for ( var attr : Item.Attribute in equippedItem.GetComponent(Item).attr ) {
+			if ( attr.type == a ) {
+				return attr.val;
+			} 
+		}
+		
+		Debug.LogError ( "Found no attribute " + a );
+		
+		return 100;
+	}
+	
+	// Shoot
+	function ResetFire () {
+		shootTimer = GetEquipmentAttribute ( Item.Attributes.FireRate );
+	}
+	
+	function Shoot (  ) {
+		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
+			shootTimer = 0;
+		
+			Debug.Log ( "BANG!" );
+		}
 	}
 	
 	// Install
@@ -73,8 +103,11 @@ class Player extends MonoBehaviour {
 	}
 		
 	function Update () {
-		if ( followingAgent ) {
-			followingAgent.destination = transform.position;
+		if ( equippedItem ) {	
+			if ( shootTimer < GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
+				shootTimer += Time.deltaTime;
+			}
+			
 		}
 	}
 }
