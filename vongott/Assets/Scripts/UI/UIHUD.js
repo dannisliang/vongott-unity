@@ -18,10 +18,13 @@ class UIHUD extends OGPage {
 	// Public vars
 	var _statusBar : StatusBar;
 	var _notificationBox : NotificationBox;
+	var _crosshair : GameObject;
 	
 	// Static vars
 	static var statusBar : StatusBar;
 	static var notificationBox : NotificationBox;
+	static var crosshair : GameObject;
+	
 	static var notificationTimer : float = 0.0;
 	static var notificationIndefinite : boolean = true;
 	
@@ -32,8 +35,10 @@ class UIHUD extends OGPage {
 	override function StartPage () {
 		statusBar = _statusBar;
 		notificationBox = _notificationBox;
+		crosshair = _crosshair;
 		
 		ShowNotification ( "" );
+		crosshair.SetActive ( false );
 	}
 	
 	
@@ -54,6 +59,14 @@ class UIHUD extends OGPage {
 		} else if ( !notificationIndefinite ) {
 			ShowNotification ( "" );
 		}
+	}
+	
+	
+	////////////////////
+	// Aiming
+	////////////////////
+	static function ToggleCrosshair () {
+		crosshair.SetActive ( !crosshair.activeSelf );
 	}
 	
 	

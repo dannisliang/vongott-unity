@@ -50,7 +50,10 @@ function GetCamDist() : Vector3 {
 	var speed : float = player.GetComponent(Animator).GetFloat("Speed");
 	var newPos : Vector3;
 	
-	if ( speed > 0.25 ){
+	if ( Input.GetMouseButton(1) ) {
+		z += 2.0;
+		x -= 0.1;
+	} else if ( speed > 0.25 ){
 		z -= 3.0 * ( speed - 0.25 );
 		x -= 0.5 * ( speed - 0.25 );
 	
@@ -85,11 +88,14 @@ function Update () {
 	var standCam = new Vector3 ( 0, 1.35, 0 );
 	var crouchCam = new Vector3 ( 0, 0.8, 0 );
 	var convoCam = new Vector3 ( 0, 1.65, 0 );
+	var aimCam = new Vector3 ( 0, 1.65, 0 );
 	
 	if ( IsCrouching() ) {
 		adjustment = crouchCam;
 	} else if ( OGRoot.currentPage && OGRoot.currentPage.pageName == "Conversation" ) {
 		adjustment = convoCam;
+	} else if ( Input.GetMouseButton(1) ) {
+		adjustment = aimCam;
 	} else {
 		adjustment = standCam;
 	}

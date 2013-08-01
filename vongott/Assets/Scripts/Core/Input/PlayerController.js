@@ -46,15 +46,24 @@ class PlayerController extends MonoBehaviour {
 		
 		}
 		
+		// Get camera target rotation
+		var camTarget : Transform = CameraTarget.instance;
+		var yRotation : float = camTarget.eulerAngles.y;
+		
 		// Get input
 		var v = Input.GetAxisRaw("Vertical");
 		var h = Input.GetAxisRaw("Horizontal");
-						
+		
+		// Mouse controls
+		if ( Input.GetMouseButton(1) && ( state == PlayerState.Idle || state == PlayerState.Walking ) ) {
+			if ( !UIHUD.crosshair.activeSelf ) { UIHUD.ToggleCrosshair (); }
+			transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z ), 10 * Time.deltaTime );
+		} else if ( UIHUD.crosshair.activeSelf ) {
+			UIHUD.crosshair.SetActive ( false );
+		}
+														
 		// Set speed		
 		if ( v != 0.0 || h != 0.0 ) {
-			// Set rotation
-			var camTarget : Transform = CameraTarget.instance;
-			var yRotation : float = camTarget.eulerAngles.y;
 			
 			// right forward
 			if ( h == 1 && v == 1 ) {
@@ -87,7 +96,10 @@ class PlayerController extends MonoBehaviour {
 			}
 			
 			var rotationTarget : Quaternion = Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z );	
-			transform.rotation = Quaternion.Slerp ( transform.rotation, rotationTarget, 5 * Time.deltaTime );
+			
+			if ( !Input.GetMouseButton(1) ) {
+				transform.rotation = Quaternion.Slerp ( transform.rotation, rotationTarget, 5 * Time.deltaTime );
+			}
 			
 			if ( speed < 0.1 ) { speed = 0.1; }
 			
