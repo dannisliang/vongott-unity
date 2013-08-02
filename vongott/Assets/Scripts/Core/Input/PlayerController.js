@@ -56,6 +56,17 @@ class PlayerController extends MonoBehaviour {
 		var v = Input.GetAxisRaw("Vertical");
 		var h = Input.GetAxisRaw("Horizontal");
 		
+		// Bullet time!
+		if ( Input.GetKeyDown ( KeyCode.LeftControl ) ) {
+			if ( GameCore.GetInstance().timeScale == 0.1 ) {
+				GameCore.GetInstance().timeScale = 1.0;
+			} else {
+				GameCore.GetInstance().timeScale = 0.1;
+				
+				GameCore.Print ( "Player | Bullet Time!" ); 
+			}
+		}
+		
 		// Mouse controls
 		if ( Input.GetMouseButton(1) && ( state == PlayerState.Idle || state == PlayerState.Walking ) ) {
 			transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z ), 10 * Time.deltaTime );
@@ -68,16 +79,19 @@ class PlayerController extends MonoBehaviour {
 				var here : Vector3 = this.GetComponent(Player).equippedItem.transform.position;
 				var there : Vector3 = Camera.main.transform.position + Camera.main.transform.forward * this.GetComponent(Player).GetEquipmentAttribute( Item.Attributes.FireRange );
 				var hit : RaycastHit;
-			
-				if ( Physics.Linecast ( here, there, hit ) ) {
-					Debug.DrawLine ( here, Camera.main.transform.position + Camera.main.transform.forward * ( here - hit.point).magnitude, Color.green );
+				var target : Vector3;
+																			
+				if ( Physics.Linecast ( Camera.main.transform.position, there, hit ) ) {					
+					target = hit.point;
+					Debug.DrawLine ( here, target, Color.green );
 				} else {
-					Debug.DrawLine ( here, there, Color.red );
+					target = there;
+					Debug.DrawLine ( here, target, Color.red );
 				}
 			
 				// Shoot
 				if ( Input.GetMouseButton(0) ) {
-					this.GetComponent(Player).Shoot ();
+					this.GetComponent(Player).Shoot ( target );
 				}
 			}
 		

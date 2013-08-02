@@ -69,7 +69,7 @@ class Player extends MonoBehaviour {
 			} 
 		}
 		
-		Debug.LogError ( "Found no attribute " + a );
+		GameCore.Error ( "Player | Found no attribute " + a + " for item " + equippedItem );
 		
 		return 100;
 	}
@@ -79,10 +79,11 @@ class Player extends MonoBehaviour {
 		shootTimer = GetEquipmentAttribute ( Item.Attributes.FireRate );
 	}
 	
-	function Shoot (  ) {
+	function Shoot ( target : Vector3 ) {
 		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
 			shootTimer = 0;
 		
+			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target );
 			Debug.Log ( "BANG!" );
 		}
 	}

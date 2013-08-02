@@ -70,6 +70,10 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
+	function TakeDamage ( damage : float ) {
+		Debug.Log ( "OUCH! Damage: " + damage );
+	}
+	
 	function Shoot () {
 		var w : String[] = new String[5];
 		w[0] = "bang!";
@@ -117,6 +121,7 @@ class Actor extends InteractiveObject {
 	/////////////////////
 	// Update
 	/////////////////////
+	// Game loop
 	function Update () {
 		if ( !GameCore.started ) { return; }
 				

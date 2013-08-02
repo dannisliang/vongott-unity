@@ -26,6 +26,9 @@ static var nextLevel : String = "";
 
 static var levelContainer : Transform;
 
+static var instance : GameCore;
+
+public var timeScale : float = 1.0;
 
 ////////////////////
 // Player
@@ -150,7 +153,16 @@ static function GoToEditor () {
 ////////////////////
 // Init
 ////////////////////
+// Instance
+static function GetInstance() : GameCore {
+	return instance;
+}
+
+// Start
 function Start () {	
+	// Instance
+	instance = this;
+	
 	// Quests
 	QuestManager.Init();
 	
@@ -206,7 +218,7 @@ static function Stop () {
 // Update
 ////////////////////
 function Update () {
-
+	Time.timeScale = timeScale;
 }
 
 
@@ -216,5 +228,11 @@ function Update () {
 static function Print ( msg : String ) {
 	if ( debuggingEnabled ) {
 		Debug.Log ( msg );
+	}
+}
+
+static function Error ( msg : String ) {
+	if ( debuggingEnabled ) {
+		Debug.LogError ( msg );
 	}
 }
