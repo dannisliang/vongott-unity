@@ -1,7 +1,13 @@
 #pragma strict
 
 class Actor extends InteractiveObject {
-	var name : String = "ActorName";
+	var head : Transform;
+	var hand : Transform;
+	var torso : Transform;
+	var footRight : Transform;
+	var footLeft : Transform;
+	
+	var displayName : String = "ActorName";
 	var model : String;
 	var affiliation : String;
 	var mood : String;
@@ -19,33 +25,15 @@ class Actor extends InteractiveObject {
 	@HideInInspector var currentNode : int = 0;
 	@HideInInspector var currentLine : int = 0;
 	@HideInInspector var nodeTimer : float = 0;
-	@HideInInspector var fireTimer : float = 0;
+	@HideInInspector var shootTimer : float = 0;
 	@HideInInspector var attentionTimer : float = 0;
 	@HideInInspector var equippedItem : GameObject;
 	@HideInInspector var updateTimer : float = 0;
 	@HideInInspector var initPosition : Vector3;
 
-	function Equip ( entry : Entry ) {
-		equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
-		
-		equippedItem.transform.parent = transform;
-		equippedItem.transform.localPosition = Vector3.zero;
-		equippedItem.transform.localEulerAngles = Vector3.zero;
-		equippedItem.collider.enabled = false;
-	
-		GameCore.Print ( "Actor | '" + entry.title + "' equipped" );
-	}
-
-	function UnEquip () {
-		Destroy ( equippedItem );
-		
-		GameCore.Print ( "Actor | unequipped" );
-	}
-
-	function Say ( msg : String ) {
-		UIHUD.ShowTimedNotification ( msg, 2.0 );
-	}
-
+	////////////////////
+	// Init
+	////////////////////
 	function Start () {
 		if ( !path ) {
 			path = new List.< GameObject >();
@@ -60,6 +48,10 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
+	
+	////////////////////
+	// Player interaction
+	////////////////////
 	function Talk () {
 		if ( conversations.Count > 0 ) {
 			conversations[currentConvo].Init ();
@@ -70,42 +62,93 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
+	function Say ( msg : String ) {
+		UIHUD.ShowTimedNotification ( msg, 2.0 );
+	}
+	
 	function TakeDamage ( damage : float ) {
 		Debug.Log ( "OUCH! Damage: " + damage );
 	}
 	
-	function Shoot () {
-		var w : String[] = new String[5];
-		w[0] = "bang!";
-		w[1] = "boom!";
-		w[2] = "ratatat!";
-		w[3] = "biff!";
-		w[4] = "krakow!";
+	
+	////////////////////
+	// Equipment
+	////////////////////
+	function GetEquipmentAttribute ( a : Item.Attributes ) : float {
+		for ( var attr : Item.Attribute in equippedItem.GetComponent(Item).attr ) {
+			if ( attr.type == a ) {
+				return attr.val;
+			} 
+		}
 		
-		Say ( w [ currentLine ] );
-		fireTimer = 0.5;
+		GameCore.Error ( "Actor | Found no attribute " + a + " for item " + equippedItem );
 		
-		if ( currentLine < w.Length - 1 ) {
-			currentLine++;
-		} else {
-			currentLine = 0;
+		return 100;
+	}
+	
+	function Equip ( entry : Entry ) {
+		equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
+		
+		equippedItem.transform.parent = hand;
+		equippedItem.transform.localPosition = Vector3.zero;
+		equippedItem.transform.localEulerAngles = Vector3.zero;
+		equippedItem.collider.enabled = false;
+	
+		GameCore.Print ( "Actor | '" + equippedItem.GetComponent(Item).title + "' equipped" );
+	}
+
+	function UnEquip () {
+		Destroy ( equippedItem );
+		
+		GameCore.Print ( "Actor | unequipped" );
+	}
+	
+	
+	////////////////////
+	// Shoot
+	////////////////////
+	function ResetFire () {
+		shootTimer = GetEquipmentAttribute ( Item.Attributes.FireRate );
+	}
+	
+	function Shoot () {		
+		if ( !equippedItem ) { return; }		
+		
+		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
+			shootTimer = 0;
+		
+			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target.collider.bounds.center, this.gameObject );
+			Debug.Log ( displayName + " | BANG!" );
 		}
 	}
 	
+	////////////////////
+	// Path finding
+	////////////////////
 	function FindPath ( v : Vector3 ) {
 		this.GetComponent ( AStarPathFinder ).SetGoal ( v );
 	}
+		
+	function ClearPath () {
+		this.GetComponent ( AStarPathFinder ).ClearNodes ();
+	}	
 	
 	function Chase ( t : Transform ) {
-		target = t;
+		if ( t ) {
+			target = t;
+			
+			if ( inventory[0].model ) {
+				Equip ( inventory[0] );
+			}
+			
+			FindPath ( target.position );
+			
+			Say ( "Hey! You!" );
 		
-		if ( inventory[0].model ) {
-			Equip ( inventory[0] );
+		} else {
+			ClearPath ();
+			
 		}
-		
-		FindPath ( target.position );
-		
-		Say ( "Hey! You!" );
 	}
 	
 	function GiveUp () {
@@ -117,6 +160,7 @@ class Actor extends InteractiveObject {
 		
 		Say ( "Bah! Whatever, man." );
 	}
+	
 	
 	/////////////////////
 	// Update
@@ -140,17 +184,22 @@ class Actor extends InteractiveObject {
 		// Detect player
 		var here : Vector3 = this.transform.position + new Vector3 ( 0, 1, 0 );
 		var there : Vector3 = GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, 1, 0 );
+		var direction : Vector3 = there - here;
+		var angle : float = Vector3.Angle ( direction, transform.forward );
+		var hit : RaycastHit;
 		
 		// ^ The player is in sight
-		if ( !Physics.Linecast ( here, there ) ) {
+		if ( Physics.Raycast ( here, direction, hit, Mathf.Infinity ) && hit.collider.gameObject == GameCore.GetPlayerObject() ) {
 			Debug.DrawLine ( here, there, Color.green );
 			
 			// Enemies chase the player
 			if ( affiliation == "enemy" ) {
 				if ( !target ) {
-					Chase ( GameCore.GetPlayerObject().transform );
+					Chase ( hit.collider.transform );
 				}
-							
+				
+				Shoot ();						
+								
 			// Allies might call for the player's attention
 			} else if ( affiliation == "ally" ) {
 				//Say ( "Yoohoo!" );
@@ -182,6 +231,11 @@ class Actor extends InteractiveObject {
 			attentionTimer = 0;
 			updateTimer = 0;
 			
+		}
+		
+		// Shoot timer
+		if ( equippedItem && shootTimer < GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
+			shootTimer += Time.deltaTime;			
 		}
 		
 		/*

@@ -83,7 +83,7 @@ class Player extends MonoBehaviour {
 		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
 			shootTimer = 0;
 		
-			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target );
+			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target, this.gameObject );
 			Debug.Log ( "BANG!" );
 		}
 	}

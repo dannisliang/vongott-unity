@@ -5,7 +5,6 @@ class DamageManager extends MonoBehaviour {
 	static var instance : DamageManager;
 	
 	// Constants
-	public var bulletSpeed : float = 10.0;
 	public var expirationTime : float = 20.0;
 	
 	// Prefab links
@@ -19,15 +18,14 @@ class DamageManager extends MonoBehaviour {
 	// Spawn
 	//////////////////
 	// Bullet
-	function SpawnBullet ( position : Vector3, target : Vector3 ) {
+	function SpawnBullet ( position : Vector3, target : Vector3, owner : GameObject ) {
 		var bullet : GameObject = Instantiate ( prefabBullet );
 		bullet.transform.parent = GameCore.levelContainer;
 		bullet.transform.position = position;
 		bullet.transform.LookAt ( target );
 		
 		var projectile : Projectile = bullet.GetComponent ( Projectile );
-		projectile.damage = 1.0;
-		projectile.speed = bulletSpeed;
+		projectile.owner = owner;
 		
 		allProjectiles.Add ( projectile );
 	}
