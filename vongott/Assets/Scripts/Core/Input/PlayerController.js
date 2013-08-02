@@ -58,10 +58,10 @@ class PlayerController extends MonoBehaviour {
 		
 		// Bullet time!
 		if ( Input.GetKeyDown ( KeyCode.LeftControl ) ) {
-			if ( GameCore.GetInstance().timeScale == 0.1 ) {
+			if ( GameCore.GetInstance().timeScale == 0.5 ) {
 				GameCore.GetInstance().timeScale = 1.0;
 			} else {
-				GameCore.GetInstance().timeScale = 0.1;
+				GameCore.GetInstance().timeScale = 0.5;
 				
 				GameCore.Print ( "Player | Bullet Time!" ); 
 			}

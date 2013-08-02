@@ -18,7 +18,7 @@ var maximumY : float = 60.0;
 var rotationY : float = 0.0;
 
 // Static vars
-static var mouselook_active = true;
+static var mouselookActive = true;
 
 
 ////////////////////
@@ -26,7 +26,7 @@ static var mouselook_active = true;
 ////////////////////
 // Update
 function Update () {
-    if ( !mouselook_active ) {
+    if ( !mouselookActive ) {
     	return;
     }
     
@@ -36,7 +36,7 @@ function Update () {
         rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
         rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
-        transform.localRotation = Quaternion.Lerp ( transform.localRotation, Quaternion.Euler (-rotationY, rotationX, 0), 20 * Time.deltaTime );
+        transform.localRotation = Quaternion.Lerp ( transform.localRotation, Quaternion.Euler (-rotationY, rotationX, 0), 20 * GameCore.GetInstance().ignoreTimeScale );
     
     } else if (axes == RotationAxes.MouseX) {
         transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
@@ -45,13 +45,15 @@ function Update () {
         rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
         rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
-        transform.localRotation = Quaternion.Lerp ( transform.localRotation, Quaternion.Euler ( -rotationY, transform.localEulerAngles.y, 0),  20 * Time.deltaTime );
+        transform.localRotation = Quaternion.Lerp ( transform.localRotation, Quaternion.Euler ( -rotationY, transform.localEulerAngles.y, 0),  20 * GameCore.GetInstance().ignoreTimeScale );
     }
+
+	//Debug.Log ( GameCore.GetInstance().timeScale ^ -1.0 );
 }
 
 // Set active
 static function SetActive ( state : boolean ) {
-	mouselook_active = state;
+	mouselookActive = state;
 	//Screen.lockCursor = state;
 	GameCore.Print ( "MouseLook | active: " + state );
 }

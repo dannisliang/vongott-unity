@@ -29,6 +29,7 @@ static var levelContainer : Transform;
 static var instance : GameCore;
 
 public var timeScale : float = 1.0;
+public var ignoreTimeScale : float = 0.0;
 
 ////////////////////
 // Player
@@ -219,6 +220,7 @@ static function Stop () {
 ////////////////////
 function Update () {
 	Time.timeScale = timeScale;
+	ignoreTimeScale = Time.deltaTime * Mathf.Pow ( timeScale, -1.0 );
 }
 
 
