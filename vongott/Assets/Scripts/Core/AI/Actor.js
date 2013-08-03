@@ -117,8 +117,15 @@ class Actor extends InteractiveObject {
 		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
 			shootTimer = 0;
 		
-			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target.collider.bounds.center, this.gameObject );
-			Debug.Log ( displayName + " | BANG!" );
+			var shootTarget : Vector3;
+		
+			if ( target.GetComponent ( Player ) ) {
+				shootTarget = target.GetComponent ( Player ).torso.transform.position;
+			} else if ( target.GetComponent ( Actor ) ) {
+				shootTarget = target.GetComponent ( Actor ).torso.position;
+			}
+		
+			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, shootTarget, this.gameObject );
 		}
 	}
 	
@@ -182,8 +189,8 @@ class Actor extends InteractiveObject {
 		}
 		
 		// Detect player
-		var here : Vector3 = this.transform.position + new Vector3 ( 0, 1, 0 );
-		var there : Vector3 = GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, 1, 0 );
+		var here : Vector3 = head.position;
+		var there : Vector3 = GameCore.GetPlayerObject().GetComponent(Player).head.transform.position;
 		var direction : Vector3 = there - here;
 		var angle : float = Vector3.Angle ( direction, transform.forward );
 		var hit : RaycastHit;

@@ -7,7 +7,7 @@ class Projectile extends MonoBehaviour {
 	var owner : GameObject;
 	
 	// Collision
-	function OnCollisionEnter ( other : Collision ) {
+	function OnCollisionEnter ( other : Collision ) {	
 		if ( other.collider.gameObject == this.gameObject ) { return; }
 		else if ( other.collider.gameObject.layer == 11 ) { return; }
 		else if ( other.collider.gameObject == owner ) { return; }
@@ -22,7 +22,12 @@ class Projectile extends MonoBehaviour {
 		}
 	}
 
-	// Debug
+	// Update
+	function Update () {
+		transform.position += transform.forward * ( speed * Time.deltaTime );	
+	}
+
+	// Draw
 	function OnDrawGizmos () {
 		Gizmos.DrawWireSphere ( transform.position, 0.25 );
 	}

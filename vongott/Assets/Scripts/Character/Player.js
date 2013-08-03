@@ -84,7 +84,6 @@ class Player extends MonoBehaviour {
 			shootTimer = 0;
 		
 			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target, this.gameObject );
-			Debug.Log ( "BANG!" );
 		}
 	}
 	

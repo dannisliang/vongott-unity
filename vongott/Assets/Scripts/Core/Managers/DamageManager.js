@@ -20,13 +20,16 @@ class DamageManager extends MonoBehaviour {
 	// Bullet
 	function SpawnBullet ( position : Vector3, target : Vector3, owner : GameObject ) {
 		var bullet : GameObject = Instantiate ( prefabBullet );
+		
+		Physics.IgnoreCollision ( bullet.collider, owner.collider );
+		
 		bullet.transform.parent = GameCore.levelContainer;
 		bullet.transform.position = position;
 		bullet.transform.LookAt ( target );
 		
 		var projectile : Projectile = bullet.GetComponent ( Projectile );
 		projectile.owner = owner;
-		
+				
 		allProjectiles.Add ( projectile );
 	}
 	
@@ -62,7 +65,6 @@ class DamageManager extends MonoBehaviour {
 				allProjectiles.RemoveAt ( i );
 			
 			} else {
-				current.transform.Translate ( Vector3.forward * ( current.speed * Time.deltaTime ) );
 				current.time += Time.deltaTime;
 			
 			} 
