@@ -16,6 +16,7 @@ class Item extends InteractiveObject {
 		Defence,
 		FireRate,
 		FireRange,
+		Accuracy,
 		ReloadSpeed,
 		RunningSpeed,
 		SwimmingSpeed,

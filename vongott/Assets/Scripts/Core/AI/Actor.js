@@ -67,7 +67,7 @@ class Actor extends InteractiveObject {
 	}
 	
 	function TakeDamage ( damage : float ) {
-		Debug.Log ( "OUCH! Damage: " + damage );
+		Debug.Log ( "Actor | Damage to '" + displayName + "': " + damage );
 	}
 	
 	
@@ -124,6 +124,11 @@ class Actor extends InteractiveObject {
 			} else if ( target.GetComponent ( Actor ) ) {
 				shootTarget = target.GetComponent ( Actor ).torso.position;
 			}
+		
+			var accuracyDecimal : float = GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100;
+			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
+		
+			shootTarget += Vector3.one * accuracyDegree;
 		
 			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, shootTarget, this.gameObject );
 		}

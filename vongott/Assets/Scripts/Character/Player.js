@@ -79,9 +79,18 @@ class Player extends MonoBehaviour {
 		shootTimer = GetEquipmentAttribute ( Item.Attributes.FireRate );
 	}
 	
+	function TakeDamage ( amount : float ) {
+		GameCore.Print ( "Player | Damage taken: " + amount );
+	}
+	
 	function Shoot ( target : Vector3 ) {
 		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
 			shootTimer = 0;
+		
+			var accuracyDecimal : float = GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100;
+			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
+		
+			target += Vector3.one * accuracyDegree;
 		
 			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target, this.gameObject );
 		}
