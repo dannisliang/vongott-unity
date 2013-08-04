@@ -58,10 +58,10 @@ class PlayerController extends MonoBehaviour {
 		
 		// Bullet time!
 		if ( Input.GetKeyDown ( KeyCode.LeftControl ) ) {
-			if ( GameCore.GetInstance().timeScale == 0.5 ) {
+			if ( GameCore.GetInstance().timeScale == 0.1 ) {
 				GameCore.GetInstance().timeScale = 1.0;
 			} else {
-				GameCore.GetInstance().timeScale = 0.5;
+				GameCore.GetInstance().timeScale = 0.1;
 				
 				GameCore.Print ( "Player | Bullet Time!" ); 
 			}
@@ -211,17 +211,12 @@ class PlayerController extends MonoBehaviour {
 		
 		}
 		
-		this.GetComponent(Animator).SetFloat("Speed", speed );
+		this.GetComponent(Animator).SetFloat("Speed", speed * ( 1 + Time.deltaTime ) );
 		
 		this.GetComponent(Animator).SetBool("Jumping", state == PlayerState.Jumping || state == PlayerState.Falling );
 		this.GetComponent(Animator).SetBool("Crouching", state == PlayerState.Crouching );
 		this.GetComponent(Animator).SetBool("Creeping", state == PlayerState.Creeping );
 		this.GetComponent(Animator).SetBool("SideStepLeft", state == PlayerState.SideStepLeft );
 		this.GetComponent(Animator).SetBool("SideStepRight", state == PlayerState.SideStepRight );
-
-	}
-
-	function FixedUpdate () {
-
 	}
 }

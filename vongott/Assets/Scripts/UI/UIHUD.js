@@ -19,6 +19,7 @@ class UIHUD extends OGPage {
 	var _statusBar : StatusBar;
 	var _notificationBox : NotificationBox;
 	var _crosshair : GameObject;
+	var _debugText : OGLabel;
 	
 	// Static vars
 	static var statusBar : StatusBar;

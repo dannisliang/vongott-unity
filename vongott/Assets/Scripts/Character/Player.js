@@ -90,7 +90,9 @@ class Player extends MonoBehaviour {
 			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100 );
 			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
 		
-			target += Vector3.one * accuracyDegree;
+			if ( GameCore.GetInstance().timeScale == 1.0 ) {
+				target += Vector3.one * accuracyDegree;
+			}
 		
 			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target, this.gameObject );
 		}

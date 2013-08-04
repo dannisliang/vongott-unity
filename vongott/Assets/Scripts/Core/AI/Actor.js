@@ -67,7 +67,7 @@ class Actor extends InteractiveObject {
 	}
 	
 	function TakeDamage ( damage : float ) {
-		Debug.Log ( "Actor | Damage to '" + displayName + "': " + damage );
+		GameCore.Print ( "Actor | Damage to '" + displayName + "': " + damage );
 	}
 	
 	

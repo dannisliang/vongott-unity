@@ -7,37 +7,28 @@ class Projectile extends MonoBehaviour {
 	var speed : float = 1.0;
 	var owner : GameObject;
 	
+	@HideInInspector var collidePos : Vector3 = Vector3.zero;
 	@HideInInspector var collideWith : GameObject;
-	
-	// Collision
-	function OnCollisionEnter ( other : Collision ) {	
-		if ( other.collider.gameObject == this.gameObject ) { return; }
-		else if ( other.collider.gameObject.layer == 11 ) { return; }
-		else if ( other.collider.gameObject == owner ) { return; }
-		
-		if ( other.collider.GetComponent ( Actor ) ) {
-			other.collider.GetComponent ( Actor ).TakeDamage ( damage );
-			Destroy ( this.gameObject );
-			return;
-		} else {
-			Destroy ( this.gameObject );
-			return;
-		}
-	}
 
 	// Update
 	function Update () {
 		var hit : RaycastHit;
 	
 		time += Time.deltaTime;
-		transform.position += transform.forward * ( speed * Time.deltaTime );
+		
+		if ( collidePos == Vector3.zero ) {
+			transform.position += transform.forward * ( speed * Time.deltaTime );
+		} else {
+			transform.position = Vector3.Lerp ( transform.position, collidePos, ( speed * Time.deltaTime ) * 2 );
+		}
 	
 		this.GetComponent(TrailRenderer).enabled = GameCore.GetInstance().timeScale != 1.0;
 	
 		if ( time > expirationTime ) {
 			Destroy ( this.gameObject );
-		
-		} else if ( collideWith ) {
+				
+		} else if ( collideWith && ( collidePos - transform.position ).magnitude < 0.05 ) {
+			
 			if ( collideWith.GetComponent ( Actor ) ) {
 				collideWith.GetComponent ( Actor ).TakeDamage ( damage );
 			
@@ -53,6 +44,7 @@ class Projectile extends MonoBehaviour {
 		
 		} else if ( Physics.Linecast ( transform.position, transform.position + transform.forward * 1.0, hit ) ) {
 			Debug.DrawLine ( transform.position, hit.point, Color.green );
+			collidePos = hit.point;
 			collideWith = hit.collider.gameObject;
 		
 		}

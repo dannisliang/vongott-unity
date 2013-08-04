@@ -220,6 +220,7 @@ static function Stop () {
 ////////////////////
 function Update () {
 	Time.timeScale = timeScale;
+	Time.fixedDeltaTime = 0.02 * timeScale;
 	ignoreTimeScale = Time.deltaTime * Mathf.Pow ( timeScale, -1.0 );
 }
 
@@ -227,14 +228,22 @@ function Update () {
 ////////////////////
 // Debug
 ////////////////////
+static var debugString : String = "";
+
 static function Print ( msg : String ) {
 	if ( debuggingEnabled ) {
+		debugString = msg + "\n" + debugString;
 		Debug.Log ( msg );
 	}
 }
 
 static function Error ( msg : String ) {
 	if ( debuggingEnabled ) {
+		debugString = msg + "\n" + debugString;
 		Debug.LogError ( msg );
 	}
+}
+
+function OnGUI () {
+	GUI.Label ( Rect ( 10, 10, Screen.width, Screen.height / 4 ), debugString );
 }
