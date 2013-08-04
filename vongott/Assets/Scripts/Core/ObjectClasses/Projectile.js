@@ -32,6 +32,8 @@ class Projectile extends MonoBehaviour {
 		time += Time.deltaTime;
 		transform.position += transform.forward * ( speed * Time.deltaTime );
 	
+		this.GetComponent(TrailRenderer).enabled = GameCore.GetInstance().timeScale != 1.0;
+	
 		if ( time > expirationTime ) {
 			Destroy ( this.gameObject );
 		
