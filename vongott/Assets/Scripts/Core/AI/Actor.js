@@ -125,7 +125,7 @@ class Actor extends InteractiveObject {
 				shootTarget = target.GetComponent ( Actor ).torso.position;
 			}
 		
-			var accuracyDecimal : float = GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100;
+			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100 );
 			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
 		
 			shootTarget += Vector3.one * accuracyDegree;

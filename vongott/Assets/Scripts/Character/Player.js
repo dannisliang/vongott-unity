@@ -87,7 +87,7 @@ class Player extends MonoBehaviour {
 		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
 			shootTimer = 0;
 		
-			var accuracyDecimal : float = GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100;
+			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100 );
 			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
 		
 			target += Vector3.one * accuracyDegree;

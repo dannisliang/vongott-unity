@@ -58,6 +58,6 @@ class Projectile extends MonoBehaviour {
 
 	// Draw
 	function OnDrawGizmos () {
-		//Gizmos.DrawWireSphere ( transform.position, 0.25 );
+		Gizmos.DrawWireSphere ( transform.position, 0.25 );
 	}
 }
