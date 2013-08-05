@@ -30,6 +30,7 @@ static var instance : GameCore;
 
 public var timeScale : float = 1.0;
 public var ignoreTimeScale : float = 0.0;
+public var tempTimeScale : float = 1.0;
 
 ////////////////////
 // Player
@@ -150,6 +151,42 @@ static function GoToEditor () {
 	Application.LoadLevel ( "editor" );
 }
 
+////////////////////
+// Pause
+////////////////////
+// Blur
+function SetPause ( state : boolean ) {
+	Camera.main.GetComponent ( BlurEffect ).enabled = state;
+	
+	if ( state ) {
+		ToggleControls ( false );
+		
+		tempTimeScale = timeScale;
+		
+		SetTimeScale ( 0 );
+
+	} else {
+		SetTimeScale ( tempTimeScale );
+		
+		ToggleControls ( true );
+		
+	}
+}
+
+// Timescale
+function TweenTimeScale ( start : float, goal : float, time : float ) {
+	iTween.ValueTo ( this.gameObject, iTween.Hash (
+		"from", start,
+		"to", goal,
+		"onupdate", "SetTimeScale",
+		"ignoretimescale", true,
+		"time", time
+	) );
+}
+
+function SetTimeScale ( time : float ) {
+	timeScale = time;
+}
 
 ////////////////////
 // Init
@@ -175,6 +212,9 @@ function Start () {
 	
 	// Flags
 	FlagManager.Init();
+	
+	// Mods
+	ModManager.Init();
 	
 	// Main camera
 	cam = Camera.main.transform;

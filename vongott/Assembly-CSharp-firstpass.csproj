@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Plugins\Blur\BlurEffect.cs" />
      <Compile Include="Assets\Plugins\JSONObject.cs" />
      <Compile Include="Assets\Plugins\Loom.cs" />
      <Compile Include="Assets\Plugins\Nullable.cs" />
@@ -57,6 +58,7 @@
      <None Include="Assets\Shaders\BumpedSpecular.shader" />
      <None Include="Assets\Shaders\RimLighting.shader" />
      <None Include="Assets\Shaders\OutlineDiffuse.shader" />
+     <None Include="Assets\Plugins\Blur\BlurEffectConeTaps.shader" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
      <None Include="Assets\Shaders\OutlineSilhouetteBumpedDiffuse.shader" />
      <None Include="Assets\Shaders\BumpedRim.shader" />

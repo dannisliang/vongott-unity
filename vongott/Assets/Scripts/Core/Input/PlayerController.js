@@ -57,7 +57,7 @@ class PlayerController extends MonoBehaviour {
 		var h = Input.GetAxisRaw("Horizontal");
 		
 		// Bullet time!
-		if ( Input.GetKeyDown ( KeyCode.LeftControl ) ) {
+		if ( Input.GetKeyDown ( KeyCode.F1 ) ) {
 			if ( GameCore.GetInstance().timeScale == 0.1 ) {
 				GameCore.GetInstance().timeScale = 1.0;
 			} else {
@@ -93,10 +93,10 @@ class PlayerController extends MonoBehaviour {
 				if ( Input.GetMouseButton(0) ) {
 					this.GetComponent(Player).Shoot ( target );
 				}
-			}
-		
+			}				
 		} else if ( UIHUD.crosshair.activeSelf ) {
 			UIHUD.crosshair.SetActive ( false );
+		
 		}
 														
 		// Set speed		

@@ -203,7 +203,7 @@ class UIInventory extends OGPage {
 	// Init
 	////////////////////
 	override function StartPage () {
-		GameCore.ToggleControls ( false );
+		GameCore.GetInstance().SetPause ( true );
 		PopulateGrid ();
 	}
 	

@@ -23,6 +23,7 @@ class Projectile extends MonoBehaviour {
 		}
 	
 		this.GetComponent(TrailRenderer).enabled = GameCore.GetInstance().timeScale != 1.0;
+		this.GetComponent(MeshRenderer).enabled = GameCore.GetInstance().timeScale != 1.0;
 	
 		if ( time > expirationTime ) {
 			Destroy ( this.gameObject );
@@ -43,6 +44,8 @@ class Projectile extends MonoBehaviour {
 			Destroy ( this.gameObject );
 		
 		} else if ( Physics.Linecast ( transform.position, transform.position + transform.forward * 1.0, hit ) ) {
+			if ( hit.collider.gameObject == owner ) { return; }
+			
 			Debug.DrawLine ( transform.position, hit.point, Color.green );
 			collidePos = hit.point;
 			collideWith = hit.collider.gameObject;

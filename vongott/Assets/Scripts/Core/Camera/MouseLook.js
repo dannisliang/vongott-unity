@@ -29,14 +29,18 @@ function Update () {
     if ( !mouselookActive ) {
     	return;
     }
-    
+        
     if (axes == RotationAxes.MouseXAndY) {
         var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
 
         rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
         rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
-        transform.localRotation = Quaternion.Lerp ( transform.localRotation, Quaternion.Euler (-rotationY, rotationX, 0), 20 * GameCore.GetInstance().ignoreTimeScale );
+		var newRotation : Quaternion = Quaternion.Lerp ( transform.localRotation, Quaternion.Euler (-rotationY, rotationX, 0), 20 * GameCore.GetInstance().ignoreTimeScale );
+
+		if ( !float.IsNaN(newRotation.x) && !float.IsNaN(newRotation.y) && !float.IsNaN(newRotation.z) && !float.IsNaN(newRotation.w) ) {
+			transform.localRotation = newRotation;
+    	}
     
     } else if (axes == RotationAxes.MouseX) {
         transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);

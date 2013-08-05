@@ -40,6 +40,8 @@ class UIHUD extends OGPage {
 		
 		ShowNotification ( "" );
 		crosshair.SetActive ( false );
+		
+		GameCore.GetInstance().SetPause ( false );
 	}
 	
 	
@@ -51,8 +53,8 @@ class UIHUD extends OGPage {
 			OGRoot.GoToPage ( "Inventory" );
 		} else if ( Input.GetKeyDown(KeyCode.Q) ) {
 			OGRoot.GoToPage ( "Quests" );
-		} else if ( Input.GetKeyDown(KeyCode.Period) ) {
-			GameCore.GoToEditor ();
+		} else if ( Input.GetMouseButtonDown(2) ) {
+			OGRoot.GoToPage ( "ModWheel" );
 		}
 		
 		if ( notificationTimer > 0.0 ) {
