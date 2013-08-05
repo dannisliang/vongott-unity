@@ -46,7 +46,7 @@ There will be no debug menu, as switching between the editor and the game is pre
 ### Melee attack
 - Various combat animations based on Oni and Tekken
 - The damage dealt during melee attacks is influenced by mechanical mods
-- The range of combos is influenced by biological mods
+- All melee attacks are meant to be regular punches. No Bruce Lee combos.
 
 ### Weapons
 - The player can pick up any weapon within the game and use it

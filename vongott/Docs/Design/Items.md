@@ -83,14 +83,10 @@ Mechanical upgrades enhance the capability of their governing limb area. They ne
 - Kicking damage  
 - Running speed
 - Jumping height
-- Noise reduction
 
 #### Arms  
 - Punching damage  
 - Swimming speed
-- Takedowns
-  - Scripted takedown animation
-  - Should be as brief as possible
 
 #### Back   
 - Fall damage reduction
@@ -108,12 +104,11 @@ Biological upgrades govern internal properties, such as reflexes and dexterity. 
 - Lock picking
 - Reload speed
   - The factor with which to multiply the reload speed of any weapon
-- Punch combo
-  - A series of punching attacks
+- Punch
+  - A variety of punching attacks
 
 #### Feet 
-- Kick combo
-  - A series of kicking attacks
+- Noise reduction
 
 #### Skull 
 - Hacking
