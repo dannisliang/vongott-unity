@@ -56,17 +56,6 @@ class PlayerController extends MonoBehaviour {
 		var v = Input.GetAxisRaw("Vertical");
 		var h = Input.GetAxisRaw("Horizontal");
 		
-		// Bullet time!
-		if ( Input.GetKeyDown ( KeyCode.F1 ) ) {
-			if ( GameCore.GetInstance().timeScale == 0.1 ) {
-				GameCore.GetInstance().timeScale = 1.0;
-			} else {
-				GameCore.GetInstance().timeScale = 0.1;
-				
-				GameCore.Print ( "Player | Bullet Time!" ); 
-			}
-		}
-		
 		// Mouse controls
 		if ( Input.GetMouseButton(1) && ( state == PlayerState.Idle || state == PlayerState.Walking ) ) {
 			transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z ), 10 * Time.deltaTime );

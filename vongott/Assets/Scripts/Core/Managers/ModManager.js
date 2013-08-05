@@ -14,15 +14,19 @@ class ModManager {
 					
 				break;
 		}
+		
+		activeMod = "";
 	}
 	
 	static function Activate ( mod : String ) {
-		if ( activeMod != "" ) {
-			DeactivateMod ( activeMod );
-		} else if ( mod == activeMod ) {
+		if ( mod == activeMod ) {
 			DeactivateMod ( mod );
 			return;
+		} else if ( activeMod != "" ) {
+			DeactivateMod ( activeMod );
 		}
+		
+		activeMod = mod;
 		
 		switch ( mod ) {
 			case "Reflexes":

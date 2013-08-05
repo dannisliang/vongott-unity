@@ -163,9 +163,11 @@ function SetPause ( state : boolean ) {
 		
 		tempTimeScale = timeScale;
 		
+		iTween.StopByName ( "TimeScaleTween" );
 		SetTimeScale ( 0 );
 
 	} else {
+		iTween.StopByName ( "TimeScaleTween" );
 		SetTimeScale ( tempTimeScale );
 		
 		ToggleControls ( true );
@@ -176,6 +178,7 @@ function SetPause ( state : boolean ) {
 // Timescale
 function TweenTimeScale ( start : float, goal : float, time : float ) {
 	iTween.ValueTo ( this.gameObject, iTween.Hash (
+		"name", "TimeScaleTween",
 		"from", start,
 		"to", goal,
 		"onupdate", "SetTimeScale",
@@ -260,7 +263,11 @@ static function Stop () {
 ////////////////////
 function Update () {
 	Time.timeScale = timeScale;
-	Time.fixedDeltaTime = 0.02 * timeScale;
+	
+	if ( timeScale > 0 ) {
+		Time.fixedDeltaTime = 0.02 * timeScale;
+	}
+	
 	ignoreTimeScale = Time.deltaTime * Mathf.Pow ( timeScale, -1.0 );
 }
 
