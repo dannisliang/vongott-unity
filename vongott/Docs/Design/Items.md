@@ -79,40 +79,33 @@ The upgrades are like equipment, can be found or purchased, and they will replac
 ### Mechanical
 Mechanical upgrades enhance the capability of their governing limb area. They need to be installed by a professional mechanic.
 
-#### Legs  
-- Kicking damage  
-- Running speed
-- Jumping height
+#### Legs
+- SPEED: Running/swimming speed/jumping height
 
 #### Arms  
-- Punching damage  
-- Swimming speed
+- STRENGTH: Punching damage and lifting things
 
 #### Back   
-- Fall damage reduction
-- Cloak
+- Fall damage reduction ( passive )
+- CLOAK: Invisibility cloak
 
 ### Biological
 Biological upgrades govern internal properties, such as reflexes and dexterity. They can be installed by the player.
 
 #### Eyes  
-- Auto aim
-- Enemy analysis
-  - Display target enemy statistics
+- AIM: Auto aim
 
 #### Hands  
-- Lock picking
-- Reload speed
+- Lock picking (passive)
+- Reload speed (passive)
   - The factor with which to multiply the reload speed of any weapon
-- Punch
-  - A variety of punching attacks
+- Punch (passive)
+  - A variety of punching attacks with different impact levels
 
 #### Feet 
-- Noise reduction
+- SILENCE: Noise reduction
 
 #### Skull 
-- Hacking
+- Hacking (passive)
   - Interfacing with consoles, cameras and computers without knowing the username and password
-- Reflexes
-  - Slows down time for everything except the mouse control
-  - Get as much Max Payne into this as possible
+- REFLEXES: Slows down time for everything except the mouse control
