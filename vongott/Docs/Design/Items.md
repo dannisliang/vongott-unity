@@ -86,7 +86,7 @@ Mechanical upgrades enhance the capability of their governing limb area. They ne
 - STRENGTH: Punching damage and lifting things
 
 #### Back   
-- Fall damage reduction ( passive )
+- PARACHUTE: Fall damage reduction and noise cancelling
 - CLOAK: Invisibility cloak
 
 ### Biological
