@@ -74,13 +74,23 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 - EMP
 
 ## Upgrades
-The upgrades are like equipment, can be found or purchased, and they will replace physical bodyparts pf the player, allowing fro a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs). Only one upgrade can be activated at a time.
+The upgrades are like equipment, can be found or purchased.
 
 ### Mechanical
-Mechanical upgrades enhance the capability of their governing limb area. They need to be installed by a professional mechanic.
+Mechanical upgrades need to be installed by a professional mechanic, as they replace physical bodyparts of the player, allowing for a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs). When activated, they consume electricity.
+
+#### Skull
+- REFLEXES: Slows down time for everything except the mouse control
+- AIM: Auto aim
+
+#### Torso
+- HEALTH: Slow health regeneration
 
 #### Legs
 - SPEED: Running/swimming speed/jumping height
+
+#### Feet
+- SILENCE: Noise reduction
 
 #### Arms  
 - STRENGTH: Punching damage and lifting things
@@ -90,22 +100,15 @@ Mechanical upgrades enhance the capability of their governing limb area. They ne
 - CLOAK: Invisibility cloak
 
 ### Biological
-Biological upgrades govern internal properties, such as reflexes and dexterity. They can be installed by the player.
-
-#### Eyes  
-- AIM: Auto aim
+Biological upgrades are passive and govern internal properties, such as reflexes and dexterity. They can be installed by the player.
 
 #### Hands  
-- Lock picking (passive)
-- Reload speed (passive)
+- Lock picking
+- Reload speed
   - The factor with which to multiply the reload speed of any weapon
-- Punch (passive)
+- Punch
   - A variety of punching attacks with different impact levels
-
-#### Feet 
-- SILENCE: Noise reduction
 
 #### Skull 
 - Hacking (passive)
   - Interfacing with consoles, cameras and computers without knowing the username and password
-- REFLEXES: Slows down time for everything except the mouse control
