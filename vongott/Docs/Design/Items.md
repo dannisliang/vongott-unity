@@ -112,3 +112,11 @@ Biological upgrades are passive and govern internal properties, such as reflexes
 #### Skull 
 - Hacking (passive)
   - Interfacing with consoles, cameras and computers without knowing the username and password
+
+### Combinations
+Players should be rewarded for combining certain upgrades, such as events triggering.
+- REFLEXES + SPEED: Time slows down, but players move around at normal speed
+- SPEED + STRENGTH: When running up to an enemy and punching, a special machinima plays
+  - Self-fist-five and enemy's head flies off! F*ck yeah!
+- PARACHUTE + STRENGTH: The player creates a shockwave when landing
+  
