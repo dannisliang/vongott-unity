@@ -15,6 +15,7 @@ class PlayerController extends MonoBehaviour {
 	
 	var state : PlayerState = PlayerState.Idle;
 	var speed : float = 0.0;
+	var speedModifier : float = 1.0;
 	var distGround : float = 0.0;
 	var isGrounded : boolean = true;
 	var inCrawlspace : boolean = false;
@@ -122,9 +123,9 @@ class PlayerController extends MonoBehaviour {
 			}
 			
 			var rotationTarget : Quaternion = Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z );	
-			
+						
 			if ( !Input.GetMouseButton(1) ) {
-				transform.rotation = Quaternion.Slerp ( transform.rotation, rotationTarget, 5 * Time.deltaTime );
+				transform.rotation = Quaternion.Slerp ( transform.rotation, rotationTarget, ( 5 * speedModifier ) * Time.deltaTime );
 			} else {
 				if ( h < 0 ) {
 					state = PlayerState.SideStepLeft;
@@ -150,8 +151,10 @@ class PlayerController extends MonoBehaviour {
 				}
 				
 			} else if ( state == PlayerState.Running ) {
-				if ( speed < 1.0 ) {	
-					speed += 0.01;
+				if ( speed < speedModifier ) {	
+					speed += 0.01 * speedModifier;
+				} else if ( speed > speedModifier ) {
+					speed -= 0.02;
 				}
 			
 			} else if ( state == PlayerState.Jumping ) {

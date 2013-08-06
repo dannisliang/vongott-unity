@@ -94,7 +94,7 @@ class Player extends MonoBehaviour {
 				target += Vector3.one * accuracyDegree;
 			}
 		
-			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, target, this.gameObject );
+			DamageManager.GetInstance().SpawnBullet ( equippedItem, target, this.gameObject );
 		}
 	}
 	

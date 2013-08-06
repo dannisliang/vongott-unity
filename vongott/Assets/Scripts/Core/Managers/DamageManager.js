@@ -15,15 +15,36 @@ class DamageManager extends MonoBehaviour {
 	// Spawn
 	//////////////////
 	// Bullet
-	function SpawnBullet ( position : Vector3, target : Vector3, owner : GameObject ) {
+	function SpawnBullet ( origin : GameObject, target : Vector3, owner : GameObject ) {
+		var weapon : Item = origin.GetComponent ( Equipment ) as Item;
+		
 		var bullet : GameObject = Instantiate ( prefabBullet );
 				
 		bullet.transform.parent = GameCore.levelContainer;
-		bullet.transform.position = position;
+		bullet.transform.position = weapon.transform.position;
 		bullet.transform.LookAt ( target );
 		
 		var projectile : Projectile = bullet.GetComponent ( Projectile );
 		projectile.owner = owner;
+	
+		projectile.expirationTime = GetEquipmentAttribute ( weapon, Item.Attributes.FireRange ) / projectile.speed;
+	}
+	
+	
+	/////////////////
+	// Get info
+	/////////////////
+	// Attr
+	function GetEquipmentAttribute ( item : Item, a : Item.Attributes ) : float {
+		for ( var attr : Item.Attribute in item.GetComponent(Item).attr ) {
+			if ( attr.type == a ) {
+				return attr.val;
+			} 
+		}
+		
+		GameCore.Error ( "DamageManager | Found no attribute " + a + " for item " + item );
+		
+		return 100;
 	}
 	
 	

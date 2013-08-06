@@ -215,10 +215,7 @@ function Start () {
 	
 	// Flags
 	FlagManager.Init();
-	
-	// Mods
-	ModManager.Init();
-	
+		
 	// Main camera
 	cam = Camera.main.transform;
 	

@@ -32,10 +32,10 @@ function CompensateForWalls ( newPos : Vector3 ) {
 	var wallHit : RaycastHit = new RaycastHit();		
 
 	if ( Physics.Linecast ( from, to, wallHit, 9 ) ) {
-		Debug.DrawLine( from, wallHit.point, Color.red);
+		Debug.DrawLine( from, wallHit.point, Color.blue);
 		newPos = Camera.main.transform.InverseTransformPoint( wallHit.point );
 	} else {
-		Debug.DrawLine ( from, to, Color.green );
+		Debug.DrawLine ( from, to, Color.cyan );
 	}
 	
 	return newPos;
@@ -49,6 +49,8 @@ function GetCamDist() : Vector3 {
 	
 	var speed : float = player.GetComponent(Animator).GetFloat("Speed");
 	var newPos : Vector3;
+	
+	if ( speed > 1.0 ) { speed = 1.0; }
 	
 	if ( Input.GetMouseButton(1) ) {
 		z += 2.0;

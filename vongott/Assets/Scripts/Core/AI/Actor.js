@@ -1,6 +1,11 @@
 #pragma strict
 
 class Actor extends InteractiveObject {
+	private class VisionCone {
+		var distance : float = 20.0;
+		var angle : float = 22.5;
+	}
+	
 	var head : Transform;
 	var hand : Transform;
 	var torso : Transform;
@@ -13,7 +18,10 @@ class Actor extends InteractiveObject {
 	var mood : String;
 	var attentionSpan : float = 30.0;
 	var updateFrequency : float = 5.0;
+	var keepDistance : float = 10.0;
 	var speed : float = 4.0;
+	var vision : VisionCone = new VisionCone();
+	var hearing : float = 10;
 
 	var path : List.< GameObject >;
 	var inventory : Entry[] = new Entry [4];
@@ -30,6 +38,7 @@ class Actor extends InteractiveObject {
 	@HideInInspector var equippedItem : GameObject;
 	@HideInInspector var updateTimer : float = 0;
 	@HideInInspector var initPosition : Vector3;
+	@HideInInspector var canShoot : boolean = false;
 
 	////////////////////
 	// Init
@@ -111,9 +120,9 @@ class Actor extends InteractiveObject {
 		shootTimer = GetEquipmentAttribute ( Item.Attributes.FireRate );
 	}
 	
-	function Shoot () {		
+	function Shooting () {		
 		if ( !equippedItem ) { return; }		
-		
+				
 		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
 			shootTimer = 0;
 		
@@ -130,7 +139,7 @@ class Actor extends InteractiveObject {
 		
 			shootTarget += Vector3.one * accuracyDegree;
 		
-			DamageManager.GetInstance().SpawnBullet ( equippedItem.transform.position, shootTarget, this.gameObject );
+			DamageManager.GetInstance().SpawnBullet ( equippedItem, shootTarget, this.gameObject );
 		}
 	}
 	
@@ -142,7 +151,9 @@ class Actor extends InteractiveObject {
 	}
 		
 	function ClearPath () {
-		this.GetComponent ( AStarPathFinder ).ClearNodes ();
+		if ( this.GetComponent ( AStarPathFinder ).nodes.Count > 0 ) {
+			this.GetComponent ( AStarPathFinder ).ClearNodes ();
+		}
 	}	
 	
 	function Chase ( t : Transform ) {
@@ -152,15 +163,34 @@ class Actor extends InteractiveObject {
 			if ( inventory[0].model ) {
 				Equip ( inventory[0] );
 			}
-			
-			FindPath ( target.position );
-			
+						
 			Say ( "Hey! You!" );
 		
 		} else {
 			ClearPath ();
 			
 		}
+	}
+	
+	function Turning ( t : Transform ) {
+		var lookPos : Vector3 = t.position - transform.position;
+		lookPos.y = 0;
+		
+		transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 4 * Time.deltaTime );
+	}
+	
+	function Approaching ( t : Transform ) {
+		ClearPath ();
+		
+		if ( ( transform.position - t.position ).magnitude > keepDistance ) {
+			Turning ( t );		
+			transform.localPosition += transform.forward * speed * Time.deltaTime;
+		
+		} else {
+			Turning ( t );
+		}
+		
+		canShoot = ( transform.position - t.position ).magnitude < keepDistance * 2;
 	}
 	
 	function GiveUp () {
@@ -197,52 +227,73 @@ class Actor extends InteractiveObject {
 		var here : Vector3 = head.position;
 		var there : Vector3 = GameCore.GetPlayerObject().GetComponent(Player).head.transform.position;
 		var direction : Vector3 = there - here;
-		var angle : float = Vector3.Angle ( direction, transform.forward );
+		var angle : float = Vector3.Angle ( forward, direction );
+		var distance : float = direction.magnitude;
 		var hit : RaycastHit;
 		
+		var inSight : boolean = angle < vision.angle && Physics.Raycast ( here, direction, hit, vision.distance ) && hit.collider.gameObject == GameCore.GetPlayerObject();
+		var inEarshot : boolean = distance < hearing &&  GameCore.GetPlayerObject().GetComponent(PlayerController).speed > 0.5;
+						
 		// ^ The player is in sight
-		if ( Physics.Raycast ( here, direction, hit, Mathf.Infinity ) && hit.collider.gameObject == GameCore.GetPlayerObject() ) {
+		if ( inSight ) {
+			// Draw sight
 			Debug.DrawLine ( here, there, Color.green );
 			
-			// Enemies chase the player
+			// Enemies shoot the player
 			if ( affiliation == "enemy" ) {
 				if ( !target ) {
 					Chase ( hit.collider.transform );
 				}
-				
-				Shoot ();						
 								
+				Approaching ( target );
+				
+				if ( canShoot ) {
+					Shooting ();						
+				}
+												
 			// Allies might call for the player's attention
 			} else if ( affiliation == "ally" ) {
 				//Say ( "Yoohoo!" );
 			
 			}
+			
+			// Reset timers
+			attentionTimer = 0;
+			updateTimer = updateFrequency;
 		
 		// ^ The player is out of sight
-		} else {
-		
-		}
-		
-		// Attention span & update frequency
-		if ( target ) {			
-			if ( updateTimer < updateFrequency ) {
-				updateTimer += Time.deltaTime;
-			} else {
-				updateTimer = 0;
-				FindPath ( target.position );
-			}
+		} else {			
+			// The player is a target
+			if ( target ) {
+				// Update frequency
+				if ( updateTimer < updateFrequency ) {
+					updateTimer += Time.deltaTime;
+				} else {
+					updateTimer = 0;
+					FindPath ( target.position );
+				}
+				
+				// Attention span
+				if ( attentionTimer < attentionSpan ) {
+					attentionTimer += Time.deltaTime;
+				} else {
+					attentionTimer = 0;
+					GiveUp ();
+				}
 			
-			if ( attentionTimer < attentionSpan ) {
-				attentionTimer += Time.deltaTime;
+			// The player is within earshot
+			} else if ( inEarshot ) {
+				Chase ( GameCore.GetPlayerObject().GetComponent(Player).transform );
+				
+				// Reset timers
+				attentionTimer = 0;
+				updateTimer = updateFrequency;
+			
 			} else {
 				attentionTimer = 0;
-				GiveUp ();
-			}
-			
-		} else {
-			attentionTimer = 0;
-			updateTimer = 0;
-			
+				updateTimer = 0;
+		
+			}	
 		}
 		
 		// Shoot timer

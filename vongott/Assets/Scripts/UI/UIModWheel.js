@@ -7,7 +7,7 @@ class UIModWheel extends OGPage {
 	
 	function Pick ( mod : String ) {
 		OGRoot.GoToPage ( "HUD" );
-		ModManager.Activate ( mod );
+		UpgradeManager.Activate ( mod );
 	}
 	
 	override function UpdatePage () {

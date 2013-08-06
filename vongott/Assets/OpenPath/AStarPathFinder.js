@@ -4,7 +4,7 @@ class AStarPathFinder extends MonoBehaviour {
 	var currentNode : int = 0;
 	var scanner : AStarScanner;
 	var speed : float = 4.0;
-	var stoppingDistance : float = 5.0;
+	var stoppingDistance : float = 0.1;
 	var nodeDistance : float = 1.0;
 	
 	@HideInInspector var nodes : List.<AStarNode> = new List.<AStarNode>();
