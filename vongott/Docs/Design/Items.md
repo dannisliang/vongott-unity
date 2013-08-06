@@ -74,7 +74,7 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 - EMP
 
 ## Upgrades
-The upgrades are like equipment, can be found or purchased, and they will replace physical bodyparts pf the player, allowing fro a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs). Only one upgrade can be activated at a time.
+The upgrades are like equipment, can be found or purchased, and they will replace physical bodyparts of the player, allowing for a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs). Only one upgrade can be activated at a time.
 
 ### Mechanical
 Mechanical upgrades enhance the capability of their governing limb area. They need to be installed by a professional mechanic.
