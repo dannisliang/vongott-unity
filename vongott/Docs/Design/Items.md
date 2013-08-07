@@ -2,6 +2,9 @@ Items
 =====
 Items can be found, stolen or purchased throughout the world. They should have short, accurate descriptions in layman's terms. And silly. Silly as hell. The player should be incentivised to look for items because of their usefulness in the world. 
 
+## Redable items
+Books, newspapers, post-it notes, etc. These will provide trivia on the game world and mission critical clues.
+
 ## Trigger items
 Some items trigger events, like doors opening and hidden areas being revealed. These items can either be picked up or not, and should be hinted at through riddles and other clues, a la Silent Hill.
 
