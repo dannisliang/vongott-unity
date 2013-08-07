@@ -120,10 +120,8 @@ class Actor extends InteractiveObject {
 		shootTimer = GetEquipmentAttribute ( Item.eItemAttribute.FireRate );
 	}
 	
-	function Shooting () {		
-		if ( !equippedItem ) { return; }		
-				
-		if ( shootTimer >= GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
+	function Shooting () {						
+		if ( equippedItem && shootTimer >= GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
 			shootTimer = 0;
 		
 			var shootTarget : Vector3;

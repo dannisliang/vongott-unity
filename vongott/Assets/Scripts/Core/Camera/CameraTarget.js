@@ -71,6 +71,7 @@ function GetCamDist() : Vector3 {
 // Init
 function Start () {
 	instance = this.gameObject.transform;
+	player = GameCore.GetPlayerObject();
 }
 
 // Update

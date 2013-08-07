@@ -194,7 +194,7 @@ static function SerializeInventory ( entries : InventoryEntry[] ) : JSONObject {
 	for ( var e : InventoryEntry in entries ) {
 		if ( e ) {
 			var entry : JSONObject = JSONObject (JSONObject.Type.OBJECT );
-			entry.AddField ( "model", e.prefabPath );
+			entry.AddField ( "prefabPath", e.prefabPath );
 			inv.Add ( entry );
 		}
 	}

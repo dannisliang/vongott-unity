@@ -7,6 +7,7 @@
 var _levelContainer : Transform;
 var _playerObject : GameObject;
 var _scanner : AStarScanner;
+var _camTarget : GameObject;
 
 // Static vars
 static var debuggingEnabled = true;
@@ -113,8 +114,7 @@ static function LoadLevel ( path : String, spawnPoint : String ) {
 		//}
 	}
 	
-	// Instantiate and position camera target
-	camTarget = Instantiate ( Resources.Load ( "Prefabs/Core/CameraTarget" ) ) as GameObject;
+	// Position camera target
 	camTarget.transform.parent = currentLevel.transform;
 	camTarget.GetComponent ( CameraTarget ).player = playerObject;
 	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
@@ -217,6 +217,7 @@ function Start () {
 	FlagManager.Init();
 		
 	// Main camera
+	camTarget = _camTarget;
 	cam = Camera.main.transform;
 	
 	// Level container
