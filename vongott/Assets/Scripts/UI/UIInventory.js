@@ -53,7 +53,7 @@ class UIInventory extends OGPage {
 	var buttons : InspectorButtons;
 	
 	// Private vars
-	@HideInInspector private var selectedEntry : Entry;
+	@HideInInspector private var selectedEntry : InventoryEntry;
 	
 	
 	////////////////////
@@ -72,18 +72,20 @@ class UIInventory extends OGPage {
 	function PopulateGrid () {
 		ClearGrid ();
 		
-		var allSlots : Slot[] = InventoryManager.GetSlots();
+		var allSlots : Dictionary.< int, InventoryEntry > = InventoryManager.GetSlots();
 		
 		var col = 0;
 		var row = 0;
 		
-		for ( var i = 0 ; i < allSlots.Length; i++ ) {
+		for ( var i = 0 ; i < InventoryManager.capacity; i++ ) {
 			var slot : InventorySlot = new InventorySlot ( i, col, row, grid, this.gameObject );
-			
-			if ( allSlots[i].entry ) {
-				slot.image.GetComponent(OGImage).image = allSlots[i].entry.image;
+						
+			if ( allSlots[i] ) {
+				var item : Item = allSlots[i].GetItem();
+				slot.image.GetComponent(OGImage).image = item.image;
+				DestroyImmediate ( item.gameObject );
 			}
-			
+						
 			slots.Add ( slot );
 		
 			if ( col < 3 ) {
@@ -98,28 +100,31 @@ class UIInventory extends OGPage {
 	// Select slot
 	function SelectSlot ( i : String ) {
 		var index : int = int.Parse ( i );
-		var allSlots : Slot[] = InventoryManager.GetSlots();
+		var allSlots : Dictionary.< int, InventoryEntry > = InventoryManager.GetSlots();
 		
-		if ( allSlots[index].entry ) {
-			var entry = allSlots[index].entry;
 		
-			inspector.entryName.text = entry.title;
-			inspector.description.text = entry.desc;
+		
+		if ( allSlots[index] ) {
+			var entry = allSlots[index];
+			var item = allSlots[index].GetItem();
+		
+			inspector.entryName.text = item.title;
+			inspector.description.text = item.desc;
 			inspector.attrName.text = "";
 			inspector.attrVal.text = "";
 			
-			for ( var a : Item.Attribute in entry.attr ) {
+			for ( var a : Item.Attribute in item.attr ) {
 				inspector.attrName.text += a.type.ToString() + ": \n";
 				inspector.attrVal.text += a.val.ToString() + "\n";
 			}
 			
-			if ( entry.type == Item.Types.Equipment ) {
+			if ( item.type == Item.eItemType.Equipment ) {
 				if ( !entry.equipped ) {
 					SetButtons ( "Discard", "Equip" );
 				} else {
 					SetButtons ( null, "Unequip" );
 				}
-			} else if ( entry.type == Item.Types.Upgrade ) {
+			} else if ( item.type == Item.eItemType.Upgrade ) {
 				if ( !entry.installed ) {
 					SetButtons ( "Discard", "Install" );
 				} else {
@@ -130,6 +135,8 @@ class UIInventory extends OGPage {
 			}
 			
 			selectedEntry = entry;
+			
+			DestroyImmediate ( item.gameObject );
 		}
 	}
 	
@@ -138,13 +145,25 @@ class UIInventory extends OGPage {
 	// Action buttons
 	////////////////////
 	// Equip entry
-	private function Equip ( entry : Entry, equip : boolean ) {
+	private function Equip ( entry : InventoryEntry, equip : boolean ) {
 		entry.equipped = equip;
+		
+		var item : Item = entry.GetItem();
+		
+		InventoryManager.Equip ( item, equip );
 	}
 	
 	// Install entry
-	private function Install ( entry : Entry, install : boolean ) {
+	private function Install ( entry : InventoryEntry, install : boolean ) {
 		entry.installed = install;
+		
+		var upgrade : Upgrade = entry.GetItem() as Upgrade;
+		
+		if ( install ) {
+			UpgradeManager.Install ( upgrade );
+		} else {
+			UpgradeManager.Remove ( upgrade.upgSlot );
+		}
 	}
 	
 	// Set buttons
@@ -166,25 +185,21 @@ class UIInventory extends OGPage {
 	
 	// Equip button
 	function BtnEquip () {
-		if ( selectedEntry.type == Item.Types.Equipment ) {
+		if ( selectedEntry.prefabPath.Contains ( "Equipment" ) ) {
 			if ( !selectedEntry.equipped ) {
 				Equip ( selectedEntry, true );
-				InventoryManager.EquipEntry ( selectedEntry, true );
 				SetButtons ( null, "Unequip" );
 			} else {
 				Equip ( selectedEntry, false );
-				InventoryManager.EquipEntry ( selectedEntry, false );
 				SetButtons ( "Discard", "Equip" );
 			}
 	
-		} else if ( selectedEntry.type == Item.Types.Upgrade ) {
+		} else if ( selectedEntry.prefabPath.Contains ( "Upgrade" ) ) {
 			if ( !selectedEntry.installed ) {
 				Install ( selectedEntry, true );
-				UpgradeManager.InstallEntry ( selectedEntry, true );
 				SetButtons ( null, "Uninstall" );
 			} else {
 				Install ( selectedEntry, false );
-				UpgradeManager.InstallEntry ( selectedEntry, false );
 				SetButtons ( "Discard", "Install" );
 			}
 		}

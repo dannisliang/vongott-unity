@@ -286,7 +286,7 @@ static function EquipItem ( obj : GameObject, slot : int ) {
 	if ( selectedObject.GetComponent(Actor) ) {
 		var item : Item = obj.GetComponent(Item);
 		
-		selectedObject.GetComponent(Actor).inventory[slot] = InventoryManager.ConvertItemToEntry ( item );
+		selectedObject.GetComponent(Actor).inventory[slot] = new InventoryEntry ( item );
 		
 		DestroyImmediate ( obj );
 	}

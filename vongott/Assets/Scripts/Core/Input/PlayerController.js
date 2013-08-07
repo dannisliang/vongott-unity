@@ -15,6 +15,7 @@ class PlayerController extends MonoBehaviour {
 	
 	var state : PlayerState = PlayerState.Idle;
 	var speed : float = 0.0;
+	var acceleration : float = 3.0;
 	var speedModifier : float = 1.0;
 	var distGround : float = 0.0;
 	var isGrounded : boolean = true;
@@ -67,7 +68,7 @@ class PlayerController extends MonoBehaviour {
 				
 				// Raycast
 				var here : Vector3 = this.GetComponent(Player).equippedItem.transform.position;
-				var there : Vector3 = Camera.main.transform.position + Camera.main.transform.forward * this.GetComponent(Player).GetEquipmentAttribute( Item.Attributes.FireRange );
+				var there : Vector3 = Camera.main.transform.position + Camera.main.transform.forward * this.GetComponent(Player).GetEquipmentAttribute( Item.eItemAttribute.FireRange );
 				var hit : RaycastHit;
 				var target : Vector3;
 																			
@@ -134,42 +135,28 @@ class PlayerController extends MonoBehaviour {
 				}
 			}
 			
-			if ( speed < 0.1 ) { speed = 0.1; }
+			var targetSpeed : float = 0.1;
+			
+			if ( speed < targetSpeed ) { speed = targetSpeed; }
 			
 			if ( state == PlayerState.Creeping ) {
-				if ( speed < 0.25 ) {	
-					speed += 0.01;
-				} else if ( speed > 0.30 ) {
-					speed -= 0.02;
-				}
+				targetSpeed = 0.25;
 							
 			} else if ( state == PlayerState.Walking ) {
-				if ( speed < 0.25 ) {	
-					speed += 0.01;
-				} else if ( speed > 0.30 ) {
-					speed -= 0.02;
-				}
+				targetSpeed = 0.25;
 				
 			} else if ( state == PlayerState.Running ) {
-				if ( speed < speedModifier ) {	
-					speed += 0.01 * speedModifier;
-				} else if ( speed > speedModifier ) {
-					speed -= 0.02;
-				}
+				targetSpeed = speedModifier;
 			
 			} else if ( state == PlayerState.Jumping ) {
-				if ( speed < 0.75 ) {	
-					speed += 0.01;
-				} else if ( speed > 0.80 ) {
-					speed -= 0.02;
-				}
+				targetSpeed = 0.75;
 			
 			} else if ( state == PlayerState.Falling ) { 
-				if ( speed > 0.15 ) {
-					speed -= 0.01;
-				}
+				targetSpeed = 0.15;
 			
 			}
+			
+			speed = Mathf.Lerp ( speed, targetSpeed, acceleration * Time.deltaTime );		
 					
 		} else {
 			if ( state != PlayerState.Jumping ) { state = PlayerState.Idle; }

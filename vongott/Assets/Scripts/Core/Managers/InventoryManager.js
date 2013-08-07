@@ -3,39 +3,9 @@
 ////////////////////
 // Prerequisites
 ////////////////////
-// Classes
-public class Slot {
-	var index = 0;
-	var entry : Entry;
-	
-	function Slot ( i : int, e : Entry ) {
-		index = i;
-		entry = e;
-	}
-
-	function SetEntry ( e : Entry ) { entry = e; }
-	
-	function GetEntry () { return entry; }
-}
-
-public class Entry {
-	var type : Item.Types = Item.Types.Equipment;
-	var id : Item.IDs = Item.IDs.Pistol;
-	var eqSlot : Equipment.Slots = Equipment.Slots.Hands;
-	var upgSlot : Upgrade.Slots = Upgrade.Slots.Hands;
-	var image : Texture2D;
-	var title = "";
-	var desc = "";
-	var attr : Item.Attribute[];
-	var equipped = false;
-	var installed = false;
-	var slot = 0;
-	var model : String;
-}
-
 // Static vars
-static var slots = new Slot[16];
-static var initialized = false;
+static var slots : Dictionary.< int, InventoryEntry > = new Dictionary.< int, InventoryEntry >();
+static var capacity : int = 16;
 
 
 ////////////////////
@@ -44,80 +14,37 @@ static var initialized = false;
 // Get slots
 static function GetSlots () { return slots; }
 
-// Convert item
-static function ConvertItemToEntry ( item : Item ) : Entry {
-	var entry = new Entry ();
-
-	entry.type = item.type;
-	entry.id = item.id;
-	entry.image = item.image;
-	entry.title = item.title;
-	entry.desc = item.desc;
-	entry.attr = item.attr;
-	entry.model = item.gameObject.GetComponent(Prefab).path + "/" + item.gameObject.GetComponent(Prefab).id;		
-	
-	return entry;
-}
-
 // Add item
 static function AddItem ( item : Item ) {
-	for ( var i = 0; i < slots.Length; i++ ) {
-		if ( slots[i].GetEntry() == null ) {
+	for ( var i = 0; i < capacity; i++ ) {
+		if ( slots[i] == null ) {
+			slots[i] = new InventoryEntry ( item );
 			
-			var entry = new Entry ();
-
-			entry.type = item.type;
-			entry.id = item.id;
-			
-			if ( item.type == Item.Types.Equipment ) {
-				var eq = item as Equipment;
-				entry.eqSlot = eq.eqSlot;
-			} else if ( item.type == Item.Types.Upgrade ) {
-				var upg = item as Upgrade;
-				entry.upgSlot = upg.upgSlot;
-			}
-			
-			entry.image = item.image;
-			entry.title = item.title;
-			entry.desc = item.desc;
-			entry.attr = item.attr;
-			entry.slot = i;
-			entry.model = item.gameObject.GetComponent(Prefab).path + "/" + item.gameObject.GetComponent(Prefab).id;;							
-										
-			slots[i].SetEntry ( ConvertItemToEntry ( item ) );
 			return;
 		}
 	}
 }
 
 // Eqip entry
-static function EquipEntry ( entry : Entry, equip : boolean ) {
+static function Equip ( i : Item, equip : boolean ) {
 	var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
-	player.Equip ( entry, equip );
+	player.Equip ( i, equip );
 }
 
 // Remove entry
-static function RemoveEntry ( entry : Entry ) {
-	slots[entry.slot].SetEntry ( null );
-	GameCore.Print ( "InventoryManager | removed entry: " + entry.title );
+static function RemoveEntry ( i : int ) {
+	GameCore.Print ( "InventoryManager | removed entry: " + i );
+	slots[i] = null;
 }
 
 // Init inventory
 static function Init () {
-	if ( !initialized ) {
-		for ( var i = 0; i < slots.Length; i++ ) {
-			slots[i] = new Slot ( i, null );
-		}
-			
-		initialized = true;
+	for ( var i = 0; i < capacity; i++ ) {
+		slots.Add ( i, null );
 	}
 }
 
 // Clear
 static function Clear () {
-	initialized = false;
-	
-	for ( var i = 0; i < slots.Length; i++ ) {
-		slots[i] = null;
-	}
+	slots.Clear();
 }

@@ -7,23 +7,35 @@ class UpgradeManager {
 	// Prerequisites
 	////////////////////
 	// Slots
-	static var slots = Dictionary.<Upgrade.Slots, Entry>();
+	enum eSlotID {
+		Skull,
+		Eyes,
+		Torso,
+		Abdomen,
+		Legs,
+		Feet,
+		Back,
+		Arms
+	}
 	
-	// Active upgrade
-	static var activeUpgrades : List.<String> = new List.<String>();
+	static var slots : Dictionary.< eSlotID, Upgrade > = new Dictionary.< eSlotID, Upgrade > ();
+	
+	// Active upgrades
+	static var activeUpgrades : List.< Upgrade > = new List.< Upgrade >();
 	
 	////////////////////
 	// Static functions
 	////////////////////
 	// Init
 	static function Init () {
-		slots.Add ( Upgrade.Slots.Hands, null );
-		slots.Add ( Upgrade.Slots.Arms, null );
-		slots.Add ( Upgrade.Slots.Skull, null );
-		slots.Add ( Upgrade.Slots.Legs, null );
-		slots.Add ( Upgrade.Slots.Chest, null );
-		slots.Add ( Upgrade.Slots.Back, null );
-		slots.Add ( Upgrade.Slots.Feet, null );
+		slots.Add ( eSlotID.Skull, null );
+		slots.Add ( eSlotID.Eyes, null );
+		slots.Add ( eSlotID.Torso, null );
+		slots.Add ( eSlotID.Abdomen, null );
+		slots.Add ( eSlotID.Legs, null );
+		slots.Add ( eSlotID.Feet, null );
+		slots.Add ( eSlotID.Back, null );
+		slots.Add ( eSlotID.Arms, null );
 	}
 	
 	// Clear
@@ -32,64 +44,90 @@ class UpgradeManager {
 	}
 	
 	// Is active?
-	static function IsActive ( upgrade : String ) : boolean {
-		for ( var u : String in activeUpgrades ) {
-			if ( u == upgrade ) {
-				return true;
-			}
-		} 
+	static function IsActive ( slot : eSlotID ) : boolean {
+		if ( slots [ slot ] ) {
+			return slots [ slot ].activated;
 		
-		return false;
+		} else {
+			return false;
+		
+		}
 	}
 	
-	// Install entry
-	static function InstallEntry ( entry : Entry, install : boolean ) {
-		var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
-		
-		// if there is already an entry installed, uninstall it first
-		if ( install ) {
-			if ( slots[entry.upgSlot] != null ) {
-				player.Install ( entry, false );
-			}
-		}
-		
-		player.Install ( entry, install );
+	// Get upgrade by slot
+	static function GetUpgrade ( slot : eSlotID ) : Upgrade {
+		return slots [ slot ];
 	}
 	
 	// Deactivate
-	static function DeactivateUpgrade ( upgrade : String ) {
-		activeUpgrades.Remove ( upgrade );
+	static function Deactivate ( slot : eSlotID ) {
+		if ( slots [ slot ] == null ) {
+			return;
+			
+		}
 		
-		switch ( upgrade ) {
-			case "Reflexes":
+		var upgrade : Upgrade = slots [ slot ];
+		
+		upgrade.activated = false;
+		
+		switch ( upgrade.ability.id ) {
+			case Upgrade.eAbilityID.Reflexes:
 				GameCore.GetInstance().TweenTimeScale ( 0.1, 1.0, 1.0 );
 					
 				break;
 				
-			case "Speed":
+			case Upgrade.eAbilityID.Speed:
 				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = 1.0;
 			
 				break;
 		}
 	}
 	
-	// Activate
-	static function Activate ( upgrade : String ) {
-		if ( IsActive ( upgrade ) ) {
-			DeactivateUpgrade ( upgrade );
-			return;
+	// Remove
+	static function Remove ( slot : eSlotID ) {
+		GameCore.Print ( "UpgradeManager | removed upgrade " + slots[slot].title );
+	
+		slots.Remove ( slot );
+	}
+	
+	// Install
+	static function Install ( upgrade : Upgrade ) {
+		if ( slots [ upgrade.upgSlot ] ) {
+			Deactivate ( upgrade.upgSlot );
+			Remove ( upgrade.upgSlot );
 		}
 		
-		activeUpgrades.Add ( upgrade );
+		slots [ upgrade.upgSlot ] = upgrade;
+			
+		GameCore.Print ( "UpgradeManager | installed upgrade " + upgrade.title + " in " + upgrade.upgSlot );
+	}
+	
+	// Activate
+	static function Activate ( slot : eSlotID ) {
+		if ( !slots.ContainsKey ( slot ) ) {
+			return;
+			
+		} else if ( IsActive ( slot ) ) {
+			Deactivate ( slot );
+			return;
 		
-		switch ( upgrade ) {
-			case "Reflexes":
-				GameCore.GetInstance().TweenTimeScale ( 1, 0.1, 1.0 );
+		} else if ( slots [ slot ] == null ) {
+			return;
+			
+		}
+		
+		var upgrade : Upgrade = slots [ slot ];
+		
+		upgrade.activated = true;
+		
+		switch ( upgrade.ability.id ) {
+			case Upgrade.eAbilityID.Reflexes:
+				GameCore.GetInstance().TweenTimeScale ( 1, upgrade.ability.val, 1.0 );
 					
 				break;
 				
-			case "Speed":
-				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = 10.0;
+			case Upgrade.eAbilityID.Speed:
+				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = upgrade.ability.val;
 			
 				break;
 		}

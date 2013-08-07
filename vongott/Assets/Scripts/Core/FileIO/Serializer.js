@@ -188,13 +188,13 @@ static function SerializePath ( nodes : List.< GameObject > ) : JSONObject {
 }
 
 // inventory
-static function SerializeInventory ( entries : Entry[] ) : JSONObject {
+static function SerializeInventory ( entries : InventoryEntry[] ) : JSONObject {
 	var inv : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 	
-	for ( var e : Entry in entries ) {
+	for ( var e : InventoryEntry in entries ) {
 		if ( e ) {
 			var entry : JSONObject = JSONObject (JSONObject.Type.OBJECT );
-			entry.AddField ( "model", e.model );
+			entry.AddField ( "model", e.prefabPath );
 			inv.Add ( entry );
 		}
 	}

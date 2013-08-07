@@ -27,7 +27,7 @@ class DamageManager extends MonoBehaviour {
 		var projectile : Projectile = bullet.GetComponent ( Projectile );
 		projectile.owner = owner;
 	
-		projectile.expirationTime = GetEquipmentAttribute ( weapon, Item.Attributes.FireRange ) / projectile.speed;
+		projectile.expirationTime = GetEquipmentAttribute ( weapon, Item.eItemAttribute.FireRange ) / projectile.speed;
 	}
 	
 	
@@ -35,7 +35,7 @@ class DamageManager extends MonoBehaviour {
 	// Get info
 	/////////////////
 	// Attr
-	function GetEquipmentAttribute ( item : Item, a : Item.Attributes ) : float {
+	function GetEquipmentAttribute ( item : Item, a : Item.eItemAttribute ) : float {
 		for ( var attr : Item.Attribute in item.GetComponent(Item).attr ) {
 			if ( attr.type == a ) {
 				return attr.val;

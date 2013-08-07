@@ -5,9 +5,11 @@ class UIModWheel extends OGPage {
 		GameCore.GetInstance().SetPause ( true );
 	}
 	
-	function Pick ( mod : String ) {
+	function Pick ( slot : String ) {
+		var s : UpgradeManager.eSlotID = System.Enum.Parse ( typeof ( UpgradeManager.eSlotID ), slot );
+		
 		OGRoot.GoToPage ( "HUD" );
-		UpgradeManager.Activate ( mod );
+		UpgradeManager.Activate ( s );
 	}
 	
 	override function UpdatePage () {

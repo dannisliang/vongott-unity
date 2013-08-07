@@ -4,14 +4,14 @@
 
 class Item extends InteractiveObject {
 	// Types
-	enum Types {
+	enum eItemType {
 		Equipment,
 		Consumable,
 		Upgrade
 	}
 	
 	// Attributes
-	enum Attributes {
+	enum eItemAttribute {
 		Damage,
 		Defence,
 		FireRate,
@@ -32,7 +32,7 @@ class Item extends InteractiveObject {
 	}
 	
 	// IDs
-	enum IDs {
+	enum eItemID {
 		// equipment
 		Pistol,
 		Baton,
@@ -48,18 +48,19 @@ class Item extends InteractiveObject {
 		HealthKit,
 		// upgrades
 		MechanicalUpgrade,
-		DigitalUpgrade
+		BiologicalUpgrade
 	}
 	
 	// Subclasses
 	public class Attribute {
-		var type = Attributes.Damage;
+		var type = eItemAttribute.Damage;
 		var val = 0.0;
 	}
 		
 	// Public vars
-	var type : Types;
-	var id : IDs;
+	var prefabPath : String;
+	var type : eItemType;
+	var id : eItemID;
 	var image : Texture2D;
 	var title : String;
 	var desc : String;

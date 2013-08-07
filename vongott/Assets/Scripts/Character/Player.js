@@ -16,21 +16,21 @@ class Player extends MonoBehaviour {
 	// Public functions
 	////////////////////
 	// Equip
-	function Equip ( entry : Entry, equip : boolean ) {
-		var slot : Equipment.Slots = entry.eqSlot;
+	function Equip ( item : Item, equip : boolean ) {
+		var slot : Equipment.eEquipmentSlot = item.eqSlot;
 		var target : GameObject;
 		var adjustPosition : Vector3;
 		var adjustRotation : Vector3;
 		
-		if ( slot == Equipment.Slots.Hands ) {
+		if ( slot == Equipment.eEquipmentSlot.Hands ) {
 			target = hand;
 		
 			adjustPosition = new Vector3 ( 0.06410789, -0.02394938, -0.05132291 );
 			adjustRotation = new Vector3 ( 345.9895, 4.343473, 342.7763 );
-		} else if ( slot == Equipment.Slots.Torso ) {
+		} else if ( slot == Equipment.eEquipmentSlot.Torso ) {
 			target = torso;
 		
-		} else if ( slot == Equipment.Slots.Head ) {
+		} else if ( slot == Equipment.eEquipmentSlot.Head ) {
 			target = head;
 		
 		} else {
@@ -39,7 +39,7 @@ class Player extends MonoBehaviour {
 		} 
 		
 		if ( equip ) {		
-			equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
+			equippedItem = item.gameObject;
 			
 			equippedItem.transform.parent = target.transform;
 			equippedItem.transform.localPosition = adjustPosition;
@@ -48,13 +48,16 @@ class Player extends MonoBehaviour {
 		
 			ResetFire();
 		
-			GameCore.Print ( "Player | item '" + entry.title + "' equipped" );
+			GameCore.Print ( "Player | item '" + item.title + "' equipped" );
 			
 		} else {
 			Destroy ( equippedItem );
 			
-			GameCore.Print ( "Player | item '" + entry.title + "' unequipped" );
+			GameCore.Print ( "Player | item '" + item.title + "' unequipped" );
 		
+			if ( item ) {
+				Destroy ( item.gameObject );
+			}
 		}
 	}
 	
@@ -62,7 +65,7 @@ class Player extends MonoBehaviour {
 		return equippedItem;
 	}
 	
-	function GetEquipmentAttribute ( a : Item.Attributes ) : float {
+	function GetEquipmentAttribute ( a : Item.eItemAttribute ) : float {
 		for ( var attr : Item.Attribute in equippedItem.GetComponent(Item).attr ) {
 			if ( attr.type == a ) {
 				return attr.val;
@@ -76,7 +79,7 @@ class Player extends MonoBehaviour {
 	
 	// Shoot
 	function ResetFire () {
-		shootTimer = GetEquipmentAttribute ( Item.Attributes.FireRate );
+		shootTimer = GetEquipmentAttribute ( Item.eItemAttribute.FireRate );
 	}
 	
 	function TakeDamage ( amount : float ) {
@@ -84,10 +87,10 @@ class Player extends MonoBehaviour {
 	}
 	
 	function Shoot ( target : Vector3 ) {
-		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
+		if ( shootTimer >= GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
 			shootTimer = 0;
 		
-			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100 );
+			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.eItemAttribute.Accuracy ) / 100 );
 			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
 		
 			if ( GameCore.GetInstance().timeScale == 1.0 ) {
@@ -99,13 +102,11 @@ class Player extends MonoBehaviour {
 	}
 	
 	// Install
-	function Install ( entry : Entry, install : boolean ) {
-		var slot : Upgrade.Slots = entry.upgSlot;
-		
+	function Install ( upg : Upgrade, install : boolean ) {
 		if ( install ) {
-			GameCore.Print ( "Player | installed upgrade " + entry.title + " in " + slot );
+			UpgradeManager.Install ( upg );
 		} else {
-			GameCore.Print ( "Player | uninstalled upgrade " + entry.title );
+			UpgradeManager.Remove ( upg.upgSlot );
 		}
 	}
 	
@@ -115,7 +116,7 @@ class Player extends MonoBehaviour {
 		
 	function Update () {
 		if ( equippedItem ) {	
-			if ( shootTimer < GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
+			if ( shootTimer < GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
 				shootTimer += Time.deltaTime;
 			}
 			

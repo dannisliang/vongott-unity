@@ -222,17 +222,15 @@ static function DeserializePath ( pth : JSONObject, act : GameObject ) : List.< 
 }
 
 // inventory
-static function DeserializeInventory ( ety : JSONObject ) : Entry[] {
-	var inv : Entry[] = new Entry[4];
+static function DeserializeInventory ( ety : JSONObject ) : InventoryEntry[] {
+	var inv : InventoryEntry[] = new InventoryEntry[4];
 	
 	for ( var i = 0; i < ety.list.Count; i++ ) {
 		var slot : JSONObject = ety.list[i] as JSONObject;
-		var model = slot.GetField("model").str;
+		var path = slot.GetField("prefabPath").str;
 		
-		if ( model != "" ) {
-			var obj : GameObject = Instantiate ( Resources.Load ( "Items/" + slot.GetField("model").str ) as GameObject );
-			inv[i] = InventoryManager.ConvertItemToEntry ( obj.GetComponent(Item) );
-			DestroyImmediate ( obj );
+		if ( path != "" ) {
+			inv[i] = new InventoryEntry ( path );
 		}
 	}
 	

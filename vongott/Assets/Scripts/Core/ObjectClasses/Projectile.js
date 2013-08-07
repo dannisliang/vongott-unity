@@ -28,7 +28,7 @@ class Projectile extends MonoBehaviour {
 		if ( time > expirationTime ) {
 			Destroy ( this.gameObject );
 				
-		} else if ( collideWith && ( collidePos - transform.position ).magnitude < 0.05 ) {
+		} else if ( collideWith && !collideWith.GetComponent(Item) && ( collidePos - transform.position ).magnitude < 0.05 ) {
 			
 			if ( collideWith.GetComponent ( Actor ) ) {
 				collideWith.GetComponent ( Actor ).TakeDamage ( damage );

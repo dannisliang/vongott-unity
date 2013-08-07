@@ -1,7 +1,7 @@
 #pragma strict
 
 class Equipment extends Item {
-	enum Slots {
+	enum eEquipmentSlot {
 		Hands,
 		Torso,
 		Legs,
@@ -9,5 +9,5 @@ class Equipment extends Item {
 	}
 	
 	// Public vars
-	var eqSlot : Slots;
+	var eqSlot : eEquipmentSlot;
 }

@@ -124,7 +124,9 @@ class EditorInspectorActor extends MonoBehaviour {
 		// inventory
 		for ( var s = 0; s < inventorySlots.Length; s++ ) {
 			if ( a.inventory[s] ) {
-				inventorySlots[s].image = a.inventory[s].image;
+				var item : Item = a.inventory[s].GetItem();
+				inventorySlots[s].image = item.image;
+				DestroyImmediate ( item.gameObject );
 			} else {
 				inventorySlots[s].image = null;
 			}

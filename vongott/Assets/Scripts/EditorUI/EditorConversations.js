@@ -161,7 +161,7 @@ class EditorConversations extends OGPage {
 	
 	
 	////////////////////
-	// Entry arrangement
+	// InventoryEntry arrangement
 	////////////////////
 	// Set flag
 	function SetFlag ( btn : OGButton ) {

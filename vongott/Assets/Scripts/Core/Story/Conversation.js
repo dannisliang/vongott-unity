@@ -7,7 +7,7 @@ class Conversation {
 	// Prerequisites
 	////////////////////
 	// Classes
-	private class Entry {
+	private class InventoryEntry {
 		var type : String;
 		var groupType : String;
 		
@@ -23,7 +23,7 @@ class Conversation {
 		var title: String;
 		var instructions: String;
 		
-		var options : List.< Entry > = new List.< Entry >();
+		var options : List.< InventoryEntry > = new List.< InventoryEntry >();
 	}
 
 	// Public vars
@@ -36,7 +36,7 @@ class Conversation {
 	var name : String;
 	var conversation : String;
 	
-	var entries : List.< Entry > = new List.< Entry >();
+	var entries : List.< InventoryEntry > = new List.< InventoryEntry >();
 	var currentOption : int = 0;
 	var currentEntry : int = 0;
 	
@@ -58,7 +58,7 @@ class Conversation {
 	
 	// Display an entry
 	function DisplayEntry () {
-		var entry : Entry = entries[currentEntry];
+		var entry : InventoryEntry = entries[currentEntry];
 		var speakerName : String;
 		var speakerLine : String;
 		
@@ -130,7 +130,7 @@ class Conversation {
 	}
 	
 	// Get flag
-	function GetFlag ( entry : Entry ) : boolean {
+	function GetFlag ( entry : InventoryEntry ) : boolean {
 		if ( entry.condition == null || entry.condition == "(none)" || entry.condition == "<condition>" || entry.condition == "" ) { return true; }
 		
 		var flag : String = SplitString ( entry.condition, 0 );
@@ -140,7 +140,7 @@ class Conversation {
 	}
 	
 	// Set flag
-	function SetFlag ( entry : Entry ) {		
+	function SetFlag ( entry : InventoryEntry ) {		
 		if ( entry.consequence == null || entry.consequence == "(none)" || entry.consequence == "<consequence>" || entry.consequence == "" ) { return; }
 		
 		var flag : String = SplitString ( entry.consequence, 0 );
@@ -204,7 +204,7 @@ class Conversation {
 		var object : JSONObject = new JSONObject ( file );
 		
 		for ( var o : JSONObject in object.list as JSONObject[] ) {
-			var entry = new Entry ();
+			var entry = new InventoryEntry ();
 			
 			// line
 			if ( o.GetField ( "type" ).str == "Line" ) {
@@ -221,7 +221,7 @@ class Conversation {
 				entry.groupType = o.GetField ( "groupType" ).str;
 				
 				for ( var opt : JSONObject in o.GetField ( "options" ).list as JSONObject[] ) {
-					var option = new Entry ();
+					var option = new InventoryEntry ();
 					
 					option.consequence = opt.GetField ( "consequence" ).str;
 					option.line = opt.GetField ( "line" ).str;

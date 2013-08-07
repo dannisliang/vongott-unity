@@ -24,7 +24,7 @@ class Actor extends InteractiveObject {
 	var hearing : float = 10;
 
 	var path : List.< GameObject >;
-	var inventory : Entry[] = new Entry [4];
+	var inventory : InventoryEntry[] = new InventoryEntry [4];
 	
 	var conversations : List.< Conversation > = new List.< Conversation >();																																							
 	var target : Transform;
@@ -83,7 +83,7 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Equipment
 	////////////////////
-	function GetEquipmentAttribute ( a : Item.Attributes ) : float {
+	function GetEquipmentAttribute ( a : Item.eItemAttribute ) : float {
 		for ( var attr : Item.Attribute in equippedItem.GetComponent(Item).attr ) {
 			if ( attr.type == a ) {
 				return attr.val;
@@ -95,8 +95,8 @@ class Actor extends InteractiveObject {
 		return 100;
 	}
 	
-	function Equip ( entry : Entry ) {
-		equippedItem = Instantiate ( Resources.Load ( entry.model ) as GameObject );
+	function Equip ( entry : InventoryEntry ) {
+		equippedItem = entry.GetItem().gameObject;
 		
 		equippedItem.transform.parent = hand;
 		equippedItem.transform.localPosition = Vector3.zero;
@@ -117,13 +117,13 @@ class Actor extends InteractiveObject {
 	// Shoot
 	////////////////////
 	function ResetFire () {
-		shootTimer = GetEquipmentAttribute ( Item.Attributes.FireRate );
+		shootTimer = GetEquipmentAttribute ( Item.eItemAttribute.FireRate );
 	}
 	
 	function Shooting () {		
 		if ( !equippedItem ) { return; }		
 				
-		if ( shootTimer >= GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
+		if ( shootTimer >= GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
 			shootTimer = 0;
 		
 			var shootTarget : Vector3;
@@ -134,7 +134,7 @@ class Actor extends InteractiveObject {
 				shootTarget = target.GetComponent ( Actor ).torso.position;
 			}
 		
-			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.Attributes.Accuracy ) / 100 );
+			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.eItemAttribute.Accuracy ) / 100 );
 			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
 		
 			shootTarget += Vector3.one * accuracyDegree;
@@ -160,7 +160,7 @@ class Actor extends InteractiveObject {
 		if ( t ) {
 			target = t;
 			
-			if ( inventory[0].model ) {
+			if ( inventory[0].prefabPath ) {
 				Equip ( inventory[0] );
 			}
 						
@@ -297,7 +297,7 @@ class Actor extends InteractiveObject {
 		}
 		
 		// Shoot timer
-		if ( equippedItem && shootTimer < GetEquipmentAttribute ( Item.Attributes.FireRate ) ) {
+		if ( equippedItem && shootTimer < GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
 			shootTimer += Time.deltaTime;			
 		}
 		
