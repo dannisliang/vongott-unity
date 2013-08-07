@@ -39,22 +39,6 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 - Grand
 - Awesome
 
-### Armour
-- Uniform specific
-  - Helmet / Visor
-  - Kevlar Vest
-  - Boots
-
-- Guerilla
-  - Bandana / Mask
-  - Armored Vest
-  - Thigh Pads
-
-- Military grade
-  - Helmet
-  - Bulletproof Vest
-  - Boots
-
 ### Weapons
 #### Melee
 - Baton
@@ -66,7 +50,7 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 #### Projectile
 - Pistol
 - Crossbow
-- Assault Rifle
+- SMG
 - Sniper Rifle
 - Shotgun
 - Dead Badger (with Linux)
@@ -85,8 +69,10 @@ Mechanical upgrades have both passive and active attributes. They need to be ins
 #### Skull
 - REFLEXES: Slows down time for everything except the mouse control
 
+
 #### Eyes
 - AIM: Auto aim
+- VISION: See through walls
 
 #### Torso
 - HEALTH: Slow health regeneration
