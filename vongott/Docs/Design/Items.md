@@ -84,6 +84,8 @@ Mechanical upgrades need to be installed by a professional mechanic, as they rep
 
 #### Skull
 - REFLEXES: Slows down time for everything except the mouse control
+
+#### Eyes
 - AIM: Auto aim
 
 #### Torso
@@ -100,6 +102,8 @@ Mechanical upgrades need to be installed by a professional mechanic, as they rep
 
 #### Back   
 - PARACHUTE: Fall damage reduction and noise cancelling
+
+#### Abdomen
 - CLOAK: Invisibility cloak
 
 ### Biological
