@@ -2,7 +2,7 @@ Items
 =====
 Items can be found, stolen or purchased throughout the world. They should have short, accurate descriptions in layman's terms. And silly. Silly as hell. The player should be incentivised to look for items because of their usefulness in the world. 
 
-## Redable items
+## Readable items
 Books, newspapers, post-it notes, etc. These will provide trivia on the game world and mission critical clues.
 
 ## Trigger items
@@ -80,7 +80,7 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 The upgrades are like equipment, can be found or purchased.
 
 ### Mechanical
-Mechanical upgrades need to be installed by a professional mechanic, as they replace physical bodyparts of the player, allowing for a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs). When activated, they consume electricity.
+Mechanical upgrades have both passive and active attributes. They need to be installed by a professional mechanic, as they replace physical bodyparts of the player, allowing for a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs). When activated, they consume electricity.
 
 #### Skull
 - REFLEXES: Slows down time for everything except the mouse control
