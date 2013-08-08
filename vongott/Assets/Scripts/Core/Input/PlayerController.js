@@ -44,6 +44,7 @@ class PlayerController extends MonoBehaviour {
 			
 		} else if ( !inCrawlspace && Input.GetKeyDown ( KeyCode.C ) ) {
 			crouchMode = !crouchMode;
+			Debug.Log ( "YEEHAW" );
 		
 		} else  {
 			state = PlayerState.Walking;

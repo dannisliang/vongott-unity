@@ -18,10 +18,7 @@ class UpgradeManager {
 		Arms
 	}
 	
-	static var slots : Dictionary.< eSlotID, Upgrade > = new Dictionary.< eSlotID, Upgrade > ();
-	
-	// Active upgrades
-	static var activeUpgrades : List.< Upgrade > = new List.< Upgrade >();
+	static var slots : Dictionary.< eSlotID, InventoryEntry > = new Dictionary.< eSlotID, InventoryEntry > ();
 	
 	////////////////////
 	// Static functions
@@ -47,15 +44,13 @@ class UpgradeManager {
 	static function IsActive ( slot : eSlotID ) : boolean {
 		if ( slots [ slot ] ) {
 			return slots [ slot ].activated;
-		
 		} else {
 			return false;
-		
 		}
 	}
 	
 	// Get upgrade by slot
-	static function GetUpgrade ( slot : eSlotID ) : Upgrade {
+	static function GetUpgrade ( slot : eSlotID ) : InventoryEntry {
 		return slots [ slot ];
 	}
 	
@@ -66,10 +61,10 @@ class UpgradeManager {
 			
 		}
 		
-		var upgrade : Upgrade = slots [ slot ];
+		slots [ slot ].activated = false;
 		
-		upgrade.activated = false;
-		
+		var upgrade : Upgrade = slots [ slot ].GetItem() as Upgrade;
+				
 		switch ( upgrade.ability.id ) {
 			case Upgrade.eAbilityID.Reflexes:
 				GameCore.GetInstance().TweenTimeScale ( 0.1, 1.0, 1.0 );
@@ -85,9 +80,9 @@ class UpgradeManager {
 	
 	// Remove
 	static function Remove ( slot : eSlotID ) {
-		GameCore.Print ( "UpgradeManager | removed upgrade " + slots[slot].title );
+		GameCore.Print ( "UpgradeManager | removed upgrade from slot " + slot );
 	
-		slots.Remove ( slot );
+		slots [ slot ] = null;
 	}
 	
 	// Install
@@ -97,8 +92,8 @@ class UpgradeManager {
 			Remove ( upgrade.upgSlot );
 		}
 		
-		slots [ upgrade.upgSlot ] = upgrade;
-			
+		slots [ upgrade.upgSlot ] = new InventoryEntry ( upgrade );
+					
 		GameCore.Print ( "UpgradeManager | installed upgrade " + upgrade.title + " in " + upgrade.upgSlot );
 	}
 	
@@ -116,9 +111,9 @@ class UpgradeManager {
 			
 		}
 		
-		var upgrade : Upgrade = slots [ slot ];
+		var upgrade : Upgrade = slots [ slot ].GetItem() as Upgrade;
 		
-		upgrade.activated = true;
+		slots[slot].activated = true;
 		
 		switch ( upgrade.ability.id ) {
 			case Upgrade.eAbilityID.Reflexes:

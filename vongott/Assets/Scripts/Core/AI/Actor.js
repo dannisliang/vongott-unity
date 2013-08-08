@@ -96,7 +96,8 @@ class Actor extends InteractiveObject {
 	}
 	
 	function Equip ( entry : InventoryEntry ) {
-		equippedItem = entry.GetItem().gameObject;
+		var item : Item = Instantiate ( entry.GetItem() ) as Item;
+		equippedItem = item.gameObject;
 		
 		equippedItem.transform.parent = hand;
 		equippedItem.transform.localPosition = Vector3.zero;

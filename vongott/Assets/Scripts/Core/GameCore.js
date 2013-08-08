@@ -8,6 +8,8 @@ var _levelContainer : Transform;
 var _playerObject : GameObject;
 var _scanner : AStarScanner;
 var _camTarget : GameObject;
+var _pauseBackground : GameObject;
+var _pauseRenderTexture : RenderTexture;
 
 // Static vars
 static var debuggingEnabled = true;
@@ -155,8 +157,15 @@ static function GoToEditor () {
 // Pause
 ////////////////////
 // Blur
-function SetPause ( state : boolean ) {
+function SetPause ( state : boolean ) {	
 	Camera.main.GetComponent ( BlurEffect ).enabled = state;
+	_pauseBackground.SetActive ( state );
+	
+	if ( state ) {
+		Camera.main.targetTexture = _pauseRenderTexture;
+	} else {
+		Camera.main.targetTexture = null;
+	}
 	
 	if ( state ) {
 		ToggleControls ( false );

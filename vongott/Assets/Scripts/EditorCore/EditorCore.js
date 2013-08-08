@@ -75,6 +75,7 @@ static var gridLineDistance : float = 1.0;
 static var gridLineBrightFrequency : int = 5;
 
 // editor essentials
+static var instance : EditorCore;
 static var workspace : Transform;
 static var cam : Transform;
 static var inspector : EditorMenuBase;
@@ -643,14 +644,18 @@ static function LoadScreenshot ( path : String ) : Texture2D {
 }
 
 // Save file
-static function SaveFile ( path : String ) {
-	//yield new WaitForEndOfFrame();
+function DoSave ( path : String ) : IEnumerator {
+	yield new WaitForEndOfFrame();
 	
 	var tex : Texture2D = new Texture2D(Screen.width, Screen.height);	
 	tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
 	TextureScale.Bilinear ( tex, tex.width * 0.25, tex.height * 0.25 );	
 	
 	Saver.SaveMap ( path, EditorCore.currentLevel, tex );
+}
+
+function SaveFile ( path : String ) {
+	StartCoroutine ( DoSave ( path ) );
 }
 
 // Load file
@@ -705,6 +710,11 @@ static function PlayLevel () {
 ////////////////////
 // Init/Update
 ////////////////////
+// Get instance
+public static function GetInstance () : EditorCore {
+	return instance;
+}
+
 // Init
 function Start () {
 	workspace = _workspace;

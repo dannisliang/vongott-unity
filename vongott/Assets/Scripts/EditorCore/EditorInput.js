@@ -233,7 +233,7 @@ function Update () {
 				if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
 					return;
 				} else {
-					EditorCore.SaveFile ( EditorCore.currentLevel.name );
+					EditorCore.GetInstance().SaveFile ( EditorCore.currentLevel.name );
 					return;
 				}
 			

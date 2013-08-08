@@ -28,7 +28,7 @@ static function AddItem ( item : Item ) {
 // Eqip entry
 static function Equip ( i : Item, equip : boolean ) {
 	var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
-	player.Equip ( i, equip );
+	player.Equip ( Instantiate (i) as Item, equip );
 }
 
 // Remove entry

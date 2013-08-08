@@ -22,6 +22,4 @@ class Upgrade extends Item {
 	// Public vars
 	var upgSlot : UpgradeManager.eSlotID;
 	var ability : Ability;	
-	var activated : boolean = false;
-	var installed : boolean = false;
 }

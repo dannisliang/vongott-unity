@@ -62,6 +62,8 @@
      <Compile Include="Assets\OpenGUI\Scripts\OGTickBox.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGTween.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGWidget.js" />
+     <Compile Include="Assets\OpenGUI\Tools\OGArrangeInCircle.js" />
+     <Compile Include="Assets\OpenGUI\Tools\OGScaleToCamera.js" />
      <Compile Include="Assets\OpenPath\AStar.js" />
      <Compile Include="Assets\OpenPath\AStarMap.js" />
      <Compile Include="Assets\OpenPath\AStarNode.js" />
@@ -104,6 +106,7 @@
      <Compile Include="Assets\Scripts\Core\Physics\DontGoThroughThings.js" />
      <Compile Include="Assets\Scripts\Core\Story\Conversation.js" />
      <Compile Include="Assets\Scripts\Core\Story\Flag.js" />
+     <Compile Include="Assets\Scripts\Core\Tools\InventoryButtonsArrange.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorCamera.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorCore.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorInput.js" />
@@ -159,6 +162,7 @@
      <None Include="Assets\Shaders\OutlineDiffuse.shader" />
      <None Include="Assets\Plugins\Blur\BlurEffectConeTaps.shader" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
+     <None Include="Assets\Animations\Character\Raw Mocap Data\Animations\_CompleteAnimationList.txt" />
      <None Include="Assets\Shaders\OutlineSilhouetteBumpedDiffuse.shader" />
      <None Include="Assets\Shaders\BumpedRim.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />

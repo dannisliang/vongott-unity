@@ -14,7 +14,7 @@ class EditorSaveAs extends OGPage {
 	// OK
 	function OK () {
 		EditorCore.currentLevel.name = newName.text;
-		EditorCore.SaveFile ( EditorCore.currentLevel.name );
+		EditorCore.GetInstance().SaveFile ( EditorCore.currentLevel.name );
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 	

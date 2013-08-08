@@ -45,7 +45,7 @@ class EditorMenuBase extends OGPage {
 			return;
 		}
 	
-		EditorCore.SaveFile ( EditorCore.currentLevel.name );
+		EditorCore.GetInstance().SaveFile ( EditorCore.currentLevel.name );
 	}
 	
 	// Rename level
@@ -236,7 +236,7 @@ class EditorMenuBase extends OGPage {
 			return;
 		}
 	
-		EditorCore.SaveFile ( EditorCore.currentLevel.name );
+		EditorCore.GetInstance().SaveFile ( EditorCore.currentLevel.name );
 		
 		EditorCore.PlayLevel ();
 	}

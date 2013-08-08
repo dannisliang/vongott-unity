@@ -2,34 +2,6 @@
 
 import System.Text.RegularExpressions;
 
-private class InventorySlot {
-	var button : GameObject;
-	var image : GameObject;
-	
-	function InventorySlot ( i : int, col : int, row : int, parent : Transform, target : GameObject ) {
-		button = new GameObject ( "slot_" + i.ToString() + "_button" );
-		image = new GameObject ( "slot_" + i.ToString() + "_image" );
-		
-		var btn = button.AddComponent ( OGButton );
-		var img = image.AddComponent ( OGImage );
-		
-		btn.target = target;
-		btn.message = "SelectSlot";
-		btn.argument = i.ToString();
-	
-		var x : float = col * 102;
-		var y : float = ( -row * 102 ) - 102;
-	
-		button.transform.parent = parent;	
-		button.transform.localScale = new Vector3 ( 100, 100, 1 );
-		button.transform.localPosition = new Vector3 ( x, y, 2 );
-		
-		image.transform.parent = parent;	
-		image.transform.localScale = new Vector3 ( 80, 80, 1 );
-		image.transform.localPosition = new Vector3 ( x + 10, y + 10, 0 );
-	}
-}
-
 private class Inspector {
 	var entryName : OGLabel;
 	var description : OGLabel;
@@ -48,7 +20,6 @@ class UIInventory extends OGPage {
 	////////////////////
 	// Public vars
 	var grid : Transform;
-	var slots : List.< InventorySlot > = new List. < InventorySlot >();
 	var inspector : Inspector;
 	var buttons : InspectorButtons;
 	
@@ -62,10 +33,9 @@ class UIInventory extends OGPage {
 	// Clear grid
 	function ClearGrid () {
 		for ( var i = 0; i < grid.childCount; i++ ) {
-			Destroy ( grid.GetChild ( i ).gameObject );
+			grid.GetChild ( i ).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = null;
+			grid.GetChild ( i ).GetChild(0).gameObject.SetActive ( false );
 		}
-		
-		slots.Clear();
 	}
 	
 	// Populate grid
@@ -78,32 +48,19 @@ class UIInventory extends OGPage {
 		var row = 0;
 		
 		for ( var i = 0 ; i < InventoryManager.capacity; i++ ) {
-			var slot : InventorySlot = new InventorySlot ( i, col, row, grid, this.gameObject );
-						
 			if ( allSlots[i] ) {
 				var item : Item = allSlots[i].GetItem();
-				slot.image.GetComponent(OGImage).image = item.image;
-				DestroyImmediate ( item.gameObject );
-			}
-						
-			slots.Add ( slot );
-		
-			if ( col < 3 ) {
-				col++;
-			} else {
-				col = 0;
-				row++;
+				grid.GetChild(i).GetChild(0).gameObject.SetActive ( true );
+				grid.GetChild(i).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = item.image;
 			}
 		}
 	}
 	
 	// Select slot
-	function SelectSlot ( i : String ) {
-		var index : int = int.Parse ( i );
+	function SelectSlot ( b : OGButton3D ) {
+		var index : int = int.Parse ( b.gameObject.name );
 		var allSlots : Dictionary.< int, InventoryEntry > = InventoryManager.GetSlots();
-		
-		
-		
+				
 		if ( allSlots[index] ) {
 			var entry = allSlots[index];
 			var item = allSlots[index].GetItem();
@@ -135,8 +92,6 @@ class UIInventory extends OGPage {
 			}
 			
 			selectedEntry = entry;
-			
-			DestroyImmediate ( item.gameObject );
 		}
 	}
 	
@@ -168,7 +123,7 @@ class UIInventory extends OGPage {
 	
 	// Set buttons
 	function SetButtons ( btn1 : String, btn2 : String ) {
-		if ( btn1 != null ) {
+		/*if ( btn1 != null ) {
 			buttons.discard.SetActive ( true );
 			buttons.discard.GetComponent(OGButton).text = btn1;
 		} else {
@@ -180,7 +135,7 @@ class UIInventory extends OGPage {
 			buttons.equip.GetComponent(OGButton).text = btn2;
 		} else {
 			buttons.equip.SetActive ( false );
-		}
+		}*/
 	}
 	
 	// Equip button
@@ -218,6 +173,7 @@ class UIInventory extends OGPage {
 	// Init
 	////////////////////
 	override function StartPage () {
+		ClearGrid ();
 		GameCore.GetInstance().SetPause ( true );
 		PopulateGrid ();
 	}
