@@ -39,22 +39,6 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 - Grand
 - Awesome
 
-### Armour
-- Uniform specific
-  - Helmet / Visor
-  - Kevlar Vest
-  - Boots
-
-- Guerilla
-  - Bandana / Mask
-  - Armored Vest
-  - Thigh Pads
-
-- Military grade
-  - Helmet
-  - Bulletproof Vest
-  - Boots
-
 ### Weapons
 #### Melee
 - Baton
@@ -66,7 +50,7 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 #### Projectile
 - Pistol
 - Crossbow
-- Assault Rifle
+- SMG
 - Sniper Rifle
 - Shotgun
 - Dead Badger (with Linux)
@@ -85,8 +69,10 @@ Mechanical upgrades have both passive and active attributes. They need to be ins
 #### Skull
 - REFLEXES: Slows down time for everything except the mouse control
 
+
 #### Eyes
 - AIM: Auto aim
+- VISION: See through walls
 
 #### Torso
 - HEALTH: Slow health regeneration
@@ -125,5 +111,6 @@ Players should be rewarded for combining certain upgrades, such as events trigge
 - REFLEXES + SPEED: Time slows down, but players move around at normal speed
 - SPEED + STRENGTH: When running up to an enemy and punching, a special machinima plays
   - Self-fist-five and enemy's head flies off! F*ck yeah!
-- PARACHUTE + STRENGTH: The player creates a shockwave when landing
-  
+- PARACHUTE + STRENGTH: The player creates a shockwave when punching before landing
+- REFLEXES + AIM: The player shoots every enemy in frame upon firing
+- 
