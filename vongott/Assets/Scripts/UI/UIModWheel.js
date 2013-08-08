@@ -5,6 +5,7 @@ class UIModWheel extends OGPage {
 	var unselectedMaterial : Material;
 	var grid : Transform;
 	var human : Transform;
+	var markers : Transform;
 	
 	function PopulateList () {
 		for ( var i = 0; i < grid.GetChildCount(); i++ ) {
@@ -31,8 +32,10 @@ class UIModWheel extends OGPage {
 		for ( var i = 0; i < human.GetChildCount(); i++ ) {
 			if ( human.GetChild(i).gameObject.name == slot ) {
 				human.GetChild(i).GetComponent(MeshRenderer).material = selectedMaterial;												
+				markers.GetChild(i).gameObject.SetActive ( true );
 			} else {
 				human.GetChild(i).GetComponent(MeshRenderer).material = unselectedMaterial;
+				markers.GetChild(i).gameObject.SetActive ( false );
 			}
 		}
 		
@@ -46,6 +49,10 @@ class UIModWheel extends OGPage {
 	
 	function Pick ( slot : String ) {
 		var s : UpgradeManager.eSlotID = System.Enum.Parse ( typeof ( UpgradeManager.eSlotID ), slot );
+		
+		if ( !UpgradeManager.GetSlots()[s] ) {
+			return;
+		}
 		
 		OGRoot.GoToPage ( "HUD" );
 		UpgradeManager.Activate ( s );

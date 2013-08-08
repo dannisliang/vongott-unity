@@ -56,6 +56,28 @@ class UIInventory extends OGPage {
 		}
 	}
 	
+	// Update text
+	function UpdateText ( entry : InventoryEntry ) {
+		var item = entry.GetItem();
+		var equipText : String = "";
+		
+		if ( entry.equipped ) {
+			equipText = "\nEQUIPPED";
+		} else if ( entry.installed ) {
+			equipText = "\nINSTALLED";
+		}
+	
+		inspector.entryName.text = item.title;
+		inspector.description.text = item.desc + equipText;
+		inspector.attrName.text = "";
+		inspector.attrVal.text = "";
+		
+		for ( var a : Item.Attribute in item.attr ) {
+			inspector.attrName.text += a.type.ToString() + ": \n";
+			inspector.attrVal.text += a.val.ToString() + "\n";
+		}
+	}
+	
 	// Select slot
 	function SelectSlot ( b : OGButton3D ) {
 		var index : int = int.Parse ( b.gameObject.name );
@@ -64,16 +86,8 @@ class UIInventory extends OGPage {
 		if ( allSlots[index] ) {
 			var entry = allSlots[index];
 			var item = allSlots[index].GetItem();
-		
-			inspector.entryName.text = item.title;
-			inspector.description.text = item.desc;
-			inspector.attrName.text = "";
-			inspector.attrVal.text = "";
-			
-			for ( var a : Item.Attribute in item.attr ) {
-				inspector.attrName.text += a.type.ToString() + ": \n";
-				inspector.attrVal.text += a.val.ToString() + "\n";
-			}
+					
+			UpdateText ( allSlots[index] );
 			
 			if ( item.type == Item.eItemType.Equipment ) {
 				if ( !entry.equipped ) {
@@ -106,6 +120,8 @@ class UIInventory extends OGPage {
 		var item : Item = entry.GetItem();
 		
 		InventoryManager.Equip ( item, equip );
+		
+		UpdateText ( entry );
 	}
 	
 	// Install entry
@@ -119,6 +135,8 @@ class UIInventory extends OGPage {
 		} else {
 			UpgradeManager.Remove ( upgrade.upgSlot );
 		}
+		
+		UpdateText ( entry );
 	}
 	
 	// Set buttons

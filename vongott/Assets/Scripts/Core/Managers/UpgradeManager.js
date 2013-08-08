@@ -54,6 +54,11 @@ class UpgradeManager {
 		return slots [ slot ];
 	}
 	
+	// Get slots
+	static function GetSlots () : Dictionary.< eSlotID, InventoryEntry > {
+		return slots;
+	}
+	
 	// Deactivate
 	static function Deactivate ( slot : eSlotID ) {
 		if ( slots [ slot ] == null ) {
