@@ -37,6 +37,17 @@ static function RemoveEntry ( i : int ) {
 	slots[i] = null;
 }
 
+static function RemoveEntry ( e : InventoryEntry ) {
+	GameCore.Print ( "InventoryManager | Removed entry: " + e.GetItem().title );
+	
+	for ( var i = 0; i < capacity; i++ ) {
+		if ( slots[i] == e ) {
+			RemoveEntry ( i );
+			return;
+		}
+	}
+}
+
 // Init inventory
 static function Init () {
 	for ( var i = 0; i < capacity; i++ ) {

@@ -6,15 +6,15 @@ class UIModWheel extends OGPage {
 	var grid : Transform;
 	var human : Transform;
 	var markers : Transform;
+	var upgName : OGLabel;
 	
 	function PopulateList () {
 		for ( var i = 0; i < grid.GetChildCount(); i++ ) {
-			var id : String = grid.GetChild(i).GetComponent(OGButton3D).argument;
-			var s : UpgradeManager.eSlotID = System.Enum.Parse ( typeof ( UpgradeManager.eSlotID ), id );
+			var slot : String = grid.GetChild(i).GetComponent(OGButton3D).argument;
 			
-			if ( UpgradeManager.GetUpgrade ( s ) ) {
+			if ( UpgradeManager.GetUpgrade ( slot ) ) {
 				grid.GetChild(i).GetChild(0).gameObject.SetActive ( true );
-				grid.GetChild(i).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = UpgradeManager.GetUpgrade ( s ).GetItem().image;
+				grid.GetChild(i).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = UpgradeManager.GetUpgrade ( slot ).GetItem().image;
 			} else {
 				grid.GetChild(i).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = null;
 				grid.GetChild(i).GetChild(0).gameObject.SetActive ( false );
@@ -28,14 +28,33 @@ class UIModWheel extends OGPage {
 		Hover ( "" );
 	}
 	
+	function Out ( slot : String ) {
+		upgName.text = "";
+		
+		for ( var i = 0; i < human.GetChildCount(); i++ ) {
+			human.GetChild(i).GetComponent(MeshRenderer).material = unselectedMaterial;
+			markers.GetChild(i).gameObject.SetActive ( false );
+		}
+		
+		if ( human.localEulerAngles.y != 0 ) {
+			iTween.RotateTo ( human.gameObject, iTween.Hash ( "rotation", new Vector3 ( 0, 0, 0 ), "time", 0.5, "ignoretimescale", true ) );
+
+		}
+	}
+	
 	function Hover ( slot : String ) {
+		upgName.text = "";
+		
 		for ( var i = 0; i < human.GetChildCount(); i++ ) {
 			if ( human.GetChild(i).gameObject.name == slot ) {
 				human.GetChild(i).GetComponent(MeshRenderer).material = selectedMaterial;												
 				markers.GetChild(i).gameObject.SetActive ( true );
+				upgName.text = UpgradeManager.GetUpgradeName ( slot );
+			
 			} else {
 				human.GetChild(i).GetComponent(MeshRenderer).material = unselectedMaterial;
 				markers.GetChild(i).gameObject.SetActive ( false );
+			
 			}
 		}
 		
@@ -47,15 +66,13 @@ class UIModWheel extends OGPage {
 		}
 	}
 	
-	function Pick ( slot : String ) {
-		var s : UpgradeManager.eSlotID = System.Enum.Parse ( typeof ( UpgradeManager.eSlotID ), slot );
-		
-		if ( !UpgradeManager.GetSlots()[s] ) {
+	function Pick ( slot : String ) {		
+		if ( !UpgradeManager.GetUpgrade ( slot ) ) {
 			return;
 		}
 		
 		OGRoot.GoToPage ( "HUD" );
-		UpgradeManager.Activate ( s );
+		UpgradeManager.Activate ( slot );
 	}
 	
 	override function UpdatePage () {

@@ -13,6 +13,7 @@ class OGButton3D extends MonoBehaviour {
 	var messageTarget : GameObject;
 	var message : String = "";
 	var hoverMessage : String = "";
+	var outMessage : String = "";
 	var argument : String = "";
 	var pressBack : Vector3;
 	var executeOn : ButtonExecType;
@@ -28,6 +29,19 @@ class OGButton3D extends MonoBehaviour {
 		} else {
 			messageTarget.SendMessage ( hoverMessage, this );
 		}
+	}
+	
+	// Out
+	function Out () {
+		if ( !messageTarget ) { return; }
+		if ( outMessage == "" ) { return; }
+		
+		if ( argument != "" ) {
+			messageTarget.SendMessage ( outMessage, argument );
+		} else {
+			messageTarget.SendMessage ( outMessage, this );
+		}
+		
 	}
 	
 	// Send message
@@ -81,9 +95,9 @@ class OGButton3D extends MonoBehaviour {
 		var hit : RaycastHit;
 		
 		if ( Physics.Raycast ( ray, hit ) ) {
-			var obj : GameObject = hit.collider.gameObject;
+			var col : Collider = hit.collider;
 			
-			if ( obj == gameObject ) {
+			if ( col == this.collider ) {
 				if ( Input.GetMouseButtonDown(0) ) {
 					PressButton ();
 				} else if ( Input.GetMouseButtonUp(0) ) {
@@ -92,7 +106,9 @@ class OGButton3D extends MonoBehaviour {
 					Hover ();
 				}
 			}
-		
+		} else {
+			Out ();
+			
 		}
 	}
 }
