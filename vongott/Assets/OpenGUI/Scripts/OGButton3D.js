@@ -9,6 +9,7 @@ class OGButton3D extends MonoBehaviour {
 	}
 	
 	var cam : Camera;
+	var layerMask : LayerMask;
 	var func : Function;
 	var messageTarget : GameObject;
 	var message : String = "";
@@ -93,8 +94,8 @@ class OGButton3D extends MonoBehaviour {
 	function Update () {
 		var ray : Ray = cam.ScreenPointToRay ( Input.mousePosition );
 		var hit : RaycastHit;
-		
-		if ( Physics.Raycast ( ray, hit ) ) {
+				
+		if ( Physics.Raycast ( ray, hit, Mathf.Infinity, layerMask ) ) {
 			var col : Collider = hit.collider;
 			
 			if ( col == this.collider ) {

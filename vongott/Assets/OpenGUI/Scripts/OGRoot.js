@@ -10,7 +10,7 @@ class OGRoot extends MonoBehaviour {
 	static var mouseOver : boolean = false;
 	static var thisTransform : Transform;
 	static var skin : GUISkin;
-		
+					
 	static function GoToPage ( name : String ) {				
 		if ( currentPage ) {
 			if ( name == currentPage.pageName ) {
