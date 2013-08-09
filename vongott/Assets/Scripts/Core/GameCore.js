@@ -34,6 +34,8 @@ static var instance : GameCore;
 public var timeScale : float = 1.0;
 public var ignoreTimeScale : float = 0.0;
 public var tempTimeScale : float = 1.0;
+public var timeScaleGoal : float = 1.0;
+
 
 ////////////////////
 // Player
@@ -177,7 +179,14 @@ function SetPause ( state : boolean ) {
 
 	} else {
 		iTween.StopByName ( "TimeScaleTween" );
-		SetTimeScale ( tempTimeScale );
+		
+		if ( tempTimeScale != timeScaleGoal ) {
+			TweenTimeScale ( tempTimeScale, timeScaleGoal, 1.0 );
+		
+		} else {
+			SetTimeScale ( tempTimeScale );
+		
+		}
 		
 		ToggleControls ( true );
 		
@@ -185,6 +194,10 @@ function SetPause ( state : boolean ) {
 }
 
 // Timescale
+function SetTimeScaleGoal ( goal : float ) {
+	timeScaleGoal = goal;
+}
+
 function TweenTimeScale ( start : float, goal : float, time : float ) {
 	iTween.ValueTo ( this.gameObject, iTween.Hash (
 		"name", "TimeScaleTween",
@@ -194,6 +207,8 @@ function TweenTimeScale ( start : float, goal : float, time : float ) {
 		"ignoretimescale", true,
 		"time", time
 	) );
+	
+	timeScaleGoal = goal;
 }
 
 function SetTimeScale ( time : float ) {

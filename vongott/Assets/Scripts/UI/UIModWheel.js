@@ -8,28 +8,21 @@ class UIModWheel extends OGPage {
 	var markers : Transform;
 	var upgName : OGLabel;
 	
-	function PopulateList () {
-		for ( var i = 0; i < grid.GetChildCount(); i++ ) {
-			var slot : String = grid.GetChild(i).GetComponent(OGButton3D).argument;
-			
-			if ( UpgradeManager.GetUpgrade ( slot ) ) {
-				grid.GetChild(i).GetChild(0).gameObject.SetActive ( true );
-				grid.GetChild(i).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = UpgradeManager.GetUpgrade ( slot ).GetItem().image;
-			} else {
-				grid.GetChild(i).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = null;
-				grid.GetChild(i).GetChild(0).gameObject.SetActive ( false );
-			}
-		}
-	}
+	var normalMaterial : Material;
+	var activatedMaterial : Material;
+	var hoverMaterial : Material;
+	var hoverActivatedMaterial : Material;
 	
 	override function StartPage () {
 		GameCore.GetInstance().SetPause ( true );
-		PopulateList ();
-		Hover ( "" );
+		SetButtonMaterials ( null );
+		upgName.text = "";
 	}
 	
-	function Out ( slot : String ) {
+	function Out ( b : OGButton3D ) {
 		upgName.text = "";
+		
+		SetButtonMaterials ( null );
 		
 		for ( var i = 0; i < human.GetChildCount(); i++ ) {
 			human.GetChild(i).GetComponent(MeshRenderer).material = unselectedMaterial;
@@ -42,8 +35,52 @@ class UIModWheel extends OGPage {
 		}
 	}
 	
-	function Hover ( slot : String ) {
+	function SetButtonMaterials ( hover : OGButton3D ) {
+		var slot : String;
+		var entry : InventoryEntry;
+		
+		for ( var i = 0; i < grid.GetChildCount(); i++ ) {
+			slot = grid.GetChild(i).gameObject.name;
+			entry = UpgradeManager.GetUpgrade ( slot );
+			
+			if ( entry ) {
+				grid.GetChild(i).GetChild(0).gameObject.SetActive ( true );
+				grid.GetChild(i).GetChild(0).renderer.material.mainTexture = entry.GetItem().image;
+				
+				if ( entry.activated ) {
+					grid.GetChild(i).renderer.material = activatedMaterial;
+				} else {
+					grid.GetChild(i).renderer.material = normalMaterial;
+				}
+			} else {
+				grid.GetChild(i).GetChild(0).gameObject.SetActive ( false );
+			
+			}
+		}
+		
+		if ( hover ) {
+			slot = hover.name;
+			entry = UpgradeManager.GetUpgrade ( slot );
+			
+			if ( entry.activated ) {
+				hover.renderer.material = hoverActivatedMaterial;	
+			} else {
+				hover.renderer.material = hoverMaterial;
+			}
+		}
+	}
+	
+	function Hover ( b : OGButton3D ) {
 		upgName.text = "";
+		
+		var slot : String = b.name;
+		
+		if ( !UpgradeManager.GetUpgrade ( slot ) ) {
+			SetButtonMaterials ( null );
+			return;
+		} 
+		
+		SetButtonMaterials ( b );
 		
 		for ( var i = 0; i < human.GetChildCount(); i++ ) {
 			if ( human.GetChild(i).gameObject.name == slot ) {
@@ -66,12 +103,13 @@ class UIModWheel extends OGPage {
 		}
 	}
 	
-	function Pick ( slot : String ) {		
+	function Pick ( b : OGButton3D ) {		
+		var slot : String = b.name;
+		
 		if ( !UpgradeManager.GetUpgrade ( slot ) ) {
 			return;
 		}
 		
-		OGRoot.GoToPage ( "HUD" );
 		UpgradeManager.Activate ( slot );
 	}
 	

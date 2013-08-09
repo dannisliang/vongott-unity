@@ -111,7 +111,7 @@ class UpgradeManager {
 				
 		switch ( upgrade.ability.id ) {
 			case Upgrade.eAbilityID.Reflexes:
-				GameCore.GetInstance().TweenTimeScale ( 0.1, 1.0, 1.0 );
+				GameCore.GetInstance().SetTimeScaleGoal ( 1.0 );
 					
 				break;
 				
@@ -161,7 +161,7 @@ class UpgradeManager {
 		
 		switch ( upgrade.ability.id ) {
 			case Upgrade.eAbilityID.Reflexes:
-				GameCore.GetInstance().TweenTimeScale ( 1, upgrade.ability.val, 1.0 );
+				GameCore.GetInstance().SetTimeScaleGoal ( upgrade.ability.val );
 					
 				break;
 				
