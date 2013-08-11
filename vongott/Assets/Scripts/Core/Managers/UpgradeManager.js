@@ -124,6 +124,8 @@ class UpgradeManager {
 	
 	// Remove
 	static function Remove ( slot : eSlotID ) {
+		Deactivate ( slot );
+		
 		GameCore.Print ( "UpgradeManager | removed upgrade from slot " + slot );
 	
 		slots [ slot ] = null;

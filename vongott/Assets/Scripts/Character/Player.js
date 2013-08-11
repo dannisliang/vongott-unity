@@ -17,6 +17,10 @@ class Player extends MonoBehaviour {
 	////////////////////
 	// Equip
 	function Equip ( item : Item, equip : boolean ) {
+		if ( !item ) {
+			item = equippedItem.GetComponent ( Item );
+		}
+		
 		var slot : Equipment.eEquipmentSlot = item.eqSlot;
 		var target : GameObject;
 		var adjustPosition : Vector3;
@@ -45,6 +49,7 @@ class Player extends MonoBehaviour {
 			equippedItem.transform.localPosition = adjustPosition;
 			equippedItem.transform.localEulerAngles = adjustRotation;
 			equippedItem.collider.enabled = false;
+			Destroy ( equippedItem.rigidbody );
 		
 			ResetFire();
 		

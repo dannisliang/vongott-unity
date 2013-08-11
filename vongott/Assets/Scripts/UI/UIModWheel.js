@@ -54,6 +54,7 @@ class UIModWheel extends OGPage {
 				}
 			} else {
 				grid.GetChild(i).GetChild(0).gameObject.SetActive ( false );
+				grid.GetChild(i).renderer.material = normalMaterial;
 			
 			}
 		}

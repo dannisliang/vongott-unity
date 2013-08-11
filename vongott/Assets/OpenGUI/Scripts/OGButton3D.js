@@ -101,10 +101,13 @@ class OGButton3D extends MonoBehaviour {
 			if ( col == this.collider ) {
 				if ( Input.GetMouseButtonDown(0) ) {
 					PressButton ();
+				
 				} else if ( Input.GetMouseButtonUp(0) ) {
-					ReleaseButton ();						
+					ReleaseButton ();	
+					
 				} else {
 					Hover ();
+				
 				}
 			}
 		} else {
