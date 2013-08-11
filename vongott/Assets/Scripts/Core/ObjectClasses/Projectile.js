@@ -1,12 +1,13 @@
 #pragma strict
 
 class Projectile extends MonoBehaviour {
+	var layerMask : LayerMask;
 	var damage : float = 1.0;
 	var time : float = 0.0;
 	var expirationTime : float = 2.5;
 	var speed : float = 1.0;
 	var owner : GameObject;
-	
+		
 	@HideInInspector var collidePos : Vector3 = Vector3.zero;
 	@HideInInspector var collideWith : GameObject;
 
@@ -28,7 +29,7 @@ class Projectile extends MonoBehaviour {
 		if ( time > expirationTime ) {
 			Destroy ( this.gameObject );
 				
-		} else if ( collideWith && !collideWith.GetComponent(Item) && ( collidePos - transform.position ).magnitude < 0.05 ) {
+		} else if ( collideWith && ( collidePos - transform.position ).magnitude < 0.05 ) {
 			
 			if ( collideWith.GetComponent ( Actor ) ) {
 				collideWith.GetComponent ( Actor ).TakeDamage ( damage );
@@ -43,7 +44,7 @@ class Projectile extends MonoBehaviour {
 			
 			Destroy ( this.gameObject );
 		
-		} else if ( Physics.Linecast ( transform.position, transform.position + transform.forward * 1.0, hit ) ) {
+		} else if ( Physics.Linecast ( transform.position, transform.position + transform.forward * 1.0, hit, layerMask ) ) {
 			if ( hit.collider.gameObject == owner ) { return; }
 			
 			Debug.DrawLine ( transform.position, hit.point, Color.green );

@@ -6,6 +6,7 @@ class UIQuests extends OGPage {
 	////////////////////
 	// Inspector items
 	var mainList : OGLabel;
+	var sideList : OGLabel;
 	
 	
 	////////////////////
@@ -14,14 +15,30 @@ class UIQuests extends OGPage {
 	// Get active quests
 	function GetActiveQuests () {
 		mainList.text = "";
+		sideList.text = "";
 		
+		
+		// Main quests
 		if ( QuestManager.GetMainQuests().Count <= 0 ) {
 			mainList.text = "( no active quests )";
-			return;
+			
+		} else {
+			for ( var q : Quest in QuestManager.GetMainQuests() ) {
+				mainList.text += "- " + q.title + ": " + q.desc + "\n";
+			}
+		
 		}
 		
-		for ( var q : Quest in QuestManager.GetMainQuests() ) {
-			mainList.text += "- " + q.title + ": " + q.desc + "\n";
+		
+		// Side quests
+		if ( QuestManager.GetSideQuests().Count <= 0 ) {
+			sideList.text = "( no active quests )";
+		
+		} else {
+			for ( var q : Quest in QuestManager.GetSideQuests() ) {
+				sideList.text += "- " + q.title + ": " + q.desc + "\n";
+			}
+		
 		}
 	}
 	

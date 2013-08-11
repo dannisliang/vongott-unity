@@ -4,6 +4,7 @@ class Actor extends InteractiveObject {
 	private class VisionCone {
 		var distance : float = 20.0;
 		var angle : float = 22.5;
+		var layerMask : LayerMask;
 	}
 	
 	var head : Transform;
@@ -230,9 +231,9 @@ class Actor extends InteractiveObject {
 		var distance : float = direction.magnitude;
 		var hit : RaycastHit;
 		
-		var inSight : boolean = angle < vision.angle && Physics.Raycast ( here, direction, hit, vision.distance ) && hit.collider.gameObject == GameCore.GetPlayerObject();
-		var inEarshot : boolean = distance < hearing &&  GameCore.GetPlayerObject().GetComponent(PlayerController).speed > 0.5;
-						
+		var inSight : boolean = angle < vision.angle && Physics.Raycast ( here, direction, hit, vision.distance, vision.layerMask ) && hit.collider.gameObject == GameCore.GetPlayerObject();
+		var inEarshot : boolean = distance < hearing && GameCore.GetPlayerObject().GetComponent(PlayerController).speed > 0.5;
+														
 		// ^ The player is in sight
 		if ( inSight ) {
 			// Draw sight
@@ -262,6 +263,8 @@ class Actor extends InteractiveObject {
 		
 		// ^ The player is out of sight
 		} else {			
+			Debug.DrawRay ( here, transform.forward * vision.distance, Color.red );
+			
 			// The player is a target
 			if ( target ) {
 				// Update frequency

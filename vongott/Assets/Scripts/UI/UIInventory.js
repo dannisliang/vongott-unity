@@ -107,7 +107,7 @@ class UIInventory extends OGPage {
 			inspector.attrName.text += a.type.ToString() + ": \n";
 			
 			if ( a.type == Item.eItemAttribute.FireRate ) {
-				inspector.attrVal.text += Mathf.Pow(a.val,-1).ToString() + " / sec\n";
+				inspector.attrVal.text += Mathf.Pow(a.val,-1).ToString() + " rd / sec\n";
 			} else if ( a.type == Item.eItemAttribute.FireRange ) {
 				inspector.attrVal.text += a.val.ToString() + " m\n";
 			} else if ( a.type == Item.eItemAttribute.Accuracy ) {

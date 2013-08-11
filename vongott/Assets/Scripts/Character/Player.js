@@ -48,7 +48,8 @@ class Player extends MonoBehaviour {
 			equippedItem.transform.parent = target.transform;
 			equippedItem.transform.localPosition = adjustPosition;
 			equippedItem.transform.localEulerAngles = adjustRotation;
-			equippedItem.collider.enabled = false;
+			equippedItem.GetComponent(BoxCollider).enabled = false;
+			equippedItem.GetComponent(SphereCollider).enabled = false;
 			Destroy ( equippedItem.rigidbody );
 		
 			ResetFire();
