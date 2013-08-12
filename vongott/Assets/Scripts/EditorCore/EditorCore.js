@@ -46,6 +46,7 @@ private class Action {
 var _workspace : Transform;
 var _gizmo : GameObject;
 var _previewCamera : Camera;
+var _selectBox : Transform;
 
 // Static vars
 static var menusActive = false;
@@ -76,6 +77,7 @@ static var gridLineBrightFrequency : int = 5;
 
 // editor essentials
 static var instance : EditorCore;
+static var selectBox : Transform;
 static var workspace : Transform;
 static var cam : Transform;
 static var inspector : EditorMenuBase;
@@ -83,7 +85,6 @@ static var player : GameObject;
 static var camTarget : GameObject;
 static var root : Transform;
 static var drawPath : Vector3[];
-static var origColors : List.< KeyValuePair.< Material, Color > > = new List.< KeyValuePair.< Material, Color > > ();
 static var noGizmos : boolean = false;
 static var previewObject : GameObject;
 static var previewCamera : Camera;
@@ -340,26 +341,6 @@ static function ToggleGizmos () {
 ////////////////////
 // Select objects
 ////////////////////
-// Pin materials
-static function PinColor ( mat : Material ) {
-	origColors.Add ( new KeyValuePair. < Material, Color > ( mat, mat.color ) );
-}
-
-// Unpin materials
-static function UnpinColor ( mat : Material ) : Color {
-	var color : Color;
-	
-	for ( var kvp : KeyValuePair. < Material, Color > in origColors ) {
-		if ( kvp.Key == mat ) {
-			color = kvp.Value;
-			origColors.Remove ( kvp );
-			break;
-		}
-	}
-	
-	return color;
-}
-
 // Reselect object
 static function ReselectObject () {
 	SelectObject ( selectedObject );
@@ -411,11 +392,7 @@ static function DeselectObject () {
 	
 	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
 	
-	if ( renderer ) {
-		for ( var mat : Material in renderer.materials ) {
-		 	mat.color = UnpinColor ( mat );
-		}
-	}
+	selectBox.gameObject.SetActive ( false );
 	
 	drawPath = null;
 	selectedObject = null;
@@ -449,6 +426,7 @@ static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex :
 // Select object
 static function SelectObject ( obj : GameObject ) {
 	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
+		selectBox.gameObject.SetActive ( false );
 		return;
 	} else if ( obj.GetComponent ( EditorVertexGizmo ) ) {
 		var gizmo : EditorVertexGizmo = obj.GetComponent ( EditorVertexGizmo );
@@ -469,15 +447,15 @@ static function SelectObject ( obj : GameObject ) {
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 	
-	// Change material
-	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
+	// Mark with selection box
+	var bounds : Bounds = selectedObject.GetComponent(MeshRenderer).bounds;
+	var e : Vector3 = ( bounds.extents * 2 );
+	var s : Vector3 = selectedObject.transform.localScale;
 	
-	if ( renderer ) {
-		for ( var i = 0; i < renderer.materials.Length; i++ ) {
-			PinColor ( renderer.materials[i] );
-			renderer.materials[i].color = Color.green;
-		}
-	}
+	selectBox.gameObject.SetActive ( true );
+	selectBox.transform.parent = selectedObject.transform.parent;
+	selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
+	selectBox.transform.localPosition = bounds.center;
 	
 	// LightSource
 	if ( obj.GetComponent(LightSource) ) {
@@ -730,6 +708,7 @@ function Start () {
 	previewCamera = _previewCamera;
 	root = this.transform.parent;
 	instance = this;
+	selectBox = _selectBox;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	
