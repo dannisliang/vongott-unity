@@ -3,45 +3,6 @@
 import System.Collections.Generic;
 import System.IO;
 
-// Public classes
-public class ObjectAttributes {
-	var keys : String = "";
-	var values : String = "";
-}
-
-// Private classes
-private class Action {
-	var obj : GameObject;
-	var objPath : String;
-	var position : Vector3;
-	var rotation : Vector3;
-	var scale : Vector3;
-	var type : String;
-	
-	function Action ( o : GameObject, t : String ) {
-		obj = o;
-		position = o.transform.localPosition;
-		rotation = o.transform.localEulerAngles;
-		scale = o.transform.localScale;
-		type = t;
-		
-		if ( o.GetComponent ( Prefab ) ) {
-			objPath = "Prefabs/" + o.GetComponent ( Prefab ).path + "/" + o.GetComponent ( Prefab ).id;
-		}
-	}
-	
-	function UndoAction () {
-		if ( !obj ) { return; }
-		
-		if ( type == "transform" ) {
-			obj.transform.localPosition = position;
-			obj.transform.localEulerAngles = rotation;
-			obj.transform.localScale = scale;
-		
-		}
-	}
-}
-
 // Public vars
 var _workspace : Transform;
 var _gizmo : GameObject;
@@ -97,6 +58,49 @@ static var grabOrigPoint : Vector3;
 static var actions : List.< Action > = new List.< Action > ();
 static var currentAction : Action;
 
+// Public classes
+public class ObjectAttributes {
+	var keys : String = "";
+	var values : String = "";
+}
+
+// Private classes
+public class Action {
+	enum eActionType {
+		Transformation,
+		Deletion
+	}
+	
+	var obj : GameObject;
+	var objPath : String;
+	var position : Vector3;
+	var rotation : Vector3;
+	var scale : Vector3;
+	var type : String;
+	
+	function Action ( o : GameObject, t : String ) {
+		obj = o;
+		position = o.transform.localPosition;
+		rotation = o.transform.localEulerAngles;
+		scale = o.transform.localScale;
+		type = t;
+		
+		if ( o.GetComponent ( Prefab ) ) {
+			objPath = o.GetComponent ( Prefab ).path + "/" + o.GetComponent ( Prefab ).id;
+		}
+	}
+	
+	function UndoAction () {
+		if ( !obj ) { return; }
+		
+		if ( type == "transform" ) {
+			obj.transform.localPosition = position;
+			obj.transform.localEulerAngles = rotation;
+			obj.transform.localScale = scale;		
+		}
+	}
+}
+
 
 ////////////////////
 // Undo buffer
@@ -113,8 +117,10 @@ static function UndoAction ( action : Action ) {
 	
 	if ( action.type != "delete" ) {
 		action.UndoAction ();
-	} else {
 		
+		selectBox.position = selectedObject.renderer.bounds.center;
+		
+	} else {
 		var newObj : GameObject = Instantiate ( Resources.Load ( action.objPath ) ) as GameObject;
 		newObj.transform.parent = currentLevel.transform;
 		newObj.transform.localPosition = action.position;
@@ -122,6 +128,7 @@ static function UndoAction ( action : Action ) {
 		newObj.transform.localScale = action.scale;
 		
 		action.obj = newObj;
+	
 	}
 	
 	actions.Remove ( action );
@@ -341,6 +348,17 @@ static function ToggleGizmos () {
 ////////////////////
 // Select objects
 ////////////////////
+// Fit selection box
+static function FitSelectionBox () {
+	var bounds : Bounds = selectedObject.GetComponent(MeshRenderer).bounds;
+	var e : Vector3 = ( bounds.extents * 2 );
+	var s : Vector3 = selectedObject.transform.localScale;
+	
+	selectBox.gameObject.SetActive ( true );
+	selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
+	selectBox.transform.position = bounds.center;
+}
+
 // Reselect object
 static function ReselectObject () {
 	SelectObject ( selectedObject );
@@ -382,10 +400,6 @@ static function DeselectObject () {
 			node.GetComponent(MeshRenderer).enabled = false;
 		}
 	
-	} else if ( selectedObject.GetComponent ( EditorVertexGizmo ) ) {
-		selectNextObject = selectedObject.GetComponent ( EditorVertexGizmo ).surface.gameObject;
-		transformUpdate = null;
-		
 	}
 	
 	focusEnabled = false;
@@ -405,33 +419,47 @@ static function DeselectObject () {
 }
 
 // Select vertex
-static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex : int, gizmo : Transform ) {
+static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex : int, button : Transform ) {
+	
+	DeselectObject ();
+	selectedObject = button.gameObject;
+	FitSelectionBox();
+	
+	grabRestrict = "xz";
+	
+	button.GetComponent(OGButton3D).enabled = false;
+	
+	inspector.ClearMenus ();
+	
+	grabOrigPoint = button.position;	
 	SetGrabMode ( true );
 	
+	Debug.Log ( button );
+	
 	transformUpdate = function () {
-		plane.vertices[vertex] = gizmo.position - surface.transform.position;
+		plane.vertices[vertex] = button.position - surface.transform.position;
+		surface.UpdateButtons ();
 		surface.Apply ();
 	};
 
 	transformEnd = function () {
-		plane.vertices[vertex] = gizmo.position - surface.transform.position;
+		transformUpdate = null;
+		
+		plane.vertices[vertex] = button.position - surface.transform.position;
 		surface.Apply ();
 		
 		SelectObject ( surface.gameObject );
 		
 		surface.CreateButtons ();
+		
+		button.GetComponent(OGButton3D).enabled = true;
 	};
 }
 
 // Select object
 static function SelectObject ( obj : GameObject ) {
 	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
-		selectBox.gameObject.SetActive ( false );
 		return;
-	} else if ( obj.GetComponent ( EditorVertexGizmo ) ) {
-		var gizmo : EditorVertexGizmo = obj.GetComponent ( EditorVertexGizmo );
-		
-		SelectVertex ( gizmo.surface, gizmo.plane, gizmo.vertex, gizmo.transform );
 	}
 				
 	if ( selectedObject ) { 
@@ -447,15 +475,8 @@ static function SelectObject ( obj : GameObject ) {
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 	
-	// Mark with selection box
-	var bounds : Bounds = selectedObject.GetComponent(MeshRenderer).bounds;
-	var e : Vector3 = ( bounds.extents * 2 );
-	var s : Vector3 = selectedObject.transform.localScale;
-	
-	selectBox.gameObject.SetActive ( true );
-	selectBox.transform.parent = selectedObject.transform.parent;
-	selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
-	selectBox.transform.localPosition = bounds.center;
+	// Mark with selection box	
+	FitSelectionBox ();
 	
 	// LightSource
 	if ( obj.GetComponent(LightSource) ) {
@@ -713,6 +734,8 @@ function Start () {
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	
 	gizmo.SetActive ( false );
+
+	Camera.main.orthographic = true;
 
 	if ( initMap ) {
 		LoadFile ( initMap );

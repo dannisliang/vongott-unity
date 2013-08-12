@@ -111,7 +111,6 @@
      <Compile Include="Assets\Scripts\EditorCore\EditorCore.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorInput.js" />
      <Compile Include="Assets\Scripts\EditorCore\EditorTest.js" />
-     <Compile Include="Assets\Scripts\EditorCore\EditorVertexGizmo.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorActors.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorAdjust.js" />
      <Compile Include="Assets\Scripts\EditorUI\EditorBrowser.js" />
@@ -157,8 +156,10 @@
      <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\Temp\TempShader.shader" />
      <None Include="Assets\Shaders\BumpedSpecularEmissive.shader" />
      <None Include="Assets\Shaders\BumpedCubemapReflection.shader" />
+     <None Include="Assets\Shaders\UnlitColoredZBuf.shader" />
      <None Include="Assets\Shaders\BumpedSpecular.shader" />
      <None Include="Assets\Shaders\RimLighting.shader" />
+     <None Include="Assets\Shaders\DiffuseDoubleSided.shader" />
      <None Include="Assets\Shaders\OutlineDiffuse.shader" />
      <None Include="Assets\Plugins\Blur\BlurEffectConeTaps.shader" />
      <None Include="Assets\Shaders\UnlitDiffuse.shader" />
