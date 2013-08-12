@@ -72,10 +72,11 @@ Mechanical upgrades have both passive and active attributes. They need to be ins
 
 #### Eyes
 - AIM: Auto aim
-- VISION: See through walls
+- X-RAY: See through walls
 
 #### Torso
 - HEALTH: Slow health regeneration
+- BATTERY: Energy conservation
 
 #### Legs
 - SPEED: Running/swimming speed/jumping height
