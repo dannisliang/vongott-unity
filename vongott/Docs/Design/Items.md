@@ -114,4 +114,3 @@ Players should be rewarded for combining certain upgrades, such as events trigge
   - Self-fist-five and enemy's head flies off! F*ck yeah!
 - PARACHUTE + STRENGTH: The player creates a shockwave when punching before landing
 - REFLEXES + AIM: The player shoots every enemy in frame upon firing
-- 
