@@ -219,7 +219,10 @@ function Update () {
 			var target : Vector3;
 			
 			if ( Camera.main.orthographic ) {
-				if ( fixPoint != Vector3.zero ) {
+				if ( EditorCore.GetSelectedObject() && Input.GetKey ( KeyCode.LeftAlt ) ) {
+					target = EditorCore.GetSelectedObject().transform.renderer.bounds.center;
+				
+				} else if ( fixPoint != Vector3.zero ) {
 					target = fixPoint;
 				
 				} else {

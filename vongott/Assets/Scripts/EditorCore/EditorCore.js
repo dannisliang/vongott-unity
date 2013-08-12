@@ -8,6 +8,7 @@ var _workspace : Transform;
 var _gizmo : GameObject;
 var _previewCamera : Camera;
 var _selectBox : Transform;
+var _selectBoxDefaultMesh : Mesh;
 
 // Static vars
 static var menusActive = false;
@@ -39,6 +40,7 @@ static var gridLineBrightFrequency : int = 5;
 // editor essentials
 static var instance : EditorCore;
 static var selectBox : Transform;
+static var selectBoxDefaultMesh : Mesh;
 static var workspace : Transform;
 static var cam : Transform;
 static var inspector : EditorMenuBase;
@@ -256,8 +258,11 @@ static function PreviewObject ( obj : GameObject ) : ObjectAttributes {
 	
 	var scal = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
 	previewObject.transform.localPosition = new Vector3 ( 0, 0, 5 );
+	
+	previewObject.transform.position += previewObject.transform.position - previewObject.renderer.bounds.center;
+	
 	previewObject.transform.localScale = Vector3.one;
-	previewObject.transform.localEulerAngles = new Vector3 ( 0, 225, 0 );
+	previewObject.transform.localEulerAngles = new Vector3 ( 0, 180, 0 );
 	
 	SetLayerRecursively ( previewObject, 8 );
 
@@ -354,9 +359,20 @@ static function FitSelectionBox () {
 	var e : Vector3 = ( bounds.extents * 2 );
 	var s : Vector3 = selectedObject.transform.localScale;
 	
+	if ( selectedObject.GetComponentsInChildren(MeshFilter).Length > 1 ) {
+		selectBox.GetComponent(MeshFilter).mesh = selectBoxDefaultMesh;
+		selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
+		selectBox.transform.position = bounds.center;
+	
+	} else {
+		selectBox.GetComponent(MeshFilter).mesh = selectedObject.GetComponent(MeshFilter).mesh;
+		selectBox.localScale = selectedObject.transform.localScale;
+		selectBox.position = selectedObject.transform.position;
+		selectBox.eulerAngles = selectedObject.transform.eulerAngles;
+	
+	}
+	
 	selectBox.gameObject.SetActive ( true );
-	selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
-	selectBox.transform.position = bounds.center;
 }
 
 // Reselect object
@@ -420,12 +436,11 @@ static function DeselectObject () {
 
 // Select vertex
 static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex : int, button : Transform ) {
-	
 	DeselectObject ();
 	selectedObject = button.gameObject;
 	FitSelectionBox();
 	
-	grabRestrict = "xz";
+	//grabRestrict = "xz";
 	
 	button.GetComponent(OGButton3D).enabled = false;
 	
@@ -730,6 +745,7 @@ function Start () {
 	root = this.transform.parent;
 	instance = this;
 	selectBox = _selectBox;
+	selectBoxDefaultMesh = _selectBoxDefaultMesh;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	

@@ -18,10 +18,15 @@ class EditorBrowser extends OGPage {
 			path = name;
 		} 
 	
-		function AddFolder ( f : Folder ) {
-			f.path = path + "/" + f.name;
-			f.files = Resources.LoadAll ( f.path );
+		function AddFolder ( f : Folder, scan : boolean ) {
+			if ( name != "Resources" ) {
+				f.path = path + "/" + f.name;
+			}
 			
+			if ( scan ) {
+				f.files = Resources.LoadAll ( f.path );
+			}
+								
 			subFolders.Add ( f );
 		}
 	
@@ -37,21 +42,8 @@ class EditorBrowser extends OGPage {
 		
 		function FindFile ( n : String ) : Object {
 			for ( var f : Object in files ) {
-				
-				if ( f.GetType() == GameObject ) {
-					var obj : GameObject = f as GameObject;
-				
-					if ( n == obj.name ) {
-						return obj;
-					}
-				
-				} else if ( f.GetType() == Material ) {
-					var mat : Material = f as Material;
-				
-					if ( n == mat.name ) {
-						return mat;
-					}
-				
+				if ( ( f.GetType() == GameObject && (f as GameObject).name == n ) || f.GetType() == Material && (f as Material).name == n ) {
+					return f;	
 				}
 			}
 			
@@ -79,7 +71,7 @@ class EditorBrowser extends OGPage {
 	@HideInInspector var currentFolder : Folder;
 	@HideInInspector var selectedFolder : Folder;
 	@HideInInspector var resourcesFolder : Folder = new Folder( "Resources" );
-	@HideInInspector var selectedFile : GameObject;
+	@HideInInspector var selectedFile : Object;
 	@HideInInspector var mode : String;
 	@HideInInspector var breadPos : float = 0;
 	
@@ -94,51 +86,50 @@ class EditorBrowser extends OGPage {
 				
 		// Actors
 		var actorsFolder : Folder = new Folder ( "Actors" );
-		actorsFolder.AddFolder ( new Folder ( "Animals" ) );
-		actorsFolder.AddFolder ( new Folder ( "NPC" ) );
+		resourcesFolder.AddFolder ( actorsFolder, false );
+		
+		actorsFolder.AddFolder ( new Folder ( "Animal" ), true );
+		actorsFolder.AddFolder ( new Folder ( "NPC" ), true );
 	
 		// Items
 		var itemsFolder : Folder = new Folder ( "Items" );
-		itemsFolder.AddFolder ( new Folder ( "Consumables" ) );
-		itemsFolder.AddFolder ( new Folder ( "Equipment" ) );
-		itemsFolder.AddFolder ( new Folder ( "Upgrades" ) );
+		resourcesFolder.AddFolder ( itemsFolder, false );
+		
+		itemsFolder.AddFolder ( new Folder ( "Consumables" ), true );
+		itemsFolder.AddFolder ( new Folder ( "Equipment" ), true );
+		itemsFolder.AddFolder ( new Folder ( "Upgrades" ), true );
 		
 		// Materials
 		var materialsFolder : Folder = new Folder ( "Materials" );
-		materialsFolder.AddFolder ( new Folder ("Brick") );
-		materialsFolder.AddFolder ( new Folder ("Concrete") );
-		materialsFolder.AddFolder ( new Folder ("Foliage") );
-		materialsFolder.AddFolder ( new Folder ("Wood") );
+		resourcesFolder.AddFolder ( materialsFolder, false );
+		
+		materialsFolder.AddFolder ( new Folder ("Brick"), true );
+		materialsFolder.AddFolder ( new Folder ("Concrete"), true );
+		materialsFolder.AddFolder ( new Folder ("Foliage"), true );
+		materialsFolder.AddFolder ( new Folder ("Wood"), true );
 		
 		// Prefabs
 		var prefabsFolder : Folder = new Folder ( "Prefabs" );
-		prefabsFolder.AddFolder ( new Folder ( "Airducts" ) );
-		prefabsFolder.AddFolder ( new Folder ( "Doors" ) );
-		prefabsFolder.AddFolder ( new Folder ( "Stairs" ) );
-		prefabsFolder.AddFolder ( new Folder ( "Walls" ) );
-		prefabsFolder.AddFolder ( new Folder ( "Windows" ) );
+		resourcesFolder.AddFolder ( prefabsFolder, false );
+		
+		prefabsFolder.AddFolder ( new Folder ( "Airducts" ), true );
+		prefabsFolder.AddFolder ( new Folder ( "Doors" ), true );
+		prefabsFolder.AddFolder ( new Folder ( "Stairs" ), true );
+		prefabsFolder.AddFolder ( new Folder ( "Walls" ), true );
+		prefabsFolder.AddFolder ( new Folder ( "Windows" ), true );
 		
 		// ^ exterior
 		var prefabsExteriorFolder = new Folder ( "Exterior" );
-		prefabsExteriorFolder.AddFolder ( new Folder ( "City" ) );
-		prefabsFolder.AddFolder ( prefabsExteriorFolder );
+		prefabsFolder.AddFolder ( prefabsExteriorFolder, false );
+		
+		prefabsExteriorFolder.AddFolder ( new Folder ( "City" ), true );
 		
 		// ^ interior
 		var prefabsInteriorFolder = new Folder ( "Interior" );
-		prefabsInteriorFolder.AddFolder ( new Folder ( "Furniture" ) );
-		prefabsInteriorFolder.AddFolder ( new Folder ( "Decoration" ) );
-		prefabsFolder.AddFolder ( prefabsInteriorFolder );
+		prefabsFolder.AddFolder ( prefabsInteriorFolder, false );
 		
-		// ^ levels
-		var prefabsLevelsFolder = new Folder ( "Levels" );
-		prefabsLevelsFolder.AddFolder ( new Folder ( "AwesomeIsland" ) );
-		prefabsFolder.AddFolder ( prefabsLevelsFolder );
-				
-		// Add to master list
-		resourcesFolder.AddFolder ( actorsFolder );
-		resourcesFolder.AddFolder ( itemsFolder );
-		resourcesFolder.AddFolder ( materialsFolder );
-		resourcesFolder.AddFolder ( prefabsFolder );
+		prefabsInteriorFolder.AddFolder ( new Folder ( "Furniture" ), true );
+		prefabsInteriorFolder.AddFolder ( new Folder ( "Decoration" ), true );		
 	}
 	
 	// Page	
@@ -306,7 +297,7 @@ class EditorBrowser extends OGPage {
 	function SelectFile ( btn : OGButton ) {
 		DeselectAll ();
 		
-		selectedFile = currentFolder.FindFile ( btn.text ) as GameObject;
+		selectedFile = currentFolder.FindFile ( btn.text );
 		btn.style = "listitemselected";
 	
 		if ( selectedFile.GetType() == GameObject ) {	
@@ -363,11 +354,11 @@ class EditorBrowser extends OGPage {
 		EditorCore.ClearPreview ();
 		
 		if ( mode == "Add" ) {
-			EditorCore.AddObject ( selectedFile );
+			EditorCore.AddObject ( selectedFile as GameObject );
 			OGRoot.GoToPage ( "MenuBase" );
 		
 		} else if ( mode == "Equip" ) {
-			EditorCore.EquipItem ( selectedFile, int.Parse(argument) );
+			EditorCore.EquipItem ( (selectedFile as GameObject), int.Parse(argument) );
 			EditorCore.ReselectObject();
 			OGRoot.GoToPage ( "MenuBase" );
 			

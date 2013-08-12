@@ -16,7 +16,11 @@ class InventoryEntry {
 
 	function GetItem () : Item {
 		var obj : GameObject = Resources.Load ( prefabPath ) as GameObject;
-		var item = obj.GetComponent ( Item );
-		return item;
+		
+		if ( obj ) {
+			return obj.GetComponent ( Item );
+		} else {
+			return null;
+		}
 	}
 }

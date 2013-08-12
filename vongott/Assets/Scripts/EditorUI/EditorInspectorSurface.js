@@ -44,7 +44,6 @@ class EditorInspectorSurface extends MonoBehaviour {
 	}
 	
 	function GetMaterial ( matPath : String ) {
-		Debug.Log ( matPath );
 		selectedSurface.materialPath = matPath;
 		selectedSurface.ReloadMaterial();
 	}

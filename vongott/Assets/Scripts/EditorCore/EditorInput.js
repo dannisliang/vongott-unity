@@ -34,6 +34,8 @@ function Update () {
 				EditorCore.GetSelectedObject().transform.localPosition.x = Round ( EditorCore.GetSelectedObject().transform.localPosition.x, EditorCore.gridLineDistance );
 				EditorCore.GetSelectedObject().transform.localPosition.y = Round ( EditorCore.GetSelectedObject().transform.localPosition.y, EditorCore.gridLineDistance );
 				EditorCore.GetSelectedObject().transform.localPosition.z = Round ( EditorCore.GetSelectedObject().transform.localPosition.z, EditorCore.gridLineDistance );
+			
+				EditorCore.FitSelectionBox();
 			}
 
 			if ( EditorCore.transformEnd ) {
@@ -250,12 +252,17 @@ function Update () {
 		// left mouse button
 		} else if ( Input.GetMouseButtonDown(0) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {
 			var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
-			var hit : RaycastHit;
+			var hits : RaycastHit[] = Physics.RaycastAll ( newRay );
+			var goal : GameObject;
 			
-			if ( Physics.Raycast ( newRay, hit ) ) {
-				var obj : GameObject = hit.collider.gameObject;
-				
-				EditorCore.SelectObject ( obj );
+			for ( var h : RaycastHit in hits ) {
+				if ( !h.collider.isTrigger ) {
+					goal = h.collider.gameObject;
+				}
+			}
+			
+			if ( goal != null ) {
+				EditorCore.SelectObject ( goal );
 			
 			} else if ( EditorCore.GetSelectedObject() ) {
 				EditorCore.DeselectObject ();
