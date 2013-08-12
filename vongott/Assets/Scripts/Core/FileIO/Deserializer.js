@@ -56,8 +56,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var newAct : GameObject;
 				
 		newAct = Instantiate ( Resources.Load ( "Actors/" + act.GetField("model").str ) as GameObject );
-		newAct.GetComponent(Actor).affiliation = act.GetField ( "affiliation" ).str;
-		newAct.GetComponent(Actor).mood = act.GetField ( "mood" ).str;
+		newAct.GetComponent(Actor).SetAffiliation ( act.GetField ( "affiliation" ).str );
+		newAct.GetComponent(Actor).SetMood ( act.GetField ( "mood" ).str );
 		
 		newAct.GetComponent(Actor).path = DeserializePath ( act.GetField ( "path" ), newAct );
 		newAct.GetComponent(Actor).inventory = DeserializeInventory ( act.GetField ( "inventory" ) );

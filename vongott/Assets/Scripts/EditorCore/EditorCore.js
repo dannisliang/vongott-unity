@@ -156,9 +156,17 @@ static function UndoCurrentAction () {
 ////////////////////
 // Get spawn position
 static function GetSpawnPosition () : Vector3 {
-	var distance : float = 10.0;
+	var distance : float = 5.0;
 	var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
 	var position = Camera.main.transform.position + forward * distance;
+	
+	var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
+	var hit : RaycastHit;
+	
+	if ( Physics.Raycast ( newRay, hit ) ) {
+		position = hit.point;
+	
+	}
 	
 	return position;
 }
@@ -721,6 +729,7 @@ function Start () {
 	gizmo = _gizmo;
 	previewCamera = _previewCamera;
 	root = this.transform.parent;
+	instance = this;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	

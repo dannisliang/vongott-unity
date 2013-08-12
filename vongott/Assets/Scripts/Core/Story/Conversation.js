@@ -203,7 +203,8 @@ class Conversation {
 		var file = Loader.LoadConversationToGame ( chapter + "/" + scene + "/" + name + "/" + conversation );
 		var object : JSONObject = new JSONObject ( file );
 		
-		for ( var o : JSONObject in object.list as JSONObject[] ) {
+		for ( var obj : Object in object.list ) {
+			var o : JSONObject = obj as JSONObject;
 			var entry = new InventoryEntry ();
 			
 			// line

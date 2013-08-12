@@ -7,6 +7,23 @@ class Actor extends InteractiveObject {
 		var layerMask : LayerMask;
 	}
 	
+	public enum eAffiliation {
+		Enemy,
+		Ally
+	}
+	
+	public enum eMood {
+		Calm,
+		Alert,
+		Aggressive
+	}
+	
+	public enum eVitalState {
+		Alive,
+		Unconcious,
+		Dead
+	}
+	
 	var head : Transform;
 	var hand : Transform;
 	var torso : Transform;
@@ -15,8 +32,9 @@ class Actor extends InteractiveObject {
 	
 	var displayName : String = "ActorName";
 	var model : String;
-	var affiliation : String;
-	var mood : String;
+	var affiliation : eAffiliation;
+	var mood : eMood;
+	var vitalState : eVitalState;
 	var attentionSpan : float = 30.0;
 	var updateFrequency : float = 5.0;
 	var keepDistance : float = 10.0;
@@ -44,6 +62,7 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Init
 	////////////////////
+	// Start
 	function Start () {
 		if ( !path ) {
 			path = new List.< GameObject >();
@@ -55,6 +74,43 @@ class Actor extends InteractiveObject {
 			this.GetComponent ( AStarPathFinder ).enabled = false;
 		} else {
 			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;
+		}
+	}
+	
+	// Get affiliation
+	public function SetAffiliation ( str : String ) {
+		if ( str == "enemy" || str == "Enemy" ) {
+			affiliation = eAffiliation.Enemy;
+		} else {
+			affiliation = eAffiliation.Ally;
+		}
+	}
+	
+	// Get mood
+	public function SetMood ( str : String ) {
+		if ( str == "aggressive" || str == "Aggressive" ) {
+			mood = eMood.Aggressive;
+		
+		} else if ( str == "alert" || str == "Alert" ) {
+			mood = eMood.Alert;
+		
+		} else {
+			mood = eMood.Calm;
+		
+		}
+	}
+	
+	// Get vital state
+	public function SetVitalState ( str : String ) {
+		if ( str == "dead" || str == "Dead" ) {
+			vitalState = eVitalState.Dead;
+		
+		} else if ( str == "unconscious" || str == "Unconscious" ) {
+			vitalState = eVitalState.Unconcious;
+		
+		} else {
+			vitalState = eVitalState.Alive;
+		
 		}
 	}
 	
@@ -160,7 +216,7 @@ class Actor extends InteractiveObject {
 		if ( t ) {
 			target = t;
 			
-			if ( inventory[0].prefabPath ) {
+			if ( inventory[0] ) {
 				Equip ( inventory[0] );
 			}
 						
@@ -214,7 +270,7 @@ class Actor extends InteractiveObject {
 		var forward = transform.TransformDirection (Vector3.forward);
 		
 		// check for interaction
-		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == "ally" && GameCore.controlsActive ) {
+		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == eAffiliation.Ally && GameCore.controlsActive ) {
 			UIHUD.ShowNotification ( "Talk [F]" );
 			
 			if ( Input.GetKeyDown(KeyCode.F) ) {
@@ -240,7 +296,7 @@ class Actor extends InteractiveObject {
 			Debug.DrawLine ( here, there, Color.green );
 			
 			// Enemies shoot the player
-			if ( affiliation == "enemy" ) {
+			if ( affiliation == eAffiliation.Enemy ) {
 				if ( !target ) {
 					Chase ( hit.collider.transform );
 				}
@@ -252,7 +308,7 @@ class Actor extends InteractiveObject {
 				}
 												
 			// Allies might call for the player's attention
-			} else if ( affiliation == "ally" ) {
+			} else if ( affiliation == eAffiliation.Ally ) {
 				//Say ( "Yoohoo!" );
 			
 			}
@@ -262,7 +318,7 @@ class Actor extends InteractiveObject {
 			updateTimer = updateFrequency;
 		
 		// ^ The player is out of sight
-		} else {			
+		} else if ( affiliation == eAffiliation.Enemy ) {			
 			Debug.DrawRay ( here, transform.forward * vision.distance, Color.red );
 			
 			// The player is a target

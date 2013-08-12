@@ -14,6 +14,8 @@ var gizmoZ : Material;
 var gridDark : Material;
 var gridBright : Material;
 
+@HideInInspector var fixPoint : Vector3;
+
 
 ////////////////////
 // Public functions
@@ -249,9 +251,35 @@ function Update () {
 	}
 	
 	// right mouse button
+	if ( Input.GetMouseButtonDown(1) ) {
+		var hit : RaycastHit;
+				
+		if ( Physics.Raycast ( Camera.main.transform.position, Camera.main.transform.forward, hit, Mathf.Infinity ) ) {
+			fixPoint = hit.point;
+		
+		} else {
+			fixPoint = Vector3.zero;
+		
+		}
+	}
+	
 	if ( Input.GetMouseButton(1) ) {    
-		if ( Input.GetKey ( KeyCode.LeftAlt ) && EditorCore.GetSelectedObject() ) { 
-			var target : Vector3 = EditorCore.GetSelectedObject().transform.renderer.bounds.center;	
+		if ( Input.GetKey ( KeyCode.LeftAlt ) && EditorCore.GetSelectedObject() || Camera.main.orthographic ) { 
+			var target : Vector3;
+			
+			if ( Camera.main.orthographic ) {
+				if ( fixPoint != Vector3.zero ) {
+					target = fixPoint;
+				
+				} else {
+					target = Camera.main.transform.position + (Camera.main.transform.forward * 5.0);
+					
+				}
+				
+			} else { 
+				target = EditorCore.GetSelectedObject().transform.renderer.bounds.center;	
+			
+			}
 			
 	       	transform.RotateAround ( target, Quaternion.Euler(0, -45, 0) * ( target - this.transform.position ), Input.GetAxis("Mouse Y") * sensitivity );
 	       	transform.RotateAround ( target, Vector3.up, Input.GetAxis("Mouse X") * sensitivity );

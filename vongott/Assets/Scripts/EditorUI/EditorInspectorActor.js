@@ -101,8 +101,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		var a : Actor = obj.GetComponent ( Actor );
 		
 		// state
-		affiliation.selectedOption = a.affiliation;
-		mood.selectedOption = a.mood;
+		affiliation.selectedOption = a.affiliation.ToString();
+		mood.selectedOption = a.mood.ToString();
 		
 		// conversation
 		ClearConvos();
@@ -143,8 +143,8 @@ class EditorInspectorActor extends MonoBehaviour {
 		if ( o.GetComponent ( Actor ) ) {
 			var a : Actor = o.GetComponent ( Actor );
 						
-			a.affiliation = affiliation.selectedOption;
-			a.mood = mood.selectedOption;
+			a.SetAffiliation ( affiliation.selectedOption );
+			a.SetMood ( mood.selectedOption );
 		
 			a.conversations.Clear ();
 			

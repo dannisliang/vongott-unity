@@ -19,6 +19,7 @@ class OGTween extends MonoBehaviour {
 	var rotate : TweenType;
 	var scale : TweenType;
 	
+	var ignoreTimeScale : boolean = true;
 	var autoPlay : boolean = false;
 	
 	var messageTarget : GameObject;
@@ -73,7 +74,8 @@ class OGTween extends MonoBehaviour {
 				"position", moveDest,
 				"time", move.time,
 				"easetype", move.easing,
-				"islocal", true
+				"islocal", true,
+				"ignoretimescale", ignoreTimeScale
 			) );
 		}
 		
@@ -87,7 +89,8 @@ class OGTween extends MonoBehaviour {
 				"rotation", rotDest,
 				"time", rotate.time,
 				"easetype", rotate.easing,
-				"islocal", true
+				"islocal", true,
+				"ignoretimescale", ignoreTimeScale
 			) );
 		}
 		
@@ -101,7 +104,8 @@ class OGTween extends MonoBehaviour {
 				"scale", sclDest,
 				"time", scale.time,
 				"easetype", scale.easing,
-				"islocal", true
+				"islocal", true,
+				"ignoretimescale", ignoreTimeScale
 			) );
 		}
 		
@@ -122,6 +126,8 @@ class OGTween extends MonoBehaviour {
 	}
 	
 	function Start () {
+		Time.timeScale = 1.0;
+		
 		startPos = transform.localPosition;
 		startRot = transform.localEulerAngles;
 		startScl = transform.localScale;
