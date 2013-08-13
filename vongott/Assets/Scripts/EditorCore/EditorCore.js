@@ -19,8 +19,8 @@ static var currentLevel : GameObject;
 
 // Load on init
 static var initMap : String;
-static var initPos : Vector3;
-static var initRot : Vector3;
+static var initPos : Vector3 = new Vector3 ( 0, 2, 0 );
+static var initRot : Vector3 = new Vector3 ( 45, 45, 0 );
 
 // modes
 static var grabMode = false;
@@ -32,7 +32,7 @@ static var editMeshMode = false;
 // grid / guides
 static var gizmo : GameObject;
 static var snapEnabled = true;
-static var gridEnabled = false;
+static var gridEnabled = true;
 static var focusEnabled = false;
 static var gridLineDistance : float = 1.0;
 static var gridLineBrightFrequency : int = 5;
@@ -359,18 +359,18 @@ static function FitSelectionBox () {
 	var e : Vector3 = ( bounds.extents * 2 );
 	var s : Vector3 = selectedObject.transform.localScale;
 	
-	if ( selectedObject.GetComponentsInChildren(MeshFilter).Length > 1 ) {
+	/*if ( selectedObject.GetComponentsInChildren(MeshFilter).Length > 1 ) {
 		selectBox.GetComponent(MeshFilter).mesh = selectBoxDefaultMesh;
 		selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
 		selectBox.transform.position = bounds.center;
 	
-	} else {
+	} else {*/
 		selectBox.GetComponent(MeshFilter).mesh = selectedObject.GetComponent(MeshFilter).mesh;
 		selectBox.localScale = selectedObject.transform.localScale;
 		selectBox.position = selectedObject.transform.position;
 		selectBox.eulerAngles = selectedObject.transform.eulerAngles;
 	
-	}
+	//}
 	
 	selectBox.gameObject.SetActive ( true );
 }
@@ -434,49 +434,24 @@ static function DeselectObject () {
 	}
 }
 
-// Select vertex
-static function SelectVertex ( surface : Surface, plane : SurfacePlane, vertex : int, button : Transform ) {
-	DeselectObject ();
-	selectedObject = button.gameObject;
-	FitSelectionBox();
-	
-	//grabRestrict = "xz";
-	
-	button.GetComponent(OGButton3D).enabled = false;
-	
-	inspector.ClearMenus ();
-	
-	grabOrigPoint = button.position;	
-	SetGrabMode ( true );
-	
-	Debug.Log ( button );
-	
-	transformUpdate = function () {
-		plane.vertices[vertex] = button.position - surface.transform.position;
-		surface.UpdateButtons ();
-		surface.Apply ();
-	};
-
-	transformEnd = function () {
-		transformUpdate = null;
-		
-		plane.vertices[vertex] = button.position - surface.transform.position;
-		surface.Apply ();
-		
-		SelectObject ( surface.gameObject );
-		
-		surface.CreateButtons ();
-		
-		button.GetComponent(OGButton3D).enabled = true;
-	};
-}
-
 // Select object
 static function SelectObject ( obj : GameObject ) {
+	transformEnd = null;
+		
 	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
 		return;
+	
+	} else if ( obj.GetComponent ( EditorVertexButton ) ) {
+		SetGrabMode ( true );
+		
+		transformEnd = function () {
+			obj.GetComponent ( EditorVertexButton ).surface.CreateButtons();
+			obj.GetComponent ( EditorVertexButton ).Remodel();
+			SelectObject ( obj.GetComponent ( EditorVertexButton ).surface.gameObject );
+		};
+	
 	}
-				
+										
 	if ( selectedObject ) { 
 		DeselectObject ();
 	}
@@ -569,7 +544,7 @@ static function SetGrabMode ( state : boolean ) {
 
 // Set rotate mode
 static function SetRotateMode ( state : boolean ) {
-	if ( !selectedObject ) {
+	if ( !selectedObject || selectedObject.GetComponent ( EditorVertexButton ) ) {
 		return;
 	}
 		
@@ -608,7 +583,7 @@ static function ToggleEditMeshMode () {
 
 // Set scale mode
 static function SetScaleMode ( state : boolean ) {
-	if ( !selectedObject ) {
+	if ( !selectedObject || selectedObject.GetComponent ( EditorVertexButton ) ) {
 		return;
 	}
 		
@@ -757,13 +732,10 @@ function Start () {
 		LoadFile ( initMap );
 	}
 	
-	if ( initPos != null ) {
-		Camera.main.transform.position = initPos;
-	}
+
+	Camera.main.transform.position = initPos;
 	
-	if ( initRot != null ) {
-		Camera.main.transform.eulerAngles = initRot;
-	}
+	Camera.main.transform.eulerAngles = initRot;
 	
 	// signal
 	GameCore.Print ("EditorCore | started");

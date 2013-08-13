@@ -64,7 +64,7 @@ function DrawGrid () {
 	var counter : int;
 	
 	// draw dark lines
-	gridDark.SetPass ( 0 );
+	/*gridDark.SetPass ( 0 );
 			
 	GL.Begin ( GL.LINES );
 	
@@ -76,20 +76,26 @@ function DrawGrid () {
 		GL.Vertex3 ( half, 0.0, ( i * distance ) - half );
 	}
 	
-	GL.End ();
+	GL.End ();*/
 	
 	// draw bright lines
 	gridBright.SetPass ( 0 );
 			
 	GL.Begin ( GL.LINES );
 	
-	for ( i = 0; i < ( amount / mark ) + 1 ; i++ ) {
+	GL.Vertex3 ( -9999, 0, 0 );
+	GL.Vertex3 ( 9999, 0, 0 );
+	
+	GL.Vertex3 ( 0, 0, -9999 );
+	GL.Vertex3 ( 0, 0, 9999 );
+	
+	/*for ( i = 0; i < ( amount / mark ) + 1 ; i++ ) {
 		GL.Vertex3 ( ( i * ( distance * mark ) ) - half, 0.0, -half );
 		GL.Vertex3 ( ( i * ( distance * mark ) ) - half, 0.0, half );
 		
 		GL.Vertex3 ( -half, 0.0, ( i * ( distance * mark ) ) - half );
 		GL.Vertex3 ( half, 0.0, ( i * ( distance * mark ) ) - half );
-	}
+	}*/
 	
 	GL.End ();
 }
@@ -148,9 +154,19 @@ function GoToRightOf ( position : Vector3 ) {
 	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 0, 270, 0 ), 0.25 );
 }
 
+function GoToLeftOf ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x - GetDist(position), position.y, position.z ), 0.25 );
+	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 0, 90, 0 ), 0.25 );
+}
+
 function GoToFrontOf ( position : Vector3 ) {
 	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x, position.y, position.z - GetDist(position) ), 0.25 );
 	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 0, 0, 0 ), 0.25 );
+}
+
+function GoToBackOf ( position : Vector3 ) {
+	iTween.MoveTo ( Camera.main.gameObject, Vector3 ( position.x, position.y, position.z + GetDist(position) ), 0.25 );
+	iTween.RotateTo ( Camera.main.gameObject, Vector3 ( 0, 180, 0 ), 0.25 );
 }
 
 function TweenTurnTo ( target : Vector3 ) {
@@ -159,15 +175,6 @@ function TweenTurnTo ( target : Vector3 ) {
 
 function TweenMoveTo ( position : Vector3 ) {
 	iTween.MoveTo ( Camera.main.gameObject, position, 0.5 );
-}
-
-// Clamp angle
-static function ClampAngle (angle : float, min : float, max : float) {
-	if (angle < -360)
-		angle += 360;
-	if (angle > 360)
-		angle -= 360;
-	return Mathf.Clamp (angle, min, max);
 }
 
 // Update
@@ -195,10 +202,17 @@ function Update () {
 		}
 		
 		if ( Camera.main.orthographicSize > translation * speed ) {
-			Camera.main.orthographicSize -= translation * speed;
+			if ( Input.GetKey ( KeyCode.X ) ) {
+				transform.position = transform.position + forward * ( translation * spd );
+			} else {
+				Camera.main.orthographicSize -= translation * speed;
+			}
+		
+		} else {
+			transform.position = transform.position + forward * ( translation * spd );
+		
 		}
 		
-		transform.position = transform.position + forward * ( translation * spd );
 	}
 	
 	// right mouse button

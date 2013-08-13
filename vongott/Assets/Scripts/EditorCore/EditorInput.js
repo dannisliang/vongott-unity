@@ -181,17 +181,38 @@ function Update () {
 		if ( Input.GetKeyDown ( KeyCode.E ) ) {
 			EditorCore.ToggleEditMeshMode();
 		
-		// Z key: wireframe toggle
+		// Z key
 		} else if ( Input.GetKeyDown ( KeyCode.Z ) ) {
-			EditorCore.ToggleWireframe();
+			// ^ undo
+			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+				EditorCore.UndoCurrentAction ();
+		
+			} else {
+			// ^ wireframe toggle
+				EditorCore.ToggleWireframe();
+		
+			}
 		
 		// G key: grab mode
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {
 			EditorCore.SetGrabMode( true );
 
-		// S key: scale mode
+		// S key
 		} else if ( Input.GetKeyDown ( KeyCode.S ) ) {
-			EditorCore.SetScaleMode( true );
+			// ^ save level
+			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+				if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
+					return;
+				} else {
+					EditorCore.GetInstance().SaveFile ( EditorCore.currentLevel.name );
+					return;
+				}
+				
+			} else {
+			// ^ scale mode	
+				EditorCore.SetScaleMode( true );
+			
+			}
 			
 		// R key: rotate mode
 		} else if ( Input.GetKeyDown ( KeyCode.R ) ) {
@@ -215,50 +236,38 @@ function Update () {
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad5 ) ) {
 			EditorCore.ToggleIsometric();
 		
-		// numpad 7: top view
+		// numpad 7: top/bottom view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) && EditorCore.GetSelectedObject() ) {
-			Camera.main.GetComponent ( EditorCamera ).GoToTopOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+				Camera.main.GetComponent ( EditorCamera ).GoToBottomOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			} else {
+				Camera.main.GetComponent ( EditorCamera ).GoToTopOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			}
 		
-		// numpad 3: right
+		// numpad 3: right/left view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) && EditorCore.GetSelectedObject() ) {
-			Camera.main.GetComponent ( EditorCamera ).GoToRightOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+				Camera.main.GetComponent ( EditorCamera ).GoToLeftOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			} else {
+				Camera.main.GetComponent ( EditorCamera ).GoToRightOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			}
 			
-		// numpad 1: front
+		// numpad 1: front/back view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad1 ) && EditorCore.GetSelectedObject() ) {
-			Camera.main.GetComponent ( EditorCamera ).GoToFrontOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
-		
-		// numpad 2: bottom view
-		} else if ( Input.GetKeyDown ( KeyCode.Keypad2 ) && EditorCore.GetSelectedObject() ) {
-			Camera.main.GetComponent ( EditorCamera ).GoToBottomOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
-				
-		// CTRL modifier
-		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-			
-			// S key: save level
-			if ( Input.GetKeyDown ( KeyCode.S ) ) {
-				if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
-					return;
-				} else {
-					EditorCore.GetInstance().SaveFile ( EditorCore.currentLevel.name );
-					return;
-				}
-			
-			// Z key: undo
-			} else if ( Input.GetKeyDown ( KeyCode.Z ) ) {
-				EditorCore.UndoCurrentAction ();
-			
+			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+				Camera.main.GetComponent ( EditorCamera ).GoToBackOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			} else {
+				Camera.main.GetComponent ( EditorCamera ).GoToFrontOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 			}
 		
 		// left mouse button
 		} else if ( Input.GetMouseButtonDown(0) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {
 			var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
-			var hits : RaycastHit[] = Physics.RaycastAll ( newRay );
+			var hit : RaycastHit;
 			var goal : GameObject;
 			
-			for ( var h : RaycastHit in hits ) {
-				if ( !h.collider.isTrigger ) {
-					goal = h.collider.gameObject;
-				}
+			if ( Physics.Raycast ( newRay, hit ) ) {
+				goal = hit.collider.gameObject;
 			}
 			
 			if ( goal != null ) {
