@@ -45,7 +45,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		var conversations : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 		
 		act.AddField ( "model", obj.GetComponent(Actor).model );
-		act.AddField ( "affiliation", obj.GetComponent(Actor).affiliation );
+		act.AddField ( "affiliation", obj.GetComponent(Actor).affiliation.ToString() );
 		act.AddField ( "mood", obj.GetComponent(Actor).mood );
 		
 		act.AddField ( "path", SerializePath ( obj.GetComponent(Actor).path ) );

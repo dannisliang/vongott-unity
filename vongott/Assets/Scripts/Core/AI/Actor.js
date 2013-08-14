@@ -72,6 +72,7 @@ class Actor extends InteractiveObject {
 		
 		if ( !GameCore.started ) {
 			this.GetComponent ( AStarPathFinder ).enabled = false;
+			Destroy ( this.rigidbody );
 		} else {
 			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;
 		}
@@ -295,7 +296,7 @@ class Actor extends InteractiveObject {
 			// Draw sight
 			Debug.DrawLine ( here, there, Color.green );
 			
-			// Enemies shoot the player
+			// Enemies shoot the player			
 			if ( affiliation == eAffiliation.Enemy ) {
 				if ( !target ) {
 					Chase ( hit.collider.transform );

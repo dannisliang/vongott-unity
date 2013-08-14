@@ -308,8 +308,6 @@ static function EquipItem ( obj : GameObject, slot : int ) {
 		var item : Item = obj.GetComponent(Item);
 		
 		selectedObject.GetComponent(Actor).inventory[slot] = new InventoryEntry ( item );
-		
-		DestroyImmediate ( obj );
 	}
 }
 
