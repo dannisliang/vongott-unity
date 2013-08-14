@@ -63,22 +63,7 @@ function DrawGrid () {
 	var half : float = amount / 2.0;
 	var counter : int;
 	
-	// draw dark lines
-	/*gridDark.SetPass ( 0 );
-			
-	GL.Begin ( GL.LINES );
-	
-	for ( var i = 0; i < amount + 1; i++ ) {
-		GL.Vertex3 ( ( i * distance ) - half, 0.0, -half );
-		GL.Vertex3 ( ( i * distance ) - half, 0.0, half );
-		
-		GL.Vertex3 ( -half, 0.0, ( i * distance ) - half );
-		GL.Vertex3 ( half, 0.0, ( i * distance ) - half );
-	}
-	
-	GL.End ();*/
-	
-	// draw bright lines
+	// draw center lines
 	gridBright.SetPass ( 0 );
 			
 	GL.Begin ( GL.LINES );
@@ -88,14 +73,6 @@ function DrawGrid () {
 	
 	GL.Vertex3 ( 0, 0, -9999 );
 	GL.Vertex3 ( 0, 0, 9999 );
-	
-	/*for ( i = 0; i < ( amount / mark ) + 1 ; i++ ) {
-		GL.Vertex3 ( ( i * ( distance * mark ) ) - half, 0.0, -half );
-		GL.Vertex3 ( ( i * ( distance * mark ) ) - half, 0.0, half );
-		
-		GL.Vertex3 ( -half, 0.0, ( i * ( distance * mark ) ) - half );
-		GL.Vertex3 ( half, 0.0, ( i * ( distance * mark ) ) - half );
-	}*/
 	
 	GL.End ();
 }
@@ -176,7 +153,7 @@ function TweenTurnTo ( target : Vector3 ) {
 function TweenMoveTo ( position : Vector3 ) {
 	iTween.MoveTo ( Camera.main.gameObject, position, 0.5 );
 }
-
+	
 // Update
 function Update () {
 	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) { return; }
@@ -201,7 +178,7 @@ function Update () {
 			spd = spd * 4;
 		}
 		
-		if ( Camera.main.orthographicSize > translation * speed ) {
+		if ( Camera.main.orthographic && Camera.main.orthographicSize > translation * speed ) {
 			if ( Input.GetKey ( KeyCode.X ) ) {
 				transform.position = transform.position + forward * ( translation * spd );
 			} else {

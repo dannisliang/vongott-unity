@@ -408,12 +408,22 @@ static function DuplicateObject () {
 }
 
 // Deselect object
-static function DeselectObject () {	
+static function DeselectObject () {
+	DeselectObject ( null );
+}
+
+static function DeselectObject ( nextObject : GameObject ) {	
 	var selectNextObject : GameObject;
 	
 	if ( selectedObject.GetComponent(Actor) ) {
 		for ( var node : GameObject in selectedObject.GetComponent(Actor).path ) {
 			node.GetComponent(MeshRenderer).enabled = false;
+		}
+	
+	} else if ( selectedObject.GetComponent(Surface) ) {
+		if ( !nextObject || !nextObject.GetComponent(EditorVertexButton) ) {	
+			selectedObject.GetComponent(Surface).ClearButtons();
+		
 		}
 	
 	}
@@ -441,7 +451,16 @@ static function SelectObject ( obj : GameObject ) {
 	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
 		return;
 	
-	} else if ( obj.GetComponent ( EditorVertexButton ) ) {
+	}
+	
+	if ( selectedObject ) { 
+		DeselectObject ( obj );
+	}
+	
+	drawPath = null;
+	selectedObject = obj;
+	
+	if ( obj.GetComponent ( EditorVertexButton ) ) {
 		SetGrabMode ( true );
 		
 		transformEnd = function () {
@@ -451,13 +470,6 @@ static function SelectObject ( obj : GameObject ) {
 		};
 	
 	}
-										
-	if ( selectedObject ) { 
-		DeselectObject ();
-	}
-	
-	drawPath = null;
-	selectedObject = obj;
 	
 	grabDistance = Vector3.Distance ( Camera.main.transform.position, selectedObject.transform.position );
 	grabOrigPoint = selectedObject.transform.position;
@@ -519,21 +531,21 @@ static function SetGrabMode ( state : boolean ) {
 	if ( grabMode ) {
 		AddAction ( selectedObject, "transform" );
 		
+		grabOrigPoint = selectedObject.transform.position;
+		
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Grab Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse mouse to move" );
 		EditorModes.SetHeight ( 90 );
 		
 		gizmo.SetActive ( true );
-		gizmo.transform.parent = selectedObject.transform;
-		gizmo.transform.localPosition = Vector3.zero;
+		gizmo.transform.position = selectedObject.transform.position;
 	
 	} else {
 		OGRoot.GoToPage ( "MenuBase" );
 		
 		SetRestriction ( null );
 		gizmo.SetActive ( false );
-		gizmo.transform.parent = workspace;
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
 		
 		if ( selectedObject.GetComponent(PathNode) ) {
@@ -559,15 +571,13 @@ static function SetRotateMode ( state : boolean ) {
 		EditorModes.SetHeight ( 110 );
 		
 		gizmo.SetActive ( true );
-		gizmo.transform.parent = selectedObject.transform;
-		gizmo.transform.localPosition = Vector3.zero;
+		gizmo.transform.position = selectedObject.transform.position;
 	
 	} else {
 		OGRoot.GoToPage ( "MenuBase" );
 		
 		SetRestriction ( null );
 		gizmo.SetActive ( false );
-		gizmo.transform.parent = workspace;
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
 		
 		if ( selectedObject.GetComponent(PathNode) ) {
@@ -598,15 +608,13 @@ static function SetScaleMode ( state : boolean ) {
 		EditorModes.SetHeight ( 110 );
 		
 		gizmo.SetActive ( true );
-		gizmo.transform.parent = selectedObject.transform;
-		gizmo.transform.localPosition = Vector3.zero;
+		gizmo.transform.position = selectedObject.transform.position;
 	
 	} else {
 		OGRoot.GoToPage ( "MenuBase" );
 		
 		SetRestriction ( null );
 		gizmo.SetActive ( false );
-		gizmo.transform.parent = workspace;
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
 	}
 }

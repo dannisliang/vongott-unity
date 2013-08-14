@@ -20,37 +20,39 @@ class Surface extends MonoBehaviour {
 		var vertex : Vector3;
 		var surface : Surface;
 		var vertIndex : int;
-	
+		var plane : SurfacePlane;
+		
 		function Update () {}
 	}
 	
 	private class VertexButton extends Button {
 		var btn : EditorVertexButton;
 		
-		function VertexButton ( surface : Surface, plane : SurfacePlane, pos : Vector3, vert : int ) {
+		function VertexButton ( s : Surface, p : SurfacePlane, i : int ) {
 			obj = Instantiate ( Resources.Load ( "Prefabs/Editor/handle_corner" ) as GameObject );
 			btn = obj.GetComponent ( EditorVertexButton );
 			
+			surface = s;
+			plane = p;
+			
 			btn.surface = surface;
 			btn.plane = plane;
-			btn.vertex = vert;
+			btn.vertex = i;
 			
-			vertIndex = vert;
+			vertIndex = i;
 			
-			obj.name = "VertexButton" + vert;
+			obj.name = "VertexButton" + i;
 			obj.transform.parent = surface.transform;
-			obj.transform.localPosition = pos;
+			obj.transform.localPosition = plane.vertices[i];
 			obj.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
 		
-			if ( vert == 1 ) {
-				obj.transform.localEulerAngles = new Vector3 ( 0.0, 270.0, 0.0 );
-			} else if ( vert == 2 ) {
-				obj.transform.localEulerAngles = new Vector3 ( 0.0, 180.0, 0.0 );
-			} else if ( vert == 3 ) {
-				obj.transform.localEulerAngles = new Vector3 ( 0.0, 90.0, 0.0 );
-			} else {
-			
-			}
+			Update ();
+		}
+	
+		override function Update () {
+			obj.transform.LookAt ( plane.middle );
+						
+			Debug.DrawLine ( obj.transform.position, plane.middle );
 		}
 	}
 	
@@ -58,7 +60,6 @@ class Surface extends MonoBehaviour {
 		var a : int;
 		var b : int;
 		var btn : OGButton3D;
-		var plane : SurfacePlane;
 		
 		function PlusButton ( p : SurfacePlane, pA : int, pB : int, surface : Transform ) {
 			plane = p;
@@ -87,7 +88,6 @@ class Surface extends MonoBehaviour {
 		var c : Vector3;
 		var d : Vector3;
 		var btn : OGButton3D;
-		var plane : SurfacePlane;
 		
 		function MinusButton ( p : SurfacePlane, surface : Transform ) {
 			obj = Instantiate ( Resources.Load ( "Prefabs/Editor/handle_delete" ) as GameObject );
@@ -109,6 +109,8 @@ class Surface extends MonoBehaviour {
 			d = plane.vertices[3];
 			
 			obj.transform.localPosition = (a/4) + (b/4) + (c/4) + (d/4);
+			
+			plane.middle = obj.transform.position;
 		}
 	}
 	
@@ -117,6 +119,33 @@ class Surface extends MonoBehaviour {
 	// Transform functions
 	////////////////////
 	// Plus
+	function PlusPlane ( plane : SurfacePlane, a : int, b : int ) {
+		var c : int;
+		var d : int;
+		
+		// Find the other 2 vertices
+		if ( a == 0 && b == 1 ) { c = 2; d = 3; }
+		else if ( a == 1 && b == 2 ) { c = 3; d = 0; }
+		else if ( a == 2 && b == 3 ) { c = 0; d = 1; }
+		else if ( a == 3 && b == 0 ) { c = 1; d = 2; }
+		
+		// Create new vertices from distance
+		var v0 : Vector3 = plane.vertices[a] + (plane.vertices[a]-plane.vertices[d]);
+		var v1 : Vector3 = plane.vertices[b] + (plane.vertices[b]-plane.vertices[c]);
+		var v2 : Vector3 = plane.vertices[b];
+		var v3 : Vector3 = plane.vertices[a];
+						
+		// Add the plane
+		AddPlane ( [ v0, v1, v2, v3 ] );
+		
+		// Apply changes
+		Apply();
+		CreateButtons ();
+		
+		// Reselect object
+		EditorCore.SelectObject ( this.gameObject );
+	}
+	
 	function PlusPlane ( plane : SurfacePlane, dir : Vector3 ) {
 		var x : Vector3 = Vector3 ( size, 0, 0 );
 		var y : Vector3 = Vector3 ( 0, 0, size );
@@ -234,6 +263,8 @@ class Surface extends MonoBehaviour {
 	function Apply () {
 		var i : int = 0;
 		
+		mesh = new Mesh();
+		
 		// Vertices
 		// ^ temporary list
 		var tempVertices : List.< Vector3 > = new List.< Vector3 >();
@@ -329,35 +360,18 @@ class Surface extends MonoBehaviour {
 		
 		for ( var plane : SurfacePlane in planes ) {
 			// Vertex buttons
-			for ( var vertex : Vector3 in plane.vertices ) {
-				var vb : VertexButton = new VertexButton ( this, plane, vertex, System.Array.LastIndexOf ( plane.vertices, vertex ) );
+			for ( var i = 0; i < plane.vertices.Length; i++ ) {
+				var vb : VertexButton = new VertexButton ( this, plane, i );
 							
 				buttons.Add ( vb );
 			}
 			
 			// Plus buttons
-			for ( var direction : Vector3 in [ Vector3.left, Vector3.right, Vector3.forward, Vector3.back ] ) {
+			for ( var points : int[] in [ [0,1], [1,2], [2,3], [3,0] ] ) {
 				var pb : PlusButton;
 				
-				var a : int;
-				var b : int;
-				
-				if ( direction == Vector3.left ) {
-					a = 0;
-					b = 3;
-				} else if ( direction == Vector3.right ) {
-					a = 1;
-					b = 2;
-				} else if ( direction == Vector3.back) {
-					a = 0;
-					b = 1;
-				} else if ( direction == Vector3.forward ) {
-					a = 2;
-					b = 3;
-				}
-				
-				pb = new PlusButton	( plane, a, b, this.transform );
-				pb.btn.func = function () { PlusPlane ( plane, direction ); };
+				pb = new PlusButton	( plane, points[0], points[1], this.transform );
+				pb.btn.func = function () { PlusPlane ( plane, points[0], points[1] ); };
 				pb.surface = this;
 				buttons.Add ( pb );
 			}

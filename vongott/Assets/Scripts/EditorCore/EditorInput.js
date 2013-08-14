@@ -152,14 +152,14 @@ function Update () {
 			
 			if ( EditorCore.snapEnabled ) {
 				if ( EditorCore.gridLineDistance > 0 ) {
-					xRotate = Round ( xRotate, EditorCore.gridLineDistance );
-					xScale = Round ( xScale, EditorCore.gridLineDistance );
+					xRotate = Round ( xRotate, EditorCore.gridLineDistance / 8 );
+					xScale = Round ( xScale, EditorCore.gridLineDistance / 8 );
 				
-					yRotate = Round ( yRotate, EditorCore.gridLineDistance );
-					yScale = Round ( yScale, EditorCore.gridLineDistance );
+					yRotate = Round ( yRotate, EditorCore.gridLineDistance / 8 );
+					yScale = Round ( yScale, EditorCore.gridLineDistance / 8 );
 				
-					zRotate = Round ( zRotate, EditorCore.gridLineDistance );
-					zScale = Round ( zScale, EditorCore.gridLineDistance );
+					zRotate = Round ( zRotate, EditorCore.gridLineDistance / 8 );
+					zScale = Round ( zScale, EditorCore.gridLineDistance / 8 );
 				}
 			}		
 			
@@ -170,6 +170,11 @@ function Update () {
 			} else if ( EditorCore.scaleMode ) {
 				o.transform.localScale = new Vector3 ( xScale, yScale, zScale );
 				EditorCore.FitSelectionBox ();
+				
+				// Fit texture
+				if ( o.GetComponent(Prefab) && o.GetComponent(Prefab).path.Contains ( "Walls" ) ) {
+					o.GetComponent(Prefab).FitTexture();
+				}
 			
 			}
 		}

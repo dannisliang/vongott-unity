@@ -24,7 +24,6 @@ class EditorMenuBase extends OGPage {
 	
 	var initName : boolean = false;
 	
-	
 	////////////////////
 	// File menu
 	////////////////////
@@ -261,6 +260,8 @@ class EditorMenuBase extends OGPage {
 				if ( !inspector.activeSelf ) {
 					inspector.SetActive ( true );
 				}
+				
+				objectName.text = EditorCore.GetSelectedObject().name;
 				
 				pos.x.transform.parent.gameObject.SetActive ( true );
 				rot.x.transform.parent.gameObject.SetActive ( true );
