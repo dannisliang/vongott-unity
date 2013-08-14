@@ -230,11 +230,13 @@ function Update () {
 		// D key: duplicate object
 		} else if ( Input.GetKeyDown ( KeyCode.D ) ) {
 			EditorCore.DuplicateObject();
-		
+			
 		// numpad period: center object
 		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) ) {
 			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).TweenTurnTo ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+				Camera.main.GetComponent ( EditorCamera ).FocusOn ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+			} else {
+				Camera.main.GetComponent ( EditorCamera ).FocusOn ( Vector3.zero );
 			}
 		
 		// numpad 5: orthographic view

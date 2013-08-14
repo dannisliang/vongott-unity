@@ -147,13 +147,39 @@ function GoToBackOf ( position : Vector3 ) {
 }
 
 function TweenTurnTo ( target : Vector3 ) {
-	iTween.LookTo ( Camera.main.gameObject, { "looktarget": target, "time" : 0.5, "onupdate" : "UpdateRotation" } );
+	iTween.LookTo ( Camera.main.gameObject, { "looktarget": target, "time" : 0.25, "onupdate" : "UpdateRotation" } );
 }
 
 function TweenMoveTo ( position : Vector3 ) {
-	iTween.MoveTo ( Camera.main.gameObject, position, 0.5 );
+	iTween.MoveTo ( Camera.main.gameObject, position, 0.25 );
 }
+
+function ChangeOrthographicSize ( n : float ) {
+	Camera.main.orthographicSize = n;
+}
+
+function FocusOn ( position : Vector3 ) {
+	TweenTurnTo ( position );
+	TweenMoveTo ( position - transform.forward * 5 );
+	iTween.ValueTo ( this.gameObject, iTween.Hash ( "from", Camera.main.orthographicSize, "to", 2, "onupdate", "ChangeOrthographicSize" ) );
+}
+
+// Fix point
+function RefreshFixPoint ( useMouse : boolean ) {
+	var hit : RaycastHit;
+				
+	if ( useMouse && Physics.Raycast ( Camera.main.ScreenPointToRay(Input.mousePosition), hit, Mathf.Infinity ) ) {
+		fixPoint = hit.point;
 	
+	} else if ( Physics.Raycast ( Camera.main.transform.position, Camera.main.transform.forward, hit, Mathf.Infinity ) ) {
+		fixPoint = hit.point;
+	
+	} else {
+		fixPoint = Camera.main.transform.position + (Camera.main.transform.forward * 5.0);
+	
+	}
+}
+
 // Update
 function Update () {
 	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) { return; }
@@ -178,11 +204,11 @@ function Update () {
 			spd = spd * 4;
 		}
 		
-		if ( Camera.main.orthographic && Camera.main.orthographicSize > translation * speed ) {
-			if ( Input.GetKey ( KeyCode.X ) ) {
-				transform.position = transform.position + forward * ( translation * spd );
-			} else {
+		if ( Camera.main.orthographic ) {
+			if ( Camera.main.orthographicSize > translation * speed ) {
+				RefreshFixPoint ( false );
 				Camera.main.orthographicSize -= translation * speed;
+				transform.position = fixPoint - forward * ( Camera.main.orthographicSize * 4 );
 			}
 		
 		} else {
@@ -194,41 +220,16 @@ function Update () {
 	
 	// right mouse button
 	if ( Input.GetMouseButtonDown(1) ) {
-		var hit : RaycastHit;
-				
-		if ( Physics.Raycast ( Camera.main.transform.position, Camera.main.transform.forward, hit, Mathf.Infinity ) ) {
-			fixPoint = hit.point;
-		
-		} else {
-			fixPoint = Vector3.zero;
-		
-		}
+		RefreshFixPoint ( true );
 	}
 	
 	if ( Input.GetMouseButton(1) ) {    
-		if ( Input.GetKey ( KeyCode.LeftAlt ) && EditorCore.GetSelectedObject() || Camera.main.orthographic ) { 
-			var target : Vector3;
+		if ( !Input.GetKey ( KeyCode.LeftAlt ) ) { 
+			var target : Vector3 = fixPoint;
 			
-			if ( Camera.main.orthographic ) {
-				if ( EditorCore.GetSelectedObject() && Input.GetKey ( KeyCode.LeftAlt ) ) {
-					target = EditorCore.GetSelectedObject().transform.renderer.bounds.center;
-				
-				} else if ( fixPoint != Vector3.zero ) {
-					target = fixPoint;
-				
-				} else {
-					target = Camera.main.transform.position + (Camera.main.transform.forward * 5.0);
-					
-				}
-				
-			} else { 
-				target = EditorCore.GetSelectedObject().transform.renderer.bounds.center;	
-			
-			}
-			
-	       	transform.RotateAround ( target, Quaternion.Euler(0, -45, 0) * ( target - this.transform.position ), Input.GetAxis("Mouse Y") * sensitivity );
+			transform.RotateAround ( target, Quaternion.Euler(0, -45, 0) * ( target - this.transform.position ), Input.GetAxis("Mouse Y") * sensitivity );
 	       	transform.RotateAround ( target, Vector3.up, Input.GetAxis("Mouse X") * sensitivity );
-	        transform.LookAt ( target );
+	        transform.rotation = Quaternion.Lerp( transform.rotation, Quaternion.LookRotation( target - transform.position ), 50 * Time.deltaTime );
 			
 		} else {
 			var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
@@ -240,10 +241,16 @@ function Update () {
 	
 	// middle mouse
 	} else if ( Input.GetMouseButton(2) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {        
-        var h = Input.GetAxis("Mouse X") * sensitivity / 8;
-        var v = Input.GetAxis("Mouse Y") * sensitivity / 8;
+        var panSensitivity : float = sensitivity; 
+			
+		if ( Camera.main.orthographic ) {
+			panSensitivity = panSensitivity * ( Camera.main.orthographicSize / 2 );
+		}
+        
+        var h = Input.GetAxis("Mouse X") * panSensitivity / 8;
+        var v = Input.GetAxis("Mouse Y") * panSensitivity / 8;
 
-        if ( Input.GetKey( KeyCode.LeftControl ) ) {
+	    if ( Input.GetKey( KeyCode.LeftControl ) ) {
         	h = h * 4;
         	v = v * 4;
         } else if ( Input.GetKey( KeyCode.LeftShift ) ) {
