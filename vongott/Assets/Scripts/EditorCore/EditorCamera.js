@@ -161,7 +161,7 @@ function ChangeOrthographicSize ( n : float ) {
 function FocusOn ( position : Vector3 ) {
 	TweenTurnTo ( position );
 	TweenMoveTo ( position - transform.forward * 5 );
-	iTween.ValueTo ( this.gameObject, iTween.Hash ( "from", Camera.main.orthographicSize, "to", 2, "onupdate", "ChangeOrthographicSize" ) );
+	iTween.ValueTo ( this.gameObject, iTween.Hash ( "from", Camera.main.orthographicSize, "to", 2, "onupdate", "ChangeOrthographicSize", "time", 0.25 ) );
 }
 
 // Fix point

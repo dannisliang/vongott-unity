@@ -24,6 +24,8 @@ function Update () {
 			EditorCore.SetRestriction ( null );
 			EditorCore.UndoCurrentAction ();
 		
+			EditorCore.FitSelectionBox ();
+		
 		// mouse click: apply
 		} else if ( Input.GetMouseButtonDown(0) ) {
 			EditorCore.SetGrabMode ( false );
@@ -182,12 +184,8 @@ function Update () {
 	
 	// camera mode
 	} else if ( OGRoot.currentPage.pageName == "MenuBase" ) {	
-		// E key: edit
-		if ( Input.GetKeyDown ( KeyCode.E ) ) {
-			EditorCore.ToggleEditMeshMode();
-		
 		// Z key
-		} else if ( Input.GetKeyDown ( KeyCode.Z ) ) {
+		if ( Input.GetKeyDown ( KeyCode.Z ) ) {
 			// ^ undo
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
 				EditorCore.UndoCurrentAction ();
@@ -282,7 +280,6 @@ function Update () {
 			
 			} else if ( EditorCore.GetSelectedObject() ) {
 				EditorCore.DeselectObject ();
-				EditorCore.editMeshMode = false;
 			
 			}
 		}

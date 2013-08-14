@@ -27,7 +27,6 @@ static var grabMode = false;
 static var rotateMode = false;
 static var scaleMode = false;
 static var grabRestrict : String;
-static var editMeshMode = false;
 
 // grid / guides
 static var gizmo : GameObject;
@@ -584,11 +583,6 @@ static function SetRotateMode ( state : boolean ) {
 			SelectObject ( selectedObject.GetComponent(PathNode).owner );
 		}
 	}
-}
-
-// Edit mesh mode
-static function ToggleEditMeshMode () {
-	editMeshMode = !editMeshMode;
 }
 
 // Set scale mode

@@ -33,6 +33,13 @@ class LightSource extends MonoBehaviour {
 		} else if ( !GameCore.started && !EditorCore.noGizmos && !this.GetComponent(MeshRenderer).enabled ) {
 			this.GetComponent(MeshRenderer).enabled = true;
 			this.GetComponent(BoxCollider).enabled = true;
+					
+		} else if ( !GameCore.started && !EditorCore.noGizmos ) {
+			this.transform.LookAt ( Camera.main.transform );
+			
+			if ( EditorCore.GetSelectedObject() == this.gameObject ) {
+				EditorCore.FitSelectionBox ();
+			}
 			
 		}
 	}

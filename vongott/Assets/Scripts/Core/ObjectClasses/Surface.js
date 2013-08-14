@@ -44,15 +44,16 @@ class Surface extends MonoBehaviour {
 			obj.name = "VertexButton" + i;
 			obj.transform.parent = surface.transform;
 			obj.transform.localPosition = plane.vertices[i];
-			obj.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
 		
 			Update ();
 		}
 	
-		override function Update () {
-			obj.transform.LookAt ( plane.middle );
-						
-			Debug.DrawLine ( obj.transform.position, plane.middle );
+		override function Update () {			
+			if ( EditorCore.GetSelectedObject() != obj ) {
+				obj.transform.localPosition = plane.vertices[vertIndex] + (plane.middle - plane.vertices[vertIndex]).normalized * 0.2;
+			}
+			
+			obj.transform.LookAt ( Camera.main.transform );
 		}
 	}
 	
@@ -79,6 +80,7 @@ class Surface extends MonoBehaviour {
 		
 		override function Update () {
 			obj.transform.localPosition = (plane.vertices[a]/2) + (plane.vertices[b]/2);
+			obj.transform.LookAt ( Camera.main.transform );
 		}
 	}
 	
@@ -109,6 +111,7 @@ class Surface extends MonoBehaviour {
 			d = plane.vertices[3];
 			
 			obj.transform.localPosition = (a/4) + (b/4) + (c/4) + (d/4);
+			obj.transform.LookAt ( Camera.main.transform );
 			
 			plane.middle = obj.transform.position;
 		}
@@ -286,7 +289,10 @@ class Surface extends MonoBehaviour {
 		// ^ add uvs from every plane
 		for ( i = 0; i < planes.Count; i++ ) {		
 			for ( var u : Vector3 in planes[i].vertices ) {
-				tempUVs.Add ( new Vector2 ( u.x * materialSize, u.z * materialSize ) );
+				var x : float = u.x;
+				var y : float = u.z;
+						
+				tempUVs.Add ( new Vector2 ( x * materialSize, y * materialSize ) );
 			}
 		}
 		
@@ -353,10 +359,6 @@ class Surface extends MonoBehaviour {
 		if ( Application.loadedLevel != 1 || EditorCore.GetSelectedObject() != this.gameObject ) { return; }
 										
 		ClearButtons ();
-		
-		if ( !EditorCore.editMeshMode ) {
-			return;
-		}
 		
 		for ( var plane : SurfacePlane in planes ) {
 			// Vertex buttons
@@ -428,20 +430,14 @@ class Surface extends MonoBehaviour {
 		var b : Button;
 		
 		if ( EditorCore.GetSelectedObject() == this.gameObject ) {
-			if ( buttons.Count > 0 ) {
-				if ( !EditorCore.editMeshMode ) {
-					ClearButtons ();
-				}
-			
-			} else if ( EditorCore.editMeshMode ) {
+			if ( buttons.Count <= 0 ) {
 				CreateButtons ();
 			
+			} else {
+				UpdateButtons ();
+			
 			}
 			
-		} else {
-			if ( !EditorCore.editMeshMode ) {
-				ClearButtons ();
-			}
 		}
 		
 		/*if ( this.GetComponent(MeshFilter).mesh.vertices.Length <= 0 ) {
