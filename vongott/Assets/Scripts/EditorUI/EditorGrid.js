@@ -20,8 +20,8 @@ class EditorGrid extends OGPage {
 	function OK () {
 		EditorCore.gridEnabled = visible.isChecked;
 		EditorCore.snapEnabled = snap.isChecked;
-		EditorCore.gridLineDistance = Mathf.Floor ( float.Parse ( darkLine.text ) );
-		EditorCore.gridLineBrightFrequency = Mathf.FloorToInt ( float.Parse ( brightLine.text ) );
+		EditorCore.gridLineDistance = float.Parse ( darkLine.text );
+		EditorCore.gridLineBrightFrequency = float.Parse ( brightLine.text );
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 }

@@ -21,37 +21,40 @@ var gridBright : Material;
 // Public functions
 ////////////////////
 // Gizmo
-function DrawXLine () {
-	gizmoX.SetPass( 0 );
-	
+function DrawLine ( from : Vector3, to : Vector3 ) {
 	GL.Begin( GL.LINES );
 	
-	GL.Vertex3( gizmo.position.x - 9999, gizmo.position.y, gizmo.position.z );
- 	GL.Vertex3( gizmo.position.x + 9999, gizmo.position.y, gizmo.position.z );
+	GL.Vertex3( from.x, from.y, from.z );
+ 	GL.Vertex3( to.x, to.y, to.z );
 
 	GL.End();
+}
+
+function DrawLine ( from : Vector3, to : Vector3, material : Material ) {
+	material.SetPass ( 0 );
+	
+	DrawLine ( from, to );
+}
+
+function DrawXLine () {
+	var right : Vector3 = gizmo.position + gizmo.right * 9999;
+	var left : Vector3 = gizmo.position - gizmo.right * 9999;
+
+	DrawLine ( right, left, gizmoX );
 }
 
 function DrawYLine () {
-	gizmoY.SetPass( 0 );
+	var up : Vector3 = gizmo.position + gizmo.up * 9999;
+	var down : Vector3 = gizmo.position - gizmo.up * 9999;
 	
-	GL.Begin( GL.LINES );
-	
-	GL.Vertex3( gizmo.position.x, gizmo.position.y - 9999, gizmo.position.z );
-	GL.Vertex3( gizmo.position.x, gizmo.position.y + 9999, gizmo.position.z );
-
-	GL.End();
+	DrawLine ( up, down, gizmoY );
 }
 
-function DrawZLine () {
-	gizmoZ.SetPass( 0 );
+function DrawZLine () {	
+	var forward : Vector3 = gizmo.position + gizmo.forward * 9999;
+	var back : Vector3 = gizmo.position - gizmo.forward * 9999;
 	
-	GL.Begin( GL.LINES );
-	
-	GL.Vertex3( gizmo.position.x, gizmo.position.y, gizmo.position.z - 9999 );
- 	GL.Vertex3( gizmo.position.x, gizmo.position.y, gizmo.position.z + 9999 );
-
-	GL.End();
+	DrawLine ( forward, back, gizmoZ );
 }
 
 // Grid
@@ -99,6 +102,10 @@ function OnPostRender () {
 		DrawYLine();
 	} else if ( EditorCore.grabRestrict == "z" ) {
 		DrawZLine();
+	} else {
+		/*DrawXLine();
+		DrawYLine();
+		DrawZLine();*/
 	}
 }
 

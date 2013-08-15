@@ -167,6 +167,7 @@ function Update () {
 			
 			if ( EditorCore.rotateMode ) {
 				o.transform.localEulerAngles = new Vector3 ( xRotate, yRotate, zRotate );
+				EditorCore.gizmo.transform.rotation = EditorCore.GetSelectedObject().transform.rotation;
 				EditorCore.FitSelectionBox ();
 	
 			} else if ( EditorCore.scaleMode ) {
@@ -186,12 +187,12 @@ function Update () {
 	} else if ( OGRoot.currentPage.pageName == "MenuBase" ) {	
 		// Z key
 		if ( Input.GetKeyDown ( KeyCode.Z ) ) {
-			// ^ undo
+			// Undo
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
 				EditorCore.UndoCurrentAction ();
 		
 			} else {
-			// ^ wireframe toggle
+			// Wireframe toggle
 				EditorCore.ToggleWireframe();
 		
 			}
@@ -202,7 +203,7 @@ function Update () {
 
 		// S key
 		} else if ( Input.GetKeyDown ( KeyCode.S ) ) {
-			// ^ save level
+			// Save level
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
 				if ( EditorCore.currentLevel.name == "<Untitled Level>" ) {
 					return;
@@ -212,7 +213,7 @@ function Update () {
 				}
 				
 			} else {
-			// ^ scale mode	
+			// Scale mode	
 				EditorCore.SetScaleMode( true );
 			
 			}

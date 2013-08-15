@@ -54,9 +54,16 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- AI implementation
 	- Proper character controls
 	- Camera movement and raycasting
+	- Trigger logic
 - Editor
+	- Improvements to surface editor
+	- Scatter surfaces
+	- Clear visual cues
+	- More view modes in the asset browser
 	- Optimisations
 - In-game objects
+	- Architecture
+		- Wall types
 	- Furniture
 		- Basic modelling 
 		- Texturing
@@ -67,7 +74,7 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Chapter 1 outline
 	- First scene core conversations
 - Level design
-	- Scene 1 concept art + initial level build
+	- Scene 1 + initial level build
 
 ### Third iteration
 - Game core

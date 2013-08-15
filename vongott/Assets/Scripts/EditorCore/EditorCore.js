@@ -33,7 +33,7 @@ static var gizmo : GameObject;
 static var snapEnabled = true;
 static var gridEnabled = true;
 static var focusEnabled = false;
-static var gridLineDistance : float = 1.0;
+static var gridLineDistance : float = 0.5;
 static var gridLineBrightFrequency : int = 5;
 
 // editor essentials
@@ -169,10 +169,14 @@ static function GetSpawnPosition () : Vector3 {
 	var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
 	var position = Camera.main.transform.position + forward * distance;
 	
+	var fixPoint : Vector3 = Camera.main.GetComponent ( EditorCamera ).fixPoint;
 	var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
 	var hit : RaycastHit;
 	
-	if ( Physics.Raycast ( newRay, hit ) ) {
+	if ( fixPoint != Vector3.zero ) {
+		position = fixPoint;
+	
+	} else if ( Physics.Raycast ( newRay, hit ) ) {
 		position = hit.point;
 	
 	}
@@ -537,6 +541,7 @@ static function SetGrabMode ( state : boolean ) {
 		
 		gizmo.SetActive ( true );
 		gizmo.transform.position = selectedObject.transform.position;
+		gizmo.transform.localEulerAngles = Vector3.zero;
 	
 	} else {
 		OGRoot.GoToPage ( "MenuBase" );
@@ -569,6 +574,7 @@ static function SetRotateMode ( state : boolean ) {
 		
 		gizmo.SetActive ( true );
 		gizmo.transform.position = selectedObject.transform.position;
+		gizmo.transform.rotation = selectedObject.transform.rotation;
 	
 	} else {
 		OGRoot.GoToPage ( "MenuBase" );
@@ -601,6 +607,7 @@ static function SetScaleMode ( state : boolean ) {
 		
 		gizmo.SetActive ( true );
 		gizmo.transform.position = selectedObject.transform.position;
+		gizmo.transform.rotation = selectedObject.transform.rotation;
 	
 	} else {
 		OGRoot.GoToPage ( "MenuBase" );
