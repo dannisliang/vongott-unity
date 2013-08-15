@@ -167,7 +167,7 @@ function Update () {
 			
 			if ( EditorCore.rotateMode ) {
 				o.transform.localEulerAngles = new Vector3 ( xRotate, yRotate, zRotate );
-				EditorCore.gizmo.transform.rotation = EditorCore.GetSelectedObject().transform.rotation;
+				EditorCore.gizmo.transform.localEulerAngles = Vector3.zero;
 				EditorCore.FitSelectionBox ();
 	
 			} else if ( EditorCore.scaleMode ) {

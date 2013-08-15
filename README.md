@@ -55,6 +55,11 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Proper character controls
 	- Camera movement and raycasting
 	- Trigger logic
+	- Basic weapon effects
+		- Projectiles
+		- Decals
+		- Muzzle fire
+		- Explosions
 - Editor
 	- Improvements to surface editor
 	- Scatter surfaces
@@ -85,6 +90,11 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Optimisations
 - In-game objects
 	- Equipment concept art 
+- Animations/mocap
+	- Facial animations
+	- Poses
+	- Loops
+	- Transitions
 - Story
 	- Chapter 1 complete script and quests
 	- More core conversations
@@ -100,9 +110,6 @@ The conversation editor and logic is fully functional, apart from playing audio 
 	- Play testing
 - In-game objects
 	- Equipment modelling and texturing
-- Animation
-	- Male
-	- Female
 - Audio
 	- Sound effects
 - GUI polishing

@@ -33,7 +33,7 @@ static var gizmo : GameObject;
 static var snapEnabled = true;
 static var gridEnabled = true;
 static var focusEnabled = false;
-static var gridLineDistance : float = 0.5;
+static var gridLineDistance : float = 0.25;
 static var gridLineBrightFrequency : int = 5;
 
 // editor essentials
