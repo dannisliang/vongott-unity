@@ -8,15 +8,19 @@ group: navigation
 {% include JB/setup %}
 
 <ul>
-  {% for post in site.posts %}
-	<li>
-		{{ post.date | date: "%Y.%m.%d" }} | <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
-		
-		{% if post.content contains '<!--more-->' %}
-			<p>{{ post.content | split:'<!--more-->' | first }}</p>
-		{% else %}
-			<!-- Case for when no excerpt is defined -->
-		{% endif %}
-    </li>
-  {% endfor %}
+	{% for post in site.posts %}
+		<li>
+			{{ post.date | date: "%Y.%m.%d" }} | <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+			
+			{% if post.content contains '<!--more-->' %}
+				<p>{{ post.content | split:'<!--more-->' | first }}</p>
+			{% else %}
+				<!-- Case for when no excerpt is defined -->
+			{% endif %}
+		</li>
+	{% endfor %}
 </ul>
+
+<p>
+{{ BASE_PATH }}
+</p>
