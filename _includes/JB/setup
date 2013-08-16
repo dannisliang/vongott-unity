@@ -8,7 +8,7 @@
     {% if site.safe and site.JB.BASE_PATH and site.JB.BASE_PATH != '' %}
       {% assign BASE_PATH = "file:///C:/Users/jampe/Documents/GitHub/vongott-site/_site" %}
       {% assign HOME_PATH = "file:///C:/Users/jampe/Documents/GitHub/vongott-site/_site" %}
-    {% else %}
+	{% else %}
       {% assign BASE_PATH = "http://mrzapp.github.io/vongott" %}
       {% assign HOME_PATH = "http://mrzapp.github.io/vongott" %}
     {% endif %}
