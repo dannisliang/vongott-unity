@@ -11,6 +11,8 @@
 	{% else %}
       {% assign BASE_PATH = "http://mrzapp.github.io/vongott" %}
       {% assign HOME_PATH = "http://mrzapp.github.io/vongott" %}
+	  {% assign BASE_PATH = nil %}
+      {% assign HOME_PATH = "/" %}
     {% endif %}
 
     {% if site.JB.ASSET_PATH %}

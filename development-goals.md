@@ -1,12 +1,12 @@
 ---
 layout: page
 title: "Development Goals"
-tagline: "These are the goals we wish to achieve during different development cycles"
+tagline: "These are the goals we wish to achieve during different development phases"
 group: navigation
 ---
 {% include JB/setup %}
 
-### First cycle ( 2013.03.12 - 2013.06.27 )
+### First phase ( 2013.03.12 - 2013.06.27 )
 - Game Core
 	- Conversations &#x2713;
 	- Quests &#x2713;
@@ -22,7 +22,7 @@ group: navigation
 - GUI
 	- New UI plugin for Unity &#x2713;
 
-### Second cycle ( 2013.07.01 - ? )
+### Second phase ( 2013.07.01 - ? )
 - Concept art
 	- Player
 	- Generic male + female
@@ -60,7 +60,7 @@ group: navigation
 - Level design
 	- Scene 1 + initial level build
 
-### Third cycle
+### Third phase
 - Game core
 	- Optimisations
 	- Reduce draw calls with combined meshes
@@ -83,7 +83,7 @@ group: navigation
 	- More materials
 	- Player & NPC initial models
 
-### Fourth cycle
+### Fourth phase
 - Game core
 	- Optimisations
 	- Play testing
@@ -97,7 +97,7 @@ group: navigation
 	- Inventory
 	- HUD
 
-### Fifth cycle
+### Fifth phase
 - Game core
 	- Optimisations
 	- Play testing

@@ -2,10 +2,21 @@
 layout: page
 title : News
 header : News
-tagline : These are all the news abut The Vongott Chronicles 
+tagline : These are all the news about The Vongott Chronicles 
 group: navigation
 ---
 {% include JB/setup %}
 
-{% assign posts_collate = site.posts %}
-{% include JB/posts_collate %}
+<ul>
+  {% for post in site.posts %}
+	<li>
+		{{ post.date | date: "%Y.%m.%d" }} | <a href="{{ post.url }}">{{ post.title }}</a>
+		
+		{% if post.content contains '<!--more-->' %}
+			<p>{{ post.content | split:'<!--more-->' | first }}</p>
+		{% else %}
+			<!-- Case for when no excerpt is defined -->
+		{% endif %}
+    </li>
+  {% endfor %}
+</ul>

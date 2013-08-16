@@ -151,9 +151,13 @@ hr {
 }
 /* line 134, ../_sass/_base.scss */
 .content p {
-  padding-bottom: 0px;
+  padding-bottom: 20px;
   line-height: 18px;
   margin: 0;
+}
+
+.content li p {
+	padding-bottom: 0px;
 }
 
 /* Page header tweaks */
