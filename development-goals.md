@@ -22,12 +22,13 @@ group: navigation
 - GUI
 	- New UI plugin for Unity &#x2713;
 
-### Second cycle
+### Second cycle ( 2013.07.01 - ? )
 - Concept art
 	- Player
 	- Generic male + female
 	- First map
 - Game core
+	- Upgrade effects
 	- Optimisations
 	- AI implementation
 	- Proper character controls
