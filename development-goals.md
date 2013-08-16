@@ -45,9 +45,9 @@ group: navigation
 	- Clear visual cues
 	- More view modes in the asset browser
 	- Optimisations
-- In-game objects
+	
+- Prefabs
 	- Architecture
-		- Wall types
 	- Furniture
 		- Basic modelling 
 		- Texturing
