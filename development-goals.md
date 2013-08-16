@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Development Goals"
-description: "These are the goals we wish to achieve during different development cycles"
+tagline: "These are the goals we wish to achieve during different development cycles"
 group: navigation
 ---
 {% include JB/setup %}

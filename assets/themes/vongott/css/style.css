@@ -23,7 +23,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-weight: normal;
-  color: #999;
+  color: #00d8f9;
   text-rendering: optimizelegibility;
   font-family: 'Ubuntu', sans-serif;
   /*font-family: 'Pontano Sans', sans-serif;*/
@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* line 35, ../_sass/_base.scss */
 a {
-  color: #4cb4e8;
+  color: #00d8f9;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
@@ -51,7 +51,7 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
 }
 
 /* line 49, ../_sass/_base.scss */
-h1, h2 {
+h1 {
   margin: 0 0 15px;
 }
 
@@ -63,6 +63,7 @@ h1 {
 /* line 57, ../_sass/_base.scss */
 h2 {
   font-size: 30px;
+  margin: 20px 0 15px;
 }
 
 /* line 61, ../_sass/_base.scss */
@@ -164,7 +165,7 @@ hr {
   background: #202020;
   background-color: rgba(0, 0, 0, 0.3);
   border: none;
-  padding: 20px 20px 10px;
+  padding: 0px 20px 10px;
   margin: 0px -20px 20px;
   z-index: 0;
   -moz-border-radius-bottomleft: 5px;
@@ -402,4 +403,11 @@ div.sidebar section img.icon {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+}
+
+#frontpage-logo {
+	display: block;
+	margin: 0px auto;
+	border: none;
+	box-shadow: none;
 }
