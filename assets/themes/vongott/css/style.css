@@ -415,3 +415,8 @@ div.sidebar section img.icon {
 	border: none;
 	box-shadow: none;
 }
+
+/* lightbox fix */
+.lb-image{
+	max-width: inherit;
+}
