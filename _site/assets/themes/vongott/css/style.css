@@ -7,7 +7,7 @@
 /* line 13, ../_sass/_base.scss */
 html, body {
   background-color: #2a2a2a;
-  background: url(../images/bgs/body.png) repeat;
+  background-image: url(../images/bgs/body.png) repeat;
 }
 
 /* line 18, ../_sass/_base.scss */
@@ -131,6 +131,7 @@ hr {
 /* line 111, ../_sass/_base.scss */
 .content img {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+  margin-bottom: 40px;
 }
 /* line 115, ../_sass/_base.scss */
 .content.no-header {
@@ -158,6 +159,10 @@ hr {
 
 .content li p {
 	padding-bottom: 0px;
+}
+
+.content #news_list li {
+	padding-bottom: 10px;
 }
 
 /* Page header tweaks */
