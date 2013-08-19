@@ -7,7 +7,7 @@ group: navigation
 ---
 {% include JB/setup %}
 
-<ul>
+<ul id="news_list">
 	{% for post in site.posts %}
 		<li>
 			{{ post.date | date: "%Y.%m.%d" }} | <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
