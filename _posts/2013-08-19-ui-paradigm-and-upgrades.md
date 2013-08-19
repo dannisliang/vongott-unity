@@ -15,7 +15,7 @@ Updates from the second development phase.
 
 ### UI
 I've decided on a circular UI, as that has always been something I'd like to do. Some of you might think "Oh no, make it stop!", but to that I say "poppycock!". It can work. Seriously. Come on, seriously.
-I am essentially aiming to accomplish what they failed to do in DX:IW. These are rough prototypes, and there are some drawing issues courtesy of the latest Unity update, but it gets the idea across.
+I am essentially aiming to accomplish what they failed to do in DX:IW. These are rough prototypes, but they get the point across.
 
 <a href="{{ img_path }}main.jpg"><img src="{{ img_path }}main.jpg" /></a>
   
