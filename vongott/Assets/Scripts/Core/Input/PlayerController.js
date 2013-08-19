@@ -44,7 +44,6 @@ class PlayerController extends MonoBehaviour {
 			
 		} else if ( !inCrawlspace && Input.GetKeyDown ( KeyCode.C ) ) {
 			crouchMode = !crouchMode;
-			Debug.Log ( "YEEHAW" );
 		
 		} else  {
 			state = PlayerState.Walking;
@@ -193,10 +192,12 @@ class PlayerController extends MonoBehaviour {
 		
 		this.GetComponent(Animator).SetFloat("Speed", speed * ( 1 + Time.deltaTime ) );
 		
+		this.GetComponent(Animator).SetBool("Walking", state == PlayerState.Walking );
+		this.GetComponent(Animator).SetBool("Running", state == PlayerState.Running );
 		this.GetComponent(Animator).SetBool("Jumping", state == PlayerState.Jumping || state == PlayerState.Falling );
 		this.GetComponent(Animator).SetBool("Crouching", state == PlayerState.Crouching );
-		this.GetComponent(Animator).SetBool("Creeping", state == PlayerState.Creeping );
-		this.GetComponent(Animator).SetBool("SideStepLeft", state == PlayerState.SideStepLeft );
-		this.GetComponent(Animator).SetBool("SideStepRight", state == PlayerState.SideStepRight );
+		//this.GetComponent(Animator).SetBool("Creeping", state == PlayerState.Creeping );
+		//this.GetComponent(Animator).SetBool("SideStepLeft", state == PlayerState.SideStepLeft );
+		//this.GetComponent(Animator).SetBool("SideStepRight", state == PlayerState.SideStepRight );
 	}
 }

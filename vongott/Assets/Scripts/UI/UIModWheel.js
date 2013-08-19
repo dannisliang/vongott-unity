@@ -24,7 +24,7 @@ class UIModWheel extends OGPage {
 		
 		SetButtonMaterials ( null );
 		
-		for ( var i = 0; i < human.GetChildCount(); i++ ) {
+		for ( var i = 0; i < human.childCount; i++ ) {
 			human.GetChild(i).GetComponent(MeshRenderer).material = unselectedMaterial;
 			markers.GetChild(i).gameObject.SetActive ( false );
 		}
@@ -39,7 +39,7 @@ class UIModWheel extends OGPage {
 		var slot : String;
 		var entry : InventoryEntry;
 		
-		for ( var i = 0; i < grid.GetChildCount(); i++ ) {
+		for ( var i = 0; i < grid.childCount; i++ ) {
 			slot = grid.GetChild(i).gameObject.name;
 			entry = UpgradeManager.GetUpgrade ( slot );
 			
@@ -83,7 +83,7 @@ class UIModWheel extends OGPage {
 		
 		SetButtonMaterials ( b );
 		
-		for ( var i = 0; i < human.GetChildCount(); i++ ) {
+		for ( var i = 0; i < human.childCount; i++ ) {
 			if ( human.GetChild(i).gameObject.name == slot ) {
 				human.GetChild(i).GetComponent(MeshRenderer).material = selectedMaterial;												
 				markers.GetChild(i).gameObject.SetActive ( true );

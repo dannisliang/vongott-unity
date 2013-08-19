@@ -47,7 +47,7 @@ function GetCamDist() : Vector3 {
 	var y : float = 0.0; 
 	var z : float = -3.0; 
 	
-	var speed : float = player.GetComponent(Animator).GetFloat("Speed");
+	var speed : float = player.GetComponent(PlayerController).speed;
 	var newPos : Vector3;
 	
 	if ( speed > 1.0 ) { speed = 1.0; }

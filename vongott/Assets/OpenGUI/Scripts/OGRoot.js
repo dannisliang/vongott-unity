@@ -23,7 +23,7 @@ class OGRoot extends MonoBehaviour {
 		
 		if ( name == "" ) { return; }
 								
-		for ( var i = 0; i < thisTransform.GetChildCount(); i++ ) {
+		for ( var i = 0; i < thisTransform.childCount; i++ ) {
 			if ( thisTransform.GetChild( i ).GetComponent ( OGPage ) ) {
 				var p = thisTransform.GetChild( i ).GetComponent ( OGPage );
 

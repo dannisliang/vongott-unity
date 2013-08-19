@@ -4,8 +4,8 @@
 
 class InventoryButtonsArrange extends MonoBehaviour {
 	function Update () {
-		for ( var i = 0; i < this.transform.GetChildCount(); i++ ) {
-			var rot : float = ( i - 1.5 ) * ( 360.0 / this.transform.GetChildCount() );
+		for ( var i = 0; i < this.transform.childCount; i++ ) {
+			var rot : float = ( i - 1.5 ) * ( 360.0 / this.transform.childCount );
 			
 			this.transform.GetChild(i).name = i.ToString();
 			this.transform.GetChild(i).localEulerAngles = new Vector3 ( rot, 90, 90 );

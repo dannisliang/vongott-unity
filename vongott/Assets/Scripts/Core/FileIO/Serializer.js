@@ -148,7 +148,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 static function SerializeGameObjectChildren ( obj : GameObject ) : JSONObject {
 	var chl : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 	
-	for ( var i = 0; i < obj.transform.GetChildCount(); i++ ) {
+	for ( var i = 0; i < obj.transform.childCount; i++ ) {
 		var c = obj.transform.GetChild ( i ).gameObject;
 		
 		// path nodes are not serialized on their own

@@ -245,7 +245,7 @@ static function SetLayerRecursively ( obj : GameObject, lay : int ) {
 	
 	obj.layer = lay;
 	
-	for ( var i = 0; i < obj.transform.GetChildCount(); i++ ) {
+	for ( var i = 0; i < obj.transform.childCount; i++ ) {
         if ( obj.transform.GetChild(i) == null ) {
         	continue;
         }
