@@ -91,24 +91,24 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Prefabs
 	function AddPrefab () {
-		EditorBrowser.initMode = "Add";
-		EditorBrowser.rootFolder = "Prefabs";
+		EditorBrowserWindow.initMode = "Add";
+		EditorBrowserWindow.rootFolder = "Prefabs";
 		
-		OGRoot.GoToPage ( "Browser" );
+		OGRoot.GoToPage ( "BrowserWindow" );
 	}
 	
 	function AddActor () {
-		EditorBrowser.initMode = "Add";
-		EditorBrowser.rootFolder = "Actors";
+		EditorBrowserWindow.initMode = "Add";
+		EditorBrowserWindow.rootFolder = "Actors";
 		
-		OGRoot.GoToPage ( "Browser" );
+		OGRoot.GoToPage ( "BrowserWindow" );
 	}
 	
 	function AddItem () {
-		EditorBrowser.initMode = "Add";
-		EditorBrowser.rootFolder = "Items";
+		EditorBrowserWindow.initMode = "Add";
+		EditorBrowserWindow.rootFolder = "Items";
 		
-		OGRoot.GoToPage ( "Browser" );
+		OGRoot.GoToPage ( "BrowserWindow" );
 	}
 	
 	function AddLight () {

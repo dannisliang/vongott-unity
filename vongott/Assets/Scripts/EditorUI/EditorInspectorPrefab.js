@@ -25,9 +25,9 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	//////////////////
 	// Pick prefab
 	function PickPrefab ( btn : OGButton ) {
-		EditorBrowser.rootFolder = "Prefabs";
-		EditorBrowser.initMode = "OK";
-		EditorBrowser.button = btn;
-		OGRoot.GoToPage ( "Browser" );
+		EditorBrowserWindow.rootFolder = "Prefabs";
+		EditorBrowserWindow.initMode = "OK";
+		EditorBrowserWindow.button = btn;
+		OGRoot.GoToPage ( "BrowserWindow" );
 	}
 }

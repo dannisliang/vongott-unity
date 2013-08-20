@@ -14,10 +14,10 @@ class EditorInspectorSurface extends MonoBehaviour {
 		tilingValue.text = selectedSurface.materialSize.ToString("f1");
 		
 		materialButton.func = function () {
-			EditorBrowser.rootFolder = "Materials";
-			EditorBrowser.initMode = "Use";
-			EditorBrowser.callback = GetMaterial;
-			OGRoot.GoToPage ( "Browser" );
+			EditorBrowserWindow.rootFolder = "Materials";
+			EditorBrowserWindow.initMode = "Use";
+			EditorBrowserWindow.callback = GetMaterial;
+			OGRoot.GoToPage ( "BrowserWindow" );
 		};
 		
 		materialButton.text = "";

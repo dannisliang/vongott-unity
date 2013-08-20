@@ -2,7 +2,7 @@
 
 import System.IO;
 
-class EditorBrowser extends OGPage {
+class EditorBrowserWindow extends OGPage {
 	////////////////////
 	// Prerequisites
 	////////////////////
@@ -115,6 +115,7 @@ class EditorBrowser extends OGPage {
 		prefabsFolder.AddFolder ( new Folder ( "Airducts" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Decor" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Doors" ), true );
+		prefabsFolder.AddFolder ( new Folder ( "Roofs" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Stairs" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Walls" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Windows" ), true );
