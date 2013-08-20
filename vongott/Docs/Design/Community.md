@@ -18,6 +18,18 @@ An SDK will be developed from scratch for creating game content. This will be us
 	- Inspector menus for all object types
 	- Surface editor for creating custom shapes such as floors and ceilings 
 	- Asset browser
+- File browser
+	- Popup window
+	- View mode: List
+- Asset browser
+	- Drawer
+	- View mode: Icons+names
+- Project hierarchy
+	- Drawer
+	- View mode: List
+- Templates
+	- Allow the user to save a group of prefabs in a particular configuration
+	- View mode: Icons+names
 - Game mechanics
 	- Interactive objects
 	- Triggers
