@@ -1,5 +1,7 @@
 #pragma strict
-	
+
+import System.IO;
+
 // Update path
 @MenuItem ( "Vongott/Prefab/Update Path" )
 static function UpdatePath () {

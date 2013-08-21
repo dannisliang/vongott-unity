@@ -6,8 +6,9 @@ class OGPopUp extends OGWidget {
 	var title : String;
 	var isUp = false;
 	var options : String[];
-	var message : String;
 	var messageTarget : GameObject;
+	var message : String;
+	var passSelectedOption : boolean = false;
 	var padding : Vector2 = new Vector2 ( 8.0, 8.0 );
 	
 	var selectedOption : String;
@@ -46,7 +47,11 @@ class OGPopUp extends OGWidget {
 					isUp = false;
 					
 					if ( messageTarget && message ) {
-						messageTarget.SendMessage ( message );
+						if ( passSelectedOption ) {
+							messageTarget.SendMessage ( message, selectedOption );
+						} else {
+							messageTarget.SendMessage ( message );
+						}
 					}
 				}
 			}

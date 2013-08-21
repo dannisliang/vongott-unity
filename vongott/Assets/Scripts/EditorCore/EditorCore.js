@@ -231,6 +231,8 @@ static function AddObject ( obj : GameObject ) {
 	var newObject : GameObject = Instantiate ( obj );
 	newObject.transform.parent = currentLevel.transform;
 	newObject.transform.position = GetSpawnPosition();
+	
+	SelectObject ( newObject );
 }
 
 // Preview any object
@@ -288,6 +290,30 @@ static function PreviewObject ( obj : GameObject ) : ObjectAttributes {
 	return attributes;
 }
 
+static function GetObjectIcon ( obj : GameObject ) : Texture2D {
+	ClearPreview ();
+	
+	previewObject = Instantiate ( obj );
+	
+	var tex : Texture2D = new Texture2D ( 128, 128 );
+	
+	var rt : RenderTexture = new RenderTexture ( 128, 128, 24);
+	previewCamera.targetTexture = rt;
+	previewCamera.Render();
+	RenderTexture.active = rt;
+	 
+	// Read pixels
+	tex.ReadPixels(new Rect ( 0, 0, 128, 128 ), 0, 0);
+	 
+	// Clean up
+	previewCamera.targetTexture = null;
+	RenderTexture.active = null; // added to avoid errors
+	DestroyImmediate(rt);
+	
+	ClearPreview ();
+	
+	return tex;
+}
 
 ////////////////////
 // Create

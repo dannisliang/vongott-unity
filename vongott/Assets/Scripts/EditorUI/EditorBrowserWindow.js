@@ -6,51 +6,6 @@ class EditorBrowserWindow extends OGPage {
 	////////////////////
 	// Prerequisites
 	////////////////////
-	// Classes
-	private class Folder {
-		var name : String;
-		var subFolders : List.< Folder > = new List.< Folder >();
-		var files : Object[];
-		var path : String;
-	
-		function Folder ( n : String ) {
-			name = n;
-			path = name;
-		} 
-	
-		function AddFolder ( f : Folder, scan : boolean ) {
-			if ( name != "Resources" ) {
-				f.path = path + "/" + f.name;
-			}
-			
-			if ( scan ) {
-				f.files = Resources.LoadAll ( f.path );
-			}
-								
-			subFolders.Add ( f );
-		}
-	
-		function FindFolder ( n : String ) : Folder {
-			for ( var f : Folder in subFolders ) {
-				if ( n == f.name ) {
-					return f;
-				}
-			}
-			
-			return null;
-		}
-		
-		function FindFile ( n : String ) : Object {
-			for ( var f : Object in files ) {
-				if ( ( f.GetType() == GameObject && (f as GameObject).name == n ) || f.GetType() == Material && (f as Material).name == n ) {
-					return f;	
-				}
-			}
-			
-			return null;
-		}
-	}
-
 	// Public vars
 	var fileList : Transform;
 	var addButton : OGButton;
@@ -68,9 +23,9 @@ class EditorBrowserWindow extends OGPage {
 	static var callback : Function;
 	
 	// Hidden vars
-	@HideInInspector var currentFolder : Folder;
-	@HideInInspector var selectedFolder : Folder;
-	@HideInInspector var resourcesFolder : Folder = new Folder( "Resources" );
+	@HideInInspector var currentFolder : EditorFileSystem.Folder;
+	@HideInInspector var selectedFolder : EditorFileSystem.Folder;
+	@HideInInspector var resourcesFolder : EditorFileSystem.Folder;
 	@HideInInspector var selectedFile : Object;
 	@HideInInspector var mode : String;
 	@HideInInspector var breadPos : float = 0;
@@ -81,67 +36,14 @@ class EditorBrowserWindow extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	// Folders
-	private function InitFolders () {
-				
-		// Actors
-		var actorsFolder : Folder = new Folder ( "Actors" );
-		resourcesFolder.AddFolder ( actorsFolder, false );
-		
-		actorsFolder.AddFolder ( new Folder ( "Animal" ), true );
-		actorsFolder.AddFolder ( new Folder ( "NPC" ), true );
-	
-		// Items
-		var itemsFolder : Folder = new Folder ( "Items" );
-		resourcesFolder.AddFolder ( itemsFolder, false );
-		
-		itemsFolder.AddFolder ( new Folder ( "Consumables" ), true );
-		itemsFolder.AddFolder ( new Folder ( "Equipment" ), true );
-		itemsFolder.AddFolder ( new Folder ( "Upgrades" ), true );
-		
-		// Materials
-		var materialsFolder : Folder = new Folder ( "Materials" );
-		resourcesFolder.AddFolder ( materialsFolder, false );
-		
-		materialsFolder.AddFolder ( new Folder ("Brick"), true );
-		materialsFolder.AddFolder ( new Folder ("Concrete"), true );
-		materialsFolder.AddFolder ( new Folder ("Foliage"), true );
-		materialsFolder.AddFolder ( new Folder ("Wood"), true );
-		
-		// Prefabs
-		var prefabsFolder : Folder = new Folder ( "Prefabs" );
-		resourcesFolder.AddFolder ( prefabsFolder, false );
-		
-		prefabsFolder.AddFolder ( new Folder ( "Airducts" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Decor" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Doors" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Roofs" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Stairs" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Walls" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Windows" ), true );
-		
-		// ^ exterior
-		var prefabsExteriorFolder = new Folder ( "Exterior" );
-		prefabsFolder.AddFolder ( prefabsExteriorFolder, false );
-		
-		prefabsExteriorFolder.AddFolder ( new Folder ( "City" ), true );
-		
-		// ^ interior
-		var prefabsInteriorFolder = new Folder ( "Interior" );
-		prefabsFolder.AddFolder ( prefabsInteriorFolder, false );
-		
-		prefabsInteriorFolder.AddFolder ( new Folder ( "Furniture" ), true );
-		prefabsInteriorFolder.AddFolder ( new Folder ( "Decoration" ), true );		
-	}
-	
 	// Page	
 	override function StartPage () {
 		preview2D.image = null;
 		
 		SetMode ( initMode );
 		
-		InitFolders ();
 		ClearList ();
+		resourcesFolder = EditorFileSystem.GetResources();
 		currentFolder = resourcesFolder;
 		
 		PopulateList ( resourcesFolder.FindFolder ( rootFolder ) );
@@ -258,7 +160,7 @@ class EditorBrowserWindow extends OGPage {
 	}
 	
 	// Populate file list	
-	private function PopulateList ( folder : Folder ) {
+	private function PopulateList ( folder : EditorFileSystem.Folder ) {
 		if ( !folder ) { return; }
 		
 		currentFolder = folder;
@@ -284,7 +186,7 @@ class EditorBrowserWindow extends OGPage {
 		
 		// List folders	
 		} else {
-			for ( var f : Folder in currentFolder.subFolders ) {
+			for ( var f : EditorFileSystem.Folder in currentFolder.subFolders ) {
 				CreateButton ( f.name, i, "Folder" );
 				
 				i++;
