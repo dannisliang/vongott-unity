@@ -238,7 +238,7 @@ static function AddObject ( obj : GameObject ) {
 // Preview any object
 static function ClearPreview () {
 	if ( previewObject ) {
-		Destroy ( previewObject );
+		DestroyImmediate ( previewObject );
 	}
 }
 
@@ -290,21 +290,41 @@ static function PreviewObject ( obj : GameObject ) : ObjectAttributes {
 	return attributes;
 }
 
-static function GetObjectIcon ( obj : GameObject ) : Texture2D {
+static function GetObjectIcon ( obj : GameObject, image : OGImage ) : IEnumerator {
 	ClearPreview ();
 	
+	yield new WaitForEndOfFrame();
+	
 	previewObject = Instantiate ( obj );
+
+	previewObject.transform.position = Vector3.zero;
+	previewObject.transform.localScale = Vector3.one;
+	previewObject.transform.localEulerAngles = new Vector3 ( 0, 135, 0 );
 	
+	var center : Vector3 = previewObject.renderer.bounds.center;
+	
+	previewCamera.transform.parent.position = new Vector3 ( center.x, 0, -5 );
+	previewCamera.transform.LookAt ( center );
+	
+	/*var scal : float = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
+	previewObject.transform.localScale = new Vector3 ( scal, scal, scal );*/
+	
+	SetLayerRecursively ( previewObject, 8 );
+
 	var tex : Texture2D = new Texture2D ( 128, 128 );
+	tex.name = "thumb_" + obj.name;
 	
-	var rt : RenderTexture = new RenderTexture ( 128, 128, 24);
+	var rt : RenderTexture = new RenderTexture ( 128, 128, 24 );
 	previewCamera.targetTexture = rt;
 	previewCamera.Render();
 	RenderTexture.active = rt;
 	 
+	previewCamera.Render();
+		   
 	// Read pixels
 	tex.ReadPixels(new Rect ( 0, 0, 128, 128 ), 0, 0);
-	 
+	tex.Apply ();
+	  
 	// Clean up
 	previewCamera.targetTexture = null;
 	RenderTexture.active = null; // added to avoid errors
@@ -312,7 +332,7 @@ static function GetObjectIcon ( obj : GameObject ) : Texture2D {
 	
 	ClearPreview ();
 	
-	return tex;
+	image.image = tex;
 }
 
 ////////////////////
@@ -325,7 +345,7 @@ static function CreateSurface () {
 	newObject.transform.position = GetSpawnPosition();
 	newObject.transform.parent = currentLevel.transform;
 	
-	//SelectObject ( newObject );
+	SelectObject ( newObject );
 }
 
 

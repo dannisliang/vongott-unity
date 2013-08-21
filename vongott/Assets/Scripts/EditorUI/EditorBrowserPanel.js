@@ -118,8 +118,8 @@ class EditorBrowserPanel extends MonoBehaviour {
 	// Create list item
 	private function CreateButton ( objName : String, index : int, type : String ) {
 		var obj : GameObject = new GameObject ( objName );
-		var btn = obj.AddComponent ( OGButton );
 		var img = obj.AddComponent ( OGImage );
+		var btn = obj.AddComponent ( OGButton );
 		
 		var xPos : float = 0;
 		var yPos : float = index * 45;
@@ -133,7 +133,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 		btn.message = "Select" + type;
 		btn.style = "listitem";
 		
-		img.image = EditorCore.GetObjectIcon ( currentFolder.FindFile ( btn.gameObject.name ) as GameObject );
+		StartCoroutine ( EditorCore.GetObjectIcon ( currentFolder.FindFile ( btn.gameObject.name ) as GameObject, img ) );
 		
 		obj.transform.parent = fileList;
 		obj.transform.localScale = new Vector3 ( 80, 80, 1 );
