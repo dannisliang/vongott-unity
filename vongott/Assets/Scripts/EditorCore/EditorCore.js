@@ -189,6 +189,8 @@ static function AddLight () {
 	var newLight : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/light_source" ) as GameObject );
 	newLight.transform.parent = currentLevel.transform;
 	newLight.transform.position = GetSpawnPosition();
+	
+	SelectObject ( newLight );
 }
 
 // Add spawnpoint
@@ -196,6 +198,8 @@ static function AddSpawnPoint () {
 	var newSpawnPoint : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/spawnpoint" ) as GameObject );
 	newSpawnPoint.transform.parent = currentLevel.transform;
 	newSpawnPoint.transform.position = GetSpawnPosition();
+	
+	SelectObject ( newSpawnPoint );
 }
 
 // Add trigger
@@ -203,6 +207,8 @@ static function AddTrigger () {
 	var newTrigger : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/trigger" ) as GameObject );
 	newTrigger.transform.parent = currentLevel.transform;
 	newTrigger.transform.position = GetSpawnPosition();
+	
+	SelectObject ( newTrigger );
 }
 
 // Add actor

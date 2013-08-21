@@ -148,8 +148,8 @@ class EditorPicker extends OGPage {
 	function InitQuests () {
 		var allQuests : JSONObject = Loader.LoadQuests();
 		
-		for ( var obj : JSONObject in allQuests.list as JSONObject[] ) {
-			CreateButton ( obj.GetField ( "id" ).str );
+		for ( var obj : Object in allQuests.list ) {
+			CreateButton ( (obj as JSONObject).GetField ( "id" ).str );
 		}
 	}
 	
