@@ -231,7 +231,7 @@ function Update () {
 	}
 	
 	if ( Input.GetMouseButton(1) ) {    
-		if ( !Input.GetKey ( KeyCode.LeftAlt ) ) { 
+		if ( Camera.main.orthographic ) { 
 			var target : Vector3 = fixPoint;
 			
 			transform.RotateAround ( target, Quaternion.Euler(0, -45, 0) * ( target - this.transform.position ), Input.GetAxis("Mouse Y") * sensitivity );

@@ -263,26 +263,12 @@ static function SetLayerRecursively ( obj : GameObject, lay : int ) {
 }
 
 static function PreviewObject ( obj : GameObject ) : ObjectAttributes {
-	ClearPreview ();
-	
-	previewObject = Instantiate ( obj );
-	
-	var scal = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
-	previewObject.transform.localPosition = new Vector3 ( 0, 0, 5 );
-	
-	previewObject.transform.position += previewObject.transform.position - previewObject.renderer.bounds.center;
-	
-	previewObject.transform.localScale = Vector3.one;
-	previewObject.transform.localEulerAngles = new Vector3 ( 0, 180, 0 );
-	
-	SetLayerRecursively ( previewObject, 8 );
-
 	// attributes
 	var attributes : ObjectAttributes = new ObjectAttributes();
 
 	// ^ equipment
-	if ( previewObject.GetComponent ( Item ) ) {
-		var itm : Item = previewObject.GetComponent ( Item );
+	if ( obj.GetComponent ( Item ) ) {
+		var itm : Item = obj.GetComponent ( Item );
 		
 		attributes.keys = itm.title + "\n\n";
 		attributes.values = "\n\n";

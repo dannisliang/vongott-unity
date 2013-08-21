@@ -163,6 +163,8 @@ class EditorBrowserWindow extends OGPage {
 	private function PopulateList ( folder : EditorFileSystem.Folder ) {
 		if ( !folder ) { return; }
 		
+		preview2D.image = null;
+		
 		currentFolder = folder;
 		ClearList ();
 		
@@ -209,6 +211,8 @@ class EditorBrowserWindow extends OGPage {
 			var attributes : ObjectAttributes = EditorCore.PreviewObject ( obj );
 			fileAttr.text = attributes.keys;
 			fileInfo.text = attributes.values;
+		
+			StartCoroutine ( EditorCore.GetObjectIcon ( obj, preview2D ) );
 		
 		} else if ( selectedFile.GetType() == Material ) {
 			var mat : Material = selectedFile as Material;
