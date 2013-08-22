@@ -45,7 +45,11 @@ group: navigation
 	- Generic male + female
 	
 	- First map
-	
+
+- Animations
+
+	- Basic placeholders
+
 - Game core
 	
 	- Upgrade effects
@@ -124,7 +128,7 @@ group: navigation
 	
 	- Equipment concept art 
 	
-- Animations/mocap
+- Animations
 	
 	- Facial animations
 	
