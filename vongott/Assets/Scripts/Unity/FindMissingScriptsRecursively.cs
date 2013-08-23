@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEditor;
 public class FindMissingScriptsRecursively : EditorWindow {
 static int go_count = 0, components_count = 0, missing_count = 0;
@@ -49,4 +49,4 @@ static int go_count = 0, components_count = 0, missing_count = 0;
             FindInGO(childT.gameObject);
             }
 	}
-}
+}*/

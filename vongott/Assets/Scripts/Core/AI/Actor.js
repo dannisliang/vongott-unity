@@ -81,6 +81,7 @@ class Actor extends InteractiveObject {
 		
 		if ( !GameCore.started ) {
 			this.GetComponent ( AStarPathFinder ).enabled = false;
+			this.GetComponent ( Animator ).enabled = false;
 			Destroy ( this.rigidbody );
 		} else {
 			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;

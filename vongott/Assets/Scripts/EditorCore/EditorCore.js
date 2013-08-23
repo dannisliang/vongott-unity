@@ -394,22 +394,22 @@ static function ToggleGizmos () {
 ////////////////////
 // Fit selection box
 static function FitSelectionBox () {
-	var bounds : Bounds = selectedObject.GetComponent(MeshRenderer).bounds;
-	var e : Vector3 = ( bounds.extents * 2 );
-	var s : Vector3 = selectedObject.transform.localScale;
-	
-	/*if ( selectedObject.GetComponentsInChildren(MeshFilter).Length > 1 ) {
-		selectBox.GetComponent(MeshFilter).mesh = selectBoxDefaultMesh;
-		selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
-		selectBox.transform.position = bounds.center;
-	
-	} else {*/
-		selectBox.GetComponent(MeshFilter).mesh = selectedObject.GetComponent(MeshFilter).mesh;
+	if ( selectedObject.GetComponentInChildren(MeshFilter) ) {
+		selectBox.GetComponent(MeshFilter).mesh = selectedObject.GetComponentInChildren(MeshFilter).mesh;
 		selectBox.localScale = selectedObject.transform.localScale;
 		selectBox.position = selectedObject.transform.position;
 		selectBox.eulerAngles = selectedObject.transform.eulerAngles;
 	
-	//}
+	} else if ( selectedObject.GetComponentInChildren(SkinnedMeshRenderer) ) {
+		var bounds : Bounds = selectedObject.GetComponentInChildren(CapsuleCollider).bounds;
+		var e : Vector3 = ( bounds.extents * 2 );
+		var s : Vector3 = selectedObject.transform.localScale;
+		
+		selectBox.GetComponent(MeshFilter).mesh = selectBoxDefaultMesh;
+		selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
+		selectBox.transform.position = bounds.center;
+	
+	}
 	
 	selectBox.gameObject.SetActive ( true );
 }
