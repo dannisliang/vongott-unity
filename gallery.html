@@ -8,6 +8,6 @@ group: navigation
 
 {% for i in (0..10) %}
 	<a href="{{ BASE_PATH }}/images/gallery/{{ i }}.jpg" data-lightbox="image-{{ i }}" >
-		<img src="{{ BASE_PATH }}/images/gallery/{{ i }}.jpg"><br>
+		<img class="gallery_image" src="{{ BASE_PATH }}/images/gallery/{{ i }}.jpg">
 	</a>
 {% endfor %}
