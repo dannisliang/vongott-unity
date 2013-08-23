@@ -167,9 +167,13 @@ class Actor extends InteractiveObject {
 		equippedItem = item.gameObject;
 		
 		equippedItem.transform.parent = hand;
-		equippedItem.transform.localPosition = Vector3.zero;
-		equippedItem.transform.localEulerAngles = Vector3.zero;
-		equippedItem.collider.enabled = false;
+		equippedItem.transform.localPosition = new Vector3 ( -0.4400277, -0.1216161, 0.187489 );
+		equippedItem.transform.localEulerAngles = new Vector3 ( 85.41418, 290.4283, 271 );
+		equippedItem.GetComponent(BoxCollider).enabled = false;
+		equippedItem.GetComponent(SphereCollider).enabled = false;
+		equippedItem.GetComponent ( DontGoThroughThings ).enabled = false;
+		Destroy ( equippedItem.rigidbody );
+		
 	
 		GameCore.Print ( "Actor | '" + equippedItem.GetComponent(Item).title + "' equipped" );
 	}
@@ -206,6 +210,11 @@ class Actor extends InteractiveObject {
 			shootTarget += Vector3.one * accuracyDegree;
 		
 			DamageManager.GetInstance().SpawnBullet ( equippedItem, shootTarget, this.gameObject );
+		
+			// Muzzle flash
+			if ( equippedItem.transform.GetChild(0) ) {
+				equippedItem.transform.GetChild(0).gameObject.SetActive ( true );
+			}
 		}
 		
 		speed = 0;

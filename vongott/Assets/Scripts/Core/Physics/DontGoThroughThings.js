@@ -17,6 +17,8 @@ function Awake() {
 } 
  
 function FixedUpdate() { 
+   if ( !rigidbody ) { return; }
+   
    //have we moved more than our minimum extent? 
    var movementThisStep : Vector3 = myRigidbody.position - previousPosition; 
    var movementSqrMagnitude : float = movementThisStep.sqrMagnitude;
@@ -25,7 +27,8 @@ function FixedUpdate() {
       var hitInfo : RaycastHit; 
       //check for obstructions we might have missed 
       if (Physics.Raycast(previousPosition, movementThisStep, hitInfo, movementMagnitude, layerMask.value)) 
-         myRigidbody.position = hitInfo.point - (movementThisStep/movementMagnitude)*partialExtent; 
+         myRigidbody.position = (hitInfo.point/2) + (previousPosition/2);
+         //myRigidbody.position = hitInfo.point - (movementThisStep/movementMagnitude)*partialExtent; 
    } 
    previousPosition = myRigidbody.position; 
 }

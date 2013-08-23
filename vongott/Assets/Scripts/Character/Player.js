@@ -29,8 +29,8 @@ class Player extends MonoBehaviour {
 		if ( slot == Equipment.eEquipmentSlot.Hands ) {
 			target = hand;
 		
-			adjustPosition = new Vector3 ( 0.244, -0.02, -0.05 );
-			adjustRotation = new Vector3 ( 14, 174, 186 );
+			adjustPosition = new Vector3 ( 0.222, -0.006, -0.060 );
+			adjustRotation = new Vector3 ( 16, 182, 8.5 );
 		} else if ( slot == Equipment.eEquipmentSlot.Torso ) {
 			target = torso;
 		
@@ -50,6 +50,7 @@ class Player extends MonoBehaviour {
 			equippedItem.transform.localEulerAngles = adjustRotation;
 			equippedItem.GetComponent(BoxCollider).enabled = false;
 			equippedItem.GetComponent(SphereCollider).enabled = false;
+			equippedItem.GetComponent ( DontGoThroughThings ).enabled = false;
 			Destroy ( equippedItem.rigidbody );
 		
 			ResetFire();
@@ -104,6 +105,11 @@ class Player extends MonoBehaviour {
 			}
 		
 			DamageManager.GetInstance().SpawnBullet ( equippedItem, target, this.gameObject );
+		
+			// Muzzle flash
+			if ( equippedItem.transform.GetChild(0) ) {
+				equippedItem.transform.GetChild(0).gameObject.SetActive ( true );
+			}
 		}
 	}
 	
