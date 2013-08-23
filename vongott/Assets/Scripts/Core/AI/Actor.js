@@ -38,7 +38,7 @@ class Actor extends InteractiveObject {
 	var attentionSpan : float = 30.0;
 	var updateFrequency : float = 5.0;
 	var keepDistance : float = 10.0;
-	var speed : float = 4.0;
+	var runningSpeed : float = 4.0;
 	var vision : VisionCone = new VisionCone();
 	var hearing : float = 10;
 
@@ -47,6 +47,8 @@ class Actor extends InteractiveObject {
 	
 	var conversations : List.< Conversation > = new List.< Conversation >();																																							
 	var target : Transform;
+
+	var speed : float = 0.0;
 
 	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
@@ -58,6 +60,10 @@ class Actor extends InteractiveObject {
 	@HideInInspector var updateTimer : float = 0;
 	@HideInInspector var initPosition : Vector3;
 	@HideInInspector var canShoot : boolean = false;
+	
+
+	@HideInInspector var pathFinder : AStarPathFinder;
+				
 
 	////////////////////
 	// Init
@@ -67,6 +73,8 @@ class Actor extends InteractiveObject {
 		if ( !path ) {
 			path = new List.< GameObject >();
 		}
+		
+		pathFinder = this.GetComponent ( AStarPathFinder );
 		
 		initPosition = this.transform.position;
 		
@@ -213,7 +221,7 @@ class Actor extends InteractiveObject {
 		}
 	}	
 	
-	function Chase ( t : Transform ) {
+	function StartChase ( t : Transform ) {
 		if ( t ) {
 			target = t;
 			
@@ -229,22 +237,30 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	function Turning ( t : Transform ) {
-		var lookPos : Vector3 = t.position - transform.position;
+	function TurnTowards ( v : Vector3 ) {
+		var lookPos : Vector3 = v - transform.position;
 		lookPos.y = 0;
 		
 		transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 4 * Time.deltaTime );
+	}
+	
+	function MoveForward () {			
+		speed = Mathf.Lerp ( speed, 1.0, Time.deltaTime * 5 );
+		
+		transform.localPosition += transform.forward * ( speed * runningSpeed * Time.deltaTime );
 	}
 	
 	function Approaching ( t : Transform ) {
 		ClearPath ();
 		
 		if ( ( transform.position - t.position ).magnitude > keepDistance ) {
-			Turning ( t );		
-			transform.localPosition += transform.forward * speed * Time.deltaTime;
+			TurnTowards ( t.position );		
+			MoveForward ();
 		
 		} else {
-			Turning ( t );
+			TurnTowards ( t.position );
+			speed = 0.0;
+			
 		}
 		
 		canShoot = ( transform.position - t.position ).magnitude < keepDistance * 2;
@@ -289,7 +305,7 @@ class Actor extends InteractiveObject {
 		var hit : RaycastHit;
 		
 		var inSight : boolean = angle < vision.angle && Physics.Raycast ( here, direction, hit, vision.distance, vision.layerMask ) && hit.collider.gameObject == GameCore.GetPlayerObject();
-		var inEarshot : boolean = distance < hearing && GameCore.GetPlayerObject().GetComponent(PlayerController).speed > 0.5;
+		var inEarshot : boolean = distance < hearing && GameCore.GetPlayerObject().GetComponent(PlayerController).runningSpeed > 0.5;
 														
 		// ^ The player is in sight
 		if ( inSight ) {
@@ -299,11 +315,11 @@ class Actor extends InteractiveObject {
 			// Enemies shoot the player			
 			if ( affiliation == eAffiliation.Enemy ) {
 				if ( !target ) {
-					Chase ( hit.collider.transform );
+					StartChase ( hit.collider.transform );
 				}
 								
 				Approaching ( target );
-				
+								
 				if ( canShoot ) {
 					Shooting ();						
 				}
@@ -332,6 +348,12 @@ class Actor extends InteractiveObject {
 					FindPath ( target.position );
 				}
 				
+				// Follow path
+				if ( pathFinder.nodes.Count > 0 ) {
+					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
+					MoveForward ();
+				}
+																
 				// Attention span
 				if ( attentionTimer < attentionSpan ) {
 					attentionTimer += Time.deltaTime;
@@ -342,13 +364,13 @@ class Actor extends InteractiveObject {
 			
 			// The player is within earshot
 			} else if ( inEarshot ) {
-				Chase ( GameCore.GetPlayerObject().GetComponent(Player).transform );
+				StartChase ( GameCore.GetPlayerObject().GetComponent(Player).transform );
 				
 				// Reset timers
 				attentionTimer = 0;
 				updateTimer = updateFrequency;
 			
-			} else {
+			} else {			
 				attentionTimer = 0;
 				updateTimer = 0;
 		
@@ -359,6 +381,8 @@ class Actor extends InteractiveObject {
 		if ( equippedItem && shootTimer < GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
 			shootTimer += Time.deltaTime;			
 		}
+		
+		this.GetComponent(Animator).SetFloat("Speed", speed );
 		
 		/*
 		// follow path

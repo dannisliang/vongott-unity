@@ -3,15 +3,10 @@
 class PlayerController extends MonoBehaviour {
 	enum PlayerState {
 		Idle,
-		Walking,
-		Running,
 		Jumping,
 		Falling,
 		Crouching,
-		Aiming,
-		Creeping,
-		SideStepRight,
-		SideStepLeft
+		Aiming
 	}
 	
 	var state : PlayerState = PlayerState.Idle;
@@ -42,15 +37,9 @@ class PlayerController extends MonoBehaviour {
 		// Set state
 		if ( !crouchMode && Input.GetKeyDown ( KeyCode.Space ) && state != PlayerState.Jumping && state != PlayerState.Falling ) {
 			state = PlayerState.Jumping;
-		
-		} else if ( !crouchMode && Input.GetKey ( KeyCode.LeftShift ) && state != PlayerState.Jumping && state != PlayerState.Falling ) {
-			state = PlayerState.Running;
 			
 		} else if ( !inCrawlspace && Input.GetKeyDown ( KeyCode.C ) ) {
 			crouchMode = !crouchMode;
-		
-		} else  {
-			state = PlayerState.Walking;
 		
 		}
 		
@@ -65,7 +54,7 @@ class PlayerController extends MonoBehaviour {
 		// Mouse controls
 		aimMode = false;
 		
-		if ( Input.GetMouseButton(1) && ( state == PlayerState.Idle || state == PlayerState.Walking ) ) {
+		if ( Input.GetMouseButton(1) ) {
 			transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z ), 10 * Time.deltaTime );
 		
 			aimMode = true;
@@ -143,20 +132,17 @@ class PlayerController extends MonoBehaviour {
 			
 			if ( speed < targetSpeed ) { speed = targetSpeed; }
 			
-			if ( state == PlayerState.Creeping ) {
-				targetSpeed = 0.25;
-							
-			} else if ( state == PlayerState.Walking ) {
-				targetSpeed = 0.25;
-				
-			} else if ( state == PlayerState.Running ) {
+			if ( !crouchMode && !aimMode && Input.GetKey ( KeyCode.LeftShift ) ) {
 				targetSpeed = speedModifier;
 			
 			} else if ( state == PlayerState.Jumping ) {
-				targetSpeed = 0.75;
+				targetSpeed = speedModifier;
 			
 			} else if ( state == PlayerState.Falling ) { 
 				targetSpeed = 0.15;
+			
+			} else {
+				targetSpeed = 0.25;
 			
 			}
 			
@@ -172,11 +158,7 @@ class PlayerController extends MonoBehaviour {
 		}
 		
 		if ( crouchMode ) {
-			if ( speed > 0 ) {
-				state = PlayerState.Creeping;
-			} else {	
-				state = PlayerState.Crouching;
-			}
+			state = PlayerState.Crouching;
 		}
 		
 		if ( aimMode ) {
@@ -184,7 +166,7 @@ class PlayerController extends MonoBehaviour {
 		}
 		
 		// Set capsule size
-		if ( state == PlayerState.Creeping || state == PlayerState.Crouching ) {
+		if ( state == PlayerState.Crouching ) {
 			capsule.height = 1.0;
 			capsule.center = new Vector3 ( 0, 0.5, 0 );
 		} else {
@@ -194,7 +176,7 @@ class PlayerController extends MonoBehaviour {
 		
 		// Detect end of jump
 		if ( isGrounded && ( state == PlayerState.Jumping || state == PlayerState.Falling ) ) {
-			state = PlayerState.Running;
+			state = PlayerState.Idle;
 		
 		}
 		
@@ -202,13 +184,8 @@ class PlayerController extends MonoBehaviour {
 		
 		this.GetComponent(Animator).SetFloat("Speed", speed * ( 1 + Time.deltaTime ) );
 		
-		this.GetComponent(Animator).SetBool("Walking", state == PlayerState.Walking );
-		this.GetComponent(Animator).SetBool("Running", state == PlayerState.Running );
 		this.GetComponent(Animator).SetBool("Jumping", state == PlayerState.Jumping || state == PlayerState.Falling );
 		this.GetComponent(Animator).SetBool("Crouching", state == PlayerState.Crouching );
 		this.GetComponent(Animator).SetBool("Aiming", state == PlayerState.Aiming );
-		//this.GetComponent(Animator).SetBool("Creeping", state == PlayerState.Creeping );
-		//this.GetComponent(Animator).SetBool("SideStepLeft", state == PlayerState.SideStepLeft );
-		//this.GetComponent(Animator).SetBool("SideStepRight", state == PlayerState.SideStepRight );
 	}
 }

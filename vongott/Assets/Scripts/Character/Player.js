@@ -29,8 +29,8 @@ class Player extends MonoBehaviour {
 		if ( slot == Equipment.eEquipmentSlot.Hands ) {
 			target = hand;
 		
-			adjustPosition = new Vector3 ( 0.06410789, -0.02394938, -0.05132291 );
-			adjustRotation = new Vector3 ( 345.9895, 4.343473, 342.7763 );
+			adjustPosition = new Vector3 ( 0.244, -0.02, -0.05 );
+			adjustRotation = new Vector3 ( 14, 174, 186 );
 		} else if ( slot == Equipment.eEquipmentSlot.Torso ) {
 			target = torso;
 		

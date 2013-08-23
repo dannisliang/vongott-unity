@@ -6,6 +6,7 @@ class AStarPathFinder extends MonoBehaviour {
 	var speed : float = 4.0;
 	var stoppingDistance : float = 0.1;
 	var nodeDistance : float = 1.0;
+	var autoChase : boolean = false;
 	
 	@HideInInspector var nodes : List.<AStarNode> = new List.<AStarNode>();
 	@HideInInspector var goal : Vector3;
@@ -61,11 +62,13 @@ class AStarPathFinder extends MonoBehaviour {
 				currentNode++;
 			}
 			
-			var lookPos : Vector3 = ( nodes[currentNode] as AStarNode ).position - transform.position;
-			lookPos.y = 0;
-			
-			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
-			transform.localPosition += transform.forward * speed * Time.deltaTime;
+			if ( autoChase ) {
+				var lookPos : Vector3 = ( nodes[currentNode] as AStarNode ).position - transform.position;
+				lookPos.y = 0;
+				
+				transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
+				transform.localPosition += transform.forward * speed * Time.deltaTime;
+			}
 		
 			if ( ( transform.position - goal ).magnitude < stoppingDistance ) {
 				ClearNodes ();

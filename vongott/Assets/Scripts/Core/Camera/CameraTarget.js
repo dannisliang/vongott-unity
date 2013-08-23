@@ -12,7 +12,6 @@ private var cam_init = false;
 
 // Static vars
 static var instance : Transform;
-static var cam_in_front = false;
 
 
 ////////////////////
@@ -20,7 +19,7 @@ static var cam_in_front = false;
 ////////////////////
 // Is player crouching?
 function IsCrouching () : boolean {
-	return player.GetComponent(PlayerController).state == PlayerController.PlayerState.Crouching || player.GetComponent(PlayerController).state == PlayerController.PlayerState.Creeping;
+	return player.GetComponent(PlayerController).state == PlayerController.PlayerState.Crouching;
 }
 
 // Compensate for walls
@@ -103,18 +102,7 @@ function Update () {
 		adjustment = standCam;
 	}
 	
-	this.transform.position = Vector3.Slerp ( this.transform.position, player.transform.position + adjustment, 1.0 );
-	cam.transform.localPosition = Vector3.Slerp ( cam.transform.localPosition, GetCamDist(), 0.5 );
+	this.transform.position = Vector3.Slerp ( this.transform.position, player.transform.position + adjustment, Time.deltaTime * 10 );
+	cam.transform.localPosition = Vector3.Slerp ( cam.transform.localPosition, GetCamDist(), Time.deltaTime * 5 );
 	
-}
-
-
-////////////////////
-// Static functions
-////////////////////
-// Turn camera in front or back of player
-static function TurnCam ( in_front : boolean ) {
-	cam_in_front = in_front;
-	
-	instance.gameObject.GetComponent(MouseLook).SetActive ( !in_front );
 }
