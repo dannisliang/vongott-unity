@@ -6,4 +6,8 @@ group: navigation
 ---
 {% include JB/setup %}
 
-<a href="{{ ASSET_PATH }}/images/logo/300x400.png" data-lightbox="image-1" title="the Vongott logo"><img src="{{ ASSET_PATH }}/images/logo/300x400.png" /></a>
+{% for i in (0..10) %}
+	<a href="{{ BASE_PATH }}/images/gallery/{{ i }}.jpg" data-lightbox="image-{{ i }}" >
+		<img src="{{ BASE_PATH }}/images/gallery/{{ i }}.jpg"><br>
+	</a>
+{% endfor %}
