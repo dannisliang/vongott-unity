@@ -49,6 +49,7 @@ class Actor extends InteractiveObject {
 	var target : Transform;
 
 	var speed : float = 0.0;
+	var aiming : boolean = false;
 
 	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
@@ -206,6 +207,9 @@ class Actor extends InteractiveObject {
 		
 			DamageManager.GetInstance().SpawnBullet ( equippedItem, shootTarget, this.gameObject );
 		}
+		
+		speed = 0;
+		aiming = true;
 	}
 	
 	////////////////////
@@ -247,7 +251,7 @@ class Actor extends InteractiveObject {
 	function MoveForward () {			
 		speed = Mathf.Lerp ( speed, 1.0, Time.deltaTime * 5 );
 		
-		transform.localPosition += transform.forward * ( speed * runningSpeed * Time.deltaTime );
+		transform.localPosition += speed * ( transform.forward * runningSpeed * Time.deltaTime );
 	}
 	
 	function Approaching ( t : Transform ) {
@@ -306,7 +310,9 @@ class Actor extends InteractiveObject {
 		
 		var inSight : boolean = angle < vision.angle && Physics.Raycast ( here, direction, hit, vision.distance, vision.layerMask ) && hit.collider.gameObject == GameCore.GetPlayerObject();
 		var inEarshot : boolean = distance < hearing && GameCore.GetPlayerObject().GetComponent(PlayerController).runningSpeed > 0.5;
-														
+		
+		aiming = false;
+																										
 		// ^ The player is in sight
 		if ( inSight ) {
 			// Draw sight
@@ -383,6 +389,7 @@ class Actor extends InteractiveObject {
 		}
 		
 		this.GetComponent(Animator).SetFloat("Speed", speed );
+		this.GetComponent(Animator).SetBool("Aiming", aiming );
 		
 		/*
 		// follow path
