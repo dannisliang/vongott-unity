@@ -21,7 +21,7 @@ There will be options for smalltalk with characters around the area that may pla
 3: Amateur scientist (Hospital)
 ....more with Come later... 
 
-- Side Quest: Some dude is causing trouble, demanding Vaccine for his girlfriend
+- Side Quest: Some dude is causing trouble in the refugee terminal, demanding Vaccine for his girlfriend
 - Outcome: 1: Shoot him
           2: Pressure your collegue to give him vaccine 
           3: Negotiate with the dude
@@ -44,7 +44,7 @@ The player in the apartment finds out the captor is in a shipping company nearby
 ### Scene 3: First mission - Shipping company
 - Main quest: Get the informant back alive. Upon meeting him, the player learns that he was there investigating a rumor that this company was shipping vaccine for the government, and was captured during.
 - Sidequests:
-  - Deal with interrogator
+  - Deal with the interrogator
   - Return with a sample of the vaccine to support the informant's story
 
 ### Scene 3: Briefing - NSF Bunker
