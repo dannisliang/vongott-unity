@@ -13,7 +13,7 @@ They gets introduced to the controls in a small training environment.
 loading bay, who they then learn is missing.
 
 While reporting the news to Miguel, a third character steps in with news of a distress call made by the commander, 
-saying that a commander of bronx division he has been captured.
+saying that an informant operating in Bronx he has been captured.
 
 There will be options for smalltalk with characters around the area that may play larger roles later on.
 1: NSF Quartermaster (Location: Staff Canteen)
@@ -27,7 +27,7 @@ There will be options for smalltalk with characters around the area that may pla
          3: Negotiate with the dude
          4: Neutual, Ignore the matter, saving the world is better than saving kitty stuck in a tree.
 
-- Main Quest 2.0: The player has been ordered by the commander to go to Bronx and search for clues regarding his disappearance
+- Main Quest 2.0: The player has been ordered by the commander to go to Bronx and search for clues regarding his capture.
 - in his apartment.
 - Main Quest 2.1: Take the boat at the cargo bay docks to Bronx
 
@@ -42,7 +42,7 @@ The player in the apartment finds out the captor is in a shipping company nearby
 
 
 ### Scene 3: First mission - Shipping company
-- Main quest: Get the commander back alive. Upon meeting the commander, the player learns that he was there investigating a rumor that this company was shipping vaccine for the government, and was captured during.
+- Main quest: Get the informant back alive. Upon meeting him, the player learns that he was there investigating a rumor that this company was shipping vaccine for the government, and was captured during.
 - Sidequests:
   - Deal with interrogator of the commander
   - Return with a sample of the vaccine to support the commander's story
