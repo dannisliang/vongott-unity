@@ -21,8 +21,8 @@ There will be options for smalltalk with characters around the area that may pla
 3: Amateur scientist (Hospital)
 ....more with Come later... 
 
-Side Quest: Some dude is causing trouble, demanding Vaccine for his girlfriend
-Outcome: 1: Shoot him
+-Side Quest: Some dude is causing trouble, demanding Vaccine for his girlfriend
+-Outcome: 1: Shoot him
          2: Pressure your collegue to give him vaccine 
          3: Negotiate with the dude
          4: Neutual, Ignore the matter, saving the world is better than saving kitty stuck in a tree.
@@ -32,7 +32,7 @@ Outcome: 1: Shoot him
 - Main Quest 2.1: Take the boat at the cargo bay docks to Bronx
 
 ### Scene 2: Bronx City Hub
-The player gets introduced in the first cityhub of the game and has the chance to explore the world, accepting 
+The player gets introduced in the first cityhub of the game and has the choice to explore, accepting 
 side quests before proceeding to complete the main quest
 
 -Main quest: search for clue regarding the informant's disappearance in his apartment.
