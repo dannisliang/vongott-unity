@@ -15,12 +15,17 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	// check if prefab
 	if ( obj.GetComponent(Prefab) ) {
 		var pfb : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		var tm : TextMesh = obj.GetComponentInChildren (TextMesh);
 		
 		pfb.AddField ( "path", obj.GetComponent(Prefab).path );
 		pfb.AddField ( "id", obj.GetComponent(Prefab).id );
 		pfb.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
 		pfb.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		pfb.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+		
+		if ( tm != null ) {
+			pfb.AddField ( "text", tm.text );
+		}
 		
 		o.AddField ( "Prefab", pfb );
 		

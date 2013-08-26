@@ -211,17 +211,17 @@ function Update () {
 			spd = spd * 4;
 		}
 		
-		if ( Camera.main.orthographic ) {
+		if ( !Camera.main.orthographic || Camera.main.orthographic && Input.GetKey ( KeyCode.LeftAlt ) ) {
+			transform.position = transform.position + forward * ( translation * spd );
+		
+		} else {
 			if ( Camera.main.orthographicSize > translation * speed ) {
 				RefreshFixPoint ( false );
 				Camera.main.orthographicSize -= translation * speed;
 				transform.position = fixPoint - forward * ( Camera.main.orthographicSize * 4 );
 			}
 		
-		} else {
-			transform.position = transform.position + forward * ( translation * spd );
-		
-		}
+		} 
 		
 	}
 	

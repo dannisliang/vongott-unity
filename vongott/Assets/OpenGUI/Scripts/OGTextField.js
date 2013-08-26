@@ -51,7 +51,7 @@ class OGTextField extends OGWidget {
 		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );
 		editor = GUIUtility.GetStateObject ( TextEditor, GUIUtility.keyboardControl ) as TextEditor;
 		
-		if ( regex != "" && regex != "\\" ) {
+		if ( regex != "" && regex != "\\" && regexPreset != RegExPreset.None ) {
 			text = Regex.Replace ( text, "[" + regex + "]", "" );
 		}
 	}

@@ -19,12 +19,17 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		Debug.Log ( "Deserializer | Instantaite " + path );
 		
 		var newPfb : GameObject = Instantiate ( Resources.Load ( path ) as GameObject );
+		var tm : TextMesh = newPfb.GetComponentInChildren ( TextMesh );
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;
 		newPfb.transform.localScale = DeserializeVector3 ( pfb.GetField("localScale") );
 		newPfb.transform.localPosition = DeserializeVector3 ( pfb.GetField("localPosition") );
 		newPfb.transform.localEulerAngles = DeserializeVector3 ( pfb.GetField("localEulerAngles") );
+		
+		if ( tm != null && pfb.HasField ( "text" ) ) {
+			tm.text = pfb.GetField ( "text" ).str;
+		}
 		
 		newPfb.name = pfb.GetField("id").str;
 		

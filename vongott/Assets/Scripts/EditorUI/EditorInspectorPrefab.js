@@ -6,17 +6,20 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	//////////////////
 	// Public vars
 	var generic : GameObject;
-	var wall : GameObject;
+
+	var textField : OGTextField;
 	
-	// Private vars
-	@HideInInspector private var currentWalls : List.< Prefab > = new List.< Prefab > ();
-	
+
 	//////////////////
-	// Wall
+	// Text
 	//////////////////
-	// Pick next
-	function PickNextWall ( wall : String ) {
-	
+	function UpdateText () {
+		var obj : GameObject = EditorCore.GetSelectedObject();
+		var tm : TextMesh = obj.GetComponentInChildren ( TextMesh );
+		
+		if ( tm != null ) {
+			tm.text = textField.text;
+		}
 	}
 	
 	
@@ -29,5 +32,26 @@ class EditorInspectorPrefab extends MonoBehaviour {
 		EditorBrowserWindow.initMode = "OK";
 		EditorBrowserWindow.button = btn;
 		OGRoot.GoToPage ( "BrowserWindow" );
+	}
+	
+	
+	//////////////////
+	// Init
+	//////////////////
+	function Init ( obj : GameObject ) {
+		if ( obj.GetComponentInChildren ( TextMesh ) ) {
+			textField.transform.parent.gameObject.SetActive ( true );
+			textField.text = obj.GetComponentInChildren ( TextMesh ).text;
+		} else {
+			textField.transform.parent.gameObject.SetActive ( false );
+		}
+	}
+	
+	
+	//////////////////
+	// Update
+	//////////////////
+	function UpdateObject () {
+		
 	}
 }

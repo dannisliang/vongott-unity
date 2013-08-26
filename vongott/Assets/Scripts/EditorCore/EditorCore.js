@@ -33,7 +33,7 @@ static var gizmo : GameObject;
 static var snapEnabled = true;
 static var gridEnabled = true;
 static var focusEnabled = false;
-static var gridLineDistance : float = 0.25;
+static var gridLineDistance : float = 0.10;
 static var gridLineBrightFrequency : int = 5;
 
 // editor essentials
@@ -510,9 +510,6 @@ static function SelectObject ( obj : GameObject ) {
 	
 	}
 	
-	grabDistance = Vector3.Distance ( Camera.main.transform.position, selectedObject.transform.position );
-	grabOrigPoint = selectedObject.transform.position;
-																			
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 	
@@ -580,6 +577,9 @@ static function SetGrabMode ( state : boolean ) {
 		gizmo.SetActive ( true );
 		gizmo.transform.position = selectedObject.transform.position;
 		gizmo.transform.localEulerAngles = Vector3.zero;
+	
+		grabDistance = Vector3.Distance ( Camera.main.transform.position, selectedObject.transform.position );
+		grabOrigPoint = selectedObject.transform.position;
 	
 	} else {
 		OGRoot.GoToPage ( "MenuBase" );

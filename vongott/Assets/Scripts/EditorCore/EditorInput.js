@@ -31,14 +31,6 @@ function Update () {
 			EditorCore.SetGrabMode ( false );
 			EditorCore.SetRotateMode ( false );
 			EditorCore.SetScaleMode ( false );
-			
-			if ( EditorCore.snapEnabled ) {
-				EditorCore.GetSelectedObject().transform.localPosition.x = Round ( EditorCore.GetSelectedObject().transform.localPosition.x, EditorCore.gridLineDistance );
-				EditorCore.GetSelectedObject().transform.localPosition.y = Round ( EditorCore.GetSelectedObject().transform.localPosition.y, EditorCore.gridLineDistance );
-				EditorCore.GetSelectedObject().transform.localPosition.z = Round ( EditorCore.GetSelectedObject().transform.localPosition.z, EditorCore.gridLineDistance );
-			
-				EditorCore.FitSelectionBox();
-			}
 
 			if ( EditorCore.transformEnd ) {
 				EditorCore.transformEnd ();
@@ -81,6 +73,12 @@ function Update () {
 
 		// translate
 		if ( EditorCore.grabMode ) {
+			if ( EditorCore.snapEnabled ) {
+				point.x = Round ( point.x, EditorCore.gridLineDistance );
+				point.y = Round ( point.y, EditorCore.gridLineDistance );
+				point.z = Round ( point.z, EditorCore.gridLineDistance );
+			}
+			
 			if ( EditorCore.grabRestrict == "x" ) {
 				object.transform.position = new Vector3 ( point.x, EditorCore.grabOrigPoint.y, EditorCore.grabOrigPoint.z );
 			
