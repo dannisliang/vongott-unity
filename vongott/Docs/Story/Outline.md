@@ -16,27 +16,28 @@ While reporting the news to Miguel, a third character steps in with news of a di
 saying that an informant operating in Bronx he has been captured.
 
 There will be options for smalltalk with characters around the area that may play larger roles later on.
-1: NSF Quartermaster (Location: Staff Canteen)
-2: Nerd fiddling with computers (Location: air control center)
-3: Amateur scientist (Hospital)
-....more with Come later... 
+  1. NSF Quartermaster (Location: Staff Canteen)
+  2. Nerd fiddling with computers (Location: air control center)
+  3. Amateur scientist (Hospital)
+  4. ....more will come later... 
 
 - Side Quest: Some dude is causing trouble in the refugee terminal, demanding Vaccine for his girlfriend
-- Outcome: 1: Shoot him
-          2: Pressure your collegue to give him vaccine 
-          3: Negotiate with the dude
-          4: Neutual, Ignore the matter, saving the world is better than saving kitty stuck in a tree.
+  1. Shoot him
+  2. Pressure your collegue to give him vaccine 
+  3. Negotiate with the dude
+  4. Neutual, Ignore the matter, saving the world is better than saving kitty stuck in a tree.
 
-- Main Quest 2.0: The player has been ordered by the commander to go to Bronx and search for clues regarding his capture.
-- in his apartment.
+- Main Quest 2.0: The player has been ordered by the commander to go to Bronx and search for clues regarding his capture in his apartment.
+
 - Main Quest 2.1: Take the boat at the cargo bay docks to Bronx
 
 ### Scene 2: Bronx City Hub
 The player gets introduced in the first cityhub of the game and has the choice to explore, accepting 
 side quests before proceeding to complete the main quest
 
--Main quest: search for clue regarding the informant's disappearance in his apartment.
--Side Quest: Help your fellas to survive a Unatco ambush.
+- Main quest: search for clue regarding the informant's disappearance in his apartment.
+
+- Side Quest: Help your fellas to survive a Unatco ambush.
 
 The player in the apartment finds out the captor is in a shipping company nearby. 
 
