@@ -47,8 +47,5 @@ The player in the apartment finds out the captor is in a shipping company nearby
   - Deal with the interrogator
   - Return with a sample of the vaccine to support the informant's story
 
-### Scene 3: Briefing - NSF Bunker
-The commander reports his findings and a new mission is formed to capture the shipment before it's loaded
-
 ### Scene 4: Second mission - Shipping company docks
 - Main quest: Find the shipment and flag their locations for recovery.
