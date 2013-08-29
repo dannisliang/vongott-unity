@@ -43,11 +43,19 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 	} else if ( obj.HasField("LightSource") ) {
 		var lgt : JSONObject = obj.GetField("LightSource");
 		var newObj : GameObject;
+		var prefabPath : String = "Prefabs/Editor/light_source";
 		
-		newObj = Instantiate ( Resources.Load ( "Prefabs/Editor/light_source" ) as GameObject );
+		if ( lgt.HasField ("prefabPath") && lgt.GetField ("prefabPath").str != "" ) {
+			prefabPath = lgt.GetField ("prefabPath").str;
+		}
+		
+		newObj = Instantiate ( Resources.Load ( prefabPath ) as GameObject );
+
 		newObj.GetComponent(LightSource).SetRange ( lgt.GetField ("range").n );
 		newObj.GetComponent(LightSource).SetColor ( DeserializeColor( lgt.GetField ("color") ) );
 		newObj.GetComponent(LightSource).SetIntensity ( lgt.GetField ("intensity").n );
+		newObj.GetComponent(LightSource).prefabPath = prefabPath;
+		
 		newObj.transform.localPosition = DeserializeVector3 ( lgt.GetField("localPosition") );
 	
 		newObj.name = newObj.name.Replace( "(Clone)", "" );

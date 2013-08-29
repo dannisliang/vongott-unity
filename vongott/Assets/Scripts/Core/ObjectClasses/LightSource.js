@@ -4,47 +4,46 @@ class LightSource extends MonoBehaviour {
 	var color : Color = new Color ( 1, 1, 1, 1 );
 	var range : float = 10.0;
 	var intensity : float = 1.0;
+	var prefabPath : String = "";
+	
+	@HideInInspector private var lightComponent : Light;
 	
 	function SetColor ( c : Color ) {
+		if ( !lightComponent ) { Debug.Log ( "No Light component attached!" ); return; }
+		
 		color = c;
 		color.a = 1;
 	
-		this.GetComponent(Light).color = color;
-		this.GetComponent(MeshRenderer).material.color = color;
+		lightComponent.color = color;
 	}
 	
 	function SetRange ( r : float ) {
+		if ( !lightComponent ) { Debug.Log ( "No Light component attached!" ); return; }
+		
 		range = r;
 	
-		this.GetComponent(Light).range = range;
+		lightComponent.range = range;
 	}
 	
 	function SetIntensity ( i : float ) {
+		if ( !lightComponent ) { Debug.Log ( "No Light component attached!" ); return; }
+		
 		intensity = i;
 		
-		this.GetComponent(Light).intensity = intensity;
+		lightComponent.intensity = intensity;
 	}
 	
 	function Update () {
-		if ( ( EditorCore.noGizmos || GameCore.started ) && this.GetComponent(MeshRenderer).enabled ) {
-			this.GetComponent(MeshRenderer).enabled = false;
-			this.GetComponent(BoxCollider).enabled = false;
-		
-		} else if ( !GameCore.started && !EditorCore.noGizmos && !this.GetComponent(MeshRenderer).enabled ) {
-			this.GetComponent(MeshRenderer).enabled = true;
-			this.GetComponent(BoxCollider).enabled = true;
-					
-		} else if ( !GameCore.started && !EditorCore.noGizmos ) {
-			this.transform.LookAt ( Camera.main.transform );
-			
-			if ( EditorCore.GetSelectedObject() == this.gameObject ) {
-				EditorCore.FitSelectionBox ();
-			}
-			
-		}
+
 	}
 	
 	function Start () {
+		if ( this.GetComponent(Light) ) {
+			lightComponent = this.GetComponent(Light);
+		} else {
+			lightComponent = this.GetComponentInChildren ( Light );
+		}
+		
 		SetColor ( color );
 		SetRange ( range );
 		SetIntensity ( intensity );

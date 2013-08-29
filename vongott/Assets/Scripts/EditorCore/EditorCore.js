@@ -394,14 +394,23 @@ static function ToggleGizmos () {
 ////////////////////
 // Fit selection box
 static function FitSelectionBox () {
-	if ( selectedObject.GetComponentInChildren(MeshFilter) ) {
-		selectBox.GetComponent(MeshFilter).mesh = selectedObject.GetComponentInChildren(MeshFilter).mesh;
+	if ( selectedObject.GetComponent(MeshCollider) ) {
+		selectBox.GetComponent(MeshFilter).mesh = selectedObject.GetComponent(MeshCollider).mesh;
 		selectBox.localScale = selectedObject.transform.localScale;
 		selectBox.position = selectedObject.transform.position;
 		selectBox.eulerAngles = selectedObject.transform.eulerAngles;
 	
-	} else if ( selectedObject.GetComponentInChildren(SkinnedMeshRenderer) ) {
-		var bounds : Bounds = selectedObject.GetComponentInChildren(CapsuleCollider).bounds;
+	} else {
+		var capsule : CapsuleCollider = selectedObject.GetComponentInChildren(CapsuleCollider);
+		var renderer : MeshRenderer = selectedObject.GetComponentInChildren(MeshRenderer);
+		var bounds : Bounds;
+		
+		if ( capsule ) {
+			bounds = capsule.bounds;
+		} else if ( renderer ) {
+			bounds = renderer.bounds;
+		}
+		
 		var e : Vector3 = ( bounds.extents * 2 );
 		var s : Vector3 = selectedObject.transform.localScale;
 		

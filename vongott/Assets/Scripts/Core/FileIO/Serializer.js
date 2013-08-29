@@ -39,6 +39,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		lgt.AddField ( "range", obj.GetComponent(LightSource).range );
 		lgt.AddField ( "intensity", obj.GetComponent(LightSource).intensity );
 		lgt.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		lgt.AddField ( "prefabPath", obj.GetComponent(LightSource).prefabPath );
 		
 		o.AddField ( "LightSource", lgt );
 		
