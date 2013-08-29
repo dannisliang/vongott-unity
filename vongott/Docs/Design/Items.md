@@ -104,8 +104,12 @@ Biological upgrades are passive and govern internal properties, such as reflexes
   - A variety of punching attacks with different impact levels
 
 #### Skull 
-- Hacking (passive)
-  - Interfacing with consoles, cameras and computers without knowing the username and password
+- Hacking (consoles/computers)
+  - lvl 1: DDoS Attack
+  - lvl 2: Trojan Horse
+  - lvl 3: Virus
+  - lvl 4: Browser Exploit
+  - lvl 5: Worm
 
 ### Combinations
 Players should be rewarded for combining certain upgrades, such as events triggering.
