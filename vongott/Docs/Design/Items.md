@@ -31,12 +31,10 @@ The consumable class refers to any item that has immediate effect on the conditi
 
 ## Equipment
 The equipment class belongs to any item that cannot be consumed. There will be a ranking system to determine the quality of a piece of equipment or upgrade:
-- Ridiculous
 - Stupid
 - Shabby
 - Average
 - Fancy
-- Grand
 - Awesome
 
 ### Weapons
@@ -72,6 +70,12 @@ Mechanical upgrades have both passive and active attributes. They need to be ins
 
 #### Eyes
 - AIM: Auto aim
+  - lvl 1: Aim anywhere within the target's mesh bounds
+  - lvl 2: Aim anywhere above the belt
+  - lvl 3: Aim for the chest
+  - lvl 4: Aim for the neck
+  - lvl 5: Aim for the head
+
 - X-RAY: See through walls
 
 #### Torso
@@ -85,7 +89,14 @@ Mechanical upgrades have both passive and active attributes. They need to be ins
 - SILENCE: Noise reduction
 
 #### Arms  
-- STRENGTH: Punching damage and lifting things
+- PUNCH: Punch attack
+  - lvl 1: Bitch slap
+  - lvl 2: Elbow
+  - lvl 3: Straight punch
+  - lvl 4: Uppercut
+  - lvl 5: Combo
+
+- LIFT: Lifting/throwing things
 
 #### Back   
 - PARACHUTE: Fall damage reduction and noise cancelling
@@ -98,19 +109,29 @@ Biological upgrades are passive and govern internal properties, such as reflexes
 
 #### Hands  
 - Lock picking
-- Reload speed
-  - The factor with which to multiply the reload speed of any weapon
-- Punch
-  - A variety of punching attacks with different impact levels
+  - lvl 1: Padlocks
+  - lvl 2: Cam locks
+  - lvl 3: Knob locks
+  - lvl 4: Rim latch locks
+  - lvl 5: Deadbolt locks
+
+- Reload speed: The factor with which to multiply the reload speed of any weapon
+
+#### Eyes
+- Aiming: The factor with which to multiply the accuracy of any weapon
 
 #### Skull 
-- Hacking (passive)
-  - Interfacing with consoles, cameras and computers without knowing the username and password
+- Hacking (consoles/computers)
+  - lvl 1: Kiddie Script
+  - lvl 2: DDoS Attack
+  - lvl 3: Trojan Horse
+  - lvl 4: Back Door
+  - lvl 5: Worm
 
 ### Combinations
 Players should be rewarded for combining certain upgrades, such as events triggering.
 - REFLEXES + SPEED: Time slows down, but players move around at normal speed
-- SPEED + STRENGTH: When running up to an enemy and punching, a special machinima plays
+- SPEED + PUNCH: When running up to an enemy and punching, a special machinima plays
   - Self-fist-five and enemy's head flies off! F*ck yeah!
 - PARACHUTE + STRENGTH: The player creates a shockwave when punching before landing
 - REFLEXES + AIM: The player shoots every enemy in frame upon firing
