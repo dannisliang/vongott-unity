@@ -56,7 +56,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newObj.GetComponent(LightSource).SetIntensity ( lgt.GetField ("intensity").n );
 		newObj.GetComponent(LightSource).prefabPath = prefabPath;
 		
+		newObj.transform.localScale = DeserializeVector3 ( lgt.GetField("localScale") );
 		newObj.transform.localPosition = DeserializeVector3 ( lgt.GetField("localPosition") );
+		newObj.transform.localEulerAngles = DeserializeVector3 ( lgt.GetField("localEulerAngles") );
 	
 		newObj.name = newObj.name.Replace( "(Clone)", "" );
 	

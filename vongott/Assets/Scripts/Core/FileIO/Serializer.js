@@ -38,8 +38,10 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		lgt.AddField ( "color", SerializeColor ( obj.GetComponent(LightSource).color ) );
 		lgt.AddField ( "range", obj.GetComponent(LightSource).range );
 		lgt.AddField ( "intensity", obj.GetComponent(LightSource).intensity );
-		lgt.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		lgt.AddField ( "prefabPath", obj.GetComponent(LightSource).prefabPath );
+		lgt.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
+		lgt.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		lgt.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
 		
 		o.AddField ( "LightSource", lgt );
 		

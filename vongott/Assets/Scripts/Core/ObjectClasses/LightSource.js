@@ -6,31 +6,31 @@ class LightSource extends MonoBehaviour {
 	var intensity : float = 1.0;
 	var prefabPath : String = "";
 	
-	@HideInInspector private var lightComponent : Light;
+	function GetLightComponent () : Light {
+		if ( this.GetComponent(Light) ) {
+			return this.GetComponent(Light);
+		} else {
+			return this.GetComponentInChildren ( Light );
+		}
+	}
 	
-	function SetColor ( c : Color ) {
-		if ( !lightComponent ) { Debug.Log ( "No Light component attached!" ); return; }
-		
+	function SetColor ( c : Color ) {		
 		color = c;
 		color.a = 1;
 	
-		lightComponent.color = color;
+		GetLightComponent().color = color;
 	}
 	
-	function SetRange ( r : float ) {
-		if ( !lightComponent ) { Debug.Log ( "No Light component attached!" ); return; }
-		
+	function SetRange ( r : float ) {		
 		range = r;
 	
-		lightComponent.range = range;
+		GetLightComponent().range = range;
 	}
 	
-	function SetIntensity ( i : float ) {
-		if ( !lightComponent ) { Debug.Log ( "No Light component attached!" ); return; }
-		
+	function SetIntensity ( i : float ) {		
 		intensity = i;
 		
-		lightComponent.intensity = intensity;
+		GetLightComponent().intensity = intensity;
 	}
 	
 	function Update () {
@@ -38,12 +38,6 @@ class LightSource extends MonoBehaviour {
 	}
 	
 	function Start () {
-		if ( this.GetComponent(Light) ) {
-			lightComponent = this.GetComponent(Light);
-		} else {
-			lightComponent = this.GetComponentInChildren ( Light );
-		}
-		
 		SetColor ( color );
 		SetRange ( range );
 		SetIntensity ( intensity );
