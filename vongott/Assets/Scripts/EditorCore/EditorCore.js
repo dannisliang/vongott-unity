@@ -241,6 +241,24 @@ static function AddObject ( obj : GameObject ) {
 	SelectObject ( newObject );
 }
 
+// Replace the currently selected object
+static function ReplaceSelectedObject ( obj : GameObject ) {
+	if ( selectedObject != null ) {
+		var newObject : GameObject = Instantiate ( obj );
+		newObject.transform.parent = currentLevel.transform;
+		newObject.transform.position = selectedObject.transform.position;
+		newObject.transform.localEulerAngles = selectedObject.transform.localEulerAngles;
+		newObject.transform.localScale = selectedObject.transform.localScale;
+	
+		Destroy ( selectedObject );
+		
+		SelectObject ( newObject );
+			
+	} else {
+		AddObject ( obj );
+	}
+}
+
 // Preview any object
 static function ClearPreview () {
 	if ( previewObject ) {

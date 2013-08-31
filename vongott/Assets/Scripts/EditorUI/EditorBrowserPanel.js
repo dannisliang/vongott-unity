@@ -6,7 +6,8 @@ class EditorBrowserPanel extends MonoBehaviour {
 	public var popupMenu : OGPopUp;
 	public var title : OGLabel;	
 	public var inspectorName : OGLabel;
-			
+	public var replaceButton : GameObject;
+					
 	// Private vars
 	private var resourcesFolder : EditorFileSystem.Folder;
 	private var selectedFile : Object;
@@ -96,6 +97,13 @@ class EditorBrowserPanel extends MonoBehaviour {
 		}
 	}
 
+	// Replace object
+	public function ReplaceObject () {
+		if ( selectedFile.GetType() == GameObject ) {
+			EditorCore.ReplaceSelectedObject ( selectedFile as GameObject );
+		}
+	}
+
 	// Deselect all
 	function DeselectAll () {
 		for ( var i = 0; i < fileList.transform.childCount; i++ ) {
@@ -138,6 +146,10 @@ class EditorBrowserPanel extends MonoBehaviour {
 		obj.transform.parent = fileList;
 		obj.transform.localScale = new Vector3 ( 80, 80, 1 );
 		obj.transform.localPosition = new Vector3 ( xPos, yPos, -2 );
+	}
+
+	function Update () {
+		replaceButton.SetActive ( EditorCore.GetSelectedObject() != null );
 	}
 
 	// Clear all
