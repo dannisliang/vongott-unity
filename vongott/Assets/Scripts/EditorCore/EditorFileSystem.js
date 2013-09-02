@@ -124,6 +124,7 @@ class EditorFileSystem extends MonoBehaviour {
 		materialsFolder.AddFolder ( new Folder ("Brick"), true );
 		materialsFolder.AddFolder ( new Folder ("Concrete"), true );
 		materialsFolder.AddFolder ( new Folder ("Foliage"), true );
+		materialsFolder.AddFolder ( new Folder ("Tiles"), true );
 		materialsFolder.AddFolder ( new Folder ("Wood"), true );
 		
 		// Prefabs
@@ -134,6 +135,8 @@ class EditorFileSystem extends MonoBehaviour {
 		prefabsFolder.AddFolder ( new Folder ( "Buildings" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Decor" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Doors" ), true );
+		prefabsFolder.AddFolder ( new Folder ( "Fences" ), true );
+		prefabsFolder.AddFolder ( new Folder ( "Furniture" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Roofs" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Stairs" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Vehicles" ), true );
