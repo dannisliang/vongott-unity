@@ -12,9 +12,11 @@ function Round ( val : float, factor : float ) : float {
 function Update () {
 	// transform modes
 	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) {
-		var ray : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
-		var point : Vector3 = ray.origin + ( ray.direction * EditorCore.grabDistance );
+		var spd : float;
+		
 		var object : GameObject = EditorCore.GetSelectedObject();
+		var mousePos : Vector3 = Input.mousePosition;
+		var point : Vector3 = Camera.main.WorldToScreenPoint ( object.transform.position );
 		
 		// esc key: undo
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
@@ -72,7 +74,12 @@ function Update () {
 		}
 
 		// translate
-		if ( EditorCore.grabMode ) {
+		if ( EditorCore.grabMode ) {			
+			point.x = mousePos.x;
+			point.y = mousePos.y;
+			
+			point = Camera.main.ScreenToWorldPoint ( point );
+			
 			if ( EditorCore.snapEnabled ) {
 				point.x = Round ( point.x, EditorCore.gridLineDistance );
 				point.y = Round ( point.y, EditorCore.gridLineDistance );
@@ -110,7 +117,7 @@ function Update () {
 			
 			// scroll wheel
 			var translation = Input.GetAxis("Mouse ScrollWheel");
-			var spd : float = 10;
+			spd = 10;
 			
 			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
 				spd = spd / 16;

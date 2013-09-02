@@ -116,7 +116,7 @@ function Start () {
 
 // Tweens
 function GetDist ( vector : Vector3 ) : float {
-	return Vector3.Distance ( Camera.main.transform.localPosition, vector );
+	return Vector3.Distance ( Camera.main.transform.position, vector );
 }
 
 function GetAngle ( vector : Vector3 ) : float {
@@ -203,7 +203,7 @@ function Update () {
 	var translation = Input.GetAxis("Mouse ScrollWheel");
 	var spd : float = speed;
 	
-	// camera mode			
+	// zooming			
 	if ( translation != 0.0 && !OGRoot.mouseOver ) {				
 		if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) ) {
 			spd = spd / 4;
