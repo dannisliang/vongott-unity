@@ -124,6 +124,7 @@ class EditorFileSystem extends MonoBehaviour {
 		materialsFolder.AddFolder ( new Folder ("Brick"), true );
 		materialsFolder.AddFolder ( new Folder ("Concrete"), true );
 		materialsFolder.AddFolder ( new Folder ("Foliage"), true );
+		materialsFolder.AddFolder ( new Folder ("Glass"), true );
 		materialsFolder.AddFolder ( new Folder ("Tiles"), true );
 		materialsFolder.AddFolder ( new Folder ("Wood"), true );
 		

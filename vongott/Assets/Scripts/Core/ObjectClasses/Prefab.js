@@ -28,6 +28,8 @@ class Prefab extends MonoBehaviour {
 		
 		if ( canChangeMaterial ) {
 			ReloadMaterial ();
+		} else {
+			FitTexture ();
 		}
 	}
 	

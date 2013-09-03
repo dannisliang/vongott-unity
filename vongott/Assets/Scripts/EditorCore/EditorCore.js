@@ -414,7 +414,7 @@ static function ToggleGizmos () {
 // Fit selection box
 static function FitSelectionBox () {
 	if ( selectedObject.GetComponent(MeshCollider) ) {
-		selectBox.GetComponent(MeshFilter).mesh = selectedObject.GetComponent(MeshCollider).mesh;
+		selectBox.GetComponent(MeshFilter).sharedMesh = selectedObject.GetComponent(MeshCollider).sharedMesh;
 		selectBox.localScale = selectedObject.transform.localScale;
 		selectBox.position = selectedObject.transform.position;
 		selectBox.eulerAngles = selectedObject.transform.eulerAngles;
@@ -433,7 +433,7 @@ static function FitSelectionBox () {
 		var e : Vector3 = ( bounds.extents * 2 );
 		var s : Vector3 = selectedObject.transform.localScale;
 		
-		selectBox.GetComponent(MeshFilter).mesh = selectBoxDefaultMesh;
+		selectBox.GetComponent(MeshFilter).sharedMesh = selectBoxDefaultMesh;
 		selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
 		selectBox.transform.position = bounds.center;
 	
@@ -472,6 +472,7 @@ static function DuplicateObject () {
 
 	DeselectObject ();
 	SelectObject ( newObj );
+	SetGrabMode ( true );
 }
 
 // Deselect object
