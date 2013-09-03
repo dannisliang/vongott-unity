@@ -15,9 +15,11 @@ class EditorModes extends OGPage {
 	static var message : OGLabel;
 	static var background : OGRect;
 	static var data : Transform;
+	static var callback : Function;
 	
 	static function SetTitle ( ttl : String ) {
 		title.text = ttl;
+		data.gameObject.SetActive ( ttl != "Pick Mode" );
 	}
 	
 	static function SetMessage ( msg : String ) {

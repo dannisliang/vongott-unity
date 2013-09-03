@@ -31,9 +31,14 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 			tm.text = pfb.GetField ( "text" ).str;
 		}
 		
+		if ( pfb.HasField("materialPath") ) {
+			newPfb.GetComponent(Prefab).materialPath = pfb.GetField("materialPath").str;
+			newPfb.GetComponent(Prefab).ReloadMaterial();
+		}
+		
 		newPfb.name = pfb.GetField("id").str;
 		
-		if ( newPfb.GetComponent(Prefab).path == "Prefabs/Doors" || newPfb.GetComponent(Prefab).path == "Prefabs/Stairs" ) {
+		if ( newPfb.GetComponent(Prefab).path == "Prefabs/Stairs" ) {
 			newPfb.tag = "walkable";
 		}
 		

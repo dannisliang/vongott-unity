@@ -180,7 +180,7 @@ function Update () {
 				EditorCore.FitSelectionBox ();
 				
 				// Fit texture
-				if ( o.GetComponent(Prefab) && o.GetComponent(Prefab).path.Contains ( "Walls" ) ) {
+				if ( o.GetComponent(Prefab) ) {
 					o.GetComponent(Prefab).FitTexture();
 				}
 			
@@ -188,6 +188,57 @@ function Update () {
 		}
 	
 	
+	// pick mode
+	} else if ( EditorCore.pickMode ) {
+		// esc key: cancel
+		if ( Input.GetKey ( KeyCode.Escape ) ) {
+			EditorCore.SetPickMode ( false );
+			EditorCore.ReselectObject ();
+		
+		} else if ( Input.GetMouseButtonDown ( 0 ) ) {
+			var mouseHit : RaycastHit;
+			var mouseGoal : GameObject;
+			
+			if ( Physics.Raycast ( Camera.main.ScreenPointToRay ( Input.mousePosition ), mouseHit ) ) {
+				mouseGoal = mouseHit.collider.gameObject;
+			}
+			
+			if ( mouseGoal != null ) {
+				var materialPath : String = "";
+				
+				if ( mouseGoal.GetComponent(Prefab) ) {
+					materialPath = mouseGoal.GetComponent(Prefab).materialPath;
+																	
+				} else if ( mouseGoal.GetComponent(Surface) ) {
+					materialPath = mouseGoal.GetComponent(Surface).materialPath;
+				
+				}
+				
+				if ( materialPath != "" ) {
+					if ( EditorCore.GetSelectedObject().GetComponent(Prefab) ) {
+						EditorCore.GetSelectedObject().GetComponent(Prefab).materialPath = materialPath;
+						EditorCore.GetSelectedObject().GetComponent(Prefab).ReloadMaterial();
+						EditorCore.SetPickMode ( false );
+						EditorCore.ReselectObject ();
+					
+					} else if ( EditorCore.GetSelectedObject().GetComponent(Surface) ) {
+						EditorCore.GetSelectedObject().GetComponent(Surface).materialPath = materialPath;
+						EditorCore.GetSelectedObject().GetComponent(Surface).ReloadMaterial();
+						EditorCore.SetPickMode ( false );
+						EditorCore.ReselectObject ();
+					
+					} else {
+						EditorCore.SetPickMode ( false );
+						EditorCore.ReselectObject ();
+					
+					}
+				
+				}					
+			
+			}
+		
+		}
+		
 	// camera mode
 	} else if ( OGRoot.currentPage.pageName == "MenuBase" ) {	
 		// Z key

@@ -37,7 +37,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 	
 	
 	//////////////////////
-	// Update
+	// Operations
 	//////////////////////
 	function FlipNormals () {
 		selectedSurface.transform.localScale = new Vector3 ( selectedSurface.transform.localScale.x, -selectedSurface.transform.localScale.y, selectedSurface.transform.localScale.z );		
@@ -46,6 +46,11 @@ class EditorInspectorSurface extends MonoBehaviour {
 	function GetMaterial ( matPath : String ) {
 		selectedSurface.materialPath = matPath;
 		selectedSurface.ReloadMaterial();
+	}
+	
+	function PickMaterial () {
+		EditorCore.SetPickMode ( true );
+		
 	}
 	
 	function TileDown () {

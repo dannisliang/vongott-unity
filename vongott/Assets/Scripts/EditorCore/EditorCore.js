@@ -26,6 +26,7 @@ static var initRot : Vector3 = new Vector3 ( 45, 45, 0 );
 static var grabMode = false;
 static var rotateMode = false;
 static var scaleMode = false;
+static var pickMode = false;
 static var grabRestrict : String;
 
 // grid / guides
@@ -583,6 +584,22 @@ static function SelectObject ( obj : GameObject ) {
 ////////////////////
 // Modes
 ////////////////////
+// Set pick mode
+static function SetPickMode ( state : boolean ) {
+	pickMode = state;
+	
+	if ( pickMode ) {
+		OGRoot.GoToPage ( "Modes" );
+		EditorModes.SetTitle ( "Pick Mode" );
+		EditorModes.SetMessage ( "Pick a material to apply" );
+		EditorModes.SetHeight ( 70 );
+		
+	} else {
+		OGRoot.GoToPage ( "MenuBase" );
+	
+	}
+}
+
 // Set grab mode
 static function SetGrabMode ( state : boolean ) {
 	if ( !selectedObject ) {
