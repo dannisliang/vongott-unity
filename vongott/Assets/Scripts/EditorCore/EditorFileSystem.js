@@ -140,6 +140,7 @@ class EditorFileSystem extends MonoBehaviour {
 		prefabsFolder.AddFolder ( new Folder ( "Furniture" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Roofs" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Stairs" ), true );
+		prefabsFolder.AddFolder ( new Folder ( "Skyboxes" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Vehicles" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Walls" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Windows" ), true );		

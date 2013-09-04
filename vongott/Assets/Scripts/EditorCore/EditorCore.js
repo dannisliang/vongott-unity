@@ -725,11 +725,6 @@ static function TrimFileNames ( paths : String[] ) : String[] {
 	return newArray;
 }
 
-// Screenshot
-static function LoadScreenshot ( path : String ) : Texture2D {
-	return Loader.LoadScreenshot ( path );
-}
-
 // Save file
 function DoSave ( path : String ) : IEnumerator {
 	yield new WaitForEndOfFrame();

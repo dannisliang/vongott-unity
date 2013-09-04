@@ -49,7 +49,7 @@ class Loader {
 		return input;
 	}
 	
-	static function LoadScreenshot ( path : String ) : Texture2D {
+	static function LoadScreenshot ( path : String ) : byte[] {
 		var input : String = ReadFile ( path );	
 		if ( !input ) { return null; }
 		

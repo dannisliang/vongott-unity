@@ -7,12 +7,15 @@ class EditorOpenFile extends OGPage {
 	// Prerequisites
 	////////////////////
 	// Public vars
+	var container : GameObject;	
 	var mapList : OGScrollView;
 	var title : OGLabel;
 	var selectedFile : String = "";
 	var previewPane : OGImage;
 	var fileInfo : OGLabel;
-	
+	var previewLoading : GameObject;
+	var fileLoading : OGLabel;
+									
 					
 	////////////////////
 	// Navigation
@@ -40,15 +43,38 @@ class EditorOpenFile extends OGPage {
 		selectedFile = name;
 		btn.style = "listitemselected";
 		
-		previewPane.image = Loader.LoadScreenshot ( Application.dataPath + "/Maps/" + name + ".vgmap" );
-	
+		var dataPath : String = Application.dataPath + "/Maps/" + name + ".vgmap";
+		var tempImage : Texture2D = new Texture2D ( 0, 0 );
+		
+		previewLoading.SetActive ( true );
+		
+		Loom.RunAsync ( function () {
+			var bytes : byte[] = Loader.LoadScreenshot ( dataPath );			
+			
+			Loom.QueueOnMainThread ( function () {
+				tempImage.LoadImage ( bytes );
+				previewPane.image = tempImage;
+				
+				previewLoading.SetActive ( false );
+			} );
+		} );
+		
 		fileInfo.text = "<map name>\n<actor count>\n<item count>\n<trigger count>\n<filesize>";
 	}
 	
 	// Open
-	function OpenFile () {
+	function LoadSelectedFile () : IEnumerator {
+		fileLoading.text = "Loading " + selectedFile + "...";
+		container.SetActive ( false );
+		
+		yield new WaitForSeconds ( 0.5 );
+	
 		EditorCore.LoadFile ( selectedFile );
 		OGRoot.GoToPage ( "MenuBase" );
+	}
+	
+	function OpenFile () {
+		StartCoroutine ( LoadSelectedFile () );
 	}
 	
 	// Cancel
@@ -77,6 +103,8 @@ class EditorOpenFile extends OGPage {
 	function PopulateList () {
 		ClearList ();
 		
+		previewLoading.SetActive ( false );
+		
 		var paths : String[] = ListFiles();
 	
 		for ( var i = 0; i < paths.Length; i++ ) {
@@ -100,6 +128,8 @@ class EditorOpenFile extends OGPage {
 	// Init
 	////////////////////
 	override function StartPage () {
+		container.SetActive ( true );
+		
 		PopulateList();
 		title.text = "Open a map file";
 	}

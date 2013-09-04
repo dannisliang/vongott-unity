@@ -86,6 +86,7 @@ class EditorMenuBase extends OGPage {
 		EditorCore.ToggleGizmos ();
 	}
 	
+	
 	////////////////////
 	// Add menu
 	////////////////////

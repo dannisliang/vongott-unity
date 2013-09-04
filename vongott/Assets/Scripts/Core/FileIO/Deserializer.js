@@ -467,12 +467,9 @@ static function DeserializeQuest ( obj : JSONObject ) : Quest {
 ////////////////////
 // Deserialize screenshot
 ////////////////////
-static function DeserializeScreenshot ( input : String ) : Texture2D {
+static function DeserializeScreenshot ( input : String ) : byte[] {
 	var map : JSONObject =  new JSONObject ( input );
 	var bytes : byte[] = Convert.FromBase64String ( map.GetField ( "screenshot" ).str );
-	var image : Texture2D = new Texture2D ( 0, 0 );
 	
-	image.LoadImage ( bytes );
-			
-	return image;
+	return bytes;
 }
