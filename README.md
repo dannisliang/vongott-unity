@@ -1,4 +1,4 @@
-<a href="https://www.dropbox.com/s/z12t78ir3dk2wyb/Build.zip">latest build</a>
+<a href="https://docs.google.com/file/d/0B9DnayqgbYmgSG1FUFVLYkZiMGM/edit?usp=sharing">latest build</a>
 
 ### What?
 This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters. 
