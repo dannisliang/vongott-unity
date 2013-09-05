@@ -109,6 +109,6 @@ function Update () {
 	
 	if ( skyboxCamera ) {
 		skyboxCamera.transform.rotation = cam.transform.rotation;
-		skyboxCamera.transform.localPosition = transform.position / 10;
+		skyboxCamera.transform.localPosition = transform.position / 40;
 	}
 }

@@ -274,6 +274,6 @@ function Update () {
 	// skybox camera
 	if ( skyboxCamera ) {
 		skyboxCamera.transform.rotation = transform.rotation;
-		skyboxCamera.transform.localPosition = transform.position / 10;
+		skyboxCamera.transform.localPosition = transform.position / 40;
 	}
 }
