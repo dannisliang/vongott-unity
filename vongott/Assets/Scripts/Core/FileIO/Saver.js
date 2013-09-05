@@ -19,6 +19,10 @@ class Saver {
 		serialized.AddField ( "Camera", Serializer.SerializeTransform ( Camera.main.transform ) );
 		serialized.AddField ( "screenshot", Serializer.SerializeScreenshot ( screenshot ) );
 		
+		if ( GameObject.FindObjectOfType(SkyBox) ) {
+			serialized.AddField ( "Skybox", GameObject.FindObjectOfType(SkyBox).name.Replace( "(Clone)", "" ) );
+		}
+		
 		sw.WriteLine ( serialized );
 		sw.Flush();
 		sw.Close();

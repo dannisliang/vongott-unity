@@ -19,8 +19,8 @@ static var currentLevel : GameObject;
 
 // Load on init
 static var initMap : String;
-static var initPos : Vector3 = new Vector3 ( 0, 2, 0 );
-static var initRot : Vector3 = new Vector3 ( 45, 45, 0 );
+static var initPos : Vector3 = new Vector3 ( -4, 5,-10 );
+static var initRot : Vector3 = new Vector3 ( 20, 20, 0 );
 
 // modes
 static var grabMode = false;
@@ -236,10 +236,27 @@ static function AddPrefab ( dir : String, name : String ) {
 // Add any object
 static function AddObject ( obj : GameObject ) {
 	var newObject : GameObject = Instantiate ( obj );
-	newObject.transform.parent = currentLevel.transform;
-	newObject.transform.position = GetSpawnPosition();
 	
-	SelectObject ( newObject );
+	newObject.name = newObject.name.Replace( "(Clone)", "" );
+	
+	// Check if skybox
+	if ( newObject.GetComponent ( SkyBox ) ) {
+		if ( GameObject.FindObjectOfType ( SkyBox ) ) {
+			Destroy ( GameObject.FindObjectOfType ( SkyBox ) );
+		}
+		
+		newObject.transform.parent = GameObject.FindWithTag("SkyboxCamera").transform.parent;
+		newObject.transform.localScale = Vector3.one;
+		newObject.transform.localEulerAngles = Vector3.zero;
+		newObject.transform.localPosition = Vector3.zero;
+	
+	} else {
+		newObject.transform.parent = currentLevel.transform;
+		newObject.transform.position = GetSpawnPosition();
+		
+		SelectObject ( newObject );
+	
+	}
 }
 
 // Replace the currently selected object
@@ -811,15 +828,12 @@ function Start () {
 	
 	gizmo.SetActive ( false );
 
-	Camera.main.orthographic = true;
-
 	if ( initMap ) {
 		LoadFile ( initMap );
 	}
 	
 
 	Camera.main.transform.position = initPos;
-	
 	Camera.main.transform.eulerAngles = initRot;
 	
 	// signal

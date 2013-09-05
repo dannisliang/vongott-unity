@@ -9,6 +9,7 @@ var player : GameObject;
 
 // Private vars
 private var cam_init = false;
+private var skyboxCamera : GameObject;
 
 // Static vars
 static var instance : Transform;
@@ -70,6 +71,7 @@ function GetCamDist() : Vector3 {
 // Init
 function Start () {
 	instance = this.gameObject.transform;
+	skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
 	player = GameCore.GetPlayerObject();
 }
 
@@ -105,4 +107,8 @@ function Update () {
 	this.transform.position = Vector3.Slerp ( this.transform.position, player.transform.position + adjustment, Time.deltaTime * 10 );
 	cam.transform.localPosition = Vector3.Slerp ( cam.transform.localPosition, GetCamDist(), Time.deltaTime * 5 );
 	
+	if ( skyboxCamera ) {
+		skyboxCamera.transform.rotation = cam.transform.rotation;
+		skyboxCamera.transform.localPosition = transform.position / 10;
+	}
 }

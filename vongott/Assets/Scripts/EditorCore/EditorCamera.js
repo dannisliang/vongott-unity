@@ -15,6 +15,7 @@ var gridDark : Material;
 var gridBright : Material;
 
 @HideInInspector var fixPoint : Vector3;
+private var skyboxCamera : GameObject;
 
 
 ////////////////////
@@ -111,7 +112,7 @@ function OnPostRender () {
 
 // Init
 function Start () {
-	
+	skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
 }
 
 // Tweens
@@ -268,5 +269,11 @@ function Update () {
     	transform.position = transform.position + vertical * v;
     	transform.position = transform.position + horizontal * h;
 		
+	}
+	
+	// skybox camera
+	if ( skyboxCamera ) {
+		skyboxCamera.transform.rotation = transform.rotation;
+		skyboxCamera.transform.localPosition = transform.position / 10;
 	}
 }

@@ -197,6 +197,19 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 		Camera.main.transform.localEulerAngles = DeserializeVector3 ( cam.GetField ( "localEulerAngles" ) );
 	}
 	
+	// skybox
+	if ( obj.HasField ( "Skybox" ) ) {
+		var parent : Transform = GameObject.FindWithTag("SkyboxCamera").transform.parent;
+		var skybox : GameObject = Instantiate ( Resources.Load ( "Prefabs/Skyboxes/" + obj.GetField ( "Skybox" ).str ) as GameObject );
+		
+		skybox.name = skybox.name.Replace( "(Clone)", "" );
+		
+		skybox.transform.parent = parent;
+		skybox.transform.localPosition = Vector3.zero;
+		skybox.transform.localScale = Vector3.one;
+		skybox.transform.localEulerAngles = Vector3.zero;
+	}
+	
 	return o;
 }
 
