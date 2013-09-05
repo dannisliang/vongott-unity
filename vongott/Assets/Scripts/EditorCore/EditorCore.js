@@ -241,11 +241,13 @@ static function AddObject ( obj : GameObject ) {
 	
 	// Check if skybox
 	if ( newObject.GetComponent ( SkyBox ) ) {
-		if ( GameObject.FindObjectOfType ( SkyBox ) ) {
-			Destroy ( GameObject.FindObjectOfType ( SkyBox ) );
+		var parent : Transform = GameObject.FindWithTag("SkyboxCamera").transform.parent;
+		
+		if ( parent.gameObject.GetComponentInChildren ( SkyBox ) ) {
+			Destroy ( parent.gameObject.GetComponentInChildren ( SkyBox ).gameObject );
 		}
 		
-		newObject.transform.parent = GameObject.FindWithTag("SkyboxCamera").transform.parent;
+		newObject.transform.parent = parent;
 		newObject.transform.localScale = Vector3.one;
 		newObject.transform.localEulerAngles = Vector3.zero;
 		newObject.transform.localPosition = Vector3.zero;
