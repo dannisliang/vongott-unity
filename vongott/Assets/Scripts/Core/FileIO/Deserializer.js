@@ -421,6 +421,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 		// lines
 		if ( e.GetField ( "type" ).str == "Line" ) {
 			entry.line.condition.text = e.GetField ( "condition" ).str;
+			entry.line.consequence.text = e.GetField ( "consequence" ).str;
 			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
 			entry.line.line.text = e.GetField ( "line" ).str;
 			entry.line.endConvo.isChecked = e.GetField ( "endConvo" ).b;

@@ -25,6 +25,7 @@ class EditorConversationEntry extends MonoBehaviour {
 	class Line {
 		var instance : GameObject;
 		var condition : OGButton;
+		var consequence : OGButton;
 		var speaker : OGPopUp;
 		var line : OGTextField;
 		var endConvo : OGTickBox;

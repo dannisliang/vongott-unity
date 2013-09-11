@@ -360,6 +360,7 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 			var l = e.line;
 						
 			entry.AddField ( "condition", l.condition.text );
+			entry.AddField ( "consequence", l.consequence.text );
 			entry.AddField ( "speaker", l.speaker.selectedOption );
 			entry.AddField ( "line", l.line.text );
 			entry.AddField ( "endConvo", l.endConvo.isChecked );			

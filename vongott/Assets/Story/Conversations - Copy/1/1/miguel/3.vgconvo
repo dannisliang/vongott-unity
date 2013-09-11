@@ -2,35 +2,30 @@
 		{
 				"type":"Line",
 				"condition":"1-1_got_gear",
-				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"Ok, let's go!",
 				"endConvo":true},
 		{
 				"type":"Line",
 				"condition":"1-1_talked_about_mission",
-				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"Come on, get your gear!",
 				"endConvo":true},
 		{
 				"type":"Line",
 				"condition":"1-1_knows_leo_is_gone",
-				"consequence":"(none)",
 				"speaker":"Player",
 				"line":"Leo wasn't there.",
 				"endConvo":false},
 		{
 				"type":"Line",
 				"condition":"1-1_knows_leo_is_gone",
-				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"No shit! We just got a distress call from him, he has been captured. Again! That hijo de puta gets himself into a new kind of trouble every 5 goddamn minutes!",
 				"endConvo":false},
 		{
 				"type":"Line",
 				"condition":"1-1_knows_leo_is_gone",
-				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"We need to find out were he is being held captive. He is instrumental to our next mission. Go talk to the quartermaster in the café and load up. We're going to Bronx to look for clues in his flat.",
 				"endConvo":false},
@@ -73,14 +68,12 @@
 		{
 				"type":"Line",
 				"condition":"1-1_knows_leo_is_gone",
-				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"Now get moving. Join me by the dock when you've got your gear.",
 				"endConvo":true},
 		{
 				"type":"Line",
 				"condition":"(none)",
-				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"Come talk to me when you've had a chat with Leo. As I said, go to the cargo loading bay via the conveyor belt.",
 				"endConvo":false}]

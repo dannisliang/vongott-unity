@@ -7,7 +7,7 @@ class Conversation {
 	// Prerequisites
 	////////////////////
 	// Classes
-	private class InventoryEntry {
+	private class ConvoEntry {
 		var type : String;
 		var groupType : String;
 		
@@ -24,7 +24,7 @@ class Conversation {
 		var title: String;
 		var instructions: String;
 		
-		var options : List.< InventoryEntry > = new List.< InventoryEntry >();
+		var options : List.< ConvoEntry > = new List.< ConvoEntry >();
 	}
 
 	// Public vars
@@ -37,7 +37,7 @@ class Conversation {
 	var name : String;
 	var conversation : String;
 	
-	var entries : List.< InventoryEntry > = new List.< InventoryEntry >();
+	var entries : List.< ConvoEntry > = new List.< ConvoEntry >();
 	var currentOption : int = 0;
 	var currentEntry : int = 0;
 	
@@ -80,7 +80,7 @@ class Conversation {
 	
 	// Display an entry
 	function DisplayEntry () {
-		var entry : InventoryEntry = entries[currentEntry];
+		var entry : ConvoEntry = entries[currentEntry];
 		var speakerLine : String;
 		
 		// line
@@ -88,6 +88,8 @@ class Conversation {
 			if ( entries[currentEntry].endConvo ) {
 				forceEnd = true;
 			}
+			
+			SetFlag ( entries[currentEntry] );
 			
 			SetName ();
 		
@@ -157,7 +159,7 @@ class Conversation {
 	}
 	
 	// Get flag
-	function GetFlag ( entry : InventoryEntry ) : boolean {
+	function GetFlag ( entry : ConvoEntry ) : boolean {
 		if ( entry.condition == null || entry.condition == "(none)" || entry.condition == "<condition>" || entry.condition == "" ) { return true; }
 		
 		var flag : String = SplitString ( entry.condition, 0 );
@@ -167,7 +169,7 @@ class Conversation {
 	}
 	
 	// Set flag
-	function SetFlag ( entry : InventoryEntry ) {		
+	function SetFlag ( entry : ConvoEntry ) {		
 		if ( entry.consequence == null || entry.consequence == "(none)" || entry.consequence == "<consequence>" || entry.consequence == "" ) { return; }
 		
 		var flag : String = SplitString ( entry.consequence, 0 );
@@ -236,13 +238,14 @@ class Conversation {
 		
 		for ( var obj : Object in object.list ) {
 			var o : JSONObject = obj as JSONObject;
-			var entry = new InventoryEntry ();
+			var entry = new ConvoEntry ();
 			
 			// line
 			if ( o.GetField ( "type" ).str == "Line" ) {
 				entry.type = o.GetField ( "type" ).str;
 				
 				entry.condition = o.GetField ( "condition" ).str;
+				entry.consequence = o.GetField ( "consequence" ).str;
 				entry.speaker = o.GetField ( "speaker" ).str;
 				entry.line = o.GetField ( "line" ).str;
 				entry.endConvo = o.GetField ( "endConvo" ).b;
@@ -257,7 +260,7 @@ class Conversation {
 				
 				for ( var list : Object in o.GetField ( "options" ).list as Object ) {
 					var opt : JSONObject = list as JSONObject;
-					var option = new InventoryEntry ();
+					var option = new ConvoEntry ();
 					
 					option.consequence = opt.GetField ( "consequence" ).str;
 					option.line = opt.GetField ( "line" ).str;

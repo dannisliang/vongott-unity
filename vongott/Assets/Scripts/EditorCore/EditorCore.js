@@ -448,11 +448,14 @@ static function FitSelectionBox () {
 	
 	} else {
 		var capsule : CapsuleCollider = selectedObject.GetComponentInChildren(CapsuleCollider);
+		var box : BoxCollider = selectedObject.GetComponentInChildren(BoxCollider);
 		var renderer : MeshRenderer = selectedObject.GetComponentInChildren(MeshRenderer);
 		var bounds : Bounds;
 		
 		if ( capsule ) {
 			bounds = capsule.bounds;
+		} else if ( box ) {
+			bounds = box.bounds;	
 		} else if ( renderer ) {
 			bounds = renderer.bounds;
 		}
@@ -463,6 +466,7 @@ static function FitSelectionBox () {
 		selectBox.GetComponent(MeshFilter).sharedMesh = selectBoxDefaultMesh;
 		selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
 		selectBox.transform.position = bounds.center;
+		selectBox.transform.eulerAngles = selectedObject.transform.eulerAngles;
 	
 	}
 	
