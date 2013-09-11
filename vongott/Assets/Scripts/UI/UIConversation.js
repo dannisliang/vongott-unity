@@ -28,6 +28,8 @@ class UIConversation extends OGPage {
 
 	// Set option
 	static function SetOption ( index : int, line : String ) {
+		HighlightOption ( 0 );
+		
 		if ( !highlight.activeSelf ) {
 			lines[0].text = "";
 			lines[1].text = "";

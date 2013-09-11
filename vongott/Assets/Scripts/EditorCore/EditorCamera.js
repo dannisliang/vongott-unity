@@ -20,7 +20,7 @@ var cursorMaterial : Material;
 // Private vars
 private var skyboxCamera : GameObject;
 private var clickTimer : float = 0;
-private var clickThreshold : float = 0.1;
+private var clickThreshold : float = 0.25;
 private var locked : boolean = false;
 
 
@@ -306,17 +306,11 @@ function Update () {
 		
 	}
 		
-	// middle mouse click
-	if ( Input.GetMouseButtonDown(2) ) {
-		clickTimer = Time.time;
+	// right mouse click
+	if ( Input.GetMouseButtonDown(1) ) {
+		RefreshFixPoint ( true );
 	
-	} else if ( Input.GetMouseButtonUp(2) ) {
-		if ( Time.time - clickTimer < clickThreshold ) {
-			RefreshFixPoint ( true );
-			TweenTurnTo ( fixPoint );
-		}
-	
-	// right mouse button
+	// right mouse drag
 	} else if ( Input.GetMouseButton(1) ) {  
 		if ( !Input.GetKey ( KeyCode.LeftAlt ) )  { 
 			var target : Vector3 = fixPoint;

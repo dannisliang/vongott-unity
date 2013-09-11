@@ -331,9 +331,11 @@ static function GetObjectIcon ( obj : GameObject, image : OGImage ) : IEnumerato
 	previewObject.transform.localScale = Vector3.one;
 	previewObject.transform.localEulerAngles = new Vector3 ( 0, 135, 0 );
 	
-	var bounds : Bounds = previewObject.GetComponentInChildren(MeshRenderer).bounds;
+	var bounds : Bounds;
 	
-	if ( bounds == null ) {
+	if ( previewObject.GetComponentInChildren(MeshRenderer) ) {
+		bounds = previewObject.GetComponentInChildren(MeshRenderer).bounds;
+	} else {
 		bounds = previewObject.GetComponentInChildren(SkinnedMeshRenderer).bounds;
 	}
 	

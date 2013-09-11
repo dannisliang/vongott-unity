@@ -1,21 +1,45 @@
 [
 		{
 				"type":"Line",
-				"condition":"1-1_picked_lethal_weapon",
-				"speaker":"",
-				"line":"I like your style, newbie, but I haven't got anything else for you. Good luck on your first mission.",
-				"endConvo":true},
+				"condition":"1-1_rude_to_miguel",
+				"speaker":"NPC",
+				"line":"Don't sweat it about Miguel. He has a bit of a temper. I personally like to think that a rough attitude makes a good activist. Keep it up.",
+				"endConvo":false},
 		{
 				"type":"Line",
-				"condition":"1-1_picked_nonlethal_weapon",
-				"speaker":"",
-				"line":"I can't say I approve of your methods, newbie. I just really hope you can live up to the hype.",
-				"endConvo":true},
+				"condition":"(none)",
+				"speaker":"NPC",
+				"line":"I hear you'll be saving Leo's ass. If you ask me, he'd be out of here a long time ago.",
+				"endConvo":false},
+		{
+				"type":"Group",
+				"condition":"(none)",
+				"groupType":"Query",
+				"options":[
+						{
+								"consequence":"1-1_picked_no_weapon",
+								"line":"What is a quartermaster anyway?",
+								"endConvo":false},
+						{
+								"consequence":"1-1_picked_lethal_weapon",
+								"line":"I'd like something that kills people. Violently.",
+								"endConvo":false},
+						{
+								"consequence":"1-1_picked_nonlethal_weapon",
+								"line":"I'd like a non-lethal weapon.",
+								"endConvo":false}],
+				"speaker":"Player"},
 		{
 				"type":"Line",
 				"condition":"1-1_picked_no_weapon",
 				"speaker":"NPC",
-				"line":"You sure you don't want a weapon of some kind?",
+				"line":"Wow, you are very green, aren't you? I can provide you with weapons and other tools you might need in the field.",
+				"endConvo":false},
+		{
+				"type":"Line",
+				"condition":"1-1_picked_no_weapon",
+				"speaker":"NPC",
+				"line":"Which weapon do you want?",
 				"endConvo":false},
 		{
 				"type":"Group",
@@ -24,7 +48,7 @@
 				"options":[
 						{
 								"consequence":"(none)",
-								"line":"No thanks, I'll take my chances.",
+								"line":"My body is my weapon.",
 								"endConvo":false},
 						{
 								"consequence":"(none)",
@@ -37,12 +61,12 @@
 				"speaker":"Player"},
 		{
 				"type":"Group",
-				"condition":"1-1_picked_no_weapon",
+				"condition":"(none)",
 				"groupType":"Response",
 				"options":[
 						{
 								"consequence":"1-1_picked_no_weapon",
-								"line":"I hope you are as lucky as you are insane. This will probably not go well for you.",
+								"line":"Haha! Well, it's been great knowing ya, newbie.",
 								"endConvo":false},
 						{
 								"consequence":"1-1_picked_lethal_weapon",
@@ -55,19 +79,19 @@
 				"speaker":"NPC"},
 		{
 				"type":"Group",
-				"condition":"1-1_picked_no_weapon",
+				"condition":"(none)",
 				"groupType":"Response",
 				"options":[
 						{
-								"consequence":"(none)",
-								"line":"I have no interest in any of my limbs, they're dead weight as far as I'm concerned.",
+								"consequence":"1-1_got_gear",
+								"line":"I am invincible!",
 								"endConvo":false},
 						{
-								"consequence":"(none)",
+								"consequence":"1-1_got_gear",
 								"line":"Those scumbags won't know what hit 'em.",
 								"endConvo":false},
 						{
-								"consequence":"(none)",
+								"consequence":"1-1_got_gear",
 								"line":"UNATCO might be our enemies, but they are still people.",
 								"endConvo":false}],
 				"speaker":"Player"}]

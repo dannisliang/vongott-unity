@@ -1,0 +1,43 @@
+[
+		{
+				"type":"Line",
+				"condition":"(none)",
+				"speaker":"NPC",
+				"line":"What's wrong? Are you malfunctioning?",
+				"endConvo":false},
+		{
+				"type":"Group",
+				"condition":"(none)",
+				"groupType":"Query",
+				"options":[
+						{
+								"consequence":"(none)",
+								"line":"I like your face.",
+								"endConvo":false},
+						{
+								"consequence":"(none)",
+								"line":"I think you owe me an explanation.",
+								"endConvo":false},
+						{
+								"consequence":"(none)",
+								"line":"Sorry, I don't want to bother you.",
+								"endConvo":false}],
+				"speaker":"Player"},
+		{
+				"type":"Group",
+				"condition":"(none)",
+				"groupType":"Response",
+				"options":[
+						{
+								"consequence":"(none)",
+								"line":"Ok. Thanks a bunch. Please leave me alone now.",
+								"endConvo":false},
+						{
+								"consequence":"(none)",
+								"line":"I don't think I owe you anything. Like I said, talk to Miguel about explanations.",
+								"endConvo":false},
+						{
+								"consequence":"(none)",
+								"line":"No problem.",
+								"endConvo":false}],
+				"speaker":"NPC"}]
