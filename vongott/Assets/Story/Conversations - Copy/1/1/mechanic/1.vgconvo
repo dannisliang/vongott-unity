@@ -2,18 +2,21 @@
 		{
 				"type":"Line",
 				"condition":"(none)",
+				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"Hey! New person! Did you see Leo?",
 				"endConvo":false},
 		{
 				"type":"Line",
 				"condition":"(none)",
+				"consequence":"(none)",
 				"speaker":"Player",
 				"line":"I came here to see him.",
 				"endConvo":false},
 		{
 				"type":"Line",
 				"condition":"(none)",
+				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"Shit shit shit shit shit... Not again...",
 				"endConvo":false},
@@ -62,18 +65,21 @@
 		{
 				"type":"Line",
 				"condition":"(none)",
+				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"He's gone, man! Completely gone! He was supposed to be right here. Right here where I am standing! But he's not!",
 				"endConvo":false},
 		{
 				"type":"Line",
 				"condition":"(none)",
+				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"I don't want to be the one to tell Miguel! I can't!",
 				"endConvo":false},
 		{
 				"type":"Line",
-				"condition":"1-1_knows_leo_is_gone",
+				"condition":"(none)",
+				"consequence":"1-1_knows_leo_is_gone",
 				"speaker":"Player",
 				"line":"I'll go talk to him.",
 				"endConvo":false}]

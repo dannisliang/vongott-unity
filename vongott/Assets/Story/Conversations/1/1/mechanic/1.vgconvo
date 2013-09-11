@@ -8,10 +8,17 @@
 				"endConvo":false},
 		{
 				"type":"Line",
+				"condition":"1-1_talked_to_miguel_2",
+				"consequence":"(none)",
+				"speaker":"Player",
+				"line":"Miguel sent me here to see him.",
+				"endConvo":false},
+		{
+				"type":"Line",
 				"condition":"(none)",
 				"consequence":"(none)",
 				"speaker":"Player",
-				"line":"I came here to see him.",
+				"line":"Who is he?",
 				"endConvo":false},
 		{
 				"type":"Line",
@@ -55,7 +62,7 @@
 				"options":[
 						{
 								"consequence":"(none)",
-								"line":"You are really getting on my nerves.. Where is this Leo guy?",
+								"line":"You are really getting on my nerves.. What's with this Leo guy?",
 								"endConvo":false},
 						{
 								"consequence":"(none)",

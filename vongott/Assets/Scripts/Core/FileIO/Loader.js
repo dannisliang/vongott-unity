@@ -90,6 +90,34 @@ class Loader {
 		return quest;
 	}
 	
+	static function LoadSpawnPoints ( name : String ) : String[] {
+		var points : String[];
+		var path = Application.dataPath + "/Maps/" + name + ".vgmap";
+		
+		if ( !File.Exists ( path ) ) {
+			Debug.LogError ( "Loader | no such file: " + path );
+			return null;
+		}
+		
+		var sr : StreamReader = new File.OpenText( path );
+		var input : String = "";
+		var line : String = "";
+		
+		line = sr.ReadLine();
+		
+		while ( line != null ) {
+			input += line;
+			line = sr.ReadLine();
+		}
+	
+		sr.Close();
+		
+		points = Deserializer.DeserializeSpawnPoints ( input );
+	
+		return points;
+		
+	}
+	
 	static function LoadMap ( name : String ) : GameObject {
 		var map : GameObject;
 		var path = Application.dataPath + "/Maps/" + name + ".vgmap";

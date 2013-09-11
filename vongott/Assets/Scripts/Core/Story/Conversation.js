@@ -42,6 +42,7 @@ class Conversation {
 	var currentEntry : int = 0;
 	
 	var done : boolean = false;
+	var displayName : String;
 
 	// Private vars
 	private var forceEnd : boolean = false;
@@ -69,7 +70,7 @@ class Conversation {
 		var speakerName : String;
 		
 		if ( entries[currentEntry].speaker == "NPC" ) {
-			speakerName = GameCore.GetInteractiveObject().GetComponent(Actor).displayName;
+			speakerName = displayName;
 			
 		} else if ( entries[currentEntry].speaker == "Player" ) {
 			speakerName = GameCore.playerName;
@@ -232,6 +233,8 @@ class Conversation {
 		UIConversation.convo = this;
 				
 		entries.Clear ();
+		
+		displayName = GameCore.GetInteractiveObject().GetComponent(Actor).displayName;
 		
 		var file = Loader.LoadConversationToGame ( chapter + "/" + scene + "/" + name + "/" + conversation );
 		var object : JSONObject = new JSONObject ( file );

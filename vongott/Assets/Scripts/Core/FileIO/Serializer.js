@@ -112,6 +112,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	} else if ( obj.GetComponent(SpawnPoint) ) {
 		var spt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 		
+		spt.AddField ( "name", obj.name );
 		spt.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		spt.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
 	

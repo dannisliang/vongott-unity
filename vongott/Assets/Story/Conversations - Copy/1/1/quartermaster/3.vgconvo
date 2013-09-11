@@ -2,18 +2,21 @@
 		{
 				"type":"Line",
 				"condition":"1-1_picked_lethal_weapon",
+				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"I like your style, newbie, but I haven't got anything else for you. Miguel is waiting for you.",
 				"endConvo":true},
 		{
 				"type":"Line",
 				"condition":"1-1_picked_nonlethal_weapon",
+				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"I can't say I approve of your methods, newbie. I just really hope you can live up to the hype.",
 				"endConvo":true},
 		{
 				"type":"Line",
 				"condition":"1-1_picked_no_weapon",
+				"consequence":"(none)",
 				"speaker":"NPC",
 				"line":"You sure you don't want a weapon of some kind?",
 				"endConvo":false},

@@ -48,13 +48,19 @@ class EditorPicker extends OGPage {
 	
 	// Create button
 	function CreateButton ( label : String ) {
+		CreateButton ( label, true );
+	}
+	
+	function CreateButton ( label : String, useNesting : boolean ) {
 		var obj : GameObject = new GameObject ( label );
 		var btn : OGButton = obj.AddComponent ( OGButton );
 		
 		var split : String [] = label.Split ( "/"[0] );
 		
-		for ( var i = 0; i < split.Length - 1; i++ ) {
-			btn.text += ".         ";
+		if ( useNesting ) {
+			for ( var i = 0; i < split.Length - 1; i++ ) {
+				btn.text += ".         ";
+			}
 		}
 		
 		btn.text += label;
@@ -173,6 +179,13 @@ class EditorPicker extends OGPage {
 		}
 	}
 	
+	// Maps
+	function InitMaps () {
+		for ( var name : String in Directory.GetFiles ( Application.dataPath + "/Maps", "*.vgmap" ) ) {
+			CreateButton ( EditorCore.TrimFileName ( name ), false );
+		}
+	}
+	
 	// Flags
 	function InitFlags () {
 		var allFlags : JSONObject = Loader.LoadFlags();
@@ -201,6 +214,9 @@ class EditorPicker extends OGPage {
 		
 		} else if ( mode == "flag" ) {
 			InitFlags ();
+		
+		} else if ( mode == "map" ) {
+			InitMaps ();
 		
 		}
 	}

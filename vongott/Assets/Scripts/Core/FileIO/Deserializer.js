@@ -141,7 +141,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newSpt.transform.localEulerAngles = new Vector3 ( 0, DeserializeVector3 ( spt.GetField("localEulerAngles") ).y, 0 );
 		newSpt.transform.localPosition = DeserializeVector3 ( spt.GetField("localPosition") );
 	
-		newSpt.name = newSpt.name.Replace( "(Clone)", "" );
+		newSpt.name = spt.GetField ( "name" ).str;
 	
 		return newSpt;
 	
@@ -153,7 +153,6 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newTrg.transform.localEulerAngles = DeserializeVector3 ( trg.GetField("localEulerAngles") );
 		newTrg.transform.localPosition = DeserializeVector3 ( trg.GetField("localPosition") );
 		newTrg.transform.localScale = DeserializeVector3 ( trg.GetField("localScale") );
-		newTrg.name = newTrg.name.Replace( "(Clone)", "" );
 		newTrg.layer = 9;
 		
 		newTrg.GetComponent ( Trigger ).fireOnce = trg.GetField ( "fireOnce" ).b;
@@ -212,6 +211,27 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 	}
 	
 	return o;
+}
+
+static function DeserializeSpawnPoints ( s : String ) : String[] {
+	var obj : JSONObject = new JSONObject ( s );
+	var list : List.< String > = new List.< String > ();	
+	var array : String[];
+	
+	for ( var o : Object in obj.list) {
+		var jo : JSONObject = o as JSONObject;
+		if ( jo.HasField("SpawnPoint") ) {
+			list.Add ( jo.GetField("SpawnPoint").GetField("name").str );
+		}
+	}
+	
+	array = new String[list.Count];
+	
+	for ( var i = 0; i < list.Count; i++ ) {
+		array[i] = list[i];
+	}
+	
+	return array;
 }
 
 // all children

@@ -771,6 +771,21 @@ function SaveFile ( path : String ) {
 	StartCoroutine ( DoSave ( path ) );
 }
 
+// Trim filename
+static function TrimFileName ( p : String ) : String {
+	var path = p.Split("\\"[0]);
+	var fileName = path[path.Length-1];
+	var extention = fileName.Split("."[0]);
+	var name = extention[0];
+	
+	return name;
+}
+
+// Get spawnpoints
+static function GetSpawnPoints ( m : String ) : String[] {
+	return Loader.LoadSpawnPoints ( m );
+}
+
 // Load file
 static function LoadFile ( path : String ) {
 	var parent = currentLevel.transform.parent;

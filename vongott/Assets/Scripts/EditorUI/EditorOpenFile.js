@@ -82,16 +82,6 @@ class EditorOpenFile extends OGPage {
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 	
-	// Trim filename
-	function TrimFileName ( p : String ) : String {
-		var path = p.Split("\\"[0]);
-		var fileName = path[path.Length-1];
-		var extention = fileName.Split("."[0]);
-		var name = extention[0];
-		
-		return name;
-	}
-	
 	// Clear list
 	function ClearList () {
 		for ( var i = 0; i < mapList.transform.childCount; i++ ) {
@@ -108,7 +98,7 @@ class EditorOpenFile extends OGPage {
 		var paths : String[] = ListFiles();
 	
 		for ( var i = 0; i < paths.Length; i++ ) {
-			var name = TrimFileName ( paths[i] );
+			var name = EditorCore.TrimFileName ( paths[i] );
 			var obj : GameObject = new GameObject ( name );
 			var btn = obj.AddComponent ( OGButton );
 		

@@ -17,12 +17,27 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		if ( trg.startAnimation != "(none)" ) { startAnimation.selectedOption = trg.startAnimation; }
 		if ( trg.startQuest != "(none)" ) { startQuest.text = trg.startQuest; }
 		if ( trg.setFlag != "(none)" ) { setFlag.text = trg.setFlag; }
-		if ( trg.travelMap != "(none)" ) { travelMap.text = trg.travelMap; }
+		
+		if ( travelMap.text != "<map>" ) {
+			trg.travelMap = travelMap.text;
+			travelPoint.options = EditorCore.GetSpawnPoints ( travelMap.text );	
+		}
+		
 		if ( trg.travelPoint != "(none)" ) { travelPoint.selectedOption = trg.travelPoint; }
 	}
 	
 	function PickQuest ( btn : OGButton ) {
 		EditorPicker.mode = "quest";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "MenuBase";
+		
+		EditorPicker.func = UpdateObject;
+		
+		OGRoot.GoToPage ( "Picker" );
+	}
+	
+	function PickMap ( btn : OGButton ) {
+		EditorPicker.mode = "map";
 		EditorPicker.button = btn;
 		EditorPicker.sender = "MenuBase";
 		
@@ -54,7 +69,12 @@ class EditorInspectorTrigger extends MonoBehaviour {
 			if ( startAnimation.selectedOption != "<animation>" ) { trg.startAnimation = startAnimation.selectedOption; }
 			if ( startQuest.text != "<quest>" ) { trg.startQuest = startQuest.text; }
 			if ( setFlag.text != "<consequence>" ) { trg.setFlag = setFlag.text; }
-			if ( travelMap.text != "<map>" ) { trg.travelMap = travelMap.text; }
+			
+			if ( travelMap.text != "<map>" ) {
+				trg.travelMap = travelMap.text;
+				travelPoint.options = EditorCore.GetSpawnPoints ( travelMap.text );	
+			}
+			
 			if ( travelPoint.selectedOption != "<spawnpoint>" ) { trg.travelPoint = travelPoint.selectedOption; }
 		}
 	}
