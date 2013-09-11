@@ -299,27 +299,27 @@ function Update () {
 			EditorCore.ToggleIsometric();
 		
 		// numpad 7: top/bottom view
-		} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) && EditorCore.GetSelectedObject() ) {
+		} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) ) {			
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				Camera.main.GetComponent ( EditorCamera ).GoToBottomOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+				Camera.main.GetComponent ( EditorCamera ).GoToBottomOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
 			} else {
-				Camera.main.GetComponent ( EditorCamera ).GoToTopOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+				Camera.main.GetComponent ( EditorCamera ).GoToTopOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
 			}
 		
 		// numpad 3: right/left view
-		} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) && EditorCore.GetSelectedObject() ) {
+		} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) ) {			
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				Camera.main.GetComponent ( EditorCamera ).GoToLeftOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+				Camera.main.GetComponent ( EditorCamera ).GoToLeftOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
 			} else {
-				Camera.main.GetComponent ( EditorCamera ).GoToRightOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+				Camera.main.GetComponent ( EditorCamera ).GoToRightOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
 			}
 			
 		// numpad 1: front/back view
-		} else if ( Input.GetKeyDown ( KeyCode.Keypad1 ) && EditorCore.GetSelectedObject() ) {
+		} else if ( Input.GetKeyDown ( KeyCode.Keypad1 ) ) {			
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				Camera.main.GetComponent ( EditorCamera ).GoToBackOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+				Camera.main.GetComponent ( EditorCamera ).GoToBackOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
 			} else {
-				Camera.main.GetComponent ( EditorCamera ).GoToFrontOf ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+				Camera.main.GetComponent ( EditorCamera ).GoToFrontOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
 			}
 		
 		// left mouse button
@@ -339,6 +339,7 @@ function Update () {
 				EditorCore.DeselectObject ();
 			
 			}
+		
 		}
 	}
 }

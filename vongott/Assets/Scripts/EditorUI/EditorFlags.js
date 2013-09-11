@@ -24,7 +24,7 @@ class EditorFlags extends OGPage {
 			txtName.transform.localPosition = new Vector3 ( 0, 0, -2 );
 			txtName.transform.localScale = new Vector3 ( 360, 20, 1 );
 			
-			textField.maxLength = 24;
+			textField.maxLength = 48;
 			textField.regex = "^a-zA-Z0-9_";
 			textField.text = name;
 			

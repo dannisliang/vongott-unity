@@ -206,7 +206,7 @@ class EditorConversations extends OGPage {
 				entry.buttonMoveUp.target = this.gameObject;
 				entry.buttonMoveDown.target = this.gameObject;
 				entry.line.condition.target = this.gameObject;
-				entry.line.consequence.target = this.gameObject;
+				entry.group.condition.target = this.gameObject;
 				
 				child.localPosition = new Vector3 ( 0, bottomLine, 0 );
 			

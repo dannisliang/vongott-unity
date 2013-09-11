@@ -1,0 +1,73 @@
+[
+		{
+				"type":"Line",
+				"condition":"1-1_picked_lethal_weapon",
+				"speaker":"",
+				"line":"I like your style, newbie, but I haven't got anything else for you. Good luck on your first mission.",
+				"endConvo":true},
+		{
+				"type":"Line",
+				"condition":"1-1_picked_nonlethal_weapon",
+				"speaker":"",
+				"line":"I can't say I approve of your methods, newbie. I just really hope you can live up to the hype.",
+				"endConvo":true},
+		{
+				"type":"Line",
+				"condition":"1-1_picked_no_weapon",
+				"speaker":"NPC",
+				"line":"You sure you don't want a weapon of some kind?",
+				"endConvo":false},
+		{
+				"type":"Group",
+				"condition":"1-1_picked_no_weapon",
+				"groupType":"Query",
+				"options":[
+						{
+								"consequence":"(none)",
+								"line":"No thanks, I'll take my chances.",
+								"endConvo":false},
+						{
+								"consequence":"(none)",
+								"line":"I'd like something that kills people. Violently.",
+								"endConvo":false},
+						{
+								"consequence":"(none)",
+								"line":"I'd like a non-lethal weapon.",
+								"endConvo":false}],
+				"speaker":"Player"},
+		{
+				"type":"Group",
+				"condition":"1-1_picked_no_weapon",
+				"groupType":"Response",
+				"options":[
+						{
+								"consequence":"1-1_picked_no_weapon",
+								"line":"I hope you are as lucky as you are insane. This will probably not go well for you.",
+								"endConvo":false},
+						{
+								"consequence":"1-1_picked_lethal_weapon",
+								"line":"Here's a 9mm pistol. That should be violent enough for a rookie such as yourself.",
+								"endConvo":false},
+						{
+								"consequence":"1-1_picked_nonlethal_weapon",
+								"line":"Heh, you certainly seem to be the pacifist Miguel was hoping for. I'll give you an electrified baton. Hippie. ",
+								"endConvo":false}],
+				"speaker":"NPC"},
+		{
+				"type":"Group",
+				"condition":"1-1_picked_no_weapon",
+				"groupType":"Response",
+				"options":[
+						{
+								"consequence":"(none)",
+								"line":"I have no interest in any of my limbs, they're dead weight as far as I'm concerned.",
+								"endConvo":false},
+						{
+								"consequence":"(none)",
+								"line":"Those scumbags won't know what hit 'em.",
+								"endConvo":false},
+						{
+								"consequence":"(none)",
+								"line":"UNATCO might be our enemies, but they are still people.",
+								"endConvo":false}],
+				"speaker":"Player"}]

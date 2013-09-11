@@ -7,9 +7,11 @@ class EditorConversationEntry extends MonoBehaviour {
 	// Public classes	
 	class Group {
 		var groupType : OGPopUp;
+		var condition : OGButton;
 		var instance : GameObject;
 		var options : OGPopUp;
 		var container : Transform;
+		var speaker : OGPopUp;
 	}
 
 	class DialogBox {
@@ -23,9 +25,9 @@ class EditorConversationEntry extends MonoBehaviour {
 	class Line {
 		var instance : GameObject;
 		var condition : OGButton;
-		var consequence : OGButton;
 		var speaker : OGPopUp;
 		var line : OGTextField;
+		var endConvo : OGTickBox;
 	}
 	
 	// Public vars

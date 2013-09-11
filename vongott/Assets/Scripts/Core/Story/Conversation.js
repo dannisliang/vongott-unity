@@ -18,6 +18,7 @@ class Conversation {
 		var line : String;
 		
 		var canCancel : boolean;
+		var endConvo : boolean;
 		var useInput: boolean;
 		
 		var title: String;
@@ -40,6 +41,11 @@ class Conversation {
 	var currentOption : int = 0;
 	var currentEntry : int = 0;
 	
+	var done : boolean = false;
+
+	// Private vars
+	private var forceEnd : boolean = false;
+
 	
 	////////////////////
 	// Conversation navigation
@@ -54,22 +60,36 @@ class Conversation {
 		
 		GameCore.ToggleControls ( true );
 		currentEntry = 0;
+		
+		done = true;
+	}
+	
+	// Set name
+	function SetName () {
+		var speakerName : String;
+		
+		if ( entries[currentEntry].speaker == "NPC" ) {
+			speakerName = GameCore.GetInteractiveObject().GetComponent(Actor).displayName;
+			
+		} else if ( entries[currentEntry].speaker == "Player" ) {
+			speakerName = GameCore.playerName;
+		}
+	
+		UIConversation.SetName ( speakerName );
 	}
 	
 	// Display an entry
 	function DisplayEntry () {
 		var entry : InventoryEntry = entries[currentEntry];
-		var speakerName : String;
 		var speakerLine : String;
 		
 		// line
 		if ( entry.type == "Line" ) {
-			if ( entries[currentEntry].speaker == "NPC" ) {
-				speakerName = name;
-				
-			} else if ( entries[currentEntry].speaker == "Player" ) {
-				speakerName = GameCore.playerName;
+			if ( entries[currentEntry].endConvo ) {
+				forceEnd = true;
 			}
+			
+			SetName ();
 		
 			if ( entries[currentEntry].line.Replace ( "Player", GameCore.playerName ) ) {
 				speakerLine = entries[currentEntry].line.Replace ( "Player", GameCore.playerName );
@@ -77,7 +97,6 @@ class Conversation {
 				speakerLine = entries[currentEntry].line;
 			}
 		
-			UIConversation.SetName ( speakerName );
 			UIConversation.SetLine ( speakerLine );
 		
 		// group		
@@ -97,15 +116,17 @@ class Conversation {
 				}
 			
 			// response
-			} else {
-				speakerName = name;
-				
+			} else {				
 				if ( entry.options[currentOption] ) {
 					speakerLine = entry.options[currentOption].line;
 					SetFlag ( entry.options[currentOption] );
+					
+					if ( entry.options[currentOption].endConvo ) {
+						forceEnd = true;
+					}
 				}
 				
-				UIConversation.SetName ( speakerName );
+				SetName ();				
 				UIConversation.SetLine ( speakerLine );
 			}
 		
@@ -126,7 +147,13 @@ class Conversation {
 	
 	// Split string
 	function SplitString ( s : String, i : int ) : String {
-		return Regex.Split ( s, " | " )[i];
+		var strings : String[] = Regex.Split ( s, " | " );
+		
+		if ( i >= strings.Length ) {
+			return "True";
+		} else {
+			return strings[i];
+		}
 	}
 	
 	// Get flag
@@ -135,7 +162,7 @@ class Conversation {
 		
 		var flag : String = SplitString ( entry.condition, 0 );
 		var bool : boolean = SplitString ( entry.condition, 2 ) == "True";
-		
+				
 		return FlagManager.GetFlag ( flag, bool );
 	}
 	
@@ -145,13 +172,13 @@ class Conversation {
 		
 		var flag : String = SplitString ( entry.consequence, 0 );
 		var bool : boolean = SplitString ( entry.consequence, 2 ) == "True";
-		
+				
 		FlagManager.SetFlag ( flag, bool );
 	}
 	
 	// Next entry
 	function NextEntry () {		
-		if ( currentEntry < entries.Count - 1 ) {
+		if ( currentEntry < entries.Count - 1 && !forceEnd ) {
 			currentEntry++;
 			
 			if ( GetFlag ( entries[currentEntry] ) ) {
@@ -162,6 +189,7 @@ class Conversation {
 		
 		} else {
 			Exit ();
+		
 		}
 	}
 	
@@ -185,6 +213,7 @@ class Conversation {
 	function SelectOption () {
 		SetFlag ( entries[currentEntry].options[currentOption] );
 		NextEntry ();
+
 	}
 	
 	
@@ -192,6 +221,8 @@ class Conversation {
 	// Init
 	////////////////////
 	function Init () {		
+		forceEnd = false;
+		
 		if ( endQuest != "" && endQuest != "(none)" ) {
 			QuestManager.EndQuest ( endQuest );
 		}
@@ -212,20 +243,25 @@ class Conversation {
 				entry.type = o.GetField ( "type" ).str;
 				
 				entry.condition = o.GetField ( "condition" ).str;
-				entry.consequence = o.GetField ( "consequence" ).str;
 				entry.speaker = o.GetField ( "speaker" ).str;
 				entry.line = o.GetField ( "line" ).str;
+				entry.endConvo = o.GetField ( "endConvo" ).b;
 			
 			// group
 			} else if ( o.GetField ( "type" ).str == "Group" ) {
+				
+				entry.condition = o.GetField ( "condition" ).str;
 				entry.type = o.GetField ( "type" ).str;
 				entry.groupType = o.GetField ( "groupType" ).str;
+				entry.speaker = o.GetField ( "speaker" ).str;
 				
-				for ( var opt : JSONObject in o.GetField ( "options" ).list as JSONObject[] ) {
+				for ( var list : Object in o.GetField ( "options" ).list as Object ) {
+					var opt : JSONObject = list as JSONObject;
 					var option = new InventoryEntry ();
 					
 					option.consequence = opt.GetField ( "consequence" ).str;
 					option.line = opt.GetField ( "line" ).str;
+					option.endConvo = opt.GetField ( "endConvo" ).b;
 					
 					entry.options.Add ( option );	
 				}

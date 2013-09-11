@@ -52,6 +52,7 @@ class Actor extends InteractiveObject {
 	var aiming : boolean = false;
 
 	@HideInInspector var currentConvo : int = 0;
+	@HideInInspector var lastValidConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
 	@HideInInspector var currentLine : int = 0;
 	@HideInInspector var nodeTimer : float = 0;
@@ -131,11 +132,28 @@ class Actor extends InteractiveObject {
 	////////////////////
 	function Talk () {
 		if ( conversations.Count > 0 ) {
-			conversations[currentConvo].Init ();
-			
-			if ( currentConvo < conversations.Count - 1 ) {
-				currentConvo++;
+			var nextConvo : Conversation;
+		
+			for ( var i = 0; i < conversations.Count; i++ ) {
+				var validConvo : boolean = FlagManager.GetFlag ( conversations[i].condition, true );
+				var doneConvo : boolean = conversations[i].done;
+				
+				// If the convo's flag is true and it's not done yet, pick this
+				if ( validConvo && !doneConvo ) {
+					nextConvo = conversations[i];
+					currentConvo = i;
+					
+					break;
+				
+				// If the convo's fla gis true and it's already been done, store it in case there are no more convos
+				} else if ( validConvo && doneConvo ) {
+					nextConvo = conversations[i];
+					currentConvo = i;
+					
+				}
 			}
+			
+			nextConvo.Init ();
 		}
 	}
 	

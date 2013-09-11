@@ -13,9 +13,15 @@ var gizmoY : Material;
 var gizmoZ : Material;
 var gridDark : Material;
 var gridBright : Material;
+var cursorMaterial : Material;
 
 @HideInInspector var fixPoint : Vector3;
+
+// Private vars
 private var skyboxCamera : GameObject;
+private var clickTimer : float = 0;
+private var clickThreshold : float = 0.1;
+private var locked : boolean = false;
 
 
 ////////////////////
@@ -81,6 +87,58 @@ function DrawGrid () {
 	GL.End ();
 }
 
+// Cursor
+function DrawCursor () {
+	cursorMaterial.SetPass ( 0 );
+	
+	var r : float = 0.25;
+	
+	GL.Begin ( GL.LINES );
+	
+	GL.Vertex3 ( fixPoint.x - r, fixPoint.y, fixPoint.z );
+	GL.Vertex3 ( fixPoint.x + r, fixPoint.y, fixPoint.z );
+	
+	GL.Vertex3 ( fixPoint.x, fixPoint.y - r, fixPoint.z );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y + r, fixPoint.z );
+	
+	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z - r );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z + r );
+	
+	for (var i:int = 0; i < 360; i++){
+    	var point : Vector3 = fixPoint;
+    	
+    	point.x = r * Mathf.Cos(i*Mathf.Deg2Rad) + fixPoint.x;
+	    point.y = r * Mathf.Sin(i*Mathf.Deg2Rad) + fixPoint.y;
+	    GL.Vertex3(point.x,point.y,point.z);
+	     
+	    point.x = r * Mathf.Cos(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.x;
+	    point.y = r * Mathf.Sin(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.y;
+	    GL.Vertex3(point.x,point.y,point.z);
+	    
+	    point = fixPoint;
+	    
+	    point.z = r * Mathf.Cos(i*Mathf.Deg2Rad) + fixPoint.z;
+	    point.y = r * Mathf.Sin(i*Mathf.Deg2Rad) + fixPoint.y;
+	    GL.Vertex3(point.x,point.y,point.z);
+	     
+	    point.z = r * Mathf.Cos(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.z;
+	    point.y = r * Mathf.Sin(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.y;
+	    GL.Vertex3(point.x,point.y,point.z);
+	    
+	    point = fixPoint;
+	    
+	    point.z = r * Mathf.Cos(i*Mathf.Deg2Rad) + fixPoint.z;
+	    point.x = r * Mathf.Sin(i*Mathf.Deg2Rad) + fixPoint.x;
+	    GL.Vertex3(point.x,point.y,point.z);
+	     
+	    point.z = r * Mathf.Cos(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.z;
+	    point.x = r * Mathf.Sin(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.x;
+	    GL.Vertex3(point.x,point.y,point.z);
+    }
+	
+	GL.End();
+}
+
 // Rendering
 function OnPreRender () {
 	// wireframe
@@ -103,16 +161,20 @@ function OnPostRender () {
 		DrawYLine();
 	} else if ( EditorCore.grabRestrict == "z" ) {
 		DrawZLine();
-	} else {
-		/*DrawXLine();
-		DrawYLine();
-		DrawZLine();*/
 	}
+	
+	// cursor
+	DrawCursor ();
 }
 
 // Init
 function Start () {
 	skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
+}
+
+// Toggle lock
+function ToggleLock () {
+	locked = !locked;
 }
 
 // Tweens
@@ -155,7 +217,8 @@ function GoToBackOf ( position : Vector3 ) {
 }
 
 function TweenTurnTo ( target : Vector3 ) {
-	iTween.LookTo ( Camera.main.gameObject, { "looktarget": target, "time" : 0.25, "onupdate" : "UpdateRotation" } );
+	ToggleLock ();
+	iTween.LookTo ( Camera.main.gameObject, { "looktarget": target, "time" : 0.25, "onupdate" : "UpdateRotation", "oncomplete" : "ToggleLock" } );
 }
 
 function TweenMoveTo ( position : Vector3 ) {
@@ -182,15 +245,32 @@ function RefreshFixPoint ( useMouse : boolean ) {
 	} else if ( Physics.Raycast ( Camera.main.transform.position, Camera.main.transform.forward, hit, Mathf.Infinity ) ) {
 		fixPoint = hit.point;
 	
-	} else {
-		fixPoint = Camera.main.transform.position + (Camera.main.transform.forward * 5.0);
-	
 	}
+}
+
+function SetFixPoint ( point : Vector3 ) {
+	fixPoint = point;
+}
+
+function SetFixPointToSelected () {
+	if ( !EditorCore.GetSelectedObject() ) {
+		return;
+	}
+	
+	var bounds : Bounds;
+	
+	if ( EditorCore.GetSelectedObject().GetComponentInChildren(MeshRenderer) ) {
+		bounds = EditorCore.GetSelectedObject().GetComponentInChildren(MeshRenderer).bounds;
+	} else {
+		bounds = EditorCore.GetSelectedObject().GetComponentInChildren(SkinnedMeshRenderer).bounds;
+	}
+	
+	Camera.main.GetComponent(EditorCamera).SetFixPoint ( bounds.center );
 }
 
 // Update
 function Update () {
-	if ( EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) { return; }
+	if ( locked || EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) { return; }
 	
 	// position
 	var x = transform.localPosition.x;
@@ -225,13 +305,19 @@ function Update () {
 		} 
 		
 	}
+		
+	// middle mouse click
+	if ( Input.GetMouseButtonDown(2) ) {
+		clickTimer = Time.time;
+	
+	} else if ( Input.GetMouseButtonUp(2) ) {
+		if ( Time.time - clickTimer < clickThreshold ) {
+			RefreshFixPoint ( true );
+			TweenTurnTo ( fixPoint );
+		}
 	
 	// right mouse button
-	if ( Input.GetMouseButtonDown(1) ) {
-		RefreshFixPoint ( true );
-	}
-	
-	if ( Input.GetMouseButton(1) ) {  
+	} else if ( Input.GetMouseButton(1) ) {  
 		if ( !Input.GetKey ( KeyCode.LeftAlt ) )  { 
 			var target : Vector3 = fixPoint;
 			
@@ -247,7 +333,7 @@ function Update () {
 		
 		}
 	
-	// middle mouse
+	// middle mouse drag
 	} else if ( Input.GetMouseButton(2) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {        
         var panSensitivity : float = sensitivity; 
 			

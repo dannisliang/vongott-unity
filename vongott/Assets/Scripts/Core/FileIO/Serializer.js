@@ -360,9 +360,9 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 			var l = e.line;
 						
 			entry.AddField ( "condition", l.condition.text );
-			entry.AddField ( "consequence", l.consequence.text );
 			entry.AddField ( "speaker", l.speaker.selectedOption );
-			entry.AddField ( "line", l.line.text );			
+			entry.AddField ( "line", l.line.text );
+			entry.AddField ( "endConvo", l.endConvo.isChecked );			
 		
 		// group
 		} else if ( e.type.selectedOption == "Group" ) {
@@ -375,12 +375,15 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 																																																																																																																																																																															
 				groupLine.AddField ( "consequence", gl.consequence.text );
 				groupLine.AddField ( "line", gl.line.text );
+				groupLine.AddField ( "endConvo", gl.endConvo.isChecked );
 				
 				options.Add ( groupLine );
 			}
 			
+			entry.AddField ( "condition", g.condition.text );
 			entry.AddField ( "groupType", g.groupType.selectedOption );
 			entry.AddField ( "options", options );
+			entry.AddField ( "speaker", g.speaker.selectedOption );
 		
 		// dialog box
 		} else if ( e.type.selectedOption == "DialogBox" ) {

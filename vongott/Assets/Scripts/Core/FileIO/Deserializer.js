@@ -195,6 +195,7 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 		
 		Camera.main.transform.localPosition = DeserializeVector3 ( cam.GetField ( "localPosition" ) );
 		Camera.main.transform.localEulerAngles = DeserializeVector3 ( cam.GetField ( "localEulerAngles" ) );
+		Camera.main.GetComponent(EditorCamera).RefreshFixPoint ( false );
 	}
 	
 	// skybox
@@ -420,14 +421,16 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 		// lines
 		if ( e.GetField ( "type" ).str == "Line" ) {
 			entry.line.condition.text = e.GetField ( "condition" ).str;
-			entry.line.consequence.text = e.GetField ( "consequence" ).str;
 			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
 			entry.line.line.text = e.GetField ( "line" ).str;
+			entry.line.endConvo.isChecked = e.GetField ( "endConvo" ).b;
 		
 		// groups
 		} else if ( e.GetField ( "type" ).str == "Group" ) {
+			entry.group.condition.text = e.GetField ( "condition" ).str;
 			entry.group.options.selectedOption = e.GetField ( "options" ).list.Count.ToString();
 			entry.group.groupType.selectedOption = e.GetField ( "groupType" ).str;
+			entry.group.speaker.selectedOption = e.GetField ( "speaker" ).str;
 			
 			for ( var i = 0; i < e.GetField ( "options" ).list.Count; i++ ) {
 				var gl : JSONObject = e.GetField ( "options" ).list[i] as JSONObject;		
@@ -437,6 +440,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 				groupLine.SetIndex ( i );
 				groupLine.consequence.text = gl.GetField ( "consequence" ).str;
 				groupLine.line.text = gl.GetField ( "line" ).str;
+				groupLine.endConvo.isChecked = gl.GetField ( "endConvo" ).b;
 			
 				groupLine.transform.parent = entry.group.container;
 				groupLine.transform.localPosition = new Vector3 ( 20, (i+1) * 50, 0 );
