@@ -410,6 +410,7 @@ static function DeserializeConversationsToGame ( convos : JSONObject ) {
 			var convo : Conversation = new Conversation ();
 			
 			if ( c.HasField ( "condition" ) ) { convo.condition = c.GetField ( "condition" ).str; }
+			if ( c.HasField ( "conditionBool" ) ) { convo.conditionBool = c.GetField ( "conditionBool" ).b; }
 			if ( c.HasField ( "startQuest" ) ) { convo.startQuest = c.GetField ( "startQuest" ).str; }
 			if ( c.HasField ( "endQuest" ) ) { convo.endQuest = c.GetField ( "endQuest" ).str; }
 			
@@ -441,7 +442,9 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 		// lines
 		if ( e.GetField ( "type" ).str == "Line" ) {
 			entry.line.condition.text = e.GetField ( "condition" ).str;
+			entry.line.conditionBool.isChecked = e.GetField ( "conditionBool" ).b;
 			entry.line.consequence.text = e.GetField ( "consequence" ).str;
+			entry.line.consequenceBool.isChecked = e.GetField ( "consequenceBool" ).b;
 			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
 			entry.line.line.text = e.GetField ( "line" ).str;
 			entry.line.endConvo.isChecked = e.GetField ( "endConvo" ).b;
@@ -449,6 +452,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 		// groups
 		} else if ( e.GetField ( "type" ).str == "Group" ) {
 			entry.group.condition.text = e.GetField ( "condition" ).str;
+			entry.group.conditionBool.isChecked = e.GetField ( "conditionBool" ).b;
 			entry.group.options.selectedOption = e.GetField ( "options" ).list.Count.ToString();
 			entry.group.groupType.selectedOption = e.GetField ( "groupType" ).str;
 			entry.group.speaker.selectedOption = e.GetField ( "speaker" ).str;
@@ -460,6 +464,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 			
 				groupLine.SetIndex ( i );
 				groupLine.consequence.text = gl.GetField ( "consequence" ).str;
+				groupLine.consequenceBool.isChecked = gl.GetField ( "consequenceBool" ).b;
 				groupLine.line.text = gl.GetField ( "line" ).str;
 				groupLine.endConvo.isChecked = gl.GetField ( "endConvo" ).b;
 			

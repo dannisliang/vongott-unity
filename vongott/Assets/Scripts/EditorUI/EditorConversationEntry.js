@@ -8,6 +8,7 @@ class EditorConversationEntry extends MonoBehaviour {
 	class Group {
 		var groupType : OGPopUp;
 		var condition : OGButton;
+		var conditionBool : OGTickBox;
 		var instance : GameObject;
 		var options : OGPopUp;
 		var container : Transform;
@@ -25,7 +26,9 @@ class EditorConversationEntry extends MonoBehaviour {
 	class Line {
 		var instance : GameObject;
 		var condition : OGButton;
+		var conditionBool : OGTickBox;
 		var consequence : OGButton;
+		var consequenceBool : OGTickBox;
 		var speaker : OGPopUp;
 		var line : OGTextField;
 		var endConvo : OGTickBox;
@@ -121,5 +124,10 @@ class EditorConversationEntry extends MonoBehaviour {
 		buttonNewBelow.argument = index.text;
 		buttonMoveUp.argument = index.text;
 		buttonMoveDown.argument = index.text;
+		
+		// Manage tickboxes
+		if ( group.condition.text == "(none)" ) { group.conditionBool.isChecked = false; }
+		if ( line.condition.text == "(none)" ) { line.conditionBool.isChecked = false; }
+		if ( line.consequence.text == "(none)" ) { line.consequenceBool.isChecked = false; }
 	}
 }

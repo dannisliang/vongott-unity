@@ -12,7 +12,9 @@ class Conversation {
 		var groupType : String;
 		
 		var condition : String;
+		var conditionBool : boolean;
 		var consequence : String;
+		var consequenceBool : boolean;
 		
 		var speaker : String;
 		var line : String;
@@ -29,6 +31,7 @@ class Conversation {
 
 	// Public vars
 	var condition : String = "";
+	var conditionBool : boolean = true;
 	var startQuest : String = "";
 	var endQuest : String = "";
 	
@@ -162,21 +165,15 @@ class Conversation {
 	// Get flag
 	function GetFlag ( entry : ConvoEntry ) : boolean {
 		if ( entry.condition == null || entry.condition == "(none)" || entry.condition == "<condition>" || entry.condition == "" ) { return true; }
-		
-		var flag : String = SplitString ( entry.condition, 0 );
-		var bool : boolean = SplitString ( entry.condition, 2 ) == "True";
 				
-		return FlagManager.GetFlag ( flag, bool );
+		return FlagManager.GetFlag ( entry.condition, entry.conditionBool );
 	}
 	
 	// Set flag
 	function SetFlag ( entry : ConvoEntry ) {		
 		if ( entry.consequence == null || entry.consequence == "(none)" || entry.consequence == "<consequence>" || entry.consequence == "" ) { return; }
-		
-		var flag : String = SplitString ( entry.consequence, 0 );
-		var bool : boolean = SplitString ( entry.consequence, 2 ) == "True";
 				
-		FlagManager.SetFlag ( flag, bool );
+		FlagManager.SetFlag ( entry.consequence, entry.consequenceBool );
 	}
 	
 	// Next entry
@@ -198,7 +195,7 @@ class Conversation {
 	
 	// Next option
 	function NextOption () {
-		if ( currentOption < entries[currentEntry].options.Count ) {
+		if ( currentOption < entries[currentEntry].options.Count - 1 ) {
 			currentOption++;
 			UIConversation.HighlightOption ( currentOption );
 		}
@@ -248,7 +245,9 @@ class Conversation {
 				entry.type = o.GetField ( "type" ).str;
 				
 				entry.condition = o.GetField ( "condition" ).str;
+				entry.conditionBool = o.GetField ( "conditionBool" ).b;
 				entry.consequence = o.GetField ( "consequence" ).str;
+				entry.consequenceBool = o.GetField ( "consequenceBool" ).b;
 				entry.speaker = o.GetField ( "speaker" ).str;
 				entry.line = o.GetField ( "line" ).str;
 				entry.endConvo = o.GetField ( "endConvo" ).b;
@@ -257,6 +256,7 @@ class Conversation {
 			} else if ( o.GetField ( "type" ).str == "Group" ) {
 				
 				entry.condition = o.GetField ( "condition" ).str;
+				entry.conditionBool = o.GetField ( "conditionBool" ).b;
 				entry.type = o.GetField ( "type" ).str;
 				entry.groupType = o.GetField ( "groupType" ).str;
 				entry.speaker = o.GetField ( "speaker" ).str;
@@ -266,6 +266,7 @@ class Conversation {
 					var option = new ConvoEntry ();
 					
 					option.consequence = opt.GetField ( "consequence" ).str;
+					option.consequenceBool = opt.GetField ( "consequenceBool" ).b;
 					option.line = opt.GetField ( "line" ).str;
 					option.endConvo = opt.GetField ( "endConvo" ).b;
 					

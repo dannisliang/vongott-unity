@@ -3,6 +3,7 @@
 class EditorConversationGroupLine extends MonoBehaviour {
 	var index : OGLabel;
 	var consequence : OGButton;
+	var consequenceBool : OGTickBox;
 	var line : OGTextField;
 	var endConvo : OGTickBox;
 	
@@ -14,5 +15,9 @@ class EditorConversationGroupLine extends MonoBehaviour {
 		} else if ( i == 2 ) {
 			index.text = "C";
 		}
+	}
+
+	function Update () {
+		if ( consequence.text == "(none)" ) { consequenceBool.isChecked = false; }
 	}
 }

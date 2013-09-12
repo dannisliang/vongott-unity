@@ -67,6 +67,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 			var convo : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 			
 			convo.AddField ( "condition", c.condition );
+			convo.AddField ( "conditionBool", c.conditionBool );
 			convo.AddField ( "startQuest", c.startQuest );
 			convo.AddField ( "endQuest", c.endQuest );
 			
@@ -361,7 +362,9 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 			var l = e.line;
 						
 			entry.AddField ( "condition", l.condition.text );
+			entry.AddField ( "conditionBool", l.conditionBool.isChecked );
 			entry.AddField ( "consequence", l.consequence.text );
+			entry.AddField ( "consequenceBool", l.consequenceBool.isChecked );
 			entry.AddField ( "speaker", l.speaker.selectedOption );
 			entry.AddField ( "line", l.line.text );
 			entry.AddField ( "endConvo", l.endConvo.isChecked );			
@@ -376,6 +379,7 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 				var groupLine : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 																																																																																																																																																																															
 				groupLine.AddField ( "consequence", gl.consequence.text );
+				groupLine.AddField ( "consequenceBool", gl.consequenceBool.isChecked );
 				groupLine.AddField ( "line", gl.line.text );
 				groupLine.AddField ( "endConvo", gl.endConvo.isChecked );
 				
@@ -383,6 +387,7 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 			}
 			
 			entry.AddField ( "condition", g.condition.text );
+			entry.AddField ( "conditionBool", l.conditionBool.isChecked );
 			entry.AddField ( "groupType", g.groupType.selectedOption );
 			entry.AddField ( "options", options );
 			entry.AddField ( "speaker", g.speaker.selectedOption );

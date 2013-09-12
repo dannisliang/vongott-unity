@@ -2,100 +2,124 @@
 		{
 				"type":"Line",
 				"condition":"1-1_rude_to_miguel",
+				"conditionBool":true,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"Don't sweat it about Miguel. He has a bit of a temper. I personally like to think that a rough attitude makes a good activist. Keep it up.",
 				"endConvo":false},
 		{
 				"type":"Line",
 				"condition":"(none)",
+				"conditionBool":false,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
-				"line":"I hear you'll be saving Leo's ass. If you ask me, he'd be out of here a long time ago.",
+				"line":"I hear you'll be saving Leo's ass. If you ask me, he should have been out of here a long time ago.",
 				"endConvo":false},
 		{
 				"type":"Group",
 				"condition":"(none)",
+				"conditionBool":false,
 				"groupType":"Query",
 				"options":[
 						{
 								"consequence":"1-1_picked_no_weapon",
+								"consequenceBool":true,
 								"line":"What is a quartermaster anyway?",
 								"endConvo":false},
 						{
 								"consequence":"1-1_picked_lethal_weapon",
+								"consequenceBool":true,
 								"line":"I'd like something that kills people. Violently.",
 								"endConvo":false},
 						{
 								"consequence":"1-1_picked_nonlethal_weapon",
+								"consequenceBool":true,
 								"line":"I'd like a non-lethal weapon.",
 								"endConvo":false}],
 				"speaker":"Player"},
 		{
 				"type":"Line",
 				"condition":"1-1_picked_no_weapon",
+				"conditionBool":true,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"Wow, you are very green, aren't you? I can provide you with weapons and other tools you might need in the field.",
 				"endConvo":false},
 		{
 				"type":"Line",
 				"condition":"1-1_picked_no_weapon",
+				"conditionBool":true,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"Which weapon do you want?",
 				"endConvo":false},
 		{
 				"type":"Group",
 				"condition":"1-1_picked_no_weapon",
+				"conditionBool":true,
 				"groupType":"Query",
 				"options":[
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"My body is my weapon.",
 								"endConvo":false},
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"I'd like something that kills people. Violently.",
 								"endConvo":false},
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"I'd like a non-lethal weapon.",
 								"endConvo":false}],
 				"speaker":"Player"},
 		{
 				"type":"Group",
 				"condition":"(none)",
+				"conditionBool":true,
 				"groupType":"Response",
 				"options":[
 						{
 								"consequence":"1-1_picked_no_weapon",
+								"consequenceBool":true,
 								"line":"Haha! Well, it's been great knowing ya, newbie.",
 								"endConvo":false},
 						{
 								"consequence":"1-1_picked_lethal_weapon",
+								"consequenceBool":true,
 								"line":"Here's a 9mm pistol. That should be violent enough for a rookie such as yourself.",
 								"endConvo":false},
 						{
 								"consequence":"1-1_picked_nonlethal_weapon",
+								"consequenceBool":true,
 								"line":"You certainly seem to be the pacifist Miguel was hoping for. I'll give you an electrified baton, hippie. ",
 								"endConvo":false}],
 				"speaker":"NPC"},
 		{
 				"type":"Group",
 				"condition":"(none)",
+				"conditionBool":true,
 				"groupType":"Response",
 				"options":[
 						{
 								"consequence":"1-1_got_gear",
+								"consequenceBool":true,
 								"line":"I am invincible!",
 								"endConvo":false},
 						{
 								"consequence":"1-1_got_gear",
+								"consequenceBool":true,
 								"line":"Those scumbags won't know what hit 'em.",
 								"endConvo":false},
 						{
 								"consequence":"1-1_got_gear",
+								"consequenceBool":true,
 								"line":"UNATCO might be our enemies, but they are still people.",
 								"endConvo":false}],
 				"speaker":"Player"}]

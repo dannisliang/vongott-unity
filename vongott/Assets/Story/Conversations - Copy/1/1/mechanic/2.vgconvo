@@ -1,6 +1,13 @@
 [
 		{
 				"type":"Line",
+				"condition":"1-1_talked_about_mission",
+				"consequence":"(none)",
+				"speaker":"NPC",
+				"line":"I am so happy I am not you right now. Good luck finding Leo!",
+				"endConvo":true},
+		{
+				"type":"Line",
 				"condition":"(none)",
 				"consequence":"(none)",
 				"speaker":"NPC",

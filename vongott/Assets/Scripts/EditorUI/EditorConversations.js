@@ -197,6 +197,7 @@ class EditorConversations extends OGPage {
 			if ( entries[i] ) {
 				var child : Transform = entries[i].transform;
 				var entry = entries[i];
+				var xPos : float = 0;
 				
 				entry.gameObject.name = i.ToString();
 				entry.index.text = i.ToString();
@@ -208,8 +209,8 @@ class EditorConversations extends OGPage {
 				entry.line.condition.target = this.gameObject;
 				entry.line.consequence.target = this.gameObject;
 				entry.group.condition.target = this.gameObject;
-				
-				child.localPosition = new Vector3 ( 0, bottomLine, 0 );
+								
+				child.localPosition = new Vector3 ( xPos, bottomLine, 0 );
 			
 				if ( entry.type.selectedOption == "Group" ) {
 					for ( var l = 0; l < entry.group.container.childCount; l++ ) {				

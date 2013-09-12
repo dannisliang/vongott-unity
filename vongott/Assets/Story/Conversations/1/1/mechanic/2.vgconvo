@@ -2,14 +2,18 @@
 		{
 				"type":"Line",
 				"condition":"1-1_talked_about_mission",
+				"conditionBool":true,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"I am so happy I am not you right now. Good luck finding Leo!",
 				"endConvo":true},
 		{
 				"type":"Line",
 				"condition":"(none)",
+				"conditionBool":false,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"Please, I can't talk to Miguel. Go tell him about Leo.",
 				"endConvo":false}]
