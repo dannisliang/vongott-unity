@@ -55,9 +55,8 @@ class Actor extends InteractiveObject {
 	var aiming : boolean = false;
 
 	@HideInInspector var currentConvo : int = 0;
-	@HideInInspector var lastValidConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
-	@HideInInspector var currentLine : int = 0;
+	@HideInInspector var currentPath : int = 0;
 	@HideInInspector var nodeTimer : float = 0;
 	@HideInInspector var shootTimer : float = 0;
 	@HideInInspector var attentionTimer : float = 0;
@@ -163,11 +162,18 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	function StopTalking () {
+	function StopTalking ( endAction : String ) {
 		talking = false;
-		waiting = false;
 		
 		GameCore.GetPlayerObject().GetComponent(Player).StopTalking ();
+	
+		if ( endAction == "Attack" ) {
+			SetAffiliation ( "Enemy" );
+		
+		} else if ( endAction == "NextPath" ) {
+			waiting = false;
+		
+		}
 	}
 	
 	function Say ( msg : String ) {

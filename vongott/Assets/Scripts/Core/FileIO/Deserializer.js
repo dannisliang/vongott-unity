@@ -437,7 +437,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 			entry.line.consequenceBool.isChecked = e.GetField ( "consequenceBool" ).b;
 			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
 			entry.line.line.text = e.GetField ( "line" ).str;
-			entry.line.endConvo.isChecked = e.GetField ( "endConvo" ).b;
+			entry.line.endConvo.selectedOption = e.GetField ( "endConvo" ).str;
 		
 		// groups
 		} else if ( e.GetField ( "type" ).str == "Group" ) {
@@ -456,7 +456,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 				groupLine.consequence.text = gl.GetField ( "consequence" ).str;
 				groupLine.consequenceBool.isChecked = gl.GetField ( "consequenceBool" ).b;
 				groupLine.line.text = gl.GetField ( "line" ).str;
-				groupLine.endConvo.isChecked = gl.GetField ( "endConvo" ).b;
+				groupLine.endConvo.selectedOption = gl.GetField ( "endConvo" ).str;
 			
 				groupLine.transform.parent = entry.group.container;
 				groupLine.transform.localPosition = new Vector3 ( 20, (i+1) * 50, 0 );

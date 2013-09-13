@@ -2,75 +2,93 @@
 		{
 				"type":"Line",
 				"condition":"1-1_picked_lethal_weapon",
+				"conditionBool":true,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"I like your style, newbie, but I haven't got anything else for you. Miguel is waiting for you.",
 				"endConvo":true},
 		{
 				"type":"Line",
 				"condition":"1-1_picked_nonlethal_weapon",
+				"conditionBool":true,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"I can't say I approve of your methods, newbie. I just really hope you can live up to the hype.",
 				"endConvo":true},
 		{
 				"type":"Line",
 				"condition":"1-1_picked_no_weapon",
+				"conditionBool":true,
 				"consequence":"(none)",
+				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"You sure you don't want a weapon of some kind?",
 				"endConvo":false},
 		{
 				"type":"Group",
 				"condition":"1-1_picked_no_weapon",
+				"conditionBool":true,
 				"groupType":"Query",
 				"options":[
 						{
 								"consequence":"1-1_picked_no_weapon",
+								"consequenceBool":true,
 								"line":"No thanks, I'll take my chances.",
 								"endConvo":false},
 						{
 								"consequence":"1-1_picked_lethal_weapon",
+								"consequenceBool":true,
 								"line":"I'd like something that kills people. Violently.",
 								"endConvo":false},
 						{
 								"consequence":"1-1_picked_nonlethal_weapon",
+								"consequenceBool":true,
 								"line":"I'd like a non-lethal weapon.",
 								"endConvo":false}],
 				"speaker":"Player"},
 		{
 				"type":"Group",
 				"condition":"1-1_picked_no_weapon",
+				"conditionBool":true,
 				"groupType":"Response",
 				"options":[
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"I hope you are as lucky as you are insane. This will probably not go well for you.",
 								"endConvo":false},
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"Here's a 9mm pistol. That should be violent enough for a rookie such as yourself.",
 								"endConvo":false},
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"You certainly seem to be the pacifist Miguel was hoping for. I'll give you an electrified baton, hippie. ",
 								"endConvo":false}],
 				"speaker":"NPC"},
 		{
 				"type":"Group",
 				"condition":"1-1_picked_no_weapon",
+				"conditionBool":true,
 				"groupType":"Response",
 				"options":[
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"I have no interest in any of my limbs, they're dead weight as far as I'm concerned.",
 								"endConvo":false},
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"Those scumbags won't know what hit 'em.",
 								"endConvo":false},
 						{
 								"consequence":"(none)",
+								"consequenceBool":false,
 								"line":"UNATCO might be our enemies, but they are still people.",
 								"endConvo":false}],
 				"speaker":"Player"}]

@@ -7,7 +7,7 @@
 				"consequenceBool":false,
 				"speaker":"NPC",
 				"line":"What's wrong? Are you malfunctioning?",
-				"endConvo":false},
+				"endConvo":""},
 		{
 				"type":"Group",
 				"condition":"(none)",
@@ -18,17 +18,17 @@
 								"consequence":"(none)",
 								"consequenceBool":false,
 								"line":"I like your face.",
-								"endConvo":false},
+								"endConvo":""},
 						{
 								"consequence":"(none)",
 								"consequenceBool":false,
 								"line":"I think you owe me an explanation.",
-								"endConvo":false},
+								"endConvo":""},
 						{
 								"consequence":"(none)",
 								"consequenceBool":false,
 								"line":"Sorry, I don't want to bother you.",
-								"endConvo":false}],
+								"endConvo":""}],
 				"speaker":"Player"},
 		{
 				"type":"Group",
@@ -40,15 +40,15 @@
 								"consequence":"(none)",
 								"consequenceBool":false,
 								"line":"Ok. Thanks a bunch. Please leave me alone now.",
-								"endConvo":false},
+								"endConvo":""},
 						{
 								"consequence":"(none)",
 								"consequenceBool":false,
 								"line":"I don't think I owe you anything. Like I said, talk to Miguel about explanations.",
-								"endConvo":false},
+								"endConvo":""},
 						{
 								"consequence":"(none)",
 								"consequenceBool":false,
 								"line":"No problem.",
-								"endConvo":false}],
+								"endConvo":""}],
 				"speaker":"NPC"}]

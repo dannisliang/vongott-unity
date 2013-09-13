@@ -228,7 +228,7 @@ class EditorConversations extends OGPage {
 			}
 		}
 		
-		scrollView.scrollLength = bottomLine;
+		scrollView.scrollLength = bottomLine + 100;
 	}
 	
 	// Insert entry

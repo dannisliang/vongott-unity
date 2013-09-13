@@ -31,7 +31,7 @@ class EditorConversationEntry extends MonoBehaviour {
 		var consequenceBool : OGTickBox;
 		var speaker : OGPopUp;
 		var line : OGTextField;
-		var endConvo : OGTickBox;
+		var endConvo : OGPopUp;
 	}
 	
 	// Public vars

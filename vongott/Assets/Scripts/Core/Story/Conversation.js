@@ -20,7 +20,7 @@ class Conversation {
 		var line : String;
 		
 		var canCancel : boolean;
-		var endConvo : boolean;
+		var endConvo : String;
 		var useInput: boolean;
 		
 		var title: String;
@@ -48,7 +48,7 @@ class Conversation {
 	var displayName : String;
 
 	// Private vars
-	private var forceEnd : boolean = false;
+	private var endAction : String = "";
 	private var actor : Actor;
 	
 	////////////////////
@@ -67,7 +67,7 @@ class Conversation {
 		
 		done = true;
 		
-		actor.StopTalking();
+		actor.StopTalking ( endAction );
 	}
 	
 	// Set name
@@ -91,9 +91,7 @@ class Conversation {
 		
 		// line
 		if ( entry.type == "Line" ) {
-			if ( entries[currentEntry].endConvo ) {
-				forceEnd = true;
-			}
+			endAction = entries[currentEntry].endConvo;
 			
 			SetFlag ( entries[currentEntry] );
 			
@@ -129,9 +127,7 @@ class Conversation {
 					speakerLine = entry.options[currentOption].line;
 					SetFlag ( entry.options[currentOption] );
 					
-					if ( entry.options[currentOption].endConvo ) {
-						forceEnd = true;
-					}
+					endAction = entry.options[currentOption].endConvo;
 				}
 				
 				SetName ();				
@@ -178,9 +174,14 @@ class Conversation {
 		FlagManager.SetFlag ( entry.consequence, entry.consequenceBool );
 	}
 	
+	// CHeck for end action
+	function hasEndAction () : boolean {
+		return endAction != "" && endAction != "(none)" && endAction != "<action>" && endAction != null;
+	}
+	
 	// Next entry
-	function NextEntry () {		
-		if ( currentEntry < entries.Count - 1 && !forceEnd ) {
+	function NextEntry () {				
+		if ( currentEntry < entries.Count - 1 && !hasEndAction () ) {
 			currentEntry++;
 			
 			if ( GetFlag ( entries[currentEntry] ) ) {
@@ -223,7 +224,7 @@ class Conversation {
 	// Init
 	////////////////////
 	function Init () {		
-		forceEnd = false;
+		endAction = "";
 		
 		if ( endQuest != "" && endQuest != "(none)" ) {
 			QuestManager.EndQuest ( endQuest );
@@ -253,7 +254,7 @@ class Conversation {
 				entry.consequenceBool = o.GetField ( "consequenceBool" ).b;
 				entry.speaker = o.GetField ( "speaker" ).str;
 				entry.line = o.GetField ( "line" ).str;
-				entry.endConvo = o.GetField ( "endConvo" ).b;
+				entry.endConvo = o.GetField ( "endConvo" ).str;
 			
 			// group
 			} else if ( o.GetField ( "type" ).str == "Group" ) {
@@ -271,7 +272,7 @@ class Conversation {
 					option.consequence = opt.GetField ( "consequence" ).str;
 					option.consequenceBool = opt.GetField ( "consequenceBool" ).b;
 					option.line = opt.GetField ( "line" ).str;
-					option.endConvo = opt.GetField ( "endConvo" ).b;
+					option.endConvo = opt.GetField ( "endConvo" ).str;
 					
 					entry.options.Add ( option );	
 				}

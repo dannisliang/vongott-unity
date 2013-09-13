@@ -5,7 +5,7 @@ class EditorConversationGroupLine extends MonoBehaviour {
 	var consequence : OGButton;
 	var consequenceBool : OGTickBox;
 	var line : OGTextField;
-	var endConvo : OGTickBox;
+	var endConvo : OGPopUp;
 	
 	function SetIndex ( i : int ) {
 		if ( i == 0 ) {
