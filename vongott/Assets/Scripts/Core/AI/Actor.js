@@ -136,7 +136,7 @@ class Actor extends InteractiveObject {
 			var nextConvo : Conversation;
 		
 			for ( var i = 0; i < conversations.Count; i++ ) {
-				var validConvo : boolean = FlagManager.GetFlag ( conversations[i].condition, true );
+				var validConvo : boolean = FlagManager.GetFlag ( conversations[i].condition, conversations[i].conditionBool );
 				var doneConvo : boolean = conversations[i].done;
 				
 				// If the convo's flag is true and it's not done yet, pick this

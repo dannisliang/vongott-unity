@@ -114,11 +114,10 @@ class EditorInspectorActor extends MonoBehaviour {
 			if ( c.condition ) { convo.condition.text = c.condition; }
 			
 			if ( c.condition != "" ) { convo.condition.text = c.condition; }
+			convo.conditionBool.isChecked = c.conditionBool;
 			if ( c.startQuest != "" ) { convo.startQuest.text = c.startQuest; }
 			if ( c.endQuest != "" ) { convo.endQuest.text = c.endQuest; }
 			convo.conversation.text = c.chapter + "/" + c.scene + "/" + c.name + "/" + c.conversation;
-			
-			convo.UpdateAll ();
 		}
 				
 		// inventory
@@ -152,6 +151,7 @@ class EditorInspectorActor extends MonoBehaviour {
 				var newConvo : Conversation = ReadConvoPath ( control.conversation.text );
 				
 				newConvo.condition = control.condition.text;
+				newConvo.conditionBool = control.conditionBool.isChecked;
 				newConvo.startQuest = control.startQuest.text;
 				newConvo.endQuest = control.endQuest.text;
 				

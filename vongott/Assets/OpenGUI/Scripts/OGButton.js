@@ -3,10 +3,10 @@
 @script AddComponentMenu ("OpenGUI/Button")
 
 class OGButton extends OGWidget {
-	var text : String;
+	var text : String = "";
 	var target : GameObject;
-	var message : String;
-	var argument : String;
+	var message : String = "";
+	var argument : String = "";
 	var func : Function;
 
 	override function Draw ( x : float, y : float ) {		

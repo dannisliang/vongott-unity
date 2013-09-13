@@ -5,6 +5,7 @@ class EditorInspectorConvo extends MonoBehaviour {
 	
 	var label : OGLabel;
 	var condition : OGButton;
+	var conditionBool : OGTickBox;
 	var startQuest : OGButton;
 	var endQuest : OGButton;
 	var conversation : OGButton;
@@ -47,8 +48,8 @@ class EditorInspectorConvo extends MonoBehaviour {
 		
 	}
 	
-	// Update all
-	function UpdateAll () {
+	// Update
+	function Update () {		
 		
 	}
 }
