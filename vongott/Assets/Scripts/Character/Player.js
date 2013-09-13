@@ -28,6 +28,7 @@ class Player extends MonoBehaviour {
 	// Talking
 	function TalkTo ( a : Actor ) {
 		talkingTo = a;
+		this.GetComponent(PlayerController).state = PlayerController.PlayerState.Idle;
 	}
 	
 	function StopTalking () {

@@ -172,6 +172,7 @@ class Actor extends InteractiveObject {
 		
 		} else if ( endAction == "NextPath" ) {
 			waiting = false;
+			currentPath++;
 		
 		}
 	}

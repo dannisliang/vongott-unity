@@ -27,6 +27,11 @@ class PlayerController extends MonoBehaviour {
 		distGround = collider.bounds.extents.y;
 	}
 
+	function OnDisable () {
+		speed = 0;
+		this.GetComponent(Animator).SetFloat("Speed", speed );
+	}
+
 	function Update () {
 		// Get grounded
 		isGrounded = Physics.Raycast ( transform.position, -transform.up, distGround + 0.1 );
