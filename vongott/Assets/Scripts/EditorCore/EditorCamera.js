@@ -64,6 +64,23 @@ function DrawZLine () {
 	DrawLine ( forward, back, gizmoZ );
 }
 
+// Path
+function DrawPath ( actor : Actor ) {
+	for ( var i : int = 0; i < actor.path.Count; i++ ) {
+		var nextPoint : int = i+1;
+		
+		if ( nextPoint == actor.path.Count ) {
+			if ( actor.pathLoop ) {	
+				nextPoint = 0;
+			} else {
+				break;
+			}
+		}
+		
+		DrawLine ( actor.path[i].position, actor.path[nextPoint].position );
+	}
+}
+
 // Grid
 function DrawGrid () {
 	var distance : float = EditorCore.gridLineDistance;
@@ -165,6 +182,11 @@ function OnPostRender () {
 	
 	// cursor
 	DrawCursor ();
+	
+	// path
+	if ( EditorCore.GetSelectedObject() && EditorCore.GetSelectedObject().GetComponent(Actor) && EditorCore.GetSelectedObject().GetComponent(Actor).path.Count > 0 ) {
+		DrawPath ( EditorCore.GetSelectedObject().GetComponent(Actor) );
+	}
 }
 
 // Init
@@ -270,7 +292,7 @@ function SetFixPointToSelected () {
 
 // Update
 function Update () {
-	if ( locked || EditorCore.grabMode || EditorCore.scaleMode || EditorCore.rotateMode ) { return; }
+	if ( locked ) { return; }
 	
 	// position
 	var x = transform.localPosition.x;
@@ -280,32 +302,6 @@ function Update () {
 	var horizontal = Camera.main.transform.TransformDirection ( Vector3.left );
 	var vertical = Camera.main.transform.TransformDirection ( Vector3.down );
 	
-	// scroll wheel
-	var translation = Input.GetAxis("Mouse ScrollWheel");
-	var spd : float = speed;
-	
-	// zooming			
-	if ( translation != 0.0 && !OGRoot.mouseOver ) {				
-		if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) ) {
-			spd = spd / 4;
-		} else if ( Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.RightControl ) ) {
-			spd = spd * 4;
-		}
-		
-		if ( !Camera.main.orthographic || Camera.main.orthographic && Input.GetKey ( KeyCode.LeftAlt ) ) {
-			transform.position = transform.position + forward * ( translation * spd );
-		
-		} else {
-			if ( Camera.main.orthographicSize > translation * speed ) {
-				RefreshFixPoint ( false );
-				Camera.main.orthographicSize -= translation * speed;
-				transform.position = fixPoint - forward * ( Camera.main.orthographicSize * 4 );
-			}
-		
-		} 
-		
-	}
-		
 	// right mouse click
 	if ( Input.GetMouseButtonDown(1) ) {
 		RefreshFixPoint ( true );
@@ -355,5 +351,32 @@ function Update () {
 	if ( skyboxCamera ) {
 		skyboxCamera.transform.rotation = transform.rotation;
 		skyboxCamera.transform.localPosition = transform.position / 40;
+	}
+	
+	// scroll wheel
+	if ( !EditorCore.rotateMode && !EditorCore.scaleMode ) {
+		var translation = Input.GetAxis("Mouse ScrollWheel");
+		var spd : float = speed;
+					
+		if ( translation != 0.0 && !OGRoot.mouseOver ) {				
+			if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) ) {
+				spd = spd / 4;
+			} else if ( Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.RightControl ) ) {
+				spd = spd * 4;
+			}
+			
+			if ( !Camera.main.orthographic || Camera.main.orthographic && Input.GetKey ( KeyCode.LeftAlt ) ) {
+				transform.position = transform.position + forward * ( translation * spd );
+			
+			} else {
+				if ( Camera.main.orthographicSize > translation * speed ) {
+					RefreshFixPoint ( false );
+					Camera.main.orthographicSize -= translation * speed;
+					transform.position = fixPoint - forward * ( Camera.main.orthographicSize * 4 );
+				}
+			
+			} 
+			
+		}
 	}
 }

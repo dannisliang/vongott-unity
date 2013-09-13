@@ -5,26 +5,23 @@ class EditorInspectorPath extends MonoBehaviour {
 	@HideInInspector var pathBottomLine : float = 0;
 	var nodes : List.< GameObject > = new List.< GameObject >();
 	var nodeGizmo : GameObject;
+	var addNode : OGButton;
+	var pathLoop : OGTickBox;
+	var pathWaitForConvo : OGTickBox;
+	
 	
 	//////////////////////
 	// Path nodes
 	//////////////////////
-	// Grab path node
-	function GrabNode ( number : String ) {
-		 var n : int = int.Parse ( number );
-		 var actor : Actor = EditorCore.GetSelectedObject().GetComponent(Actor);
-		 
-		 EditorCore.selectedObject = actor.path[n].gameObject;
-		 EditorCore.SetGrabMode ( true );
-	}
+	// Pick path node
+	function PickNode ( number : String ) {
+		var i : int = int.Parse ( number );
+		
+		EditorCore.SetPickMode ( true );
 	
-	// Rotate path node
-	function RotateNode ( number : String ) {
-		 var n : int = int.Parse ( number );
-		 var actor : Actor = EditorCore.GetSelectedObject().GetComponent(Actor);
-		 
-		 EditorCore.selectedObject = actor.path[n].gameObject;
-		 EditorCore.SetRotateMode ( true );
+		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
+			EditorCore.GetSelectedObject().GetComponent(Actor).path[i].position = hit.point;
+		};
 	}
 	
 	// Clear nodes
@@ -39,24 +36,29 @@ class EditorInspectorPath extends MonoBehaviour {
 	}
 	
 	// Remove path node
-	function RemoveNode () {		
+	function DeleteNode ( number : String ) {		
+		var i : int = int.Parse ( number );
+		
 		if ( nodes.Count < 1 ) {
 			return;
 		}
-		
-		var i : int = nodes.Count-1;
 		
 		// delete UI item
 		DestroyImmediate ( nodes[i] );
 		nodes.RemoveAt ( i );
 		
 		// delete actual PathNode
-		DestroyImmediate ( EditorCore.GetSelectedObject().GetComponent(Actor).path[i].gameObject );
 		EditorCore.GetSelectedObject().GetComponent(Actor).path.RemoveAt ( i );
+		
+		// reinit
+		Init ( EditorCore.GetSelectedObject() );
+	
+		// move add button
+		addNode.transform.localPosition = new Vector3 ( 0, pathBottomLine, 0 );
 	}
 	
 	// Create path node
-	function AddNodeMenuItem ( duration ) {
+	function AddNodeMenuItem ( actorNode : PathNode ) {		
 		// root
 		var node : GameObject = new GameObject ( "PathNode" + nodes.Count.ToString() );
 		node.transform.parent = pathContainer;
@@ -72,29 +74,29 @@ class EditorInspectorPath extends MonoBehaviour {
 		var l : OGLabel = label.AddComponent ( OGLabel );
 		l.text = "PathNode" + nodes.Count.ToString();
 		
-		// grab node
-		var buttonGrab : GameObject = new GameObject ( "ButtonGrab" );
-		buttonGrab.transform.parent = node.transform;
-		buttonGrab.transform.localPosition = new Vector3 ( 220, 20, -2 );
-		buttonGrab.transform.localScale = new Vector3 ( 70, 20, 0 );
+		// pick node
+		var buttonPick : GameObject = new GameObject ( "ButtonGrab" );
+		buttonPick.transform.parent = node.transform;
+		buttonPick.transform.localPosition = new Vector3 ( 190, 20, -2 );
+		buttonPick.transform.localScale = new Vector3 ( 70, 20, 0 );
 		
-		var bg : OGButton = buttonGrab.AddComponent ( OGButton );
-		bg.text = "Grab";
-		bg.target = this.gameObject;
-		bg.message = "GrabNode";
-		bg.argument = nodes.Count.ToString();
+		var bp : OGButton = buttonPick.AddComponent ( OGButton );
+		bp.text = "Pick";
+		bp.target = this.gameObject;
+		bp.message = "PickNode";
+		bp.argument = nodes.Count.ToString();
 		
-		// rotate node
-		var buttonRot : GameObject = new GameObject ( "ButtonRotate" );
-		buttonRot.transform.parent = node.transform;
-		buttonRot.transform.localPosition = new Vector3 ( 140, 20, -2 );
-		buttonRot.transform.localScale = new Vector3 ( 70, 20, 0 );
+		// delete node
+		var buttonDelete : GameObject = new GameObject ( "ButtonDelete" );
+		buttonDelete.transform.parent = node.transform;
+		buttonDelete.transform.localPosition = new Vector3 ( 270, 20, -2 );
+		buttonDelete.transform.localScale = new Vector3 ( 20, 20, 0 );
 		
-		var br : OGButton = buttonRot.AddComponent ( OGButton );
-		br.text = "Rotate";
-		br.target = this.gameObject;
-		br.message = "RotateNode";
-		br.argument = nodes.Count.ToString();
+		var bd : OGButton = buttonDelete.AddComponent ( OGButton );
+		bd.text = "-";
+		bd.target = this.gameObject;
+		bd.message = "DeleteNode";
+		bd.argument = nodes.Count.ToString();
 		
 		// idle time
 		var idleTime : GameObject = new GameObject ( "IdleTime" );
@@ -105,17 +107,13 @@ class EditorInspectorPath extends MonoBehaviour {
 		// ^ input
 		var input : GameObject = new GameObject ( "Input" );
 		input.transform.parent = idleTime.transform;
-		input.transform.localPosition = new Vector3 ( 50, 0, -2 );
+		input.transform.localPosition = new Vector3 ( 60, 0, -2 );
 		input.transform.localScale = new Vector3 ( 70, 20, 1 );
 		
 		var tf : OGTextField = input.AddComponent ( OGTextField );
-		tf.text = "0";
+		tf.text = actorNode.duration.ToString();
 		tf.maxLength = 4;
 		tf.regex = "^0-9";
-
-		if ( duration ) {
-			tf.text = duration.ToString();
-		}
 
 		// ^ label
 		var itLabel : GameObject = new GameObject ( "Label" );
@@ -125,11 +123,29 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 		var il : OGLabel = itLabel.AddComponent ( OGLabel );
 		il.text = "Idle (s)";
+		
+		// position
+		var posLabel : GameObject = new GameObject ( "Label" );
+		posLabel.transform.parent = idleTime.transform;
+		posLabel.transform.localPosition = new Vector3 ( 0, 30, -2 );
+		posLabel.transform.localScale = new Vector3 ( 100, 20, 0 );
+		
+		var pl : OGLabel = posLabel.AddComponent ( OGLabel );
+		pl.text = "Position:";
+
+		// ^ numbers
+		var numLabel : GameObject = new GameObject ( "Position" );
+		numLabel.transform.parent = idleTime.transform;
+		numLabel.transform.localPosition = new Vector3 ( 60, 30, -2 );
+		numLabel.transform.localScale = new Vector3 ( 200, 20, 1 );
+		
+		var nl : OGLabel = numLabel.AddComponent ( OGLabel );
+		nl.text = actorNode.position.x.ToString("f2") + ", " + actorNode.position.y.ToString("f2") + ", " + actorNode.position.z.ToString("f2");
 
 		// add node
 		nodes.Add ( node );
 		
-		pathBottomLine += 60;
+		pathBottomLine += 80;
 		pathContainer.GetComponent ( OGScrollView ).scrollLength = pathBottomLine;
 		
 	}
@@ -139,18 +155,15 @@ class EditorInspectorPath extends MonoBehaviour {
 			return;
 		}
 		
-		AddNodeMenuItem ( null );
+		var node : PathNode = new PathNode ();
+		node.position = EditorCore.GetSelectedObject().transform.position;
+		node.duration = 0;
 		
-		// instantiate and add to actor
-		var pathObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/path_node" ) as GameObject );
-		var actObj : GameObject = EditorCore.GetSelectedObject();
+		AddNodeMenuItem ( node );
 		
-		pathObj.transform.parent = actObj.transform.parent;
-		pathObj.transform.localScale = new Vector3 ( 0.25, 0.25, 0.25 );
-		pathObj.transform.localPosition = actObj.transform.localPosition;
-		pathObj.GetComponent(PathNode).owner = actObj;
+		EditorCore.GetSelectedObject().GetComponent(Actor).path.Add ( node );
 		
-		actObj.GetComponent(Actor).path.Add ( pathObj );
+		addNode.transform.localPosition = new Vector3 ( 0, pathBottomLine, 0 );
 	}
 		
 		
@@ -163,10 +176,15 @@ class EditorInspectorPath extends MonoBehaviour {
 		ClearNodes();
 		
 		pathContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - pathContainer.position.y;
+		
+		pathLoop.isChecked = a.pathLoop;
+		pathWaitForConvo.isChecked = a.pathWaitForConvo;
+		
 		for ( var i = 0; i < a.path.Count; i++ ) {
-			AddNodeMenuItem( a.path[i].GetComponent(PathNode).duration );
+			AddNodeMenuItem( a.path[i] );
 		}
 		
+		addNode.transform.localPosition = new Vector3 ( 0, pathBottomLine, 0 );
 	}
 	
 	
@@ -181,11 +199,14 @@ class EditorInspectorPath extends MonoBehaviour {
 		if ( o.GetComponent ( Actor ) ) {
 			var a : Actor = o.GetComponent ( Actor );		
 		
+			a.pathLoop = pathLoop.isChecked;
+			a.pathWaitForConvo = pathWaitForConvo.isChecked;
+		
 			for ( var i = 0; i < a.path.Count; i++ ) {
 				var str : String = nodes[i].GetComponentInChildren(OGTextField).text;
 				
 				if ( str != "" ) {
-					a.path[i].GetComponent(PathNode).duration = float.Parse ( str );
+					a.path[i].duration = float.Parse ( str );
 				}
 			}
 		}

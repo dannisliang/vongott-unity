@@ -94,7 +94,9 @@ class OGScrollView extends OGWidget {
 		// Draw widgets
 		for ( var i = 0; i < queue.Count; i++ ) {
 			for ( var item : OGWidget in queue[i] ) {
-				item.Draw ( item.transform.position.x - transform.position.x + item.adjustPivot.x, item.transform.position.y - transform.position.y + item.adjustPivot.y );
+				if ( item != null ) {
+					item.Draw ( item.transform.position.x - transform.position.x + item.adjustPivot.x, item.transform.position.y - transform.position.y + item.adjustPivot.y );
+				}
 			}
 		}
 	

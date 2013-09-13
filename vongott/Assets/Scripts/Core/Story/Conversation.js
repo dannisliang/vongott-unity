@@ -49,7 +49,7 @@ class Conversation {
 
 	// Private vars
 	private var forceEnd : boolean = false;
-
+	private var actor : Actor;
 	
 	////////////////////
 	// Conversation navigation
@@ -66,6 +66,8 @@ class Conversation {
 		currentEntry = 0;
 		
 		done = true;
+		
+		actor.StopTalking();
 	}
 	
 	// Set name
@@ -231,7 +233,8 @@ class Conversation {
 				
 		entries.Clear ();
 		
-		displayName = GameCore.GetInteractiveObject().GetComponent(Actor).displayName;
+		actor = GameCore.GetInteractiveObject().GetComponent(Actor);
+		displayName = actor.displayName;
 		
 		var file = Loader.LoadConversationToGame ( chapter + "/" + scene + "/" + name + "/" + conversation );
 		var object : JSONObject = new JSONObject ( file );

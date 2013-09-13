@@ -6,7 +6,6 @@
 // Public vars
 var _levelContainer : Transform;
 var _playerObject : GameObject;
-var _scanner : AStarScanner;
 var _camTarget : GameObject;
 var _pauseBackground : GameObject;
 var _pauseRenderTexture : RenderTexture;
@@ -248,7 +247,7 @@ function Start () {
 	levelContainer = _levelContainer;
 	
 	// AStar scanner
-	scanner = _scanner;
+	scanner = this.GetComponent(AStarScanner);
 	
 	// Load level
 	if ( nextLevel != "" ) {

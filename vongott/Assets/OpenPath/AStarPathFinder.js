@@ -35,6 +35,10 @@ class AStarPathFinder extends MonoBehaviour {
 		goal = v;
 		UpdatePosition ();
 	}
+	
+	function GetGoal () : Vector3 {
+		return goal;
+	}
 		
 	function UpdatePosition () {
 		var start : Vector3 = this.transform.position;
@@ -54,7 +58,14 @@ class AStarPathFinder extends MonoBehaviour {
 	}
 	
 	function Update () {
-		if ( scanner == null ) { Debug.LogError ( "No scanner found! Attach an AStarScanner to the scanner variable." ); return; }
+		if ( scanner == null ) {
+			if ( GameObject.FindObjectOfType(AStarScanner) ) {
+				scanner = GameObject.FindObjectOfType(AStarScanner);
+			} else {
+				Debug.LogError ( "No scanner found! Attach an AStarScanner to the scanner variable." );
+				return;
+			}
+		}
 			
 		// If there are nodes to follow
 		if ( nodes && nodes.Count > 0 ) {

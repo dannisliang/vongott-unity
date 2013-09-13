@@ -11,7 +11,7 @@ var _selectBox : Transform;
 var _selectBoxDefaultMesh : Mesh;
 
 // Static vars
-static var menusActive = false;
+static var menusActive : boolean = false;
 static var selectedObject : GameObject;
 static var selectedPlane : SurfacePlane;
 static var selectedVertex : int;
@@ -20,20 +20,21 @@ static var currentLevel : GameObject;
 // Load on init
 static var initMap : String;
 static var initPos : Vector3 = new Vector3 ( -4, 5,-10 );
-static var initRot : Vector3 = new Vector3 ( 20, 20, 0 );
+static var initRot : Vector3 = new Vector3 ( 24.9, 21.8, 0 );
 
 // modes
-static var grabMode = false;
-static var rotateMode = false;
-static var scaleMode = false;
-static var pickMode = false;
+static var grabMode : boolean = false;
+static var rotateMode : boolean = false;
+static var scaleMode : boolean = false;
+static var pickMode : boolean = false;
+static var pickerCallback : Function = null;
 static var grabRestrict : String;
 
 // grid / guides
 static var gizmo : GameObject;
-static var snapEnabled = true;
-static var gridEnabled = true;
-static var focusEnabled = false;
+static var snapEnabled : boolean = true;
+static var gridEnabled : boolean = true;
+static var focusEnabled : boolean = false;
 static var gridLineDistance : float = 0.10;
 static var gridLineBrightFrequency : int = 5;
 
@@ -47,7 +48,6 @@ static var inspector : EditorMenuBase;
 static var player : GameObject;
 static var camTarget : GameObject;
 static var root : Transform;
-static var drawPath : Vector3[];
 static var noGizmos : boolean = false;
 static var previewObject : GameObject;
 static var previewCamera : Camera;
@@ -55,6 +55,7 @@ static var transformUpdate : Function;
 static var transformEnd : Function;
 static var grabDistance : float;
 static var grabOrigPoint : Vector3;
+static var running : boolean = false;
 
 // undo
 static var actions : List.< Action > = new List.< Action > ();
@@ -174,13 +175,7 @@ static function GetSpawnPosition () : Vector3 {
 	var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
 	var hit : RaycastHit;
 	
-	if ( fixPoint != Vector3.zero ) {
-		position = fixPoint;
-	
-	} else if ( Physics.Raycast ( newRay, hit ) ) {
-		position = hit.point;
-	
-	}
+	position = fixPoint;
 	
 	return position;
 }
@@ -515,9 +510,6 @@ static function DeselectObject ( nextObject : GameObject ) {
 	var selectNextObject : GameObject;
 	
 	if ( selectedObject.GetComponent(Actor) ) {
-		for ( var node : GameObject in selectedObject.GetComponent(Actor).path ) {
-			node.GetComponent(MeshRenderer).enabled = false;
-		}
 	
 	} else if ( selectedObject.GetComponent(Surface) ) {
 		if ( !nextObject || !nextObject.GetComponent(EditorVertexButton) ) {	
@@ -533,7 +525,6 @@ static function DeselectObject ( nextObject : GameObject ) {
 	
 	selectBox.gameObject.SetActive ( false );
 	
-	drawPath = null;
 	selectedObject = null;
 	
 	inspector.ClearMenus ();
@@ -556,7 +547,6 @@ static function SelectObject ( obj : GameObject ) {
 		DeselectObject ( obj );
 	}
 	
-	drawPath = null;
 	selectedObject = obj;
 	
 	if ( obj.GetComponent ( EditorVertexButton ) ) {
@@ -585,15 +575,13 @@ static function SelectObject ( obj : GameObject ) {
 	if ( obj.GetComponent(Actor) ) {
 		inspector.AddMenu ( "Actor", obj );
 		inspector.AddMenu ( "Path", obj );
-		
-		for ( var node : GameObject in obj.GetComponent(Actor).path ) {
-			node.GetComponent(MeshRenderer).enabled = true;
-		}
+		inspector.AddMenu ( "Trigger", obj );
 	}
 	
 	// Item
 	if ( obj.GetComponent ( Item ) ) {
 		inspector.AddMenu ( "Item", obj );
+		inspector.AddMenu ( "Trigger", obj );
 	}
 	
 	// Prefab
@@ -623,8 +611,8 @@ static function SetPickMode ( state : boolean ) {
 	if ( pickMode ) {
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Pick Mode" );
-		EditorModes.SetMessage ( "Pick a material to apply" );
-		EditorModes.SetHeight ( 70 );
+		EditorModes.SetMessage ( "" );
+		EditorModes.SetHeight ( 50 );
 		
 	} else {
 		OGRoot.GoToPage ( "MenuBase" );
@@ -663,10 +651,6 @@ static function SetGrabMode ( state : boolean ) {
 		SetRestriction ( null );
 		gizmo.SetActive ( false );
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
-		
-		if ( selectedObject.GetComponent(PathNode) ) {
-			SelectObject ( selectedObject.GetComponent(PathNode).owner );
-		}
 	}
 }
 
@@ -696,10 +680,6 @@ static function SetRotateMode ( state : boolean ) {
 		SetRestriction ( null );
 		gizmo.SetActive ( false );
 		gizmo.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
-		
-		if ( selectedObject.GetComponent(PathNode) ) {
-			SelectObject ( selectedObject.GetComponent(PathNode).owner );
-		}
 	}
 }
 
@@ -845,6 +825,8 @@ public static function GetInstance () : EditorCore {
 
 // Init
 function Start () {
+	running = true;
+	
 	workspace = _workspace;
 	gizmo = _gizmo;
 	previewCamera = _previewCamera;
@@ -867,6 +849,11 @@ function Start () {
 	
 	// signal
 	GameCore.Print ("EditorCore | started");
+}
+
+// Quit
+static function Stop () {
+	running = false;
 }
 
 // Update

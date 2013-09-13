@@ -11,6 +11,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	
 	function Init ( obj : GameObject ) {
 		var trg : Trigger = obj.GetComponent ( Trigger );
+		if ( trg == null ) { return; }
 		
 		fireOnce.isChecked = trg.fireOnce;
 		if ( trg.endQuest != "(none)" ) { endQuest.text = trg.endQuest; }

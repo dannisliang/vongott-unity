@@ -79,7 +79,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.GetComponent(Actor).SetAffiliation ( act.GetField ( "affiliation" ).str );
 		newAct.GetComponent(Actor).SetMood ( act.GetField ( "mood" ).str );
 		
-		newAct.GetComponent(Actor).path = DeserializePath ( act.GetField ( "path" ), newAct );
+		newAct.GetComponent(Actor).pathLoop = act.GetField ( "pathLoop" ).b;
+		newAct.GetComponent(Actor).pathWaitForConvo = act.GetField ( "pathWaitForConvo" ).b;
+		newAct.GetComponent(Actor).path = DeserializePath ( act.GetField ( "path" ) );
 		newAct.GetComponent(Actor).inventory = DeserializeInventory ( act.GetField ( "inventory" ) );
 		newAct.GetComponent(Actor).conversations = DeserializeConversationsToGame ( act.GetField ( "conversations" ) );
 		
@@ -265,11 +267,11 @@ static function DeserializeGameObjectComponents ( arr : JSONObject, o : GameObje
 }
 
 // path
-static function DeserializePath ( pth : JSONObject, act : GameObject ) : List.< GameObject > {
-	var nodes : List.< GameObject > =  new List.< GameObject >();
+static function DeserializePath ( pth : JSONObject ) : List.< PathNode > {
+	var nodes : List.< PathNode > = new List.< PathNode >();
 
 	for ( var o : Object in pth.list ) {
-		nodes.Add ( DeserializePathNode ( (o as JSONObject), act ) );
+		nodes.Add ( DeserializePathNode ( (o as JSONObject) ) );
 	}
 
 	return nodes;
@@ -296,28 +298,16 @@ static function DeserializeInventory ( ety : JSONObject ) : InventoryEntry[] {
 // Deserialize components individually
 ////////////////////
 // PathNode
-static function DeserializePathNode ( p : JSONObject, o : GameObject ) : GameObject {
-	var obj : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/path_node" ) as GameObject );
+static function DeserializePathNode ( p : JSONObject ) : PathNode {
+	var node : PathNode = new PathNode ();
 	
 	// position
-	obj.transform.localPosition = DeserializeVector3( p.GetField ( "localPosition" ) );
-	
-	// rotation
-	obj.transform.localEulerAngles = DeserializeVector3( p.GetField ( "localEulerAngles" ) );
+	node.position = DeserializeVector3( p.GetField ( "position" ) );
 	
 	// duration
-	obj.GetComponent(PathNode).duration = p.GetField ( "duration" ).n;
+	node.duration = p.GetField ( "duration" ).n;
 	
-	// owner
-	obj.GetComponent(PathNode).owner = o;
-	
-	// set invisible
-	obj.GetComponent(MeshRenderer).enabled = false;
-	
-	// parent
-	obj.transform.parent = root;
-	
-	return obj;
+	return node;
 }
 
 // SurfacePlane

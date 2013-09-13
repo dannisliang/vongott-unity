@@ -60,6 +60,8 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		act.AddField ( "affiliation", obj.GetComponent(Actor).affiliation.ToString() );
 		act.AddField ( "mood", obj.GetComponent(Actor).mood );
 		
+		act.AddField ( "pathLoop", obj.GetComponent(Actor).pathLoop );
+		act.AddField ( "pathWaitForConvo", obj.GetComponent(Actor).pathWaitForConvo );
 		act.AddField ( "path", SerializePath ( obj.GetComponent(Actor).path ) );
 		act.AddField ( "inventory", SerializeInventory ( obj.GetComponent(Actor).inventory ) );
 		
@@ -165,11 +167,8 @@ static function SerializeGameObjectChildren ( obj : GameObject ) : JSONObject {
 	for ( var i = 0; i < obj.transform.childCount; i++ ) {
 		var c = obj.transform.GetChild ( i ).gameObject;
 		
-		// path nodes are not serialized on their own
-		if ( !c.GetComponent(PathNode) ) {
-			var o = SerializeGameObject ( c );
-			chl.Add ( o );
-		}
+		var o = SerializeGameObject ( c );
+		chl.Add ( o );
 	}
 	
 	return chl;
@@ -191,10 +190,10 @@ static function SerializeGameObjectComponents ( obj : GameObject ) : JSONObject 
 }
 
 // path
-static function SerializePath ( nodes : List.< GameObject > ) : JSONObject {
+static function SerializePath ( nodes : List.< PathNode > ) : JSONObject {
 	var pth : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 	
-	for ( var p : GameObject in nodes ) {
+	for ( var p : PathNode in nodes ) {
 		pth.Add ( SerializePathNode ( p ) );
 	}
 	
@@ -221,19 +220,16 @@ static function SerializeInventory ( entries : InventoryEntry[] ) : JSONObject {
 // Serialize components individually
 ////////////////////
 // PathNode
-static function SerializePathNode ( p : GameObject ) : JSONObject {
-	var component : JSONObject = JSONObject (JSONObject.Type.OBJECT);
+static function SerializePathNode ( p : PathNode ) : JSONObject {
+	var node : JSONObject = JSONObject (JSONObject.Type.OBJECT);
 	
 	// position
-	component.AddField ( "localPosition", SerializeVector3 ( p.transform.localPosition ) );
-	
-	// rotation
-	component.AddField ( "localEulerAngles", SerializeVector3 ( p.transform.localEulerAngles ) );
+	node.AddField ( "position", SerializeVector3 ( p.position ) );	
 	
 	// duration
-	component.AddField ( "duration", p.GetComponent(PathNode).duration );
+	node.AddField ( "duration", p.duration );
 	
-	return component;
+	return node;
 }
 
 // SurfacePlane

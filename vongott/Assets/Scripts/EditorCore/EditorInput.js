@@ -204,36 +204,49 @@ function Update () {
 			}
 			
 			if ( mouseGoal != null ) {
-				var materialPath : String = "";
-				
-				if ( mouseGoal.GetComponent(Prefab) ) {
-					materialPath = mouseGoal.GetComponent(Prefab).materialPath;
-																	
-				} else if ( mouseGoal.GetComponent(Surface) ) {
-					materialPath = mouseGoal.GetComponent(Surface).materialPath;
-				
-				}
-				
-				if ( materialPath != "" ) {
-					if ( EditorCore.GetSelectedObject().GetComponent(Prefab) ) {
-						EditorCore.GetSelectedObject().GetComponent(Prefab).materialPath = materialPath;
-						EditorCore.GetSelectedObject().GetComponent(Prefab).ReloadMaterial();
-						EditorCore.SetPickMode ( false );
-						EditorCore.ReselectObject ();
+				// Material picker
+				if ( EditorCore.GetSelectedObject().GetComponent(Prefab) ||	EditorCore.GetSelectedObject().GetComponent(Surface) ) {
+					var materialPath : String = "";
 					
-					} else if ( EditorCore.GetSelectedObject().GetComponent(Surface) ) {
-						EditorCore.GetSelectedObject().GetComponent(Surface).materialPath = materialPath;
-						EditorCore.GetSelectedObject().GetComponent(Surface).ReloadMaterial();
-						EditorCore.SetPickMode ( false );
-						EditorCore.ReselectObject ();
+					if ( mouseGoal.GetComponent(Prefab) ) {
+						materialPath = mouseGoal.GetComponent(Prefab).materialPath;
+																		
+					} else if ( mouseGoal.GetComponent(Surface) ) {
+						materialPath = mouseGoal.GetComponent(Surface).materialPath;
 					
-					} else {
-						EditorCore.SetPickMode ( false );
-						EditorCore.ReselectObject ();
+					}
+					
+					if ( materialPath != "" ) {
+						if ( EditorCore.GetSelectedObject().GetComponent(Prefab) ) {
+							EditorCore.GetSelectedObject().GetComponent(Prefab).materialPath = materialPath;
+							EditorCore.GetSelectedObject().GetComponent(Prefab).ReloadMaterial();
+							EditorCore.SetPickMode ( false );
+							EditorCore.ReselectObject ();
+						
+						} else if ( EditorCore.GetSelectedObject().GetComponent(Surface) ) {
+							EditorCore.GetSelectedObject().GetComponent(Surface).materialPath = materialPath;
+							EditorCore.GetSelectedObject().GetComponent(Surface).ReloadMaterial();
+							EditorCore.SetPickMode ( false );
+							EditorCore.ReselectObject ();
+						
+						} else {
+							EditorCore.SetPickMode ( false );
+							EditorCore.ReselectObject ();
+						
+						}
 					
 					}
 				
-				}					
+				// Position picker
+				} else if ( EditorCore.pickerCallback != null ) {
+					EditorCore.pickerCallback ( mouseHit );
+					EditorCore.pickerCallback = null;
+					
+					EditorCore.SetPickMode ( false );
+					EditorCore.ReselectObject ();
+				
+				}
+						
 			
 			}
 		

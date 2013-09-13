@@ -11,10 +11,29 @@ class Player extends MonoBehaviour {
 	var equippedItem : GameObject;
 
 	@HideInInspector var shootTimer : float = 0;
-			
+	@HideInInspector var talkingTo : Actor;
+	
+					
 	////////////////////
 	// Public functions
 	////////////////////
+	// Turn towards
+	function TurnTowards ( v : Vector3 ) {
+		var lookPos : Vector3 = v - transform.position;
+		lookPos.y = 0;
+		
+		transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 4 * Time.deltaTime );
+	}
+	
+	// Talking
+	function TalkTo ( a : Actor ) {
+		talkingTo = a;
+	}
+	
+	function StopTalking () {
+		talkingTo = null;
+	}
+	
 	// Equip
 	function Equip ( item : Item, equip : boolean ) {
 		if ( !item ) {
@@ -127,6 +146,10 @@ class Player extends MonoBehaviour {
 	}
 		
 	function Update () {
+		if ( talkingTo != null ) {
+			TurnTowards ( talkingTo.transform.position );
+		}
+		
 		if ( equippedItem ) {	
 			if ( shootTimer < GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
 				shootTimer += Time.deltaTime;

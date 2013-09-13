@@ -39,10 +39,13 @@ class Actor extends InteractiveObject {
 	var updateFrequency : float = 5.0;
 	var keepDistance : float = 10.0;
 	var runningSpeed : float = 4.0;
+	var walkingSpeed : float = 1.0;
 	var vision : VisionCone = new VisionCone();
 	var hearing : float = 10;
 
-	var path : List.< GameObject >;
+	var pathWaitForConvo : boolean = false;
+	var pathLoop : boolean = true;
+	var path : List.< PathNode > = new List.< PathNode >();
 	var inventory : InventoryEntry[] = new InventoryEntry [4];
 	
 	var conversations : List.< Conversation > = new List.< Conversation >();																																							
@@ -62,8 +65,9 @@ class Actor extends InteractiveObject {
 	@HideInInspector var updateTimer : float = 0;
 	@HideInInspector var initPosition : Vector3;
 	@HideInInspector var canShoot : boolean = false;
+	@HideInInspector var talking : boolean = false;
+	@HideInInspector var waiting : boolean = false;
 	
-
 	@HideInInspector var pathFinder : AStarPathFinder;
 				
 
@@ -72,20 +76,18 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Start
 	function Start () {
-		if ( !path ) {
-			path = new List.< GameObject >();
-		}
-		
 		pathFinder = this.GetComponent ( AStarPathFinder );
 		
 		initPosition = this.transform.position;
 		
-		if ( !GameCore.started ) {
+		if ( EditorCore.running ) {
 			this.GetComponent ( AStarPathFinder ).enabled = false;
 			this.GetComponent ( Animator ).enabled = false;
 			Destroy ( this.rigidbody );
 		} else {
 			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;
+			waiting = pathWaitForConvo;
+			
 		}
 	}
 	
@@ -145,7 +147,7 @@ class Actor extends InteractiveObject {
 					
 					break;
 				
-				// If the convo's fla gis true and it's already been done, store it in case there are no more convos
+				// If the convo's flag is true and it's already been done, store it in case there are no more convos
 				} else if ( validConvo && doneConvo ) {
 					nextConvo = conversations[i];
 					currentConvo = i;
@@ -154,7 +156,18 @@ class Actor extends InteractiveObject {
 			}
 			
 			nextConvo.Init ();
+			
+			talking = true;
+			
+			GameCore.GetPlayerObject().GetComponent(Player).TalkTo ( this );
 		}
+	}
+	
+	function StopTalking () {
+		talking = false;
+		waiting = false;
+		
+		GameCore.GetPlayerObject().GetComponent(Player).StopTalking ();
 	}
 	
 	function Say ( msg : String ) {
@@ -255,6 +268,8 @@ class Actor extends InteractiveObject {
 	
 	function StartChase ( t : Transform ) {
 		if ( t ) {
+			SetMood ( "Aggressive" );
+			
 			target = t;
 			
 			if ( inventory[0] ) {
@@ -277,9 +292,53 @@ class Actor extends InteractiveObject {
 	}
 	
 	function MoveForward () {			
-		speed = Mathf.Lerp ( speed, 1.0, Time.deltaTime * 5 );
+		speed = Mathf.Lerp ( speed, runningSpeed, Time.deltaTime * 5 );
 		
-		transform.localPosition += speed * ( transform.forward * runningSpeed * Time.deltaTime );
+		transform.localPosition += speed * ( transform.forward * Time.deltaTime );
+	}
+	
+	function WalkForward () {			
+		speed = Mathf.Lerp ( walkingSpeed, 1.0, Time.deltaTime * 5 );
+		
+		transform.localPosition += speed * ( transform.forward * Time.deltaTime );
+	}
+	
+	function Roaming () {
+		// Conversation
+		if ( talking ) {
+			TurnTowards ( GameCore.GetPlayerObject().transform.position );
+			speed = 0;
+		
+		// Waiting
+		} else if ( waiting ) {
+			speed = 0;
+		
+		// Follow path
+		} else if ( path.Count > 0 ) {
+			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.1 ) {
+				nodeTimer = path[currentNode].duration;
+								
+				if ( currentNode < path.Count - 1 ) {
+					currentNode++;
+				} else if ( pathLoop ) {
+					currentNode = 0;
+				} else {
+					waiting = true;
+					return;
+				}
+			
+				speed = 0;
+			}
+			
+			if ( nodeTimer <= 0 ) {
+				TurnTowards ( path[currentNode].position );
+				WalkForward ();
+				
+			} else {
+				nodeTimer -= Time.deltaTime;
+			
+			}	
+		}
 	}
 	
 	function Approaching ( t : Transform ) {
@@ -299,7 +358,7 @@ class Actor extends InteractiveObject {
 	}
 	
 	function GiveUp () {
-		target = null;
+		SetMood ( "Alert" );
 		
 		FindPath ( initPosition );
 		
@@ -361,6 +420,8 @@ class Actor extends InteractiveObject {
 			// Allies might call for the player's attention
 			} else if ( affiliation == eAffiliation.Ally ) {
 				//Say ( "Yoohoo!" );
+				
+				Roaming ();
 			
 			}
 			
@@ -368,7 +429,7 @@ class Actor extends InteractiveObject {
 			attentionTimer = 0;
 			updateTimer = updateFrequency;
 		
-		// ^ The player is out of sight
+		// ^ The player is out of sight and the actor is an enemy
 		} else if ( affiliation == eAffiliation.Enemy ) {			
 			Debug.DrawRay ( here, transform.forward * vision.distance, Color.red );
 			
@@ -409,6 +470,11 @@ class Actor extends InteractiveObject {
 				updateTimer = 0;
 		
 			}	
+		
+		// ^ the player is out if sight and the actor is an ally
+		} else {
+			Roaming ();
+			
 		}
 		
 		// Shoot timer
@@ -416,30 +482,7 @@ class Actor extends InteractiveObject {
 			shootTimer += Time.deltaTime;			
 		}
 		
-		this.GetComponent(Animator).SetFloat("Speed", speed );
+		this.GetComponent(Animator).SetFloat("Speed", speed / runningSpeed );
 		this.GetComponent(Animator).SetBool("Aiming", aiming );
-		
-		/*
-		// follow path
-		} else if ( path.Count > 1 ) {
-			if ( Vector3.Distance ( transform.position, path[currentNode].transform.position ) < 0.1 ) {
-				transform.localEulerAngles = path[currentNode].transform.localEulerAngles;
-				
-				nodeTimer = path[currentNode].GetComponent(PathNode).duration;
-								
-				if ( currentNode < path.Count - 1 ) {
-					currentNode++;
-				} else {
-					currentNode = 0;
-				}
-			}
-			
-			if ( nodeTimer <= 0 ) {
-				transform.LookAt ( path[currentNode].transform.position );
-				transform.position += transform.forward * 4 * Time.deltaTime;
-			} else {
-				nodeTimer -= Time.deltaTime;
-			}
-		}*/
 	}
 }
