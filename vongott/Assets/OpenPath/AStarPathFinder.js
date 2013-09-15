@@ -31,6 +31,8 @@ class AStarPathFinder extends MonoBehaviour {
 	}
 	
 	function SetGoal ( v : Vector3 ) {
+		if ( goal == v ) { return; }
+		
 		ClearNodes ();
 		goal = v;
 		UpdatePosition ();

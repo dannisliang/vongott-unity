@@ -67,17 +67,30 @@ function DrawZLine () {
 // Path
 function DrawPath ( actor : Actor ) {
 	for ( var i : int = 0; i < actor.path.Count; i++ ) {
-		var nextPoint : int = i+1;
+		var pointA : Vector3;
+		var pointB : Vector3;
 		
-		if ( nextPoint == actor.path.Count ) {
-			if ( actor.pathLoop ) {	
-				nextPoint = 0;
+		if ( actor.pathType == Actor.ePathType.NavPoint ) {
+			if ( i == 0 ) {
+				pointA = actor.transform.position;
+				pointB = actor.path[0].position;
 			} else {
-				break;
+				pointA = actor.path[i-1].position;
+				pointB = actor.path[i].position;
+			
 			}
+		
+		} else if ( i+1 == actor.path.Count ) {	
+			pointA = actor.path[i].position;
+			pointB = actor.path[0].position;
+		
+		} else {
+			pointA = actor.path[i].position;
+			pointB = actor.path[i+1].position;
+		
 		}
 		
-		DrawLine ( actor.path[i].position, actor.path[nextPoint].position );
+		DrawLine ( pointA, pointB );
 	}
 }
 

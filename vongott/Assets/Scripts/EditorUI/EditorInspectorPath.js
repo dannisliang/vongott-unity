@@ -4,10 +4,8 @@ class EditorInspectorPath extends MonoBehaviour {
 	var pathContainer : Transform;
 	@HideInInspector var pathBottomLine : float = 0;
 	var nodes : List.< GameObject > = new List.< GameObject >();
-	var nodeGizmo : GameObject;
 	var addNode : OGButton;
-	var pathLoop : OGTickBox;
-	var pathWaitForConvo : OGTickBox;
+	var pathType : OGPopUp;
 	
 	
 	//////////////////////
@@ -177,8 +175,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 		pathContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - pathContainer.position.y;
 		
-		pathLoop.isChecked = a.pathLoop;
-		pathWaitForConvo.isChecked = a.pathWaitForConvo;
+		pathType.selectedOption = a.pathType.ToString();
 		
 		for ( var i = 0; i < a.path.Count; i++ ) {
 			AddNodeMenuItem( a.path[i] );
@@ -199,8 +196,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		if ( o.GetComponent ( Actor ) ) {
 			var a : Actor = o.GetComponent ( Actor );		
 		
-			a.pathLoop = pathLoop.isChecked;
-			a.pathWaitForConvo = pathWaitForConvo.isChecked;
+			a.SetPathType ( pathType.selectedOption );
 		
 			for ( var i = 0; i < a.path.Count; i++ ) {
 				var str : String = nodes[i].GetComponentInChildren(OGTextField).text;

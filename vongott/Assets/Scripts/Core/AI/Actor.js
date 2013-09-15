@@ -18,6 +18,11 @@ class Actor extends InteractiveObject {
 		Aggressive
 	}
 	
+	public enum ePathType {
+		Patrolling,
+		NavPoint
+	}
+	
 	public enum eVitalState {
 		Alive,
 		Unconcious,
@@ -43,8 +48,7 @@ class Actor extends InteractiveObject {
 	var vision : VisionCone = new VisionCone();
 	var hearing : float = 10;
 
-	var pathWaitForConvo : boolean = false;
-	var pathLoop : boolean = true;
+	var pathType : ePathType;
 	var path : List.< PathNode > = new List.< PathNode >();
 	var inventory : InventoryEntry[] = new InventoryEntry [4];
 	
@@ -56,7 +60,6 @@ class Actor extends InteractiveObject {
 
 	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
-	@HideInInspector var currentPath : int = 0;
 	@HideInInspector var nodeTimer : float = 0;
 	@HideInInspector var shootTimer : float = 0;
 	@HideInInspector var attentionTimer : float = 0;
@@ -85,12 +88,12 @@ class Actor extends InteractiveObject {
 			Destroy ( this.rigidbody );
 		} else {
 			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;
-			waiting = pathWaitForConvo;
+			waiting = pathType == ePathType.NavPoint;
 			
 		}
 	}
 	
-	// Get affiliation
+	// Set affiliation
 	public function SetAffiliation ( str : String ) {
 		if ( str == "enemy" || str == "Enemy" ) {
 			affiliation = eAffiliation.Enemy;
@@ -99,7 +102,7 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	// Get mood
+	// Set mood
 	public function SetMood ( str : String ) {
 		if ( str == "aggressive" || str == "Aggressive" ) {
 			mood = eMood.Aggressive;
@@ -113,7 +116,18 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	// Get vital state
+	// Set mood
+	public function SetPathType ( str : String ) {
+		if ( str == "patrolling" || str == "Patrolling" ) {
+			pathType = ePathType.Patrolling;
+		
+		} else {
+			pathType = ePathType.NavPoint;
+		
+		}
+	}
+	
+	// Set vital state
 	public function SetVitalState ( str : String ) {
 		if ( str == "dead" || str == "Dead" ) {
 			vitalState = eVitalState.Dead;
@@ -170,9 +184,9 @@ class Actor extends InteractiveObject {
 		if ( endAction == "Attack" ) {
 			SetAffiliation ( "Enemy" );
 		
-		} else if ( endAction == "NextPath" ) {
+		} else if ( endAction == "NextPoint" ) {
 			waiting = false;
-			currentPath++;
+			currentNode++;
 		
 		}
 	}
@@ -320,14 +334,14 @@ class Actor extends InteractiveObject {
 		} else if ( waiting ) {
 			speed = 0;
 		
-		// Follow path
-		} else if ( path.Count > 0 ) {
+		// Patrolling
+		} else if ( pathType == ePathType.Patrolling && path.Count > 0 ) {
 			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.1 ) {
 				nodeTimer = path[currentNode].duration;
 								
 				if ( currentNode < path.Count - 1 ) {
 					currentNode++;
-				} else if ( pathLoop ) {
+				} else if ( pathType == ePathType.Patrolling ) {
 					currentNode = 0;
 				} else {
 					waiting = true;
@@ -345,6 +359,11 @@ class Actor extends InteractiveObject {
 				nodeTimer -= Time.deltaTime;
 			
 			}	
+		
+		// Go to navpoint
+		} else if ( pathType == ePathType.NavPoint && currentNode < path.Count ) {
+			this.GetComponent(AStarPathFinder).SetGoal( path[currentNode].position );
+		
 		}
 	}
 	
