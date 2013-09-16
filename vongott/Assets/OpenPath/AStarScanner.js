@@ -61,7 +61,7 @@ class AStarScanner extends MonoBehaviour {
 			if ( n.parent ) { Gizmos.color = Color.red; }
 			if ( n.active ) { Gizmos.color = Color.green; }
 
-			//Gizmos.DrawCube ( n.position, new Vector3 ( 0.5, 0.5, 0.5 ) );
+			Gizmos.DrawCube ( n.position, new Vector3 ( 0.5, 0.5, 0.5 ) );
 			
 			Gizmos.color = Color.white;
 		}

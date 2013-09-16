@@ -21,18 +21,23 @@ class AStarPathFinder extends MonoBehaviour {
 	}
 	
 	function SetGoal ( t : Transform ) {
-		ClearNodes ();
-		
 		// If there is a goal, create the nodes
 		if ( t ) {
+			if ( goal == t.position ) { return; }
+		
+			ClearNodes ();
 			goal = t.position;
 			UpdatePosition ();
+		
+		} else {
+			ClearNodes ();
+		
 		}
 	}
 	
 	function SetGoal ( v : Vector3 ) {
 		if ( goal == v ) { return; }
-		
+				
 		ClearNodes ();
 		goal = v;
 		UpdatePosition ();
@@ -83,7 +88,7 @@ class AStarPathFinder extends MonoBehaviour {
 				transform.localPosition += transform.forward * speed * Time.deltaTime;
 			}
 		
-			if ( ( transform.position - goal ).magnitude < stoppingDistance ) {
+			if ( ( transform.position - goal ).magnitude <= stoppingDistance ) {
 				ClearNodes ();
 			}
 		}

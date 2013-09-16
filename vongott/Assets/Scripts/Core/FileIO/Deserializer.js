@@ -306,6 +306,9 @@ static function DeserializePathNode ( p : JSONObject ) : PathNode {
 	// duration
 	node.duration = p.GetField ( "duration" ).n;
 	
+	// duration
+	if ( p.HasField ( "running" ) ) { node.running = p.GetField ( "running" ).b; }
+	
 	return node;
 }
 

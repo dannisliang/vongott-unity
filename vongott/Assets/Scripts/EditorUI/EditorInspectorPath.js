@@ -73,9 +73,9 @@ class EditorInspectorPath extends MonoBehaviour {
 		l.text = "PathNode" + nodes.Count.ToString();
 		
 		// pick node
-		var buttonPick : GameObject = new GameObject ( "ButtonGrab" );
+		var buttonPick : GameObject = new GameObject ( "ButtonPick" );
 		buttonPick.transform.parent = node.transform;
-		buttonPick.transform.localPosition = new Vector3 ( 190, 20, -2 );
+		buttonPick.transform.localPosition = new Vector3 ( 190, 47, -2 );
 		buttonPick.transform.localScale = new Vector3 ( 70, 20, 0 );
 		
 		var bp : OGButton = buttonPick.AddComponent ( OGButton );
@@ -87,7 +87,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		// delete node
 		var buttonDelete : GameObject = new GameObject ( "ButtonDelete" );
 		buttonDelete.transform.parent = node.transform;
-		buttonDelete.transform.localPosition = new Vector3 ( 270, 20, -2 );
+		buttonDelete.transform.localPosition = new Vector3 ( 270, 30, -2 );
 		buttonDelete.transform.localScale = new Vector3 ( 20, 20, 0 );
 		
 		var bd : OGButton = buttonDelete.AddComponent ( OGButton );
@@ -106,7 +106,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		var input : GameObject = new GameObject ( "Input" );
 		input.transform.parent = idleTime.transform;
 		input.transform.localPosition = new Vector3 ( 60, 0, -2 );
-		input.transform.localScale = new Vector3 ( 70, 20, 1 );
+		input.transform.localScale = new Vector3 ( 60, 20, 1 );
 		
 		var tf : OGTextField = input.AddComponent ( OGTextField );
 		tf.text = actorNode.duration.ToString();
@@ -121,6 +121,16 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 		var il : OGLabel = itLabel.AddComponent ( OGLabel );
 		il.text = "Idle (s)";
+		
+		// running
+		var running : GameObject = new GameObject ( "Running" );
+		running.transform.parent = node.transform;
+		running.transform.localPosition = new Vector3 ( 190, 20, -2 );
+		running.transform.localScale = new Vector3 ( 38, 20, 1 );
+		
+		var rtb : OGTickBox = running.AddComponent ( OGTickBox );
+		rtb.label = "Run";
+		rtb.isChecked = actorNode.running;
 		
 		// position
 		var posLabel : GameObject = new GameObject ( "Label" );
@@ -199,10 +209,13 @@ class EditorInspectorPath extends MonoBehaviour {
 			a.SetPathType ( pathType.selectedOption );
 		
 			for ( var i = 0; i < a.path.Count; i++ ) {
-				var str : String = nodes[i].GetComponentInChildren(OGTextField).text;
+				var duration : String = nodes[i].GetComponentInChildren(OGTextField).text;
+				var running : boolean = nodes[i].GetComponentInChildren(OGTickBox).isChecked;
 				
-				if ( str != "" ) {
-					a.path[i].duration = float.Parse ( str );
+				a.path[i].running = running;
+				
+				if ( duration != "" ) {
+					a.path[i].duration = float.Parse ( duration );
 				}
 			}
 		}

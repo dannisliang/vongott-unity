@@ -228,6 +228,9 @@ static function SerializePathNode ( p : PathNode ) : JSONObject {
 	// duration
 	node.AddField ( "duration", p.duration );
 	
+	// running
+	node.AddField ( "running", p.running );
+	
 	return node;
 }
 

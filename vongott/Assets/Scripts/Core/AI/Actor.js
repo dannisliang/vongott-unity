@@ -69,9 +69,10 @@ class Actor extends InteractiveObject {
 	@HideInInspector var canShoot : boolean = false;
 	@HideInInspector var talking : boolean = false;
 	@HideInInspector var waiting : boolean = false;
+	@HideInInspector var firstNodeTriggered : boolean = false;
 	
 	@HideInInspector var pathFinder : AStarPathFinder;
-				
+			
 
 	////////////////////
 	// Init
@@ -184,9 +185,16 @@ class Actor extends InteractiveObject {
 		if ( endAction == "Attack" ) {
 			SetAffiliation ( "Enemy" );
 		
-		} else if ( endAction == "NextPoint" ) {
+		} else if ( endAction == "NextPath" ) {
 			waiting = false;
-			currentNode++;
+		
+			if ( firstNodeTriggered ) {
+				currentNode++;
+				
+			} else {
+				firstNodeTriggered = true;
+			
+			}
 		
 		}
 	}
@@ -278,7 +286,7 @@ class Actor extends InteractiveObject {
 	// Path finding
 	////////////////////
 	function FindPath ( v : Vector3 ) {
-		this.GetComponent ( AStarPathFinder ).SetGoal ( v );
+		pathFinder.SetGoal ( v );
 	}
 		
 	function ClearPath () {
@@ -312,7 +320,7 @@ class Actor extends InteractiveObject {
 		transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 4 * Time.deltaTime );
 	}
 	
-	function MoveForward () {			
+	function RunForward () {			
 		speed = Mathf.Lerp ( speed, runningSpeed, Time.deltaTime * 5 );
 		
 		transform.localPosition += speed * ( transform.forward * Time.deltaTime );
@@ -331,11 +339,11 @@ class Actor extends InteractiveObject {
 			speed = 0;
 		
 		// Waiting
-		} else if ( waiting ) {
+		} else if ( waiting || path.Count == 0 ) {
 			speed = 0;
 		
 		// Patrolling
-		} else if ( pathType == ePathType.Patrolling && path.Count > 0 ) {
+		} else if ( pathType == ePathType.Patrolling ) {
 			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.1 ) {
 				nodeTimer = path[currentNode].duration;
 								
@@ -362,8 +370,25 @@ class Actor extends InteractiveObject {
 		
 		// Go to navpoint
 		} else if ( pathType == ePathType.NavPoint && currentNode < path.Count ) {
-			this.GetComponent(AStarPathFinder).SetGoal( path[currentNode].position );
-		
+			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.5 ) {
+				waiting = true;
+				ClearPath();
+			
+			} else if ( pathFinder.nodes.Count > 0 ) {
+				TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
+				
+				if ( path[currentNode].running ) {
+					RunForward ();
+				
+				} else {
+					WalkForward ();
+				
+				}
+												
+			} else {
+				FindPath ( path[currentNode].position );
+			
+			}
 		}
 	}
 	
@@ -372,7 +397,7 @@ class Actor extends InteractiveObject {
 		
 		if ( ( transform.position - t.position ).magnitude > keepDistance ) {
 			TurnTowards ( t.position );		
-			MoveForward ();
+			RunForward ();
 		
 		} else {
 			TurnTowards ( t.position );
@@ -472,7 +497,7 @@ class Actor extends InteractiveObject {
 				// Follow path
 				if ( pathFinder.nodes.Count > 0 ) {
 					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
-					MoveForward ();
+					RunForward ();
 				}
 																
 				// Attention span

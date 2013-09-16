@@ -88,6 +88,10 @@ function Update () {
 		}
 	}
 	
+	if ( !player ) {
+		player = GameCore.GetPlayerObject();
+	}
+	
 	var adjustment : Vector3;
 	var standCam = new Vector3 ( 0, 1.35, 0 );
 	var crouchCam = new Vector3 ( 0, 0.8, 0 );
