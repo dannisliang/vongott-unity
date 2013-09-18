@@ -10,7 +10,7 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Public vars
 	////////////////////
-	var objectName : OGTextField;
+	var objectName : OGLabel;
 	var levelName : OGLabel;
 	
 	var inspector : GameObject;
@@ -220,8 +220,6 @@ class EditorMenuBase extends OGPage {
 			menuObj.GetComponent(EditorInspectorPath).Init(selectedObj);
 		} else if ( menu == "Trigger" ) {
 			menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
-		} else if ( menu == "Tween" ) {
-		//	menuObj.GetComponent(EditorInspectorTween).Init(selectedObj);
 		} else if ( menu == "Surface" ) {
 			menuObj.GetComponent(EditorInspectorSurface).Init(selectedObj);
 		} else if ( menu == "Prefab" ) {

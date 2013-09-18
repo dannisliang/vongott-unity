@@ -14,39 +14,58 @@ class EventManager extends MonoBehaviour {
 			if ( !FlagManager.GetFlag ( event.condition, event.conditionBool ) ) { return; }
 		}
 		
-		if ( event.type == GameEvent.eEventType.Animation ) {
-			StartAnimation ( event.animationObject, event.animationType, event.animationVector );
+		switch ( event.type ) {
+			case GameEvent.eEventType.Animation:
+				StartAnimation ( event.animationObject, event.animationType, event.animationVector );
+				break;
 		
-		} else if ( event.type == GameEvent.eEventType.NextPath ) {
-			NextPath ( event.nextPathName );
+			case GameEvent.eEventType.NextPath:
+				NextPath ( event.nextPathName );
+				break;
 		
-		} else if ( event.type == GameEvent.eEventType.SetFlag ) {
-			SetFlag ( event.flagName, event.flagBool );
+			case GameEvent.eEventType.SetFlag:
+				SetFlag ( event.flagName, event.flagBool );
+				break;
 		
-		} else if ( event.type == GameEvent.eEventType.Quest ) {
-			if ( event.questAction == "Start" ) {
-				StartQuest ( event.questID );
-			} else {
-				EndQuest ( event.questID );
-			}
+			case GameEvent.eEventType.Quest:
+				if ( event.questAction == "Start" ) {
+					StartQuest ( event.questID );
+				} else {
+					EndQuest ( event.questID );
+				}
+				break;
 			
-		} else if ( event.type == GameEvent.eEventType.Travel ) {
-			GoToLocation ( event.travelMap, event.travelSpawnPoint );
-		
+			case GameEvent.eEventType.Travel:
+				GoToLocation ( event.travelMap, event.travelSpawnPoint );
+				break;
+			
 		}
 	}
 	
 	public static function StartAnimation ( objName : String, animID : String, destination : Vector3 ) {
 		for ( var c : Component in GameCore.levelContainer.GetComponentsInChildren ( Prefab ) ) {
 			if ( c.gameObject.name == objName ) {
-				iTween.MoveTo ( c.gameObject, iTween.Hash ( "position", destination ) );
+				if ( animID == "MoveTo" ) {
+					iTween.MoveTo ( c.gameObject, iTween.Hash ( "position", destination ) );
+				
+				} else if ( animID == "MoveBy" ) {
+					iTween.MoveBy ( c.gameObject, iTween.Hash ( "amount", destination ) );
+				
+				} else if ( animID == "RotateTo" ) {
+					iTween.RotateTo ( c.gameObject, iTween.Hash ( "rotation", destination ) );
+				
+				} else if ( animID == "RotateBy" ) {
+					iTween.RotateBy ( c.gameObject, iTween.Hash ( "amount", destination / 360 ) );
+				
+				}
+			
 			}
 		}
 	}
 	
 	public static function NextPath ( n : String ) {
 		for ( var c : Component in GameCore.levelContainer.GetComponentsInChildren ( Actor ) ) {
-			if ( ( c as Actor ).displayName == n ) {
+			if ( c.gameObject.name == n ) {
 				( c as Actor ).NextPath ();
 			}
 		}

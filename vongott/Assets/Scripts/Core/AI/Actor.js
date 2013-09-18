@@ -15,7 +15,8 @@ class Actor extends InteractiveObject {
 	public enum eMood {
 		Calm,
 		Alert,
-		Aggressive
+		Aggressive,
+		Scared
 	}
 	
 	public enum ePathType {
@@ -79,6 +80,11 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Start
 	function Start () {
+		// Generate GUID if necessary
+		if ( this.gameObject.name.Length < 30 ) {
+			this.gameObject.name = System.Guid.NewGuid().ToString();
+		}
+		
 		pathFinder = this.GetComponent ( AStarPathFinder );
 		
 		initPosition = this.transform.position;
@@ -194,13 +200,28 @@ class Actor extends InteractiveObject {
 		
 		GameCore.GetPlayerObject().GetComponent(Player).StopTalking ();
 	
-		if ( endAction == "Attack" ) {
-			SetAffiliation ( "Enemy" );
+		switch ( endAction ) {
+			case "Attack":
+				SetAffiliation ( "Enemy" );
+				SetMood ( "Aggressive" );
+				break;
 		
-		} else if ( endAction == "NextPath" ) {
-			NextPath ();
-		
-		}
+			case "NextPath":
+				NextPath ();
+				break;
+				
+			case "RunAway":
+				SetAffiliation ( "Enemy" );
+				SetMood ( "Scared" );
+				break;
+				
+			case "FireTrigger":
+				if ( this.GetComponent(Trigger) && this.GetComponent(Trigger).activation == Trigger.eTriggerActivation.EndConvo ) {
+					this.GetComponent(Trigger).Activate();
+				}
+				break;
+			
+		} 
 	}
 	
 	function Say ( msg : String ) {

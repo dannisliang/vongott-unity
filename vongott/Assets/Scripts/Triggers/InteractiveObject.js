@@ -18,7 +18,7 @@ class InteractiveObject extends MonoBehaviour {
 	function InvokePrompt () {}
 	
 	function Interact () {}
-	
+		
 	function Update () {
 		if ( GameCore.GetInteractiveObject() == this.gameObject ) {
 			Interact ();

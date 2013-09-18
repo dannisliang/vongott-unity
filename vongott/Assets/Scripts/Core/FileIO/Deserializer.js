@@ -42,6 +42,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 			newPfb.tag = "walkable";
 		}
 		
+		// GUID
+		newPfb.name = obj.GetField ( "name" ).str;
+		
 		return newPfb;
 
 	// check if lightsource
@@ -64,8 +67,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newObj.transform.localScale = DeserializeVector3 ( lgt.GetField("localScale") );
 		newObj.transform.localPosition = DeserializeVector3 ( lgt.GetField("localPosition") );
 		newObj.transform.localEulerAngles = DeserializeVector3 ( lgt.GetField("localEulerAngles") );
-	
-		newObj.name = newObj.name.Replace( "(Clone)", "" );
+		
+		// GUID
+		newObj.name = obj.GetField ( "name" ).str;
 	
 		return newObj;
 	
@@ -91,6 +95,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.name = act.GetField("model").str;
 		newAct.layer = 9;
 	
+		// GUID
+		newAct.name = obj.GetField ( "name" ).str;
+	
 		return newAct;
 	
 	// check if item
@@ -106,6 +113,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 	
 		newItm.name = itm.GetField("model").str;
 		newItm.layer = 9;
+	
+		// GUID
+		newItm.name = obj.GetField ( "name" ).str;
 	
 		return newItm;
 	
@@ -131,6 +141,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newSrf.Init ();
 		newSrf.Apply ();
 	
+		// GUID
+		newSrfObj.name = obj.GetField ( "name" ).str;
+	
 		return newSrfObj;
 	
 	// check if spawnpoint
@@ -141,9 +154,11 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newSpt = Instantiate ( Resources.Load ( "Prefabs/Editor/spawnpoint" ) as GameObject );
 		newSpt.transform.localEulerAngles = new Vector3 ( 0, DeserializeVector3 ( spt.GetField("localEulerAngles") ).y, 0 );
 		newSpt.transform.localPosition = DeserializeVector3 ( spt.GetField("localPosition") );
+		//newSpt.GetComponent(SpawnPoint).spawnPointName = 
 	
-		newSpt.name = spt.GetField ( "name" ).str;
-	
+		// GUID
+		newSpt.name = obj.GetField ( "name" ).str;
+		
 		return newSpt;
 	
 	// check trigger
@@ -159,6 +174,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newTrg.GetComponent(Trigger).SetActivationType ( trg.GetField ( "activation" ).str );
 		newTrg.GetComponent(Trigger).fireOnce = trg.GetField ( "fireOnce" ).b;
 		newTrg.GetComponent(Trigger).events = DeserializeEvents ( trg.GetField ( "events" ) );
+		
+		// GUID
+		newTrg.name = obj.GetField ( "name" ).str;
 		
 		return newTrg;
 	

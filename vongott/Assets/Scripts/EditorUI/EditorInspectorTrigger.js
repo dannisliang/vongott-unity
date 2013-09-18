@@ -7,7 +7,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	@HideInInspector var bottomLine : float = 0;
 	var eventContainer : Transform;
 	var eventPrefab : EditorInspectorEvent;
-	
+		
 	function Init ( obj : GameObject ) {
 		ClearEvents ();
 		
@@ -18,7 +18,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		fireOnce.isChecked = trg.fireOnce;
 		
 		eventContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - eventContainer.position.y;
-		
+				
 		for ( var e : GameEvent in trg.events ) {
 			AddEvent ( e );
 		}
@@ -40,7 +40,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	
 		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
 			if ( hit.collider.gameObject.GetComponent(Actor) ) {
-				btn.text = hit.collider.gameObject.GetComponent(Actor).displayName;
+				btn.text = hit.collider.gameObject.name;
 			}
 			
 			UpdateObject();
@@ -145,9 +145,11 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	}
 	
 	function ClearEvents () {
+		bottomLine = 0;
+		
 		for ( var i = 0; i < eventContainer.childCount; i++ ) {
 			if ( eventContainer.GetChild(i).GetComponent ( EditorInspectorEvent ) ) {
-				Destroy ( eventContainer.GetChild(i).gameObject );
+				DestroyImmediate ( eventContainer.GetChild(i).gameObject );
 			}
 		}
 	}

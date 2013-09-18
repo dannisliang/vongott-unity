@@ -66,6 +66,14 @@ class Item extends InteractiveObject {
 	var desc : String;
 	var attr : Attribute[];
 
+	// Init
+	function Start () {
+		// Generate GUID if necessary
+		if ( this.gameObject.name.Length < 30 ) {
+			this.gameObject.name = System.Guid.NewGuid().ToString();
+		}
+	}
+
 	// Handle pick-up
 	override function InvokePrompt () {
 		UIHUD.ShowNotification ( "Pick up [F]" );

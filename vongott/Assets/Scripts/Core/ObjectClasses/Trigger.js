@@ -4,6 +4,7 @@ class Trigger extends MonoBehaviour {
 	enum eTriggerActivation {
 		Collision,
 		Death,
+		EndConvo,
 		PickUp
 	}
 	
@@ -25,6 +26,10 @@ class Trigger extends MonoBehaviour {
 			case "Death":
 				activation = eTriggerActivation.Death;
 				break;
+				
+			case "EndConvo":
+				activation = eTriggerActivation.EndConvo;
+				break;
 		}	
 	}
 	
@@ -42,12 +47,17 @@ class Trigger extends MonoBehaviour {
 		}
 		
 		if ( fireOnce ) {
-			this.gameObject.SetActive ( false );
+			this.enabled = false;
 		}
 	}
 	
 	// Init
 	function Start () {
+		// Generate GUID if necessary
+		if ( this.gameObject.name.Length < 30 ) {
+			this.gameObject.name = System.Guid.NewGuid().ToString();
+		}
+		
 		if ( GameCore.started ) {
 			this.GetComponent(MeshRenderer).enabled = false;
 		}

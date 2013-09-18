@@ -575,13 +575,11 @@ static function SelectObject ( obj : GameObject ) {
 	if ( obj.GetComponent(Actor) ) {
 		inspector.AddMenu ( "Actor", obj );
 		inspector.AddMenu ( "Path", obj );
-		inspector.AddMenu ( "Trigger", obj );
 	}
 	
 	// Item
 	if ( obj.GetComponent ( Item ) ) {
 		inspector.AddMenu ( "Item", obj );
-		inspector.AddMenu ( "Trigger", obj );
 	}
 	
 	// Prefab

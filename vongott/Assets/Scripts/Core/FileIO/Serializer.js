@@ -12,6 +12,9 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	var chl : JSONObject;
 	var com : JSONObject;
 	
+	// name
+	o.AddField ( "name", obj.name );
+	
 	// check if prefab
 	if ( obj.GetComponent(Prefab) ) {
 		var pfb : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
@@ -140,9 +143,6 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	
 	// anything else
 	} else {
-		// name
-		o.AddField ( "name", obj.name );
-			
 		// components
 		com = SerializeGameObjectComponents ( obj );
 		o.AddField ( "components", com );
