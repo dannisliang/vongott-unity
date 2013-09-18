@@ -14,6 +14,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		var trg : Trigger = obj.GetComponent ( Trigger );
 		if ( trg == null ) { return; }
 		
+		activation.selectedOption = trg.activation.ToString();
 		fireOnce.isChecked = trg.fireOnce;
 		
 		eventContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - eventContainer.position.y;
@@ -23,6 +24,27 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		}
 		
 		RearrangeEvents ();
+	}
+	
+	function PickPrefab ( btn : OGButton ) {
+		EditorCore.SetPickMode ( true );
+	
+		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
+			btn.text = hit.collider.gameObject.name;
+			UpdateObject();
+		};
+	}
+	
+	function PickActor ( btn : OGButton ) {
+		EditorCore.SetPickMode ( true );
+	
+		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
+			if ( hit.collider.gameObject.GetComponent(Actor) ) {
+				btn.text = hit.collider.gameObject.GetComponent(Actor).displayName;
+			}
+			
+			UpdateObject();
+		};
 	}
 	
 	function PickQuest ( btn : OGButton ) {
@@ -66,8 +88,23 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		pfb.transform.parent = eventContainer;
 		pfb.eventDelay.text = "0";
 	
+		pfb.anim.button.target = this.gameObject;
+		pfb.quest.button.target = this.gameObject;
+		pfb.nextPath.button.target = this.gameObject;
+		pfb.setFlag.button.target = this.gameObject;
+		pfb.travel.button.target = this.gameObject;
+		pfb.eventCondition.target = this.gameObject;
+				
 		if ( e ) {
 			pfb.eventDelay.text = e.delay.ToString();
+			
+			if ( e.condition != "" ) {
+				pfb.eventCondition.text = e.condition;
+				pfb.eventConditionBool.isChecked = e.conditionBool;
+			} else {
+				pfb.eventCondition.text = "(none)";
+				pfb.eventConditionBool.isChecked = false;
+			}
 			
 			switch ( e.type ) {
 				case GameEvent.eEventType.Animation:
@@ -104,9 +141,6 @@ class EditorInspectorTrigger extends MonoBehaviour {
 			
 			}
 		
-		} else {
-			RearrangeEvents ();
-		
 		}
 	}
 	
@@ -131,11 +165,11 @@ class EditorInspectorTrigger extends MonoBehaviour {
 						
 			switch ( e.eventType.selectedOption ) {
 				case "": case "NextPath": case "Quest": case "SetFlag":
-					bottomLine += 80;
+					bottomLine += 140;
 					break;
 					
 				case "Animation": case "Travel":
-					bottomLine += 110;
+					bottomLine += 170;
 					break;
 			}
 		}
@@ -174,6 +208,11 @@ class EditorInspectorTrigger extends MonoBehaviour {
 				if ( e.eventDelay.text == "" ) { e.eventDelay.text = "0"; }
 				
 				newEvent.delay = float.Parse ( e.eventDelay.text );
+				
+				if ( e.eventCondition.text == "" ) { e.eventCondition.text = "(none)"; e.eventConditionBool.isChecked = false; }
+				
+				newEvent.condition = e.eventCondition.text;
+				newEvent.conditionBool = e.eventConditionBool.isChecked;
 				
 				switch ( e.eventType.selectedOption ) {
 					case "Animation":

@@ -10,6 +10,10 @@ class EventManager extends MonoBehaviour {
 	// Main functions
 	/////////////////
 	public static function Fire ( event : GameEvent ) {
+		if ( event.condition != "" && event.condition != "(none)" ) {
+			if ( !FlagManager.GetFlag ( event.condition, event.conditionBool ) ) { return; }
+		}
+		
 		if ( event.type == GameEvent.eEventType.Animation ) {
 			StartAnimation ( event.animationObject, event.animationType, event.animationVector );
 		

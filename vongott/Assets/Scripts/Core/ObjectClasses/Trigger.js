@@ -3,8 +3,8 @@
 class Trigger extends MonoBehaviour {
 	enum eTriggerActivation {
 		Collision,
-		PickUp,
-		Die
+		Death,
+		PickUp
 	}
 	
 	var activation : eTriggerActivation;
@@ -22,8 +22,8 @@ class Trigger extends MonoBehaviour {
 				activation = eTriggerActivation.PickUp;
 				break;
 				
-			case "Die":
-				activation = eTriggerActivation.Die;
+			case "Death":
+				activation = eTriggerActivation.Death;
 				break;
 		}	
 	}
@@ -32,10 +32,6 @@ class Trigger extends MonoBehaviour {
 	function OnTriggerEnter () {
 		if ( activation != eTriggerActivation.Collision ) { return; }
 		
-		if ( fireOnce ) {
-			this.GetComponent(BoxCollider).enabled = false;
-		}
-		
 		Activate ();
 	}
 	
@@ -43,6 +39,10 @@ class Trigger extends MonoBehaviour {
 	function Activate () {
 		for ( var event : GameEvent in events ) {
 			EventManager.Fire ( event );
+		}
+		
+		if ( fireOnce ) {
+			this.gameObject.SetActive ( false );
 		}
 	}
 	

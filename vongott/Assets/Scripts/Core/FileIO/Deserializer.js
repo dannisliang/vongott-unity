@@ -314,6 +314,8 @@ static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
 	var event : GameEvent = new GameEvent();
 	
 	event.delay = evt.GetField ( "delay" ).n;
+	event.condition = evt.GetField ( "condition" ).str;
+	event.conditionBool = evt.GetField ( "conditionBool" ).b;
 			
 	switch ( evt.GetField ( "type" ).str ) {
 		case "Animation":

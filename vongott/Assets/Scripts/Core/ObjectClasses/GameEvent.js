@@ -11,6 +11,8 @@ class GameEvent {
 
 	var type : eEventType;
 	var delay : float = 0;
+	var condition : String = "";
+	var conditionBool : boolean;
 
 	var animationObject : String;
 	var animationType : String;

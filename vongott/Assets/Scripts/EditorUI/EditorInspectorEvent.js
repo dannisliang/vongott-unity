@@ -4,6 +4,8 @@ class EditorInspectorEvent extends MonoBehaviour {
 	public var eventIndex : OGLabel;
 	public var eventDelay : OGTextField;
 	public var eventType : OGPopUp;
+	public var eventCondition : OGButton;
+	public var eventConditionBool : OGTickBox;
 	public var eventTypeContainers : Transform;
 	
 	private class AnimationType {

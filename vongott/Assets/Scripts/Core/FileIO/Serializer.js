@@ -230,6 +230,8 @@ static function SerializeGameEvent ( event : GameEvent ) : JSONObject {
 	var evt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	
 	evt.AddField ( "delay", event.delay );
+	evt.AddField ( "condition", event.condition );
+	evt.AddField ( "conditionBool", event.conditionBool );
 			
 	switch ( event.type ) {
 		case GameEvent.eEventType.Animation:
