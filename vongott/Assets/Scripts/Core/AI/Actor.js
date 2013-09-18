@@ -177,6 +177,18 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
+	function NextPath () {
+		waiting = false;
+		
+		if ( firstNodeTriggered ) {
+			currentNode++;
+			
+		} else {
+			firstNodeTriggered = true;
+		
+		}
+	}
+	
 	function StopTalking ( endAction : String ) {
 		talking = false;
 		
@@ -186,15 +198,7 @@ class Actor extends InteractiveObject {
 			SetAffiliation ( "Enemy" );
 		
 		} else if ( endAction == "NextPath" ) {
-			waiting = false;
-		
-			if ( firstNodeTriggered ) {
-				currentNode++;
-				
-			} else {
-				firstNodeTriggered = true;
-			
-			}
+			NextPath ();
 		
 		}
 	}

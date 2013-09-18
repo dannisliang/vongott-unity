@@ -53,7 +53,7 @@ class OGWidget extends MonoBehaviour {
 	var stretch : Stretch = new Stretch();
 	
 	@HideInInspector var adjustPivot : Vector2 = Vector2.zero;				
-	@HideInInspector var manualDraw = false;
+	var manualDraw = false;
 	@HideInInspector var mouseOver = false;
 	@HideInInspector var colliderRect : Rect;
 	@HideInInspector var guiStyle : GUIStyle;

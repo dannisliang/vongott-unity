@@ -64,11 +64,11 @@ class OGPopUp extends OGWidget {
 			originalZ = transform.localPosition.z;
 		}
 		
-		if ( isUp ) {
+		/*if ( isUp ) {
 			transform.localPosition.z = -10;
 		} else {
 			transform.localPosition.z = originalZ;
-		}
+		}*/
 		
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			isUp = false;

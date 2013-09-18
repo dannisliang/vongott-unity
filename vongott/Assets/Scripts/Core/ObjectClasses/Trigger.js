@@ -1,13 +1,32 @@
 #pragma strict
 
 class Trigger extends MonoBehaviour {
+	enum eTriggerActivation {
+		Collision,
+		PickUp,
+		Die
+	}
+	
+	var activation : eTriggerActivation;
 	var fireOnce : boolean = true;
-	var startAnimation : String = "";
-	var startQuest : String = "";
-	var endQuest : String = "";
-	var setFlag : String = "";
-	var travelMap : String = "";
-	var travelPoint : String = "";
+	var events : List.< GameEvent > = new List.< GameEvent > ();
+	
+	// Set activation
+	function SetActivationType ( type : String ) {
+		switch ( type ) {
+			case "Collision":
+				activation = eTriggerActivation.Collision;
+				break;
+			
+			case "Pickup":
+				activation = eTriggerActivation.PickUp;
+				break;
+				
+			case "Die":
+				activation = eTriggerActivation.Die;
+				break;
+		}	
+	}
 	
 	// Check collision
 	function OnTriggerEnter () {
@@ -18,38 +37,10 @@ class Trigger extends MonoBehaviour {
 		Activate ();
 	}
 	
-	// Before animation
-	function BeforeAnim () {
-		if ( endQuest != "(none)" && endQuest != "" ) {
-			QuestManager.EndQuest ( endQuest );
-		}
-	}
-	
-	// After animation
-	function AfterAnim () {
-		if ( startQuest != "(none)" && startQuest != "" ) {
-			QuestManager.StartQuest ( startQuest );
-		}
-		
-		if ( setFlag != "(none)" && setFlag != "" ) {
-			FlagManager.SetFlag ( setFlag, true );
-		}
-		
-		if ( travelMap != "(none)" && travelMap != "" ) {
-			GameCore.LoadLevel ( travelMap, travelPoint );
-		}
-	}
-	
 	// Activate trigger
 	function Activate () {
-		BeforeAnim ();
-		
-		if ( startAnimation != "(none)" && startAnimation != "" ) {
-			GameCore.StartAnimation ( startAnimation, AfterAnim );
-
-		} else {
-			AfterAnim ();
-		
+		for ( var event : GameEvent in events ) {
+			EventManager.Fire ( event );
 		}
 	}
 	

@@ -156,14 +156,6 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newTrg.transform.localScale = DeserializeVector3 ( trg.GetField("localScale") );
 		newTrg.layer = 9;
 		
-		newTrg.GetComponent ( Trigger ).fireOnce = trg.GetField ( "fireOnce" ).b;
-		newTrg.GetComponent ( Trigger ).endQuest = trg.GetField ( "endQuest" ).str;
-		newTrg.GetComponent ( Trigger ).startAnimation = trg.GetField ( "startAnimation" ).str;
-		newTrg.GetComponent ( Trigger ).startQuest = trg.GetField ( "startQuest" ).str;
-		newTrg.GetComponent ( Trigger ).setFlag = trg.GetField ( "setFlag" ).str;
-		newTrg.GetComponent ( Trigger ).travelMap = trg.GetField ( "travelMap" ).str;
-		newTrg.GetComponent ( Trigger ).travelPoint = trg.GetField ( "travelPoint" ).str;
-		
 		return newTrg;
 	
 	} else {
