@@ -47,7 +47,7 @@ class Trigger extends MonoBehaviour {
 		}
 		
 		if ( fireOnce ) {
-			this.enabled = false;
+			this.GetComponent(BoxCollider).enabled = false;
 		}
 	}
 	
