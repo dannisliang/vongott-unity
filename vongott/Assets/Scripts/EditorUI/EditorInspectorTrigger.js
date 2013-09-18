@@ -7,13 +7,8 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	@HideInInspector var bottomLine : float = 0;
 	var eventContainer : Transform;
 	var eventPrefab : EditorInspectorEvent;
-		
-	function Init ( obj : GameObject ) {
-		ClearEvents ();
-		
-		var trg : Trigger = obj.GetComponent ( Trigger );
-		if ( trg == null ) { return; }
-		
+	
+	function PopulateEvents ( trg : Trigger ) {
 		activation.selectedOption = trg.activation.ToString();
 		fireOnce.isChecked = trg.fireOnce;
 		
@@ -24,6 +19,13 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		}
 		
 		RearrangeEvents ();
+	}
+	
+	function Init ( obj : GameObject ) {
+		var trg : Trigger = obj.GetComponent ( Trigger );
+		if ( trg == null ) { return; }
+		
+		ClearEvents ( function () { PopulateEvents ( trg ); } );
 	}
 	
 	function PickPrefab ( btn : OGButton ) {
@@ -145,12 +147,20 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	}
 	
 	function ClearEvents () {
+		ClearEvents ( null );
+	}
+	
+	function ClearEvents ( func : Function ) {
 		bottomLine = 0;
 		
 		for ( var i = 0; i < eventContainer.childCount; i++ ) {
 			if ( eventContainer.GetChild(i).GetComponent ( EditorInspectorEvent ) ) {
-				DestroyImmediate ( eventContainer.GetChild(i).gameObject );
+				Destroy ( eventContainer.GetChild(i).gameObject );
 			}
+		}
+		
+		if ( func ) {
+			func ();
 		}
 	}
 	
