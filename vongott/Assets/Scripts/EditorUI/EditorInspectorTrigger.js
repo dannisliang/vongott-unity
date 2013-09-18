@@ -57,6 +57,8 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	
 	function AddEvent () {
 		AddEvent ( null );
+		
+		UpdateObject();
 	}
 	
 	function AddEvent ( e : GameEvent ) {
@@ -178,6 +180,11 @@ class EditorInspectorTrigger extends MonoBehaviour {
 						newEvent.type = GameEvent.eEventType.Animation;
 						newEvent.animationObject = e.anim.button.text;
 						newEvent.animationType = e.anim.popUp.selectedOption;
+						
+						if ( e.anim.x.text == "" ) { e.anim.x.text = "0"; }
+						if ( e.anim.y.text == "" ) { e.anim.y.text = "0"; }
+						if ( e.anim.z.text == "" ) { e.anim.z.text = "0"; }
+						
 						newEvent.animationVector = new Vector3 ( float.Parse(e.anim.x.text), float.Parse(e.anim.y.text), float.Parse(e.anim.z.text) );
 						break;
 					

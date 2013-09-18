@@ -130,6 +130,10 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		trg.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
 		trg.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
 	
+		trg.AddField ( "activation", obj.GetComponent(Trigger).activation.ToString() );
+		trg.AddField ( "fireOnce", obj.GetComponent(Trigger).fireOnce );
+		trg.AddField ( "events", SerializeEvents ( obj.GetComponent(Trigger).events ) );
+	
 		o.AddField ( "Trigger", trg );
 	
 		return o;
@@ -180,6 +184,17 @@ static function SerializeGameObjectComponents ( obj : GameObject ) : JSONObject 
 	return com;
 }
 
+// game events
+static function SerializeEvents ( events : List.< GameEvent > ) : JSONObject {
+	var evt : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+	
+	for ( var e : GameEvent in events ) {
+		evt.Add ( SerializeGameEvent ( e ) );
+	}
+	
+	return evt;
+}
+
 // path
 static function SerializePath ( nodes : List.< PathNode > ) : JSONObject {
 	var pth : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
@@ -210,6 +225,48 @@ static function SerializeInventory ( entries : InventoryEntry[] ) : JSONObject {
 ////////////////////
 // Serialize components individually
 ////////////////////
+// GameEvent
+static function SerializeGameEvent ( event : GameEvent ) : JSONObject {
+	var evt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	
+	evt.AddField ( "delay", event.delay );
+			
+	switch ( event.type ) {
+		case GameEvent.eEventType.Animation:
+			evt.AddField ( "type", "Animation" );
+			evt.AddField ( "animationObject", event.animationObject );
+			evt.AddField ( "animationType", event.animationType );
+			evt.AddField ( "animationVector", SerializeVector3 ( event.animationVector ) );
+			break;
+		
+		case GameEvent.eEventType.Quest:
+			evt.AddField ( "type", "Quest" );
+			evt.AddField ( "questID", event.questID );
+			evt.AddField ( "questAction", event.questAction );
+			break;
+			
+		case GameEvent.eEventType.NextPath:
+			evt.AddField ( "type", "NextPath" );
+			evt.AddField ( "nextPathName", event.nextPathName );
+			break;
+			
+		case GameEvent.eEventType.SetFlag:
+			evt.AddField ( "type", "SetFlag" );
+			evt.AddField ( "flagName", event.flagName );
+			evt.AddField ( "flagBool", event.flagBool );
+			break;
+			
+		case GameEvent.eEventType.Travel:
+			evt.AddField ( "type", "Travel" );
+			evt.AddField ( "travelMap", event.travelMap );
+			evt.AddField ( "travelSpawnPoint", event.travelSpawnPoint );
+			break;
+	
+	}
+	
+	return evt;
+}
+
 // PathNode
 static function SerializePathNode ( p : PathNode ) : JSONObject {
 	var node : JSONObject = JSONObject (JSONObject.Type.OBJECT);

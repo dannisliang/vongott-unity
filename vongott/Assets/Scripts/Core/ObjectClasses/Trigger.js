@@ -30,6 +30,8 @@ class Trigger extends MonoBehaviour {
 	
 	// Check collision
 	function OnTriggerEnter () {
+		if ( activation != eTriggerActivation.Collision ) { return; }
+		
 		if ( fireOnce ) {
 			this.GetComponent(BoxCollider).enabled = false;
 		}

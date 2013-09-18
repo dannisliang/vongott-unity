@@ -156,6 +156,10 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newTrg.transform.localScale = DeserializeVector3 ( trg.GetField("localScale") );
 		newTrg.layer = 9;
 		
+		newTrg.GetComponent(Trigger).SetActivationType ( trg.GetField ( "activation" ).str );
+		newTrg.GetComponent(Trigger).fireOnce = trg.GetField ( "fireOnce" ).b;
+		newTrg.GetComponent(Trigger).events = DeserializeEvents ( trg.GetField ( "events" ) );
+		
 		return newTrg;
 	
 	} else {
@@ -257,6 +261,23 @@ static function DeserializeGameObjectComponents ( arr : JSONObject, o : GameObje
 	}
 }
 
+// game events
+static function DeserializeEvents ( evt : JSONObject ) : List.< GameEvent > {
+	if ( !evt ) {
+		return null;
+	}
+	
+	var events : List.< GameEvent > =  new List.< GameEvent > ();
+	
+	for ( var o : Object in evt.list ) {
+		var j : JSONObject = o as JSONObject;
+		
+		events.Add ( DeserializeGameEvent ( j ) );
+	}
+	
+	return events;
+}
+
 // path
 static function DeserializePath ( pth : JSONObject ) : List.< PathNode > {
 	var nodes : List.< PathNode > = new List.< PathNode >();
@@ -288,6 +309,48 @@ static function DeserializeInventory ( ety : JSONObject ) : InventoryEntry[] {
 ////////////////////
 // Deserialize components individually
 ////////////////////
+// GameEvent
+static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
+	var event : GameEvent = new GameEvent();
+	
+	event.delay = evt.GetField ( "delay" ).n;
+			
+	switch ( evt.GetField ( "type" ).str ) {
+		case "Animation":
+			event.type = GameEvent.eEventType.Animation;
+			event.animationObject = evt.GetField ( "animationObject" ).str;
+			event.animationType = evt.GetField ( "animationType" ).str;
+			event.animationVector = DeserializeVector3 ( evt.GetField ( "animationVector" ) );
+			break;
+		
+		case "Quest":
+			event.type = GameEvent.eEventType.Quest;
+			event.questID = evt.GetField ( "questID" ).str;
+			event.questAction = evt.GetField ( "questAction" ).str;
+			break;
+			
+		case "NextPath":
+			event.type = GameEvent.eEventType.NextPath;
+			event.nextPathName = evt.GetField ( "nextPathName" ).str;
+			break;
+			
+		case "SetFlag":
+			event.type = GameEvent.eEventType.SetFlag;
+			event.flagName = evt.GetField ( "flagName" ).str;
+			event.flagBool = evt.GetField ( "flagBool" ).b;
+			break;
+			
+		case "Travel":
+			event.type = GameEvent.eEventType.Travel;
+			event.travelMap = evt.GetField ( "travelMap" ).str;
+			event.travelSpawnPoint = evt.GetField ( "travelSpawnPoint" ).str;
+			break;
+	
+	}
+	
+	return event;
+}
+
 // PathNode
 static function DeserializePathNode ( p : JSONObject ) : PathNode {
 	var node : PathNode = new PathNode ();
