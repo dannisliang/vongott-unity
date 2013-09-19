@@ -8,7 +8,9 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	var generic : GameObject;
 
 	var textField : OGTextField;
+	var textPreview : OGLabel;
 	
+	var editTextButton : OGButton;
 	var previewImage : OGImage;
 	var materialButton : OGButton;
 	
@@ -24,6 +26,21 @@ class EditorInspectorPrefab extends MonoBehaviour {
 		if ( tm != null ) {
 			tm.text = textField.text;
 		}
+	}
+	
+	function EditText () {
+		obj = EditorCore.GetSelectedObject();
+		
+		EditorEditText.objectName = obj.name;
+		
+		EditorEditText.callback = function ( content : String ) {
+			if ( obj.GetComponent(Book) ) {
+				obj.GetComponent(Book).content = content;
+				textPreview.text = content;
+			}
+		};
+		
+		OGRoot.GoToPage ( "EditText" );
 	}
 	
 	
@@ -49,10 +66,16 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	function Init ( obj : GameObject ) {
 		textField.transform.parent.gameObject.SetActive ( false );
 		previewImage.transform.parent.gameObject.SetActive ( false );
+		editTextButton.transform.parent.gameObject.SetActive ( false );
 		
 		if ( obj.GetComponentInChildren ( TextMesh ) ) {
 			textField.transform.parent.gameObject.SetActive ( true );
 			textField.text = obj.GetComponentInChildren ( TextMesh ).text;
+		}
+		
+		if ( obj.GetComponent ( Book ) ) {
+			editTextButton.transform.parent.gameObject.SetActive ( true );
+			textPreview.text = obj.GetComponent ( Book ).content;
 		}
 		
 		if ( obj.GetComponent(Prefab).path.Contains ( "Walls" ) && obj.GetComponent(Prefab).canChangeMaterial  ) {

@@ -22,6 +22,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		var pfb : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 		var tm : TextMesh = obj.GetComponentInChildren (TextMesh);
+		var bk : Book = obj.GetComponent(Book);
 		
 		pfb.AddField ( "path", obj.GetComponent(Prefab).path );
 		pfb.AddField ( "id", obj.GetComponent(Prefab).id );
@@ -31,6 +32,10 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		if ( tm != null ) {
 			pfb.AddField ( "text", tm.text );
+		}
+		
+		if ( bk != null ) {
+			pfb.AddField ( "bookText", bk.content );
 		}
 		
 		if ( obj.GetComponent(Prefab).materialPath != "" && obj.GetComponent(Prefab).canChangeMaterial ) {

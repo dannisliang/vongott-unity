@@ -20,6 +20,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		var newPfb : GameObject = Instantiate ( Resources.Load ( path ) as GameObject );
 		var tm : TextMesh = newPfb.GetComponentInChildren ( TextMesh );
+		var bk : Book = newPfb.GetComponent(Book);
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;
@@ -29,6 +30,10 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		if ( tm != null && pfb.HasField ( "text" ) ) {
 			tm.text = pfb.GetField ( "text" ).str;
+		}
+		
+		if ( bk != null && pfb.HasField ( "bookText" ) ) {
+			bk.content = pfb.GetField ( "bookText" ).str;
 		}
 		
 		if ( pfb.HasField("materialPath") ) {
