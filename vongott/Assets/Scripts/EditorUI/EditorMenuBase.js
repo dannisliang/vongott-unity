@@ -263,7 +263,9 @@ class EditorMenuBase extends OGPage {
 					inspector.SetActive ( true );
 				}
 				
-				objectName.text = EditorCore.GetSelectedObject().name;
+				if ( EditorCore.GetSelectedObject().GetComponent(GUID) ) {
+					objectName.text = EditorCore.GetSelectedObject().GetComponent(GUID).GUID;
+				}
 				
 				pos.x.transform.parent.gameObject.SetActive ( true );
 				rot.x.transform.parent.gameObject.SetActive ( true );

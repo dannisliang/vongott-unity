@@ -43,7 +43,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		}
 		
 		// GUID
-		newPfb.name = obj.GetField ( "name" ).str;
+		if ( obj.HasField ( "GUID" ) ) {
+			newPfb.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
+		}
 		
 		return newPfb;
 
@@ -57,6 +59,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 			prefabPath = lgt.GetField ("prefabPath").str;
 		}
 		
+		Debug.Log ( "Deserializer | Instantaite " + prefabPath );
+		
 		newObj = Instantiate ( Resources.Load ( prefabPath ) as GameObject );
 
 		newObj.GetComponent(LightSource).SetRange ( lgt.GetField ("range").n );
@@ -69,7 +73,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newObj.transform.localEulerAngles = DeserializeVector3 ( lgt.GetField("localEulerAngles") );
 		
 		// GUID
-		newObj.name = obj.GetField ( "name" ).str;
+		if ( obj.HasField ( "GUID" ) ) {
+			newObj.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
+		}
 	
 		return newObj;
 	
@@ -78,7 +84,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var act : JSONObject = obj.GetField("Actor");
 		var cnv : JSONObject = obj.GetField("Conversation");
 		var newAct : GameObject;
-				
+		
+		Debug.Log ( "Deserializer | Instantaite " + act.GetField("model").str );	
+								
 		newAct = Instantiate ( Resources.Load ( "Actors/" + act.GetField("model").str ) as GameObject );
 		newAct.GetComponent(Actor).SetAffiliation ( act.GetField ( "affiliation" ).str );
 		newAct.GetComponent(Actor).SetMood ( act.GetField ( "mood" ).str );
@@ -96,7 +104,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.layer = 9;
 	
 		// GUID
-		newAct.name = obj.GetField ( "name" ).str;
+		if ( obj.HasField ( "GUID" ) ) {
+			newAct.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
+		}
 	
 		return newAct;
 	
@@ -115,7 +125,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newItm.layer = 9;
 	
 		// GUID
-		newItm.name = obj.GetField ( "name" ).str;
+		if ( obj.HasField ( "GUID" ) ) {
+			newItm.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
+		}
 	
 		return newItm;
 	
@@ -142,7 +154,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newSrf.Apply ();
 	
 		// GUID
-		newSrfObj.name = obj.GetField ( "name" ).str;
+		if ( obj.HasField ( "GUID" ) ) {
+			newSrfObj.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
+		}
 	
 		return newSrfObj;
 	
@@ -157,7 +171,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		//newSpt.GetComponent(SpawnPoint).spawnPointName = 
 	
 		// GUID
-		newSpt.name = obj.GetField ( "name" ).str;
+		if ( obj.HasField ( "GUID" ) ) {
+			newSpt.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
+		}
 		
 		return newSpt;
 	
@@ -176,7 +192,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newTrg.GetComponent(Trigger).events = DeserializeEvents ( trg.GetField ( "events" ) );
 		
 		// GUID
-		newTrg.name = obj.GetField ( "name" ).str;
+		if ( obj.HasField ( "GUID" ) ) {
+			newTrg.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
+		}
 		
 		return newTrg;
 	

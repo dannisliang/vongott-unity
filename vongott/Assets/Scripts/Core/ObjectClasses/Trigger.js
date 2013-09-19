@@ -1,5 +1,7 @@
 #pragma strict
 
+@script RequireComponent(GUID)
+
 class Trigger extends MonoBehaviour {
 	enum eTriggerActivation {
 		Collision,
@@ -7,7 +9,7 @@ class Trigger extends MonoBehaviour {
 		EndConvo,
 		PickUp
 	}
-	
+		
 	var activation : eTriggerActivation;
 	var fireOnce : boolean = true;
 	var events : List.< GameEvent > = new List.< GameEvent > ();
@@ -53,9 +55,8 @@ class Trigger extends MonoBehaviour {
 	
 	// Init
 	function Start () {
-		// Generate GUID if necessary
-		if ( this.gameObject.name.Length < 30 ) {
-			this.gameObject.name = System.Guid.NewGuid().ToString();
+		if ( !this.GetComponent(GUID) ) {
+			this.gameObject.AddComponent(GUID);
 		}
 		
 		if ( GameCore.started ) {

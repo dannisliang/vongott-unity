@@ -1,5 +1,7 @@
 #pragma strict
 
+@script RequireComponent(GUID)
+
 class LightSource extends MonoBehaviour {
 	var color : Color = new Color ( 1, 1, 1, 1 );
 	var range : float = 10.0;
@@ -38,6 +40,10 @@ class LightSource extends MonoBehaviour {
 	}
 	
 	function Start () {
+		if ( !this.GetComponent(GUID) ) {
+			this.gameObject.AddComponent(GUID);
+		}
+		
 		SetColor ( color );
 		SetRange ( range );
 		SetIntensity ( intensity );

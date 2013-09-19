@@ -32,8 +32,11 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		EditorCore.SetPickMode ( true );
 	
 		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
-			btn.text = hit.collider.gameObject.name;
-			UpdateObject();
+			if ( hit.collider.gameObject.GetComponent(Prefab) ) {
+				btn.text = hit.collider.gameObject.GetComponent(Prefab).id;
+				btn.hiddenString = hit.collider.gameObject.GetComponent(GUID).GUID;
+				UpdateObject();
+			}
 		};
 	}
 	
@@ -42,7 +45,8 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	
 		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
 			if ( hit.collider.gameObject.GetComponent(Actor) ) {
-				btn.text = hit.collider.gameObject.name;
+				btn.text = hit.collider.gameObject.GetComponent(Actor).displayName;
+				btn.hiddenString = hit.collider.gameObject.GetComponent(GUID).GUID;
 			}
 			
 			UpdateObject();
@@ -111,7 +115,8 @@ class EditorInspectorTrigger extends MonoBehaviour {
 			switch ( e.type ) {
 				case GameEvent.eEventType.Animation:
 					pfb.eventType.selectedOption = "Animation";
-					pfb.anim.button.text = e.animationObject;
+					if ( e.animationObject != "" ) { pfb.anim.button.text = EditorCore.GetPrefab ( e.animationObject ).id; }
+					pfb.anim.button.hiddenString = e.animationObject;
 					pfb.anim.popUp.selectedOption = e.animationType;
 					pfb.anim.x.text = e.animationVector.x.ToString();
 					pfb.anim.y.text = e.animationVector.y.ToString();
@@ -126,7 +131,8 @@ class EditorInspectorTrigger extends MonoBehaviour {
 					
 				case GameEvent.eEventType.NextPath:
 					pfb.eventType.selectedOption = "NextPath";
-					pfb.nextPath.button.text = e.nextPathName;
+					pfb.nextPath.button.text = EditorCore.GetActor ( e.nextPathName ).displayName;
+					pfb.nextPath.button.hiddenString = e.nextPathName;
 					break;
 					
 				case GameEvent.eEventType.SetFlag:
@@ -229,7 +235,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 				switch ( e.eventType.selectedOption ) {
 					case "Animation":
 						newEvent.type = GameEvent.eEventType.Animation;
-						newEvent.animationObject = e.anim.button.text;
+						newEvent.animationObject = e.anim.button.hiddenString;
 						newEvent.animationType = e.anim.popUp.selectedOption;
 						
 						if ( e.anim.x.text == "" ) { e.anim.x.text = "0"; }
@@ -247,7 +253,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 						
 					case "NextPath":
 						newEvent.type = GameEvent.eEventType.NextPath;
-						newEvent.nextPathName = e.nextPath.button.text;
+						newEvent.nextPathName = e.nextPath.button.hiddenString;
 						break;
 						
 					case "SetFlag":

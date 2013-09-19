@@ -385,6 +385,28 @@ static function CreateSurface () {
 ////////////////////
 // Actor
 ////////////////////
+// Get actor form GUID
+static function GetActor ( guid : String ) : Actor {
+	for ( var a : Component in workspace.GetComponentsInChildren(Actor) ) {
+		if ( a.GetComponent(GUID).GUID == guid ) {
+			return a as Actor;
+		}
+	}
+	
+	return null;
+}
+
+// Get prefab form GUID
+static function GetPrefab ( guid : String ) : Prefab {
+	for ( var p : Component in workspace.GetComponentsInChildren(Prefab) ) {
+		if ( p.GetComponent(GUID).GUID == guid ) {
+			return p as Prefab;
+		}
+	}
+	
+	return null;
+}
+
 // Equip item
 static function EquipItem ( obj : GameObject, slot : int ) {
 	if ( selectedObject.GetComponent(Actor) ) {

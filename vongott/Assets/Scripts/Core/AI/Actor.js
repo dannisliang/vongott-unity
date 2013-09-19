@@ -58,6 +58,8 @@ class Actor extends InteractiveObject {
 
 	var speed : float = 0.0;
 	var aiming : boolean = false;
+	var waiting : boolean = false;
+	var talking : boolean = false;
 
 	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
@@ -68,8 +70,6 @@ class Actor extends InteractiveObject {
 	@HideInInspector var updateTimer : float = 0;
 	@HideInInspector var initPosition : Vector3;
 	@HideInInspector var canShoot : boolean = false;
-	@HideInInspector var talking : boolean = false;
-	@HideInInspector var waiting : boolean = false;
 	@HideInInspector var firstNodeTriggered : boolean = false;
 	
 	@HideInInspector var pathFinder : AStarPathFinder;
@@ -80,11 +80,6 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Start
 	function Start () {
-		// Generate GUID if necessary
-		if ( this.gameObject.name.Length < 30 ) {
-			this.gameObject.name = System.Guid.NewGuid().ToString();
-		}
-		
 		pathFinder = this.GetComponent ( AStarPathFinder );
 		
 		initPosition = this.transform.position;

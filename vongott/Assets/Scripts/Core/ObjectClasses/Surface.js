@@ -1,10 +1,11 @@
 #pragma strict
 
+@script RequireComponent(GUID)
+
 class Surface extends MonoBehaviour {
 	////////////////////
 	// Prerequisites
-	////////////////////
-	// Public vars
+	////////////////////	
 	var material : Material;	
 	var materialPath : String = "Materials/Editor/editor_checker";
 	var materialSize : float = 1.0;
@@ -419,9 +420,8 @@ class Surface extends MonoBehaviour {
 	}
 	
 	function Start () {
-		// Generate GUID if necessary
-		if ( this.gameObject.name.Length < 30 ) {
-			this.gameObject.name = System.Guid.NewGuid().ToString();
+		if ( !this.GetComponent(GUID) ) {
+			this.gameObject.AddComponent(GUID);
 		}
 		
 		if ( planes.Count == 0 ) {

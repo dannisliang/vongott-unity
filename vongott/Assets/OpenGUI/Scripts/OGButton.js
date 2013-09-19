@@ -9,6 +9,8 @@ class OGButton extends OGWidget {
 	var argument : String = "";
 	var func : Function;
 
+	@HideInInspector var hiddenString : String;
+
 	override function Draw ( x : float, y : float ) {		
 		if ( !guiStyle ) { guiStyle = GUI.skin.button; }
 		

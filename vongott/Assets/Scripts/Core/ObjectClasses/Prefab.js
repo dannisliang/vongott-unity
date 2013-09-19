@@ -1,5 +1,7 @@
 #pragma strict
 
+@script RequireComponent(GUID)
+
 class Prefab extends MonoBehaviour {
 	enum eMaterialMapCoordinate {
 		None,
@@ -22,9 +24,8 @@ class Prefab extends MonoBehaviour {
 
 	// Init
 	function Start () {
-		// Generate GUID if necessary
-		if ( this.gameObject.name.Length < 30 ) {
-			this.gameObject.name = System.Guid.NewGuid().ToString();
+		if ( !this.GetComponent(GUID) ) {
+			this.gameObject.AddComponent(GUID);
 		}
 		
 		if ( Application.isPlaying && this.GetComponent(Rigidbody) && !GameCore.started ) {

@@ -44,7 +44,7 @@ class EventManager extends MonoBehaviour {
 	
 	public static function StartAnimation ( objName : String, animID : String, destination : Vector3 ) {
 		for ( var c : Component in GameCore.levelContainer.GetComponentsInChildren ( Prefab ) ) {
-			if ( c.gameObject.name == objName ) {
+			if ( c.gameObject.GetComponent(GUID).GUID == objName ) {
 				if ( animID == "MoveTo" ) {
 					iTween.MoveTo ( c.gameObject, iTween.Hash ( "position", destination ) );
 				
@@ -65,7 +65,7 @@ class EventManager extends MonoBehaviour {
 	
 	public static function NextPath ( n : String ) {
 		for ( var c : Component in GameCore.levelContainer.GetComponentsInChildren ( Actor ) ) {
-			if ( c.gameObject.name == n ) {
+			if ( c.gameObject.GetComponent(GUID).GUID == n ) {
 				( c as Actor ).NextPath ();
 			}
 		}

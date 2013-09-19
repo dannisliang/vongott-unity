@@ -17,6 +17,9 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	
 	// check if prefab
 	if ( obj.GetComponent(Prefab) ) {
+		// guid
+		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
+		
 		var pfb : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 		var tm : TextMesh = obj.GetComponentInChildren (TextMesh);
 		
@@ -40,6 +43,9 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	
 	// check if lightsource
 	} else if ( obj.GetComponent(LightSource) ) {
+		// guid
+		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
+		
 		var lgt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 		
 		lgt.AddField ( "color", SerializeColor ( obj.GetComponent(LightSource).color ) );
@@ -56,6 +62,9 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 	// check if actor
 	} else if ( obj.GetComponent(Actor) ) {
+		// guid
+		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
+		
 		var act : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 		var conversations : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 		
@@ -95,6 +104,9 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 
 	// check if surface
 	} else if ( obj.GetComponent(Surface) ) {
+		// guid
+		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
+		
 		var srf : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 		var planes : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 		
@@ -115,6 +127,9 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	
 	// check if spawnpoint
 	} else if ( obj.GetComponent(SpawnPoint) ) {
+		// guid
+		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
+		
 		var spt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 		
 		spt.AddField ( "name", obj.name );
@@ -127,6 +142,9 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	
 	// check trigger
 	} else if ( obj.GetComponent(Trigger) ) {
+		// guid
+		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
+		
 		var trg : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	
 		trg.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );

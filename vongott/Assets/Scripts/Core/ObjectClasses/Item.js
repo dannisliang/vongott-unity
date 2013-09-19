@@ -68,10 +68,7 @@ class Item extends InteractiveObject {
 
 	// Init
 	function Start () {
-		// Generate GUID if necessary
-		if ( this.gameObject.name.Length < 30 ) {
-			this.gameObject.name = System.Guid.NewGuid().ToString();
-		}
+
 	}
 
 	// Handle pick-up
