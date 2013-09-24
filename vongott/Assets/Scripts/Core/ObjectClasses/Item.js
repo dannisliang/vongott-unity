@@ -68,7 +68,10 @@ class Item extends InteractiveObject {
 
 	// Init
 	function Start () {
-
+		if ( EditorCore.running ) {
+			this.GetComponent ( SphereCollider ).enabled = false;
+			Destroy ( this.rigidbody );			
+		}
 	}
 
 	// Handle pick-up

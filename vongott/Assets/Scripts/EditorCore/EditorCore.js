@@ -457,37 +457,47 @@ static function ToggleGizmos () {
 ////////////////////
 // Fit selection box
 static function FitSelectionBox () {
-	if ( selectedObject.GetComponent(MeshCollider) ) {
-		selectBox.GetComponent(MeshFilter).sharedMesh = selectedObject.GetComponent(MeshCollider).sharedMesh;
-		selectBox.localScale = selectedObject.transform.localScale;
-		selectBox.position = selectedObject.transform.position;
-		selectBox.eulerAngles = selectedObject.transform.eulerAngles;
+	if ( selectedObject.GetComponent(Trigger) && !selectedObject.GetComponent(InteractiveObject) ) {
+		selectBox.gameObject.SetActive ( false );
 	
 	} else {
-		var capsule : CapsuleCollider = selectedObject.GetComponentInChildren(CapsuleCollider);
-		var box : BoxCollider = selectedObject.GetComponentInChildren(BoxCollider);
-		var renderer : MeshRenderer = selectedObject.GetComponentInChildren(MeshRenderer);
-		var bounds : Bounds;
+		selectBox.gameObject.SetActive ( true );
 		
-		if ( capsule ) {
-			bounds = capsule.bounds;
-		} else if ( box ) {
-			bounds = box.bounds;	
-		} else if ( renderer ) {
-			bounds = renderer.bounds;
+		if ( selectedObject.GetComponent(MeshCollider) ) {
+			selectBox.GetComponent(MeshFilter).sharedMesh = selectedObject.GetComponent(MeshCollider).sharedMesh;
+			selectBox.localScale = selectedObject.transform.localScale;
+			selectBox.position = selectedObject.transform.position;
+			selectBox.eulerAngles = selectedObject.transform.eulerAngles;
+		
+		} else {
+			var capsule : CapsuleCollider = selectedObject.GetComponentInChildren(CapsuleCollider);
+			var box : BoxCollider = selectedObject.GetComponentInChildren(BoxCollider);
+			var renderer : MeshRenderer = selectedObject.GetComponentInChildren(MeshRenderer);
+			var bounds : Bounds;
+			
+			if ( capsule ) {
+				bounds = capsule.bounds;
+			} else if ( box ) {
+				bounds = box.bounds;	
+			} else if ( renderer ) {
+				bounds = renderer.bounds;
+			}
+			
+			var e : Vector3 = ( bounds.extents * 2 );
+			var s : Vector3 = selectedObject.transform.localScale;
+			
+			selectBox.GetComponent(MeshFilter).sharedMesh = selectBoxDefaultMesh;
+			selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
+			selectBox.transform.position = bounds.center;
+			selectBox.transform.eulerAngles = selectedObject.transform.eulerAngles;
+		
 		}
-		
-		var e : Vector3 = ( bounds.extents * 2 );
-		var s : Vector3 = selectedObject.transform.localScale;
-		
-		selectBox.GetComponent(MeshFilter).sharedMesh = selectBoxDefaultMesh;
-		selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
-		selectBox.transform.position = bounds.center;
-		selectBox.transform.eulerAngles = selectedObject.transform.eulerAngles;
-	
 	}
-	
-	selectBox.gameObject.SetActive ( true );
+}
+
+// Hide selection box
+static function HideSelectionBox () {
+	selectBox.gameObject.SetActive ( false );
 }
 
 // Reselect object
@@ -560,13 +570,12 @@ static function DeselectObject ( nextObject : GameObject ) {
 static function SelectObject ( obj : GameObject ) {
 	transformEnd = null;
 		
-	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
-		return;
-	
-	}
-	
 	if ( selectedObject ) { 
 		DeselectObject ( obj );
+	}
+	
+	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
+		return;
 	}
 	
 	selectedObject = obj;

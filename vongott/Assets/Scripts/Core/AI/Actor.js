@@ -87,6 +87,7 @@ class Actor extends InteractiveObject {
 		if ( EditorCore.running ) {
 			this.GetComponent ( AStarPathFinder ).enabled = false;
 			this.GetComponent ( Animator ).enabled = false;
+			this.GetComponent ( BoxCollider ).enabled = false;
 			Destroy ( this.rigidbody );
 		} else {
 			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;
@@ -390,7 +391,7 @@ class Actor extends InteractiveObject {
 		
 		// Go to navpoint
 		} else if ( pathType == ePathType.NavPoint && currentNode < path.Count ) {
-			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.5 ) {
+			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.2 ) {
 				waiting = true;
 				ClearPath();
 			

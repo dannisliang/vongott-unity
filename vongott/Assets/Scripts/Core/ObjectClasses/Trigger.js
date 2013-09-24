@@ -14,6 +14,8 @@ class Trigger extends MonoBehaviour {
 	var fireOnce : boolean = true;
 	var events : List.< GameEvent > = new List.< GameEvent > ();
 	
+	var boundingBoxMaterial : Material;
+	
 	// Set activation
 	function SetActivationType ( type : String ) {
 		switch ( type ) {
@@ -54,13 +56,19 @@ class Trigger extends MonoBehaviour {
 	}
 	
 	// Init
+	function OnDisable () {
+		if ( Camera.main && Camera.main.GetComponent(EditorCamera) ) {
+			Camera.main.GetComponent(EditorCamera).drawBoxes.Remove ( this.gameObject );
+		}
+	}
+	
 	function Start () {
 		if ( !this.GetComponent(GUID) ) {
 			this.gameObject.AddComponent(GUID);
 		}
 		
-		if ( GameCore.started ) {
-			this.GetComponent(MeshRenderer).enabled = false;
+		if ( Camera.main && Camera.main.GetComponent(EditorCamera) && !this.GetComponent(InteractiveObject) ) {
+			Camera.main.GetComponent(EditorCamera).drawBoxes.Add ( this.gameObject );
 		}
 	}
 }

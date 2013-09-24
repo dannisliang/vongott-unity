@@ -128,20 +128,6 @@ static function LoadLevel ( path : String, spawnPoint : String ) {
 
 
 ////////////////////
-// Events
-////////////////////
-static function StartAnimation ( n : String, f : Function ) {
-	/* TODO: Implicit downcast - revise this logic
-	
-	for ( var anim : OGTween in currentLevel.transform.GetComponentsInChildren ( OGTween ) ) {
-		if ( anim.gameObject.name == n ) {
-			anim.func = f;
-			anim.Play ( true );
-		}
-	}*/
-}
-
-////////////////////
 // Go to editor
 ////////////////////
 static function GoToEditor () {
@@ -153,6 +139,7 @@ static function GoToEditor () {
 	
 	Application.LoadLevel ( "editor" );
 }
+
 
 ////////////////////
 // Pause
@@ -213,6 +200,7 @@ function TweenTimeScale ( start : float, goal : float, time : float ) {
 function SetTimeScale ( time : float ) {
 	timeScale = time;
 }
+
 
 ////////////////////
 // Init
@@ -313,5 +301,7 @@ static function Error ( msg : String ) {
 }
 
 function OnGUI () {
-	GUI.Label ( Rect ( 10, 10, Screen.width, Screen.height / 4 ), debugString );
+	if ( debuggingEnabled ) {
+		GUI.Label ( Rect ( 10, 10, Screen.width, Screen.height / 4 ), debugString );
+	}
 }

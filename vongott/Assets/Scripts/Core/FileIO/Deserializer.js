@@ -16,7 +16,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var pfb : JSONObject = obj.GetField("Prefab");		
 		var path : String = pfb.GetField("path").str + "/" + pfb.GetField("id").str;
 		
-		Debug.Log ( "Deserializer | Instantaite " + path );
+		Debug.Log ( "Deserializer | Instantiate " + path );
 		
 		var newPfb : GameObject = Instantiate ( Resources.Load ( path ) as GameObject );
 		var tm : TextMesh = newPfb.GetComponentInChildren ( TextMesh );
@@ -41,7 +41,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 			newPfb.GetComponent(Prefab).ReloadMaterial();
 		}
 		
-		newPfb.name = pfb.GetField("id").str;
+		newPfb.name = obj.GetField("name").str;
 		
 		if ( newPfb.GetComponent(Prefab).path == "Prefabs/Stairs" ) {
 			newPfb.tag = "walkable";
@@ -77,6 +77,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newObj.transform.localPosition = DeserializeVector3 ( lgt.GetField("localPosition") );
 		newObj.transform.localEulerAngles = DeserializeVector3 ( lgt.GetField("localEulerAngles") );
 		
+		newObj.name = obj.GetField("name").str;
+		
 		// GUID
 		if ( obj.HasField ( "GUID" ) ) {
 			newObj.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
@@ -105,7 +107,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.transform.localPosition = DeserializeVector3 ( act.GetField("localPosition") );
 		newAct.transform.localEulerAngles = DeserializeVector3 ( act.GetField("localEulerAngles") );
 	
-		newAct.name = act.GetField("model").str;
+		newAct.name = obj.GetField("name").str;
 		newAct.layer = 9;
 	
 		// GUID
@@ -114,27 +116,6 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		}
 	
 		return newAct;
-	
-	// check if item
-	} else if ( obj.HasField("Item") ) {
-		var itm : JSONObject = obj.GetField("Item");
-		var newItm : GameObject;
-		
-		newItm = Instantiate ( Resources.Load ( "Items/" + itm.GetField("model").str ) as GameObject );
-								
-		newItm.transform.localScale = DeserializeVector3 ( itm.GetField("localScale") );
-		newItm.transform.localPosition = DeserializeVector3 ( itm.GetField("localPosition") );
-		newItm.transform.localEulerAngles = DeserializeVector3 ( itm.GetField("localEulerAngles") );
-	
-		newItm.name = itm.GetField("model").str;
-		newItm.layer = 9;
-	
-		// GUID
-		if ( obj.HasField ( "GUID" ) ) {
-			newItm.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
-		}
-	
-		return newItm;
 	
 	// check if surface
 	} else if ( obj.HasField("Surface") ) {
@@ -154,6 +135,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		if ( newSrfObj.transform.localScale.y == 1 ) {
 			newSrfObj.tag = "walkable";
 		}
+	
+		newSrf.name = obj.GetField("name").str;
 	
 		newSrf.Init ();
 		newSrf.Apply ();
@@ -175,6 +158,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newSpt.transform.localPosition = DeserializeVector3 ( spt.GetField("localPosition") );
 		//newSpt.GetComponent(SpawnPoint).spawnPointName = 
 	
+		newSpt.name = obj.GetField("name").str;
+	
 		// GUID
 		if ( obj.HasField ( "GUID" ) ) {
 			newSpt.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
@@ -195,6 +180,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newTrg.GetComponent(Trigger).SetActivationType ( trg.GetField ( "activation" ).str );
 		newTrg.GetComponent(Trigger).fireOnce = trg.GetField ( "fireOnce" ).b;
 		newTrg.GetComponent(Trigger).events = DeserializeEvents ( trg.GetField ( "events" ) );
+		
+		newTrg.name = obj.GetField("name").str;
 		
 		// GUID
 		if ( obj.HasField ( "GUID" ) ) {

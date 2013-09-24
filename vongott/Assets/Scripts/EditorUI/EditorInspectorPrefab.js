@@ -32,6 +32,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 		obj = EditorCore.GetSelectedObject();
 		
 		EditorEditText.objectName = obj.name;
+		EditorEditText.objectContent = obj.GetComponent(Book).content;
 		
 		EditorEditText.callback = function ( content : String ) {
 			if ( obj.GetComponent(Book) ) {

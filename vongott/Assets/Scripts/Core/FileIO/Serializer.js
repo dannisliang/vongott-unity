@@ -13,7 +13,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	var com : JSONObject;
 	
 	// name
-	o.AddField ( "name", obj.name );
+	o.AddField ( "name", obj.name.Replace ( "(Clone)", "" ) );
 	
 	// check if prefab
 	if ( obj.GetComponent(Prefab) ) {

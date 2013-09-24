@@ -14,8 +14,11 @@ var gizmoZ : Material;
 var gridDark : Material;
 var gridBright : Material;
 var cursorMaterial : Material;
+var boundingBoxMaterial : Material;
+var selectedBoundingBoxMaterial : Material;
 
 @HideInInspector var fixPoint : Vector3;
+@HideInInspector var drawBoxes : List.< GameObject > = new List.< GameObject > ();
 
 // Private vars
 private var skyboxCamera : GameObject;
@@ -119,54 +122,105 @@ function DrawGrid () {
 
 // Cursor
 function DrawCursor () {
-	cursorMaterial.SetPass ( 0 );
+	var r : float = 0.25;//( Vector3.Distance ( this.transform.position, fixPoint ) ) * 0.02;
 	
-	var r : float = 0.25;
-	
+	gizmoX.SetPass ( 0 );
 	GL.Begin ( GL.LINES );
-	
-	GL.Vertex3 ( fixPoint.x - r, fixPoint.y, fixPoint.z );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
 	GL.Vertex3 ( fixPoint.x + r, fixPoint.y, fixPoint.z );
+	GL.End ();
 	
-	GL.Vertex3 ( fixPoint.x, fixPoint.y - r, fixPoint.z );
+	GL.Begin ( GL.TRIANGLES );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
+	GL.Vertex3 ( fixPoint.x + (r/3), fixPoint.y, fixPoint.z );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y + (r/3), fixPoint.z );
+	GL.End ();
+	
+	gizmoY.SetPass ( 0 );
+	GL.Begin ( GL.LINES );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
 	GL.Vertex3 ( fixPoint.x, fixPoint.y + r, fixPoint.z );
+	GL.End ();
 	
-	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z - r );
+	gizmoZ.SetPass ( 0 );
+	GL.Begin ( GL.LINES );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
 	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z + r );
+	GL.End ();
 	
-	for (var i:int = 0; i < 360; i++){
-    	var point : Vector3 = fixPoint;
-    	
-    	point.x = r * Mathf.Cos(i*Mathf.Deg2Rad) + fixPoint.x;
-	    point.y = r * Mathf.Sin(i*Mathf.Deg2Rad) + fixPoint.y;
-	    GL.Vertex3(point.x,point.y,point.z);
-	     
-	    point.x = r * Mathf.Cos(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.x;
-	    point.y = r * Mathf.Sin(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.y;
-	    GL.Vertex3(point.x,point.y,point.z);
-	    
-	    point = fixPoint;
-	    
-	    point.z = r * Mathf.Cos(i*Mathf.Deg2Rad) + fixPoint.z;
-	    point.y = r * Mathf.Sin(i*Mathf.Deg2Rad) + fixPoint.y;
-	    GL.Vertex3(point.x,point.y,point.z);
-	     
-	    point.z = r * Mathf.Cos(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.z;
-	    point.y = r * Mathf.Sin(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.y;
-	    GL.Vertex3(point.x,point.y,point.z);
-	    
-	    point = fixPoint;
-	    
-	    point.z = r * Mathf.Cos(i*Mathf.Deg2Rad) + fixPoint.z;
-	    point.x = r * Mathf.Sin(i*Mathf.Deg2Rad) + fixPoint.x;
-	    GL.Vertex3(point.x,point.y,point.z);
-	     
-	    point.z = r * Mathf.Cos(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.z;
-	    point.x = r * Mathf.Sin(i*Mathf.Deg2Rad+Mathf.Deg2Rad) + fixPoint.x;
-	    GL.Vertex3(point.x,point.y,point.z);
-    }
+	GL.Begin ( GL.TRIANGLES );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z + (r/3) );
+	GL.Vertex3 ( fixPoint.x, fixPoint.y + (r/3), fixPoint.z );
+	GL.End ();
+}
+
+// Bounding boxes
+function DrawBoundingBoxes () {
+	for ( var obj : GameObject in drawBoxes ) {
+		if ( !obj.activeSelf ) {
+			continue;
+		}
+		
+		if ( obj == EditorCore.GetSelectedObject() ) {
+			selectedBoundingBoxMaterial.SetPass(0);
+		} else {
+			boundingBoxMaterial.SetPass(0);
+		}
 	
-	GL.End();
+		GL.Begin ( GL.LINES );
+		
+		var bounds : Bounds;
+		
+		if ( obj.GetComponent(BoxCollider) ) {
+			bounds = obj.GetComponent(BoxCollider).bounds;
+		} else if ( obj.GetComponent(MeshFilter) ) {
+			bounds = obj.GetComponent(MeshFilter).sharedMesh.bounds;
+		}
+		
+		var pos : Vector3 = obj.transform.position;
+					
+		// Bottom plane
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y - bounds.extents.y, pos.z - bounds.extents.z );
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y - bounds.extents.y, pos.z - bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y - bounds.extents.y, pos.z - bounds.extents.z );
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y - bounds.extents.y, pos.z + bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y - bounds.extents.y, pos.z + bounds.extents.z );
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y - bounds.extents.y, pos.z + bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y - bounds.extents.y, pos.z + bounds.extents.z );
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y - bounds.extents.y, pos.z - bounds.extents.z );
+		
+		// Corner lines
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y - bounds.extents.y, pos.z - bounds.extents.z );
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y + bounds.extents.y, pos.z - bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y - bounds.extents.y, pos.z - bounds.extents.z );
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y + bounds.extents.y, pos.z - bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y - bounds.extents.y, pos.z + bounds.extents.z );
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y + bounds.extents.y, pos.z + bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y - bounds.extents.y, pos.z + bounds.extents.z );
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y + bounds.extents.y, pos.z + bounds.extents.z );
+		
+		// Top plane
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y + bounds.extents.y, pos.z - bounds.extents.z );
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y + bounds.extents.y, pos.z - bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y + bounds.extents.y, pos.z - bounds.extents.z );
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y + bounds.extents.y, pos.z + bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x + bounds.extents.x, pos.y + bounds.extents.y, pos.z + bounds.extents.z );
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y + bounds.extents.y, pos.z + bounds.extents.z );
+		
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y + bounds.extents.y, pos.z + bounds.extents.z );
+		GL.Vertex3 ( pos.x - bounds.extents.x, pos.y + bounds.extents.y, pos.z - bounds.extents.z );
+	
+		GL.End ();
+	}
 }
 
 // Rendering
@@ -192,6 +246,9 @@ function OnPostRender () {
 	} else if ( EditorCore.grabRestrict == "z" ) {
 		DrawZLine();
 	}
+	
+	// bounding boxes
+	DrawBoundingBoxes ();
 	
 	// cursor
 	DrawCursor ();

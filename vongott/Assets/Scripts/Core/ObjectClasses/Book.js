@@ -15,4 +15,11 @@ class Book extends InteractiveObject {
 			OGRoot.GoToPage ( "TextDisplay" );
 		}
 	}
+	
+	function Start () {
+		if ( EditorCore.running ) {
+			this.GetComponent ( SphereCollider ).enabled = false;
+			Destroy ( this.rigidbody );			
+		}
+	}
 }
