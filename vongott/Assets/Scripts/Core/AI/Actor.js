@@ -180,6 +180,12 @@ class Actor extends InteractiveObject {
 	}
 	
 	function NextPath () {
+		if ( pathType != ePathType.NavPoint ) {
+			return;
+		}
+		
+		ClearPath ();
+		
 		waiting = false;
 		
 		if ( firstNodeTriggered ) {
@@ -360,7 +366,7 @@ class Actor extends InteractiveObject {
 			speed = 0;
 		
 		// Waiting
-		} else if ( waiting || path.Count == 0 ) {
+		} else if ( waiting ) {
 			speed = 0;
 		
 		// Patrolling
@@ -391,13 +397,13 @@ class Actor extends InteractiveObject {
 		
 		// Go to navpoint
 		} else if ( pathType == ePathType.NavPoint && currentNode < path.Count ) {
-			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.2 ) {
+			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.5 ) {
 				waiting = true;
 				ClearPath();
 			
 			} else if ( pathFinder.nodes.Count > 0 ) {
 				TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
-				
+								
 				if ( path[currentNode].running ) {
 					RunForward ();
 				

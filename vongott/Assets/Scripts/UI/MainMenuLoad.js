@@ -24,8 +24,8 @@ class MainMenuLoad extends OGPage {
 	
 	// Select map
 	function SelectFile ( name : String ) {
-		GameCore.nextLevel = name;
-		Application.LoadLevel ( "game" );
+		LoadingManager.nextScene = name;
+		Application.LoadLevel ( "loading" );
 	}
 	
 	// Populate list

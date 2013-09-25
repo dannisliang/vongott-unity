@@ -37,7 +37,9 @@ class AStarPathFinder extends MonoBehaviour {
 	
 	function SetGoal ( v : Vector3 ) {
 		if ( goal == v ) { return; }
-				
+		
+		Debug.Log ( "AStarPathFinder | searching for best route from " + this.transform.position + " to " + v );
+		
 		ClearNodes ();
 		goal = v;
 		UpdatePosition ();
