@@ -3,10 +3,10 @@
 @script RequireComponent(GUID)
 
 class InteractiveObject extends MonoBehaviour {
-	function OnTriggerEnter ( other:Collider ) {
+	function OnTriggerStay ( other : Collider ) {
 		if ( !GameCore.started || other.gameObject != GameCore.GetPlayerObject() ) { return; }
 		
-		if ( GameCore.GetInteractiveObject() != this.gameObject ) {
+		if ( GameCore.GetInteractiveObject() == null ) {
 			GameCore.SetInteractiveObject ( this.gameObject );
 			InvokePrompt ();
 		}

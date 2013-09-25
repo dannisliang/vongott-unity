@@ -78,18 +78,23 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Init
 	////////////////////
+	// Awake
+	function Awake () {
+		if ( EditorCore.running ) {
+			DestroyImmediate ( this.GetComponent ( Animator ) );
+			DestroyImmediate ( this.GetComponent ( Rigidbody ) );
+			DestroyImmediate ( this.GetComponent ( BoxCollider ) );
+			DestroyImmediate ( this.GetComponent ( AStarPathFinder ) );			
+		}
+	}
+	
 	// Start
 	function Start () {
 		pathFinder = this.GetComponent ( AStarPathFinder );
 		
 		initPosition = this.transform.position;
 		
-		if ( EditorCore.running ) {
-			this.GetComponent ( AStarPathFinder ).enabled = false;
-			this.GetComponent ( Animator ).enabled = false;
-			this.GetComponent ( BoxCollider ).enabled = false;
-			Destroy ( this.rigidbody );
-		} else {
+		if ( !EditorCore.running ) {
 			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;
 			waiting = pathType == ePathType.NavPoint;
 			

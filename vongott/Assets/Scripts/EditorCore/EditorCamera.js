@@ -20,6 +20,10 @@ var selectedBoundingBoxMaterial : Material;
 @HideInInspector var fixPoint : Vector3;
 @HideInInspector var drawBoxes : List.< GameObject > = new List.< GameObject > ();
 
+@HideInInspector var fixPointX : Vector3;
+@HideInInspector var fixPointY : Vector3;
+@HideInInspector var fixPointZ : Vector3;
+
 // Private vars
 private var skyboxCamera : GameObject;
 private var clickTimer : float = 0;
@@ -93,7 +97,7 @@ function DrawPath ( actor : Actor ) {
 		
 		}
 		
-		DrawLine ( pointA, pointB );
+		DrawLine ( pointA, pointB, cursorMaterial );
 	}
 }
 
@@ -117,12 +121,21 @@ function DrawGrid () {
 	GL.Vertex3 ( 0, 0, -9999 );
 	GL.Vertex3 ( 0, 0, 9999 );
 	
+	for ( counter = -100; counter < 100; counter++ ) {
+		GL.Vertex3 ( -EditorCore.gridLineDistance, 0, counter * EditorCore.gridLineDistance * 10 );
+		GL.Vertex3 ( EditorCore.gridLineDistance, 0, counter * EditorCore.gridLineDistance * 10 );
+		
+		GL.Vertex3 ( counter * EditorCore.gridLineDistance * 10, 0, -EditorCore.gridLineDistance );
+		GL.Vertex3 ( counter * EditorCore.gridLineDistance * 10, 0, EditorCore.gridLineDistance );
+	}
+		
+	
 	GL.End ();
 }
 
 // Cursor
 function DrawCursor () {
-	var r : float = 0.25;//( Vector3.Distance ( this.transform.position, fixPoint ) ) * 0.02;
+	var r : float = ( Vector3.Distance ( this.transform.position, fixPoint ) ) * 0.04;
 	
 	gizmoX.SetPass ( 0 );
 	GL.Begin ( GL.LINES );
@@ -135,13 +148,13 @@ function DrawCursor () {
 	GL.Vertex3 ( fixPoint.x + (r/3), fixPoint.y, fixPoint.z );
 	GL.Vertex3 ( fixPoint.x, fixPoint.y + (r/3), fixPoint.z );
 	GL.End ();
-	
+		
 	gizmoY.SetPass ( 0 );
 	GL.Begin ( GL.LINES );
 	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
 	GL.Vertex3 ( fixPoint.x, fixPoint.y + r, fixPoint.z );
 	GL.End ();
-	
+		
 	gizmoZ.SetPass ( 0 );
 	GL.Begin ( GL.LINES );
 	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );

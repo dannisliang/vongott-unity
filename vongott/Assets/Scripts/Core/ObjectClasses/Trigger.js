@@ -38,8 +38,8 @@ class Trigger extends MonoBehaviour {
 	}
 	
 	// Check collision
-	function OnTriggerEnter () {
-		if ( activation != eTriggerActivation.Collision ) { return; }
+	function OnTriggerEnter ( collider : Collider ) {
+		if ( activation != eTriggerActivation.Collision || collider.gameObject != GameCore.GetPlayerObject() ) { return; }
 		
 		Activate ();
 	}

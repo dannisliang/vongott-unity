@@ -14,6 +14,8 @@ class EventManager extends MonoBehaviour {
 			if ( !FlagManager.GetFlag ( event.condition, event.conditionBool ) ) { return; }
 		}
 		
+		GameCore.Print ( "EventManager | Fire event type: " + event.type.ToString() );
+		
 		switch ( event.type ) {
 			case GameEvent.eEventType.Animation:
 				StartAnimation ( event.animationObject, event.animationType, event.animationVector );

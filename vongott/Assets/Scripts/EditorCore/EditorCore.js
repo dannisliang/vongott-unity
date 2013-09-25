@@ -121,7 +121,17 @@ static function UndoAction ( action : Action ) {
 	if ( action.type != "delete" ) {
 		action.UndoAction ();
 		
-		selectBox.position = selectedObject.renderer.bounds.center;
+		var bounds : Bounds;
+		
+		if ( selectedObject.GetComponentInChildren(MeshRenderer) ) {
+			bounds = selectedObject.GetComponentInChildren(MeshRenderer).bounds;
+		} else if ( selectedObject.GetComponentInChildren(SkinnedMeshRenderer) ) {
+			bounds = selectedObject.GetComponentInChildren(SkinnedMeshRenderer).sharedMesh.bounds;
+		} else {
+			bounds = selectedObject.GetComponentInChildren(MeshFilter).sharedMesh.bounds;
+		}
+		
+		selectBox.position = bounds.center;
 		
 	} else {
 		var newObj : GameObject = Instantiate ( Resources.Load ( action.objPath ) ) as GameObject;
