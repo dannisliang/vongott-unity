@@ -58,11 +58,23 @@ group: navigation
 	
 	- AI implementation
 	
+		- Path finding
+		
+		- Gunfire
+		
+	- Event management
+	
+		- Triggers
+			
+		- Travelling
+		
+		- Environmental changes
+		
+		- Actor influence
+	
 	- Proper character controls
 	
 	- Camera movement and raycasting
-	
-	- Trigger logic
 	
 	- Basic weapon effects
 	
