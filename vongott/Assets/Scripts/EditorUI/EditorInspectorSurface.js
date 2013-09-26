@@ -4,6 +4,11 @@ class EditorInspectorSurface extends MonoBehaviour {
 	var previewImage : OGImage;
 	var tilingValue : OGLabel;
 	var materialButton : OGButton;
+	
+	var foliagePreview : OGImage;
+	var foliageDensity : OGLabel;
+	var foliageSource : OGButton;
+	
 	@HideInInspector var selectedSurface : Surface;
 	
 	//////////////////////
@@ -11,8 +16,10 @@ class EditorInspectorSurface extends MonoBehaviour {
 	//////////////////////
 	function Init ( obj : GameObject ) {			
 		selectedSurface = obj.GetComponent ( Surface );
-		tilingValue.text = selectedSurface.materialSize.ToString("f1");
 		
+		// Material
+		tilingValue.text = selectedSurface.materialSize.ToString("f1");
+				
 		materialButton.func = function () {
 			EditorBrowserWindow.rootFolder = "Materials";
 			EditorBrowserWindow.initMode = "Use";
@@ -33,6 +40,30 @@ class EditorInspectorSurface extends MonoBehaviour {
 		} else {
 			previewImage.image = null;
 		}
+		
+		// Foliage
+		foliageDensity.text = selectedSurface.foliageDensity.ToString("f1");
+				
+		foliageSource.func = function () {
+			EditorBrowserWindow.rootFolder = "Foliage";
+			EditorBrowserWindow.initMode = "Use";
+			EditorBrowserWindow.callback = GetFoliage;
+			OGRoot.GoToPage ( "BrowserWindow" );
+		};
+		
+		foliageSource.text = "";
+		for ( i = 0; i < selectedSurface.foliagePath.Length; i++ ) {
+			if ( i < 12 ) {
+				foliageSource.text += selectedSurface.foliagePath[i];
+			}
+		}
+		foliageSource.text += "...";
+		
+		if ( selectedSurface.foliagePath != "" ) {
+			foliagePreview.image = ( Resources.Load ( selectedSurface.foliagePath ) as Material ).mainTexture as Texture2D;
+		} else {
+			foliagePreview.image = null;
+		}
 	}
 	
 	
@@ -43,6 +74,47 @@ class EditorInspectorSurface extends MonoBehaviour {
 		selectedSurface.transform.localScale = new Vector3 ( selectedSurface.transform.localScale.x, -selectedSurface.transform.localScale.y, selectedSurface.transform.localScale.z );		
 	}
 	
+	
+	//////////////////////
+	// Foliage
+	//////////////////////
+	function PickFoliage () {
+		
+	}
+	
+	function GetFoliage ( folPath : String ) {
+		selectedSurface.foliagePath = "Foliage" + folPath;
+		selectedSurface.ReloadFoliage();
+	}
+	
+	function DensityDown () {
+		var val : float = float.Parse ( foliageDensity.text );
+		
+		if ( val > 0.0 ) {
+			val -= 0.1;
+		}
+		
+		foliageDensity.text = val.ToString("f1");
+		
+		UpdateObject ();
+	}
+	
+	function DensityUp () {
+		var val : float = float.Parse ( foliageDensity.text );
+		
+		if ( val < 10.0 ) {
+			val += 0.1;
+		}
+		
+		foliageDensity.text = val.ToString("f1");
+		
+		UpdateObject ();
+	}
+	
+	
+	//////////////////////
+	// Material
+	//////////////////////
 	function GetMaterial ( matPath : String ) {
 		selectedSurface.materialPath = matPath;
 		selectedSurface.ReloadMaterial();
@@ -80,6 +152,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 	function UpdateObject () {
 		if ( selectedSurface ) {
 			selectedSurface.materialSize = float.Parse ( tilingValue.text );
+			selectedSurface.foliageDensity = float.Parse ( foliageDensity.text );
 			selectedSurface.Apply ();
 		}
 	}

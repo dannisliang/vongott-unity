@@ -121,6 +121,8 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		srf.AddField ( "materialPath", obj.GetComponent(Surface).materialPath );
 		srf.AddField ( "materialSize", obj.GetComponent(Surface).materialSize );
+		srf.AddField ( "foliagePath", obj.GetComponent(Surface).foliagePath );
+		srf.AddField ( "foliageDensity", obj.GetComponent(Surface).foliageDensity );
 		srf.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
 		srf.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		srf.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );

@@ -9,6 +9,10 @@ class Surface extends MonoBehaviour {
 	var material : Material;	
 	var materialPath : String = "Materials/Editor/editor_checker";
 	var materialSize : float = 1.0;
+	
+	var foliagePath : String = "";
+	var foliageDensity : float = 1.0;
+	
 	var buttons : List.< Button > = new List.< Button > ();
 	var planes : List.< SurfacePlane > = new List.< SurfacePlane> ();
 	
@@ -389,6 +393,10 @@ class Surface extends MonoBehaviour {
 	}
 	
 	// Init
+	function ReloadFoliage () {
+		
+	}
+	
 	function ReloadMaterial () {
 		material = Resources.Load ( materialPath ) as Material;
 		this.GetComponent(MeshRenderer).material = material;

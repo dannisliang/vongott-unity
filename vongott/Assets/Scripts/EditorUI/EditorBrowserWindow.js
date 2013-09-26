@@ -274,7 +274,7 @@ class EditorBrowserWindow extends OGPage {
 			PopulateList ( selectedFolder );
 			
 		} else if ( mode == "Use" ) {
-			if ( rootFolder == "Materials" ) {
+			if ( rootFolder == "Materials" || rootFolder == "Foliage" ) {
 				callback ( selectedFolder.path + "/" + (selectedFile as Material ).name );
 			}
 			

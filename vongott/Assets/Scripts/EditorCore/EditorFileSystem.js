@@ -128,6 +128,9 @@ class EditorFileSystem extends MonoBehaviour {
 		materialsFolder.AddFolder ( new Folder ("Tiles"), true );
 		materialsFolder.AddFolder ( new Folder ("Wood"), true );
 		
+		// Foliage
+		resourcesFolder.AddFolder ( new Folder ( "Foliage" ), true );
+		
 		// Prefabs
 		var prefabsFolder : Folder = new Folder ( "Prefabs" );
 		resourcesFolder.AddFolder ( prefabsFolder, false );
