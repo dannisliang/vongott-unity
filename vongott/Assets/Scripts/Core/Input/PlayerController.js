@@ -6,7 +6,8 @@ class PlayerController extends MonoBehaviour {
 		Jumping,
 		Falling,
 		Crouching,
-		Aiming
+		Aiming,
+		Shooting
 	}
 	
 	var state : PlayerState = PlayerState.Idle;
@@ -20,6 +21,7 @@ class PlayerController extends MonoBehaviour {
 	var capsule : CapsuleCollider;
 	var crouchMode : boolean = false;
 	var aimMode : boolean = false;
+	var shootMode : boolean = false;
 	var sideStep : float;
 
 	function Start () {		
@@ -58,6 +60,7 @@ class PlayerController extends MonoBehaviour {
 		
 		// Mouse controls
 		aimMode = false;
+		shootMode = false;
 		
 		if ( Input.GetMouseButton(1) ) {
 			transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z ), 10 * Time.deltaTime );
@@ -85,6 +88,7 @@ class PlayerController extends MonoBehaviour {
 				// Shoot
 				if ( Input.GetMouseButton(0) ) {
 					this.GetComponent(Player).Shoot ( target );
+					shootMode = true;
 				}
 			}				
 		} else if ( UIHUD.crosshair.activeSelf ) {
@@ -170,6 +174,10 @@ class PlayerController extends MonoBehaviour {
 			state = PlayerState.Aiming;
 		}
 		
+		if ( shootMode ) {
+			state = PlayerState.Shooting;
+		}
+		
 		// Set capsule size
 		if ( state == PlayerState.Crouching ) {
 			capsule.height = 1.0;
@@ -185,12 +193,14 @@ class PlayerController extends MonoBehaviour {
 		
 		}
 		
-		this.transform.position = this.transform.position + this.transform.forward * ( speed * runningSpeed * Time.deltaTime );
+		// Only for animations without transformation
+		//this.transform.position = this.transform.position + this.transform.forward * ( speed * runningSpeed * Time.deltaTime );
 		
 		this.GetComponent(Animator).SetFloat("Speed", speed * ( 1 + Time.deltaTime ) );
 		
 		this.GetComponent(Animator).SetBool("Jumping", state == PlayerState.Jumping || state == PlayerState.Falling );
 		this.GetComponent(Animator).SetBool("Crouching", state == PlayerState.Crouching );
 		this.GetComponent(Animator).SetBool("Aiming", state == PlayerState.Aiming );
+		this.GetComponent(Animator).SetBool("Shooting", state == PlayerState.Shooting );
 	}
 }

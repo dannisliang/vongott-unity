@@ -355,13 +355,13 @@ class Actor extends InteractiveObject {
 	function RunForward () {			
 		speed = Mathf.Lerp ( speed, runningSpeed, Time.deltaTime * 5 );
 		
-		transform.localPosition += speed * ( transform.forward * Time.deltaTime );
+		//transform.localPosition += speed * ( transform.forward * Time.deltaTime );
 	}
 	
 	function WalkForward () {			
 		speed = Mathf.Lerp ( walkingSpeed, 1.0, Time.deltaTime * 5 );
 		
-		transform.localPosition += speed * ( transform.forward * Time.deltaTime );
+		//transform.localPosition += speed * ( transform.forward * Time.deltaTime );
 	}
 	
 	function Roaming () {

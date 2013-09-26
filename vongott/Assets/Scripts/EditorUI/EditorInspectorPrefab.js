@@ -62,6 +62,42 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	
 	
 	//////////////////
+	// Wall
+	//////////////////
+	function FlipWall () {		
+		var obj : GameObject = EditorCore.GetSelectedObject();
+		
+		var newObj : String = "";		
+		var newRot : Vector3 = obj.transform.localEulerAngles;
+		var newPos : Vector3 = obj.transform.localPosition;
+		
+		if ( obj.name == "wall_basic_corner_90" ) {
+			newObj = "wall_basic_corner_270";
+			newRot.y += 180;
+			
+		} else if ( obj.name == "wall_basic_corner_270" ) {
+			newObj = "wall_basic_corner_90";
+			newRot.y += 180;
+		
+		} else if ( obj.name == "wall_basic_end" ) {
+			newRot.y += 180;
+		
+		} else {
+			newPos.x -= obj.renderer.bounds.extents.x * 2;
+			newRot.y += 180;
+		
+		}
+		
+		obj.transform.localEulerAngles = newRot;
+		obj.transform.localPosition = newPos;
+	
+		if ( newObj != "" ) {
+			EditorCore.ReplaceSelectedObject ( Resources.Load ( "Prefabs/Walls/" + newObj ) as GameObject );
+		}
+	}
+	
+	
+	//////////////////
 	// Init
 	//////////////////
 	function Init ( obj : GameObject ) {

@@ -275,6 +275,17 @@ static function ReplaceSelectedObject ( obj : GameObject ) {
 		newObject.transform.localEulerAngles = selectedObject.transform.localEulerAngles;
 		newObject.transform.localScale = selectedObject.transform.localScale;
 	
+		newObject.name = newObject.name.Replace( "(Clone)", "" );
+	
+		if ( newObject.GetComponent ( Prefab ) && selectedObject.GetComponent ( Prefab ) ) {
+			if ( newObject.GetComponent ( Prefab ).canChangeMaterial && selectedObject.GetComponent ( Prefab ).canChangeMaterial ) {
+		  		if ( !String.IsNullOrEmpty ( selectedObject.GetComponent ( Prefab ).materialPath ) ) {
+					newObject.GetComponent ( Prefab ).materialPath = selectedObject.GetComponent ( Prefab ).materialPath;
+					newObject.GetComponent ( Prefab ).ReloadMaterial ();
+				}
+			}
+		}
+	
 		Destroy ( selectedObject );
 		
 		SelectObject ( newObject );
