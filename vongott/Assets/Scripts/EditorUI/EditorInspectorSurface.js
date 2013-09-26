@@ -60,6 +60,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 		foliageSource.text += "...";
 		
 		if ( selectedSurface.foliagePath != "" ) {
+			Debug.Log (  selectedSurface.foliagePath );
 			foliagePreview.image = ( Resources.Load ( selectedSurface.foliagePath ) as Material ).mainTexture as Texture2D;
 		} else {
 			foliagePreview.image = null;

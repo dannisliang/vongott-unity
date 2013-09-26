@@ -129,8 +129,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		newSrf.materialPath = srf.GetField("materialPath").str;
 		newSrf.materialSize = srf.GetField ( "materialSize" ).n;
-		if ( srf.HasField ( "foliagePath" ) ) { newSrf.materialPath = srf.GetField("foliagePath").str; }
-		if ( srf.HasField ( "foliageDensity" ) ) { newSrf.materialSize = srf.GetField ( "foliageDensity" ).n; }
+		if ( srf.HasField ( "foliagePath" ) ) { newSrf.foliagePath = srf.GetField("foliagePath").str; }
+		if ( srf.HasField ( "foliageDensity" ) ) { newSrf.foliageDensity = srf.GetField ( "foliageDensity" ).n; }
 		newSrfObj.transform.localScale = DeserializeVector3 ( srf.GetField ( "localScale" ) );
 		newSrfObj.transform.localPosition = DeserializeVector3 ( srf.GetField ( "localPosition" ) );
 		newSrfObj.transform.localEulerAngles = DeserializeVector3 ( srf.GetField ( "localEulerAngles" ) );
