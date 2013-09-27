@@ -17,12 +17,15 @@ class EditorSelectionBox extends MonoBehaviour {
 		var useTransform : Transform;
 		var mesh : Mesh;
 		var newMesh : Mesh = new Mesh();
-						
+		var rotation : Quaternion = obj.transform.rotation;
+										
 		if ( skinnedMeshRenderer ) {
 			mesh = skinnedMeshRenderer.sharedMesh;
+			rotation = skinnedMeshRenderer.transform.rotation;
 		
 		} else if ( meshFilter ) {
 			mesh = meshFilter.sharedMesh;	
+			rotation = meshFilter.transform.rotation;
 		
 		}
 		
@@ -50,7 +53,7 @@ class EditorSelectionBox extends MonoBehaviour {
 	
 		transform.localScale = obj.transform.localScale;
 		transform.position = obj.transform.position;
-		transform.localEulerAngles = obj.transform.localEulerAngles;
+		transform.rotation = rotation;
 	}
 	
 	function OnRenderObject() {  

@@ -375,7 +375,7 @@ function SetFixPointToSelected () {
 
 // Update
 function Update () {
-	if ( locked ) { return; }
+	if ( locked || OGRoot.currentPage.pageName != "MenuBase" ) { return; }
 	
 	// position
 	var x = transform.localPosition.x;

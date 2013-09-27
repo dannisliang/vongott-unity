@@ -20,7 +20,13 @@ class LightSource extends MonoBehaviour {
 		color = c;
 		color.a = 1;
 	
-		GetLightComponent().color = color;
+		var l : Light = GetLightComponent();
+		
+		l.color = color;
+	
+		if ( l.GetComponent(MeshRenderer) ) {
+			l.GetComponent(MeshRenderer).material.color = color;
+		}
 	}
 	
 	function SetRange ( r : float ) {		

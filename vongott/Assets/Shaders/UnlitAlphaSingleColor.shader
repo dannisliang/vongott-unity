@@ -1,0 +1,22 @@
+Shader "Vongott/Unlit/SingleColor" {
+	Properties {
+		_Color ("Color", Color) = (1,1,1,1)
+	}
+	 
+	Category {
+		Lighting Off
+		ZWrite Off
+		Cull back
+		Blend SrcAlpha OneMinusSrcAlpha
+		Tags {Queue=Transparent}
+		 
+		SubShader {
+			Color [_Color]
+			
+			Pass {							
+			}
+		}
+		
+		Fallback "Diffuse"
+	}
+}

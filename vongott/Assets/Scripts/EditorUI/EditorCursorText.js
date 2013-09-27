@@ -17,6 +17,9 @@ class EditorCursorText extends MonoBehaviour {
 		yPos.y = Screen.height-yPos.y;
 		zPos.y = Screen.height-zPos.y;
 		
+		xPos.z = 10;
+		yPos.z = 10;
+		zPos.z = 10;
 		
 		x.localPosition = xPos;
 		y.localPosition = yPos;
