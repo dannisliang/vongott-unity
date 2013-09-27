@@ -51,8 +51,7 @@ class PlayerController extends MonoBehaviour {
 		}
 		
 		// Get camera target rotation
-		var camTarget : Transform = CameraTarget.instance;
-		var yRotation : float = camTarget.eulerAngles.y;
+		var yRotation : float = Camera.main.transform.eulerAngles.y;
 		
 		// Get input
 		var v = Input.GetAxisRaw("Vertical");

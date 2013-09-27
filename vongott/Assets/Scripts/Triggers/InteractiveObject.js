@@ -33,6 +33,10 @@ class InteractiveObject extends MonoBehaviour {
 	
 	function UpdateObject () {}
 	
+	function Awake () {
+		this.gameObject.tag = "dynamic";
+	}
+	
 	function Start () {
 		if ( !this.GetComponent(GUID) ) {
 			this.gameObject.AddComponent(GUID);

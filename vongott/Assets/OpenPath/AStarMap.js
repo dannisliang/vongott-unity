@@ -58,7 +58,7 @@ public class AStarGridMap extends AStarMap {
 				
 				for ( var h : RaycastHit in hits ) {										
 					var p : Vector3 = h.point; 
-					if ( CheckWalkable ( p, spacing ) ) {
+					if ( CheckWalkable ( p, spacing ) && h.collider.gameObject.tag != "dynamic" ) {
 						var m : AStarNode = new AStarNode ( p.x, p.y, p.z );
 						var i : Vector3 = Round ( start, p, spacing );
 						nodes [ i.x, i.y, i.z ] = m;
@@ -77,7 +77,7 @@ public class AStarGridMap extends AStarMap {
 		
 		if ( colliders.Length > 0 ) {
 			for ( var c : Collider in colliders ) {
-				if ( c.transform.tag != "walkable" ) {
+				if ( c.transform.tag != "walkable" && c.transform.tag != "dynamic" ) {
 					return false;
 				}
 			}
