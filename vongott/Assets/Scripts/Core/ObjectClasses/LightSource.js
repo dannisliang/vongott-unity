@@ -7,6 +7,7 @@ class LightSource extends MonoBehaviour {
 	var range : float = 10.0;
 	var intensity : float = 1.0;
 	var prefabPath : String = "";
+	var hideInGame : boolean = false;
 	
 	function GetLightComponent () : Light {
 		if ( this.GetComponent(Light) ) {
@@ -48,6 +49,10 @@ class LightSource extends MonoBehaviour {
 	function Start () {
 		if ( !this.GetComponent(GUID) ) {
 			this.gameObject.AddComponent(GUID);
+		}
+		
+		if ( hideInGame ) {
+			this.GetComponentInChildren ( MeshRenderer ).enabled = false;
 		}
 		
 		SetColor ( color );

@@ -3,6 +3,12 @@
 @script RequireComponent(GUID)
 
 class InteractiveObject extends MonoBehaviour {
+	function OnTriggerEnter ( other : Collider ) {
+		if ( other.GetComponent(Actor) ) {
+			NPCCollide ( other.GetComponent(Actor) );
+		}
+	}
+	
 	function OnTriggerStay ( other : Collider ) {
 		if ( !GameCore.started || other.gameObject != GameCore.GetPlayerObject() ) { return; }
 		
@@ -19,9 +25,13 @@ class InteractiveObject extends MonoBehaviour {
 		UIHUD.ShowNotification ( "" );
 	}
 	
+	function NPCCollide ( a : Actor ) {}
+	
 	function InvokePrompt () {}
 	
 	function Interact () {}
+	
+	function UpdateObject () {}
 	
 	function Start () {
 		if ( !this.GetComponent(GUID) ) {
@@ -33,5 +43,7 @@ class InteractiveObject extends MonoBehaviour {
 		if ( GameCore.GetInteractiveObject() == this.gameObject ) {
 			Interact ();
 		}
+		
+		UpdateObject ();
 	}
 }

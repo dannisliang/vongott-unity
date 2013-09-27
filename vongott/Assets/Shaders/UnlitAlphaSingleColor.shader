@@ -6,7 +6,7 @@ Shader "Vongott/Unlit/SingleColor" {
 	Category {
 		Lighting Off
 		ZWrite Off
-		Cull back
+		Cull Off
 		Blend SrcAlpha OneMinusSrcAlpha
 		Tags {Queue=Transparent}
 		 

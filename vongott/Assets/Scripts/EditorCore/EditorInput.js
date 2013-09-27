@@ -302,8 +302,10 @@ function Update () {
 		// numpad period: center object
 		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) ) {
 			if ( EditorCore.GetSelectedObject() ) {
+				Camera.main.GetComponent ( EditorCamera ).fixPoint = EditorCore.GetSelectedObject().transform.renderer.bounds.center;
 				Camera.main.GetComponent ( EditorCamera ).FocusOn ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 			} else {
+				Camera.main.GetComponent ( EditorCamera ).fixPoint = Vector3.zero;
 				Camera.main.GetComponent ( EditorCamera ).FocusOn ( Vector3.zero );
 			}
 		

@@ -60,8 +60,8 @@ class EditorSelectionBox extends MonoBehaviour {
 	    if ( wireframeMode ) {
 		    lineMaterial.SetPass(0);
 		
-		    GL.PushMatrix();
-		    GL.MultMatrix(transform.localToWorldMatrix);
+		    //GL.PushMatrix();
+		    //GL.MultMatrix(transform.localToWorldMatrix);
 		    GL.Begin(GL.LINES);
 		
 		    for ( var i = 0; i < lines.length / 3; i++) {
@@ -74,7 +74,7 @@ class EditorSelectionBox extends MonoBehaviour {
 		    }
 		
 		    GL.End();
-		    GL.PopMatrix();
+		    //GL.PopMatrix();
 	    }
 	}
 }

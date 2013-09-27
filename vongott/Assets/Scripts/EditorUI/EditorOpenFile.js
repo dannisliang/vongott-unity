@@ -14,7 +14,8 @@ class EditorOpenFile extends OGPage {
 	var previewPane : OGImage;
 	var fileInfo : OGLabel;
 	var previewLoading : GameObject;
-	var fileLoading : OGLabel;
+	var fileLoading : GameObject;
+	var fileLoadingLabel : OGLabel;
 									
 					
 	////////////////////
@@ -64,7 +65,8 @@ class EditorOpenFile extends OGPage {
 	
 	// Open
 	function LoadSelectedFile () : IEnumerator {
-		fileLoading.text = "Loading " + selectedFile + "...";
+		fileLoading.SetActive ( true );
+		fileLoadingLabel.text = "Loading " + selectedFile + "...";
 		container.SetActive ( false );
 		
 		yield new WaitForSeconds ( 0.5 );
@@ -118,6 +120,7 @@ class EditorOpenFile extends OGPage {
 	// Init
 	////////////////////
 	override function StartPage () {
+		fileLoading.SetActive ( false );
 		container.SetActive ( true );
 		
 		PopulateList();

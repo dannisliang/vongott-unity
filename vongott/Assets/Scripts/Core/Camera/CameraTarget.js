@@ -33,7 +33,7 @@ function CompensateForWalls ( newPos : Vector3 ) {
 
 	if ( Physics.Linecast ( from, to, wallHit, 9 ) ) {
 		Debug.DrawLine( from, wallHit.point, Color.blue);
-		newPos = Camera.main.transform.InverseTransformPoint( wallHit.point );
+		//newPos = Camera.main.transform.InverseTransformPoint( wallHit.point );
 	} else {
 		Debug.DrawLine ( from, to, Color.cyan );
 	}
