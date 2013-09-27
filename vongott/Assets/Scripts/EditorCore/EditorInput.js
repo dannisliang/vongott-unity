@@ -280,9 +280,9 @@ function Update () {
 					EditorCore.GetInstance().SaveFile ( EditorCore.currentLevel.name );
 					return;
 				}
-				
-			} else {
+			
 			// Scale mode	
+			} else if ( !EditorCore.GetSelectedObject().GetComponent(Surface) ) {
 				EditorCore.SetScaleMode( true );
 			
 			}

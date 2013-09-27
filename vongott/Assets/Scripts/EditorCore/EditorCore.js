@@ -399,7 +399,7 @@ static function CreateSurface () {
 	newObject.transform.position = GetSpawnPosition();
 	newObject.transform.parent = currentLevel.transform;
 	
-	SelectObject ( newObject );
+	//SelectObject ( newObject );
 }
 
 
@@ -478,42 +478,15 @@ static function ToggleGizmos () {
 ////////////////////
 // Fit selection box
 static function FitSelectionBox () {
-	if ( selectedObject.GetComponent(Trigger) && !selectedObject.GetComponent(InteractiveObject) ) {
-		selectBox.gameObject.SetActive ( false );
+	var doWireframe : boolean = false;
 	
-	} else {
-		selectBox.gameObject.SetActive ( true );
-		
-		if ( selectedObject.GetComponent(MeshCollider) ) {
-			selectBox.GetComponent(MeshFilter).sharedMesh = selectedObject.GetComponent(MeshCollider).sharedMesh;
-			selectBox.localScale = selectedObject.transform.localScale;
-			selectBox.position = selectedObject.transform.position;
-			selectBox.eulerAngles = selectedObject.transform.eulerAngles;
-		
-		} else {
-			var capsule : CapsuleCollider = selectedObject.GetComponentInChildren(CapsuleCollider);
-			var box : BoxCollider = selectedObject.GetComponentInChildren(BoxCollider);
-			var renderer : MeshRenderer = selectedObject.GetComponentInChildren(MeshRenderer);
-			var bounds : Bounds;
-			
-			if ( capsule ) {
-				bounds = capsule.bounds;
-			} else if ( box ) {
-				bounds = box.bounds;	
-			} else if ( renderer ) {
-				bounds = renderer.bounds;
-			}
-			
-			var e : Vector3 = ( bounds.extents * 2 );
-			var s : Vector3 = selectedObject.transform.localScale;
-			
-			selectBox.GetComponent(MeshFilter).sharedMesh = selectBoxDefaultMesh;
-			selectBox.transform.localScale = new Vector3 ( e.x+0.1, e.y+0.1, e.z+0.1 );
-			selectBox.transform.position = bounds.center;
-			selectBox.transform.eulerAngles = selectedObject.transform.eulerAngles;
-		
-		}
+	selectBox.gameObject.SetActive ( true );
+	
+	if ( selectedObject.GetComponent(Trigger) && !selectedObject.GetComponent(InteractiveObject) || selectedObject.GetComponent(Surface) ) {
+ 		doWireframe = true;
 	}
+	
+	selectBox.GetComponent ( EditorSelectionBox ).Fit( selectedObject, doWireframe );
 }
 
 // Hide selection box
@@ -591,12 +564,12 @@ static function DeselectObject ( nextObject : GameObject ) {
 static function SelectObject ( obj : GameObject ) {
 	transformEnd = null;
 		
-	if ( selectedObject ) { 
-		DeselectObject ( obj );
-	}
-	
 	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
 		return;
+	}
+	
+	if ( selectedObject ) { 
+		DeselectObject ( obj );
 	}
 	
 	selectedObject = obj;
@@ -612,11 +585,13 @@ static function SelectObject ( obj : GameObject ) {
 	
 	}
 	
+	// Mark object with selection box
+	FitSelectionBox ();
+	
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 	
-	// Mark with selection box	
-	FitSelectionBox ();
+	
 	
 	// LightSource
 	if ( obj.GetComponent(LightSource) ) {

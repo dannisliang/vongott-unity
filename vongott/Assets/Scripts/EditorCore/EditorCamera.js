@@ -262,8 +262,8 @@ function OnPostRender () {
 	
 	// bounding boxes
 	DrawBoundingBoxes ();
-	
-	// cursor
+
+		// cursor
 	DrawCursor ();
 	
 	// path
