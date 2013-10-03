@@ -62,11 +62,10 @@ The equipment class belongs to any item that cannot be consumed. There will be a
 The upgrades are like equipment, can be found or purchased.
 
 ### Mechanical
-Mechanical upgrades have both passive and active attributes. They need to be installed by a professional mechanic, as they replace physical bodyparts of the player, allowing for a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs). When activated, they consume electricity.
+Mechanical upgrades are inactive by default and can be activated at the player's convenience. They need to be installed by a professional mechanic, as they replace physical bodyparts of the player, allowing for a lot of customisation. They should have branding names that relate to their purpose (e.g. "Cheetah" for fast legs). When activated, they consume electricity.
 
 #### Skull
-- REFLEXES: Slows down time for everything except the mouse control
-
+- REFLEXES: Slows down time for everything except the aim control
 
 #### Eyes
 - AIM: Auto aim
@@ -77,16 +76,21 @@ Mechanical upgrades have both passive and active attributes. They need to be ins
   - lvl 5: Aim for the head
 
 - X-RAY: See through walls
+  - Distance and energy consumption depends on level
 
 #### Torso
-- HEALTH: Slow health regeneration
+- HEALTH: Health regeneration
+  - Energy consumption depends on level
+
 - BATTERY: Energy conservation
+  - Energy conserved depends on level
 
 #### Legs
 - SPEED: Running/swimming speed/jumping height
+  - Speed increase and energy consumption depends on level
 
-#### Feet
 - SILENCE: Noise reduction
+  - Energy consumption depends on level
 
 #### Arms  
 - PUNCH: Punch attack
@@ -94,15 +98,24 @@ Mechanical upgrades have both passive and active attributes. They need to be ins
   - lvl 2: Elbow
   - lvl 3: Straight punch
   - lvl 4: Uppercut
-  - lvl 5: Combo
+  - lvl 5: Short combo
 
 - LIFT: Lifting/throwing things
+  - Capacity and energy consumption depends on level
 
 #### Back   
-- PARACHUTE: Fall damage reduction and noise cancelling
+- PARACHUTE: Fall damage and noise reduction
+  - Reduction depends on level
+
+- SHOCKWAVE: Pushes enemies in a small radius away, chance of knocking unconcious
+  - Radius, chance of knocking unconcious and energy consumption depends on level
 
 #### Abdomen
 - CLOAK: Invisibility cloak
+  - Energy consumption depends on level
+
+- ARMOR: Bullet protection
+  - Protection depends on level
 
 ### Biological
 Biological upgrades are passive and govern internal properties, such as reflexes and dexterity. They can be installed by the player.
@@ -116,9 +129,11 @@ Biological upgrades are passive and govern internal properties, such as reflexes
   - lvl 5: Deadbolt locks
 
 - Reload speed: The factor with which to multiply the reload speed of any weapon
+  - Factor depends on level
 
 #### Eyes
 - Aiming: The factor with which to multiply the accuracy of any weapon
+  - Factor depends on level
 
 #### Skull 
 - Hacking (consoles/computers)
@@ -128,10 +143,13 @@ Biological upgrades are passive and govern internal properties, such as reflexes
   - lvl 4: Back Door
   - lvl 5: Worm
 
-### Combinations
-Players should be rewarded for combining certain upgrades, such as events triggering.
+### Combinations of mechanical upgrades
+Players should be rewarded for combining certain mechanical upgrades. Timed effects will cancel the activated upgrades.
 - REFLEXES + SPEED: Time slows down, but players move around at normal speed
 - SPEED + PUNCH: When running up to an enemy and punching, a special machinima plays
   - Self-fist-five and enemy's head flies off! F*ck yeah!
-- PARACHUTE + STRENGTH: The player creates a shockwave when punching before landing
+- SPEED + LIFT: When running up to an enemy and throwing a lifted object, a special machinima plays
+  - Animation and severity of impact depends on the weight of the lifted object
+- PARACHUTE + STRENGTH: The player creates a shockwave when punching before landing, same as the dedicated upgrade
+- ARMOR + SHOCKWAVE: Deflecting any projectiles back towards their sender
 - REFLEXES + AIM: The player shoots every enemy in frame upon firing

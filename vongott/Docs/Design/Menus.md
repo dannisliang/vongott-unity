@@ -42,10 +42,10 @@ Menus
 
 ## Quick inventory
 - only visible upon invocation
+- option to bind items to keys
 
 ## Quick upgrade menu
 - a wheel selection screen
-- activated via middle mouse button
 - option to bind upgrades to keys
 
 # Game menu

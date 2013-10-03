@@ -1,7 +1,7 @@
 NPCs
 =======
-- All NPCs regardless of affiliation can be killed, with consequences
-- Mobile NPCs will implement the A* path finding algorithm
+- Most NPCs regardless of affiliation can be killed, with consequences
+- Mobile NPCs will implement the A* path finding algorithm coupled with local obstacle avoidance
 
 ## Mechanical
 ### Machine Gun Turret
@@ -19,7 +19,7 @@ NPCs
 
 ## Biological
 - Biological NPCs will either be stationary or walk a predetermined route
-- Especially scripted humans will converse with one another
+- Some humans will converse with one another
 - Properties:
   - state: Calm, Alert and Aggressive
   - attentionSpan: An amount of seconds for which they will stay alert after losing an enemy
@@ -28,7 +28,7 @@ NPCs
 
 ### Allies
 - Allied humans will be treated as interactive objects and can be talked to upon interaction
-- The merchant class will have a particularly expansive inventory and will invoke the shop screen upon interaction
+- The merchant class will have a particularly expansive inventory and will invoke a quick inventory screen upon interaction
 
 ### Enemies
 - Enemies will detect their opponents within a visual and audible range and change state to Aggressive

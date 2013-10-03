@@ -4,10 +4,10 @@ Design document for The Vongott Chronicles
 There are several good reasons for creating a game like this.
 
 ## Community
-By developing the game not inside Unity, but through an SDK, we are enabling anyone who wishes to participate in the project to do so. This is a mentality that seems to be more or less lost on modern games, even in the indie community. Several old Unreal Engine and Id Tech games would release with a community SDK and as a result are still alive and kicking today, The Nameless Mod for Deus Ex being a prime example. As we realise doing a full game with an SDK by ourselves is a bit of a stretch, we will instead develop the first chapter, so about an hour of gameplay, and then encourage the players to participate any way they feel like in creating the next. It's of course a bit of a gamble, as we have to effectively obtain and maintain the attention of a community, especially since mobile gaming has effectively reduced the attention span of most people to that of a squirrel, but as long as we target the right audience, this project should have a chance. And furthermore..
+By developing the game not inside Unity, but through an SDK, we are enabling anyone who wishes to participate in the project to do so. This is a mentality that seems to be more or less lost on modern games, even in the indie community. Several old Unreal Engine and Id Tech games would be released with a community SDK and as a result are still alive and kicking today, The Nameless Mod for Deus Ex being a prime example. As we realise doing a full game with an SDK by ourselves is a bit of a stretch, we will instead develop the first chapter, so about an hour of gameplay, and then encourage the players to participate any way they want in creating the next. It's of course a bit of a gamble, as we have to obtain and maintain the attention of a community, especially since mobile gaming has effectively reduced the attention span of most people to that of a squirrel, but as long as we target the right audience, this project should have a chance. And furthermore..
 
 ## Open Source
-..doing an open source game of this size is beneficial to anyone who participates, as it could act as an entry to the participant's CV, whether that person might be a programmer, modeller or level designer, as it grants anyone the opportunity to have a close look at the work.
+..doing an open source game of this size is beneficial to anyone who participates, as it could act as an entry to the participant's CV, whether that person might be a programmer, game designer, modeller, illustrator, writer or level designer, as it grants anyone the opportunity to have a close look at the work.
 
 ## Deus Ex is just goddamn awesome
 By far the most obvious reason for creating this project is of course the Deus Ex obsession. Rather than praising the original story, though, we want to focus on a different branch of it in the same universe. We want to poke some fun at the original game while trying to recreate the ambience and feel of it. The word "love letter" is thrown around a lot in gaming, but this is definitely one.
@@ -33,18 +33,24 @@ During conversations, the HUD will disappear and black bars come up, the camera 
 Conversations can happen between NPCs as well.
 
 ## Debug menu
-There will be no debug menu, as switching between the editor and the game is pretty seamless.
+A quick access flag editor will be present, but not much else
 
 # Gameplay
 ## Genre
 - Shoulder view
-- Action RPG
+- Adventure Action RPG
 
 ## Controls
 - Optimised for keyboard+mouse and gamepad
+- Aiming, shooting, jumping, crouching, walking forward and turning
+- Defaults:
+  - Left mouse: Interact
+  - Right mouse: Aim
+  - Right + left mouse: Shoot
+  - Space: Jump
+  - C: Toggle crouch
 
 ### Melee attack
-- Various combat animations based on Oni and Tekken
 - The damage dealt during melee attacks is influenced by mechanical mods
 - All melee attacks are meant to be regular punches. No Bruce Lee combos.
 
@@ -54,14 +60,7 @@ There will be no debug menu, as switching between the editor and the game is pre
 - Reload speed is affected by biological mods
 
 ### Move and look
-- Keyboard+mouse: WASD and aim with mouse
-- Gamepad
-- Jumping into specially scripted walls will cause a wall run, a wall flip or a wall slide depending on an which point during the jump the player reaches the wall
-	- above 30%: fall
-	- below 30%: wall flip
-	- below 15%: wall run
-- Sneak: In sneak mode, the animation will be cartoony
-- Grab: Specially scripted ledges can be grabbed, shimmied on and traversed.
+- No strict cover system, but adaptive animations to reflect when in cover
 
 # User interface
 ## Menu system
@@ -74,6 +73,7 @@ Displays health and energy in the top right and weapons in the bottom. The weapo
 Enemies will walk patrol routes and have a fairly narrow vision cone. 
 They will have 3 states: calm, alert and aggressive. Alert leads to aggressive, if they spot the player.
 If they spot dead bodies, they will become alert.
+When aggressive and weilding a weapon, they will attack. When no weapon is equipped, they will flee.
 
 # Setting
 ## Visuals
@@ -81,7 +81,7 @@ If they spot dead bodies, they will become alert.
 
 ## Story
 - In line with the original Deus Ex game
-- Cameos from original characters, but with altered names
+- Cameos from original characters
 - Side quests related to the main plot will be available
 
 ## Musical inspiration
@@ -94,7 +94,9 @@ If they spot dead bodies, they will become alert.
 - Consoles if possible
 
 ## Stores
-- Steam
-- HumbleBundle
-- From own website
-- Ubuntu Software Center
+- The game will be free, but accept donations.
+- We will still look into these possible platforms of distribution:
+  - Steam
+  - HumbleBundle
+  - From own website
+  - Ubuntu Software Center
