@@ -68,7 +68,15 @@ class UIConversation extends OGPage {
 	////////////////////
 	override function UpdatePage () {
 		if ( highlight.activeSelf ) {
-			if ( Input.GetKeyDown ( KeyCode.Return ) ) {
+			// Let the mouse pick
+			for ( var i = 0; i < lines.Length; i++ ) {
+				if ( lines[i].mouseOver ) {
+					convo.HighlightOption ( i );
+				}
+			}
+			
+			
+			if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetMouseButtonDown(0) ) {
 				convo.SelectOption ();
 			} else if ( Input.GetKeyDown ( KeyCode.UpArrow ) ) {
 				convo.PreviousOption ();
@@ -77,7 +85,7 @@ class UIConversation extends OGPage {
 			}
 		
 		} else {
-			if ( Input.GetKeyDown ( KeyCode.Return ) ) {
+			if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetMouseButtonDown(0) ) {
 				convo.NextEntry ();
 			}
 		}

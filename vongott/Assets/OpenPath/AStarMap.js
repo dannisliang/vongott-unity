@@ -1,10 +1,14 @@
 #pragma strict
 
 class AStarMap {
-	var nodes : AStarNode[,,];
-	var width : int;
-	var height : int;
+	enum AStarMapType {
+		Grid,
+		Waypoint
+	}
 	
+	var mapType : AStarMapType = AStarMapType.Grid;
+	var nodes : AStarNode[,,] = null;
+
 	function GetNode ( x : int, y : int, z : int ) : AStarNode {
 		return nodes [ x, y, z ];
 			
@@ -20,21 +24,32 @@ class AStarMap {
 		return null;
 	}
 	
-	function GetIndex ( node : AStarNode ) : Vector3 {
-		for ( var x = 0; x < nodes.GetLength(0); x++ ) {
-			for ( var y = 0; y < nodes.GetLength(1); y++ ) {
-				for ( var z = 0; z < nodes.GetLength(2); z++ ) {
-					if ( nodes[x,y,z] == node ) {
-						return new Vector3 ( x, y, z );
-					}
-				}
-			}
+	function ListToGrid ( list : List.<AStarNode> ) : AStarNode[,,] {
+		var newArray : AStarNode[,,] = new AStarNode[list.Count,1,1];
+										
+		for ( var i : int = 0; i < newArray.GetLength(0); i++ ) {
+			var node : AStarNode = list[i];
+			newArray[i,0,0] = node;
 		}
 		
-		return Vector3.zero;
+		return newArray;
 	}
 	
-	function GetNeighbors ( node : AStarNode, goal : AStarNode, neighbors : List.<AStarNode> ) {
+	function ListToArray ( list : List.<AStarNode> ) : AStarNode[] {
+		var newArray : AStarNode[] = new AStarNode[list.Count];
+		
+		for ( var i : int = 0; i < list.Count; i++ ) {
+			newArray[i] = list[i];
+		}
+		
+		return newArray;
+	}
+	
+	function GetIndex ( node : AStarNode ) : Vector3 {
+		return node.index;
+	}
+	
+	function GetNeighbors ( node : AStarNode ) : AStarNode[] {
 		return;
 	}
 	
@@ -42,28 +57,6 @@ class AStarMap {
 		for ( var n : AStarNode in nodes ) {
 			if ( n ) {
 				n.parent = null;
-			}
-		}
-	}
-}
-
-public class AStarGridMap extends AStarMap {	
-	function AStarGridMap ( start : Vector3, size : Vector3, spacing : float ) {
-		nodes = new AStarNode [ size.x, size.y, size.z ];
-		
-		for ( var x = 0; x < size.x; x++ ) {
-			for ( var z = 0; z < size.z; z++ ) {
-				var from : Vector3 = new Vector3 ( start.x + (x*spacing), start.y + (size.y*spacing), start.z + (z*spacing) );
-				var hits : RaycastHit[] = Physics.RaycastAll ( from, Vector3.down, Mathf.Infinity );
-				
-				for ( var h : RaycastHit in hits ) {										
-					var p : Vector3 = h.point; 
-					if ( CheckWalkable ( p, spacing ) && h.collider.gameObject.tag != "dynamic" ) {
-						var m : AStarNode = new AStarNode ( p.x, p.y, p.z );
-						var i : Vector3 = Round ( start, p, spacing );
-						nodes [ i.x, i.y, i.z ] = m;
-					}
-				}
 			}
 		}
 	}
@@ -89,6 +82,77 @@ public class AStarGridMap extends AStarMap {
 		
 		}
 	}
+}
+
+public class AStarWaypointMap extends AStarMap {
+	function AStarWaypointMap ( meshes : List.<Mesh>, spacing : float ) {
+		mapType = AStarMapType.Waypoint;
+		
+		var tempList : List.<AStarNode> = new List.<AStarNode>();
+		
+		for ( var m : Mesh in meshes ) {
+			for ( var v : Vector3 in m.vertices ) {
+				if ( CheckWalkable ( v, spacing ) ) {
+					var n : AStarNode = new AStarNode ( v.x, v.y, v.z );
+					tempList.Add ( n );
+				}
+			}
+		}
+		
+		nodes = ListToGrid ( tempList );
+	
+		for ( var nd : AStarNode in nodes ) {
+			FindNeighbors ( nd );
+		}
+	}
+	
+	private function FindNeighbors ( node : AStarNode ) {
+		var tempList : List.<AStarNode> = new List.<AStarNode>();
+		
+		for ( var i = 0; i < nodes.GetLength(0); i++ ) {
+			if ( !Physics.Linecast ( node.position, nodes[i,0,0].position ) ) {
+				tempList.Add ( nodes[i,0,0] );
+			}
+		}
+		
+		node.neighbors = ListToArray ( tempList );
+	}
+	
+	override function GetNeighbors ( node : AStarNode ) : AStarNode [] {
+		if ( node.neighbors == null ) {
+			FindNeighbors ( node );	
+		}
+		
+		return node.neighbors;
+	}
+}
+
+public class AStarGridMap extends AStarMap {	
+	function AStarGridMap ( start : Vector3, size : Vector3, spacing : float ) {
+		mapType = AStarMapType.Grid;
+		
+		nodes = new AStarNode [ size.x, size.y, size.z ];
+		
+		var x : int;
+		var y : int;
+		var z : int;
+		
+		for ( x = 0; x < size.x; x++ ) {
+			for ( z = 0; z < size.z; z++ ) {
+				var from : Vector3 = new Vector3 ( start.x + (x*spacing), start.y + (size.y*spacing), start.z + (z*spacing) );
+				var hits : RaycastHit[] = Physics.RaycastAll ( from, Vector3.down, Mathf.Infinity );
+				
+				for ( var h : RaycastHit in hits ) {										
+					var p : Vector3 = h.point; 
+					if ( CheckWalkable ( p, spacing ) && h.collider.gameObject.tag != "dynamic" ) {
+						var m : AStarNode = new AStarNode ( p.x, p.y, p.z );
+						m.index = Round ( start, p, spacing );
+						nodes [ m.index.x, m.index.y, m.index.z ] = m;
+					}
+				}
+			}
+		}		
+	}
 	
 	// Round value
 	function Round ( start : Vector3, val : Vector3, factor : float ) : Vector3 {
@@ -99,8 +163,9 @@ public class AStarGridMap extends AStarMap {
 		return val;
 	}
 	
-	override function GetNeighbors ( node : AStarNode, goal : AStarNode, neighbors : List.<AStarNode> ) {
-		var index : Vector3 = GetIndex ( node );
+	private function FindNeighbors ( node : AStarNode ) {
+		var index : Vector3 = node.index;
+		var tempList : List.<AStarNode> = new List.<AStarNode>();
 		
 		var neighborPositions : Vector3[] = [
 			new Vector3 ( index.x,index.y,index.z+1 ),		// front
@@ -134,9 +199,23 @@ public class AStarGridMap extends AStarMap {
 				var n : AStarNode = nodes [ pos.x, pos.y, pos.z ];
 					
 				if ( n != null ) {
-					neighbors.Add ( n );
+					tempList.Add ( n );
 				}
 			}
 		}
+		
+		node.neighbors = new AStarNode[tempList.Count];
+		
+		for ( var i = 0; i < tempList.Count; i++ ) {
+			node.neighbors[i] = tempList[i];
+		}
+	}
+	
+	override function GetNeighbors ( node : AStarNode ) : AStarNode[] {
+		if ( node.neighbors == null ) {
+			FindNeighbors ( node );
+		}
+		
+		return node.neighbors;		
 	}
 }

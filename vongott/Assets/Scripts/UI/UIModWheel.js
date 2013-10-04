@@ -1,10 +1,11 @@
 #pragma strict
 
 class UIModWheel extends OGPage {
+	var animations : OGTween[];
+	
 	var selectedMaterial : Material;
 	var unselectedMaterial : Material;
 	var grid : Transform;
-	var human : Transform;
 	var markers : Transform;
 	var upgName : OGLabel;
 	
@@ -13,26 +14,39 @@ class UIModWheel extends OGPage {
 	var hoverMaterial : Material;
 	var hoverActivatedMaterial : Material;
 	
+	private var tempPos : Vector3;
+	private var tempRot : Vector3;
+	
 	override function StartPage () {
+		SetButtons ( false );
+	
 		GameCore.GetInstance().SetPause ( true );
 		SetButtonMaterials ( null );
 		upgName.text = "";
+			
+		tempPos = GameCamera.GetInstance().transform.position;
+		tempRot = GameCamera.GetInstance().transform.eulerAngles;
+		
+		GameCamera.GetInstance().SetBlur ( true );
+		StartCoroutine ( Transition ( true, function () { SetButtons ( true ); } ) );
+	}
+	
+	function SetButtons ( state : boolean ) {
+		for ( var c : Component in grid.GetComponentsInChildren(BoxCollider) ) {
+			(c as BoxCollider).enabled = state;
+		}
 	}
 	
 	function Out ( b : OGButton3D ) {
 		upgName.text = "";
 		
 		SetButtonMaterials ( null );
-		
-		for ( var i = 0; i < human.childCount; i++ ) {
-			human.GetChild(i).GetComponent(MeshRenderer).material = unselectedMaterial;
-			markers.GetChild(i).gameObject.SetActive ( false );
-		}
-		
-		if ( human.localEulerAngles.y != 0 ) {
-			iTween.RotateTo ( human.gameObject, iTween.Hash ( "rotation", new Vector3 ( 0, 0, 0 ), "time", 0.5, "ignoretimescale", true ) );
-
-		}
+	}
+	
+	function RepositionCamera () {
+		GameCamera.GetInstance().SetBlur ( false );
+		iTween.MoveTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "position", tempPos, "time", 0.5, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
+		iTween.RotateTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "rotation", tempRot, "time", 0.5, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
 	}
 	
 	function SetButtonMaterials ( hover : OGButton3D ) {
@@ -71,37 +85,47 @@ class UIModWheel extends OGPage {
 		}
 	}
 	
+	function Transition ( forward : boolean, callback : Function ) : IEnumerator {
+		var time : float;
+		
+		for ( var t : OGTween in animations ) {
+			t.Play ( forward );
+		
+			if ( t.move.enabled && t.move.time > time ) { time = t.move.time; }
+			if ( t.rotate.enabled && t.rotate.time > time ) { time = t.rotate.time; }
+			if ( t.scale.enabled && t.scale.time > time ) { time = t.scale.time; }
+		}	
+		
+		if ( callback ) {
+			var targetTime = System.DateTime.Now.AddSeconds ( time );
+			
+			while ( System.DateTime.Now < targetTime ) {
+				yield null;
+			}
+			
+			callback ();
+		}
+	}
+	
 	function Hover ( b : OGButton3D ) {
 		upgName.text = "";
 		
 		var slot : String = b.name;
 		
+		GameCamera.GetInstance().FocusOnBodyPart ( slot );
+								
 		if ( !UpgradeManager.GetUpgrade ( slot ) ) {
 			SetButtonMaterials ( null );
 			return;
-		} 
+		}
 		
 		SetButtonMaterials ( b );
 		
-		for ( var i = 0; i < human.childCount; i++ ) {
-			if ( human.GetChild(i).gameObject.name == slot ) {
-				human.GetChild(i).GetComponent(MeshRenderer).material = selectedMaterial;												
-				markers.GetChild(i).gameObject.SetActive ( true );
-				upgName.text = UpgradeManager.GetUpgradeName ( slot );
-			
-			} else {
-				human.GetChild(i).GetComponent(MeshRenderer).material = unselectedMaterial;
-				markers.GetChild(i).gameObject.SetActive ( false );
-			
-			}
-		}
-		
-		if ( slot == "Back" ) {
-			iTween.RotateTo ( human.gameObject, iTween.Hash ( "rotation", new Vector3 ( 0, 180, 0 ), "time", 0.5, "ignoretimescale", true ) );
-		} else if ( human.localEulerAngles.y != 0 ) {
-			iTween.RotateTo ( human.gameObject, iTween.Hash ( "rotation", new Vector3 ( 0, 0, 0 ), "time", 0.5, "ignoretimescale", true ) );
-
-		}
+		upgName.text = UpgradeManager.GetUpgradeName ( slot );
+	}
+	
+	function Exit () {
+		OGRoot.GoToPage ( "HUD" );
 	}
 	
 	function Pick ( b : OGButton3D ) {		
@@ -116,7 +140,9 @@ class UIModWheel extends OGPage {
 	
 	override function UpdatePage () {
 		if ( Input.GetMouseButtonDown(2) || Input.GetKeyDown( KeyCode.Escape ) ) {
-			OGRoot.GoToPage ( "HUD" );
+			SetButtons ( false );
+			RepositionCamera();
+			StartCoroutine ( Transition ( false, Exit )	);
 		}
 	}
 }

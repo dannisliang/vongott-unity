@@ -9,6 +9,8 @@ class AStarNode implements IComparable {
 	var size : int;	
 	var parent : AStarNode;
 	var active : boolean = false;
+	var neighbors : AStarNode[];
+	var index : Vector3;
 	
 	function AStarNode () {
 		estimatedTotalCost = 0.0;

@@ -2,7 +2,8 @@
 
 class AStarScanner extends MonoBehaviour {
 	var gridSize : Vector3;
-	var map : AStarMap;
+	var mapType : AStarMap.AStarMapType;
+	var map : AStarMap = null;
 	var heuristic : float = 10.0;
 	var spacing : float = 1.0;
 	var bounds : Bounds;
@@ -22,7 +23,19 @@ class AStarScanner extends MonoBehaviour {
 	}
 	
 	function SetMap () {
-		map = new AStarGridMap ( transform.position, gridSize, spacing );
+		if ( mapType == AStarMap.AStarMapType.Grid ) {
+			map = new AStarGridMap ( transform.position, gridSize, spacing );
+		} else {
+			var meshes : List.<Mesh> = new List.<Mesh>();
+			
+			for ( var mf : MeshFilter in GameObject.FindObjectsOfType(MeshFilter) ) {
+				if ( mf.gameObject.tag == "walkable" ) {
+					meshes.Add ( mf.sharedMesh );
+				}
+			}
+		
+			map = new AStarWaypointMap ( meshes, spacing );
+		}
 	}
 	
 	function Init () {
@@ -54,14 +67,14 @@ class AStarScanner extends MonoBehaviour {
 			Gizmos.DrawWireCube ( bounds.center, bounds.size );
 		}
 		
-		for ( var n : AStarNode in map.nodes ) {
+		for ( var n : AStarNode in map.nodes ) {		
 			if ( n == null ) { continue; }
-			
+						
 			Gizmos.color = new Color ( 1, 1, 1, 0.5 );
 			if ( n.parent ) { Gizmos.color = Color.red; }
 			if ( n.active ) { Gizmos.color = Color.green; }
 
-			Gizmos.DrawCube ( n.position, new Vector3 ( 0.5, 0.5, 0.5 ) );
+			Gizmos.DrawCube ( n.position, new Vector3 ( 0.1, 0.1, 0.1 ) );
 			
 			Gizmos.color = Color.white;
 		}

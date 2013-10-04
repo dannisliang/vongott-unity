@@ -1,4 +1,7 @@
 class Door extends InteractiveObject {
+	var locked : boolean = false;
+	var lockLevel : int = 1;
+	var lockKeyGUID : String = "";
 	var closed : boolean = true;
 	var startRot : Vector3;
 	var targetRot : Vector3;
@@ -9,20 +12,42 @@ class Door extends InteractiveObject {
 	// Prompt
 	override function InvokePrompt () {
 		if ( closed ) {
-			UIHUD.ShowNotification ( "Open [F]" );
+			if ( locked ) {
+				// TODO: Check if player has the right key in inventory
+				
+				UIHUD.ShowNotification ( "Pick lock [LeftMouse]" );
+				
+			} else {
+				UIHUD.ShowNotification ( "Open [LeftMouse]" );
+			}
 		
 		} else {
-			UIHUD.ShowNotification ( "Close [F]" );
+			UIHUD.ShowNotification ( "Close [LeftMouse]" );
 		
 		}
 	}
 	
+	// Lock picking
+	private function PickLock ( p : Player ) {
+		// TODO: Check for level of lockpicking skill
+		// 	if ( lockpickingSkill >= lockLevel ) {
+		//  	Unlock ();
+		//	} else {
+				UIHUD.ShowNotification ( "Skill not high enough" );    
+		//	}		
+	}
+	
+	private function Unlock () {
+		locked = false;
+		InvokePrompt ();
+	}
+				
 	// Movement
-	private function ToggleDoor ( pos : Vector3 ) {
+	private function ToggleDoor ( t : Transform ) {
 		targetRot = startRot;
 		
 		if ( closed ) {
-			if ( Vector3.Distance ( pos, backPos ) < Vector3.Distance ( pos, frontPos ) ) {
+			if ( Vector3.Distance ( t.position, backPos ) < Vector3.Distance ( t.position, frontPos ) ) {
 				targetRot.y += 90;
 			} else {
 				targetRot.y -= 90;
@@ -55,13 +80,27 @@ class Door extends InteractiveObject {
 	// Interaction
 	override function NPCCollide ( a : Actor ) {
 		if ( closed ) {
-			ToggleDoor ( a.transform.position );
+			ToggleDoor ( a.transform );
 		}
 	}
 	
 	override function Interact () {
-		if ( Input.GetKeyDown(KeyCode.F) ) {
-			ToggleDoor ( GameCore.GetPlayerObject().transform.position );
+		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive ) {
+			if ( locked ) {
+				// TODO: Check if player has the right key in inventory
+				// 	for ( var k : String in player.keys ) {
+				//		if ( k == lockKeyGUID ) {
+				//			Unlock ();
+				//			return;
+				//		}
+				//	}
+				
+				PickLock ( GameCore.GetPlayerObject().GetComponent(Player) );
+			
+			} else {
+				ToggleDoor ( GameCore.GetPlayerObject().transform );
+			
+			}
 		
 			InvokePrompt ();
 		}

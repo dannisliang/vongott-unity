@@ -5,10 +5,10 @@
 ////////////////////
 // Public vars
 var _levelContainer : Transform;
-var _playerObject : GameObject;
-var _camTarget : GameObject;
-var _pauseBackground : GameObject;
-var _pauseRenderTexture : RenderTexture;
+
+// Private vars
+private var tempCamPos : Vector3;
+private var tempCamRot : Vector3;
 
 // Static vars
 static var debuggingEnabled = true;
@@ -16,8 +16,6 @@ static var playerName = "Nameless";
 static var interactiveObject : GameObject;
 
 static var playerObject:GameObject;
-static var camTarget:GameObject;
-static var cam:Transform;
 static var scanner:AStarScanner;
 
 static var started = false;
@@ -67,7 +65,7 @@ static function GetInteractiveObject () {
 static function ToggleControls ( state : boolean ) {
 	playerObject.GetComponent(PlayerController).enabled = state;
 	
-	MouseLook.SetActive ( state );
+	Camera.main.GetComponent(GameCamera).enabled = state;
 	
 	controlsActive = state;
 	
@@ -117,11 +115,6 @@ static function LoadLevel ( path : String, spawnPoint : String ) {
 		//}
 	}
 	
-	// Position camera target
-	camTarget.transform.parent = currentLevel.transform;
-	camTarget.GetComponent ( CameraTarget ).player = playerObject;
-	camTarget.GetComponent ( CameraTarget ).cam = cam.gameObject;
-	
 	scanner.Init ();
 	//MergeMeshes ();
 }
@@ -144,20 +137,9 @@ static function GoToEditor () {
 ////////////////////
 // Pause
 ////////////////////
-// Blur
-function SetPause ( state : boolean ) {	
-	Camera.main.GetComponent ( BlurEffect ).enabled = state;
-	_pauseBackground.SetActive ( state );
-	
-	if ( state ) {
-		Camera.main.targetTexture = _pauseRenderTexture;
-	} else {
-		Camera.main.targetTexture = null;
-	}
-	
-	if ( state ) {
-		ToggleControls ( false );
-		
+// Regular
+function SetPause ( state : boolean ) {
+	if ( state ) {		
 		tempTimeScale = timeScale;
 		
 		iTween.StopByName ( "TimeScaleTween" );
@@ -173,9 +155,6 @@ function SetPause ( state : boolean ) {
 			SetTimeScale ( tempTimeScale );
 		
 		}
-		
-		ToggleControls ( true );
-		
 	}
 }
 
@@ -210,6 +189,13 @@ static function GetInstance() : GameCore {
 	return instance;
 }
 
+// Find player
+function FindPlayer () {
+	var player : Player = GameObject.FindObjectOfType ( Player );
+	playerObject = player.gameObject;
+	Debug.Log ( "GameCore | Found player: " + playerObject );
+}
+
 // Start
 function Start () {	
 	// Instance
@@ -226,24 +212,21 @@ function Start () {
 	
 	// Flags
 	FlagManager.Init();
-		
-	// Main camera
-	camTarget = _camTarget;
-	cam = Camera.main.transform;
-	
+			
 	// Level container
 	levelContainer = _levelContainer;
 	
 	// AStar scanner
 	scanner = this.GetComponent(AStarScanner);
-	
+		
 	// Load level
 	if ( nextLevel != "" ) {
 		LoadLevel ( nextLevel, "" );
-	} else {
-		playerObject = _playerObject;
 	}
 	
+	// Player
+	FindPlayer ();
+			
 	// Signal
 	Print ("GameCore | started");
 	started = true;
@@ -271,6 +254,10 @@ static function Stop () {
 // Update
 ////////////////////
 function Update () {
+	if ( playerObject == null ) {
+		FindPlayer ();
+	}
+	
 	Time.timeScale = timeScale;
 	
 	if ( timeScale > 0 ) {

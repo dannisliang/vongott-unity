@@ -7,6 +7,9 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	// Public vars
 	var generic : GameObject;
 
+	var doorLocked : OGTickBox;
+	var doorLockLevel : OGPopUp;
+
 	var textField : OGTextField;
 	var textPreview : OGLabel;
 	
@@ -64,9 +67,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	//////////////////
 	// Wall
 	//////////////////
-	function FlipWall () {		
-		var obj : GameObject = EditorCore.GetSelectedObject();
-		
+	function FlipWall () {				
 		var newObj : String = "";		
 		var newRot : Vector3 = obj.transform.localEulerAngles;
 		var newPos : Vector3 = obj.transform.localPosition;
@@ -98,9 +99,16 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	
 	
 	//////////////////
+	// Door
+	//////////////////
+	
+	
+	//////////////////
 	// Init
 	//////////////////
-	function Init ( obj : GameObject ) {
+	function Init ( o : GameObject ) {
+		obj = o;
+		
 		textField.transform.parent.gameObject.SetActive ( false );
 		previewImage.transform.parent.gameObject.SetActive ( false );
 		editTextButton.transform.parent.gameObject.SetActive ( false );
@@ -113,6 +121,12 @@ class EditorInspectorPrefab extends MonoBehaviour {
 		if ( obj.GetComponent ( Book ) ) {
 			editTextButton.transform.parent.gameObject.SetActive ( true );
 			textPreview.text = obj.GetComponent ( Book ).content;
+		}
+		
+		if ( obj.GetComponent ( Door ) ) {
+			doorLocked.transform.parent.gameObject.SetActive ( true );
+			doorLocked.isChecked = obj.GetComponent ( Door ).locked;
+			doorLockLevel.selectedOption = obj.GetComponent ( Door ).lockLevel.ToString();
 		}
 		
 		if ( obj.GetComponent(Prefab).path.Contains ( "Walls" ) && obj.GetComponent(Prefab).canChangeMaterial  ) {
@@ -145,7 +159,10 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
-	function UpdateObject () {
-		
+	function Update () {
+		if ( obj.GetComponent ( Door ) ) {
+			obj.GetComponent ( Door ).locked = doorLocked.isChecked;
+			obj.GetComponent ( Door ).lockLevel = int.Parse(doorLockLevel.selectedOption);
+		}
 	}
 }

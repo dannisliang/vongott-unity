@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [ExecuteInEditMode]
-[AddComponentMenu("Image Effects/Blur")]
+[AddComponentMenu("Image Effects/Blur/Blur")]
 public class BlurEffect : MonoBehaviour
 {	
 	/// Blur iterations - larger number means more blur.
@@ -35,12 +35,11 @@ public class BlurEffect : MonoBehaviour
 		} 
 	}
 	
-	protected void OnDisable()
-	{
+	protected void OnDisable() {
 		if( m_Material ) {
 			DestroyImmediate( m_Material );
 		}
-	}
+	}	
 	
 	// --------------------------------------------------------
 	
@@ -60,9 +59,8 @@ public class BlurEffect : MonoBehaviour
 	
 	// Performs one blur iteration.
 	public void FourTapCone (RenderTexture source, RenderTexture dest, int iteration)
-	{		
-		float off = 0.5f + iteration * blurSpread;
-		
+	{
+		float off = 0.5f + iteration*blurSpread;
 		Graphics.BlitMultiTap (source, dest, material,
 			new Vector2(-off, -off),
 			new Vector2(-off,  off),
@@ -84,31 +82,24 @@ public class BlurEffect : MonoBehaviour
 	}
 	
 	// Called by the camera to apply the image effect
-	void OnRenderImage (RenderTexture source, RenderTexture destination)
-	{
-		RenderTexture buffer = RenderTexture.GetTemporary(source.width/4, source.height/4, 0);
-		RenderTexture buffer2 = RenderTexture.GetTemporary(source.width/4, source.height/4, 0);
+	void OnRenderImage (RenderTexture source, RenderTexture destination) {		
+		int rtW = source.width/4;
+		int rtH = source.height/4;
+		RenderTexture buffer = RenderTexture.GetTemporary(rtW, rtH, 0);
 		
 		// Copy source to the 4x4 smaller texture.
 		DownSample4x (source, buffer);
 		
 		// Blur the small texture
-		bool oddEven = true;
-		
 		for(int i = 0; i < iterations; i++)
 		{
-			if( oddEven )
-				FourTapCone (buffer, buffer2, i);
-			else
-				FourTapCone (buffer2, buffer, i);
-			oddEven = !oddEven;
+			RenderTexture buffer2 = RenderTexture.GetTemporary(rtW, rtH, 0);
+			FourTapCone (buffer, buffer2, i);
+			RenderTexture.ReleaseTemporary(buffer);
+			buffer = buffer2;
 		}
-		if( oddEven )
-			Graphics.Blit(buffer, destination);
-		else
-			Graphics.Blit(buffer2, destination);
+		Graphics.Blit(buffer, destination);
 		
 		RenderTexture.ReleaseTemporary(buffer);
-		RenderTexture.ReleaseTemporary(buffer2);
 	}	
 }

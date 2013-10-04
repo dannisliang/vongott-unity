@@ -62,7 +62,6 @@ class Conversation {
 		
 		OGRoot.GoToPage ( "HUD" );
 		
-		GameCore.ToggleControls ( true );
 		currentEntry = 0;
 		
 		done = true;
@@ -199,17 +198,21 @@ class Conversation {
 	// Next option
 	function NextOption () {
 		if ( currentOption < entries[currentEntry].options.Count - 1 ) {
-			currentOption++;
-			UIConversation.HighlightOption ( currentOption );
+			HighlightOption ( currentOption + 1 );
 		}
 	}
 	
 	// Previous option
 	function PreviousOption () {
 		if ( currentOption > 0 ) {
-			currentOption--;
-			UIConversation.HighlightOption ( currentOption );
+			HighlightOption ( currentOption - 1 );
 		}
+	}
+	
+	// Highlight option
+	function HighlightOption ( i : int ) {
+		currentOption = i;
+		UIConversation.HighlightOption ( currentOption );
 	}
 	
 	// Select option
@@ -292,8 +295,6 @@ class Conversation {
 		}
 		
 		OGRoot.GoToPage ( "Conversation" );
-		
-		GameCore.ToggleControls ( false );
 	
 		currentEntry = -1;
 		NextEntry ();

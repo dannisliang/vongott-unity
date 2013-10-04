@@ -169,27 +169,38 @@ class OGWidget extends MonoBehaviour {
 	
 	function Start () {}
 	
+	private function GetDrawPosition () : Vector2 {
+		var pos : Vector2;
+		var t : Transform = transform;
+		
+		while ( t && !t.GetComponent(OGRoot) ) {
+			pos.x += t.localPosition.x;
+			pos.y += t.localPosition.y;
+			
+			t = t.parent;
+		}
+		
+		pos.x += adjustPivot.x;
+		pos.y += adjustPivot.y;
+	
+		return pos;
+	}
+	
 	function OnGUI () {
 		colliderRect = new Rect ( transform.position.x, transform.position.y, transform.localScale.x, transform.localScale.y );
 		
 		GUI.depth = transform.localPosition.z;
-		
-		var quat : Quaternion = Quaternion.identity;
-		quat.eulerAngles = transform.eulerAngles;
-		GUI.matrix = Matrix4x4.TRS ( new Vector3 ( transform.position.x, transform.position.y, 0 ), quat, Vector3.one );
-		
+				
 		if ( OGRoot.skin ) {
 			GUI.skin = OGRoot.skin;
 			guiStyle = CheckStyle ( OGRoot.skin );
 		}
 		
 		if ( !manualDraw ) {
-			Draw ( adjustPivot.x, adjustPivot.y );
+			var pos : Vector2 = GetDrawPosition ();
+			Draw ( pos.x, pos.y );
 		}
 		
-		quat.eulerAngles = Vector3.zero;
-		GUI.matrix = Matrix4x4.TRS ( Vector3.zero, quat, Vector3.one );
-	
 		mouseOver = colliderRect.Contains ( Event.current.mousePosition );
 	}
 	

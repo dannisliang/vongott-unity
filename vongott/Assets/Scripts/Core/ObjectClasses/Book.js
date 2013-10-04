@@ -5,11 +5,11 @@ class Book extends InteractiveObject {
 	
 	// Handle read
 	override function InvokePrompt () {
-		UIHUD.ShowNotification ( "Read [F]" );
+		UIHUD.ShowNotification ( "Read [LeftMouse]" );
 	}
 	
 	override function Interact () {
-		if ( Input.GetKeyDown(KeyCode.F) ) {
+		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive ) {
 			UITextDisplay.displayText = content;
 			UIHUD.ShowNotification ( "" );
 			OGRoot.GoToPage ( "TextDisplay" );

@@ -56,6 +56,7 @@ static var transformEnd : Function;
 static var grabDistance : float;
 static var grabOrigPoint : Vector3;
 static var running : boolean = false;
+static var stringClipboard : String = "";
 
 // undo
 static var actions : List.< Action > = new List.< Action > ();
@@ -796,6 +797,11 @@ static function LoadFile ( path : String ) {
 	var parent = currentLevel.transform.parent;
 	Destroy ( currentLevel );
 	currentLevel = null;
+	
+	var skyBoxParent : Transform = GameObject.FindWithTag("SkyboxCamera").transform.parent;
+	if ( skyBoxParent.gameObject.GetComponentInChildren ( SkyBox ) ) {
+		Destroy ( parent.gameObject.GetComponentInChildren ( SkyBox ).gameObject );
+	}
 	
 	currentLevel = Loader.LoadMap ( path );
 	

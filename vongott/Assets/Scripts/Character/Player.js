@@ -6,8 +6,11 @@ class Player extends MonoBehaviour {
 	var head : GameObject;
 	var hand : GameObject;
 	var torso : GameObject;
+	var legs : GameObject;
+	var arms : GameObject;
 	var foot_r : GameObject;
 	var foot_l : GameObject;
+	var back : GameObject;
 	var equippedItem : GameObject;
 
 	@HideInInspector var shootTimer : float = 0;
@@ -27,12 +30,25 @@ class Player extends MonoBehaviour {
 	
 	// Talking
 	function TalkTo ( a : Actor ) {
+		GameCore.ToggleControls ( false );
+		
 		talkingTo = a;
 		this.GetComponent(PlayerController).state = PlayerController.PlayerState.Idle;
+		
+		GameCamera.GetInstance().SetBlur ( true, a.transform );
+				
+		GameCore.Print ( "Player | conversation with " + a.displayName + " started" ); 
 	}
 	
-	function StopTalking () {
+	function StopTalking () : IEnumerator {
+		GameCore.Print ( "Player | conversation with " + talkingTo.displayName + " ended" ); 
+		
 		talkingTo = null;
+		GameCamera.GetInstance().SetBlur ( false, null );
+	
+		yield WaitForSeconds ( 1 );
+		
+		GameCore.ToggleControls ( true );
 	}
 	
 	// Equip

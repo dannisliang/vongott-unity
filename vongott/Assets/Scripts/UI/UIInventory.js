@@ -15,6 +15,7 @@ class UIInventory extends OGPage {
 	// Prerequisites
 	////////////////////
 	// Public vars
+	var animations : OGTween[];
 	var grid : Transform;
 	var inspector : Inspector;
 	var btnDiscard : OGButton3D;
@@ -25,7 +26,8 @@ class UIInventory extends OGPage {
 	var normalMaterial : Material;
 	
 	// Private vars
-	@HideInInspector private var selectedEntry : InventoryEntry;
+	private var selectedEntry : InventoryEntry;
+	private var activeButton : OGButton3D;
 	
 	
 	////////////////////
@@ -134,6 +136,10 @@ class UIInventory extends OGPage {
 	
 	// Select slot
 	function SelectSlot ( b : OGButton3D ) {
+		if ( b == activeButton ) { return; }
+		
+		activeButton = b;
+		
 		var index : int = int.Parse ( b.gameObject.name );
 		var allSlots : InventoryEntry[] = InventoryManager.GetSlots();
 		
@@ -144,7 +150,7 @@ class UIInventory extends OGPage {
 		selectedEntry = allSlots[index];
 		
 		btnDiscard.renderer.material = normalMaterial;
-		btnDiscard.transform.localEulerAngles = b.transform.localEulerAngles;
+		btnDiscard.transform.localEulerAngles = -b.transform.localEulerAngles;
 		
 		btnDiscard.gameObject.SetActive ( allSlots[index] != null );
 	}
@@ -177,6 +183,29 @@ class UIInventory extends OGPage {
 		}
 		
 		UpdateText ( entry );
+	}
+	
+	// Transition
+	function Transition ( forward : boolean, callback : Function ) : IEnumerator {
+		var time : float;
+		
+		for ( var t : OGTween in animations ) {
+			t.Play ( forward );
+		
+			if ( t.move.enabled && t.move.time > time ) { time = t.move.time; }
+			if ( t.rotate.enabled && t.rotate.time > time ) { time = t.rotate.time; }
+			if ( t.scale.enabled && t.scale.time > time ) { time = t.scale.time; }
+		}	
+		
+		if ( callback ) {
+			var targetTime = System.DateTime.Now.AddSeconds ( time );
+			
+			while ( System.DateTime.Now < targetTime ) {
+				yield null;
+			}
+			
+			callback ();
+		}
 	}
 	
 	// Equip button
@@ -229,11 +258,26 @@ class UIInventory extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
+	function SetButtons ( state : boolean ) {
+		for ( var c : Component in grid.GetComponentsInChildren(BoxCollider) ) {
+			(c as BoxCollider).enabled = state;
+		}
+	}
+	
 	override function StartPage () {
+		SetButtons ( false );
+		
 		ClearGrid ();
 		GameCore.GetInstance().SetPause ( true );
 		PopulateGrid ();
 		UpdateText ( null );
+		
+		GameCamera.GetInstance().SetBlur ( true );
+		StartCoroutine ( Transition ( true, function () { SetButtons ( true ); } ) );
+	}
+		
+	function Exit () {
+		OGRoot.GoToPage ( "HUD" );
 	}
 	
 	
@@ -242,8 +286,11 @@ class UIInventory extends OGPage {
 	////////////////////
 	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
-			OGRoot.GoToPage ( "HUD" );
-			GameCore.ToggleControls ( true );
+			GameCamera.GetInstance().SetBlur ( false );
+			SetButtons ( false );
+			UpdateText ( null );
+			btnDiscard.gameObject.SetActive ( false );
+			StartCoroutine ( Transition ( false, Exit )	);
 		}
 	}
 }

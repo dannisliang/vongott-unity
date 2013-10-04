@@ -180,7 +180,7 @@ class Actor extends InteractiveObject {
 			
 			talking = true;
 			
-			GameCore.GetPlayerObject().GetComponent(Player).TalkTo ( this );
+			GameCore.GetPlayerObject().GetComponent(Player).TalkTo ( this );	
 		}
 	}
 	
@@ -205,7 +205,7 @@ class Actor extends InteractiveObject {
 	function StopTalking ( endAction : String ) {
 		talking = false;
 		
-		GameCore.GetPlayerObject().GetComponent(Player).StopTalking ();
+		StartCoroutine ( GameCore.GetPlayerObject().GetComponent(Player).StopTalking () );
 	
 		switch ( endAction ) {
 			case "Attack":
@@ -345,11 +345,17 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	function TurnTowards ( v : Vector3 ) {
-		var lookPos : Vector3 = v - transform.position;
+	function TurnTo ( dir : Vector3 ) {
+		if ( dir == Vector3.zero ) { return; }
+		
+		var lookPos : Vector3 = dir;
 		lookPos.y = 0;
 		
 		transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 4 * Time.deltaTime );
+	}
+	
+	function TurnTowards ( pos : Vector3 ) {
+		TurnTo ( pos - transform.position );
 	}
 	
 	function RunForward () {			
@@ -407,8 +413,12 @@ class Actor extends InteractiveObject {
 				ClearPath();
 			
 			} else if ( pathFinder.nodes.Count > 0 ) {
-				TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
-								
+				if ( this.GetComponent(LocalAvoidance) && this.GetComponent(LocalAvoidance).detecting ) {
+					TurnTo ( this.GetComponent(LocalAvoidance).targetDirection );
+				} else {
+					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
+				}
+										
 				if ( path[currentNode].running ) {
 					RunForward ();
 				
@@ -462,9 +472,9 @@ class Actor extends InteractiveObject {
 		
 		// check for interaction
 		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == eAffiliation.Ally && GameCore.controlsActive ) {
-			UIHUD.ShowNotification ( "Talk [F]" );
+			UIHUD.ShowNotification ( "Talk [LeftMouse]" );
 			
-			if ( Input.GetKeyDown(KeyCode.F) ) {
+			if ( Input.GetMouseButtonDown(0) ) {
 				Talk();
 				UIHUD.ShowNotification ( "" );
 			}

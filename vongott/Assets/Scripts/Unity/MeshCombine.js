@@ -4,7 +4,7 @@ public class MeshCombine {
     public static function CombineMeshes ( parent : GameObject ) : Mesh {
 	    var outputMesh : Mesh = new Mesh ();
 	    
-	    var meshFilters : MeshFilter[] = parent.GetComponentsInChildren(MeshFilter);
+	    var meshFilters : Component[] = parent.GetComponentsInChildren(MeshFilter);
         var combine : CombineInstance[] = new CombineInstance[meshFilters.Length];
         
         var index : int = 0;
@@ -12,19 +12,21 @@ public class MeshCombine {
 
         for ( var i = 0; i < meshFilters.Length; i++)
         {
-            if (meshFilters[i].sharedMesh == null) { continue; }
+            var mf : MeshFilter = meshFilters[i] as MeshFilter;
             
-            if ( !meshFilters[i].renderer.enabled ) {
+            if (mf.sharedMesh == null) { continue; }
+            
+            if ( !mf.renderer.enabled ) {
             	continue;
             
             } else if ( matIndex == -1) {
                 matIndex = i;
             }
                         
-            combine[index].mesh = meshFilters[i].sharedMesh;
+            combine[index].mesh = mf.sharedMesh;
 
-            combine[index++].transform = meshFilters[i].transform.localToWorldMatrix;
-            meshFilters[i].renderer.enabled = false;
+            combine[index++].transform = mf.transform.localToWorldMatrix;
+            mf.renderer.enabled = false;
         }
 
         outputMesh.CombineMeshes(combine);

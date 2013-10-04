@@ -44,7 +44,7 @@ class EditorSelectionBox extends MonoBehaviour {
 		        linesArray.Add(vertices[triangles[i * 3 + 2]]);
 		    }
 		
-		    lines = linesArray.ToBuiltin(Vector3);
+		    lines = linesArray.ToBuiltin(Vector3) as Vector3[];
 		
 		} else {
 			this.GetComponent(MeshFilter).sharedMesh = newMesh;

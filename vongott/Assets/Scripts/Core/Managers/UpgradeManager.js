@@ -13,7 +13,6 @@ class UpgradeManager {
 		Torso,
 		Abdomen,
 		Legs,
-		Feet,
 		Back,
 		Arms
 	}
@@ -30,7 +29,6 @@ class UpgradeManager {
 		slots.Add ( eSlotID.Torso, null );
 		slots.Add ( eSlotID.Abdomen, null );
 		slots.Add ( eSlotID.Legs, null );
-		slots.Add ( eSlotID.Feet, null );
 		slots.Add ( eSlotID.Back, null );
 		slots.Add ( eSlotID.Arms, null );
 	}
@@ -43,7 +41,6 @@ class UpgradeManager {
 		else if ( s == "Torso" ) { e = eSlotID.Torso; }
 		else if ( s == "Abdomen" ) { e = eSlotID.Abdomen; }
 		else if ( s == "Legs" ) { e = eSlotID.Legs; }
-		else if ( s == "Feet" ) { e = eSlotID.Feet; }
 		else if ( s == "Arms" ) { e = eSlotID.Arms; }
 		else if ( s == "Back" ) { e = eSlotID.Back; }
 		else if ( s == "Skull" ) { e = eSlotID.Skull; }

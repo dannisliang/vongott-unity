@@ -76,11 +76,11 @@ class Item extends InteractiveObject {
 
 	// Handle pick-up
 	override function InvokePrompt () {
-		UIHUD.ShowNotification ( "Pick up [F]" );
+		UIHUD.ShowNotification ( "Pick up [LeftMouse]" );
 	}
 	
 	override function Interact () {
-		if ( Input.GetKeyDown(KeyCode.F) ) {
+		if ( Input.GetMouseButton(0) ) {
 			InventoryManager.AddItem(this);
 			Destroy ( this.gameObject );
 			GameCore.SetInteractiveObject ( null );
