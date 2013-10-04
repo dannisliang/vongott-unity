@@ -27,8 +27,7 @@ Street
 
 Walls
 - Universal wall: interchangeable texture
-- Hand rail with backlighting
-- Fieldstone
+- Broken walls: Interchangeable texture
 
 Windows
 - Double
@@ -44,13 +43,13 @@ Windows
 
 ### Decorations
 Light sources
-- Torch
+- Torch, bulletproof
 - Mining lamp, bulletproof
 - Architect lamp
 - Halogen lamp
 - Standing lamp
-- Construction spotlight
-- Street lamp
+- Construction spotlight, bulletproof
+- Street lamp, bulletproof
 - Rice lamp
 
 Indoor
