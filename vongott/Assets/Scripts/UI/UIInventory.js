@@ -28,6 +28,7 @@ class UIInventory extends OGPage {
 	// Private vars
 	private var selectedEntry : InventoryEntry;
 	private var activeButton : OGButton3D;
+	private var buttonsActive : boolean = false;
 	
 	
 	////////////////////
@@ -68,7 +69,7 @@ class UIInventory extends OGPage {
 	
 	// Update text
 	function UpdateText ( entry : InventoryEntry, button : OGButton3D ) {
-		if ( entry == null ) {
+		if ( entry == null || !buttonsActive ) {
 			inspector.entryName.text = "";
 			inspector.description.text = "";
 			inspector.attrName.text = "";
@@ -226,6 +227,16 @@ class UIInventory extends OGPage {
 				Install ( selectedEntry, false );
 			}
 		}
+		
+		if ( activeButton ) {
+			if ( selectedEntry.equipped || selectedEntry.installed ) {
+				activeButton.GetComponent(MeshRenderer).material = equippedSelectedMaterial;
+			
+			} else {
+				activeButton.GetComponent(MeshRenderer).material = selectedMaterial;
+			
+			}
+		}
 	}
 	
 	// Discard button
@@ -259,8 +270,14 @@ class UIInventory extends OGPage {
 	// Init
 	////////////////////
 	function SetButtons ( state : boolean ) {
-		for ( var c : Component in grid.GetComponentsInChildren(BoxCollider) ) {
-			(c as BoxCollider).enabled = state;
+		buttonsActive = state;
+		
+		for ( var c : Component in grid.GetComponentsInChildren(Collider) ) {
+			if ( c.GetType() == BoxCollider ) {
+				(c as BoxCollider).enabled = state;
+			} else if ( c.GetType() == MeshCollider ) {
+				(c as MeshCollider).enabled = state;
+			}
 		}
 	}
 	
