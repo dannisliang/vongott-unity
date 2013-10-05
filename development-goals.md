@@ -6,7 +6,7 @@ group: navigation
 ---
 {% include JB/setup %}
 
-### Phase 1: Proof of concept ( 2013.03.12 - 2013.06.27 )
+### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )
 
 - Game Core
 
@@ -36,7 +36,7 @@ group: navigation
 	
 	- New UI plugin for Unity &#x2713;
 
-### Phase 2: Gameplay and development tools ( 2013.07.01 - ? )
+### Phase 2: Proof of concept ( 2013.07.01 - ? )
 
 - Concept art
 	
@@ -51,8 +51,6 @@ group: navigation
 	- Basic placeholders
 
 - Game core
-	
-	- Upgrade effects
 	
 	- Optimisations
 	
@@ -97,6 +95,14 @@ group: navigation
 	- More view modes in the asset browser
 	
 	- Optimisations
+
+- Gameplay
+
+	- Interfaces ( terminals, books, computers, keypads, door locks )
+	
+	- Conversation dynamics
+
+	- Upgrade effects 
 	
 - Prefabs
 	
