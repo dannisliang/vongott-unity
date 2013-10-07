@@ -224,6 +224,8 @@ class EditorMenuBase extends OGPage {
 			menuObj.GetComponent(EditorInspectorSurface).Init(selectedObj);
 		} else if ( menu == "Prefab" ) {
 			menuObj.GetComponent(EditorInspectorPrefab).Init(selectedObj);
+		} else if ( menu == "Computer" ) {
+			menuObj.GetComponent(EditorInspectorComputer).Init(selectedObj);
 		}
 	}
 	

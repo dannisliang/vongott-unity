@@ -1,15 +1,10 @@
 ﻿#pragma strict
 
 class Computer extends InteractiveObject {
-	public class PersonalMessage {
-		var senderName : String = "SomeDude";
-		var message : String = "This is a very, very personal message: You have herpes.";
-	}
-	
 	public class Account {
 		var username : String = "dude";
 		var password : String = "sweet";
-		var messages : List.< PersonalMessage > = new List.< PersonalMessage > ();
+		var messages : String = "";
 	}
 	
 	var networkTitle : String = "Default network";
@@ -19,7 +14,7 @@ class Computer extends InteractiveObject {
 	private var tempRot : Vector3;
 	
 	public function LoginSuccess ( a : Account ) {
-		UIComputerDisplay.username  = a.username + "@" + networkTitle;
+		UIComputerDisplay.username  = a.username;
 		UIComputerDisplay.messages = a.messages;
 		UIComputerDisplay.currentComputer = this;
 		

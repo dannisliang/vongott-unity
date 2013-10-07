@@ -621,6 +621,11 @@ static function SelectObject ( obj : GameObject ) {
 	}
 	
 	// Trigger
+	if ( obj.GetComponent ( Computer ) ) {
+		inspector.AddMenu ( "Computer", obj );
+	}
+	
+	// Trigger
 	if ( obj.GetComponent ( Trigger ) ) {
 		inspector.AddMenu ( "Trigger", obj );
 	}
