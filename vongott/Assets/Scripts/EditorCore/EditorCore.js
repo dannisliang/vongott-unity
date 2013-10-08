@@ -620,7 +620,7 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "Surface", obj );
 	}
 	
-	// Trigger
+	// Computer
 	if ( obj.GetComponent ( Computer ) ) {
 		inspector.AddMenu ( "Computer", obj );
 	}

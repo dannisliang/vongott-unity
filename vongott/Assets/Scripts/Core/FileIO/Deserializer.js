@@ -22,6 +22,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var tm : TextMesh = newPfb.GetComponentInChildren ( TextMesh );
 		var bk : Book = newPfb.GetComponent(Book);
 		var dr : Door = newPfb.GetComponent(Door);
+		var pc : Computer = newPfb.GetComponent(Computer);
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;
@@ -40,6 +41,10 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		if ( dr != null && pfb.HasField ( "doorLocked" ) ) {
 			dr.locked = pfb.GetField ( "doorLocked" ).b;
 			dr.lockLevel = pfb.GetField ( "doorLockLevel" ).n;
+		}
+		
+		if ( pc != null ) {
+			DeserializeComputer ( pfb.GetField ( "computer" ), pc );
 		}
 		
 		if ( pfb.HasField("materialPath") ) {
@@ -345,6 +350,37 @@ static function DeserializeInventory ( ety : JSONObject ) : InventoryEntry[] {
 ////////////////////
 // Deserialize components individually
 ////////////////////
+// Computer
+static function DeserializeComputer ( o : JSONObject, c : Computer ) {
+	
+	c.domain = o.GetField ( "domain" ).str;
+	c.validAccounts = DeserializeAccounts ( o.GetField ( "validAccounts" ) );
+}
+
+static function DeserializeAccounts ( accounts : JSONObject ) : List.<Computer.Account> {
+	var list : List.<Computer.Account> = new List.<Computer.Account>();
+
+	for ( var o : Object in accounts.list ) {
+		list.Add ( DeserializeAccount ( o as JSONObject ) );
+	}
+
+	return list;
+}
+
+static function DeserializeAccount ( account : JSONObject ) : Computer.Account {
+	var acc : Computer.Account = new Computer.Account ();
+
+	acc.username = account.GetField ( "username" ).str;
+	acc.password = account.GetField ( "password" ).str;
+	acc.messages = account.GetField ( "messages" ).str;
+	acc.todoList = account.GetField ( "todoList" ).str;
+	acc.openFile = account.GetField ( "openFile" ).str;
+	acc.openFileName = account.GetField ( "openFileName" ).str;
+	acc.wallpaper = account.GetField ( "wallpaper" ).str;
+
+	return acc;
+}
+
 // GameEvent
 static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
 	var event : GameEvent = new GameEvent();

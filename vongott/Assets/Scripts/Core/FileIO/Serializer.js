@@ -24,6 +24,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		var tm : TextMesh = obj.GetComponentInChildren (TextMesh);
 		var bk : Book = obj.GetComponent(Book);
 		var dr : Door = obj.GetComponent(Door);
+		var pc : Computer = obj.GetComponent(Computer);
 		
 		pfb.AddField ( "path", obj.GetComponent(Prefab).path );
 		pfb.AddField ( "id", obj.GetComponent(Prefab).id );
@@ -42,6 +43,10 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		if ( dr != null ) {
 			pfb.AddField ( "doorLocked", dr.locked );
 			pfb.AddField ( "doorLockLevel", dr.lockLevel );
+		}
+		
+		if ( pc != null ) {
+			pfb.AddField ( "computer", SerializeComputer ( pc ) );
 		}
 		
 		if ( obj.GetComponent(Prefab).materialPath != "" && obj.GetComponent(Prefab).canChangeMaterial ) {
@@ -256,6 +261,40 @@ static function SerializeInventory ( entries : InventoryEntry[] ) : JSONObject {
 ////////////////////
 // Serialize components individually
 ////////////////////
+// Computer
+static function SerializeComputer ( c : Computer ) : JSONObject {
+	var com : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	
+	com.AddField ( "domain", c.domain );
+	com.AddField ( "validAccounts", SerializeAccounts ( c.validAccounts ) );
+	
+	return com;
+}
+
+static function SerializeAccounts ( accounts : List.<Computer.Account> ) : JSONObject {
+	var list : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+
+	for ( var acc : Computer.Account in accounts ) {
+		list.Add ( SerializeAccount ( acc ) );
+	}
+
+	return list;
+}
+
+static function SerializeAccount ( account : Computer.Account ) : JSONObject {
+	var acc : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+
+	acc.AddField ( "username", account.username );
+	acc.AddField ( "password", account.password );
+	acc.AddField ( "messages", account.messages );
+	acc.AddField ( "todoList", account.todoList );
+	acc.AddField ( "openFile", account.openFile );
+	acc.AddField ( "openFileName", account.openFileName );
+	acc.AddField ( "wallpaper", account.wallpaper );
+
+	return acc;
+}
+
 // GameEvent
 static function SerializeGameEvent ( event : GameEvent ) : JSONObject {
 	var evt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);

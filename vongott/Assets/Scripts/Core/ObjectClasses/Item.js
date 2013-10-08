@@ -1,7 +1,5 @@
 #pragma strict
 
-@script ExecuteInEditMode();
-
 class Item extends InteractiveObject {
 	// Types
 	enum eItemType {

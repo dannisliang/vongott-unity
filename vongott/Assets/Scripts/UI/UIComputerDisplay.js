@@ -7,9 +7,11 @@ class UIComputerDisplay extends OGPage {
 	var messageContainer : OGScrollView;
 	var messageString : OGLabel;
 	var messageTextField : OGTextField;
+	var todoList : OGLabel;
+	var openFile : OGLabel;
+	var openFileName : OGLabel;
 	
-	public static var username : String = "";
-	public static var messages : String  = "";
+	public static var currentAccount : Computer.Account;
 	public static var currentComputer : Computer;
 	
 			
@@ -17,33 +19,63 @@ class UIComputerDisplay extends OGPage {
 	// Init
 	////////////////////
 	public static function Clear () {
-		username = "";
-		messages = null;
+		currentAccount = null;
 		currentComputer = null;
 	}
 	
 	override function StartPage () {
-		nameLabel.text = username + "@" + currentComputer.networkTitle;
+		nameLabel.text = currentAccount.username + "@" + currentComputer.domain;
 		
-		ClearMessages ();
-		StartCoroutine ( PopulateMessages () );
+		if ( currentAccount.messages != "" ) {
+			messageContainer.transform.parent.gameObject.SetActive ( true );
+			
+			ClearMessages ();
+			PopulateMessages ();
+		
+		} else {
+			messageContainer.transform.parent.gameObject.SetActive ( false );
+			
+		}
+		
+		if ( currentAccount.openFile != "" ) {
+			openFileName.transform.parent.gameObject.SetActive ( true );
+		
+			openFileName.text = currentAccount.openFileName;
+			openFile.text = currentAccount.openFile;
+		
+		} else {
+			todoList.transform.parent.gameObject.SetActive ( false );
+				
+		}
+		
+		if ( currentAccount.todoList != "" ) {
+			todoList.transform.parent.gameObject.SetActive ( true );
+		
+			todoList.text = currentAccount.todoList;
+		
+		} else {
+			todoList.transform.parent.gameObject.SetActive ( false );
+				
+		}
 	}
 	
 	public function SendMessage () {
-		messages += "\n\n" + DateTime.Now.ToString("HH:mm") + " - " + username + ":\n" + messageTextField.text;
+		currentAccount.messages += "\n\n" + DateTime.Now.ToString("HH:mm") + " - " + currentAccount.username + ":\n" + messageTextField.text;
 		messageTextField.text = "";
 		
-		StartCoroutine ( PopulateMessages () );
+		PopulateMessages ();
 	}
 	
 	public function Logout () {
 		currentComputer.ShowLogin ();
 	}
 	
-	private function PopulateMessages () : IEnumerator {
-		messageString.text = messages;
+	private function PopulateMessages () {
+		messageString.text = currentAccount.messages;
+		messageString.CalcHeight();
 		
-		yield WaitForSeconds ( 0.1 );
+		messageContainer.scrollLength = messageString.transform.localScale.y + 50;
+		messageTextField.transform.parent.localPosition = new Vector3 ( 0, messageContainer.scrollLength - 40, 0 );
 		
 		messageContainer.position.y = messageContainer.scrollLength - messageContainer.viewHeight;
 	}
@@ -57,7 +89,6 @@ class UIComputerDisplay extends OGPage {
 	// Update
 	////////////////////
 	override function UpdatePage () {
-		messageContainer.scrollLength = messageString.transform.localScale.y + 50;
-		messageTextField.transform.parent.localPosition = new Vector3 ( 0, messageContainer.scrollLength - 40, 0 );
+		
 	}
 }

@@ -5,24 +5,52 @@ class Computer extends InteractiveObject {
 		var username : String = "dude";
 		var password : String = "sweet";
 		var messages : String = "";
+		var todoList : String = "";
+		var openFile : String = "";
+		var openFileName : String = "filename.txt";
+		var wallpaper : String = "wallpaper_debian";
 	}
 	
-	var networkTitle : String = "Default network";
+	var domain : String = "domainname";
 	var validAccounts : List.< Account > = new List.< Account > ();
 	
 	private var tempPos : Vector3;
 	private var tempRot : Vector3;
 	
+	private var inSession : boolean = false;
+	
+	public function AddAccount () {
+		validAccounts.Add ( new Account () );
+	}
+	
+	public function RemoveAccount ( str : String ) {
+		for ( var acc : Account in validAccounts ) {
+			if ( str == acc.username ) {
+				validAccounts.Remove ( acc );
+				return;
+			}	
+		}
+	}
+	
+	public function GetAccountFromString ( str : String ) : Account {
+		for ( var acc : Account in validAccounts ) {
+			if ( str == acc.username ) {
+				return acc;
+			}	
+		}
+	
+		return null;
+	}
+	
 	public function LoginSuccess ( a : Account ) {
-		UIComputerDisplay.username  = a.username;
-		UIComputerDisplay.messages = a.messages;
+		UIComputerDisplay.currentAccount = a;
 		UIComputerDisplay.currentComputer = this;
 		
 		OGRoot.GoToPage ( "ComputerDisplay" );
 	}
 	
 	public function ShowLogin ( ){
-		UILoginDisplay.title = networkTitle;
+		UILoginDisplay.title = domain;
 		UILoginDisplay.accounts = validAccounts;
 		UILoginDisplay.successCallback = LoginSuccess;
 		UIHUD.ShowNotification ( "" );
@@ -30,6 +58,8 @@ class Computer extends InteractiveObject {
 	}
 	
 	public function Enter () : IEnumerator {
+		inSession = true;
+		
 		GameCore.ToggleControls ( false );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform );
@@ -38,6 +68,8 @@ class Computer extends InteractiveObject {
 	}
 	
 	public function Exit () : IEnumerator {
+		inSession = false;
+		
 		GameCamera.GetInstance().SetBlur ( false );
 		iTween.MoveTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "position", tempPos, "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
 		iTween.RotateTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "rotation", tempRot, "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
@@ -53,14 +85,14 @@ class Computer extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive ) {
+		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession ) {
 			tempPos = GameCamera.GetInstance().transform.position;
 			tempRot = GameCamera.GetInstance().transform.eulerAngles;
 	
 			GameCamera.GetInstance().SetBlur ( true );
 			StartCoroutine ( Enter () );
 		
-		} else if ( Input.GetKeyDown(KeyCode.Escape) ) {
+		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
 			OGRoot.GoToPage ( "HUD" );
 			UILoginDisplay.Clear ();
 			UIComputerDisplay.Clear ();

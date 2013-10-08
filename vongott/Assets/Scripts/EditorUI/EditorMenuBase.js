@@ -212,20 +212,34 @@ class EditorMenuBase extends OGPage {
 		
 		tabs.AddTab ( menu, menuObj );
 		
-		if ( menu == "Light" ) {
-			menuObj.GetComponent(EditorInspectorLight).Init(selectedObj);
-		} else if ( menu == "Actor" ) {
-			menuObj.GetComponent(EditorInspectorActor).Init(selectedObj);
-		} else if ( menu == "Path" ) {
-			menuObj.GetComponent(EditorInspectorPath).Init(selectedObj);
-		} else if ( menu == "Trigger" ) {
-			menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
-		} else if ( menu == "Surface" ) {
-			menuObj.GetComponent(EditorInspectorSurface).Init(selectedObj);
-		} else if ( menu == "Prefab" ) {
-			menuObj.GetComponent(EditorInspectorPrefab).Init(selectedObj);
-		} else if ( menu == "Computer" ) {
-			menuObj.GetComponent(EditorInspectorComputer).Init(selectedObj);
+		switch ( menu ) {
+			case "Light":
+				menuObj.GetComponent(EditorInspectorLight).Init(selectedObj);
+				break;
+			
+			case "Actor":
+				menuObj.GetComponent(EditorInspectorActor).Init(selectedObj);
+				break;
+		
+			case "Path":
+				menuObj.GetComponent(EditorInspectorPath).Init(selectedObj);
+				break;
+		
+			case "Trigger":
+				menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
+				break;
+		
+			case "Surface":
+				menuObj.GetComponent(EditorInspectorSurface).Init(selectedObj);
+				break;
+		
+			case "Prefab":
+				menuObj.GetComponent(EditorInspectorPrefab).Init(selectedObj);
+				break;
+		
+			case "Computer":
+				menuObj.GetComponent(EditorInspectorComputer).Init(selectedObj);
+				break;
 		}
 	}
 	
