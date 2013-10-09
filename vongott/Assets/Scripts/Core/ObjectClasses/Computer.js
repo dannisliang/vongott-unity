@@ -62,7 +62,7 @@ class Computer extends InteractiveObject {
 		
 		GameCore.ToggleControls ( false );
 		
-		yield GameCamera.GetInstance().FocusInterface ( this.transform );
+		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.4 );
 		
 		ShowLogin ();
 	}

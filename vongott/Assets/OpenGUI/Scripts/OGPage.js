@@ -16,4 +16,6 @@ class OGPage extends MonoBehaviour {
 	function StartPage () {}
 
 	function UpdatePage () {}
+	
+	function ExitPage () {};
 }
