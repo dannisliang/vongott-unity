@@ -70,6 +70,10 @@ class UIComputerDisplay extends OGPage {
 		currentComputer.ShowLogin ();
 	}
 	
+	public function CloseWindow ( name : String ) {
+	
+	}
+	
 	private function PopulateMessages () {
 		messageString.text = currentAccount.messages;
 		messageString.CalcHeight();

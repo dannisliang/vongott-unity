@@ -223,7 +223,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 }
 
 static function DeserializeGameObject ( s : String ) : GameObject {
-	var obj : JSONObject = new JSONObject ( s );
+	var obj : JSONObject = new JSONObject ( s, false );
 	var o : GameObject = DeserializeGameObjectFromJSON ( obj );
 	
 	// camera
@@ -252,7 +252,7 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 }
 
 static function DeserializeSpawnPoints ( s : String ) : String[] {
-	var obj : JSONObject = new JSONObject ( s );
+	var obj : JSONObject = new JSONObject ( s, false );
 	var list : List.< String > = new List.< String > ();	
 	var array : String[];
 	
@@ -346,6 +346,17 @@ static function DeserializeInventory ( ety : JSONObject ) : InventoryEntry[] {
 	return inv;
 }
 
+// multi-line text
+static function DeserializeMultiLineString ( lines : JSONObject ) : String {
+	var newString : String = "";
+
+	for ( var o : Object in lines.list ) {
+		newString += (o as JSONObject).str + "\n";
+	}
+
+	return newString;
+}
+
 
 ////////////////////
 // Deserialize components individually
@@ -372,9 +383,9 @@ static function DeserializeAccount ( account : JSONObject ) : Computer.Account {
 
 	acc.username = account.GetField ( "username" ).str;
 	acc.password = account.GetField ( "password" ).str;
-	acc.messages = account.GetField ( "messages" ).str;
-	acc.todoList = account.GetField ( "todoList" ).str;
-	acc.openFile = account.GetField ( "openFile" ).str;
+	acc.messages = DeserializeMultiLineString ( account.GetField ( "messages" ) );
+	acc.todoList = DeserializeMultiLineString ( account.GetField ( "todoList" ) );
+	acc.openFile = DeserializeMultiLineString ( account.GetField ( "openFile" ) );
 	acc.openFileName = account.GetField ( "openFileName" ).str;
 	acc.wallpaper = account.GetField ( "wallpaper" ).str;
 
@@ -549,7 +560,7 @@ static function DeserializeConversationsToGame ( convos : JSONObject ) {
 
 // To editor
 static function DeserializeConversationToEditor ( str : String ) : List.< EditorConversationEntry > {
-	var c : JSONObject = new JSONObject ( str );
+	var c : JSONObject = new JSONObject ( str, false );
 	var conversation : List.< EditorConversationEntry > = new List.< EditorConversationEntry >();
 			
 	for ( var o = 0; o < c.list.Count; o++ ) {
@@ -632,7 +643,7 @@ static function DeserializeQuest ( obj : JSONObject ) : Quest {
 // Deserialize screenshot
 ////////////////////
 static function DeserializeScreenshot ( input : String ) : byte[] {
-	var map : JSONObject =  new JSONObject ( input );
+	var map : JSONObject =  new JSONObject ( input, false );
 	var bytes : byte[] = Convert.FromBase64String ( map.GetField ( "screenshot" ).str );
 	
 	return bytes;

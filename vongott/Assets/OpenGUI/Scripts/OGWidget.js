@@ -191,10 +191,15 @@ class OGWidget extends MonoBehaviour {
 		
 		GUI.depth = transform.localPosition.z;
 				
-		if ( OGRoot.skin ) {
+		if ( OGRoot.currentPage && OGRoot.currentPage.skin ) {
+			GUI.skin = OGRoot.currentPage.skin;
+			guiStyle = CheckStyle ( OGRoot.currentPage.skin );
+		
+		} else if ( OGRoot.skin ) {
 			GUI.skin = OGRoot.skin;
 			guiStyle = CheckStyle ( OGRoot.skin );
-		}
+		
+		} 
 		
 		if ( !manualDraw ) {
 			var pos : Vector2 = GetDrawPosition ();

@@ -240,8 +240,8 @@ class Conversation {
 		actor = GameCore.GetInteractiveObject().GetComponent(Actor);
 		displayName = actor.displayName;
 		
-		var file = Loader.LoadConversationToGame ( chapter + "/" + scene + "/" + name + "/" + conversation );
-		var object : JSONObject = new JSONObject ( file );
+		var file : String = Loader.LoadConversationToGame ( chapter + "/" + scene + "/" + name + "/" + conversation );
+		var object : JSONObject = new JSONObject ( file, false );
 		
 		for ( var obj : Object in object.list ) {
 			var o : JSONObject = obj as JSONObject;

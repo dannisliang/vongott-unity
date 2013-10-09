@@ -257,6 +257,17 @@ static function SerializeInventory ( entries : InventoryEntry[] ) : JSONObject {
 	return inv;
 }
 
+// multi-line text
+static function SerializeMultiLineString ( str : String ) : JSONObject {
+	var lines : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+	var array : String[] = str.Split ( "\n"[0] );
+
+	for ( var s : String in array ) {
+		lines.Add ( s );
+	}
+
+	return lines;
+}
 
 ////////////////////
 // Serialize components individually
@@ -286,9 +297,9 @@ static function SerializeAccount ( account : Computer.Account ) : JSONObject {
 
 	acc.AddField ( "username", account.username );
 	acc.AddField ( "password", account.password );
-	acc.AddField ( "messages", account.messages );
-	acc.AddField ( "todoList", account.todoList );
-	acc.AddField ( "openFile", account.openFile );
+	acc.AddField ( "messages", SerializeMultiLineString ( account.messages ) );
+	acc.AddField ( "todoList", SerializeMultiLineString ( account.todoList ) );
+	acc.AddField ( "openFile", SerializeMultiLineString ( account.openFile ) );
 	acc.AddField ( "openFileName", account.openFileName );
 	acc.AddField ( "wallpaper", account.wallpaper );
 

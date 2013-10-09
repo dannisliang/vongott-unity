@@ -62,7 +62,7 @@ class Loader {
 		var input : String = ReadFile ( path );	
 		if ( !input ) { return null; }
 		
-		return new JSONObject ( input );
+		return new JSONObject ( input, false );
 	}
 	
 	static function LoadQuests () : JSONObject {
@@ -71,7 +71,7 @@ class Loader {
 		var input : String = ReadFile ( path );	
 		if ( !input ) { input = ""; }
 		
-		var quests : JSONObject = new JSONObject ( input );
+		var quests : JSONObject = new JSONObject ( input, false );
 	
 		return quests;
 	}
@@ -82,7 +82,7 @@ class Loader {
 		var input : String = ReadFile ( path );	
 		if ( !input ) { return null; }
 		
-		var object : JSONObject = new JSONObject ( input );
+		var object : JSONObject = new JSONObject ( input, false );
 		if ( !object.HasField ( id ) ) { return null; }
 		
 		var quest : Quest = Deserializer.DeserializeQuest ( object.GetField ( id ) );
