@@ -5,6 +5,17 @@ import System.IO;
 class Saver {
 	static function SaveMap ( name : String, obj : GameObject, screenshot : Texture2D ) {
 		var path = Application.dataPath + "/Maps/" + name + ".vgmap";
+		
+		if ( File.Exists ( path + "_backup2" ) ) {
+			File.Copy ( path + "_backup2", path + "_backup3", true );
+		}
+								
+		if ( File.Exists ( path + "_backup1" ) ) {
+			File.Copy ( path + "_backup1", path + "_backup2", true );
+		}
+		
+		File.Copy ( path, path + "_backup1", true );
+
 		var sw : StreamWriter;
 		
 		if ( !File.Exists ( path ) ) {
