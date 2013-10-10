@@ -76,6 +76,8 @@ class Computer extends InteractiveObject {
 	
 		yield WaitForSeconds ( 1 );
 	
+		GameCamera.GetInstance().BlurFocus ( null );
+	
 		GameCore.ToggleControls ( true );
 	}
 	

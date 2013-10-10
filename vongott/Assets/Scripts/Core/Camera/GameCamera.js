@@ -22,11 +22,7 @@ class GameCamera extends MonoBehaviour {
 	public static function GetInstance () : GameCamera {
 		return instance;
 	}
-	
-	function SetBlur ( state : boolean ) {
-		SetBlur ( state, null );
-	}
-	
+		
 	function BlurFocus ( t : Transform ) {
 		if ( t == null ) {
 			t = GameObject.FindObjectOfType(OGRoot).transform;
@@ -35,7 +31,7 @@ class GameCamera extends MonoBehaviour {
 		this.GetComponent(DepthOfFieldScatter).focalTransform = t;
 	}
 	
-	function SetBlur ( state : boolean, t : Transform ) {
+	function SetBlur ( state : boolean ) {
 		var a : float;
 		var b : float;
 		
@@ -48,8 +44,6 @@ class GameCamera extends MonoBehaviour {
 		}
 		
 		iTween.ValueTo ( gameObject, iTween.Hash ( "from", a, "to", b, "onupdate", "SetMaxBlurSize", "time", 0.5, "ignoretimescale", true ) );
-	
-		BlurFocus ( t );
 	}
 	
 	function FocusOn ( pos : Vector3 ) {

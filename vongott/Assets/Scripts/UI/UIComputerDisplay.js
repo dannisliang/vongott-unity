@@ -18,12 +18,9 @@ class UIComputerDisplay extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
-	public static function Clear () {
-		currentAccount = null;
-		currentComputer = null;
-	}
-	
 	override function StartPage () {
+		GameCamera.GetInstance().GetComponent(Camera).enabled = false;
+		
 		nameLabel.text = currentAccount.username + "@" + currentComputer.domain;
 		
 		if ( currentAccount.messages != "" ) {
@@ -59,17 +56,34 @@ class UIComputerDisplay extends OGPage {
 		}
 	}
 	
-	public function SendMessage () {
-		currentAccount.messages += "\n\n" + DateTime.Now.ToString("HH:mm") + " - " + currentAccount.username + ":\n" + messageTextField.text;
-		messageTextField.text = "";
-		
-		PopulateMessages ();
+	
+	////////////////////
+	// Exit
+	////////////////////
+	public static function Clear () {
+		currentAccount = null;
+		currentComputer = null;
 	}
 	
 	public function Logout () {
 		currentComputer.ShowLogin ();
 	}
 	
+	override function ExitPage () {
+		GameCamera.GetInstance().GetComponent(Camera).enabled = true;
+	}
+	
+	
+	////////////////////
+	// Computer operations
+	////////////////////
+	public function SendMessage () {
+		currentAccount.messages += "\n\n" + DateTime.Now.ToString("HH:mm") + " - " + currentAccount.username + ":\n" + messageTextField.text;
+		messageTextField.text = "";
+		
+		PopulateMessages ();
+	}
+		
 	public function CloseWindow ( name : String ) {
 	
 	}

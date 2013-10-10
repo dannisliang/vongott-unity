@@ -37,8 +37,9 @@ class Player extends MonoBehaviour {
 		talkingTo = a;
 		this.GetComponent(PlayerController).state = PlayerController.PlayerState.Idle;
 		
-		GameCamera.GetInstance().SetBlur ( true, a.transform );
-				
+		GameCamera.GetInstance().SetBlur ( true );
+		GameCamera.GetInstance().BlurFocus ( a.transform );
+		
 		GameCore.Print ( "Player | conversation with " + a.displayName + " started" ); 
 	}
 	
@@ -46,7 +47,8 @@ class Player extends MonoBehaviour {
 		GameCore.Print ( "Player | conversation with " + talkingTo.displayName + " ended" ); 
 		
 		talkingTo = null;
-		GameCamera.GetInstance().SetBlur ( false, null );
+		GameCamera.GetInstance().SetBlur ( false );
+		GameCamera.GetInstance().BlurFocus ( null );
 	
 		yield WaitForSeconds ( 1 );
 		

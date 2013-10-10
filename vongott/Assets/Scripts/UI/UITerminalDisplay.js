@@ -28,8 +28,6 @@ class UITerminalDisplay extends OGPage {
 	}
 	
 	override function StartPage () {
-		Camera.main.enabled = false;
-		
 		for ( var i = 0; i < currentCameras.Length; i++ ) {
 			if ( currentCameras[i] ) {
 				currentCameras[i].SetActive ( true );
@@ -56,9 +54,7 @@ class UITerminalDisplay extends OGPage {
 		UpdateCameras ();
 	}
 	
-	override function ExitPage () {
-		Camera.main.enabled = true;
-		
+	override function ExitPage () {		
 		for ( var i = 0; i < currentCameras.Length; i++ ) {
 			if ( currentCameras[i] ) {
 				currentCameras[i].SetActive ( false );			
