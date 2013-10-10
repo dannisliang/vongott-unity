@@ -168,6 +168,11 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Inspector
 	////////////////////
+	// Renew GUID
+	function RenewGUID () {
+		EditorCore.GetSelectedObject().GetComponent(GUID).NewGUID();
+	}
+	
 	// Adjust position
 	function AdjustPosition () {
 		EditorAdjust.adjust = "position";

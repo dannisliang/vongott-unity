@@ -466,6 +466,8 @@ class Actor extends InteractiveObject {
 	/////////////////////
 	// Game loop
 	function Update () {
+		if ( !inventory ) { inventory = new InventoryEntry [4]; }
+		
 		if ( !GameCore.started ) { return; }
 				
 		var forward = transform.TransformDirection (Vector3.forward);

@@ -342,6 +342,8 @@ static function DeserializePath ( pth : JSONObject ) : List.< PathNode > {
 
 // inventory
 static function DeserializeInventory ( ety : JSONObject ) : InventoryEntry[] {
+	if ( !ety.list ) { return null; }
+	
 	var inv : InventoryEntry[] = new InventoryEntry[4];
 	
 	for ( var i = 0; i < ety.list.Count; i++ ) {

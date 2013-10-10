@@ -28,8 +28,12 @@ class UITerminalDisplay extends OGPage {
 	}
 	
 	override function StartPage () {
+		Camera.main.enabled = false;
+		
 		for ( var i = 0; i < currentCameras.Length; i++ ) {
 			if ( currentCameras[i] ) {
+				currentCameras[i].SetActive ( true );
+				
 				cameraWindows[i].transform.parent.gameObject.SetActive ( true );
 				cameraWindows[i].targetCamera = currentCameras[i].cameraView;
 				targetControls[i].selectedOption = currentCameras[i].target.ToString();
@@ -50,5 +54,15 @@ class UITerminalDisplay extends OGPage {
 	
 	override function UpdatePage () {
 		UpdateCameras ();
+	}
+	
+	override function ExitPage () {
+		Camera.main.enabled = true;
+		
+		for ( var i = 0; i < currentCameras.Length; i++ ) {
+			if ( currentCameras[i] ) {
+				currentCameras[i].SetActive ( false );			
+			}
+		}
 	}
 }

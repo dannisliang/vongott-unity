@@ -254,6 +254,8 @@ static function SerializePath ( nodes : List.< PathNode > ) : JSONObject {
 
 // inventory
 static function SerializeInventory ( entries : InventoryEntry[] ) : JSONObject {
+	if ( entries == null ) { return null; }
+	
 	var inv : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 	
 	for ( var e : InventoryEntry in entries ) {

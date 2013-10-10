@@ -19,6 +19,12 @@ class SurveillanceCamera extends MonoBehaviour {
 		if ( !cameraView ) {
 			cameraView = this.gameObject.GetComponentInChildren ( Camera );
 		}
+		
+		SetActive ( false );
+	}
+
+	public function SetActive ( state : boolean ) {
+		cameraView.enabled = state;
 	}
 
 	public function SetTarget ( t : String ) {
@@ -30,7 +36,10 @@ class SurveillanceCamera extends MonoBehaviour {
 	}
 
 	function Update () {
-		if ( EditorCore.running ) { return; }
+		if ( EditorCore.running ) {
+			if ( cameraView.enabled ) { cameraView.enabled = false; }
+			return;
+		}
 		
 		if ( !door && doorGUID != "" ) {
 			var obj : GameObject = GameCore.GetObjectFromGUID ( doorGUID );

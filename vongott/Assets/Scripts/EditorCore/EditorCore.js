@@ -523,6 +523,10 @@ static function DuplicateObject () {
 	var newObj : GameObject = Instantiate ( selectedObject );
 	newObj.transform.parent = currentLevel.transform;
 
+	if ( newObj.GetComponent(GUID) ) { 
+		newObj.GetComponent(GUID).NewGUID();
+	}
+
 	DeselectObject ();
 	SelectObject ( newObj );
 	SetGrabMode ( true );
