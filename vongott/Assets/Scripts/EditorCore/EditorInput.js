@@ -204,8 +204,18 @@ function Update () {
 			}
 			
 			if ( mouseGoal != null ) {
+				var obj : GameObject = EditorCore.GetSelectedObject();
+				
+				// GUID picker
+				if ( obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
+					EditorCore.pickerCallback ( mouseGoal.name, mouseGoal.GetComponent(GUID).GUID );
+					EditorCore.pickerCallback = null;
+					
+					EditorCore.SetPickMode ( false );
+					EditorCore.ReselectObject ();
+				
 				// Material picker
-				if ( EditorCore.GetSelectedObject().GetComponent(Prefab) ||	EditorCore.GetSelectedObject().GetComponent(Surface) ) {
+				} else if ( obj.GetComponent(Prefab) || obj.GetComponent(Surface) ) {
 					var materialPath : String = "";
 					
 					if ( mouseGoal.GetComponent(Prefab) ) {

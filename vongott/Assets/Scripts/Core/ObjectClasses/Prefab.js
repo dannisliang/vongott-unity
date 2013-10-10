@@ -28,13 +28,13 @@ class Prefab extends MonoBehaviour {
 			this.gameObject.AddComponent(GUID);
 		}
 		
-		if ( Application.isPlaying && this.GetComponent(Rigidbody) && !GameCore.started ) {
+		if ( EditorCore.running && this.GetComponent(Rigidbody) ) {
 			Destroy ( this.GetComponent(Rigidbody) );
 		}
 		
 		if ( canChangeMaterial ) {
 			ReloadMaterial ();
-		} else {
+		} else if ( this.renderer ) {
 			FitTexture ();
 		}
 	}

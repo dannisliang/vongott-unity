@@ -23,6 +23,8 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var bk : Book = newPfb.GetComponent(Book);
 		var dr : Door = newPfb.GetComponent(Door);
 		var pc : Computer = newPfb.GetComponent(Computer);
+		var tl : Terminal = newPfb.GetComponent(Terminal);
+		var sc : SurveillanceCamera = newPfb.GetComponent(SurveillanceCamera);
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;
@@ -43,8 +45,16 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 			dr.lockLevel = pfb.GetField ( "doorLockLevel" ).n;
 		}
 		
-		if ( pc != null ) {
+		if ( pc != null && pfb.HasField ( "computer" ) ) {
 			DeserializeComputer ( pfb.GetField ( "computer" ), pc );
+		}
+		
+		if ( tl != null && pfb.HasField ( "terminal" ) ) {
+			DeserializeTerminal ( pfb.GetField ( "terminal" ), tl );
+		}
+		
+		if ( sc != null && pfb.HasField ( "surveillanceCamera" ) ) {
+			DeserializeSurveillanceCamera ( pfb.GetField ( "surveillanceCamera" ), sc );
 		}
 		
 		if ( pfb.HasField("materialPath") ) {
@@ -361,9 +371,26 @@ static function DeserializeMultiLineString ( lines : JSONObject ) : String {
 ////////////////////
 // Deserialize components individually
 ////////////////////
+// Terminal
+static function DeserializeTerminal ( o : JSONObject, t : Terminal ) {
+	t.passCode = o.GetField ( "passCode" ).str;
+	
+	for ( var i = 0; i < o.GetField ( "cameraGUIDs" ).list.Count; i++ ) {
+		t.cameraGUIDs[i] = o.GetField ( "cameraGUIDs" ).list[i].str;
+	}
+}
+
+// SurveillanceCamera
+static function DeserializeSurveillanceCamera ( o : JSONObject, c : SurveillanceCamera ) {
+	c.SetTarget ( o.GetField ( "target" ).str );
+	
+	if ( o.HasField ( "doorGUID" ) ) {
+		c.doorGUID = o.GetField ( "doorGUID" ).str;
+	}
+}
+
 // Computer
 static function DeserializeComputer ( o : JSONObject, c : Computer ) {
-	
 	c.domain = o.GetField ( "domain" ).str;
 	c.validAccounts = DeserializeAccounts ( o.GetField ( "validAccounts" ) );
 }

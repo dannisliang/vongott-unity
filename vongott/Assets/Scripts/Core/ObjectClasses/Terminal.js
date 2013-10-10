@@ -1,13 +1,15 @@
 ﻿#pragma strict
 
 class Terminal extends InteractiveObject {
+	public var cameraGUIDs : String [] = new String[3];
 	public var cameras : SurveillanceCamera[] = new SurveillanceCamera[3];
 	public var passCode : String = "";
+	public var difficulty : int = 1;
 	
 	private var tempPos : Vector3;
 	private var tempRot : Vector3;
 	private var inSession : boolean = false;
-		
+			
 	public function LoginSuccess () {
 		UITerminalDisplay.currentCameras = cameras;
 		
@@ -66,6 +68,20 @@ class Terminal extends InteractiveObject {
 		}
 		
 		
+	}
+	
+	override function UpdateObject () {
+		if ( EditorCore.running ) { return; }
+		
+		for ( var i = 0; i < 3; i++ ) {
+			if ( cameraGUIDs[i] != "" && cameras[i] == null ) {
+				var obj : GameObject = GameCore.GetObjectFromGUID ( cameraGUIDs[i] );
+				
+				if ( obj ) {
+					cameras[i] = obj.GetComponent ( SurveillanceCamera );
+				}
+			}
+		}
 	}
 	
 	function Start () {

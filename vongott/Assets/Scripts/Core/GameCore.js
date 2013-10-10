@@ -41,6 +41,10 @@ static function GetPlayerObject () : GameObject {
 	return playerObject;
 }
 
+static function GetPlayer () : Player {
+	return playerObject.GetComponent(Player);
+}
+
 ////////////////////
 // Interactions
 ////////////////////
@@ -194,6 +198,19 @@ function FindPlayer () {
 	var player : Player = GameObject.FindObjectOfType ( Player );
 	playerObject = player.gameObject;
 	Debug.Log ( "GameCore | Found player: " + playerObject );
+}
+
+// Find object from GUID
+public static function GetObjectFromGUID ( id : String ) : GameObject {
+	if ( !started ) { return; }
+	
+	for ( var c : Component in levelContainer.GetComponentsInChildren(GUID) ) {
+		if ( (c as GUID).GUID == id ) {
+			return c.gameObject;
+		}
+	}
+	
+	return null;
 }
 
 // Start

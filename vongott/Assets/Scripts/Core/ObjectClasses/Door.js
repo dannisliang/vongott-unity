@@ -1,3 +1,5 @@
+#pragma strict
+
 class Door extends InteractiveObject {
 	var locked : boolean = false;
 	var lockLevel : int = 1;
@@ -70,7 +72,7 @@ class Door extends InteractiveObject {
 	
 	function UpdateObject () {
 		if ( !EditorCore.running ) {
-			this.transform.localEulerAngles = Vector3.Slerp ( this.transform.localEulerAngles, targetRot, Time.deltaTime * 2 );
+			this.transform.localRotation = Quaternion.Slerp ( this.transform.localRotation, Quaternion.Euler ( 0, targetRot.y, 0 ), Time.deltaTime * 2 );
 		}
 	
 		Debug.DrawLine ( this.transform.position, frontPos, Color.green );

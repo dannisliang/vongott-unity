@@ -625,6 +625,16 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "Computer", obj );
 	}
 	
+	// SurveillanceCamera
+	if ( obj.GetComponent ( SurveillanceCamera ) ) {
+		inspector.AddMenu ( "SurveillanceCamera", obj );
+	}
+	
+	// Terminal
+	if ( obj.GetComponent ( Terminal ) ) {
+		inspector.AddMenu ( "Terminal", obj );
+	}
+	
 	// Trigger
 	if ( obj.GetComponent ( Trigger ) ) {
 		inspector.AddMenu ( "Trigger", obj );

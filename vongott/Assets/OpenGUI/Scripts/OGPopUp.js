@@ -10,6 +10,7 @@ class OGPopUp extends OGWidget {
 	var message : String;
 	var passSelectedOption : boolean = false;
 	var padding : Vector2 = new Vector2 ( 8.0, 8.0 );
+	var indicator : String = "";
 	
 	var selectedOption : String;
 	@HideInInspector var originalZ : float = 99;
@@ -34,6 +35,8 @@ class OGPopUp extends OGWidget {
 			}
 			
 			GUI.Box ( Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), transform.localScale.y ), "", guiStyle );
+			
+			GUI.Label ( Rect ( x + transform.localScale.x - 20, y + transform.localScale.y - 18, 20, 20 ), indicator, textStyle );
 			
 			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), transform.localScale.y ), label, textStyle ) ) {
 				isUp = true;

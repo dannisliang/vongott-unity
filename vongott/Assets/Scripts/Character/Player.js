@@ -16,6 +16,8 @@ class Player extends MonoBehaviour {
 	@HideInInspector var shootTimer : float = 0;
 	@HideInInspector var talkingTo : Actor;
 	
+	private var liftedObject : LiftableItem;
+	
 					
 	////////////////////
 	// Public functions
@@ -49,6 +51,15 @@ class Player extends MonoBehaviour {
 		yield WaitForSeconds ( 1 );
 		
 		GameCore.ToggleControls ( true );
+	}
+	
+	// Picking up / dropping objects
+	function PickUpObject ( obj : LiftableItem ) {
+		liftedObject = obj;
+	}
+	
+	function DropObject () {
+		liftedObject = null;
 	}
 	
 	// Equip
@@ -163,6 +174,11 @@ class Player extends MonoBehaviour {
 	}
 		
 	function Update () {
+		if ( liftedObject ) {
+			liftedObject.transform.rotation = this.transform.rotation;
+			liftedObject.transform.position = torso.transform.position + this.transform.forward;
+		}
+		
 		if ( talkingTo != null ) {
 			TurnTowards ( talkingTo.transform.position );
 		}

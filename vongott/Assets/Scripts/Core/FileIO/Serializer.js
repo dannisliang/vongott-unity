@@ -25,6 +25,8 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		var bk : Book = obj.GetComponent(Book);
 		var dr : Door = obj.GetComponent(Door);
 		var pc : Computer = obj.GetComponent(Computer);
+		var tl : Terminal = obj.GetComponent(Terminal);
+		var sc : SurveillanceCamera = obj.GetComponent(SurveillanceCamera);
 		
 		pfb.AddField ( "path", obj.GetComponent(Prefab).path );
 		pfb.AddField ( "id", obj.GetComponent(Prefab).id );
@@ -47,6 +49,14 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		if ( pc != null ) {
 			pfb.AddField ( "computer", SerializeComputer ( pc ) );
+		}
+		
+		if ( tl != null ) {
+			pfb.AddField ( "terminal", SerializeTerminal ( tl ) );
+		}
+		
+		if ( sc != null ) {
+			pfb.AddField ( "surveillanceCamera", SerializeSurveillanceCamera ( sc ) );
 		}
 		
 		if ( obj.GetComponent(Prefab).materialPath != "" && obj.GetComponent(Prefab).canChangeMaterial ) {
@@ -272,6 +282,35 @@ static function SerializeMultiLineString ( str : String ) : JSONObject {
 ////////////////////
 // Serialize components individually
 ////////////////////
+// Terminal
+static function SerializeTerminal ( t : Terminal ) : JSONObject {
+	var term : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	var guids : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+	
+	term.AddField ( "passCode", t.passCode );
+	
+	for ( var s : String in t.cameraGUIDs ) {
+		guids.Add ( s );
+	}
+	
+	term.AddField ( "cameraGUIDs", guids );
+	
+	return term;
+}
+
+// SurveillanceCamera
+static function SerializeSurveillanceCamera ( sc : SurveillanceCamera ) : JSONObject {
+	var cam : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	
+	cam.AddField ( "target", sc.target.ToString() );
+	
+	if ( sc.doorGUID != "" ) {
+		cam.AddField ( "doorGUID", sc.doorGUID );
+	}
+	
+	return cam;
+}
+
 // Computer
 static function SerializeComputer ( c : Computer ) : JSONObject {
 	var com : JSONObject = new JSONObject (JSONObject.Type.OBJECT);

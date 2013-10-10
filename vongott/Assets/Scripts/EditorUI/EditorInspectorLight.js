@@ -1,17 +1,17 @@
 #pragma strict
 
-private class ColorSliders {
-	var r : OGSlider;
-	var g : OGSlider;
-	var b : OGSlider;
-}
-
-private class ValueSlider {
-	var slider : OGSlider;
-	var sliderValue : OGLabel; 
-}
-
 class EditorInspectorLight extends MonoBehaviour {
+	private class ColorSliders {
+		var r : OGSlider;
+		var g : OGSlider;
+		var b : OGSlider;
+	}
+	
+	private class ValueSlider {
+		var slider : OGSlider;
+		var sliderValue : OGLabel; 
+	}
+	
 	var colorSliders : ColorSliders;
 	var range : ValueSlider;
 	var intensity : ValueSlider;
