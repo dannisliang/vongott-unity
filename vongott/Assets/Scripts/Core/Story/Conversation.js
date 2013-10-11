@@ -69,45 +69,54 @@ class Conversation {
 		done = true;
 		
 		actor.StopTalking ( endAction );
+		
+		GameCamera.GetInstance().SetBlur ( false );
+		GameCamera.GetInstance().BlurFocus ( null );
+		GameCamera.GetInstance().RestorePosRot ( 1 );
 	}
 	
-	// Set name
-	function SetName () {
+	// Set speaker
+	function SetSpeaker ( entry : ConvoEntry, smoothCam : boolean ) {
 		var speakerName : String;
-		
-		if ( entries[currentEntry].speaker == "NPC" ) {
+				
+		if ( entry.speaker == "NPC" ) {
 			speakerName = displayName;
+ 			GameCamera.GetInstance().ConvoFocus ( GameCore.GetPlayer().talkingTo, smoothCam );
 			
-		} else if ( entries[currentEntry].speaker == "Player" ) {
+		} else if ( entry.speaker == "Player" ) {
 			speakerName = GameCore.playerName;
+			GameCamera.GetInstance().ConvoFocus ( GameCore.GetPlayer(), smoothCam );
+
 		}
-	
+					
 		UIConversation.SetName ( speakerName );
 	}
 	
 	// Display an entry
-	function DisplayEntry () {
+	function DisplayEntry ( smoothCam : boolean ) {
 		var entry : ConvoEntry = entries[currentEntry];
 		var speakerLine : String;
 		
 		// line
 		if ( entry.type == "Line" ) {
-			endAction = entries[currentEntry].endConvo;
+			endAction = entry.endConvo;
 			
-			SetFlag ( entries[currentEntry] );
+			SetFlag ( entry );
 			
-			SetName ();
+			SetSpeaker ( entry, smoothCam );
 		
-			if ( entries[currentEntry].line.Replace ( "Player", GameCore.playerName ) ) {
-				speakerLine = entries[currentEntry].line.Replace ( "Player", GameCore.playerName );
+			if ( entry.line.Replace ( "Player", GameCore.playerName ) ) {
+				speakerLine = entry.line.Replace ( "Player", GameCore.playerName );
 			} else {
-				speakerLine = entries[currentEntry].line;
+				speakerLine = entry.line;
 			}
 		
 			UIConversation.SetLine ( speakerLine );
 		
 		// group		
 		} else if ( entry.type == "Group" ) {
+			SetSpeaker ( entry, smoothCam );
+			
 			// query
 			if ( entry.groupType == "Query" ) {
 				UIConversation.SetName ( GameCore.playerName );
@@ -131,7 +140,7 @@ class Conversation {
 					endAction = entry.options[currentOption].endConvo;
 				}
 				
-				SetName ();				
+				SetSpeaker ( entry, smoothCam );				
 				UIConversation.SetLine ( speakerLine );
 			}
 		
@@ -181,14 +190,18 @@ class Conversation {
 	}
 	
 	// Next entry
-	function NextEntry () {				
+	function NextEntry () {
+		NextEntry ( false );
+	}
+	
+	function NextEntry ( smoothCam : boolean ) {				
 		if ( currentEntry < entries.Count - 1 && !hasEndAction () ) {
 			currentEntry++;
 			
 			if ( GetFlag ( entries[currentEntry] ) ) {
-				DisplayEntry ();
+				DisplayEntry ( smoothCam );
 			} else {
-				NextEntry ();
+				NextEntry ( smoothCam );
 			}
 		
 		} else {
@@ -229,6 +242,8 @@ class Conversation {
 	// Init
 	////////////////////
 	function Init () {		
+		GameCamera.GetInstance().StorePosRot();
+		
 		endAction = "";
 		
 		if ( endQuest != "" && endQuest != "(none)" ) {
@@ -299,6 +314,8 @@ class Conversation {
 		OGRoot.GoToPage ( "Conversation" );
 	
 		currentEntry = -1;
-		NextEntry ();
+		NextEntry ( true );
+		
+		GameCamera.GetInstance().SetBlur ( true );
 	}
 }

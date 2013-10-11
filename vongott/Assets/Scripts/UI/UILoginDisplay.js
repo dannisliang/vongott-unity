@@ -22,7 +22,6 @@ class UILoginDisplay extends OGPage {
 		usernameInput.text = "";
 		passwordInput.text = "";
 		
-		GameCore.ToggleControls ( false );
 		titleTextLabel.text = title;
 		
 		if ( accounts == null ) {
@@ -60,7 +59,6 @@ class UILoginDisplay extends OGPage {
 		if ( Input.GetKeyDown(KeyCode.Escape) ) {
 			Clear ();
 			OGRoot.GoToPage ( "HUD" );
-			GameCore.ToggleControls ( true );
 		
 		} else if ( Input.GetKeyDown(KeyCode.Return) && accounts != null ) {
 			CheckCredentials ();

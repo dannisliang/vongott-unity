@@ -202,6 +202,10 @@ class EditorMenuBase extends OGPage {
 	
 	// Display the object's relevant menus
 	function AddMenu ( menu : String, selectedObj : GameObject ) {
+		AddMenu ( menu, selectedObj, false );
+	}
+	
+	function AddMenu ( menu : String, selectedObj : GameObject, hasPriority : boolean ) {
 		var menuObj : GameObject;
 		
 		for ( var c : GameObject in inspectorMenus ) {		
@@ -215,7 +219,7 @@ class EditorMenuBase extends OGPage {
 			return;
 		}
 		
-		tabs.AddTab ( menu, menuObj );
+		tabs.AddTab ( menu, menuObj, hasPriority );
 		
 		switch ( menu ) {
 			case "Light":

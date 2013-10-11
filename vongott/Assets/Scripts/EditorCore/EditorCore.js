@@ -596,7 +596,10 @@ static function SelectObject ( obj : GameObject ) {
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 	
-	
+	// Prefab
+	if ( obj.GetComponent ( Prefab ) ) {
+		inspector.AddMenu ( "Prefab", obj );
+	}
 	
 	// LightSource
 	if ( obj.GetComponent(LightSource) ) {
@@ -614,11 +617,6 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "Item", obj );
 	}
 	
-	// Prefab
-	if ( obj.GetComponent ( Prefab ) ) {
-		inspector.AddMenu ( "Prefab", obj );
-	}
-	
 	// Plane
 	if ( obj.GetComponent ( Surface ) ) {
 		inspector.AddMenu ( "Surface", obj );
@@ -626,22 +624,22 @@ static function SelectObject ( obj : GameObject ) {
 	
 	// Computer
 	if ( obj.GetComponent ( Computer ) ) {
-		inspector.AddMenu ( "Computer", obj );
+		inspector.AddMenu ( "Computer", obj, true );
 	}
 	
 	// Keypad
 	if ( obj.GetComponent ( Keypad ) ) {
-		inspector.AddMenu ( "Keypad", obj );
+		inspector.AddMenu ( "Keypad", obj, true );
 	}
 	
 	// SurveillanceCamera
 	if ( obj.GetComponent ( SurveillanceCamera ) ) {
-		inspector.AddMenu ( "SurveillanceCamera", obj );
+		inspector.AddMenu ( "SurveillanceCamera", obj, true );
 	}
 	
 	// Terminal
 	if ( obj.GetComponent ( Terminal ) ) {
-		inspector.AddMenu ( "Terminal", obj );
+		inspector.AddMenu ( "Terminal", obj, true );
 	}
 	
 	// Trigger

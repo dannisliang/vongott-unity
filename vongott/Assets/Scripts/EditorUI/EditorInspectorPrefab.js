@@ -109,6 +109,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	function Init ( o : GameObject ) {
 		obj = o;
 		
+		doorLocked.transform.parent.gameObject.SetActive ( false );
 		textField.transform.parent.gameObject.SetActive ( false );
 		previewImage.transform.parent.gameObject.SetActive ( false );
 		editTextButton.transform.parent.gameObject.SetActive ( false );

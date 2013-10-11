@@ -45,6 +45,12 @@ class Door extends InteractiveObject {
 	}
 				
 	// Movement
+	private function CloseDoor () {
+		targetRot = startRot;
+	
+		closed = true;
+	}
+	
 	private function ToggleDoor ( t : Transform ) {
 		targetRot = startRot;
 		
@@ -97,7 +103,13 @@ class Door extends InteractiveObject {
 				//		}
 				//	}
 				
-				PickLock ( GameCore.GetPlayerObject().GetComponent(Player) );
+				if ( !closed ) {
+					CloseDoor ();
+				
+				} else { 
+					PickLock ( GameCore.GetPlayer() );
+				
+				}
 			
 			} else {
 				ToggleDoor ( GameCore.GetPlayerObject().transform );

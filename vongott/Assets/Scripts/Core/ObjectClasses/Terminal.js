@@ -6,8 +6,6 @@ class Terminal extends InteractiveObject {
 	public var passCode : String = "";
 	public var difficulty : int = 1;
 	
-	private var tempPos : Vector3;
-	private var tempRot : Vector3;
 	private var inSession : boolean = false;
 			
 	public function LoginSuccess () {
@@ -26,6 +24,9 @@ class Terminal extends InteractiveObject {
 	public function Enter () : IEnumerator {
 		inSession = true;
 		
+		GameCamera.GetInstance().SetBlur ( true );
+		GameCamera.GetInstance().StorePosRot ();
+		
 		GameCore.ToggleControls ( false );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
@@ -37,9 +38,8 @@ class Terminal extends InteractiveObject {
 		inSession = false;
 		
 		GameCamera.GetInstance().SetBlur ( false );
-		iTween.MoveTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "position", tempPos, "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
-		iTween.RotateTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "rotation", tempRot, "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
-	
+		GameCamera.GetInstance().RestorePosRot ( 1 );
+			
 		yield WaitForSeconds ( 1 );
 	
 		GameCamera.GetInstance().BlurFocus ( null );
@@ -54,10 +54,6 @@ class Terminal extends InteractiveObject {
 	
 	override function Interact () {
 		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession ) {
-			tempPos = GameCamera.GetInstance().transform.position;
-			tempRot = GameCamera.GetInstance().transform.eulerAngles;
-	
-			GameCamera.GetInstance().SetBlur ( true );
 			StartCoroutine ( Enter () );
 		
 		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {

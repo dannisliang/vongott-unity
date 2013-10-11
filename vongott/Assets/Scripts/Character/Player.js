@@ -12,9 +12,9 @@ class Player extends MonoBehaviour {
 	var foot_l : GameObject;
 	var back : GameObject;
 	var equippedItem : GameObject;
-
+	var talkingTo : Actor;
+	
 	@HideInInspector var shootTimer : float = 0;
-	@HideInInspector var talkingTo : Actor;
 	
 	private var liftedObject : LiftableItem;
 	
@@ -37,9 +37,6 @@ class Player extends MonoBehaviour {
 		talkingTo = a;
 		this.GetComponent(PlayerController).state = PlayerController.PlayerState.Idle;
 		
-		GameCamera.GetInstance().SetBlur ( true );
-		GameCamera.GetInstance().BlurFocus ( a.transform );
-		
 		GameCore.Print ( "Player | conversation with " + a.displayName + " started" ); 
 	}
 	
@@ -47,7 +44,6 @@ class Player extends MonoBehaviour {
 		GameCore.Print ( "Player | conversation with " + talkingTo.displayName + " ended" ); 
 		
 		talkingTo = null;
-		GameCamera.GetInstance().SetBlur ( false );
 		GameCamera.GetInstance().BlurFocus ( null );
 	
 		yield WaitForSeconds ( 1 );

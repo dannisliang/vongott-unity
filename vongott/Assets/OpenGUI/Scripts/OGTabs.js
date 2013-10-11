@@ -26,15 +26,28 @@ class OGTabs extends OGWidget {
 	@HideInInspector var boxPos : Vector2 = Vector2.zero; 
 	
 	function AddTab ( label : String, object : GameObject ) {
-		tabs.Add ( new Tab ( label, object ) );
+		AddTab ( label, object, false );
+	}
+	
+	function AddTab ( label : String, object : GameObject, switchTo : boolean ) {
+		var newTab : Tab = new Tab ( label, object );
+		tabs.Add ( newTab );
 		
-		if ( tabs.Count == 1 ) {
+		if ( switchTo ) {
+			ActivateTab ( newTab );	
+		
+		} else if ( tabs.Count == 1 ) {
 			Start ();
+		
 		}
 	}
 	
 	override function UpdateWidget () {
 
+	}
+	
+	function ActivateTab ( i : int ) {
+		ActivateTab ( tabs[i] );
 	}
 	
 	function ActivateTab ( tab : Tab ) {

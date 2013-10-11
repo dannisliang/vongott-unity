@@ -178,11 +178,11 @@ class Actor extends InteractiveObject {
 	
 	function Talk () {
 		if ( conversations.Count > 0 ) {
+			GameCore.GetPlayerObject().GetComponent(Player).TalkTo ( this );
+			
 			conversations[currentConvo].Init ();
 			
-			talking = true;
-			
-			GameCore.GetPlayerObject().GetComponent(Player).TalkTo ( this );	
+			talking = true;				
 		}
 	}
 	
@@ -477,7 +477,7 @@ class Actor extends InteractiveObject {
 		var forward = transform.TransformDirection (Vector3.forward);
 		
 		// check for interaction
-		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == eAffiliation.Ally && GameCore.controlsActive ) {
+		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == eAffiliation.Ally && GameCore.controlsActive && !talking ) {
 			if ( CheckForcedConvo() ) {
 				Talk ();
 				UIHUD.ShowNotification ( "" );
