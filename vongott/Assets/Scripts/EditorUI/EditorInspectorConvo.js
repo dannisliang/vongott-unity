@@ -6,6 +6,7 @@ class EditorInspectorConvo extends MonoBehaviour {
 	var label : OGLabel;
 	var condition : OGButton;
 	var conditionBool : OGTickBox;
+	var forced : OGTickBox;
 	var startQuest : OGButton;
 	var endQuest : OGButton;
 	var conversation : OGButton;

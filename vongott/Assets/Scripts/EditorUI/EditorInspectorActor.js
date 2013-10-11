@@ -28,7 +28,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		convo.inspector = this.gameObject;
 		convo.Init ();
 				
-		convoBottomLine += 160;
+		convoBottomLine += 190;
 		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
 	
 		return convo;
@@ -42,7 +42,7 @@ class EditorInspectorActor extends MonoBehaviour {
 	
 	// Remove convo
 	function RemoveConvo () {
-		convoBottomLine -= 100;
+		convoBottomLine -= 190;
 		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
 	
 		Destroy ( convos[convos.Count-1].gameObject );
@@ -115,6 +115,7 @@ class EditorInspectorActor extends MonoBehaviour {
 			
 			if ( c.condition != "" ) { convo.condition.text = c.condition; }
 			convo.conditionBool.isChecked = c.conditionBool;
+			convo.forced.isChecked = c.forced;
 			if ( c.startQuest != "" ) { convo.startQuest.text = c.startQuest; }
 			if ( c.endQuest != "" ) { convo.endQuest.text = c.endQuest; }
 			convo.conversation.text = c.chapter + "/" + c.scene + "/" + c.name + "/" + c.conversation;
@@ -135,6 +136,10 @@ class EditorInspectorActor extends MonoBehaviour {
 	//////////////////////
 	// Update
 	//////////////////////
+	function Update () {
+		UpdateObject ();
+	}
+	
 	function UpdateObject () {
 		var o : GameObject = EditorCore.GetSelectedObject();
 		
@@ -152,6 +157,7 @@ class EditorInspectorActor extends MonoBehaviour {
 				
 				newConvo.condition = control.condition.text;
 				newConvo.conditionBool = control.conditionBool.isChecked;
+				newConvo.forced = control.forced.isChecked;
 				newConvo.startQuest = control.startQuest.text;
 				newConvo.endQuest = control.endQuest.text;
 				

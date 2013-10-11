@@ -153,30 +153,32 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Player interaction
 	////////////////////
+	function CheckForcedConvo () : boolean {
+		return conversations[currentConvo].forced;
+	}
+	
+	function FindNextConvo () {
+		for ( var i = 0; i < conversations.Count; i++ ) {
+			var validConvo : boolean = FlagManager.GetFlag ( conversations[i].condition, conversations[i].conditionBool );
+			var doneConvo : boolean = conversations[i].done;
+			
+			// If the convo's flag is true and it's not done yet, pick this
+			if ( validConvo && !doneConvo ) {
+				currentConvo = i;
+				
+				break;
+			
+			// If the convo's flag is true and it's already been done, store it in case there are no more convos
+			} else if ( validConvo && doneConvo ) {
+				currentConvo = i;
+				
+			}
+		}
+	}
+	
 	function Talk () {
 		if ( conversations.Count > 0 ) {
-			var nextConvo : Conversation;
-		
-			for ( var i = 0; i < conversations.Count; i++ ) {
-				var validConvo : boolean = FlagManager.GetFlag ( conversations[i].condition, conversations[i].conditionBool );
-				var doneConvo : boolean = conversations[i].done;
-				
-				// If the convo's flag is true and it's not done yet, pick this
-				if ( validConvo && !doneConvo ) {
-					nextConvo = conversations[i];
-					currentConvo = i;
-					
-					break;
-				
-				// If the convo's flag is true and it's already been done, store it in case there are no more convos
-				} else if ( validConvo && doneConvo ) {
-					nextConvo = conversations[i];
-					currentConvo = i;
-					
-				}
-			}
-			
-			nextConvo.Init ();
+			conversations[currentConvo].Init ();
 			
 			talking = true;
 			
@@ -204,6 +206,8 @@ class Actor extends InteractiveObject {
 	
 	function StopTalking ( endAction : String ) {
 		talking = false;
+		
+		FindNextConvo ();
 		
 		StartCoroutine ( GameCore.GetPlayerObject().GetComponent(Player).StopTalking () );
 	
@@ -474,11 +478,17 @@ class Actor extends InteractiveObject {
 		
 		// check for interaction
 		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == eAffiliation.Ally && GameCore.controlsActive ) {
-			UIHUD.ShowNotification ( "Talk [LeftMouse]" );
-			
-			if ( Input.GetMouseButtonDown(0) ) {
-				Talk();
+			if ( CheckForcedConvo() ) {
+				Talk ();
 				UIHUD.ShowNotification ( "" );
+				
+			} else { 
+				UIHUD.ShowNotification ( "Talk [LeftMouse]" );
+				
+				if ( Input.GetMouseButtonDown(0) ) {
+					Talk();
+					UIHUD.ShowNotification ( "" );
+				}
 			}
 		}
 		

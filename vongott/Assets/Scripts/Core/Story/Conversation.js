@@ -34,6 +34,7 @@ class Conversation {
 	var conditionBool : boolean = true;
 	var startQuest : String = "";
 	var endQuest : String = "";
+	var forced : boolean = false;
 	
 	var chapter : String;
 	var scene : String;
@@ -46,6 +47,7 @@ class Conversation {
 	
 	var done : boolean = false;
 	var displayName : String;
+	
 
 	// Private vars
 	private var endAction : String = "";

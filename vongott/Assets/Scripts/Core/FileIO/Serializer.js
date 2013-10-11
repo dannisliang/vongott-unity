@@ -27,6 +27,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		var pc : Computer = obj.GetComponent(Computer);
 		var tl : Terminal = obj.GetComponent(Terminal);
 		var sc : SurveillanceCamera = obj.GetComponent(SurveillanceCamera);
+		var kp : Keypad = obj.GetComponent(Keypad);
 		
 		pfb.AddField ( "path", obj.GetComponent(Prefab).path );
 		pfb.AddField ( "id", obj.GetComponent(Prefab).id );
@@ -57,6 +58,10 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		if ( sc != null ) {
 			pfb.AddField ( "surveillanceCamera", SerializeSurveillanceCamera ( sc ) );
+		}
+		
+		if ( kp != null ) {
+			pfb.AddField ( "keypad", SerializeKeypad ( kp ) );
 		}
 		
 		if ( obj.GetComponent(Prefab).materialPath != "" && obj.GetComponent(Prefab).canChangeMaterial ) {
@@ -109,6 +114,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 			convo.AddField ( "conditionBool", c.conditionBool );
 			convo.AddField ( "startQuest", c.startQuest );
 			convo.AddField ( "endQuest", c.endQuest );
+			convo.AddField ( "forced", c.forced );
 			
 			convo.AddField ( "chapter", c.chapter );
 			convo.AddField ( "scene", c.scene );
@@ -284,12 +290,24 @@ static function SerializeMultiLineString ( str : String ) : JSONObject {
 ////////////////////
 // Serialize components individually
 ////////////////////
+// Keypad
+static function SerializeKeypad ( kp : Keypad ) : JSONObject {
+	var keypad : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	
+	keypad.AddField ( "passCode", kp.passCode );
+	keypad.AddField ( "difficulty", kp.difficulty );
+	keypad.AddField ( "doorGUID", kp.doorGUID );
+	
+	return keypad;
+}
+
 // Terminal
 static function SerializeTerminal ( t : Terminal ) : JSONObject {
 	var term : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	var guids : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 	
 	term.AddField ( "passCode", t.passCode );
+	term.AddField ( "difficulty", t.difficulty );
 	
 	for ( var s : String in t.cameraGUIDs ) {
 		guids.Add ( s );

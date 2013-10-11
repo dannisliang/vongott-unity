@@ -49,5 +49,9 @@ class InteractiveObject extends MonoBehaviour {
 		}
 		
 		UpdateObject ();
+	
+		if ( EditorCore.running && this.GetComponent ( SphereCollider ) && this.GetComponent ( SphereCollider ).enabled ) {
+			this.GetComponent ( SphereCollider ).enabled = false;
+		}
 	}
 }

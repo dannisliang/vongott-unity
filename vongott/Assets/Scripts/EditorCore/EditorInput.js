@@ -207,7 +207,7 @@ function Update () {
 				var obj : GameObject = EditorCore.GetSelectedObject();
 				
 				// GUID picker
-				if ( obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
+				if ( obj.GetComponent(Keypad) || obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
 					EditorCore.pickerCallback ( mouseGoal.name, mouseGoal.GetComponent(GUID).GUID );
 					EditorCore.pickerCallback = null;
 					

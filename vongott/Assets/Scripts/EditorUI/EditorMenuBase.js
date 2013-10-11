@@ -245,6 +245,10 @@ class EditorMenuBase extends OGPage {
 			case "Computer":
 				menuObj.GetComponent(EditorInspectorComputer).Init(selectedObj);
 				break;
+			
+			case "Keypad":
+				menuObj.GetComponent(EditorInspectorKeypad).Init(selectedObj);
+				break;
 				
 			case "SurveillanceCamera":
 				menuObj.GetComponent(EditorInspectorSurveillanceCamera).Init(selectedObj);

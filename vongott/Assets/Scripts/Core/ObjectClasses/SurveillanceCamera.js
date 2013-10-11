@@ -51,7 +51,7 @@ class SurveillanceCamera extends MonoBehaviour {
 		
 		if ( seeking ) {		
 			t = Mathf.PingPong(Time.time * 0.2, 1.0);
-			cameraView.transform.localRotation = Quaternion.Slerp ( Quaternion.Euler(0,-45,0), Quaternion.Euler(0,45,0), t);
+			cameraView.transform.parent.localRotation = Quaternion.Slerp ( Quaternion.Euler(0,-45,0), Quaternion.Euler(0,45,0), t);
 		}
 	}
 }

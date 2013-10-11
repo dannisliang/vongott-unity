@@ -25,6 +25,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var pc : Computer = newPfb.GetComponent(Computer);
 		var tl : Terminal = newPfb.GetComponent(Terminal);
 		var sc : SurveillanceCamera = newPfb.GetComponent(SurveillanceCamera);
+		var kp : Keypad = newPfb.GetComponent(Keypad);
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;
@@ -55,6 +56,10 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		if ( sc != null && pfb.HasField ( "surveillanceCamera" ) ) {
 			DeserializeSurveillanceCamera ( pfb.GetField ( "surveillanceCamera" ), sc );
+		}
+		
+		if ( kp != null && pfb.HasField ( "keypad" ) ) {
+			DeserializeKeypad ( pfb.GetField ( "keypad" ), kp );
 		}
 		
 		if ( pfb.HasField("materialPath") ) {
@@ -373,9 +378,17 @@ static function DeserializeMultiLineString ( lines : JSONObject ) : String {
 ////////////////////
 // Deserialize components individually
 ////////////////////
+// Keypad
+static function DeserializeKeypad ( o : JSONObject, kp : Keypad ) {
+	kp.passCode = o.GetField ( "passCode" ).str;
+	kp.difficulty = o.GetField ( "difficulty" ).n;
+	kp.doorGUID = o.GetField ( "doorGUID" ).str;
+}
+
 // Terminal
 static function DeserializeTerminal ( o : JSONObject, t : Terminal ) {
 	t.passCode = o.GetField ( "passCode" ).str;
+	t.difficulty = o.GetField ( "difficulty" ).n;
 	
 	for ( var i = 0; i < o.GetField ( "cameraGUIDs" ).list.Count; i++ ) {
 		t.cameraGUIDs[i] = o.GetField ( "cameraGUIDs" ).list[i].str;
@@ -574,6 +587,7 @@ static function DeserializeConversationsToGame ( convos : JSONObject ) {
 			if ( c.HasField ( "conditionBool" ) ) { convo.conditionBool = c.GetField ( "conditionBool" ).b; }
 			if ( c.HasField ( "startQuest" ) ) { convo.startQuest = c.GetField ( "startQuest" ).str; }
 			if ( c.HasField ( "endQuest" ) ) { convo.endQuest = c.GetField ( "endQuest" ).str; }
+			if ( c.HasField ( "forced" ) ) { convo.forced = c.GetField ( "forced" ).b; }
 			
 			convo.chapter = c.GetField ( "chapter" ).str;
 			convo.scene = c.GetField ( "scene" ).str;

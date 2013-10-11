@@ -629,6 +629,11 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "Computer", obj );
 	}
 	
+	// Keypad
+	if ( obj.GetComponent ( Keypad ) ) {
+		inspector.AddMenu ( "Keypad", obj );
+	}
+	
 	// SurveillanceCamera
 	if ( obj.GetComponent ( SurveillanceCamera ) ) {
 		inspector.AddMenu ( "SurveillanceCamera", obj );
