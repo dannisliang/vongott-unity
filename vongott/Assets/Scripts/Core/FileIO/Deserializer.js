@@ -438,44 +438,54 @@ static function DeserializeAccount ( account : JSONObject ) : Computer.Account {
 static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
 	var event : GameEvent = new GameEvent();
 	
-	event.delay = evt.GetField ( "delay" ).n;
-	event.condition = evt.GetField ( "condition" ).str;
-	event.conditionBool = evt.GetField ( "conditionBool" ).b;
+	if ( evt.HasField ( "delay" ) ) { event.delay = evt.GetField ( "delay" ).n; }
+	if ( evt.HasField ( "condition" ) ) { event.condition = evt.GetField ( "condition" ).str; }
+	if ( evt.HasField ( "conditionBool" ) ) { event.conditionBool = evt.GetField ( "conditionBool" ).b; }
+	
+	if ( evt.HasField ( "type" ) ) {
+		switch ( evt.GetField ( "type" ).str ) {
+			case "Animation":
+				event.type = GameEvent.eEventType.Animation;
+				event.animationObject = evt.GetField ( "animationObject" ).str;
+				event.animationType = evt.GetField ( "animationType" ).str;
+				event.animationVector = DeserializeVector3 ( evt.GetField ( "animationVector" ) );
+				break;
 			
-	switch ( evt.GetField ( "type" ).str ) {
-		case "Animation":
-			event.type = GameEvent.eEventType.Animation;
-			event.animationObject = evt.GetField ( "animationObject" ).str;
-			event.animationType = evt.GetField ( "animationType" ).str;
-			event.animationVector = DeserializeVector3 ( evt.GetField ( "animationVector" ) );
-			break;
+			case "Quest":
+				event.type = GameEvent.eEventType.Quest;
+				event.questID = evt.GetField ( "questID" ).str;
+				event.questAction = evt.GetField ( "questAction" ).str;
+				break;
+				
+			case "NextPath":
+				event.type = GameEvent.eEventType.NextPath;
+				event.nextPathName = evt.GetField ( "nextPathName" ).str;
+				break;
+				
+			case "SetFlag":
+				event.type = GameEvent.eEventType.SetFlag;
+				event.flagName = evt.GetField ( "flagName" ).str;
+				event.flagBool = evt.GetField ( "flagBool" ).b;
+				break;
+				
+			case "Travel":
+				event.type = GameEvent.eEventType.Travel;
+				event.travelMap = evt.GetField ( "travelMap" ).str;
+				event.travelSpawnPoint = evt.GetField ( "travelSpawnPoint" ).str;
+				break;
 		
-		case "Quest":
-			event.type = GameEvent.eEventType.Quest;
-			event.questID = evt.GetField ( "questID" ).str;
-			event.questAction = evt.GetField ( "questAction" ).str;
-			break;
-			
-		case "NextPath":
-			event.type = GameEvent.eEventType.NextPath;
-			event.nextPathName = evt.GetField ( "nextPathName" ).str;
-			break;
-			
-		case "SetFlag":
-			event.type = GameEvent.eEventType.SetFlag;
-			event.flagName = evt.GetField ( "flagName" ).str;
-			event.flagBool = evt.GetField ( "flagBool" ).b;
-			break;
-			
-		case "Travel":
-			event.type = GameEvent.eEventType.Travel;
-			event.travelMap = evt.GetField ( "travelMap" ).str;
-			event.travelSpawnPoint = evt.GetField ( "travelSpawnPoint" ).str;
-			break;
+		}
+	
+		return event;
+	
+	} else {
+		Debug.LogError ( "Deserializer | Not a valid GameEvent!" );
+		
+		return null;
 	
 	}
 	
-	return event;
+	
 }
 
 // PathNode
@@ -574,7 +584,7 @@ static function DeserializeVector2 ( v : JSONObject ) : Vector2 {
 // Conversations
 ////////////////////
 // To game
-static function DeserializeConversationsToGame ( convos : JSONObject ) {
+static function DeserializeConversationsToGame ( convos : JSONObject ) : List.< Conversation > {
 	var conversations : List.< Conversation > = new List.< Conversation >();
 		
 	if ( convos ) {		
@@ -623,6 +633,10 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
 			entry.line.line.text = e.GetField ( "line" ).str;
 			entry.line.endConvo.selectedOption = e.GetField ( "endConvo" ).str;
+			if ( e.HasField ( "gameEvent" ) ) {
+				entry.line.gameEvent.hiddenString = e.GetField ( "gameEvent" ).str;
+				entry.line.gameEvent.text = e.GetField ( "gameEvent" ).str.Substring(0,9);
+			}
 		
 		// groups
 		} else if ( e.GetField ( "type" ).str == "Group" ) {
@@ -642,6 +656,10 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 				groupLine.consequenceBool.isChecked = gl.GetField ( "consequenceBool" ).b;
 				groupLine.line.text = gl.GetField ( "line" ).str;
 				groupLine.endConvo.selectedOption = gl.GetField ( "endConvo" ).str;
+				if ( gl.HasField ( "gameEvent" ) ) {
+					groupLine.gameEvent.hiddenString = gl.GetField ( "gameEvent" ).str;
+					groupLine.gameEvent.text = gl.GetField ( "gameEvent" ).str.Substring(0,9);
+				}
 			
 				groupLine.transform.parent = entry.group.container;
 				groupLine.transform.localPosition = new Vector3 ( 20, (i+1) * 50, 0 );

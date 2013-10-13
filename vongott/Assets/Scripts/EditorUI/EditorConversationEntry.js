@@ -32,6 +32,7 @@ class EditorConversationEntry extends MonoBehaviour {
 		var speaker : OGPopUp;
 		var line : OGTextField;
 		var endConvo : OGPopUp;
+		var gameEvent : OGButton;
 	}
 	
 	// Public vars
@@ -50,6 +51,21 @@ class EditorConversationEntry extends MonoBehaviour {
 	// Public functions
 	function RemoveEntry () {
 		EditorConversations.RemoveEntry ( this );
+	}
+	
+	public function PickEvent ( btn : OGButton ) {
+		if ( btn.hiddenString != "" ) {
+			EditorEditEvent.eventCode = btn.hiddenString;
+		}
+		
+		EditorEditEvent.sender = "Conversations";
+		
+		EditorEditEvent.callback = function ( e : String ) {
+			btn.hiddenString = e;
+			btn.text = e.Substring ( 0, 9 );
+		};
+		
+		OGRoot.GoToPage ( "EditEvent" );
 	}
 	
 	function ShowType ( name : String ) {

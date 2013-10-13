@@ -556,7 +556,8 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 			entry.AddField ( "consequenceBool", l.consequenceBool.isChecked );
 			entry.AddField ( "speaker", l.speaker.selectedOption );
 			entry.AddField ( "line", l.line.text );
-			entry.AddField ( "endConvo", l.endConvo.selectedOption );			
+			entry.AddField ( "endConvo", l.endConvo.selectedOption );
+			entry.AddField ( "gameEvent", l.gameEvent.hiddenString );			
 		
 		// group
 		} else if ( e.type.selectedOption == "Group" ) {
@@ -571,6 +572,7 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 				groupLine.AddField ( "consequenceBool", gl.consequenceBool.isChecked );
 				groupLine.AddField ( "line", gl.line.text );
 				groupLine.AddField ( "endConvo", gl.endConvo.selectedOption );
+				groupLine.AddField ( "gameEvent", gl.gameEvent.hiddenString );
 				
 				options.Add ( groupLine );
 			}

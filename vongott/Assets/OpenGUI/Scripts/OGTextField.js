@@ -13,6 +13,7 @@ class OGTextField extends OGWidget {
 		NoSpaces
 	}
 	
+	var locked : boolean = false;
 	var text : String = "";
 	var maxLength : int = 30;
 	var regex : String;
@@ -47,8 +48,15 @@ class OGTextField extends OGWidget {
 	override function Draw ( x : float, y : float ) {
 		if ( !text ) { text = ""; }
 		if ( !guiStyle ) { guiStyle = GUI.skin.textField; }
-					
-		text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );
+		
+		if ( locked ) {
+			GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );
+			
+		} else {			
+			text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, guiStyle );
+		
+		}
+		
 		editor = GUIUtility.GetStateObject ( TextEditor, GUIUtility.keyboardControl ) as TextEditor;
 		
 		if ( regex != "" && regex != "\\" && regexPreset != RegExPreset.None ) {

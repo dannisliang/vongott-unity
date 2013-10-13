@@ -3,9 +3,7 @@
 import System.IO;
 
 class Saver {
-	static function SaveMap ( name : String, obj : GameObject, screenshot : Texture2D ) {
-		var path = Application.dataPath + "/Maps/" + name + ".vgmap";
-		
+	static function CheckBackups ( path : String ) {
 		if ( File.Exists ( path + "_backup2" ) ) {
 			File.Copy ( path + "_backup2", path + "_backup3", true );
 		}
@@ -15,6 +13,12 @@ class Saver {
 		}
 		
 		File.Copy ( path, path + "_backup1", true );
+	}
+	
+	static function SaveMap ( name : String, obj : GameObject, screenshot : Texture2D ) {
+		var path = Application.dataPath + "/Maps/" + name + ".vgmap";
+		
+		CheckBackups ( path );
 
 		var sw : StreamWriter;
 		
@@ -90,6 +94,8 @@ class Saver {
 		var scenePath = chapterPath + "/" + scene;
 		var actorPath = scenePath + "/" + name;
 		var filePath = actorPath + "/" + conversation + ".vgconvo";
+		
+		CheckBackups ( filePath );
 		
 		var sw : StreamWriter;
 		

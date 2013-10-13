@@ -22,6 +22,7 @@ class Conversation {
 		var canCancel : boolean;
 		var endConvo : String;
 		var useInput: boolean;
+		var gameEvent : GameEvent;
 		
 		var title: String;
 		var instructions: String;
@@ -275,6 +276,9 @@ class Conversation {
 				entry.speaker = o.GetField ( "speaker" ).str;
 				entry.line = o.GetField ( "line" ).str;
 				entry.endConvo = o.GetField ( "endConvo" ).str;
+				if ( o.HasField ( "gameEvent" ) ) {
+					entry.gameEvent = Deserializer.DeserializeGameEvent ( new JSONObject ( o.GetField ( "gameEvent" ).str, false ) );
+				}
 			
 			// group
 			} else if ( o.GetField ( "type" ).str == "Group" ) {
@@ -293,6 +297,9 @@ class Conversation {
 					option.consequenceBool = opt.GetField ( "consequenceBool" ).b;
 					option.line = opt.GetField ( "line" ).str;
 					option.endConvo = opt.GetField ( "endConvo" ).str;
+					if ( opt.HasField ( "gameEvent" ) ) {
+						option.gameEvent = Deserializer.DeserializeGameEvent ( new JSONObject ( opt.GetField ( "gameEvent" ).str, false ) );
+					}
 					
 					entry.options.Add ( option );	
 				}

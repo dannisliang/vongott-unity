@@ -5,13 +5,17 @@
 ////////////////////
 // Static vars
 static var slots : InventoryEntry[] = new InventoryEntry[16];
+static var credits : int = 0;
 
 
 ////////////////////
 // Static functions
 ////////////////////
 // Get slots
-static function GetSlots () { return slots; }
+static function GetSlots () : InventoryEntry[] { return slots; }
+
+// Get credits
+static function GetCredits() : int { return credits; }
 
 // Add item
 static function AddItem ( item : Item ) {
@@ -22,6 +26,11 @@ static function AddItem ( item : Item ) {
 			return;
 		}
 	}
+}
+
+// Change credits amount
+static function ChangeCredits ( amount : int ) {
+	credits += amount;
 }
 
 // Eqip entry
