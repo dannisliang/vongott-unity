@@ -62,7 +62,9 @@ class EditorConversationEntry extends MonoBehaviour {
 		
 		EditorEditEvent.callback = function ( e : String ) {
 			btn.hiddenString = e;
-			btn.text = e.Substring ( 0, 9 );
+			if ( e.Length > 10 ) {
+				btn.text = e.Substring ( 0, 9 );
+			}
 		};
 		
 		OGRoot.GoToPage ( "EditEvent" );

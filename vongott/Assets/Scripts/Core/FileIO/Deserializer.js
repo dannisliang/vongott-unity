@@ -633,7 +633,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
 			entry.line.line.text = e.GetField ( "line" ).str;
 			entry.line.endConvo.selectedOption = e.GetField ( "endConvo" ).str;
-			if ( e.HasField ( "gameEvent" ) ) {
+			if ( e.HasField ( "gameEvent" ) && e.GetField ( "gameEvent" ).str.Length > 10 ) {
 				entry.line.gameEvent.hiddenString = e.GetField ( "gameEvent" ).str;
 				entry.line.gameEvent.text = e.GetField ( "gameEvent" ).str.Substring(0,9);
 			}
@@ -656,7 +656,7 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 				groupLine.consequenceBool.isChecked = gl.GetField ( "consequenceBool" ).b;
 				groupLine.line.text = gl.GetField ( "line" ).str;
 				groupLine.endConvo.selectedOption = gl.GetField ( "endConvo" ).str;
-				if ( gl.HasField ( "gameEvent" ) ) {
+				if ( gl.HasField ( "gameEvent" ) && gl.GetField ( "gameEvent" ).str.Length > 10 ) {
 					groupLine.gameEvent.hiddenString = gl.GetField ( "gameEvent" ).str;
 					groupLine.gameEvent.text = gl.GetField ( "gameEvent" ).str.Substring(0,9);
 				}

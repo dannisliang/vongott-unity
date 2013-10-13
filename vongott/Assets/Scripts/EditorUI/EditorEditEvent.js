@@ -112,10 +112,9 @@ class EditorEditEvent extends OGPage {
 	}
 	
 	// Init
-	private function Clear () {
+	public function Clear () {
 		event = null;
 		eventCode = "";
-		sender = "";
 		
 		eventDelay.text = "0";
 		
@@ -271,8 +270,13 @@ class EditorEditEvent extends OGPage {
 	// Exit
 	function OK () {
 		if ( callback != null ) {
-			Serialize ();
-			callback ( eventCodeInput.text );
+			if ( eventType.selectedOption == "" ) {
+				callback ( "(none)" );
+			} else {
+				Serialize ();
+				callback ( eventCodeInput.text );
+			}
+			
 			callback = null;
 		}
 		
