@@ -12,7 +12,9 @@ class Saver {
 			File.Copy ( path + "_backup1", path + "_backup2", true );
 		}
 		
-		File.Copy ( path, path + "_backup1", true );
+		if ( File.Exists ( path ) ) {
+			File.Copy ( path, path + "_backup1", true );
+		}
 	}
 	
 	static function SaveMap ( name : String, obj : GameObject, screenshot : Texture2D ) {
@@ -70,6 +72,35 @@ class Saver {
 		}
 		
 		sw.WriteLine ( allQuests );
+		sw.Flush();
+		sw.Close();
+	}
+	
+	static function SaveEvent ( event : GameEvent ) {
+		var basePath = Application.dataPath + "/Story/Events";
+		var filePath = basePath + "/events.vgdata";
+		
+		var allEvents : JSONObject = Loader.LoadEvents();
+
+		if ( allEvents.HasField ( event.id ) ) {
+			allEvents.SetField ( event.id, Serializer.SerializeGameEvent ( event ) );
+		} else {
+			allEvents.AddField ( event.id, Serializer.SerializeGameEvent ( event ) );
+		}
+		
+		var sw : StreamWriter;
+		
+		if ( !File.Exists ( basePath ) ) {
+			Debug.Log ( "Saver | Created directory '" + basePath + "': " + Directory.CreateDirectory ( basePath ) );
+		}
+		
+		if ( !File.Exists ( filePath ) ) {
+			sw = File.CreateText ( filePath );
+		} else {
+			sw = new StreamWriter ( filePath );
+		}
+		
+		sw.WriteLine ( allEvents );
 		sw.Flush();
 		sw.Close();
 	}

@@ -76,6 +76,17 @@ class Loader {
 		return quests;
 	}
 	
+	static function LoadEvents () : JSONObject {
+		var path = Application.dataPath + "/Story/Events/events.vgdata";
+		
+		var input : String = ReadFile ( path );	
+		if ( !input ) { input = ""; }
+		
+		var events : JSONObject = new JSONObject ( input, false );
+	
+		return events;
+	}
+	
 	static function LoadQuest ( id : String ) : Quest {
 		var path = Application.dataPath + "/Story/Quests/quests.vgdata";
 				
@@ -88,6 +99,20 @@ class Loader {
 		var quest : Quest = Deserializer.DeserializeQuest ( object.GetField ( id ) );
 	
 		return quest;
+	}
+	
+	static function LoadEvent ( id : String ) : GameEvent {
+		var path = Application.dataPath + "/Story/Events/events.vgdata";
+				
+		var input : String = ReadFile ( path );	
+		if ( !input ) { return null; }
+		
+		var object : JSONObject = new JSONObject ( input, false );
+		if ( !object.HasField ( id ) ) { return null; }
+		
+		var event : GameEvent = Deserializer.DeserializeGameEvent ( object.GetField ( id ) );
+	
+		return event;
 	}
 	
 	static function LoadSpawnPoints ( name : String ) : String[] {

@@ -22,7 +22,7 @@ class Conversation {
 		var canCancel : boolean;
 		var endConvo : String;
 		var useInput: boolean;
-		var gameEvent : GameEvent;
+		var gameEvent : String;
 		
 		var title: String;
 		var instructions: String;
@@ -52,6 +52,7 @@ class Conversation {
 
 	// Private vars
 	private var endAction : String = "";
+	private var gameEvent : String = "";
 	private var actor : Actor;
 	
 	////////////////////
@@ -101,6 +102,7 @@ class Conversation {
 		// line
 		if ( entry.type == "Line" ) {
 			endAction = entry.endConvo;
+			gameEvent = entry.gameEvent;
 			
 			SetFlag ( entry );
 			
@@ -139,6 +141,7 @@ class Conversation {
 					SetFlag ( entry.options[currentOption] );
 					
 					endAction = entry.options[currentOption].endConvo;
+					gameEvent = entry.options[currentOption].gameEvent;
 				}
 				
 				SetSpeaker ( entry, smoothCam );				
@@ -185,9 +188,14 @@ class Conversation {
 		FlagManager.SetFlag ( entry.consequence, entry.consequenceBool );
 	}
 	
-	// CHeck for end action
-	function hasEndAction () : boolean {
+	// Check for end action
+	function HasEndAction () : boolean {
 		return endAction != "" && endAction != "(none)" && endAction != "<action>" && endAction != null;
+	}
+	
+	// Check for GameEvent
+	function HasGameEvent () : boolean {
+		return gameEvent != "" && gameEvent != "(none)" && endAction != null;
 	}
 	
 	// Next entry
@@ -196,8 +204,12 @@ class Conversation {
 	}
 	
 	function NextEntry ( smoothCam : boolean ) {				
-		if ( currentEntry < entries.Count - 1 && !hasEndAction () ) {
+		if ( currentEntry < entries.Count - 1 && !HasEndAction () ) {
 			currentEntry++;
+			
+			if ( HasGameEvent () ) {
+				EventManager.Fire ( gameEvent );
+			}
 			
 			if ( GetFlag ( entries[currentEntry] ) ) {
 				DisplayEntry ( smoothCam );
@@ -277,7 +289,7 @@ class Conversation {
 				entry.line = o.GetField ( "line" ).str;
 				entry.endConvo = o.GetField ( "endConvo" ).str;
 				if ( o.HasField ( "gameEvent" ) ) {
-					entry.gameEvent = Deserializer.DeserializeGameEvent ( new JSONObject ( o.GetField ( "gameEvent" ).str, false ) );
+					entry.gameEvent = o.GetField ( "gameEvent" ).str;
 				}
 			
 			// group
@@ -298,7 +310,7 @@ class Conversation {
 					option.line = opt.GetField ( "line" ).str;
 					option.endConvo = opt.GetField ( "endConvo" ).str;
 					if ( opt.HasField ( "gameEvent" ) ) {
-						option.gameEvent = Deserializer.DeserializeGameEvent ( new JSONObject ( opt.GetField ( "gameEvent" ).str, false ) );
+						option.gameEvent = opt.GetField ( "gameEvent" ).str;
 					}
 					
 					entry.options.Add ( option );	

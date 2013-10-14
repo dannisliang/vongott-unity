@@ -385,7 +385,7 @@ class Actor extends InteractiveObject {
 			speed = 0;
 		
 		// Patrolling
-		} else if ( pathType == ePathType.Patrolling ) {
+		} else if ( pathType == ePathType.Patrolling && path.Count > 0 ) {
 			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.1 ) {
 				nodeTimer = path[currentNode].duration;
 								
@@ -411,7 +411,7 @@ class Actor extends InteractiveObject {
 			}	
 		
 		// Go to navpoint
-		} else if ( pathType == ePathType.NavPoint && currentNode < path.Count ) {
+		} else if ( pathType == ePathType.NavPoint && path.Count > 0 && currentNode < path.Count ) {
 			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.5 ) {
 				waiting = true;
 				ClearPath();

@@ -151,6 +151,11 @@ class EditorMenuBase extends OGPage {
 		OGRoot.GoToPage ( "Quests" );
 	}
 	
+	// Event editor
+	function EventEditor () {
+		OGRoot.GoToPage ( "Events" );
+	}
+	
 	// Flag editor
 	function FlagEditor () {
 		OGRoot.GoToPage ( "Flags" );

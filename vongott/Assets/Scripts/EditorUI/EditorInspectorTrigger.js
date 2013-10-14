@@ -24,7 +24,8 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		var trg : Trigger = obj.GetComponent ( Trigger );
 		if ( trg == null ) { return; }
 		
-		ClearEvents ( function () { PopulateEvents ( trg ); } );
+		ClearEvents ();
+		PopulateEvents ( trg );
 	}
 	
 	function PickPrefab ( btn : OGButton ) {
@@ -89,47 +90,56 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	}
 	
 	function AddEvent ( e : GameEvent ) {
+		var obj : GameObject = new GameObject ( "Event" );
+		obj.transform.parent = eventContainer;
+		obj.transform.localScale = Vector3.one;
+		obj.transform.localEulerAngles = Vector3.zero;
+		
 		var btnObj : GameObject = new GameObject ( "Button" );
-		btnObj.transform.parent = eventContainer;
-		btnObj.transform.localScale = new Vector3 ( 290, 20, 1 );
+		btnObj.transform.parent = obj.transform;
+		btnObj.transform.localScale = new Vector3 ( 260, 20, 1 );
 		btnObj.transform.localEulerAngles = Vector3.zero;
+		btnObj.transform.localPosition = Vector3.zero;
 		
 		var btn : OGButton = btnObj.AddComponent ( OGButton );
 		btn.text = "Edit";
 		btn.func = function () {
-			if ( btn.hiddenString != "" && btn.hiddenString != "(none)" ) { EditorEditEvent.eventCode = btn.hiddenString; }
-			else if ( e ) { EditorEditEvent.event = e; }
-			EditorEditEvent.callback = function ( code : String ) { btn.hiddenString = code; btn.text = code.Substring(0,30); UpdateObject(); };
-			EditorEditEvent.sender = "MenuBase";
-			OGRoot.GoToPage ( "EditEvent" );
+			EditorPicker.mode = "event";				
+			EditorPicker.sender = "MenuBase";
+			EditorPicker.button = btn;
+			EditorPicker.func = UpdateObject;
+			
+			OGRoot.GoToPage ( "Picker" );
+		};
+		
+		var dltObj : GameObject = new GameObject ( "Delete" );
+		dltObj.transform.parent = obj.transform;
+		dltObj.transform.localScale = new Vector3 ( 20, 20, 1 );
+		dltObj.transform.localEulerAngles = Vector3.zero;
+		dltObj.transform.localPosition = new Vector3 ( 270, 0, 0 );
+		
+		var dlt : OGButton = dltObj.AddComponent ( OGButton );
+		dlt.text = "x";
+		dlt.func = function () {
+			RemoveEvent ( obj );
 		};
 		
 		if ( e ) {
-			btn.hiddenString = Serializer.SerializeGameEvent ( e ).ToString();
-			btn.text = btn.hiddenString.Substring ( 0, 30 );
+			btn.text = e.id;
 		
 		} else {
 			btn.text = "(none)";
-			btn.hiddenString = "";
 			
 		}
 	}
 	
 	function ClearEvents () {
-		ClearEvents ( null );
-	}
-	
-	function ClearEvents ( func : Function ) {
 		bottomLine = 0;
 		
 		for ( var i = 0; i < eventContainer.childCount; i++ ) {
-			if ( eventContainer.GetChild(i).GetComponent(OGButton) && eventContainer.GetChild(i).GetComponent(OGButton).text !="+" ) {
+			if ( !eventContainer.GetChild(i).GetComponent(OGButton) ) {
 				Destroy ( eventContainer.GetChild(i).gameObject );
 			}
-		}
-		
-		if ( func ) {
-			func ();
 		}
 	}
 	
@@ -170,10 +180,14 @@ class EditorInspectorTrigger extends MonoBehaviour {
 			trg.events.Clear();
 			
 			for ( var i : int = 0; i < eventContainer.childCount; i++ ) {
-				var e : OGButton = eventContainer.GetChild(i).GetComponent(OGButton);
+				if ( eventContainer.GetChild(i).GetComponent(OGButton) ) { continue; }
 				
-				if ( e != null && e.hiddenString != "" ) {				
-					trg.events.Add ( Deserializer.DeserializeGameEvent ( new JSONObject ( e.hiddenString, false ) ) );
+				for ( var c : Component in eventContainer.GetChild(i).GetComponentsInChildren ( OGButton ) ) {
+					var btn : OGButton = c as OGButton;
+					
+					if ( btn && btn.text != "x" ) {				
+						trg.events.Add ( Loader.LoadEvent ( btn.text ) );
+					}
 				}
 			}
 		}

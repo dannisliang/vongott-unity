@@ -9,6 +9,7 @@ class GameEvent {
 		SetFlag
 	}
 
+	var id : String = "";
 	var type : eEventType;
 	var delay : float = 0;
 	var condition : String = "";

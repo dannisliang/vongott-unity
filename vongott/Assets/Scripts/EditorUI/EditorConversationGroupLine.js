@@ -19,18 +19,11 @@ class EditorConversationGroupLine extends MonoBehaviour {
 	}
 
 	public function PickEvent ( btn : OGButton ) {
-		if ( btn.hiddenString != "" ) {
-			EditorEditEvent.eventCode = btn.hiddenString;
-		}
+		EditorPicker.mode = "event";				
+		EditorPicker.sender = "Conversations";
+		EditorPicker.button = btn;
 		
-		EditorEditEvent.sender = "Conversations";
-		
-		EditorEditEvent.callback = function ( e : String ) {
-			btn.hiddenString = e;
-			btn.text = e.Substring ( 0, 9 );
-		};
-		
-		OGRoot.GoToPage ( "EditEvent" );
+		OGRoot.GoToPage ( "Picker" );
 	}
 
 	function Update () {

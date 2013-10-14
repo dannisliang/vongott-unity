@@ -151,7 +151,7 @@ class EditorPicker extends OGPage {
 	// Init
 	////////////////////
 	// Quests
-	function InitQuests () {
+	private function InitQuests () {
 		var allQuests : JSONObject = Loader.LoadQuests();
 		
 		for ( var obj : Object in allQuests.list ) {
@@ -159,8 +159,17 @@ class EditorPicker extends OGPage {
 		}
 	}
 	
+	// Events
+	private function InitEvents () {
+		var allEvents : JSONObject = Loader.LoadEvents();
+		
+		for ( var obj : Object in allEvents.list ) {
+			CreateButton ( (obj as JSONObject).GetField ( "id" ).str );
+		}
+	}
+	
 	// Convos
-	function InitConvos () {		
+	private function InitConvos () {		
 		for ( var c : String in EditorCore.GetConvoChapters () ) {
 			CreateLine ( "chapter " + c );
 			
@@ -180,14 +189,14 @@ class EditorPicker extends OGPage {
 	}
 	
 	// Maps
-	function InitMaps () {
+	private function InitMaps () {
 		for ( var name : String in Directory.GetFiles ( Application.dataPath + "/Maps", "*.vgmap" ) ) {
 			CreateButton ( EditorCore.TrimFileName ( name ), false );
 		}
 	}
 	
 	// Flags
-	function InitFlags () {
+	private function InitFlags () {
 		var allFlags : JSONObject = Loader.LoadFlags();
 		
 		for ( var i = 0; i < allFlags.list.Count; i++ ) {
@@ -206,17 +215,26 @@ class EditorPicker extends OGPage {
 		
 		title.text = "Pick a " + mode;
 		
-		if ( mode == "quest" ) {
-			InitQuests ();
+		switch ( mode ) {
+			case "quest":
+				InitQuests ();
+				break;
 		
-		} else if ( mode == "conversation" ) {
-			InitConvos ();
+			case "conversation":
+				InitConvos ();
+				break;
 		
-		} else if ( mode == "flag" ) {
-			InitFlags ();
+			case "flag":
+				InitFlags ();
+				break;
 		
-		} else if ( mode == "map" ) {
-			InitMaps ();
+			case "map":
+				InitMaps ();
+				break;
+				
+			case "event":
+				InitEvents ();
+				break;
 		
 		}
 	}

@@ -204,51 +204,60 @@ function Update () {
 			}
 			
 			if ( mouseGoal != null ) {
+				if ( EditorCore.pickerType && !mouseGoal.collider.gameObject.GetComponent(EditorCore.pickerType) ) { return; }
+			
 				var obj : GameObject = EditorCore.GetSelectedObject();
 				
-				// GUID picker
-				if ( obj.GetComponent(Keypad) || obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
-					EditorCore.pickerCallback ( mouseGoal.name, mouseGoal.GetComponent(GUID).GUID );
-					EditorCore.pickerCallback = null;
-					
-					EditorCore.SetPickMode ( false );
-					EditorCore.ReselectObject ();
-				
-				// Material picker
-				} else if ( obj.GetComponent(Prefab) || obj.GetComponent(Surface) ) {
-					var materialPath : String = "";
-					
-					if ( mouseGoal.GetComponent(Prefab) ) {
-						materialPath = mouseGoal.GetComponent(Prefab).materialPath;
-																		
-					} else if ( mouseGoal.GetComponent(Surface) ) {
-						materialPath = mouseGoal.GetComponent(Surface).materialPath;
-					
-					}
-					
-					if ( materialPath != "" ) {
-						if ( EditorCore.GetSelectedObject().GetComponent(Prefab) ) {
-							EditorCore.GetSelectedObject().GetComponent(Prefab).materialPath = materialPath;
-							EditorCore.GetSelectedObject().GetComponent(Prefab).ReloadMaterial();
-							EditorCore.SetPickMode ( false );
-							EditorCore.ReselectObject ();
+				// Return name and GUID
+				if ( obj != null ) {
+					if ( obj.GetComponent(Keypad) || obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
+						EditorCore.pickerCallback ( mouseGoal.name, mouseGoal.GetComponent(GUID).GUID );
+						EditorCore.pickerCallback = null;
 						
-						} else if ( EditorCore.GetSelectedObject().GetComponent(Surface) ) {
-							EditorCore.GetSelectedObject().GetComponent(Surface).materialPath = materialPath;
-							EditorCore.GetSelectedObject().GetComponent(Surface).ReloadMaterial();
-							EditorCore.SetPickMode ( false );
-							EditorCore.ReselectObject ();
+						EditorCore.SetPickMode ( false );
+						EditorCore.ReselectObject ();
+					
+						return;
+					
+					// Return material
+					} else if ( obj.GetComponent(Prefab) || obj.GetComponent(Surface) ) {
+						var materialPath : String = "";
 						
-						} else {
-							EditorCore.SetPickMode ( false );
-							EditorCore.ReselectObject ();
+						if ( mouseGoal.GetComponent(Prefab) ) {
+							materialPath = mouseGoal.GetComponent(Prefab).materialPath;
+																			
+						} else if ( mouseGoal.GetComponent(Surface) ) {
+							materialPath = mouseGoal.GetComponent(Surface).materialPath;
+						
+						}
+						
+						if ( materialPath != "" ) {
+							if ( EditorCore.GetSelectedObject().GetComponent(Prefab) ) {
+								EditorCore.GetSelectedObject().GetComponent(Prefab).materialPath = materialPath;
+								EditorCore.GetSelectedObject().GetComponent(Prefab).ReloadMaterial();
+								EditorCore.SetPickMode ( false );
+								EditorCore.ReselectObject ();
+							
+							} else if ( EditorCore.GetSelectedObject().GetComponent(Surface) ) {
+								EditorCore.GetSelectedObject().GetComponent(Surface).materialPath = materialPath;
+								EditorCore.GetSelectedObject().GetComponent(Surface).ReloadMaterial();
+								EditorCore.SetPickMode ( false );
+								EditorCore.ReselectObject ();
+							
+							} else {
+								EditorCore.SetPickMode ( false );
+								EditorCore.ReselectObject ();
+							
+							}
 						
 						}
 					
+						return;
 					}
-				
-				// Position picker
-				} else if ( EditorCore.pickerCallback != null ) {
+				}
+												
+				// Return hit
+				if ( EditorCore.pickerCallback != null ) {
 					EditorCore.pickerCallback ( mouseHit );
 					EditorCore.pickerCallback = null;
 					

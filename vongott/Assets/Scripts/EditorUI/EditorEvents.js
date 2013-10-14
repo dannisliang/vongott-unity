@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-class EditorEditEvent extends OGPage {
+class EditorEvents extends OGPage {
 	private class AnimationType {
 		public var button : OGButton;
 		public var popUp : OGPopUp;
@@ -27,8 +27,16 @@ class EditorEditEvent extends OGPage {
 		public var button : OGButton;
 		public var tickBox : OGTickBox;
 	}
-		
-	public var eventCodeInput : OGTextField;
+	
+	private  var currentEvent : GameEvent;
+
+	public var fileModeSwitch : OGPopUp;
+	public var fileModeSelect : GameObject;
+	public var fileModeCreate : GameObject;
+	
+	public var selector : OGButton;
+	public var creator : OGTextField;
+			
 	public var eventType : OGPopUp;
 	public var eventTypeContainers : Transform;
 	public var eventDelay : OGTextField;
@@ -41,11 +49,6 @@ class EditorEditEvent extends OGPage {
 	public var nextPath : NextPathType;
 	public var setFlag : SetFlagType;
 	
-	public static var callback : Function;
-	public static var sender : String = "";
-	public static var eventCode : String = "";
-	public static var event : GameEvent;
-	
 
 	///////////////////
 	// Pick functions
@@ -53,10 +56,10 @@ class EditorEditEvent extends OGPage {
 	function PickPrefab ( btn : OGButton ) {
 		EditorCore.SetPickMode ( true );
 	
+		EditorCore.pickerSender = "Events";
 		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
 			if ( hit.collider.gameObject.GetComponent(Prefab) ) {
-				btn.text = hit.collider.gameObject.GetComponent(Prefab).id;
-				btn.hiddenString = hit.collider.gameObject.GetComponent(GUID).GUID;
+				btn.text = hit.collider.gameObject.GetComponent(GUID).GUID;
 			}
 		};
 	}
@@ -64,10 +67,10 @@ class EditorEditEvent extends OGPage {
 	function PickActor ( btn : OGButton ) {
 		EditorCore.SetPickMode ( true );
 	
+		EditorCore.pickerSender = "Events";
 		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
 			if ( hit.collider.gameObject.GetComponent(Actor) ) {
-				btn.text = hit.collider.gameObject.GetComponent(Actor).displayName;
-				btn.hiddenString = hit.collider.gameObject.GetComponent(GUID).GUID;
+				btn.text = hit.collider.gameObject.GetComponent(GUID).GUID;
 			}
 		};
 	}
@@ -75,15 +78,33 @@ class EditorEditEvent extends OGPage {
 	function PickQuest ( btn : OGButton ) {
 		EditorPicker.mode = "quest";
 		EditorPicker.button = btn;
-		EditorPicker.sender = "EditEvent";
+		EditorPicker.sender = "Events";
 				
 		OGRoot.GoToPage ( "Picker" );
+	}
+	
+	function PickEvent ( btn : OGButton ) {
+		EditorPicker.mode = "event";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "Events";
+		EditorPicker.func = Load;
+						
+		OGRoot.GoToPage ( "Picker" );
+	}
+	
+	function CreateEvent () {	
+		selector.text = creator.text;
+	
+		fileModeSwitch.selectedOption = "Load";
+		SelectMode();
+		currentEvent = new GameEvent ();
+		currentEvent.id = creator.text;
 	}
 	
 	function PickMap ( btn : OGButton ) {
 		EditorPicker.mode = "map";
 		EditorPicker.button = btn;
-		EditorPicker.sender = "EditEvent";
+		EditorPicker.sender = "Events";
 				
 		OGRoot.GoToPage ( "Picker" );
 	}
@@ -91,9 +112,19 @@ class EditorEditEvent extends OGPage {
 	function PickFlag ( btn : OGButton ) {
 		EditorPicker.mode = "flag";
 		EditorPicker.button = btn;
-		EditorPicker.sender = "EditEvent";
+		EditorPicker.sender = "Events";
 				
 		OGRoot.GoToPage ( "Picker" );
+	}
+
+	function SelectMode () {
+		if ( fileModeSwitch.selectedOption == "Load" ) {
+			fileModeSelect.SetActive ( true );
+			fileModeCreate.SetActive ( false );
+		} else {
+			fileModeSelect.SetActive ( false );
+			fileModeCreate.SetActive ( true );
+		}
 	}
 
 
@@ -111,11 +142,14 @@ class EditorEditEvent extends OGPage {
 		SetVisible ( type );
 	}
 	
+	override function UpdatePage () {
+		if ( anim.x.text == "" ) { anim.x.text = "0"; }
+		if ( anim.y.text == "" ) { anim.y.text = "0"; }
+		if ( anim.z.text == "" ) { anim.z.text = "0"; }
+	}
+	
 	// Init
-	public function Clear () {
-		event = null;
-		eventCode = "";
-		
+	public function Clear () {		
 		eventDelay.text = "0";
 		
 		eventCondition.text = "(none)";
@@ -142,21 +176,11 @@ class EditorEditEvent extends OGPage {
 		travel.button.text = "(none)";
 		travel.textField.text = "";
 		
-		eventCodeInput.text = "";
-		
 		SetVisible ( "" );
 	}
 	
 	override function StartPage () {
-		if ( event != null ) {
-			Populate ( event );
-			event = null;
 		
-		} else if ( eventCode != "" ) {
-			Populate ( Deserializer.DeserializeGameEvent ( new JSONObject ( eventCode, false ) ) );
-			eventCode = "";
-		
-		}
 	}
 
 	private function Populate ( e : GameEvent ) {
@@ -174,8 +198,7 @@ class EditorEditEvent extends OGPage {
 			switch ( e.type ) {
 				case GameEvent.eEventType.Animation:
 					eventType.selectedOption = "Animation";
-					if ( e.animationObject != "" ) { anim.button.text = EditorCore.GetPrefab ( e.animationObject ).id; }
-					anim.button.hiddenString = e.animationObject;
+					if ( e.animationObject != "" ) { anim.button.text = e.animationObject; }
 					anim.popUp.selectedOption = e.animationType;
 					anim.x.text = e.animationVector.x.ToString();
 					anim.y.text = e.animationVector.y.ToString();
@@ -190,8 +213,7 @@ class EditorEditEvent extends OGPage {
 					
 				case GameEvent.eEventType.NextPath:
 					eventType.selectedOption = "NextPath";
-					nextPath.button.text = EditorCore.GetActor ( e.nextPathName ).displayName;
-					nextPath.button.hiddenString = e.nextPathName;
+					nextPath.button.text = e.nextPathName;
 					break;
 					
 				case GameEvent.eEventType.SetFlag:
@@ -208,87 +230,68 @@ class EditorEditEvent extends OGPage {
 			
 			}
 		
-			Serialize ();
-		
 			SetVisible ( eventType.selectedOption );
 		
 		}
 	}
 
-	// Serialize
-	public function Serialize () {		
-		var event : GameEvent = new GameEvent ();
+	function Load () {
+		currentEvent = Loader.LoadEvent ( selector.text );
+		Populate ( currentEvent );
+	}
+	
+	function Save () {
+		currentEvent.id = selector.text;
 		
-		if ( eventDelay.text == "" ) { eventDelay.text = "0"; }
-		event.delay = float.Parse(eventDelay.text);
-		
-		if ( eventCondition.text != "" && eventCondition.text != "(none)" ) {
-			event.condition = eventCondition.text;
-			event.conditionBool = eventConditionBool.isChecked;
-		
+		currentEvent.delay = float.Parse(eventDelay.text);
+			
+		if ( eventCondition.text != "" ) {
+			currentEvent.condition = eventCondition.text;
+			currentEvent.conditionBool = eventConditionBool.isChecked;
 		} else {
-			eventConditionBool.isChecked = false;
-		
+			currentEvent.condition = "";
+			currentEvent.conditionBool = false;
 		}
-				
+		
 		switch ( eventType.selectedOption ) {
 			case "Animation":
-				event.type = GameEvent.eEventType.Animation;
-				event.animationObject = anim.button.hiddenString;
-				event.animationType = anim.popUp.selectedOption;
-				event.animationVector = new Vector3 ( float.Parse ( anim.x.text ), float.Parse ( anim.y.text ), float.Parse ( anim.z.text ) );
+				currentEvent.type = GameEvent.eEventType.Animation;
+				currentEvent.animationObject = anim.button.text;
+				currentEvent.animationType = anim.popUp.selectedOption;
+				currentEvent.animationVector = new Vector3 ( float.Parse(anim.x.text), float.Parse(anim.y.text), float.Parse(anim.z.text) );
 				break;
 			
 			case "Quest":
-				event.type = GameEvent.eEventType.Quest;
-				event.questID = quest.button.text;
-				event.questAction = quest.popUp.selectedOption;
+				currentEvent.type = GameEvent.eEventType.Quest;
+				currentEvent.questID = quest.button.text;
+				currentEvent.questAction = quest.popUp.selectedOption;
 				break;
 				
 			case "NextPath":
-				event.type = GameEvent.eEventType.NextPath;
-				event.nextPathName = nextPath.button.hiddenString;
+				currentEvent.type = GameEvent.eEventType.NextPath;
+				currentEvent.nextPathName = nextPath.button.text;
 				break;
 				
 			case "SetFlag":
-				event.type = GameEvent.eEventType.SetFlag;
-				event.flagName = setFlag.button.text;
-				event.flagBool = setFlag.tickBox.isChecked;
+				currentEvent.type = GameEvent.eEventType.SetFlag;
+				currentEvent.flagName = setFlag.button.text;
+				currentEvent.flagBool = setFlag.tickBox.isChecked;
 				break;
 				
 			case "Travel":
-				event.type = GameEvent.eEventType.Travel;
-				event.travelMap = travel.button.text;
-				event.travelSpawnPoint = travel.textField.text;
+				currentEvent.type = GameEvent.eEventType.Travel;
+				currentEvent.travelMap = travel.button.text;
+				currentEvent.travelSpawnPoint = travel.textField.text;
 				break;
 		
 		}
 		
-		eventCodeInput.text = Serializer.SerializeGameEvent(event).ToString();
-	}
-
-	// Exit
-	function OK () {
-		if ( callback != null ) {
-			if ( eventType.selectedOption == "" ) {
-				callback ( "(none)" );
-			} else {
-				Serialize ();
-				callback ( eventCodeInput.text );
-			}
-			
-			callback = null;
-		}
-		
-		if ( sender == "" ) { sender == "MenuBase"; }
-		OGRoot.GoToPage ( sender );
-		
-		Clear ();
+		Saver.SaveEvent ( currentEvent );
 	}
 	
+	// Exit
 	function Cancel () {
-		if ( sender == "" ) { sender == "MenuBase"; }
-		OGRoot.GoToPage ( sender );
+		OGRoot.GoToPage ( "MenuBase" );
 		
 		Clear ();
 	}

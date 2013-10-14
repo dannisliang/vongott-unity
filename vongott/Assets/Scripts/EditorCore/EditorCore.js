@@ -28,6 +28,8 @@ static var rotateMode : boolean = false;
 static var scaleMode : boolean = false;
 static var pickMode : boolean = false;
 static var pickerCallback : Function = null;
+static var pickerSender : String = "";
+static var pickerType : System.Type;
 static var grabRestrict : String;
 
 // grid / guides
@@ -477,6 +479,17 @@ static function ToggleGizmos () {
 ////////////////////
 // Select objects
 ////////////////////
+// Find object from GUID
+public static function GetObjectFromGUID ( id : String ) : GameObject {
+	for ( var c : Component in workspace.GetComponentsInChildren(GUID) ) {
+		if ( (c as GUID).GUID == id ) {
+			return c.gameObject;
+		}
+	}
+	
+	return null;
+}
+
 // Fit selection box
 static function FitSelectionBox () {
 	var doWireframe : boolean = false;
@@ -663,7 +676,10 @@ static function SetPickMode ( state : boolean ) {
 		EditorModes.SetHeight ( 50 );
 		
 	} else {
-		OGRoot.GoToPage ( "MenuBase" );
+		if ( pickerSender == "" ) { pickerSender = "MenuBase"; }
+		OGRoot.GoToPage ( pickerSender );
+		pickerSender = "";
+		pickerType = null;
 	
 	}
 }

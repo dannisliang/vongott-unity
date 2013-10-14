@@ -9,6 +9,10 @@ class EventManager extends MonoBehaviour {
 	/////////////////
 	// Main functions
 	/////////////////
+	public static function Fire ( id : String ) {
+		Fire ( Loader.LoadEvent ( id ) );
+	}
+	
 	public static function Fire ( event : GameEvent ) {
 		if ( event.condition != "" && event.condition != "(none)" ) {
 			if ( !FlagManager.GetFlag ( event.condition, event.conditionBool ) ) { return; }
@@ -44,9 +48,9 @@ class EventManager extends MonoBehaviour {
 		}
 	}
 	
-	public static function StartAnimation ( objName : String, animID : String, destination : Vector3 ) {
+	public static function StartAnimation ( objGUID : String, animID : String, destination : Vector3 ) {
 		for ( var c : Component in GameCore.levelContainer.GetComponentsInChildren ( Prefab ) ) {
-			if ( c.gameObject.GetComponent(GUID).GUID == objName ) {
+			if ( c.gameObject.GetComponent(GUID).GUID == objGUID ) {
 				if ( animID == "MoveTo" ) {
 					iTween.MoveTo ( c.gameObject, iTween.Hash ( "position", destination ) );
 				

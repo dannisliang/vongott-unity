@@ -438,6 +438,7 @@ static function DeserializeAccount ( account : JSONObject ) : Computer.Account {
 static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
 	var event : GameEvent = new GameEvent();
 	
+	if ( evt.HasField ( "id" ) ) { event.id = evt.GetField ( "id" ).str; }
 	if ( evt.HasField ( "delay" ) ) { event.delay = evt.GetField ( "delay" ).n; }
 	if ( evt.HasField ( "condition" ) ) { event.condition = evt.GetField ( "condition" ).str; }
 	if ( evt.HasField ( "conditionBool" ) ) { event.conditionBool = evt.GetField ( "conditionBool" ).b; }
@@ -633,9 +634,10 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
 			entry.line.line.text = e.GetField ( "line" ).str;
 			entry.line.endConvo.selectedOption = e.GetField ( "endConvo" ).str;
-			if ( e.HasField ( "gameEvent" ) && e.GetField ( "gameEvent" ).str.Length > 10 ) {
-				entry.line.gameEvent.hiddenString = e.GetField ( "gameEvent" ).str;
-				entry.line.gameEvent.text = e.GetField ( "gameEvent" ).str.Substring(0,9);
+			if ( e.HasField ( "gameEvent" ) && e.GetField ( "gameEvent" ).str != "" ) {
+				entry.line.gameEvent.text = e.GetField ( "gameEvent" ).str;
+			} else {
+				entry.line.gameEvent.text = "(none)";
 			}
 		
 		// groups
@@ -656,9 +658,10 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 				groupLine.consequenceBool.isChecked = gl.GetField ( "consequenceBool" ).b;
 				groupLine.line.text = gl.GetField ( "line" ).str;
 				groupLine.endConvo.selectedOption = gl.GetField ( "endConvo" ).str;
-				if ( gl.HasField ( "gameEvent" ) && gl.GetField ( "gameEvent" ).str.Length > 10 ) {
-					groupLine.gameEvent.hiddenString = gl.GetField ( "gameEvent" ).str;
-					groupLine.gameEvent.text = gl.GetField ( "gameEvent" ).str.Substring(0,9);
+				if ( gl.HasField ( "gameEvent" ) && gl.GetField ( "gameEvent" ).str != "" ) {
+					groupLine.gameEvent.text = gl.GetField ( "gameEvent" ).str;
+				} else {
+					groupLine.gameEvent.text = "(none)";
 				}
 			
 				groupLine.transform.parent = entry.group.container;

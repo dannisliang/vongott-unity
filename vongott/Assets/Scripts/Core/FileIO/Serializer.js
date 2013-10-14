@@ -369,6 +369,7 @@ static function SerializeAccount ( account : Computer.Account ) : JSONObject {
 static function SerializeGameEvent ( event : GameEvent ) : JSONObject {
 	var evt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	
+	evt.AddField ( "id", event.id );
 	evt.AddField ( "delay", event.delay );
 	evt.AddField ( "condition", event.condition );
 	evt.AddField ( "conditionBool", event.conditionBool );
@@ -557,7 +558,7 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 			entry.AddField ( "speaker", l.speaker.selectedOption );
 			entry.AddField ( "line", l.line.text );
 			entry.AddField ( "endConvo", l.endConvo.selectedOption );
-			entry.AddField ( "gameEvent", l.gameEvent.hiddenString );			
+			entry.AddField ( "gameEvent", l.gameEvent.text );			
 		
 		// group
 		} else if ( e.type.selectedOption == "Group" ) {
