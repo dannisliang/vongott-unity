@@ -62,13 +62,13 @@ group: navigation
 		
 	- Event management
 	
-		- Triggers
+		- Triggers &#x2713;
 			
-		- Travelling
+		- Travelling &#x2713;
 		
 		- Environmental changes
 		
-		- Actor influence
+		- Actor influence &#x2713;
 	
 	- Proper character controls
 	
@@ -76,31 +76,31 @@ group: navigation
 	
 	- Basic weapon effects
 	
-		- Projectiles
+		- Projectiles &#x2713;
 
 		- Decals
 		
-		- Muzzle fire
+		- Muzzle fire &#x2713;
 		
 		- Explosions
 		
 - Editor
 
-	- Improvements to surface editor
+	- Improvements to surface editor &#x2713;
 	
 	- Scatter surfaces
 	
 	- Clear visual cues
 	
-	- More view modes in the asset browser
+	- More view modes in the asset browser &#x2713;
 	
 	- Optimisations
 
 - Gameplay
 
-	- Interfaces ( terminals, books, computers, keypads, door locks )
+	- Interfaces ( terminals, books, computers, keypads, door locks ) &#x2713;
 	
-	- Conversation dynamics
+	- Conversation dynamics &#x2713;
 
 	- Upgrade effects 
 	
