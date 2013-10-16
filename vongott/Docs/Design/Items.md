@@ -128,7 +128,6 @@ Mechanical upgrades are inactive by default and can be activated at the player's
 ### Biological
 Biological upgrades are passive and govern internal properties, such as reflexes and dexterity. They can be installed by the player.
 
-#### Hands  
 - Lock picking
   - lvl 1: Padlocks
   - lvl 2: Cam locks
@@ -139,11 +138,9 @@ Biological upgrades are passive and govern internal properties, such as reflexes
 - Reload speed: The factor with which to multiply the reload speed of any weapon
   - Factor depends on level
 
-#### Eyes
 - Aiming: The factor with which to multiply the accuracy of any weapon
   - Factor depends on level
 
-#### Skull 
 - Hacking (consoles/computers)
   - lvl 1: Kiddie Script
   - lvl 2: DDoS Attack
