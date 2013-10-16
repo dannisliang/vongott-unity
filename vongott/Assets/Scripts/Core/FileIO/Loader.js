@@ -144,6 +144,10 @@ class Loader {
 	}
 	
 	static function LoadMap ( name : String ) : GameObject {
+		return LoadMap ( name, "" );
+	}
+	
+	static function LoadMap ( name : String, spawnPoint : String ) : GameObject {
 		var map : GameObject;
 		var path = Application.dataPath + "/Maps/" + name + ".vgmap";
 				

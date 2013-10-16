@@ -54,9 +54,11 @@ class Player extends MonoBehaviour {
 	// Picking up / dropping objects
 	function PickUpObject ( obj : LiftableItem ) {
 		liftedObject = obj;
+		liftedObject.OnPickup ();
 	}
 	
 	function DropObject () {
+		liftedObject.OnDrop ();
 		liftedObject = null;
 	}
 	
@@ -169,6 +171,18 @@ class Player extends MonoBehaviour {
 	
 	function Start () {
 		
+	}
+		
+	function OnTriggerEnter ( other : Collider ) {				
+		if ( other.GetComponent ( InteractiveObject ) ) {
+			other.GetComponent ( InteractiveObject ).Focus ();
+		}
+	}
+	
+	function OnTriggerExit ( other : Collider ) {				
+		if ( other.GetComponent ( InteractiveObject ) ) {
+			other.GetComponent ( InteractiveObject ).Unfocus ();
+		}
 	}
 		
 	function Update () {

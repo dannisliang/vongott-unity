@@ -3,26 +3,44 @@
 @script RequireComponent(GUID)
 
 class InteractiveObject extends MonoBehaviour {
-	function OnTriggerEnter ( other : Collider ) {
-		if ( other.GetComponent(Actor) ) {
-			NPCCollide ( other.GetComponent(Actor) );
+	private function SetColor ( isActive : boolean ) {
+		var smr : SkinnedMeshRenderer = this.GetComponentInChildren(SkinnedMeshRenderer);
+		var mr : MeshRenderer = this.GetComponent(MeshRenderer);
+		var color : Color;
+		
+		if ( !mr ) {
+			mr = this.GetComponentInChildren(MeshRenderer);
 		}
+		
+		if ( isActive ) {
+			color = GameCore.GetInstance().selectedOutlineColor;
+		
+		} else {
+			color = GameCore.GetInstance().deselectedOutlineColor;
+			
+		}
+		
+		if ( smr ) { smr.renderer.material.SetColor ( "_OutlineColor", color ); }
+		if ( mr ) { mr.renderer.material.SetColor ( "_OutlineColor", color ); }
 	}
 	
-	function OnTriggerStay ( other : Collider ) {
-		if ( !GameCore.started || other.gameObject != GameCore.GetPlayerObject() ) { return; }
+	function Focus () {
+		var intObj : GameObject = GameCore.GetInteractiveObject();
 		
-		if ( GameCore.GetInteractiveObject() == null ) {
-			GameCore.SetInteractiveObject ( this.gameObject );
-			InvokePrompt ();
-		}
+		if ( intObj == this.gameObject || ( intObj && intObj.GetComponent ( LiftableItem ) && intObj.GetComponent ( LiftableItem ).isPickedUp ) ) { return; }
+	
+		SetColor ( true );
+		GameCore.SetInteractiveObject ( this.gameObject );
+		InvokePrompt ();
 	}
 	
-	function OnTriggerExit ( other:Collider ) {
-		if ( !GameCore.started || other.gameObject != GameCore.GetPlayerObject() ) { return; }
+	function Unfocus () {		
+		SetColor ( false );
 		
-		GameCore.SetInteractiveObject ( null );
-		UIHUD.ShowNotification ( "" );
+		if ( GameCore.GetInteractiveObject() == this.gameObject ) {
+			GameCore.SetInteractiveObject ( null );
+			UIHUD.ShowNotification ( "" );
+		}
 	}
 	
 	function NPCCollide ( a : Actor ) {}
@@ -41,6 +59,8 @@ class InteractiveObject extends MonoBehaviour {
 		if ( !this.GetComponent(GUID) ) {
 			this.gameObject.AddComponent(GUID);
 		}
+		
+		SetColor ( false );
 	}
 	
 	function Update () {
@@ -49,9 +69,5 @@ class InteractiveObject extends MonoBehaviour {
 		}
 		
 		UpdateObject ();
-	
-		if ( EditorCore.running && this.GetComponent ( SphereCollider ) && this.GetComponent ( SphereCollider ).enabled ) {
-			this.GetComponent ( SphereCollider ).enabled = false;
-		}
 	}
 }

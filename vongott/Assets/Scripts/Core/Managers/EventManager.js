@@ -14,6 +14,8 @@ class EventManager extends MonoBehaviour {
 	}
 	
 	public static function Fire ( event : GameEvent ) {
+		if ( !event ) { return; }
+		
 		if ( event.condition != "" && event.condition != "(none)" ) {
 			if ( !FlagManager.GetFlag ( event.condition, event.conditionBool ) ) { return; }
 		}
@@ -90,19 +92,9 @@ class EventManager extends MonoBehaviour {
 	}
 	
 	public static function GoToLocation ( map : String, spawnPoint : String ) {
-		Loader.LoadMap ( map );
-		
-		var currentSpawnPoint : SpawnPoint;
-		
-		for ( var c : Component in GameCore.levelContainer.GetComponentsInChildren ( SpawnPoint ) ) {
-			currentSpawnPoint = c as SpawnPoint;
-			
-			if ( currentSpawnPoint.gameObject.name == spawnPoint ) {
-				break;
-			}
-		}
-		
-		GameCore.GetPlayerObject().transform.position = currentSpawnPoint.transform.position;
-		GameCore.GetPlayerObject().transform.localEulerAngles = currentSpawnPoint.transform.localEulerAngles;
+		iTween.Stop ();
+		LoadingManager.nextScene = map;
+		LoadingManager.nextSpawnPoint = spawnPoint;
+		Application.LoadLevel ( "loading" );
 	}
 }

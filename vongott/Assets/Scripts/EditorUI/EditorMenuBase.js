@@ -262,6 +262,10 @@ class EditorMenuBase extends OGPage {
 			case "SurveillanceCamera":
 				menuObj.GetComponent(EditorInspectorSurveillanceCamera).Init(selectedObj);
 				break;
+				
+			case "SpawnPoint":
+				menuObj.GetComponent(EditorInspectorSpawnPoint).Init(selectedObj);
+				break;
 					
 			case "Terminal":
 				menuObj.GetComponent(EditorInspectorTerminal).Init(selectedObj);

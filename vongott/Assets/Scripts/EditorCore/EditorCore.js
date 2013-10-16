@@ -650,6 +650,11 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "SurveillanceCamera", obj, true );
 	}
 	
+	// SpawnPoint
+	if ( obj.GetComponent ( SpawnPoint ) ) {
+		inspector.AddMenu ( "SpawnPoint", obj, true );
+	}
+	
 	// Terminal
 	if ( obj.GetComponent ( Terminal ) ) {
 		inspector.AddMenu ( "Terminal", obj, true );

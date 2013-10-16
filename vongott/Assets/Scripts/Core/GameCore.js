@@ -6,6 +6,9 @@
 // Public vars
 var _levelContainer : Transform;
 
+public var selectedOutlineColor : Color;
+public var deselectedOutlineColor : Color;
+
 // Private vars
 private var tempCamPos : Vector3;
 private var tempCamRot : Vector3;
@@ -23,6 +26,7 @@ static var controlsActive = true;
 
 static var currentLevel : GameObject;
 static var nextLevel : String = "";
+static var nextSpawnPoint : String = "";
 
 static var levelContainer : Transform;
 
@@ -102,25 +106,12 @@ static function LoadLevel ( path : String, spawnPoint : String ) {
 	playerObject = Instantiate ( Resources.Load ( "Actors/Player/Player" ) ) as GameObject;
 	playerObject.transform.parent = currentLevel.transform;
 	
-	playerObject.transform.localPosition = Vector3.one;
-	playerObject.transform.localEulerAngles = Vector3.zero;
 	playerObject.layer = 9;	
-	
-	// Find spawn point
-	for ( var o : Object in currentLevel.GetComponentsInChildren ( SpawnPoint ) ) {
-		var spt : SpawnPoint = o as SpawnPoint;
-		
-		//if ( spawnPoint == "" ) { spawnPoint == spt.gameObject.name; }
-		
-		//if ( spt.gameObject.name == spawnPoint ) {
-			playerObject.transform.localPosition = spt.transform.localPosition;
-			playerObject.transform.localEulerAngles = spt.transform.localEulerAngles;
-			spt.gameObject.SetActive ( false );
-		//}
-	}
 	
 	scanner.Init ();
 	//MergeMeshes ();
+
+	GoToSpawnPoint ( spawnPoint );
 }
 
 
@@ -200,6 +191,32 @@ function FindPlayer () {
 	Debug.Log ( "GameCore | Found player: " + playerObject );
 }
 
+// Find spawn point
+public static function GoToSpawnPoint ( s : String ) {
+	var currentSpawnPoint : SpawnPoint;
+	
+	Debug.Log ( "GameCore | Searching for SpawnPoint '" + s + "'..." );
+				
+	for ( var c : Component in GameCore.levelContainer.GetComponentsInChildren ( SpawnPoint ) ) {
+		currentSpawnPoint = c as SpawnPoint;
+		
+		if ( currentSpawnPoint.gameObject.name == s ) {
+			Debug.Log ( "GameCore | ...found!" );
+			break;
+		}
+	}
+	
+	Debug.Log ( "GameCore | ...failed!" );
+	
+	playerObject.transform.position = currentSpawnPoint.transform.position;
+	
+	var newRot : Vector3 = currentSpawnPoint.transform.localEulerAngles;
+	newRot.x = 0;
+	newRot.z = 0;
+	
+	playerObject.transform.localEulerAngles = newRot;
+}
+
 // Find object from GUID
 public static function GetObjectFromGUID ( id : String ) : GameObject {
 	if ( !started ) { return; }
@@ -218,18 +235,20 @@ function Start () {
 	// Instance
 	instance = this;
 	
-	// Quests
-	QuestManager.Init();
+	if ( !started ) {
+		// Quests
+		QuestManager.Init();
+		
+		// Inventory
+		InventoryManager.Init();
+		
+		// Upgrades
+		UpgradeManager.Init();
+		
+		// Flags
+		FlagManager.Init();
+	}
 	
-	// Inventory
-	InventoryManager.Init();
-	
-	// Upgrades
-	UpgradeManager.Init();
-	
-	// Flags
-	FlagManager.Init();
-			
 	// Level container
 	levelContainer = _levelContainer;
 	
@@ -238,12 +257,15 @@ function Start () {
 		
 	// Load level
 	if ( nextLevel != "" ) {
-		LoadLevel ( nextLevel, "" );
+		LoadLevel ( nextLevel, nextSpawnPoint );
 	}
+	
+	nextLevel = "";
+	nextSpawnPoint = "";
 	
 	// Player
 	FindPlayer ();
-			
+		
 	// Signal
 	Print ("GameCore | started");
 	started = true;

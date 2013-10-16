@@ -54,6 +54,7 @@ class EditorInspectorTerminal extends MonoBehaviour {
 	public function PickCamera ( n : String ) {
 		var i : int = int.Parse ( n );
 	
+		EditorCore.pickerType = SurveillanceCamera;
 		EditorCore.pickerCallback = function ( name : String, id : String ) {
 			buttons[i].text = name;
 			buttons[i].hiddenString = id;

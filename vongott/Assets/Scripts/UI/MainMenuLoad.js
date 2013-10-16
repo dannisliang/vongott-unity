@@ -25,6 +25,7 @@ class MainMenuLoad extends OGPage {
 	// Select map
 	function SelectFile ( name : String ) {
 		LoadingManager.nextScene = name;
+		LoadingManager.nextSpawnPoint = "";
 		Application.LoadLevel ( "loading" );
 	}
 	

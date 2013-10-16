@@ -53,7 +53,6 @@ class Computer extends InteractiveObject {
 		UILoginDisplay.title = domain;
 		UILoginDisplay.accounts = validAccounts;
 		UILoginDisplay.successCallback = LoginSuccess;
-		UIHUD.ShowNotification ( "" );
 		OGRoot.GoToPage ( "LoginDisplay" );
 	}
 	
@@ -61,6 +60,7 @@ class Computer extends InteractiveObject {
 		inSession = true;
 		
 		GameCore.ToggleControls ( false );
+		UIHUD.ShowNotification ( "" );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.4 );
 		
@@ -76,6 +76,7 @@ class Computer extends InteractiveObject {
 	
 		yield WaitForSeconds ( 1 );
 	
+		InvokePrompt ();
 		GameCamera.GetInstance().BlurFocus ( null );
 	
 		GameCore.ToggleControls ( true );
@@ -107,8 +108,5 @@ class Computer extends InteractiveObject {
 	}
 	
 	function Start () {
-		if ( EditorCore.running ) {
-			this.GetComponent ( SphereCollider ).enabled = false;
-		}
 	}
 }

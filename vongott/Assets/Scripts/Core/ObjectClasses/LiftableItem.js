@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 class LiftableItem extends InteractiveObject {
-	private var isPickedUp : boolean = false;
+	public var isPickedUp : boolean = false;
 	
 	// Prompt
 	override function InvokePrompt () {
@@ -12,6 +12,15 @@ class LiftableItem extends InteractiveObject {
 			UIHUD.ShowNotification ( "Pick up [LeftMouse]" );
 		
 		}
+	}
+	
+	// Handle lifting
+	public function OnPickup () {
+		this.GetComponent ( Rigidbody ).useGravity = false;
+	}
+	
+	public function OnDrop () {
+		this.GetComponent ( Rigidbody ).useGravity = true;
 	}
 	
 	// Interact

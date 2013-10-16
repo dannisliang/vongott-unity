@@ -154,7 +154,11 @@ class Actor extends InteractiveObject {
 	// Player interaction
 	////////////////////
 	function CheckForcedConvo () : boolean {
-		return conversations[currentConvo].forced;
+		if ( conversations.Count > 0 ) { 
+			return conversations[currentConvo].forced;
+		} else {
+			return false;
+		}
 	}
 	
 	function FindNextConvo () {
@@ -468,6 +472,13 @@ class Actor extends InteractiveObject {
 	/////////////////////
 	// Update
 	/////////////////////
+	// Trigger
+	function OnTriggerEnter ( other : Collider ) {
+		if ( other.GetComponent ( InteractiveObject ) ) {
+			other.GetComponent ( InteractiveObject ).NPCCollide ( this );
+		}
+	}
+	
 	// Game loop
 	function Update () {
 		if ( !inventory ) { inventory = new InventoryEntry [4]; }

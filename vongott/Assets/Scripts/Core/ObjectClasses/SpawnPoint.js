@@ -7,5 +7,10 @@ class SpawnPoint extends MonoBehaviour {
 		if ( !this.GetComponent(GUID) ) {
 			this.gameObject.AddComponent(GUID);
 		}
+	
+		if ( !EditorCore.running ) {
+			this.GetComponent(MeshRenderer).enabled = false;
+			this.GetComponent(BoxCollider).enabled = false;
+		}
 	}
 }

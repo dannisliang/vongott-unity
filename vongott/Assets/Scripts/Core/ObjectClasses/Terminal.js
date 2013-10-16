@@ -17,7 +17,6 @@ class Terminal extends InteractiveObject {
 	public function ShowLogin ( ){
 		UIKeypadDisplay.passCode = passCode;
 		UIKeypadDisplay.successCallback = LoginSuccess;
-		UIHUD.ShowNotification ( "" );
 		OGRoot.GoToPage ( "KeypadDisplay" );
 	}
 	
@@ -28,6 +27,7 @@ class Terminal extends InteractiveObject {
 		GameCamera.GetInstance().StorePosRot ();
 		
 		GameCore.ToggleControls ( false );
+		UIHUD.ShowNotification ( "" );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
 		
@@ -42,6 +42,7 @@ class Terminal extends InteractiveObject {
 			
 		yield WaitForSeconds ( 1 );
 	
+		InvokePrompt ();
 		GameCamera.GetInstance().BlurFocus ( null );
 	
 		GameCore.ToggleControls ( true );
@@ -84,7 +85,6 @@ class Terminal extends InteractiveObject {
 	
 	function Start () {
 		if ( EditorCore.running ) {
-			this.GetComponent ( SphereCollider ).enabled = false;
 		}
 	}
 }

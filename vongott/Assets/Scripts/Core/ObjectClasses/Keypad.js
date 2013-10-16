@@ -65,9 +65,6 @@ class Keypad extends InteractiveObject {
 	// Init
 	//////////////////
 	function Start () {
-		if ( EditorCore.running ) {
-			this.GetComponent ( SphereCollider ).enabled = false;
-		}
 	}
 	
 	

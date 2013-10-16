@@ -48,6 +48,7 @@ class EditorInspectorKeypad extends MonoBehaviour {
 	}
 	
 	public function PickDoor () {	
+		EditorCore.pickerType = Door;
 		EditorCore.pickerCallback = function ( name : String, id : String ) {
 			button.text = name;
 			button.hiddenString = id;

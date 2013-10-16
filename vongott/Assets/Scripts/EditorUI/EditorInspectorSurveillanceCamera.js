@@ -35,6 +35,7 @@ class EditorInspectorSurveillanceCamera extends MonoBehaviour {
 	}
 	
 	public function PickDoor () {
+		EditorCore.pickerType = Door;
 		EditorCore.pickerCallback = function ( n : String, id : String ) {
 			door.text = n;
 			door.hiddenString = id;

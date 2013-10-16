@@ -2,6 +2,8 @@
 
 class LoadingManager extends MonoBehaviour {
 	public static var nextScene : String;
+	public static var nextSpawnPoint : String;
+	
 	private var loadingDone : boolean = false;
 	
 	public var loadingString : OGLabel;
@@ -12,6 +14,7 @@ class LoadingManager extends MonoBehaviour {
 		if ( String.IsNullOrEmpty(nextScene) ) { return; }
 		
 		GameCore.nextLevel = nextScene;
+		GameCore.nextSpawnPoint = nextSpawnPoint;
 		
 		yield LoadLevelAsync ();
 	}

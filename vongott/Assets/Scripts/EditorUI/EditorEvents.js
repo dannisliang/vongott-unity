@@ -54,25 +54,27 @@ class EditorEvents extends OGPage {
 	// Pick functions
 	///////////////////
 	function PickPrefab ( btn : OGButton ) {
-		EditorCore.SetPickMode ( true );
-	
+		EditorCore.pickerType = Prefab;
 		EditorCore.pickerSender = "Events";
 		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
 			if ( hit.collider.gameObject.GetComponent(Prefab) ) {
 				btn.text = hit.collider.gameObject.GetComponent(GUID).GUID;
 			}
 		};
+		
+		EditorCore.SetPickMode ( true );
 	}
 	
 	function PickActor ( btn : OGButton ) {
-		EditorCore.SetPickMode ( true );
-	
+		EditorCore.pickerType = Actor;
 		EditorCore.pickerSender = "Events";
 		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
 			if ( hit.collider.gameObject.GetComponent(Actor) ) {
 				btn.text = hit.collider.gameObject.GetComponent(GUID).GUID;
 			}
 		};
+		
+		EditorCore.SetPickMode ( true );
 	}
 	
 	function PickQuest ( btn : OGButton ) {

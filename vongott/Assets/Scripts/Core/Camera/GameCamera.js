@@ -15,10 +15,11 @@ class GameCamera extends MonoBehaviour {
 	
 	public static var instance : GameCamera;
 	
-																					
+	////////////////////
+	// Init
+	////////////////////																	
 	function Start () {
 		player = GameObject.FindObjectOfType ( PlayerController );
-	
 		instance = this;
 	}
 	
@@ -26,6 +27,10 @@ class GameCamera extends MonoBehaviour {
 		return instance;
 	}
 	
+	
+	////////////////////
+	// Positioning and rotation
+	////////////////////
 	function StorePosRot () {
 		storedPos = this.transform.position;
 		storedRot = this.transform.eulerAngles;
@@ -34,54 +39,6 @@ class GameCamera extends MonoBehaviour {
 	function RestorePosRot ( t : float ) {
 		iTween.MoveTo ( this.gameObject, iTween.Hash ( "position", storedPos, "time", t, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
 		iTween.RotateTo ( this.gameObject, iTween.Hash ( "rotation", storedRot, "time", t, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
-	}
-	
-	function BlurFocus ( t : Transform ) {
-		if ( t == null ) {
-			t = GameObject.FindObjectOfType(OGRoot).transform;
-		}
-		
-		this.GetComponent(DepthOfFieldScatter).focalTransform = t;
-	}
-	
-	function ConvoFocus ( a : Actor, smooth : boolean ) {
-		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
-		var player : Player = GameCore.GetPlayer();
-		var camPos : Vector3 = player.transform.position + height + ( player.transform.right * 0.6 ) - ( player.transform.forward * 0.6 );		
-		var lookPos : Vector3 = a.transform.position + height; 
-		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
-		
-		BlurFocus ( a.transform );
-		
-		if ( smooth ) {
-			TweenPosition ( camPos, 1 );
-			TweenRotation ( lookQuat.eulerAngles, 1 );
-		
-		} else {
-			this.transform.position = camPos;	
-			this.transform.LookAt ( lookPos );
-		
-		}
-	}
-	
-	function ConvoFocus ( p : Player, smooth : boolean ) {
-		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
-		var actor : Actor = GameCore.GetPlayer().talkingTo;
-		var camPos : Vector3 =  actor.transform.position + height + ( actor.transform.right * 0.6 ) - ( actor.transform.forward * 0.6 );		
-		var lookPos : Vector3 = p.transform.position + height; 
-		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
-		
-		BlurFocus ( p.transform );
-		
-		if ( smooth ) {
-			TweenPosition ( camPos, 1 );
-			TweenRotation ( lookQuat.eulerAngles, 1 );
-		
-		} else {
-			this.transform.position = camPos;	
-			this.transform.LookAt ( lookPos );
-		
-		}
 	}
 	
 	function TweenLook ( v : Vector3, t : float ) {
@@ -96,24 +53,10 @@ class GameCamera extends MonoBehaviour {
 		iTween.RotateTo ( this.gameObject, iTween.Hash ( "time", t, "easetype", iTween.EaseType.easeInOutQuad, "rotation", v ) );
 	}
 	
-	function SetBlur ( state : boolean ) {
-		var a : float;
-		var b : float;
-		
-		if ( state ) {
-			a = 1;
-			b = 25;
-		} else {
-			a = 25;
-			b = 1;
-		}
-		
-		iTween.ValueTo ( gameObject, iTween.Hash ( "from", a, "to", b, "onupdate", "SetMaxBlurSize", "time", 0.5, "ignoretimescale", true ) );
-	}
-	
 	function FocusOn ( pos : Vector3 ) {
 		iTween.LookTo ( this.gameObject, iTween.Hash ( "easetype", iTween.EaseType.easeInOutQuad, "looktarget", pos, "time", 0.5, "ignoretimescale", true ) );
 	}
+	
 	
 	public function FocusInterface ( t : Transform, modifier : float ) : IEnumerator {
 		iTween.MoveTo ( this.gameObject, iTween.Hash ( "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "position", t.position + t.forward * modifier ) );
@@ -194,7 +137,78 @@ class GameCamera extends MonoBehaviour {
 		}
 	}
 	
-    function LateUpdate (){
+	
+	////////////////////
+	// Effects
+	////////////////////
+	function BlurFocus ( t : Transform ) {
+		if ( t == null ) {
+			t = GameObject.FindObjectOfType(OGRoot).transform;
+		}
+		
+		this.GetComponent(DepthOfFieldScatter).focalTransform = t;
+	}
+	
+	function ConvoFocus ( a : Actor, smooth : boolean ) {
+		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
+		var player : Player = GameCore.GetPlayer();
+		var camPos : Vector3 = player.transform.position + height + ( player.transform.right * 0.6 ) - ( player.transform.forward * 0.6 );		
+		var lookPos : Vector3 = a.transform.position + height; 
+		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
+		
+		BlurFocus ( a.transform );
+		
+		if ( smooth ) {
+			TweenPosition ( camPos, 1 );
+			TweenRotation ( lookQuat.eulerAngles, 1 );
+		
+		} else {
+			this.transform.position = camPos;	
+			this.transform.LookAt ( lookPos );
+		
+		}
+	}
+	
+	function ConvoFocus ( p : Player, smooth : boolean ) {
+		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
+		var actor : Actor = GameCore.GetPlayer().talkingTo;
+		var camPos : Vector3 =  actor.transform.position + height + ( actor.transform.right * 0.6 ) - ( actor.transform.forward * 0.6 );		
+		var lookPos : Vector3 = p.transform.position + height; 
+		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
+		
+		BlurFocus ( p.transform );
+		
+		if ( smooth ) {
+			TweenPosition ( camPos, 1 );
+			TweenRotation ( lookQuat.eulerAngles, 1 );
+		
+		} else {
+			this.transform.position = camPos;	
+			this.transform.LookAt ( lookPos );
+		
+		}
+	}
+	
+	function SetBlur ( state : boolean ) {
+		var a : float;
+		var b : float;
+		
+		if ( state ) {
+			a = 1;
+			b = 25;
+		} else {
+			a = 25;
+			b = 1;
+		}
+		
+		iTween.ValueTo ( gameObject, iTween.Hash ( "from", a, "to", b, "onupdate", "SetMaxBlurSize", "time", 0.5, "ignoretimescale", true ) );
+	}
+	
+	
+	////////////////////
+	// Update and collision
+	////////////////////
+	function LateUpdate (){
         var target : Vector3 = player.transform.position;
         target.y += offset.y;
         target += transform.right * offset.x;

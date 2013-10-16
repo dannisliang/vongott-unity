@@ -8,9 +8,12 @@ class UITextDisplay extends OGPage {
 	// Init
 	////////////////////
 	override function StartPage () {
-		GameCore.GetInstance().SetPause ( true );
 		displayTextLabel.text = displayText;
 	}
+		
+	override function ExitPage () {
+	}	
+	
 	
 	////////////////////
 	// Update
@@ -18,7 +21,6 @@ class UITextDisplay extends OGPage {
 	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return) ) {
 			OGRoot.GoToPage ( "HUD" );
-			GameCore.GetInstance().SetPause ( false );
 		}
 	}
 }
