@@ -59,8 +59,11 @@ class GameCamera extends MonoBehaviour {
 	
 	
 	public function FocusInterface ( t : Transform, modifier : float ) : IEnumerator {
-		iTween.MoveTo ( this.gameObject, iTween.Hash ( "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "position", t.position + t.forward * modifier ) );
-		iTween.RotateTo ( this.gameObject, iTween.Hash ( "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "rotation", t.localEulerAngles + new Vector3 ( 0, 180, 0 ) ) );
+		var targetPos : Vector3 = t.position + t.forward * modifier;
+		var targetRot : Vector3 = Quaternion.LookRotation ( t.position - targetPos ).eulerAngles;
+		
+		iTween.MoveTo ( this.gameObject, iTween.Hash ( "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "position", targetPos, "space", "world" ) );
+		iTween.RotateTo ( this.gameObject, iTween.Hash ( "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "rotation", targetRot, "space", "world" ) );
 	
 		BlurFocus ( t );
 	

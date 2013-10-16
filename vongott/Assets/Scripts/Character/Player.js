@@ -96,11 +96,12 @@ class Player extends MonoBehaviour {
 			equippedItem.transform.localPosition = adjustPosition;
 			equippedItem.transform.localEulerAngles = adjustRotation;
 			equippedItem.GetComponent(BoxCollider).enabled = false;
-			equippedItem.GetComponent(SphereCollider).enabled = false;
 			equippedItem.GetComponent ( DontGoThroughThings ).enabled = false;
 			Destroy ( equippedItem.rigidbody );
 		
-			ResetFire();
+			if ( IsEquippedWeapon() ) {
+				ResetFire();
+			}
 		
 			GameCore.Print ( "Player | item '" + item.title + "' equipped" );
 			
@@ -119,7 +120,23 @@ class Player extends MonoBehaviour {
 		return equippedItem;
 	}
 	
-	function GetEquipmentAttribute ( a : Item.eItemAttribute ) : float {
+	function IsEquippedWeapon () : boolean {
+		if ( equippedItem ) {
+			return equippedItem.GetComponent(Item).type == eItemType.Weapon;
+		} else {
+			return false;
+		}
+	}
+	
+	function IsEquippedLockpick () : boolean {
+		if ( equippedItem ) {
+			return equippedItem.GetComponent(Item).id == eItemID.Lockpick;
+		} else {
+			return false;
+		}
+	}
+	
+	function GetEquipmentAttribute ( a : eItemAttribute ) : float {
 		for ( var attr : Item.Attribute in equippedItem.GetComponent(Item).attr ) {
 			if ( attr.type == a ) {
 				return attr.val;
@@ -133,7 +150,7 @@ class Player extends MonoBehaviour {
 	
 	// Shoot
 	function ResetFire () {
-		shootTimer = GetEquipmentAttribute ( Item.eItemAttribute.FireRate );
+		shootTimer = GetEquipmentAttribute ( eItemAttribute.FireRate );
 	}
 	
 	function TakeDamage ( amount : float ) {
@@ -141,10 +158,10 @@ class Player extends MonoBehaviour {
 	}
 	
 	function Shoot ( target : Vector3 ) {
-		if ( shootTimer >= GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
+		if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
 			shootTimer = 0;
 		
-			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.eItemAttribute.Accuracy ) / 100 );
+			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
 			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
 		
 			if ( GameCore.GetInstance().timeScale == 1.0 ) {
@@ -195,8 +212,8 @@ class Player extends MonoBehaviour {
 			TurnTowards ( talkingTo.transform.position );
 		}
 		
-		if ( equippedItem ) {	
-			if ( shootTimer < GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
+		if ( equippedItem && IsEquippedWeapon() ) {	
+			if ( shootTimer < GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
 				shootTimer += Time.deltaTime;
 			}
 			

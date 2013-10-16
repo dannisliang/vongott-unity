@@ -1,54 +1,53 @@
 #pragma strict
 
+// Types
+public enum eItemType {
+	Weapon,
+	Tool,
+	Consumable,
+	Upgrade
+}
+
+// Attributes
+public enum eItemAttribute {
+	Damage,
+	Defence,
+	FireRate,
+	FireRange,
+	Accuracy,
+	ReloadSpeed,
+	RunningSpeed,
+	SwimmingSpeed,
+	MeleeAttack,
+	Cloak
+}
+
+// IDs
+public enum eItemID {
+	// Weapons
+	Pistol = 0,
+	Baton,
+	Tazer,
+	AssaultRifle,
+	DartGun,
+	Vest,
+	Boots,
+	
+	// Tools
+	Lockpick = 500,
+	
+	// Consumables
+	RiceCake = 1000,
+	SoyMilk,
+	Sandwich,
+	HealthKit,
+	
+	// Upgrades
+	MechanicalUpgrade = 1500,
+	BiologicalUpgrade
+}
+
 class Item extends InteractiveObject {
-	// Types
-	enum eItemType {
-		Equipment,
-		Consumable,
-		Upgrade
-	}
-	
-	// Attributes
-	enum eItemAttribute {
-		Damage,
-		Defence,
-		FireRate,
-		FireRange,
-		Accuracy,
-		ReloadSpeed,
-		RunningSpeed,
-		SwimmingSpeed,
-		JumpingHeight,
-		NoiseReduction,
-		Hacking,
-		AutoAim,
-		LockPicking,
-		MeleeAttack,
-		Cloak,
-		WallRunning,
-		Takedown
-	}
-	
-	// IDs
-	enum eItemID {
-		// equipment
-		Pistol,
-		Baton,
-		Tazer,
-		AssaultRifle,
-		DartGun,
-		Vest,
-		Boots,
-		// consumables
-		RiceCake,
-		SoyMilk,
-		Sandwich,
-		HealthKit,
-		// upgrades
-		MechanicalUpgrade,
-		BiologicalUpgrade
-	}
-	
 	// Subclasses
 	public class Attribute {
 		var type = eItemAttribute.Damage;

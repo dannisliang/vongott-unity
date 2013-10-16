@@ -38,7 +38,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		}
 		
 		if ( bk != null && pfb.HasField ( "bookText" ) ) {
-			bk.content = pfb.GetField ( "bookText" ).str;
+			bk.content = DeserializeMultiLineString ( pfb.GetField ( "bookText" ) );
 		}
 		
 		if ( dr != null && pfb.HasField ( "doorLocked" ) ) {

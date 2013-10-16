@@ -35,12 +35,6 @@ class EditorEditAccount extends OGPage {
 		openFile.text = currentAccount.openFile;
 		openFileName.text = currentAccount.openFileName;		
 	}
-
-	private function Clear () {
-		currentComputer = null;
-		currentAccount = null;
-		callback = null;
-	}
 	
 	public function UpdateWallpaper ( n : String ) {
 		wallpaper.image = Resources.Load ( "Textures/UI/Wallpapers/" + n ) as Texture2D;

@@ -40,7 +40,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		}
 		
 		if ( bk != null ) {
-			pfb.AddField ( "bookText", bk.content );
+			pfb.AddField ( "bookText", SerializeMultiLineString ( bk.content ) );
 		}
 		
 		if ( dr != null ) {

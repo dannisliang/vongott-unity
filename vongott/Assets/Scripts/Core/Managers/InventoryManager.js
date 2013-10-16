@@ -40,13 +40,15 @@ static function Equip ( i : Item, equip : boolean ) {
 }
 
 // Remove entry
-static function RemoveEntry ( i : int ) {
-	var droppedItem : Item = Instantiate ( slots[i].GetItem() );
-	droppedItem.transform.parent = GameCore.GetPlayerObject().transform.parent;
-	droppedItem.transform.position = GameCore.GetPlayerObject().GetComponent(Player).torso.transform.position + ( GameCore.GetPlayerObject().transform.forward * 0.5 );
-	droppedItem.transform.localEulerAngles = Vector3.zero;
-	droppedItem.transform.localScale = Vector3.one;
-	
+static function RemoveEntry ( i : int, delete : boolean ) {
+	if ( !delete ) {
+		var droppedItem : Item = Instantiate ( slots[i].GetItem() );
+		droppedItem.transform.parent = GameCore.GetPlayerObject().transform.parent;
+		droppedItem.transform.position = GameCore.GetPlayerObject().GetComponent(Player).torso.transform.position + ( GameCore.GetPlayerObject().transform.forward * 0.5 );
+		droppedItem.transform.localEulerAngles = Vector3.zero;
+		droppedItem.transform.localScale = Vector3.one;
+	}
+		
 	if ( slots[i].equipped ) {
 		GameCore.GetPlayerObject().GetComponent(Player).Equip ( null, false );
 	}
@@ -55,10 +57,10 @@ static function RemoveEntry ( i : int ) {
 	slots[i] = null;
 }
 
-static function RemoveEntry ( e : InventoryEntry ) {
+static function RemoveEntry ( e : InventoryEntry, delete : boolean ) {
 	for ( var i = 0; i < slots.Length; i++ ) {
 		if ( slots[i] == e ) {
-			RemoveEntry ( i );
+			RemoveEntry ( i, delete );
 			return;
 		}
 	}

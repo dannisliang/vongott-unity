@@ -72,7 +72,7 @@ class PlayerController extends MonoBehaviour {
 				
 				// Raycast
 				var here : Vector3 = this.GetComponent(Player).equippedItem.transform.position;
-				var there : Vector3 = Camera.main.transform.position + Camera.main.transform.forward * this.GetComponent(Player).GetEquipmentAttribute( Item.eItemAttribute.FireRange );
+				var there : Vector3 = Camera.main.transform.position + Camera.main.transform.forward * this.GetComponent(Player).GetEquipmentAttribute( eItemAttribute.FireRange );
 				var hit : RaycastHit;
 				var target : Vector3;
 																			

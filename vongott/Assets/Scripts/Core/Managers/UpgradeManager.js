@@ -2,6 +2,24 @@
 
 import System.Collections.Generic;
 
+public enum eAbilityID {
+	// Mechanical
+	Reflexes = 0,
+	Speed,
+	Health,
+	Strength,
+	Aim,
+	Silence, 
+	Parachute,
+	Cloak,
+	
+	// Biological
+	Lockpicking = 100,
+	ReloadSpeed,
+	Aiming,
+	Hacking
+}
+	
 class UpgradeManager {
 	////////////////////
 	// Prerequisites
@@ -18,6 +36,8 @@ class UpgradeManager {
 	}
 	
 	static var slots : Dictionary.< eSlotID, InventoryEntry > = new Dictionary.< eSlotID, InventoryEntry > ();
+	static var abilities : Dictionary.< eAbilityID, int > = new Dictionary.< eAbilityID, int > ();
+	
 	
 	////////////////////
 	// Static functions
@@ -31,6 +51,11 @@ class UpgradeManager {
 		slots.Add ( eSlotID.Legs, null );
 		slots.Add ( eSlotID.Back, null );
 		slots.Add ( eSlotID.Arms, null );
+		
+		abilities.Add ( eAbilityID.Lockpicking, 0 );
+		abilities.Add ( eAbilityID.ReloadSpeed, 0 );
+		abilities.Add ( eAbilityID.Aiming, 0 );
+		abilities.Add ( eAbilityID.Hacking, 0 );
 	}
 	
 	// Because System.Enum.Parse isn't type safe in UnityScript *grumble grumble*
@@ -107,12 +132,12 @@ class UpgradeManager {
 		var upgrade : Upgrade = slots [ slot ].GetItem() as Upgrade;
 				
 		switch ( upgrade.ability.id ) {
-			case Upgrade.eAbilityID.Reflexes:
+			case eAbilityID.Reflexes:
 				GameCore.GetInstance().SetTimeScaleGoal ( 1.0 );
 					
 				break;
 				
-			case Upgrade.eAbilityID.Speed:
+			case eAbilityID.Speed:
 				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = 1.0;
 			
 				break;
@@ -128,16 +153,36 @@ class UpgradeManager {
 		slots [ slot ] = null;
 	}
 	
+	// Set ability
+	static function IncrementAbility ( id : eAbilityID, n : int ) {
+		abilities [ id ] += n;
+	}
+	
+	static function SetAbility ( id : eAbilityID, n : int ) {
+		abilities [ id ] = n;
+	}
+	
+	// Get ability
+	static function GetAbility ( id : eAbilityID ) : int {
+		return abilities [ id ];
+	}
+	
 	// Install
 	static function Install ( upgrade : Upgrade ) {
-		if ( slots [ upgrade.upgSlot ] ) {
-			Deactivate ( upgrade.upgSlot );
-			Remove ( upgrade.upgSlot );
-		}
+		if ( ( upgrade as Item ).id == eItemID.BiologicalUpgrade ) {
+			IncrementAbility ( upgrade.ability.id, upgrade.ability.val );
 		
-		slots [ upgrade.upgSlot ] = new InventoryEntry ( upgrade );
-					
-		GameCore.Print ( "UpgradeManager | installed upgrade " + upgrade.title + " in " + upgrade.upgSlot );
+		} else {
+			if ( slots [ upgrade.upgSlot ] ) {
+				Deactivate ( upgrade.upgSlot );
+				Remove ( upgrade.upgSlot );
+			}
+			
+			slots [ upgrade.upgSlot ] = new InventoryEntry ( upgrade );
+						
+			GameCore.Print ( "UpgradeManager | installed upgrade " + upgrade.title + " in " + upgrade.upgSlot );
+		
+		}
 	}
 	
 	// Activate
@@ -159,12 +204,12 @@ class UpgradeManager {
 		slots[slot].activated = true;
 		
 		switch ( upgrade.ability.id ) {
-			case Upgrade.eAbilityID.Reflexes:
+			case eAbilityID.Reflexes:
 				GameCore.GetInstance().SetTimeScaleGoal ( upgrade.ability.val );
 					
 				break;
 				
-			case Upgrade.eAbilityID.Speed:
+			case eAbilityID.Speed:
 				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = upgrade.ability.val;
 			
 				break;

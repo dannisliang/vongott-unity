@@ -251,7 +251,7 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Equipment
 	////////////////////
-	function GetEquipmentAttribute ( a : Item.eItemAttribute ) : float {
+	function GetEquipmentAttribute ( a : eItemAttribute ) : float {
 		for ( var attr : Item.Attribute in equippedItem.GetComponent(Item).attr ) {
 			if ( attr.type == a ) {
 				return attr.val;
@@ -290,11 +290,11 @@ class Actor extends InteractiveObject {
 	// Shoot
 	////////////////////
 	function ResetFire () {
-		shootTimer = GetEquipmentAttribute ( Item.eItemAttribute.FireRate );
+		shootTimer = GetEquipmentAttribute ( eItemAttribute.FireRate );
 	}
 	
 	function Shooting () {						
-		if ( equippedItem && shootTimer >= GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
+		if ( equippedItem && shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
 			shootTimer = 0;
 		
 			var shootTarget : Vector3;
@@ -305,7 +305,7 @@ class Actor extends InteractiveObject {
 				shootTarget = target.GetComponent ( Actor ).torso.position;
 			}
 		
-			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( Item.eItemAttribute.Accuracy ) / 100 );
+			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
 			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
 		
 			shootTarget += Vector3.one * accuracyDegree;
@@ -594,7 +594,7 @@ class Actor extends InteractiveObject {
 		}
 		
 		// Shoot timer
-		if ( equippedItem && shootTimer < GetEquipmentAttribute ( Item.eItemAttribute.FireRate ) ) {
+		if ( equippedItem && shootTimer < GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
 			shootTimer += Time.deltaTime;			
 		}
 		

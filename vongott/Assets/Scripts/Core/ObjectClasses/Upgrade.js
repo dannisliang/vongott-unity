@@ -1,18 +1,6 @@
 #pragma strict
 
 class Upgrade extends Item {
-	// Enums
-	enum eAbilityID {
-		Reflexes,
-		Speed,
-		Health,
-		Strength,
-		Aim,
-		Silence, 
-		Parachute,
-		Cloak
-	}
-	
 	// Classes
 	public class Ability {
 		var id : eAbilityID;

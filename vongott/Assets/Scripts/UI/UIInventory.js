@@ -87,21 +87,21 @@ class UIInventory extends OGPage {
 		inspector.attrVal.text = "";
 		inspector.action.text = "";
 		
-		if ( item.type == Item.eItemType.Equipment ) {
+		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
 			if ( entry.equipped ) {
 				inspector.action.text = "[UNEQUIP]";
 			} else {
 				inspector.action.text = "[EQUIP]";
 			}
 			
-		} else if ( item.type == Item.eItemType.Upgrade ) {
+		} else if ( item.type == eItemType.Upgrade ) {
 			if ( entry.installed ) {
 				inspector.action.text = "[UNINSTALL]";
 			} else {
 				inspector.action.text = "[INSTALL]";
 			}
 			
-		} else if ( item.type == Item.eItemType.Consumable ) {
+		} else if ( item.type == eItemType.Consumable ) {
 			inspector.action.text = "[CONSUME]";
 		
 		}
@@ -109,11 +109,11 @@ class UIInventory extends OGPage {
 		for ( var a : Item.Attribute in item.attr ) {
 			inspector.attrName.text += a.type.ToString() + ": \n";
 			
-			if ( a.type == Item.eItemAttribute.FireRate ) {
+			if ( a.type == eItemAttribute.FireRate ) {
 				inspector.attrVal.text += Mathf.Pow(a.val,-1).ToString() + " rd / sec\n";
-			} else if ( a.type == Item.eItemAttribute.FireRange ) {
+			} else if ( a.type == eItemAttribute.FireRange ) {
 				inspector.attrVal.text += a.val.ToString() + " m\n";
-			} else if ( a.type == Item.eItemAttribute.Accuracy ) {
+			} else if ( a.type == eItemAttribute.Accuracy ) {
 				inspector.attrVal.text += a.val.ToString() + " %\n";
 			} else {
 				inspector.attrVal.text += a.val.ToString() + "\n";
@@ -171,14 +171,38 @@ class UIInventory extends OGPage {
 		UpdateText ( entry );
 	}
 	
+	// Destroy entry
+	private function DestroyEntry () {
+		if ( !selectedEntry ) { return; }
+		
+		if ( selectedEntry.GetItem().type == eItemType.Upgrade ) {
+			UpgradeManager.Remove ( ( selectedEntry.GetItem() as Upgrade ).upgSlot );
+		}
+		
+		InventoryManager.RemoveEntry ( selectedEntry, true );
+		selectedEntry = null;
+		activeButton = null;		
+		UpdateText( null );
+		ClearGrid ();
+		PopulateGrid ();
+	}
+	
 	// Install entry
 	private function Install ( entry : InventoryEntry, install : boolean ) {
 		entry.installed = install;
 		
-		var upgrade : Upgrade = entry.GetItem() as Upgrade;
+		var item : Item = entry.GetItem();
+		var upgrade : Upgrade = item as Upgrade;
+		
 		
 		if ( install ) {
 			UpgradeManager.Install ( upgrade );
+							
+			// Destroy object if biological upgrade
+			if ( item.id == eItemID.BiologicalUpgrade ) {
+				DestroyEntry ();
+			}
+			
 		} else {
 			UpgradeManager.Remove ( upgrade.upgSlot );
 		}
@@ -223,6 +247,7 @@ class UIInventory extends OGPage {
 		} else if ( selectedEntry.prefabPath.Contains ( "Upgrade" ) ) {
 			if ( !selectedEntry.installed ) {
 				Install ( selectedEntry, true );
+				
 			} else {
 				Install ( selectedEntry, false );
 			}
@@ -255,11 +280,11 @@ class UIInventory extends OGPage {
 	function BtnDiscard () {
 		if ( !selectedEntry ) { return; }
 		
-		if ( selectedEntry.GetItem().type == Item.eItemType.Upgrade ) {
+		if ( selectedEntry.GetItem().type == eItemType.Upgrade ) {
 			UpgradeManager.Remove ( ( selectedEntry.GetItem() as Upgrade ).upgSlot );
 		}
 		
-		InventoryManager.RemoveEntry ( selectedEntry );
+		InventoryManager.RemoveEntry ( selectedEntry, false );
 		UpdateText( null );
 		ClearGrid ();
 		PopulateGrid ();
