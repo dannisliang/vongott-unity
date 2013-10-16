@@ -128,25 +128,25 @@ Mechanical upgrades are inactive by default and can be activated at the player's
 ### Biological
 Biological upgrades are passive and govern internal properties, such as reflexes and dexterity. They can be installed by the player.
 
-- Lock picking
-  - lvl 1: Padlocks
-  - lvl 2: Cam locks
-  - lvl 3: Knob locks
-  - lvl 4: Rim latch locks
-  - lvl 5: Deadbolt locks
+#### Lock picking
+- lvl 1: Padlocks
+- lvl 2: Cam locks
+- lvl 3: Knob locks
+- lvl 4: Rim latch locks
+- lvl 5: Deadbolt locks
 
-- Reload speed: The factor with which to multiply the reload speed of any weapon
-  - Factor depends on level
+#### Reload speed: The factor with which to multiply the reload speed of any weapon
+- Factor depends on level
 
-- Aiming: The factor with which to multiply the accuracy of any weapon
-  - Factor depends on level
+#### Aiming: The factor with which to multiply the accuracy of any weapon
+- Factor depends on level
 
-- Hacking (consoles/computers)
-  - lvl 1: Kiddie Script
-  - lvl 2: DDoS Attack
-  - lvl 3: Trojan Horse
-  - lvl 4: Back Door
-  - lvl 5: Worm
+#### Hacking (consoles/computers)
+- lvl 1: Kiddie Script
+- lvl 2: DDoS Attack
+- lvl 3: Trojan Horse
+- lvl 4: Back Door
+- lvl 5: Worm
 
 ### Combinations of mechanical upgrades
 Players should be rewarded for combining certain mechanical upgrades. Timed effects will cancel the activated upgrades.
