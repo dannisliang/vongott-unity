@@ -57,7 +57,7 @@ class Trigger extends MonoBehaviour {
 	
 	// Init
 	function OnDisable () {
-		if ( Camera.main && Camera.main.GetComponent(EditorCamera) ) {
+		if ( EditorCore.running && Camera.main && Camera.main.GetComponent(EditorCamera) ) {
 			Camera.main.GetComponent(EditorCamera).drawBoxes.Remove ( this.gameObject );
 		}
 	}

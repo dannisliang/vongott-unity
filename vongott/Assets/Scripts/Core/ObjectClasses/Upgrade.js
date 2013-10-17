@@ -8,6 +8,6 @@ class Upgrade extends Item {
 	}
 	
 	// Public vars
-	var upgSlot : UpgradeManager.eSlotID;
+	var upgSlot : eSlotID;
 	var ability : Ability;	
 }

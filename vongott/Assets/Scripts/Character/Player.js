@@ -11,12 +11,17 @@ class Player extends MonoBehaviour {
 	var foot_r : GameObject;
 	var foot_l : GameObject;
 	var back : GameObject;
+	
+	var health : int = 100;
+	var automaticHeal : int = 0;
+	
 	var equippedItem : GameObject;
 	var talkingTo : Actor;
 	
 	@HideInInspector var shootTimer : float = 0;
 	
 	private var liftedObject : LiftableItem;
+	private var healTimer : float = 0;
 	
 					
 	////////////////////
@@ -153,7 +158,47 @@ class Player extends MonoBehaviour {
 		shootTimer = GetEquipmentAttribute ( eItemAttribute.FireRate );
 	}
 	
-	function TakeDamage ( amount : float ) {
+	function Die () {
+	
+	}
+	
+	function CanHeal ( amount : int ) : boolean {
+		return health + amount <= UpgradeManager.GetAbility ( eAbilityID.MaxHealth );
+	}
+	
+	function StartAutoHeal ( amount : int ) {
+		healTimer = 1;
+		automaticHeal = amount;
+	}
+	
+	function StopAutoHeal () {
+		automaticHeal = 0;
+		UpgradeManager.Deactivate ( eSlotID.Torso );
+	}
+	
+	function HasFullHealth () : boolean {		
+		return health == UpgradeManager.GetAbility ( eAbilityID.MaxHealth );
+	}
+	
+	function Heal ( amount : int ) {
+		if ( CanHeal ( amount ) ) {
+			health += amount;
+		
+		} else if ( !HasFullHealth() ) {
+			health = UpgradeManager.GetAbility ( eAbilityID.MaxHealth );
+		
+		} else {
+			StopAutoHeal ();
+			return;
+			
+		}
+	
+		GameCore.Print ( "Player | Healing: " + health );
+	}
+	
+	function TakeDamage ( amount : int ) {
+		health -= amount;
+	
 		GameCore.Print ( "Player | Damage taken: " + amount );
 	}
 	
@@ -217,6 +262,15 @@ class Player extends MonoBehaviour {
 				shootTimer += Time.deltaTime;
 			}
 			
+		}
+		
+		if ( automaticHeal > 0 ) {
+			if ( healTimer <= 0 ) {
+				Heal ( automaticHeal );
+				healTimer = 1;
+			} else {
+				healTimer -= Time.deltaTime;
+			}
 		}
 	}
 }

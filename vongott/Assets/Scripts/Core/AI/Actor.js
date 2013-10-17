@@ -41,6 +41,7 @@ class Actor extends InteractiveObject {
 	var affiliation : eAffiliation;
 	var mood : eMood;
 	var vitalState : eVitalState;
+	var health : int = 100;
 	var attentionSpan : float = 30.0;
 	var updateFrequency : float = 5.0;
 	var keepDistance : float = 10.0;
@@ -89,7 +90,7 @@ class Actor extends InteractiveObject {
 	}
 	
 	// Start
-	function Start () {
+	function Start () {				
 		pathFinder = this.GetComponent ( AStarPathFinder );
 		
 		initPosition = this.transform.position;
@@ -243,7 +244,21 @@ class Actor extends InteractiveObject {
 		UIHUD.ShowTimedNotification ( msg, 2.0 );
 	}
 	
-	function TakeDamage ( damage : float ) {
+	function Die () {
+		vitalState = eVitalState.Dead;
+		
+		this.GetComponent(Animator).enabled = false;
+		
+		GameCore.Print ( "Actor | '" + displayName + "' died" );
+	}
+	
+	function TakeDamage ( damage : int ) {
+		health -= damage;
+		
+		if ( health <= 0 ) {
+			Die ();
+		}
+		
 		GameCore.Print ( "Actor | Damage to '" + displayName + "': " + damage );
 	}
 	
@@ -481,6 +496,13 @@ class Actor extends InteractiveObject {
 	
 	// Game loop
 	function Update () {
+		if ( vitalState != eVitalState.Alive ) {
+			if ( !this.gameObject.GetComponent ( LiftableItem ) ) {
+				this.gameObject.AddComponent ( LiftableItem );
+			}
+			return;
+		}
+		
 		if ( !inventory ) { inventory = new InventoryEntry [4]; }
 		
 		if ( !GameCore.started ) { return; }
@@ -488,17 +510,19 @@ class Actor extends InteractiveObject {
 		var forward = transform.TransformDirection (Vector3.forward);
 		
 		// check for interaction
-		if ( GameCore.GetInteractiveObject() == this.gameObject && affiliation == eAffiliation.Ally && GameCore.controlsActive && !talking ) {
-			if ( CheckForcedConvo() ) {
-				Talk ();
-				UIHUD.ShowNotification ( "" );
-				
-			} else { 
-				UIHUD.ShowNotification ( "Talk [LeftMouse]" );
-				
-				if ( Input.GetMouseButtonDown(0) ) {
-					Talk();
+		if ( GameCore.GetInteractiveObject() == this.gameObject && GameCore.controlsActive ) {
+			if ( affiliation == eAffiliation.Ally && !talking  ) {
+				if ( CheckForcedConvo() ) {
+					Talk ();
 					UIHUD.ShowNotification ( "" );
+					
+				} else { 
+					UIHUD.ShowNotification ( "Talk [LeftMouse]" );
+					
+					if ( Input.GetMouseButtonDown(0) ) {
+						Talk();
+						UIHUD.ShowNotification ( "" );
+					}
 				}
 			}
 		}

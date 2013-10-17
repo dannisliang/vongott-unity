@@ -6,38 +6,41 @@ public enum eAbilityID {
 	// Mechanical
 	Reflexes = 0,
 	Speed,
-	Health,
+	Healing,
 	Strength,
 	Aim,
 	Silence, 
 	Parachute,
 	Cloak,
+	XRay,
 	
 	// Biological
 	Lockpicking = 100,
 	ReloadSpeed,
 	Aiming,
-	Hacking
+	Hacking,
+	MaxHealth
 }
-	
+
+// Slots
+public enum eSlotID {
+	Skull,
+	Eyes,
+	Torso,
+	Abdomen,
+	Legs,
+	Back,
+	Arms
+}
+
 class UpgradeManager {
 	////////////////////
 	// Prerequisites
 	////////////////////
-	// Slots
-	enum eSlotID {
-		Skull,
-		Eyes,
-		Torso,
-		Abdomen,
-		Legs,
-		Back,
-		Arms
-	}
 	
 	static var slots : Dictionary.< eSlotID, InventoryEntry > = new Dictionary.< eSlotID, InventoryEntry > ();
 	static var abilities : Dictionary.< eAbilityID, int > = new Dictionary.< eAbilityID, int > ();
-	
+		
 	
 	////////////////////
 	// Static functions
@@ -56,6 +59,7 @@ class UpgradeManager {
 		abilities.Add ( eAbilityID.ReloadSpeed, 0 );
 		abilities.Add ( eAbilityID.Aiming, 0 );
 		abilities.Add ( eAbilityID.Hacking, 0 );
+		abilities.Add ( eAbilityID.MaxHealth, 100 );
 	}
 	
 	// Because System.Enum.Parse isn't type safe in UnityScript *grumble grumble*
@@ -87,7 +91,7 @@ class UpgradeManager {
 		}
 	}
 	
-	// Get upgrade by slot
+	// Get upgrade
 	static function GetUpgrade ( slot : eSlotID ) : InventoryEntry {
 		return slots [ slot ];
 	}
@@ -134,12 +138,18 @@ class UpgradeManager {
 		switch ( upgrade.ability.id ) {
 			case eAbilityID.Reflexes:
 				GameCore.GetInstance().SetTimeScaleGoal ( 1.0 );
-					
 				break;
 				
 			case eAbilityID.Speed:
 				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = 1.0;
-			
+				break;
+				
+			case eAbilityID.XRay:
+				GameCamera.GetInstance().SetXRay ( false, 0 );
+				break;
+				
+			case eAbilityID.Healing:
+				UseHealing ( false, 0 );
 				break;
 		}
 	}
@@ -185,6 +195,15 @@ class UpgradeManager {
 		}
 	}
 	
+	// Healing
+	static function UseHealing ( isActive : boolean, amount : int ) {
+		if ( isActive ) {
+			GameCore.GetPlayer().StartAutoHeal ( amount );
+		} else {
+			GameCore.GetPlayer().automaticHeal = 0;
+		}
+	}
+	
 	// Activate
 	static function Activate ( slot : eSlotID ) {
 		if ( !slots.ContainsKey ( slot ) ) {
@@ -206,12 +225,18 @@ class UpgradeManager {
 		switch ( upgrade.ability.id ) {
 			case eAbilityID.Reflexes:
 				GameCore.GetInstance().SetTimeScaleGoal ( upgrade.ability.val );
-					
 				break;
 				
 			case eAbilityID.Speed:
 				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = upgrade.ability.val;
-			
+				break;
+				
+			case eAbilityID.XRay:
+				GameCamera.GetInstance().SetXRay ( true, upgrade.ability.val );
+				break;
+		
+			case eAbilityID.Healing:
+				UseHealing ( true, upgrade.ability.val );
 				break;
 		}
 	}
@@ -219,5 +244,10 @@ class UpgradeManager {
 	static function Activate ( slot : String ) {
 		Activate ( GetEnum ( slot ) );
 	}
+	
+	
+	////////////////////
+	// Update
+	////////////////////
 	
 }

@@ -308,6 +308,12 @@ function Update () {
 
 
 ////////////////////
+// Gameplay functions
+////////////////////
+
+
+
+////////////////////
 // Debug
 ////////////////////
 static var debugString : String = "";

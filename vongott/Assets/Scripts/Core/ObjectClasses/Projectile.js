@@ -2,7 +2,7 @@
 
 class Projectile extends MonoBehaviour {
 	var layerMask : LayerMask;
-	var damage : float = 1.0;
+	var damage : int = 1;
 	var time : float = 0.0;
 	var expirationTime : float = 2.5;
 	var speed : float = 1.0;

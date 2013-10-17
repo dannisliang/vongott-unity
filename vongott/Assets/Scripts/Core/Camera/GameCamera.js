@@ -5,6 +5,7 @@ class GameCamera extends MonoBehaviour {
 	private var skyboxCamera : GameObject;
 	private var storedPos : Vector3;
 	private var storedRot : Vector3;
+	private var storedMaterials : List.< Material > = new List.< Material >();
 	
 	public var sensitivity : float = 2.5;
 	public var distance : float = 3;
@@ -12,8 +13,11 @@ class GameCamera extends MonoBehaviour {
 	public var turnSpeed : float = 2;
 	public var translateSpeed : float = 5;
 	public var offset : Vector3;
+	public var xRayShader : Shader;
+	public var regularShader : Shader;
 	
 	public static var instance : GameCamera;
+	
 	
 	////////////////////
 	// Init
@@ -144,6 +148,22 @@ class GameCamera extends MonoBehaviour {
 	////////////////////
 	// Effects
 	////////////////////
+	public function SetXRay ( isActive : boolean, meters : int ) {
+		for ( var c : Component in GameObject.FindObjectsOfType ( Actor ) ) {
+			var go : GameObject = c.gameObject;
+			
+			var smr : SkinnedMeshRenderer = go.GetComponentInChildren ( SkinnedMeshRenderer );
+			
+			for ( var i : int = 0; i < smr.materials.Length; i++ ) {
+				if ( isActive ) {
+					smr.materials[i].shader = xRayShader;
+				} else {
+					smr.materials[i].shader = regularShader;
+				}
+			}
+		}
+	}
+	
 	function BlurFocus ( t : Transform ) {
 		if ( t == null ) {
 			t = GameObject.FindObjectOfType(OGRoot).transform;
