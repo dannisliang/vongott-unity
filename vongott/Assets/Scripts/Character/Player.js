@@ -12,6 +12,7 @@ class Player extends MonoBehaviour {
 	var foot_l : GameObject;
 	var back : GameObject;
 	
+	var energy : float = 100;
 	var health : int = 100;
 	var automaticHeal : int = 0;
 	
@@ -25,7 +26,7 @@ class Player extends MonoBehaviour {
 	
 					
 	////////////////////
-	// Public functions
+	// Actor interaction
 	////////////////////
 	// Turn towards
 	function TurnTowards ( v : Vector3 ) {
@@ -56,6 +57,10 @@ class Player extends MonoBehaviour {
 		GameCore.ToggleControls ( true );
 	}
 	
+	
+	////////////////////
+	// Object interaction
+	////////////////////
 	// Picking up / dropping objects
 	function PickUpObject ( obj : LiftableItem ) {
 		liftedObject = obj;
@@ -65,6 +70,25 @@ class Player extends MonoBehaviour {
 	function DropObject () {
 		liftedObject.OnDrop ();
 		liftedObject = null;
+	}
+	
+	// Consume
+	function Consume ( item : Item ) {
+		if ( item.id == eItemID.BiologicalUpgrade ) {
+			var upg : Upgrade = item as Upgrade;
+			
+			UpgradeManager.IncrementAbility ( upg.ability.id, upg.ability.value );
+					
+		} else {
+			for ( var i = 0; i < item.attr.Length; i++ ) {
+				switch ( item.attr[i].type ) {
+					case eItemAttribute.Energy:
+						energy += Mathf.RoundToInt(item.attr[i].val);
+						if ( energy > 100 ) { energy = 100; }
+						break;
+				}
+			}
+		}
 	}
 	
 	// Equip
@@ -153,7 +177,9 @@ class Player extends MonoBehaviour {
 		return 100;
 	}
 	
-	// Shoot
+	////////////////////
+	// Fighting
+	////////////////////
 	function ResetFire () {
 		shootTimer = GetEquipmentAttribute ( eItemAttribute.FireRate );
 	}
@@ -166,6 +192,36 @@ class Player extends MonoBehaviour {
 		return health + amount <= UpgradeManager.GetAbility ( eAbilityID.MaxHealth );
 	}
 	
+	function TakeDamage ( amount : int ) {
+		health -= amount;
+	
+		GameCore.Print ( "Player | Damage taken: " + amount );
+	}
+	
+	function Shoot ( target : Vector3 ) {
+		if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
+			shootTimer = 0;
+		
+			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
+			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
+		
+			if ( GameCore.GetInstance().timeScale == 1.0 ) {
+				target += Vector3.one * accuracyDegree;
+			}
+		
+			DamageManager.GetInstance().SpawnBullet ( equippedItem, target, this.gameObject );
+		
+			// Muzzle flash
+			if ( equippedItem.transform.GetChild(0) ) {
+				equippedItem.transform.GetChild(0).gameObject.SetActive ( true );
+			}
+		}
+	}
+	
+	
+	////////////////////
+	// Upgrades
+	////////////////////
 	function StartAutoHeal ( amount : int ) {
 		healTimer = 1;
 		automaticHeal = amount;
@@ -196,32 +252,6 @@ class Player extends MonoBehaviour {
 		GameCore.Print ( "Player | Healing: " + health );
 	}
 	
-	function TakeDamage ( amount : int ) {
-		health -= amount;
-	
-		GameCore.Print ( "Player | Damage taken: " + amount );
-	}
-	
-	function Shoot ( target : Vector3 ) {
-		if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
-			shootTimer = 0;
-		
-			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
-			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
-		
-			if ( GameCore.GetInstance().timeScale == 1.0 ) {
-				target += Vector3.one * accuracyDegree;
-			}
-		
-			DamageManager.GetInstance().SpawnBullet ( equippedItem, target, this.gameObject );
-		
-			// Muzzle flash
-			if ( equippedItem.transform.GetChild(0) ) {
-				equippedItem.transform.GetChild(0).gameObject.SetActive ( true );
-			}
-		}
-	}
-	
 	// Install
 	function Install ( upg : Upgrade, install : boolean ) {
 		if ( install ) {
@@ -231,10 +261,10 @@ class Player extends MonoBehaviour {
 		}
 	}
 	
-	function Start () {
-		
-	}
-		
+	
+	////////////////////
+	// Trigger
+	////////////////////
 	function OnTriggerEnter ( other : Collider ) {				
 		if ( other.GetComponent ( InteractiveObject ) ) {
 			other.GetComponent ( InteractiveObject ).Focus ();
@@ -246,17 +276,24 @@ class Player extends MonoBehaviour {
 			other.GetComponent ( InteractiveObject ).Unfocus ();
 		}
 	}
-		
+	
+	
+	////////////////////
+	// Update
+	////////////////////	
 	function Update () {
+		// Lifting object
 		if ( liftedObject ) {
 			liftedObject.transform.rotation = this.transform.rotation;
 			liftedObject.transform.position = torso.transform.position + this.transform.forward;
 		}
 		
+		// Talking
 		if ( talkingTo != null ) {
 			TurnTowards ( talkingTo.transform.position );
 		}
 		
+		// Equipped weapon
 		if ( equippedItem && IsEquippedWeapon() ) {	
 			if ( shootTimer < GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
 				shootTimer += Time.deltaTime;
@@ -264,6 +301,7 @@ class Player extends MonoBehaviour {
 			
 		}
 		
+		// Automatic heal
 		if ( automaticHeal > 0 ) {
 			if ( healTimer <= 0 ) {
 				Heal ( automaticHeal );
@@ -271,6 +309,14 @@ class Player extends MonoBehaviour {
 			} else {
 				healTimer -= Time.deltaTime;
 			}
+		}
+		
+		// Calculate energy cost
+		energy -= UpgradeManager.CalculateEnergyCost() * Time.deltaTime;
+	
+		if ( energy <= 0 ) {
+			energy = 0;
+			UpgradeManager.DeactivateAll ();
 		}
 	}
 }

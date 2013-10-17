@@ -140,7 +140,7 @@ function SetPause ( state : boolean ) {
 		iTween.StopByName ( "TimeScaleTween" );
 		SetTimeScale ( 0 );
 
-	} else {
+	} else {		
 		iTween.StopByName ( "TimeScaleTween" );
 		
 		if ( tempTimeScale != timeScaleGoal ) {
@@ -156,6 +156,7 @@ function SetPause ( state : boolean ) {
 // Timescale
 function SetTimeScaleGoal ( goal : float ) {
 	timeScaleGoal = goal;
+	Print ( "GameCore | timeScale set to " + goal );
 }
 
 function TweenTimeScale ( start : float, goal : float, time : float ) {
@@ -168,7 +169,7 @@ function TweenTimeScale ( start : float, goal : float, time : float ) {
 		"time", time
 	) );
 	
-	timeScaleGoal = goal;
+	SetTimeScaleGoal ( goal );
 }
 
 function SetTimeScale ( time : float ) {

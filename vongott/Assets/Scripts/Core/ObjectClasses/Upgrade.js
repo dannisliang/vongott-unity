@@ -1,13 +1,14 @@
 #pragma strict
 
 class Upgrade extends Item {
-	// Classes
-	public class Ability {
+	// Private classes
+	private class Ability {
 		var id : eAbilityID;
-		var val : float;
+		var value : float = 0;
 	}
 	
 	// Public vars
 	var upgSlot : eSlotID;
-	var ability : Ability;	
+	var ability : Ability;
+	var cost : int = 0;
 }

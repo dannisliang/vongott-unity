@@ -19,7 +19,8 @@ public enum eItemAttribute {
 	RunningSpeed,
 	SwimmingSpeed,
 	MeleeAttack,
-	Cloak
+	Cloak,
+	Energy
 }
 
 // IDs
@@ -41,6 +42,7 @@ public enum eItemID {
 	SoyMilk,
 	Sandwich,
 	HealthKit,
+	Battery,
 	
 	// Upgrades
 	MechanicalUpgrade = 1500,

@@ -19,8 +19,22 @@ class InventoryEntry {
 		
 		if ( obj ) {
 			return obj.GetComponent ( Item );
+		
 		} else {
 			return null;
+		
+		}
+	}
+	
+	function GetUpgrade () : Upgrade {
+		var item : Item = GetItem();
+		
+		if ( item && item.GetComponent ( Upgrade ) ) {
+			return item.GetComponent ( Upgrade );
+		
+		} else {
+			return null;
+			
 		}
 	}
 }

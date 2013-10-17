@@ -187,6 +187,11 @@ class UIInventory extends OGPage {
 		PopulateGrid ();
 	}
 	
+	// Consume item
+	private function Consume ( item : Item ) {
+		GameCore.GetPlayer().Consume ( item );
+	}
+	
 	// Install entry
 	private function Install ( entry : InventoryEntry, install : boolean ) {
 		entry.installed = install;
@@ -237,20 +242,28 @@ class UIInventory extends OGPage {
 	function BtnEquip () {
 		if ( !selectedEntry ) { return; }
 		
-		if ( selectedEntry.prefabPath.Contains ( "Equipment" ) ) {
+		var item : Item = selectedEntry.GetItem();
+		
+		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
 			if ( !selectedEntry.equipped ) {
 				Equip ( selectedEntry, true );
 			} else {
 				Equip ( selectedEntry, false );
 			}
 	
-		} else if ( selectedEntry.prefabPath.Contains ( "Upgrade" ) ) {
+		} else if ( item.type == eItemType.Upgrade ) {
 			if ( !selectedEntry.installed ) {
 				Install ( selectedEntry, true );
 				
 			} else {
 				Install ( selectedEntry, false );
 			}
+		
+		} else if ( item.type == eItemType.Consumable ) {
+			Consume ( item );
+			DestroyEntry ();
+			return;
+		
 		}
 		
 		if ( activeButton ) {

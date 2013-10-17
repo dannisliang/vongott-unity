@@ -1,6 +1,7 @@
 #pragma strict
 
 import System.Collections.Generic;
+import System.Enum;
 
 public enum eAbilityID {
 	// Mechanical
@@ -124,7 +125,26 @@ class UpgradeManager {
 		return slots;
 	}
 	
+	// Energy cost
+	static function CalculateEnergyCost () : int {
+		var totalCost : int = 0;
+		
+		for ( var s : InventoryEntry in slots.Values ) {
+			if ( s && s.activated ) {
+				totalCost += s.GetUpgrade().cost;
+			}
+		}
+		
+		return totalCost;
+	}
+	
 	// Deactivate
+	static function DeactivateAll () {
+		for ( var s : eSlotID in slots.Keys ) {
+			Deactivate ( s );
+		}
+	}
+	
 	static function Deactivate ( slot : eSlotID ) {
 		if ( slots [ slot ] == null ) {
 			return;
@@ -180,7 +200,7 @@ class UpgradeManager {
 	// Install
 	static function Install ( upgrade : Upgrade ) {
 		if ( ( upgrade as Item ).id == eItemID.BiologicalUpgrade ) {
-			IncrementAbility ( upgrade.ability.id, upgrade.ability.val );
+			IncrementAbility ( upgrade.ability.id, upgrade.ability.value );
 		
 		} else {
 			if ( slots [ upgrade.upgSlot ] ) {
@@ -224,30 +244,24 @@ class UpgradeManager {
 		
 		switch ( upgrade.ability.id ) {
 			case eAbilityID.Reflexes:
-				GameCore.GetInstance().SetTimeScaleGoal ( upgrade.ability.val );
+				GameCore.GetInstance().SetTimeScaleGoal ( upgrade.ability.value );
 				break;
 				
 			case eAbilityID.Speed:
-				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = upgrade.ability.val;
+				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = upgrade.ability.value;
 				break;
 				
 			case eAbilityID.XRay:
-				GameCamera.GetInstance().SetXRay ( true, upgrade.ability.val );
+				GameCamera.GetInstance().SetXRay ( true, upgrade.ability.value );
 				break;
 		
 			case eAbilityID.Healing:
-				UseHealing ( true, upgrade.ability.val );
+				UseHealing ( true, upgrade.ability.value );
 				break;
 		}
 	}
 	
 	static function Activate ( slot : String ) {
 		Activate ( GetEnum ( slot ) );
-	}
-	
-	
-	////////////////////
-	// Update
-	////////////////////
-	
+	}	
 }
