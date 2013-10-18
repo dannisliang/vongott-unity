@@ -6,7 +6,7 @@ group: navigation
 ---
 {% include JB/setup %}
 
-### Phase 1: Proof of concept ( 2013.03.12 - 2013.06.27 )
+### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )
 
 - Game Core
 
@@ -36,7 +36,7 @@ group: navigation
 	
 	- New UI plugin for Unity &#x2713;
 
-### Phase 2: Gameplay and development tools ( 2013.07.01 - ? )
+### Phase 2: Proof of concept ( 2013.07.01 - ? )
 
 - Concept art
 	
@@ -52,8 +52,6 @@ group: navigation
 
 - Game core
 	
-	- Upgrade effects
-	
 	- Optimisations
 	
 	- AI implementation
@@ -64,13 +62,13 @@ group: navigation
 		
 	- Event management
 	
-		- Triggers
+		- Triggers &#x2713;
 			
-		- Travelling
+		- Travelling &#x2713;
 		
 		- Environmental changes
 		
-		- Actor influence
+		- Actor influence &#x2713;
 	
 	- Proper character controls
 	
@@ -78,25 +76,33 @@ group: navigation
 	
 	- Basic weapon effects
 	
-		- Projectiles
+		- Projectiles &#x2713;
 
 		- Decals
 		
-		- Muzzle fire
+		- Muzzle fire &#x2713;
 		
 		- Explosions
 		
 - Editor
 
-	- Improvements to surface editor
+	- Improvements to surface editor &#x2713;
 	
 	- Scatter surfaces
 	
 	- Clear visual cues
 	
-	- More view modes in the asset browser
+	- More view modes in the asset browser &#x2713;
 	
 	- Optimisations
+
+- Gameplay
+
+	- Interfaces ( terminals, books, computers, keypads, door locks ) &#x2713;
+	
+	- Conversation dynamics &#x2713;
+
+	- Upgrade effects 
 	
 - Prefabs
 	
