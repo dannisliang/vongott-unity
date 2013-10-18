@@ -58,7 +58,7 @@ group: navigation
 	
 	- AI implementation
 	
-		- Path finding
+		- Path finding ( A* and local avoidance )
 		
 		- Gunfire
 		
