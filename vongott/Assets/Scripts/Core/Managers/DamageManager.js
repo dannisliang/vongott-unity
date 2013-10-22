@@ -26,7 +26,7 @@ class DamageManager extends MonoBehaviour {
 		
 		var projectile : Projectile = bullet.GetComponent ( Projectile );
 		projectile.owner = owner;
-	
+		projectile.damage = GetEquipmentAttribute ( weapon, eItemAttribute.Damage );
 		projectile.expirationTime = GetEquipmentAttribute ( weapon, eItemAttribute.FireRange ) / projectile.speed;
 	}
 	

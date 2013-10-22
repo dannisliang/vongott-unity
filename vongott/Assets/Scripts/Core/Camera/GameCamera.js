@@ -6,6 +6,8 @@ class GameCamera extends MonoBehaviour {
 	private var storedPos : Vector3;
 	private var storedRot : Vector3;
 	private var storedMaterials : List.< Material > = new List.< Material >();
+	private var boundingBoxModifier : float = 1.0;
+	private var boundingBoxDelta : float = 0.1;
 	
 	public var sensitivity : float = 2.5;
 	public var distance : float = 3;
@@ -15,6 +17,7 @@ class GameCamera extends MonoBehaviour {
 	public var offset : Vector3;
 	public var xRayShader : Shader;
 	public var regularShader : Shader;
+	public var boundingBoxMaterial : Material;
 	
 	public static var instance : GameCamera;
 	
@@ -148,6 +151,62 @@ class GameCamera extends MonoBehaviour {
 	////////////////////
 	// Effects
 	////////////////////
+	private function DrawLine ( from : Vector3, to : Vector3 ) {
+		GL.Vertex3 ( from.x, from.y, from.z );
+		GL.Vertex3 ( to.x, to.y, to.z );
+	}
+	
+	private function DrawCorner ( allCorners : Vector3[], from : int, toA : int, toB : int, toC : int ) {
+		DrawLine ( allCorners[from], allCorners[from] + ( ( ( allCorners[from] + allCorners[toA] ) / 2 ) - allCorners[from] ).normalized * 0.05 );
+		DrawLine ( allCorners[from], allCorners[from] + ( ( ( allCorners[from] + allCorners[toB] ) / 2 ) - allCorners[from] ).normalized * 0.05 );
+		DrawLine ( allCorners[from], allCorners[from] + ( ( ( allCorners[from] + allCorners[toC] ) / 2 ) - allCorners[from] ).normalized * 0.05 );
+	}
+	
+	private function DrawBoundingBox ( obj : GameObject ) {
+		boundingBoxMaterial.SetPass(0);
+
+		GL.Begin ( GL.LINES );
+		
+		var bounds : Bounds;
+		var length : float = 0.1;
+		
+		if ( obj.GetComponent(BoxCollider) ) {
+			bounds = obj.GetComponent(BoxCollider).bounds;
+		} else if ( obj.GetComponent(MeshFilter) ) {
+			bounds = obj.GetComponent(MeshFilter).sharedMesh.bounds;
+		} else if ( obj.GetComponent(CapsuleCollider) ) {
+			bounds = obj.GetComponent(CapsuleCollider).bounds;
+		}
+		
+		bounds.extents = bounds.extents * boundingBoxModifier;
+		
+		var corners : Vector3[] = [
+			// Bottom
+			new Vector3 ( bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y, bounds.center.z - bounds.extents.z ),
+			new Vector3 ( bounds.center.x + bounds.extents.x, bounds.center.y - bounds.extents.y, bounds.center.z - bounds.extents.z ),
+			new Vector3 ( bounds.center.x + bounds.extents.x, bounds.center.y - bounds.extents.y, bounds.center.z + bounds.extents.z ),
+			new Vector3 ( bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y, bounds.center.z + bounds.extents.z ),
+		
+			// Top
+			new Vector3 ( bounds.center.x - bounds.extents.x, bounds.center.y + bounds.extents.y, bounds.center.z - bounds.extents.z ),
+			new Vector3 ( bounds.center.x + bounds.extents.x, bounds.center.y + bounds.extents.y, bounds.center.z - bounds.extents.z ),
+			new Vector3 ( bounds.center.x + bounds.extents.x, bounds.center.y + bounds.extents.y, bounds.center.z + bounds.extents.z ),
+			new Vector3 ( bounds.center.x - bounds.extents.x, bounds.center.y + bounds.extents.y, bounds.center.z + bounds.extents.z )	
+		];
+		
+		DrawCorner ( corners, 0, 4, 1, 3 );
+		DrawCorner ( corners, 1, 5, 0, 2 );
+		DrawCorner ( corners, 2, 6, 1, 3 );
+		DrawCorner ( corners, 3, 7, 2, 0 );
+		
+		DrawCorner ( corners, 4, 7, 5, 0 );
+		DrawCorner ( corners, 5, 4, 6, 1 );
+		DrawCorner ( corners, 6, 5, 7, 2 );
+		DrawCorner ( corners, 7, 6, 4, 3 );
+	
+		GL.End ();
+	}
+	
 	public function SetXRay ( isActive : boolean, meters : int ) {
 		for ( var c : Component in GameObject.FindObjectsOfType ( Actor ) ) {
 			var go : GameObject = c.gameObject;
@@ -229,9 +288,33 @@ class GameCamera extends MonoBehaviour {
 	
 	
 	////////////////////
+	// Render
+	////////////////////
+	function OnPostRender () {
+		if ( GameCore.GetInteractiveObject() ) {
+			DrawBoundingBox ( GameCore.GetInteractiveObject() );
+		}
+	}	
+	
+	
+	////////////////////
 	// Update and collision
 	////////////////////
-	function LateUpdate (){
+	function Update () {
+		// Bounding box modifier
+		if ( boundingBoxModifier < 1 ) {
+			boundingBoxDelta = 0.1;
+		
+		} else {
+			boundingBoxDelta -= 0.3 * Time.deltaTime;
+		 
+	  	} 
+		
+		boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
+			
+	}
+	
+	function LateUpdate () {
         var target : Vector3 = player.transform.position;
         target.y += offset.y;
         target += transform.right * offset.x;

@@ -56,9 +56,9 @@ static function SetInteractiveObject ( obj : GameObject ) {
 	interactiveObject = obj;
 	
 	if ( obj ) {
-		Print ( "GameCore | interactive object set to: " + obj );
+		Print ( "GameCore | Interactive object set to: " + obj.name );
 	} else {
-		Print ( "GameCore | interactive object released" );
+		Print ( "GameCore | Interactive object released" );
 	}
 }
 
@@ -78,9 +78,9 @@ static function ToggleControls ( state : boolean ) {
 	controlsActive = state;
 	
 	if ( state ) {
-		Print ( "GameCore | controls activated" );
+		Print ( "GameCore | Controls activated" );
 	} else {
-		Print ( "GameCore | controls deactivated" );
+		Print ( "GameCore | Controls deactivated" );
 	}
 }
 
@@ -268,7 +268,7 @@ function Start () {
 	FindPlayer ();
 		
 	// Signal
-	Print ("GameCore | started");
+	Print ("GameCore | Started");
 	started = true;
 }
 
@@ -291,33 +291,13 @@ static function Stop () {
 
 
 ////////////////////
-// Update
-////////////////////
-function Update () {
-	if ( playerObject == null ) {
-		FindPlayer ();
-	}
-	
-	Time.timeScale = timeScale;
-	
-	if ( timeScale > 0 ) {
-		Time.fixedDeltaTime = 0.02 * timeScale;
-	}
-	
-	ignoreTimeScale = Time.deltaTime * Mathf.Pow ( timeScale, -1.0 );
-}
-
-
-////////////////////
-// Gameplay functions
-////////////////////
-
-
-
-////////////////////
 // Debug
 ////////////////////
 static var debugString : String = "";
+private var frameCounter : int = 0;
+private var timeCounter : float = 0.0f;
+private var lastFramerate : float = 0.0f;
+private var refreshTime : float = 0.5f;
 
 static function Print ( msg : String ) {
 	if ( debuggingEnabled ) {
@@ -336,5 +316,42 @@ static function Error ( msg : String ) {
 function OnGUI () {
 	if ( debuggingEnabled ) {
 		GUI.Label ( Rect ( 10, 10, Screen.width, Screen.height / 4 ), debugString );
+		
+		if ( lastFramerate > 50 ) { GUI.color = Color.green; }
+		else if ( lastFramerate > 30 ) { GUI.color = Color.yellow; }
+		else { GUI.color = Color.red; }
+		
+		GUI.Label ( Rect ( 10, Screen.height - 30, 100, 20 ), "FPS " + Mathf.Floor ( lastFramerate ) );
+		
+		GUI.color = Color.white;
+	}
+}
+
+
+////////////////////
+// Update
+////////////////////
+function Update () {
+	if ( playerObject == null ) {
+		FindPlayer ();
+	}
+	
+	Time.timeScale = timeScale;
+	
+	if ( timeScale > 0 ) {
+		Time.fixedDeltaTime = 0.02 * timeScale;
+	}
+	
+	ignoreTimeScale = Time.deltaTime * Mathf.Pow ( timeScale, -1.0 );
+
+
+	if ( timeCounter < refreshTime ) {
+		timeCounter += Time.deltaTime;
+		frameCounter++;
+	
+	} else {
+		lastFramerate = frameCounter / timeCounter;
+		frameCounter = 0;
+		timeCounter = 0.0f;
 	}
 }

@@ -152,8 +152,14 @@ class UIInventory extends OGPage {
 		
 		btnDiscard.renderer.material = normalMaterial;
 		btnDiscard.transform.localEulerAngles = -b.transform.localEulerAngles;
+			
+		if ( selectedEntry && selectedEntry.GetItem() && selectedEntry.GetItem().canDrop ) {
+			btnDiscard.gameObject.SetActive ( true );
 		
-		btnDiscard.gameObject.SetActive ( allSlots[index] != null );
+		} else {
+			btnDiscard.gameObject.SetActive ( false );
+		
+		}
 	}
 	
 	

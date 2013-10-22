@@ -7,13 +7,15 @@ public enum eAbilityID {
 	// Mechanical
 	Reflexes = 0,
 	Speed,
-	Healing,
-	Strength,
+	Heal,
+	Punch,
+	Lift,
 	Aim,
 	Silence, 
 	Parachute,
 	Cloak,
 	XRay,
+	Shield,
 	
 	// Biological
 	Lockpicking = 100,
@@ -38,13 +40,33 @@ class UpgradeManager {
 	////////////////////
 	// Prerequisites
 	////////////////////
-	
 	static var slots : Dictionary.< eSlotID, InventoryEntry > = new Dictionary.< eSlotID, InventoryEntry > ();
 	static var abilities : Dictionary.< eAbilityID, int > = new Dictionary.< eAbilityID, int > ();
 		
+	////////////////////
+	// Effects
+	////////////////////
+	// Healing
+	static function UseHealing ( isActive : boolean, amount : int ) {
+		if ( isActive ) {
+			GameCore.GetPlayer().StartAutoHeal ( amount );
+		} else {
+			GameCore.GetPlayer().StopAutoHeal ();
+		}
+	}
+	
+	// Shield
+	static function UseShield ( isActive : boolean, level : int ) {
+		if ( isActive ) {
+			GameCore.GetPlayer().StartShield ( level );
+		} else {
+			GameCore.GetPlayer().StopShield ();
+		}
+	}
+	
 	
 	////////////////////
-	// Static functions
+	// Management
 	////////////////////
 	// Init
 	static function Init () {
@@ -168,10 +190,16 @@ class UpgradeManager {
 				GameCamera.GetInstance().SetXRay ( false, 0 );
 				break;
 				
-			case eAbilityID.Healing:
+			case eAbilityID.Heal:
 				UseHealing ( false, 0 );
 				break;
+				
+			case eAbilityID.Shield:
+				UseShield ( false, 0 );
+				break;
 		}
+		
+		GameCore.Print ( "UpgradeManager | Deactivated " + upgrade.title );
 	}
 	
 	// Remove
@@ -215,15 +243,6 @@ class UpgradeManager {
 		}
 	}
 	
-	// Healing
-	static function UseHealing ( isActive : boolean, amount : int ) {
-		if ( isActive ) {
-			GameCore.GetPlayer().StartAutoHeal ( amount );
-		} else {
-			GameCore.GetPlayer().automaticHeal = 0;
-		}
-	}
-	
 	// Activate
 	static function Activate ( slot : eSlotID ) {
 		if ( !slots.ContainsKey ( slot ) ) {
@@ -255,10 +274,16 @@ class UpgradeManager {
 				GameCamera.GetInstance().SetXRay ( true, upgrade.ability.value );
 				break;
 		
-			case eAbilityID.Healing:
+			case eAbilityID.Heal:
 				UseHealing ( true, upgrade.ability.value );
 				break;
+				
+			case eAbilityID.Shield:
+				UseShield ( true, upgrade.ability.value );
+				break;
 		}
+		
+		GameCore.Print ( "UpgradeManager | Activated " + upgrade.title );
 	}
 	
 	static function Activate ( slot : String ) {

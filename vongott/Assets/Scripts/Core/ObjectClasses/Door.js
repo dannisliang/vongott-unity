@@ -20,6 +20,9 @@ class Door extends InteractiveObject {
 				if ( GameCore.GetPlayer().IsEquippedLockpick() ) {
 					UIHUD.ShowNotification ( "Pick lock [LeftMouse]" );
 			
+				} else {
+					UIHUD.ShowNotification ( "This door is locked" );
+				
 				}
 				
 			} else {

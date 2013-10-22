@@ -57,13 +57,14 @@ class Item extends InteractiveObject {
 	}
 		
 	// Public vars
-	var prefabPath : String;
-	var type : eItemType;
-	var id : eItemID;
-	var image : Texture2D;
-	var title : String;
-	var desc : String;
-	var attr : Attribute[];
+	public var prefabPath : String;
+	public var canDrop : boolean = true;
+	public var type : eItemType;
+	public var id : eItemID;
+	public var image : Texture2D;
+	public var title : String;
+	public var desc : String;
+	public var attr : Attribute[];
 
 	// Init
 	function Start () {

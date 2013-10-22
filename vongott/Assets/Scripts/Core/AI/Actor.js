@@ -286,7 +286,6 @@ class Actor extends InteractiveObject {
 		equippedItem.transform.localPosition = new Vector3 ( -0.4400277, -0.1216161, 0.187489 );
 		equippedItem.transform.localEulerAngles = new Vector3 ( 85.41418, 290.4283, 271 );
 		equippedItem.GetComponent(BoxCollider).enabled = false;
-		equippedItem.GetComponent(SphereCollider).enabled = false;
 		equippedItem.GetComponent ( DontGoThroughThings ).enabled = false;
 		Destroy ( equippedItem.rigidbody );
 		
@@ -331,10 +330,10 @@ class Actor extends InteractiveObject {
 			if ( equippedItem.transform.GetChild(0) ) {
 				equippedItem.transform.GetChild(0).gameObject.SetActive ( true );
 			}
-		}
 		
-		speed = 0;
-		aiming = true;
+			speed = 0;
+			aiming = true;
+		}		
 	}
 	
 	////////////////////
@@ -383,14 +382,10 @@ class Actor extends InteractiveObject {
 	
 	function RunForward () {			
 		speed = Mathf.Lerp ( speed, runningSpeed, Time.deltaTime * 5 );
-		
-		//transform.localPosition += speed * ( transform.forward * Time.deltaTime );
 	}
 	
 	function WalkForward () {			
 		speed = Mathf.Lerp ( walkingSpeed, 1.0, Time.deltaTime * 5 );
-		
-		//transform.localPosition += speed * ( transform.forward * Time.deltaTime );
 	}
 	
 	function Roaming () {

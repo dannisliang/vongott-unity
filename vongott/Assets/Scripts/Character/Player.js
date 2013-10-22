@@ -3,25 +3,27 @@ class Player extends MonoBehaviour {
 	// Prerequisites
 	////////////////////
 	// Public vars
-	var head : GameObject;
-	var hand : GameObject;
-	var torso : GameObject;
-	var legs : GameObject;
-	var arms : GameObject;
-	var foot_r : GameObject;
-	var foot_l : GameObject;
-	var back : GameObject;
+	public var head : GameObject;
+	public var hand : GameObject;
+	public var torso : GameObject;
+	public var legs : GameObject;
+	public var arms : GameObject;
+	public var foot_r : GameObject;
+	public var foot_l : GameObject;
+	public var back : GameObject;
 	
-	var energy : float = 100;
-	var health : int = 100;
-	var automaticHeal : int = 0;
+	public var energy : float = 100;
+	public var health : int = 100;
 	
-	var equippedItem : GameObject;
-	var talkingTo : Actor;
+	public var automaticHeal : int = 0;
+	public var shieldPrefab : GameObject;
 	
-	@HideInInspector var shootTimer : float = 0;
+	public var equippedItem : GameObject;
+	public var talkingTo : Actor;
 	
+	private var shield : GameObject;
 	private var liftedObject : LiftableItem;
+	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
 	
 					
@@ -118,7 +120,7 @@ class Player extends MonoBehaviour {
 		
 		} 
 		
-		if ( equip ) {		
+		if ( equip ) {					
 			equippedItem = item.gameObject;
 			
 			equippedItem.transform.parent = target.transform;
@@ -222,6 +224,25 @@ class Player extends MonoBehaviour {
 	////////////////////
 	// Upgrades
 	////////////////////
+	// Shield
+	function StartShield ( level : int ) {
+		shield = Instantiate ( shieldPrefab ) as GameObject;
+		shield.transform.parent = this.transform;
+		shield.transform.localPosition = new Vector3 ( 0, 1, 0 );
+		shield.transform.localScale = new Vector3 ( 0.1, 0.1, 0.1 );
+		
+		iTween.ScaleTo ( shield, iTween.Hash ( "scale", Vector3.one, "easetype", iTween.EaseType.easeInQuad, "time", 0.5, "ignoretimescale", true ) );
+	}
+	
+	function StopShield () {
+		iTween.ScaleTo ( shield, iTween.Hash ( "scale", Vector3.one / 100, "easetype", iTween.EaseType.easeInQuad, "time", 0.5, "ignoretimescale", true, "oncompletetarget", this.gameObject, "oncomplete", "DestroyShield" ) );
+	}
+	
+	function DestroyShield () {
+		Destroy ( shield );
+	}
+	
+	// Healing
 	function StartAutoHeal ( amount : int ) {
 		healTimer = 1;
 		automaticHeal = amount;
@@ -311,10 +332,15 @@ class Player extends MonoBehaviour {
 			}
 		}
 		
+		// Shield
+		if ( shield ) {
+			shield.transform.eulerAngles = Vector3.zero;
+		}
+		
 		// Calculate energy cost
 		energy -= UpgradeManager.CalculateEnergyCost() * Time.deltaTime;
 	
-		if ( energy <= 0 ) {
+		if ( energy < 0 ) {
 			energy = 0;
 			UpgradeManager.DeactivateAll ();
 		}
