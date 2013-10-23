@@ -46,7 +46,25 @@ class EventManager extends MonoBehaviour {
 			case GameEvent.eEventType.Travel:
 				GoToLocation ( event.travelMap, event.travelSpawnPoint );
 				break;
+				
+			case GameEvent.eEventType.GiveItem:
+				GiveItem ( event.giveItem, event.giveCost );
+				break;
 			
+		}
+	}
+	
+	public static function GiveItem ( path : String, cost : int ) {
+		if ( InventoryManager.credits >= cost ) {
+			var obj : GameObject = Resources.Load ( "Items/" + path ) as GameObject;
+			
+			InventoryManager.AddItem ( obj.GetComponent ( Item ) );
+			InventoryManager.ChangeCredits ( -cost );		
+			GameCore.Print ( "EventManager | Bought " + path + " for " + cost + " credits" );
+			
+		} else {
+			GameCore.Print ( "EventManager | Not enough credits to buy " + path );
+		
 		}
 	}
 	

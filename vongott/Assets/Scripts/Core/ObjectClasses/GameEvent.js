@@ -6,7 +6,8 @@ class GameEvent {
 		Quest,
 		Travel,
 		NextPath,
-		SetFlag
+		SetFlag,
+		GiveItem
 	}
 
 	var id : String = "";
@@ -29,4 +30,7 @@ class GameEvent {
 	
 	var travelMap : String = "";
 	var travelSpawnPoint : String = "";
+	
+	var giveItem : String;
+	var giveCost : int;
 }

@@ -9,6 +9,11 @@ class EditorEvents extends OGPage {
 		public var z : OGTextField;
 	}
 	
+	private class GiveItemType {
+		public var button : OGButton;
+		public var textField : OGTextField;
+	}
+	
 	private class QuestType {
 		public var button : OGButton;
 		public var popUp : OGPopUp;
@@ -48,7 +53,8 @@ class EditorEvents extends OGPage {
 	public var travel : TravelType;
 	public var nextPath : NextPathType;
 	public var setFlag : SetFlagType;
-	
+	public var giveItem	: GiveItemType;
+
 
 	///////////////////
 	// Pick functions
@@ -63,6 +69,14 @@ class EditorEvents extends OGPage {
 		};
 		
 		EditorCore.SetPickMode ( true );
+	}
+	
+	function PickItem ( btn : OGButton ) {
+		EditorPicker.mode = "items";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "Events";
+				
+		OGRoot.GoToPage ( "Picker" );
 	}
 	
 	function PickActor ( btn : OGButton ) {
@@ -178,6 +192,9 @@ class EditorEvents extends OGPage {
 		travel.button.text = "(none)";
 		travel.textField.text = "";
 		
+		giveItem.button.text = "(none)";
+		giveItem.textField.text = "0";
+		
 		SetVisible ( "" );
 	}
 	
@@ -228,6 +245,12 @@ class EditorEvents extends OGPage {
 					eventType.selectedOption = "Travel";
 					travel.button.text = e.travelMap;
 					travel.textField.text = e.travelSpawnPoint;
+					break;
+					
+				case GameEvent.eEventType.GiveItem:
+					eventType.selectedOption = "GiveItem";
+					giveItem.button.text = e.giveItem;
+					giveItem.textField.text = e.giveCost.ToString();
 					break;
 			
 			}
@@ -284,6 +307,12 @@ class EditorEvents extends OGPage {
 				currentEvent.type = GameEvent.eEventType.Travel;
 				currentEvent.travelMap = travel.button.text;
 				currentEvent.travelSpawnPoint = travel.textField.text;
+				break;
+				
+			case "GiveItem":
+				currentEvent.type = GameEvent.eEventType.GiveItem;
+				currentEvent.giveItem = giveItem.button.text;
+				currentEvent.giveCost = int.Parse ( giveItem.textField.text );
 				break;
 		
 		}

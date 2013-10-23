@@ -202,13 +202,13 @@ class Conversation {
 	}
 	
 	function NextEntry ( smoothCam : boolean ) {				
+		if ( HasGameEvent () ) {
+			EventManager.Fire ( gameEvent );
+		}
+		
 		if ( currentEntry < entries.Count - 1 && !HasEndAction () ) {
 			currentEntry++;
-			
-			if ( HasGameEvent () ) {
-				EventManager.Fire ( gameEvent );
-			}
-			
+						
 			if ( GetFlag ( entries[currentEntry] ) ) {
 				DisplayEntry ( smoothCam );
 			} else {

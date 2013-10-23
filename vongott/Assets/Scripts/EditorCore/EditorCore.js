@@ -871,7 +871,7 @@ static function GetConvoNames ( chapter : String, scene: String ) : String[] {
 }
 
 static function GetConvos ( chapter : String, scene: String, name: String ) : String[] {
-	return TrimFileNames ( Directory.GetFiles ( Application.dataPath + "/Story/Conversations/" + chapter + "/" + scene + "/" + name, "*" ) );
+	return TrimFileNames ( Directory.GetFiles ( Application.dataPath + "/Story/Conversations/" + chapter + "/" + scene + "/" + name, "*.vgconvo" ) );
 }
 
 

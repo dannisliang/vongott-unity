@@ -420,6 +420,12 @@ static function SerializeGameEvent ( event : GameEvent ) : JSONObject {
 			evt.AddField ( "travelMap", event.travelMap );
 			evt.AddField ( "travelSpawnPoint", event.travelSpawnPoint );
 			break;
+			
+		case GameEvent.eEventType.GiveItem:
+			evt.AddField ( "type", "GiveItem" );
+			evt.AddField ( "giveItem", event.giveItem );
+			evt.AddField ( "giveCost", event.giveCost );
+			break;
 	
 	}
 	
@@ -589,13 +595,13 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 				groupLine.AddField ( "consequenceBool", gl.consequenceBool.isChecked );
 				groupLine.AddField ( "line", gl.line.text );
 				groupLine.AddField ( "endConvo", gl.endConvo.selectedOption );
-				groupLine.AddField ( "gameEvent", gl.gameEvent.hiddenString );
+				groupLine.AddField ( "gameEvent", gl.gameEvent.text );
 				
 				options.Add ( groupLine );
 			}
 			
 			entry.AddField ( "condition", g.condition.text );
-			entry.AddField ( "conditionBool", l.conditionBool.isChecked );
+			entry.AddField ( "conditionBool", g.conditionBool.isChecked );
 			entry.AddField ( "groupType", g.groupType.selectedOption );
 			entry.AddField ( "options", options );
 			entry.AddField ( "speaker", g.speaker.selectedOption );

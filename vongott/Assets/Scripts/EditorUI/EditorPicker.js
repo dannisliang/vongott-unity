@@ -150,6 +150,15 @@ class EditorPicker extends OGPage {
 	////////////////////
 	// Init
 	////////////////////
+	// Sort list
+	private function SortList () : IEnumerator {
+		yield WaitForEndOfFrame ();
+	
+		for ( var i = 0; i < scrollView.transform.childCount; i++ ) {
+			scrollView.transform.GetChild(i).localPosition = new Vector3 ( scrollView.transform.GetChild(i).localPosition.x, i* 20, scrollView.transform.GetChild(i).localPosition.z );
+		}
+	}
+	
 	// Quests
 	private function InitQuests () {
 		var allQuests : JSONObject = Loader.LoadQuests();
@@ -166,6 +175,8 @@ class EditorPicker extends OGPage {
 		for ( var obj : Object in allEvents.list ) {
 			CreateButton ( (obj as JSONObject).GetField ( "id" ).str );
 		}
+		
+		StartCoroutine ( SortList () );
 	}
 	
 	// Convos
@@ -202,6 +213,37 @@ class EditorPicker extends OGPage {
 		for ( var i = 0; i < allFlags.list.Count; i++ ) {
 			CreateButton ( allFlags.keys[i] as String );
 		}
+		
+		StartCoroutine ( SortList () );
+	}
+	
+	// Items
+	private function InitItems () {
+		var itemsFolder : EditorFileSystem.Folder = EditorFileSystem.resourcesFolder.FindFolder("Items");
+		var allConsumables : String[] = itemsFolder.FindFolder("Consumables").GetFileNames();
+		var allEquipment : String[] = itemsFolder.FindFolder("Equipment").GetFileNames();
+		var allUpgrades : String[] = itemsFolder.FindFolder("Upgrades").GetFileNames();
+		var allMisc : String[] = itemsFolder.FindFolder("Misc").GetFileNames();
+		
+		var currentString : String = "";
+		
+		for ( currentString in allConsumables ) {
+			CreateButton ( "Consumables/" + currentString, false );
+		}
+		
+		for ( currentString in allEquipment ) {
+			CreateButton ( "Equipment/" + currentString, false );
+		}
+		
+		for ( currentString in allUpgrades ) {
+			CreateButton ( "Upgrades/" + currentString, false );
+		}
+		
+		for ( currentString in allMisc ) {
+			CreateButton ( "Misc/" + currentString, false );
+		}
+		
+		StartCoroutine ( SortList () );
 	}
 	
 	// Page
@@ -234,6 +276,10 @@ class EditorPicker extends OGPage {
 				
 			case "event":
 				InitEvents ();
+				break;
+				
+			case "items":
+				InitItems ();
 				break;
 		
 		}

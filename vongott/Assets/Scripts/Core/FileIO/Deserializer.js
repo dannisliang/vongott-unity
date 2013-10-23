@@ -498,6 +498,12 @@ static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
 				event.travelMap = evt.GetField ( "travelMap" ).str;
 				event.travelSpawnPoint = evt.GetField ( "travelSpawnPoint" ).str;
 				break;
+				
+			case "GiveItem":
+				event.type = GameEvent.eEventType.GiveItem;
+				event.giveItem = evt.GetField ( "giveItem" ).str;
+				event.giveCost = evt.GetField ( "giveCost" ).n;
+				break;
 		
 		}
 	
