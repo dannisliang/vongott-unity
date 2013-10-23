@@ -52,7 +52,6 @@ class Player extends MonoBehaviour {
 		GameCore.Print ( "Player | conversation with " + talkingTo.displayName + " ended" ); 
 		
 		talkingTo = null;
-		GameCamera.GetInstance().BlurFocus ( null );
 	
 		yield WaitForSeconds ( 1 );
 		

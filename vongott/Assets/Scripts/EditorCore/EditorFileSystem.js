@@ -116,6 +116,7 @@ class EditorFileSystem extends MonoBehaviour {
 		itemsFolder.AddFolder ( new Folder ( "Consumables" ), true );
 		itemsFolder.AddFolder ( new Folder ( "Equipment" ), true );
 		itemsFolder.AddFolder ( new Folder ( "Upgrades" ), true );
+		itemsFolder.AddFolder ( new Folder ( "Misc" ), true );
 		
 		// Materials
 		var materialsFolder : Folder = new Folder ( "Materials" );

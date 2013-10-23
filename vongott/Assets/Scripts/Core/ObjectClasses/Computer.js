@@ -71,22 +71,14 @@ class Computer extends InteractiveObject {
 	public function Exit () : IEnumerator {
 		inSession = false;
 		
-		GameCamera.GetInstance().SetBlur ( false );
 		iTween.MoveTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "position", tempPos, "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
 		iTween.RotateTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "rotation", tempRot, "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
 	
 		yield WaitForSeconds ( 1 );
 	
 		UIHUD.ToggleCrosshair ();
-		InvokePrompt ();
-		GameCamera.GetInstance().BlurFocus ( null );
 	
 		GameCore.ToggleControls ( true );
-	}
-	
-	// Handle use
-	override function InvokePrompt () {
-		UIHUD.ShowNotification ( "Use [LeftMouse]" );
 	}
 	
 	override function Interact () {
@@ -94,7 +86,6 @@ class Computer extends InteractiveObject {
 			tempPos = GameCamera.GetInstance().transform.position;
 			tempRot = GameCamera.GetInstance().transform.eulerAngles;
 	
-			GameCamera.GetInstance().SetBlur ( true );
 			StartCoroutine ( Enter () );
 			
 			GameCore.interactiveObjectLocked = true;

@@ -270,6 +270,10 @@ class EditorMenuBase extends OGPage {
 			case "Terminal":
 				menuObj.GetComponent(EditorInspectorTerminal).Init(selectedObj);
 				break;
+				
+			case "Wallet":
+				menuObj.GetComponent(EditorInspectorWallet).Init(selectedObj);
+				break;
 		}
 	}
 	

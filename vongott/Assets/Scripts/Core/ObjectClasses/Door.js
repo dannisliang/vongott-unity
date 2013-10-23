@@ -10,47 +10,21 @@ class Door extends InteractiveObject {
 	
 	var frontPos : Vector3;
 	var backPos : Vector3;
-	
-	// Prompt
-	override function InvokePrompt () {
-		if ( closed ) {
-			if ( locked ) {
-				// TODO: Check if player has the right key in inventory
-				
-				if ( GameCore.GetPlayer().IsEquippedLockpick() ) {
-					UIHUD.ShowNotification ( "Pick lock [LeftMouse]" );
-			
-				} else {
-					UIHUD.ShowNotification ( "This door is locked" );
-				
-				}
-				
-			} else {
-				UIHUD.ShowNotification ( "Open [LeftMouse]" );
-			
-			}
 		
-		} else {
-			UIHUD.ShowNotification ( "Close [LeftMouse]" );
-		
-		}
-	}
-	
 	// Lock picking
 	private function PickLock ( p : Player ) {
-		 	if ( UpgradeManager.GetAbility(eAbilityID.Lockpicking) >= lockLevel ) {
-		  		Unlock ();
-		  		UIHUD.ShowNotification ( "Door unlocked" ); 	
-			
-			} else {
-				UIHUD.ShowNotification ( "Skill not high enough" );    
-			
-			}		
+	 	if ( UpgradeManager.GetAbility(eAbilityID.Lockpicking) >= lockLevel ) {
+	  		Unlock ();
+	  		UIHUD.ShowNotification ( "Door unlocked" ); 	
+		
+		} else {
+			UIHUD.ShowNotification ( "Skill not high enough" );    
+		
+		}		
 	}
 	
 	private function Unlock () {
 		locked = false;
-		InvokePrompt ();
 	}
 				
 	// Movement
@@ -115,17 +89,16 @@ class Door extends InteractiveObject {
 				if ( !closed ) {
 					CloseDoor ();
 				
-				} else { 
-					if ( GameCore.GetPlayer().IsEquippedLockpick() ) {
-						PickLock ( GameCore.GetPlayer() );
-						
-					}					
+				} else if ( GameCore.GetPlayer().IsEquippedLockpick() ) {
+					PickLock ( GameCore.GetPlayer() );				
+				
+				} else {
+					UIHUD.ShowNotification ( "This door is locked" );
 				
 				}
 			
 			} else {
 				ToggleDoor ( GameCore.GetPlayerObject().transform );
-				InvokePrompt ();
 			
 			}
 			

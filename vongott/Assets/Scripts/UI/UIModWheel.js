@@ -27,7 +27,6 @@ class UIModWheel extends OGPage {
 		tempPos = GameCamera.GetInstance().transform.position;
 		tempRot = GameCamera.GetInstance().transform.eulerAngles;
 		
-		GameCamera.GetInstance().SetBlur ( true );
 		StartCoroutine ( Transition ( true, function () { SetButtons ( true ); } ) );
 	}
 	
@@ -44,7 +43,6 @@ class UIModWheel extends OGPage {
 	}
 	
 	function RepositionCamera () {
-		GameCamera.GetInstance().SetBlur ( false );
 		iTween.MoveTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "position", tempPos, "time", 0.5, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
 		iTween.RotateTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "rotation", tempRot, "time", 0.5, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
 	}

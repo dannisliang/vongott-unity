@@ -660,6 +660,11 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "Terminal", obj, true );
 	}
 	
+	// Wallet
+	if ( obj.GetComponent ( Wallet ) ) {
+		inspector.AddMenu ( "Wallet", obj );
+	}
+	
 	// Trigger
 	if ( obj.GetComponent ( Trigger ) ) {
 		inspector.AddMenu ( "Trigger", obj );

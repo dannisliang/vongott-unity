@@ -24,7 +24,6 @@ class Terminal extends InteractiveObject {
 		inSession = true;
 		UIHUD.ToggleCrosshair ();
 		
-		GameCamera.GetInstance().SetBlur ( true );
 		GameCamera.GetInstance().StorePosRot ();
 		
 		GameCore.ToggleControls ( false );
@@ -38,21 +37,13 @@ class Terminal extends InteractiveObject {
 	public function Exit () : IEnumerator {
 		inSession = false;
 		
-		GameCamera.GetInstance().SetBlur ( false );
 		GameCamera.GetInstance().RestorePosRot ( 1 );
 			
 		yield WaitForSeconds ( 1 );
 	
 		UIHUD.ToggleCrosshair ();
-		InvokePrompt ();
-		GameCamera.GetInstance().BlurFocus ( null );
 	
 		GameCore.ToggleControls ( true );
-	}
-	
-	// Handle use
-	override function InvokePrompt () {
-		UIHUD.ShowNotification ( "Use [LeftMouse]" );
 	}
 	
 	override function Interact () {

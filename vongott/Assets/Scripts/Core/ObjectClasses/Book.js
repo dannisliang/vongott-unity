@@ -6,10 +6,6 @@ class Book extends InteractiveObject {
 	private var inSession : boolean = false;
 	
 	// Handle read
-	override function InvokePrompt () {
-		UIHUD.ShowNotification ( "Read [LeftMouse]" );
-	}
-	
 	public function Enter () : IEnumerator {
 		inSession = true;		
 		
@@ -17,7 +13,6 @@ class Book extends InteractiveObject {
 		UIHUD.ShowNotification ( "" );
 		UITextDisplay.displayText = content;
 		
-		GameCamera.GetInstance().SetBlur ( true );
 		GameCamera.GetInstance().StorePosRot ();
 		
 		GameCore.ToggleControls ( false );
@@ -30,14 +25,11 @@ class Book extends InteractiveObject {
 	public function Exit () : IEnumerator {
 		inSession = false;
 		
-		GameCamera.GetInstance().SetBlur ( false );
 		GameCamera.GetInstance().RestorePosRot ( 1 );
 			
 		yield WaitForSeconds ( 1 );
 	
 		UIHUD.ToggleCrosshair ();
-		InvokePrompt ();
-		GameCamera.GetInstance().BlurFocus ( null );
 	
 		GameCore.ToggleControls ( true );
 	}

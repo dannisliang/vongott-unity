@@ -73,11 +73,7 @@ class Item extends InteractiveObject {
 		}
 	}
 
-	// Handle pick-up
-	override function InvokePrompt () {
-		UIHUD.ShowNotification ( "Pick up [LeftMouse]" );
-	}
-	
+	// Handle pick-up	
 	override function Interact () {
 		if ( Input.GetMouseButton(0) ) {
 			InventoryManager.AddItem(this);

@@ -19,6 +19,7 @@ class UIInventory extends OGPage {
 	var grid : Transform;
 	var inspector : Inspector;
 	var btnDiscard : OGButton3D;
+	var creditsDisplay : OGLabel;
 	
 	var selectedMaterial : Material;
 	var equippedMaterial : Material;
@@ -328,12 +329,12 @@ class UIInventory extends OGPage {
 	override function StartPage () {
 		SetButtons ( false );
 		
+		creditsDisplay.text = "CREDITS: " + InventoryManager.GetCredits();
 		ClearGrid ();
 		GameCore.GetInstance().SetPause ( true );
 		PopulateGrid ();
 		UpdateText ( null );
 		
-		GameCamera.GetInstance().SetBlur ( true );
 		StartCoroutine ( Transition ( true, function () { SetButtons ( true ); } ) );
 	}
 		
@@ -347,7 +348,6 @@ class UIInventory extends OGPage {
 	////////////////////
 	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
-			GameCamera.GetInstance().SetBlur ( false );
 			SetButtons ( false );
 			UpdateText ( null );
 			btnDiscard.gameObject.SetActive ( false );

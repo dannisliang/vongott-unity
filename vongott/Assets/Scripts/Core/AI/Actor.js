@@ -498,11 +498,6 @@ class Actor extends InteractiveObject {
 			if ( affiliation == eAffiliation.Ally && !talking  ) {
 				if ( CheckForcedConvo() ) {
 					StartCoroutine ( Talk() );
-					UIHUD.ShowNotification ( "" );
-					
-				} else { 
-					UIHUD.ShowNotification ( "Talk [LeftMouse]" );
-					
 				}
 			}
 		}

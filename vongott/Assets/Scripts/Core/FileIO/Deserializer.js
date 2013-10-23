@@ -112,6 +112,30 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 	
 		return newObj;
 	
+	// check if wallet
+	} else if ( obj.HasField("Wallet") ) {
+		var wlt : JSONObject = obj.GetField("Wallet");
+		var newWlt : GameObject;
+		
+		newWlt = Instantiate ( Resources.Load ( "Items/Misc/wallet" ) as GameObject );
+
+		Debug.Log ( "Deserializer | Instantiate wallet" );
+
+		newWlt.GetComponent(Wallet).creditAmount = wlt.GetField ("creditAmount").n;
+		
+		newWlt.transform.localScale = DeserializeVector3 ( wlt.GetField("localScale") );
+		newWlt.transform.localPosition = DeserializeVector3 ( wlt.GetField("localPosition") );
+		newWlt.transform.localEulerAngles = DeserializeVector3 ( wlt.GetField("localEulerAngles") );
+		
+		newWlt.name = obj.GetField("name").str;
+		
+		// GUID
+		if ( obj.HasField ( "GUID" ) ) {
+			newWlt.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
+		}
+	
+		return newWlt;
+	
 	// check if actor
 	} else if ( obj.HasField("Actor") ) {
 		var act : JSONObject = obj.GetField("Actor");

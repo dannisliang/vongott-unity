@@ -71,9 +71,7 @@ class GameCamera extends MonoBehaviour {
 		
 		iTween.MoveTo ( this.gameObject, iTween.Hash ( "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "position", targetPos, "space", "world" ) );
 		iTween.RotateTo ( this.gameObject, iTween.Hash ( "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "rotation", targetRot, "space", "world" ) );
-	
-		BlurFocus ( t );
-	
+		
 		yield WaitForSeconds ( 1 );
 	}
 	
@@ -162,42 +160,49 @@ class GameCamera extends MonoBehaviour {
 		DrawLine ( allCorners[from], allCorners[from] + ( ( ( allCorners[from] + allCorners[toC] ) / 2 ) - allCorners[from] ).normalized * 0.05 );
 	}
 	
-	private function CalculateCorner ( t : Transform, m : Vector3, b : Bounds ) : Vector3 {
-		return b.center + ((t.right*m.x)*b.extents.x) + ((t.up*m.y)*b.extents.y) + ((t.forward*m.z)*b.extents.z);
+	private function CalculateCorner ( t : Transform, m : Vector3, center : Vector3, size : Vector3 ) : Vector3 {
+		return t.position + center + ((t.right*m.x)*(size.x/2)) + ((t.up*m.y)*(size.y/2)) + ((t.forward*m.z)*(size.z/2));
 	}
 	
 	private function DrawBoundingBox ( obj : GameObject ) {
-		boundingBoxMaterial.SetPass(0);
-
-		GL.Begin ( GL.LINES );
-		
-		var bounds : Bounds;
-		var length : float = 0.1;
+		var center : Vector3;
+		var size : Vector3;
 		
 		if ( obj.GetComponent(BoxCollider) ) {
-			bounds = obj.GetComponent(BoxCollider).bounds;
-		} else if ( obj.GetComponent(MeshFilter) ) {
-			bounds = obj.GetComponent(MeshFilter).sharedMesh.bounds;
-		} else if ( obj.GetComponent(CapsuleCollider) ) {
-			bounds = obj.GetComponent(CapsuleCollider).bounds;
-		}
+			center = obj.GetComponent(BoxCollider).center;
+			size = obj.GetComponent(BoxCollider).size * boundingBoxModifier;
 		
-		bounds.extents = bounds.extents * boundingBoxModifier;
+		} else if ( obj.GetComponent(CapsuleCollider) ) {
+			center = obj.GetComponent(CapsuleCollider).center;
+			size = new Vector3 ( obj.GetComponent(CapsuleCollider).radius*2, obj.GetComponent(CapsuleCollider).height, obj.GetComponent(CapsuleCollider).radius*2 ) * boundingBoxModifier;
+		
+		} else if ( obj.GetComponent(SphereCollider) ) {
+			center = obj.GetComponent(SphereCollider).center;
+			size = new Vector3 ( obj.GetComponent(SphereCollider).radius, obj.GetComponent(SphereCollider).radius, obj.GetComponent(SphereCollider).radius ) * boundingBoxModifier;
+		
+		} else {
+			return;
+		
+		}
 		
 		var corners : Vector3[] = [
 			// Bottom
-			CalculateCorner ( obj.transform, new Vector3 ( -1, -1, -1 ), bounds ),
-			CalculateCorner ( obj.transform, new Vector3 ( 1, -1, -1 ), bounds ),
-			CalculateCorner ( obj.transform, new Vector3 ( 1, -1, 1 ), bounds ),
-			CalculateCorner ( obj.transform, new Vector3 ( -1, -1, 1 ), bounds ),
+			CalculateCorner ( obj.transform, new Vector3 ( -1, -1, -1 ), center, size ),
+			CalculateCorner ( obj.transform, new Vector3 ( 1, -1, -1 ), center, size ),
+			CalculateCorner ( obj.transform, new Vector3 ( 1, -1, 1 ), center, size ),
+			CalculateCorner ( obj.transform, new Vector3 ( -1, -1, 1 ), center, size ),
 		
 			// Top
-			CalculateCorner ( obj.transform, new Vector3 ( -1, 1, -1 ), bounds ),
-			CalculateCorner ( obj.transform, new Vector3 ( 1, 1, -1 ), bounds ),
-			CalculateCorner ( obj.transform, new Vector3 ( 1, 1, 1 ), bounds ),
-			CalculateCorner ( obj.transform, new Vector3 ( -1, 1, 1 ), bounds )	
+			CalculateCorner ( obj.transform, new Vector3 ( -1, 1, -1 ), center, size ),
+			CalculateCorner ( obj.transform, new Vector3 ( 1, 1, -1 ), center, size ),
+			CalculateCorner ( obj.transform, new Vector3 ( 1, 1, 1 ), center, size ),
+			CalculateCorner ( obj.transform, new Vector3 ( -1, 1, 1 ), center, size )	
 		];
 		
+		boundingBoxMaterial.SetPass(0);
+
+		GL.Begin ( GL.LINES );
+				
 		DrawCorner ( corners, 0, 4, 1, 3 );
 		DrawCorner ( corners, 1, 5, 0, 2 );
 		DrawCorner ( corners, 2, 6, 1, 3 );
@@ -226,24 +231,14 @@ class GameCamera extends MonoBehaviour {
 			}
 		}
 	}
-	
-	function BlurFocus ( t : Transform ) {
-		if ( t == null ) {
-			t = GameObject.FindObjectOfType(OGRoot).transform;
-		}
 		
-		this.GetComponent(DepthOfFieldScatter).focalTransform = t;
-	}
-	
 	function ConvoFocus ( a : Actor, smooth : boolean ) {
 		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
 		var player : Player = GameCore.GetPlayer();
 		var camPos : Vector3 = player.transform.position + height + ( player.transform.right * 0.6 ) - ( player.transform.forward * 0.6 );		
 		var lookPos : Vector3 = a.transform.position + height; 
 		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
-		
-		BlurFocus ( a.transform );
-		
+				
 		if ( smooth ) {
 			TweenPosition ( camPos, 1 );
 			TweenRotation ( lookQuat.eulerAngles, 1 );
@@ -261,9 +256,7 @@ class GameCamera extends MonoBehaviour {
 		var camPos : Vector3 =  actor.transform.position + height + ( actor.transform.right * 0.6 ) - ( actor.transform.forward * 0.6 );		
 		var lookPos : Vector3 = p.transform.position + height; 
 		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
-		
-		BlurFocus ( p.transform );
-		
+				
 		if ( smooth ) {
 			TweenPosition ( camPos, 1 );
 			TweenRotation ( lookQuat.eulerAngles, 1 );
@@ -273,21 +266,6 @@ class GameCamera extends MonoBehaviour {
 			this.transform.LookAt ( lookPos );
 		
 		}
-	}
-	
-	function SetBlur ( state : boolean ) {
-		var a : float;
-		var b : float;
-		
-		if ( state ) {
-			a = 1;
-			b = 25;
-		} else {
-			a = 25;
-			b = 1;
-		}
-		
-		iTween.ValueTo ( gameObject, iTween.Hash ( "from", a, "to", b, "onupdate", "SetMaxBlurSize", "time", 0.5, "ignoretimescale", true ) );
 	}
 	
 	

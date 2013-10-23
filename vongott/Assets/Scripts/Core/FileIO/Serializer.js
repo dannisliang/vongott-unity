@@ -91,6 +91,22 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		return o;
 		
+	// check if wallet
+	} else if ( obj.GetComponent(Wallet) ) {
+		// guid
+		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
+		
+		var wlt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		
+		wlt.AddField ( "creditAmount", obj.GetComponent(Wallet).creditAmount );
+		wlt.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
+		wlt.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		wlt.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+		
+		o.AddField ( "Wallet", wlt );
+		
+		return o;
+		
 	// check if actor
 	} else if ( obj.GetComponent(Actor) ) {
 		// guid

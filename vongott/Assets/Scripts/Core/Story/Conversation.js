@@ -72,8 +72,6 @@ class Conversation {
 		
 		actor.StopTalking ( endAction );
 		
-		GameCamera.GetInstance().SetBlur ( false );
-		GameCamera.GetInstance().BlurFocus ( null );
 		GameCamera.GetInstance().RestorePosRot ( 1 );
 	}
 	
@@ -334,7 +332,5 @@ class Conversation {
 	
 		currentEntry = -1;
 		NextEntry ( true );
-		
-		GameCamera.GetInstance().SetBlur ( true );
 	}
 }
