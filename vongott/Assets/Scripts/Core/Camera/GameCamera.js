@@ -162,6 +162,10 @@ class GameCamera extends MonoBehaviour {
 		DrawLine ( allCorners[from], allCorners[from] + ( ( ( allCorners[from] + allCorners[toC] ) / 2 ) - allCorners[from] ).normalized * 0.05 );
 	}
 	
+	private function CalculateCorner ( t : Transform, m : Vector3, b : Bounds ) : Vector3 {
+		return b.center + ((t.right*m.x)*b.extents.x) + ((t.up*m.y)*b.extents.y) + ((t.forward*m.z)*b.extents.z);
+	}
+	
 	private function DrawBoundingBox ( obj : GameObject ) {
 		boundingBoxMaterial.SetPass(0);
 
@@ -182,16 +186,16 @@ class GameCamera extends MonoBehaviour {
 		
 		var corners : Vector3[] = [
 			// Bottom
-			new Vector3 ( bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y, bounds.center.z - bounds.extents.z ),
-			new Vector3 ( bounds.center.x + bounds.extents.x, bounds.center.y - bounds.extents.y, bounds.center.z - bounds.extents.z ),
-			new Vector3 ( bounds.center.x + bounds.extents.x, bounds.center.y - bounds.extents.y, bounds.center.z + bounds.extents.z ),
-			new Vector3 ( bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y, bounds.center.z + bounds.extents.z ),
+			CalculateCorner ( obj.transform, new Vector3 ( -1, -1, -1 ), bounds ),
+			CalculateCorner ( obj.transform, new Vector3 ( 1, -1, -1 ), bounds ),
+			CalculateCorner ( obj.transform, new Vector3 ( 1, -1, 1 ), bounds ),
+			CalculateCorner ( obj.transform, new Vector3 ( -1, -1, 1 ), bounds ),
 		
 			// Top
-			new Vector3 ( bounds.center.x - bounds.extents.x, bounds.center.y + bounds.extents.y, bounds.center.z - bounds.extents.z ),
-			new Vector3 ( bounds.center.x + bounds.extents.x, bounds.center.y + bounds.extents.y, bounds.center.z - bounds.extents.z ),
-			new Vector3 ( bounds.center.x + bounds.extents.x, bounds.center.y + bounds.extents.y, bounds.center.z + bounds.extents.z ),
-			new Vector3 ( bounds.center.x - bounds.extents.x, bounds.center.y + bounds.extents.y, bounds.center.z + bounds.extents.z )	
+			CalculateCorner ( obj.transform, new Vector3 ( -1, 1, -1 ), bounds ),
+			CalculateCorner ( obj.transform, new Vector3 ( 1, 1, -1 ), bounds ),
+			CalculateCorner ( obj.transform, new Vector3 ( 1, 1, 1 ), bounds ),
+			CalculateCorner ( obj.transform, new Vector3 ( -1, 1, 1 ), bounds )	
 		];
 		
 		DrawCorner ( corners, 0, 4, 1, 3 );
@@ -292,7 +296,7 @@ class GameCamera extends MonoBehaviour {
 	////////////////////
 	function OnPostRender () {
 		if ( GameCore.GetInteractiveObject() ) {
-			DrawBoundingBox ( GameCore.GetInteractiveObject() );
+			DrawBoundingBox ( GameCore.GetInteractiveObject().gameObject );
 		}
 	}	
 	
@@ -301,6 +305,20 @@ class GameCamera extends MonoBehaviour {
 	// Update and collision
 	////////////////////
 	function Update () {
+		// Check for interaction
+		var hit : RaycastHit;
+		
+		Debug.DrawRay ( transform.position, transform.forward * 4, Color.yellow );
+				
+		if ( Physics.Raycast ( transform.position, transform.forward, hit, 4 ) ) {
+			if ( hit.collider.GetComponent ( InteractiveObject ) && GameCore.GetInteractiveObject() != hit.collider.GetComponent(InteractiveObject) ) {
+				hit.collider.GetComponent ( InteractiveObject ).Focus ();
+			}
+				
+		} else if ( GameCore.GetInteractiveObject() && !GameCore.interactiveObjectLocked ) {
+				GameCore.GetInteractiveObject().Unfocus ();
+		}
+		
 		// Bounding box modifier
 		if ( boundingBoxModifier < 1 ) {
 			boundingBoxDelta = 0.1;

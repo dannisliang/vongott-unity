@@ -181,8 +181,10 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	function Talk () {
+	function Talk () : IEnumerator {
 		if ( conversations.Count > 0 ) {
+			yield WaitForEndOfFrame();
+		
 			GameCore.GetPlayerObject().GetComponent(Player).TalkTo ( this );
 			
 			conversations[currentConvo].Init ();
@@ -489,6 +491,30 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
+	// Interact
+	override function InvokePrompt () {
+		// check for interaction
+		if ( GameCore.controlsActive ) {
+			if ( affiliation == eAffiliation.Ally && !talking  ) {
+				if ( CheckForcedConvo() ) {
+					StartCoroutine ( Talk() );
+					UIHUD.ShowNotification ( "" );
+					
+				} else { 
+					UIHUD.ShowNotification ( "Talk [LeftMouse]" );
+					
+				}
+			}
+		}
+	}
+	
+	override function Interact () {
+		if ( GameCore.controlsActive && Input.GetMouseButtonDown(0) && !talking ) {
+			StartCoroutine ( Talk() );
+			UIHUD.ShowNotification ( "" );
+		}
+	}
+	
 	// Game loop
 	function Update () {
 		if ( vitalState != eVitalState.Alive ) {
@@ -503,25 +529,7 @@ class Actor extends InteractiveObject {
 		if ( !GameCore.started ) { return; }
 				
 		var forward = transform.TransformDirection (Vector3.forward);
-		
-		// check for interaction
-		if ( GameCore.GetInteractiveObject() == this.gameObject && GameCore.controlsActive ) {
-			if ( affiliation == eAffiliation.Ally && !talking  ) {
-				if ( CheckForcedConvo() ) {
-					Talk ();
-					UIHUD.ShowNotification ( "" );
-					
-				} else { 
-					UIHUD.ShowNotification ( "Talk [LeftMouse]" );
-					
-					if ( Input.GetMouseButtonDown(0) ) {
-						Talk();
-						UIHUD.ShowNotification ( "" );
-					}
-				}
-			}
-		}
-		
+				
 		// Detect player
 		var here : Vector3 = head.position;
 		var there : Vector3 = GameCore.GetPlayerObject().GetComponent(Player).head.transform.position;

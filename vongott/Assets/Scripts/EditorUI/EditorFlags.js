@@ -1,15 +1,17 @@
 #pragma strict
 
+import System.Collections.Generic;
+
 class EditorFlags extends OGPage {
 	private class Flag {
 		var instance : GameObject;
 		var textField : OGTextField;
-		var tickBox : OGTickBox;
 		var button : OGButton;
 		
-		function Update ( index : String ) {
-			instance.name = index;
-			button.argument = index;
+		function Update ( i : int ) {
+			instance.name = i.ToString();
+			button.argument = i.ToString();
+			instance.transform.localPosition = new Vector3 ( 0, i * 30, 0 );
 		}
 		
 		function Flag ( name : String ) {
@@ -22,21 +24,11 @@ class EditorFlags extends OGPage {
 			
 			txtName.transform.parent = instance.transform;
 			txtName.transform.localPosition = new Vector3 ( 0, 0, -2 );
-			txtName.transform.localScale = new Vector3 ( 360, 20, 1 );
+			txtName.transform.localScale = new Vector3 ( 440, 20, 1 );
 			
 			textField.maxLength = 48;
-			textField.regex = "^a-zA-Z0-9_";
+			textField.regex = "^a-zA-Z0-9_-";
 			textField.text = name;
-			
-			// Toggle
-			var tickToggle : GameObject = new GameObject ( "toggle" );
-			tickBox = tickToggle.AddComponent ( OGTickBox );
-			
-			tickToggle.transform.parent = instance.transform;
-			tickToggle.transform.localPosition = new Vector3 ( 380, -1, -2 );
-			tickToggle.transform.localScale = new Vector3 ( 20, 20, 1 );
-			
-			tickBox.label = "bool";
 												
 			// Delete button
 			var btnPick : GameObject = new GameObject ( "btn" );
@@ -53,23 +45,24 @@ class EditorFlags extends OGPage {
 	}
 	
 	var scrollView : OGScrollView;
+	var warningMessage : OGLabel;
 	
-	@HideInInspector var flags : List.< Flag > = new List.< Flag >();
-	@HideInInspector var flagTable : JSONObject;
-	@HideInInspector var bottomLine : float = 0;
+	private var flags : List.< Flag > = new List.< Flag >();
+	private var flagTable : JSONObject;
+	private var bottomLine : float = 0;
 	
 	function NewFlag ( name : String ) {		
+		if ( FlagExists ( name ) ) { return; }
+		
 		var flag : Flag = new Flag ( name );
 	
 		flags.Add ( flag );
 		flag.instance.transform.parent = scrollView.transform;
-		flag.instance.transform.localPosition = new Vector3 ( 0, bottomLine, 0 );
 		flag.button.target = this.gameObject;
 		
-		bottomLine += 30;
-		scrollView.scrollLength = bottomLine;
+		SortFlags ();
 		
-		flag.Update ( flags.IndexOf ( flag ).ToString() );
+		scrollView.position.y = flag.instance.transform.position.y - 255;
 	}
 	
 	function Clear () {
@@ -95,10 +88,62 @@ class EditorFlags extends OGPage {
 	
 	function Cancel () {
 		OGRoot.GoToPage ( "MenuBase" );
+	}
+	
+	function OK () {
+		if ( HasDuplicates() ) { return; }
 		
+		OGRoot.GoToPage ( "MenuBase" );
+	
 		SaveFlags ();
 	}
 	
+	function FlagExists ( str : String ) : boolean {
+		for ( var f : Flag in flags ) {
+			if ( f.textField.text == str ) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	function HasDuplicates () : boolean {
+		var dic : Dictionary.< String, Flag > = new Dictionary.< String, Flag > ();
+		
+		for ( var f : Flag in flags ) {
+			if ( dic.ContainsKey ( f.textField.text ) ) {
+				warningMessage.text = "DUPLICATE FLAG:\n" + f.textField.text;
+				return true;
+			} else {
+				dic.Add ( f.textField.text, f );
+			}
+		}
+		
+		return false;
+	}
+	
+	function SortFlags () {
+		var dic : Dictionary.< String, Flag > = new Dictionary.< String, Flag > ();
+		var arr : Array = new Array ();
+		bottomLine = 0;
+		
+		for ( var f : Flag in flags ) {
+			dic.Add ( f.textField.text, f );
+			arr.Push ( f.textField.text );
+		}
+		
+		arr.Sort ();
+		
+		for ( var i = 0; i < arr.length; i++ ) {
+			dic[arr[i] as String].Update ( i );
+			bottomLine += 30;
+		}
+		
+		scrollView.scrollLength = bottomLine;
+		
+	}
+		
 	function SaveFlags () {
 		flagTable = new JSONObject ( JSONObject.Type.OBJECT );
 		
@@ -117,9 +162,12 @@ class EditorFlags extends OGPage {
 		for ( var i = 0; i < flagTable.list.Count; i++ ) {
 			NewFlag ( flagTable.keys[i] as String );
 		}
+		
+		SortFlags ();
 	}
 	
 	override function StartPage () {
+		warningMessage.text = "";	
 		ReadFlags ();
 	}
 }

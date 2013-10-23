@@ -22,6 +22,7 @@ static function AddItem ( item : Item ) {
 	for ( var i = 0; i < slots.Length; i++ ) {
 		if ( slots[i] == null ) {
 			slots[i] = new InventoryEntry ( item );
+			FlagManager.SetItemFlag ( item, true );
 			
 			return;
 		}
@@ -61,6 +62,8 @@ static function RemoveEntry ( e : InventoryEntry, delete : boolean ) {
 	for ( var i = 0; i < slots.Length; i++ ) {
 		if ( slots[i] == e ) {
 			RemoveEntry ( i, delete );
+			FlagManager.SetItemFlag ( e.GetItem(), false );
+			
 			return;
 		}
 	}

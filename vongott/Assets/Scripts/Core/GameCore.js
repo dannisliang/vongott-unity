@@ -16,7 +16,8 @@ private var tempCamRot : Vector3;
 // Static vars
 static var debuggingEnabled = true;
 static var playerName = "Nameless";
-static var interactiveObject : GameObject;
+static var interactiveObject : InteractiveObject;
+static var interactiveObjectLocked : boolean = false;
 
 static var playerObject:GameObject;
 static var scanner:AStarScanner;
@@ -52,7 +53,7 @@ static function GetPlayer () : Player {
 ////////////////////
 // Interactions
 ////////////////////
-static function SetInteractiveObject ( obj : GameObject ) {
+static function SetInteractiveObject ( obj : InteractiveObject ) {
 	interactiveObject = obj;
 	
 	if ( obj ) {
@@ -62,7 +63,7 @@ static function SetInteractiveObject ( obj : GameObject ) {
 	}
 }
 
-static function GetInteractiveObject () {
+static function GetInteractiveObject () : InteractiveObject {
 	return interactiveObject;
 }
 
@@ -353,5 +354,10 @@ function Update () {
 		lastFramerate = frameCounter / timeCounter;
 		frameCounter = 0;
 		timeCounter = 0.0f;
+	}
+	
+	// Interactive objects
+	if ( interactiveObject ) {
+		interactiveObject.Interact ();
 	}
 }

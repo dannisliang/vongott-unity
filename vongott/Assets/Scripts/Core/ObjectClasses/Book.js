@@ -13,6 +13,7 @@ class Book extends InteractiveObject {
 	public function Enter () : IEnumerator {
 		inSession = true;		
 		
+		UIHUD.ToggleCrosshair ();
 		UIHUD.ShowNotification ( "" );
 		UITextDisplay.displayText = content;
 		
@@ -34,6 +35,7 @@ class Book extends InteractiveObject {
 			
 		yield WaitForSeconds ( 1 );
 	
+		UIHUD.ToggleCrosshair ();
 		InvokePrompt ();
 		GameCamera.GetInstance().BlurFocus ( null );
 	
@@ -44,10 +46,14 @@ class Book extends InteractiveObject {
 		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession ) {
 			StartCoroutine ( Enter () );
 		
+			GameCore.interactiveObjectLocked = true;
+		
 		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
 			OGRoot.GoToPage ( "HUD" );
 			
 			StartCoroutine ( Exit () );
+			
+			GameCore.interactiveObjectLocked = false;
 		
 		}
 	}

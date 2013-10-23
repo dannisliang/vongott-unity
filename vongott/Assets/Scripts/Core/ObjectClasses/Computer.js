@@ -58,6 +58,7 @@ class Computer extends InteractiveObject {
 	
 	public function Enter () : IEnumerator {
 		inSession = true;
+		UIHUD.ToggleCrosshair ();
 		
 		GameCore.ToggleControls ( false );
 		UIHUD.ShowNotification ( "" );
@@ -76,6 +77,7 @@ class Computer extends InteractiveObject {
 	
 		yield WaitForSeconds ( 1 );
 	
+		UIHUD.ToggleCrosshair ();
 		InvokePrompt ();
 		GameCamera.GetInstance().BlurFocus ( null );
 	
@@ -94,6 +96,8 @@ class Computer extends InteractiveObject {
 	
 			GameCamera.GetInstance().SetBlur ( true );
 			StartCoroutine ( Enter () );
+			
+			GameCore.interactiveObjectLocked = true;
 		
 		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
 			OGRoot.GoToPage ( "HUD" );
@@ -101,6 +105,8 @@ class Computer extends InteractiveObject {
 			UIComputerDisplay.Clear ();
 			
 			StartCoroutine ( Exit () );
+			
+			GameCore.interactiveObjectLocked = false;
 		
 		}
 		

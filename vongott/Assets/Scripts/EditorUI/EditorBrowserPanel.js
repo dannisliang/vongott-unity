@@ -111,7 +111,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 			btn.style = "listitem";		
 		}
 	}
-	
+		
 	// Select file
 	public function SelectFile ( btn : OGButton ) {
 		DeselectAll ();
@@ -119,7 +119,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 		btn.style = "listitemselected";
 		
 		selectedFile = currentFolder.FindFile ( btn.gameObject.name );
-				
+								
 		inspectorName.text = btn.gameObject.name;
 	}
 

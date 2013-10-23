@@ -66,10 +66,7 @@ class PlayerController extends MonoBehaviour {
 		
 			aimMode = true;
 		
-			if ( this.GetComponent(Player).equippedItem ) {
-				// Set crosshair
-				if ( !UIHUD.crosshair.activeSelf ) { UIHUD.ToggleCrosshair (); }
-				
+			if ( this.GetComponent(Player).equippedItem ) {				
 				// Raycast
 				var here : Vector3 = this.GetComponent(Player).equippedItem.transform.position;
 				var there : Vector3 = Camera.main.transform.position + Camera.main.transform.forward * this.GetComponent(Player).GetEquipmentAttribute( eItemAttribute.FireRange );
@@ -90,9 +87,6 @@ class PlayerController extends MonoBehaviour {
 					shootMode = true;
 				}
 			}				
-		} else if ( UIHUD.crosshair.activeSelf ) {
-			UIHUD.crosshair.SetActive ( false );
-					
 		}
 														
 		// Set speed		

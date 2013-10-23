@@ -4,16 +4,15 @@
 
 class InteractiveObject extends MonoBehaviour {
 	function Focus () {
-		var intObj : GameObject = GameCore.GetInteractiveObject();
-		
-		if ( intObj == this.gameObject || ( intObj && intObj.GetComponent ( LiftableItem ) && intObj.GetComponent ( LiftableItem ).isPickedUp ) ) { return; }
+		var intObj : InteractiveObject = GameCore.GetInteractiveObject();
+		if ( intObj == this || ( intObj && intObj.GetComponent ( LiftableItem ) && intObj.GetComponent ( LiftableItem ).isPickedUp ) ) { return; }
 
-		GameCore.SetInteractiveObject ( this.gameObject );
-		InvokePrompt ();
+		GameCore.SetInteractiveObject ( this );
+		InvokePrompt ();		
 	}
 	
 	function Unfocus () {				
-		if ( GameCore.GetInteractiveObject() == this.gameObject ) {
+		if ( GameCore.GetInteractiveObject() == this ) {
 			GameCore.SetInteractiveObject ( null );
 			UIHUD.ShowNotification ( "" );
 		}
@@ -37,11 +36,7 @@ class InteractiveObject extends MonoBehaviour {
 		}
 	}
 	
-	function Update () {
-		if ( GameCore.GetInteractiveObject() == this.gameObject ) {
-			Interact ();
-		}
-		
+	function Update () {		
 		UpdateObject ();
 	}
 }

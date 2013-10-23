@@ -39,7 +39,6 @@ class UIHUD extends OGPage {
 		crosshair = _crosshair;
 		
 		ShowNotification ( "" );
-		crosshair.SetActive ( false );
 		
 		GameCore.GetInstance().SetPause ( false );
 	}

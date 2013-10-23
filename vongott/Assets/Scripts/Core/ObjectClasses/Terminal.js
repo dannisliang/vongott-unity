@@ -22,6 +22,7 @@ class Terminal extends InteractiveObject {
 	
 	public function Enter () : IEnumerator {
 		inSession = true;
+		UIHUD.ToggleCrosshair ();
 		
 		GameCamera.GetInstance().SetBlur ( true );
 		GameCamera.GetInstance().StorePosRot ();
@@ -42,6 +43,7 @@ class Terminal extends InteractiveObject {
 			
 		yield WaitForSeconds ( 1 );
 	
+		UIHUD.ToggleCrosshair ();
 		InvokePrompt ();
 		GameCamera.GetInstance().BlurFocus ( null );
 	
@@ -57,12 +59,16 @@ class Terminal extends InteractiveObject {
 		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession ) {
 			StartCoroutine ( Enter () );
 		
+			GameCore.interactiveObjectLocked = true;
+		
 		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
 			OGRoot.GoToPage ( "HUD" );
 			UILoginDisplay.Clear ();
 			UIComputerDisplay.Clear ();
 			
 			StartCoroutine ( Exit () );
+		
+			GameCore.interactiveObjectLocked = false;
 		
 		}
 		

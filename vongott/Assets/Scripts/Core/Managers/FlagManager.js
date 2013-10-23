@@ -17,9 +17,15 @@ static function SetFlag ( flag : String, state : boolean ) {
 	
 	if ( flagTable.GetField ( flag ) ) {
 		flagTable.GetField ( flag ).b = state;
+	} else {
+		flagTable.AddField ( flag, state );
 	}
 	
 	GameCore.Print ( "FlagManager | set flag '" + flag + "' to " + state );
+}
+
+static function SetItemFlag ( i : Item, b : boolean ) { 
+	SetFlag ( "0_has_item_" + i.gameObject.name, b );
 }
 
 static function GetFlag ( flag : String, state : boolean ) {
