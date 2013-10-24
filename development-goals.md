@@ -46,9 +46,39 @@ group: navigation
 	
 	- First map
 
-- Animations
+- Animations ( basic placeholders, no transitions )
 
-	- Basic placeholders
+	- Weapons:
+	
+		- Idle single hand
+		
+		- Equip single hand
+		
+		- Idle dual hand
+		
+		- Equip dual hand
+		
+	- Idle stances:
+	
+		- Standing
+		
+		- Crouching
+		
+	- Locomotion:
+	
+		- Walking
+		
+		- Trotting
+		
+		- Sprinting
+		
+		- Crawling ( crouched walk )
+	
+	- Jumping:
+	
+		- Running
+		
+		- Standing 
 
 - Game core
 	
@@ -69,6 +99,8 @@ group: navigation
 		- Environmental changes
 		
 		- Actor influence &#x2713;
+		
+		- Item purchase &#x2713;
 	
 	- Proper character controls
 	
