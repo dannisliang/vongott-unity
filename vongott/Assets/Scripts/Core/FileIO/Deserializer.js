@@ -699,14 +699,6 @@ static function DeserializeConversationToEditor ( str : String ) : List.< Editor
 				groupLine.transform.localScale = Vector3.one;
 			
 			}
-		
-		// dialog boxes
-		} else if ( e.GetField ( "type" ).str == "DialogBox" ) {
-			entry.dialogBox.instructions.text = e.GetField ( "instructions" ).str;
-			entry.dialogBox.title.text = e.GetField ( "title" ).str;
-			entry.dialogBox.useInput.isChecked = e.GetField ( "useInput" ).str == "True";
-			entry.dialogBox.canCancel.isChecked = e.GetField ( "canCancel" ).str == "True";
-		
 		}
 	
 		conversation.Add ( entry );

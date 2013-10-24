@@ -604,17 +604,7 @@ static function SerializeConversation ( c : List.< EditorConversationEntry > ) :
 			entry.AddField ( "conditionBool", g.conditionBool.isChecked );
 			entry.AddField ( "groupType", g.groupType.selectedOption );
 			entry.AddField ( "options", options );
-			entry.AddField ( "speaker", g.speaker.selectedOption );
-		
-		// dialog box
-		} else if ( e.type.selectedOption == "DialogBox" ) {
-			var d = e.dialogBox;
-			
-			entry.AddField ( "canCancel", d.canCancel.isChecked.ToString() );
-			entry.AddField ( "useInput", d.useInput.isChecked.ToString() );
-			entry.AddField ( "title", d.title.text );
-			entry.AddField ( "instructions", d.instructions.text );
-			
+			entry.AddField ( "speaker", g.speaker.selectedOption );			
 		}
 		
 		conversation.Add ( entry );

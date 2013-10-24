@@ -15,14 +15,6 @@ class EditorConversationEntry extends MonoBehaviour {
 		var speaker : OGPopUp;
 	}
 
-	class DialogBox {
-		var instance : GameObject;
-		var instructions : OGTextField;
-		var title : OGTextField;
-		var canCancel : OGTickBox;
-		var useInput : OGTickBox;
-	}
-
 	class Line {
 		var instance : GameObject;
 		var condition : OGButton;
@@ -39,7 +31,6 @@ class EditorConversationEntry extends MonoBehaviour {
 	var index : OGLabel;
 	var type : OGPopUp;
 	var group : Group;
-	var dialogBox : DialogBox;
 	var line : Line;
 	var groupLinePrefab : EditorConversationGroupLine;
 	var buttonNewAbove : OGButton;
@@ -62,25 +53,21 @@ class EditorConversationEntry extends MonoBehaviour {
 	}
 	
 	function ShowType ( name : String ) {
-		if ( name == "DialogBox" ) {
-			dialogBox.instance.SetActive ( true );
-			group.instance.SetActive ( false );
-			line.instance.SetActive ( false );
+		switch ( name ) {
+			case "Group":
+				group.instance.SetActive ( true );
+				line.instance.SetActive ( false );
+				break;
+		
+			case "Line":
+				group.instance.SetActive ( false );
+				line.instance.SetActive ( true );
+				break;
 			
-		} else if ( name == "Group" ) {
-			dialogBox.instance.SetActive ( false );
-			group.instance.SetActive ( true );
-			line.instance.SetActive ( false );
-		
-		} else if ( name == "Line" ) {
-			dialogBox.instance.SetActive ( false );
-			group.instance.SetActive ( false );
-			line.instance.SetActive ( true );
-		
-		} else {
-			dialogBox.instance.SetActive ( false );
-			group.instance.SetActive ( false );
-			line.instance.SetActive ( false );
+			default:
+				group.instance.SetActive ( false );
+				line.instance.SetActive ( false );
+				break;			
 		}
 	}
 
