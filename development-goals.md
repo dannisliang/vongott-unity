@@ -154,7 +154,11 @@ group: navigation
 	
 - Prefabs
 	
-	- Architecture
+	- Vehicles
+	
+		- 747 &#x2713;
+		
+		- Lifts &#x2713;
 	
 	- Furniture
 	
