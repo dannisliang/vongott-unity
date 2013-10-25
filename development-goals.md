@@ -78,7 +78,19 @@ group: navigation
 	
 		- Running
 		
-		- Standing 
+		- Standing
+	
+	- Silly:
+	
+		- He me
+		
+		- He meeee
+		
+		- He me neee
+		
+		- Triangle
+		
+		- Split jump 
 
 - Game core
 	
