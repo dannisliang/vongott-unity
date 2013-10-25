@@ -230,6 +230,21 @@ group: navigation
 	
 	- HUD
 
+- Animations
+	
+	- Lockpicking
+	
+	- Facial animations
+	
+	- Conversational gestures
+	
+	- Melee animations
+	
+	- Upgrade combination animations
+
+	- Transitions between all animations 
+	
+
 ### Phase 5: Finetuning and more artistic content
 
 - Game core
