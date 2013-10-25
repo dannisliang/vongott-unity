@@ -47,6 +47,19 @@ class LiftPanel extends InteractiveObject {
 		iTween.MoveTo ( doorB.gameObject, iTween.Hash ( "position", new Vector3 ( -distance, 0, 2.1 ), "easetype", iTween.EaseType.easeOutQuad, "time", 1, "islocal", true ) );
 	}
 	
+	private function StartLift () {
+		locked = true;
+		
+		GameCore.GetPlayerObject().transform.parent = liftObject;
+	}
+	
+	private function StopLift () {
+		locked = false;
+		MoveDoors ( 0.9 );
+		
+		GameCore.GetPlayerObject().transform.parent = GameCore.levelContainer;
+	}
+	
 	public function Exit ( i : int ) : IEnumerator {
 		OGRoot.GoToPage ( "HUD" );
 		
@@ -93,11 +106,10 @@ class LiftPanel extends InteractiveObject {
 			liftObject.position = Vector3.Slerp ( liftObject.position, allDestinations[currentDestination], Time.deltaTime * 0.5 );
 			
 			if ( Vector3.Distance ( liftObject.position, allDestinations[currentDestination] ) > 0.08 ) {		
-				locked = true;
+				StartLift ();
 			
 			} else if ( locked ) {
-				locked = false;
-				MoveDoors ( 0.9 );
+				StopLift ();
 			
 			}
 			 
