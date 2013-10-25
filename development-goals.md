@@ -52,11 +52,11 @@ group: navigation
 	
 		- Idle single hand
 		
-		- Equip single hand
+		- Aiming single hand
 		
 		- Idle dual hand
 		
-		- Equip dual hand
+		- Aiming dual hand
 		
 	- Idle stances:
 	
@@ -67,6 +67,10 @@ group: navigation
 	- Locomotion:
 	
 		- Walking
+		
+		- Walking aiming single hand
+		
+		- Walking aiming dual hand 
 		
 		- Trotting
 		
