@@ -2,6 +2,8 @@
 
 class LiftPanel extends InteractiveObject {
 	public var liftObject : Transform;
+	public var doorA : Transform;
+	public var doorB : Transform;
 	public var allDestinations : List.< Vector3 > = new List.< Vector3 >();
 	public var currentDestination : int = 0;
 			
@@ -40,10 +42,17 @@ class LiftPanel extends InteractiveObject {
 		ShowPanel ();
 	}
 	
+	private function MoveDoors ( distance : float ) {
+		iTween.MoveTo ( doorA.gameObject, iTween.Hash ( "position", new Vector3 ( distance, 0, 2.1 ), "easetype", iTween.EaseType.easeOutQuad, "time", 1, "islocal", true ) );
+		iTween.MoveTo ( doorB.gameObject, iTween.Hash ( "position", new Vector3 ( -distance, 0, 2.1 ), "easetype", iTween.EaseType.easeOutQuad, "time", 1, "islocal", true ) );
+	}
+	
 	public function Exit ( i : int ) : IEnumerator {
 		OGRoot.GoToPage ( "HUD" );
 		
 		inSession = false;
+		
+		MoveDoors ( 0 );
 		
 		GameCamera.GetInstance().RestorePosRot ( 1 );
 			
@@ -86,8 +95,9 @@ class LiftPanel extends InteractiveObject {
 			if ( Vector3.Distance ( liftObject.position, allDestinations[currentDestination] ) > 0.08 ) {		
 				locked = true;
 			
-			} else {
+			} else if ( locked ) {
 				locked = false;
+				MoveDoors ( 0.9 );
 			
 			}
 			 

@@ -386,7 +386,7 @@ function Update () {
 	var vertical = Camera.main.transform.TransformDirection ( Vector3.down );
 	
 	// right mouse click
-	if ( Input.GetMouseButtonDown(1) ) {
+	if ( Input.GetMouseButtonDown(1) && !Input.GetKey ( KeyCode.LeftAlt ) ) {
 		RefreshFixPoint ( true );
 	
 	// right mouse drag

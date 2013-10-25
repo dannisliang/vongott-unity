@@ -161,7 +161,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	// Update
 	//////////////////
 	function Update () {
-		if ( obj.GetComponent ( Door ) ) {
+		if ( obj && obj.GetComponent ( Door ) ) {
 			obj.GetComponent ( Door ).locked = doorLocked.isChecked;
 			obj.GetComponent ( Door ).lockLevel = int.Parse(doorLockLevel.selectedOption);
 		}
