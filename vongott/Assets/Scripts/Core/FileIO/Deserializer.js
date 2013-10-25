@@ -26,6 +26,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var tl : Terminal = newPfb.GetComponent(Terminal);
 		var sc : SurveillanceCamera = newPfb.GetComponent(SurveillanceCamera);
 		var kp : Keypad = newPfb.GetComponent(Keypad);
+		var lp : LiftPanel = newPfb.GetComponentInChildren(LiftPanel);
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;
@@ -60,6 +61,10 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		if ( kp != null && pfb.HasField ( "keypad" ) ) {
 			DeserializeKeypad ( pfb.GetField ( "keypad" ), kp );
+		}
+		
+		if ( lp != null && pfb.HasField ( "liftPanel" ) ) {
+			DeserializeLiftPanel ( pfb.GetField ( "liftPanel" ), lp );
 		}
 		
 		if ( pfb.HasField("materialPath") ) {
@@ -402,6 +407,17 @@ static function DeserializeMultiLineString ( lines : JSONObject ) : String {
 ////////////////////
 // Deserialize components individually
 ////////////////////
+// LiftPanel
+static function DeserializeLiftPanel ( o : JSONObject, lp : LiftPanel ) {
+	lp.allDestinations.Clear ();
+	
+	for ( var v : Object in o.GetField("allDestinations").list ) {
+		var j : JSONObject = v as JSONObject;
+		
+		lp.allDestinations.Add ( DeserializeVector3 ( j ) );
+	}
+}
+
 // Keypad
 static function DeserializeKeypad ( o : JSONObject, kp : Keypad ) {
 	kp.passCode = o.GetField ( "passCode" ).str;

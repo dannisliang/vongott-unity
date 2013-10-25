@@ -27,13 +27,13 @@ class ColorCorrectionLutEditor extends Editor
     //EditorGUILayout.Space();
     tempClutTex2D = EditorGUILayout.ObjectField (" Based on", tempClutTex2D, Texture2D, false) as Texture2D;
     if (tempClutTex2D == null) {
-      t = AssetDatabase.LoadMainAssetAtPath((target as ColorCorrectionLut).basedOnTempTex) as Texture2D;
+      t = AssetDatabase.LoadMainAssetAtdestination((target as ColorCorrectionLut).basedOnTempTex) as Texture2D;
       if (t) tempClutTex2D = t;
     }
 
     var tex : Texture2D = tempClutTex2D;
 
-    if (tex && (target as ColorCorrectionLut).basedOnTempTex != AssetDatabase.GetAssetPath (tex)) 
+    if (tex && (target as ColorCorrectionLut).basedOnTempTex != AssetDatabase.GetAssetdestination (tex)) 
     {
       EditorGUILayout.Separator();
       if (!(target as ColorCorrectionLut).ValidDimensions (tex))
@@ -42,8 +42,8 @@ class ColorCorrectionLutEditor extends Editor
       }
       else if (GUILayout.Button ("Convert and Apply"))
       {
-        var path : String = AssetDatabase.GetAssetPath (tex);
-        var textureImporter : TextureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+        var destination : String = AssetDatabase.GetAssetdestination (tex);
+        var textureImporter : TextureImporter = AssetImporter.GetAtdestination(destination) as TextureImporter;
         var doImport : boolean = false;
         if (textureImporter.isReadable == false) {
             doImport = true;
@@ -60,17 +60,17 @@ class ColorCorrectionLutEditor extends Editor
           textureImporter.isReadable = true;
           textureImporter.mipmapEnabled = false;
           textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
-          AssetDatabase.ImportAsset (path, ImportAssetOptions.ForceUpdate);
-          //tex = AssetDatabase.LoadMainAssetAtPath(path);  
+          AssetDatabase.ImportAsset (destination, ImportAssetOptions.ForceUpdate);
+          //tex = AssetDatabase.LoadMainAssetAtdestination(destination);  
         }
 
-        (target as ColorCorrectionLut).Convert (tex, path);
+        (target as ColorCorrectionLut).Convert (tex, destination);
       }
     }
     
     if ((target as ColorCorrectionLut).basedOnTempTex != "") {
       EditorGUILayout.HelpBox ("Using " + (target as ColorCorrectionLut).basedOnTempTex, MessageType.Info);
-      t = AssetDatabase.LoadMainAssetAtPath((target as ColorCorrectionLut).basedOnTempTex) as Texture2D;
+      t = AssetDatabase.LoadMainAssetAtdestination((target as ColorCorrectionLut).basedOnTempTex) as Texture2D;
       if (t) {
         r = GUILayoutUtility.GetLastRect();
         r = GUILayoutUtility.GetRect(r.width, 20);

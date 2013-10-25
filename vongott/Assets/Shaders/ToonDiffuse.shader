@@ -27,7 +27,7 @@ CGPROGRAM
 		
 		// custom lighting function that uses a texture ramp based
 		// on angle between light direction and normal
-		#pragma lighting ToonRamp exclude_path:prepass
+		#pragma lighting ToonRamp exclude_destination:prepass
 		inline half4 LightingToonRamp (SurfaceOutput s, half3 lightDir, half atten)
 		{
 			#ifndef USING_DIRECTIONAL_LIGHT

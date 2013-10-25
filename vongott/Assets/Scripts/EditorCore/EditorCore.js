@@ -665,6 +665,11 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "Wallet", obj );
 	}
 	
+	// Lift
+	if ( obj.GetComponent ( Lift ) ) {
+		inspector.AddMenu ( "LiftPanel", obj, true );
+	}
+	
 	// Trigger
 	if ( obj.GetComponent ( Trigger ) ) {
 		inspector.AddMenu ( "Trigger", obj );

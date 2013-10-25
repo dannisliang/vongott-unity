@@ -28,6 +28,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		var tl : Terminal = obj.GetComponent(Terminal);
 		var sc : SurveillanceCamera = obj.GetComponent(SurveillanceCamera);
 		var kp : Keypad = obj.GetComponent(Keypad);
+		var lp : LiftPanel = obj.GetComponentInChildren(LiftPanel);
 		
 		pfb.AddField ( "path", obj.GetComponent(Prefab).path );
 		pfb.AddField ( "id", obj.GetComponent(Prefab).id );
@@ -62,6 +63,10 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		if ( kp != null ) {
 			pfb.AddField ( "keypad", SerializeKeypad ( kp ) );
+		}
+		
+		if ( lp != null ) {
+			pfb.AddField ( "liftPanel", SerializeLiftPanel ( lp ) );
 		}
 		
 		if ( obj.GetComponent(Prefab).materialPath != "" && obj.GetComponent(Prefab).canChangeMaterial ) {
@@ -306,6 +311,20 @@ static function SerializeMultiLineString ( str : String ) : JSONObject {
 ////////////////////
 // Serialize components individually
 ////////////////////
+// LiftPanel
+static function SerializeLiftPanel ( lp : LiftPanel ) : JSONObject {
+	var liftPanel : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	var allDestinations : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+
+	for ( var v : Vector3 in lp.allDestinations ) {
+		allDestinations.Add ( SerializeVector3 ( v ) );
+	}
+
+	liftPanel.AddField ( "allDestinations", allDestinations );
+	
+	return liftPanel;
+}
+
 // Keypad
 static function SerializeKeypad ( kp : Keypad ) : JSONObject {
 	var keypad : JSONObject = new JSONObject (JSONObject.Type.OBJECT);

@@ -206,25 +206,10 @@ class EditorMenuBase extends OGPage {
 	}
 	
 	// Display the object's relevant menus
-	function AddMenu ( menu : String, selectedObj : GameObject ) {
-		AddMenu ( menu, selectedObj, false );
-	}
-	
-	function AddMenu ( menu : String, selectedObj : GameObject, hasPriority : boolean ) {
-		var menuObj : GameObject;
+	private function DisplayMenu ( menu : String, menuObj : GameObject, selectedObj : GameObject ) : IEnumerator {
+		yield WaitForEndOfFrame ();
 		
-		for ( var c : GameObject in inspectorMenus ) {		
-			if ( c.name == menu ) {
-				menuObj = c;
-				continue;
-			}
-		}
-		
-		if ( !menuObj ) {
-			return;
-		}
-		
-		tabs.AddTab ( menu, menuObj, hasPriority );
+		yield WaitForSeconds ( 0.5 );
 		
 		switch ( menu ) {
 			case "Light":
@@ -274,7 +259,34 @@ class EditorMenuBase extends OGPage {
 			case "Wallet":
 				menuObj.GetComponent(EditorInspectorWallet).Init(selectedObj);
 				break;
+				
+			case "LiftPanel":
+				menuObj.GetComponent(EditorInspectorLiftPanel).Init(selectedObj);
+				break;
 		}
+	}
+	
+	function AddMenu ( menu : String, selectedObj : GameObject ) {
+		AddMenu ( menu, selectedObj, false );
+	}
+	
+	function AddMenu ( menu : String, selectedObj : GameObject, hasPriority : boolean ) {
+		var menuObj : GameObject;
+		
+		for ( var c : GameObject in inspectorMenus ) {		
+			if ( c.name == menu ) {
+				menuObj = c;
+				continue;
+			}
+		}
+		
+		if ( !menuObj ) {
+			return;
+		}
+		
+		tabs.AddTab ( menu, menuObj, hasPriority );	
+		
+		StartCoroutine ( DisplayMenu ( menu, menuObj, selectedObj ) );
 	}
 	
 			
