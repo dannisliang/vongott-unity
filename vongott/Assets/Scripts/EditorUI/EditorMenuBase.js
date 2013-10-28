@@ -212,6 +212,10 @@ class EditorMenuBase extends OGPage {
 		yield WaitForSeconds ( 0.5 );
 		
 		switch ( menu ) {
+			case "Shape":
+				menuObj.GetComponent(EditorInspectorShape).Init(selectedObj);
+				break;
+			
 			case "Light":
 				menuObj.GetComponent(EditorInspectorLight).Init(selectedObj);
 				break;

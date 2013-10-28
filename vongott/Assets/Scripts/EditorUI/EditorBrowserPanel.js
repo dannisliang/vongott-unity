@@ -7,10 +7,12 @@ class EditorBrowserPanel extends MonoBehaviour {
 	public var title : OGLabel;	
 	public var inspectorName : OGLabel;
 	public var replaceButton : GameObject;
+	public var shapeButtons : GameObject;
 					
 	// Private vars
 	private var resourcesFolder : EditorFileSystem.Folder;
 	private var selectedFile : Object;
+	private var selectedShape : String;
 	private var currentTab : String = "";
 	private var currentFolder : EditorFileSystem.Folder;
 	private var currentActorsCategory : String = "";
@@ -25,18 +27,30 @@ class EditorBrowserPanel extends MonoBehaviour {
 	
 	// Init
 	public function Init ( tab : String, category : String ) {
-		resourcesFolder = EditorFileSystem.GetResources();
+		if ( tab == "Shapes" ) {
+			shapeButtons.SetActive ( true );
+			fileList.gameObject.SetActive ( false );
 		
-		currentTab = tab;
-		title.text = currentTab;
+			currentTab = tab;
+			title.text = currentTab;
 		
-		popupMenu.options = resourcesFolder.FindFolder(tab).GetFolderNames();
-		
-		popupMenu.selectedOption = category;
-		
-		Debug.Log ( "EditorBrowserPanel | Finding " + tab + " > " + category );
-		
-		PopulateList ( resourcesFolder.FindFolder(tab).FindFolder(category) );
+		} else {
+			shapeButtons.SetActive ( false );
+			fileList.gameObject.SetActive ( true );
+			
+			resourcesFolder = EditorFileSystem.GetResources();
+			
+			currentTab = tab;
+			title.text = currentTab;
+			
+			popupMenu.options = resourcesFolder.FindFolder(tab).GetFolderNames();
+			
+			popupMenu.selectedOption = category;
+			
+			Debug.Log ( "EditorBrowserPanel | Finding " + tab + " > " + category );
+			
+			PopulateList ( resourcesFolder.FindFolder(tab).FindFolder(category) );
+		}
 	}
 
 	// Pick category
@@ -64,27 +78,35 @@ class EditorBrowserPanel extends MonoBehaviour {
 		
 		var category : String;
 		
-		if ( tab == "Actors" ) {
-			if ( currentActorsCategory == "" ) {
-				currentActorsCategory = "NPC";
-			}
-			
-			category = currentActorsCategory;
+		switch ( tab ) {
+			case "Actors":
+				popupMenu.gameObject.SetActive ( true );
+				if ( currentActorsCategory == "" ) {
+					currentActorsCategory = "NPC";
+				}
+				category = currentActorsCategory;
+				break;
 		
-		} else if ( tab == "Items" ) {
-			if ( currentItemsCategory == "" ) {
-				currentItemsCategory = "Equipment";
-			}
-			
-			category = currentItemsCategory;
+			case "Items":
+				popupMenu.gameObject.SetActive ( true );
+				if ( currentItemsCategory == "" ) {
+					currentItemsCategory = "Equipment";
+				}
+				category = currentItemsCategory;
+				break;
 		
-		} else if ( tab == "Prefabs" ) {
-			if ( currentPrefabsCategory == "" ) {
-				currentPrefabsCategory = "Walls";
-			}
-			
-			category = currentPrefabsCategory;
-		
+			case "Prefabs":
+				popupMenu.gameObject.SetActive ( true );
+				if ( currentPrefabsCategory == "" ) {
+					currentPrefabsCategory = "Walls";
+				}
+				category = currentPrefabsCategory;
+				break;
+				
+			default:
+				popupMenu.gameObject.SetActive ( false );
+				category = "Shapes";
+				break;
 		}
 		
 		Init ( tab, category );
@@ -92,8 +114,14 @@ class EditorBrowserPanel extends MonoBehaviour {
 
 	// Place object
 	public function PlaceObject () {
-		if ( selectedFile.GetType() == GameObject ) {
-			EditorCore.AddObject ( selectedFile as GameObject );
+		if ( currentTab == "Shapes" ) {
+			EditorCore.AddObject ( Resources.Load ( "Shapes/" + selectedShape ) as GameObject );
+		
+		} else {
+			if ( selectedFile.GetType() == GameObject ) {
+				EditorCore.AddObject ( selectedFile as GameObject );
+			}
+	
 		}
 	}
 
@@ -106,12 +134,30 @@ class EditorBrowserPanel extends MonoBehaviour {
 
 	// Deselect all
 	function DeselectAll () {
-		for ( var i = 0; i < fileList.transform.childCount; i++ ) {
-			var btn : OGButton = fileList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
+		var i : int = 0;
+		var btn : OGButton;
+		
+		for ( i = 0; i < fileList.transform.childCount; i++ ) {
+			btn = fileList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
+			btn.style = "listitem";		
+		}
+		
+		for ( i = 0; i < shapeButtons.transform.childCount; i++ ) {
+			btn = shapeButtons.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
 			btn.style = "listitem";		
 		}
 	}
 		
+	// Select shape
+	public function SelectShape ( btn : OGButton ) {
+		DeselectAll ();
+		
+		btn.style = "listitemselected";
+		
+		inspectorName.text = btn.text;
+		selectedShape = "shape_" + btn.gameObject.name;
+	}
+	
 	// Select file
 	public function SelectFile ( btn : OGButton ) {
 		DeselectAll ();

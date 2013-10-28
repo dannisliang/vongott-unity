@@ -191,6 +191,10 @@ function DrawBoundingBoxes () {
 			bounds = obj.GetComponent(MeshFilter).sharedMesh.bounds;
 		}
 		
+		bounds.size.x *= obj.transform.localScale.x;
+		bounds.size.y *= obj.transform.localScale.y;
+		bounds.size.z *= obj.transform.localScale.z;
+		
 		var pos : Vector3 = obj.transform.position;
 					
 		// Bottom plane

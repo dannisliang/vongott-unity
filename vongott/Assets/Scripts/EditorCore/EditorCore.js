@@ -407,6 +407,32 @@ static function CreateSurface () {
 
 
 ////////////////////
+// Shape
+////////////////////
+// Solidify
+public function AddShape ( shape : Shape ) {
+	Debug.Log ( "EditorCore | Adding shape " + shape );
+	
+	var combinedMesh : CombinedMesh = workspace.gameObject.FindObjectOfType ( CombinedMesh );
+	
+	if ( !combinedMesh ) {
+		combinedMesh = Instantiate ( Resources.Load ( "Prefabs/Editor/CombinedMesh" ) as GameObject ).GetComponent ( CombinedMesh );
+		combinedMesh.gameObject.name = "CombinedMesh";
+		combinedMesh.transform.parent = workspace;
+		combinedMesh.transform.localPosition = Vector3.zero;
+		combinedMesh.transform.localEulerAngles = Vector3.zero;
+		combinedMesh.transform.localScale = Vector3.one;
+	}
+	
+	combinedMesh.Add ( shape.GetComponent(MeshFilter).sharedMesh, shape.transform );
+	
+	DeselectObject ();
+	
+	Destroy ( shape.gameObject );
+}
+
+
+////////////////////
 // Actor
 ////////////////////
 // Get actor form GUID
@@ -582,7 +608,7 @@ static function DeselectObject ( nextObject : GameObject ) {
 static function SelectObject ( obj : GameObject ) {
 	transformEnd = null;
 		
-	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
+	if ( !obj || obj.GetComponent ( OGButton3D ) || obj.GetComponent ( CombinedMesh ) ) {
 		return;
 	}
 	
@@ -608,6 +634,11 @@ static function SelectObject ( obj : GameObject ) {
 	
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
+	
+	// Shape
+	if ( obj.GetComponent ( Shape ) ) {
+		inspector.AddMenu ( "Shape", obj );
+	}
 	
 	// Prefab
 	if ( obj.GetComponent ( Prefab ) ) {
