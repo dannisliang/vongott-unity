@@ -51,7 +51,7 @@ class LightSource extends MonoBehaviour {
 			this.gameObject.AddComponent(GUID);
 		}
 		
-		if ( hideInGame ) {
+		if ( hideInGame && !EditorCore.running ) {
 			this.GetComponentInChildren ( MeshRenderer ).enabled = false;
 		}
 		
