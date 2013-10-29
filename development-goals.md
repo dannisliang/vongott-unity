@@ -143,6 +143,10 @@ group: navigation
 	- More view modes in the asset browser &#x2713;
 	
 	- Optimisations
+	
+	- Boolean mesh implementation for architecture
+	
+	- Undo functionality &#x2713; 
 
 - Gameplay
 
