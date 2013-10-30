@@ -71,7 +71,7 @@ class CombinedMesh extends MonoBehaviour {
 		this.GetComponent(MeshFilter).mesh = newMesh;
 		this.GetComponent(MeshFilter).mesh.CombineMeshes(combine);
 	
-		this.GetComponent(MeshRenderer).materials[0] = material;
+		this.GetComponent(MeshRenderer).sharedMaterials[0] = material;
 		
 		UpdateCollider ();
 	}
