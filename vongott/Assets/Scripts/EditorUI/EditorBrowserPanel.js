@@ -127,8 +127,13 @@ class EditorBrowserPanel extends MonoBehaviour {
 
 	// Replace object
 	public function ReplaceObject () {
-		if ( selectedFile.GetType() == GameObject ) {
-			EditorCore.ReplaceSelectedObject ( selectedFile as GameObject );
+		if ( currentTab == "Shapes" ) {
+			EditorCore.ReplaceSelectedObject ( Resources.Load ( "Shapes/" + selectedShape ) as GameObject );
+		
+		} else {
+			if ( selectedFile.GetType() == GameObject ) {
+				EditorCore.ReplaceSelectedObject ( selectedFile as GameObject );
+			}
 		}
 	}
 

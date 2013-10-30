@@ -7,53 +7,52 @@ class EditorSelectionBox extends MonoBehaviour {
 	private var lines : Vector3[];
 	private var linesArray : Array;
 	
-	function Fit ( obj : GameObject, wireframe : boolean ) {
+	function Fit ( mesh : Mesh, wireframe : boolean ) {
 		wireframeMode = wireframe;
 		
 		this.GetComponent(MeshRenderer).enabled = !wireframeMode;
 		
-		var skinnedMeshRenderer : SkinnedMeshRenderer = obj.GetComponentInChildren(SkinnedMeshRenderer);
-		var meshFilter : MeshFilter = obj.GetComponentInChildren(MeshFilter);
-		var useTransform : Transform;
-		var mesh : Mesh;
-		var newMesh : Mesh = new Mesh();
-		var rotation : Quaternion = obj.transform.rotation;
-										
-		if ( skinnedMeshRenderer ) {
-			mesh = skinnedMeshRenderer.sharedMesh;
-			rotation = skinnedMeshRenderer.transform.rotation;
-		
-		} else if ( meshFilter ) {
-			mesh = meshFilter.sharedMesh;	
-			rotation = meshFilter.transform.rotation;
-		
-		}
-		
-		newMesh.vertices = mesh.vertices;
-		newMesh.triangles = mesh.triangles;
-		
 		if ( wireframe ) {
 			linesArray = new Array();
-					
-		    var vertices = mesh.vertices;
-		    var triangles = mesh.triangles;
 		
-		    for ( var i = 0; i < triangles.length / 3; i++) {
-		        linesArray.Add(vertices[triangles[i * 3]]);
-		        linesArray.Add(vertices[triangles[i * 3 + 1]]);
-		        linesArray.Add(vertices[triangles[i * 3 + 2]]);
+		    for ( var i : int = 0; i < mesh.triangles.length / 3; i++) {
+		        linesArray.Add(this.transform.TransformPoint(mesh.vertices[mesh.triangles[i * 3]]));
+		        linesArray.Add(this.transform.TransformPoint(mesh.vertices[mesh.triangles[i * 3 + 1]]));
+		        linesArray.Add(this.transform.TransformPoint(mesh.vertices[mesh.triangles[i * 3 + 2]]));
 		    }
 		
 		    lines = linesArray.ToBuiltin(Vector3) as Vector3[];
 		
 		} else {
-			this.GetComponent(MeshFilter).sharedMesh = newMesh;
+			this.GetComponent(MeshFilter).sharedMesh = mesh;
 		
 		}
+	}
 	
-		transform.localScale = obj.transform.localScale;
-		transform.position = obj.transform.position;
-		transform.rotation = rotation;
+	function Fit ( vertices : Vector3[], triangles : int[], wireframe : boolean ) {
+		var newMesh : Mesh = new Mesh();
+		newMesh.vertices = vertices;
+		newMesh.triangles = triangles;
+		
+		Fit ( newMesh, wireframe );
+	}
+	
+	function Fit ( obj : GameObject, wireframe : boolean ) {
+		var mesh : Mesh;
+		var skinnedMeshRenderer : SkinnedMeshRenderer = obj.GetComponentInChildren(SkinnedMeshRenderer);
+		var meshFilter : MeshFilter = obj.GetComponentInChildren(MeshFilter);
+		
+		if ( skinnedMeshRenderer ) {
+			mesh = skinnedMeshRenderer.sharedMesh;
+		
+		} else if ( meshFilter ) {
+			mesh = meshFilter.sharedMesh;
+		
+		}
+		
+		this.transform.position = obj.transform.position;
+		
+		Fit ( mesh, wireframe );
 	}
 	
 	function OnRenderObject() {  

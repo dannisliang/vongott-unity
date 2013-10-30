@@ -26,6 +26,7 @@ class CombinedMesh extends MonoBehaviour {
 	
 	private function ScaleMesh ( mesh : Mesh, scale : Vector3 ) : Mesh {
 		var newMesh : Mesh = new Mesh();
+		newMesh.subMeshCount = mesh.subMeshCount;
 		newMesh.vertices = mesh.vertices;
 		newMesh.triangles = mesh.triangles;
 		newMesh.uv = mesh.uv;
@@ -46,23 +47,31 @@ class CombinedMesh extends MonoBehaviour {
 		return newMesh;
 	}
 	
-	public function Add ( meshAdded : Mesh, transformAdded : Transform ) {
-		var meshBefore : Mesh = this.GetComponent(MeshFilter).sharedMesh;
+	public function Union ( shape : Shape ) {
+		
+	}
+	
+	public function Add ( meshAdded : Mesh, transformAdded : Transform, material : Material ) {
+		var meshBefore : Mesh = this.GetComponent(MeshFilter).mesh;
 		
 		if ( !meshBefore ) {
-			this.GetComponent(MeshFilter).sharedMesh = ScaleMesh ( meshAdded, transformAdded.localScale );
-		
-		} else {
-			var combine : CombineInstance[] = new CombineInstance[2];
-			combine[0].mesh = meshBefore;
-			combine[0].transform = this.transform.localToWorldMatrix;
-			combine[1].mesh = ScaleMesh ( meshAdded, transformAdded.localScale );
-			combine[1].transform = transformAdded.localToWorldMatrix;
-			
-			this.GetComponent(MeshFilter).sharedMesh = new Mesh();
-			this.GetComponent(MeshFilter).sharedMesh.CombineMeshes(combine);
+			meshBefore = new Mesh();
 		
 		}
+		
+		var combine : CombineInstance[] = new CombineInstance[2];
+		combine[0].mesh = meshBefore;
+		combine[0].transform = this.transform.localToWorldMatrix;
+		combine[1].mesh = ScaleMesh ( meshAdded, transformAdded.localScale );
+		combine[1].transform = transformAdded.localToWorldMatrix;
+		
+		var newMesh : Mesh = new Mesh();
+		newMesh.name = "CombinedMesh";
+		
+		this.GetComponent(MeshFilter).mesh = newMesh;
+		this.GetComponent(MeshFilter).mesh.CombineMeshes(combine);
+	
+		this.GetComponent(MeshRenderer).materials[0] = material;
 		
 		UpdateCollider ();
 	}

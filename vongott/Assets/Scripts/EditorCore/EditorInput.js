@@ -120,7 +120,7 @@ function Update () {
 			spd = 10;
 			
 			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-				spd = spd / 16;
+				spd = spd / 20;
 			} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
 				spd = spd * 4;
 			} 
@@ -149,34 +149,42 @@ function Update () {
 			
 			var o : GameObject = EditorCore.selectedObject;
 			
-			var xRotate : float = o.transform.localEulerAngles.x + ( x * 2 );
-			var yRotate : float = o.transform.localEulerAngles.y + ( y * 2 );
-			var zRotate : float = o.transform.localEulerAngles.z + ( z * 2 );
+			var rotate : Vector3 = new Vector3 (
+				o.transform.localEulerAngles.x + ( x * 2 ),
+				o.transform.localEulerAngles.y + ( y * 2 ),
+				o.transform.localEulerAngles.z + ( z * 2 )
+			);
 			
-			var xScale : float = o.transform.localScale.x + x;
-			var yScale : float = o.transform.localScale.y + y;
-			var zScale : float = o.transform.localScale.z + z;
+			var scale : Vector3 = new Vector3 (
+				o.transform.localScale.x + x,
+				o.transform.localScale.y + y,
+				o.transform.localScale.z + z
+			);
+			
+			if ( scale.x < 0.1 || scale.y < 0.1 || scale.z < 0.1 ) {
+				return;
+			}
 			
 			if ( EditorCore.snapEnabled ) {
 				if ( EditorCore.gridLineDistance > 0 ) {
-					xRotate = Round ( xRotate, EditorCore.gridLineDistance / 8 );
-					xScale = Round ( xScale, EditorCore.gridLineDistance / 8 );
+					rotate.x = Round ( rotate.x, EditorCore.gridLineDistance / 8 );
+					scale.x = Round ( scale.x, EditorCore.gridLineDistance / 8 );
 				
-					yRotate = Round ( yRotate, EditorCore.gridLineDistance / 8 );
-					yScale = Round ( yScale, EditorCore.gridLineDistance / 8 );
+					rotate.y = Round ( rotate.y, EditorCore.gridLineDistance / 8 );
+					scale.y = Round ( scale.y, EditorCore.gridLineDistance / 8 );
 				
-					zRotate = Round ( zRotate, EditorCore.gridLineDistance / 8 );
-					zScale = Round ( zScale, EditorCore.gridLineDistance / 8 );
+					rotate.z = Round ( rotate.z, EditorCore.gridLineDistance / 8 );
+					scale.z = Round ( scale.z, EditorCore.gridLineDistance / 8 );
 				}
 			}		
 			
 			if ( EditorCore.rotateMode ) {
-				o.transform.localEulerAngles = new Vector3 ( xRotate, yRotate, zRotate );
+				o.transform.localEulerAngles = rotate;
 				EditorCore.gizmo.transform.localEulerAngles = Vector3.zero;
 				EditorCore.FitSelectionBox ();
 	
 			} else if ( EditorCore.scaleMode ) {
-				o.transform.localScale = new Vector3 ( xScale, yScale, zScale );
+				o.transform.localScale = scale;
 				EditorCore.FitSelectionBox ();
 				
 				// Fit texture
@@ -203,14 +211,25 @@ function Update () {
 				mouseGoal = mouseHit.collider.gameObject;
 			}
 			
-			if ( mouseGoal != null ) {
+			if ( mouseGoal != null ) {				
 				if ( EditorCore.pickerType && !mouseGoal.collider.gameObject.GetComponent(EditorCore.pickerType) ) { return; }
 			
 				var obj : GameObject = EditorCore.GetSelectedObject();
 				
-				// Return name and GUID
 				if ( obj != null ) {
-					if ( obj.GetComponent(Keypad) || obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
+					// Return triangles
+					if ( obj.GetComponent ( CombinedMesh ) ) {
+						//EditorCore.SelectTriangle ( obj, mouseHit.triangleIndex );
+						EditorCore.pickerCallback ( mouseHit.triangleIndex );
+						EditorCore.pickerCallback = null;
+						
+						EditorCore.SetPickMode ( false );
+						EditorCore.ReselectObject ();
+					
+						return;				
+				
+					// Return name and GUID
+					} else if ( obj.GetComponent(Keypad) || obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
 						EditorCore.pickerCallback ( mouseGoal.name, mouseGoal.GetComponent(GUID).GUID );
 						EditorCore.pickerCallback = null;
 						

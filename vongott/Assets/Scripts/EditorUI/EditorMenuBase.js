@@ -24,6 +24,9 @@ class EditorMenuBase extends OGPage {
 	
 	var initName : boolean = false;
 	
+	var transformDisplay : GameObject;
+	
+	
 	////////////////////
 	// File menu
 	////////////////////
@@ -206,14 +209,15 @@ class EditorMenuBase extends OGPage {
 	}
 	
 	// Display the object's relevant menus
-	private function DisplayMenu ( menu : String, menuObj : GameObject, selectedObj : GameObject ) : IEnumerator {
-		yield WaitForEndOfFrame ();
-		
-		yield WaitForSeconds ( 0.5 );
+	private function DisplayMenu ( menu : String, menuObj : GameObject, selectedObj : GameObject ) {
 		
 		switch ( menu ) {
 			case "Shape":
 				menuObj.GetComponent(EditorInspectorShape).Init(selectedObj);
+				break;
+			
+			case "CombinedMesh":
+				menuObj.GetComponent(EditorInspectorCombinedMesh).Init(selectedObj);
 				break;
 			
 			case "Light":
@@ -269,7 +273,7 @@ class EditorMenuBase extends OGPage {
 				break;
 		}
 	}
-	
+		
 	function AddMenu ( menu : String, selectedObj : GameObject ) {
 		AddMenu ( menu, selectedObj, false );
 	}
@@ -290,7 +294,7 @@ class EditorMenuBase extends OGPage {
 		
 		tabs.AddTab ( menu, menuObj, hasPriority );	
 		
-		StartCoroutine ( DisplayMenu ( menu, menuObj, selectedObj ) );
+		DisplayMenu ( menu, menuObj, selectedObj );
 	}
 	
 			

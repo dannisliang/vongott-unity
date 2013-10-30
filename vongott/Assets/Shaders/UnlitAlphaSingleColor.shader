@@ -8,7 +8,7 @@ Shader "Vongott/Unlit/SingleColor" {
 		ZWrite Off
 		Cull Off
 		Blend SrcAlpha OneMinusSrcAlpha
-		Tags {Queue=Transparent}
+		Tags {"Queue"="Transparent"}
 		 
 		SubShader {
 			Color [_Color]

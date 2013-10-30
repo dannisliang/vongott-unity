@@ -84,6 +84,23 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		}
 		
 		return newPfb;
+	
+	// check if combined mesh
+	} else if ( obj.HasField("CombinedMesh") ) {
+		var cbm : JSONObject = obj.GetField("CombinedMesh");
+		var newCbm : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/CombinedMesh" ) as GameObject );
+		
+		newCbm.GetComponent(MeshFilter).sharedMesh = DeserializeMesh ( cbm.GetField("mesh") );
+		newCbm.GetComponent(MeshCollider).sharedMesh = newCbm.GetComponent(MeshFilter).sharedMesh;
+		newCbm.GetComponent(MeshRenderer).sharedMaterial = Resources.Load ( "Materials/" + cbm.GetField("material").str ) as Material;
+		
+		newCbm.transform.localScale = DeserializeVector3 ( cbm.GetField("localScale") );
+		newCbm.transform.localPosition = DeserializeVector3 ( cbm.GetField("localPosition") );
+		newCbm.transform.localEulerAngles = DeserializeVector3 ( cbm.GetField("localEulerAngles") );
+		
+		newCbm.name = obj.GetField("name").str;
+		
+		return newCbm;
 
 	// check if lightsource
 	} else if ( obj.HasField("LightSource") ) {
@@ -624,6 +641,34 @@ static function DeserializeVector2 ( v : JSONObject ) : Vector2 {
 	var vector : Vector3 = new Vector3 ( x.n, y.n );
 		
 	return vector;
+}
+
+// Mesh
+static function DeserializeMesh ( m : JSONObject ) : Mesh {
+	var mesh : Mesh = new Mesh();
+	var vertices : Vector3[] = new Vector3 [ m.GetField ( "vertices" ).list.Count ];
+	var uv : Vector2[] = new Vector2 [ m.GetField ( "uv" ).list.Count ];
+	var triangles : int[] = new int [ m.GetField ( "triangles" ).list.Count ];
+	
+	var i : int = 0;
+	
+	for ( i = 0; i < vertices.Length; i++ ) {
+		vertices[i] = DeserializeVector3 ( m.GetField ( "vertices" ).list[i] );
+	}
+	
+	for ( i = 0; i < uv.Length; i++ ) {
+		uv[i] = DeserializeVector2 ( m.GetField ( "uv" ).list[i] );
+	}
+	
+	for ( i = 0; i < triangles.Length; i++ ) {
+		triangles[i] = m.GetField ( "triangles" ).list[i].n;
+	}
+	
+	mesh.vertices = vertices;
+	mesh.uv = uv;
+	mesh.triangles = triangles;
+	
+	return mesh;
 }
 
 

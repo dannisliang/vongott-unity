@@ -4,11 +4,13 @@ import System.Collections.Generic;
 import System.IO;
 
 // Public vars
-var _workspace : Transform;
-var _gizmo : GameObject;
-var _previewCamera : Camera;
-var _selectBox : Transform;
-var _selectBoxDefaultMesh : Mesh;
+public var _workspace : Transform;
+public var _gizmo : GameObject;
+public var _previewCamera : Camera;
+public var _selectBox : Transform;
+public var _selectBoxDefaultMesh : Mesh;
+public var _undoContainer : Transform;
+public var _defaultMaterial : Material;
 
 // Static vars
 static var menusActive : boolean = false;
@@ -36,7 +38,6 @@ static var grabRestrict : String;
 static var gizmo : GameObject;
 static var snapEnabled : boolean = true;
 static var gridEnabled : boolean = true;
-static var focusEnabled : boolean = false;
 static var gridLineDistance : float = 0.10;
 static var gridLineBrightFrequency : int = 5;
 
@@ -59,10 +60,12 @@ static var grabDistance : float;
 static var grabOrigPoint : Vector3;
 static var running : boolean = false;
 static var stringClipboard : String = "";
+static var defaultMaterial : Material;
 
 // undo
-static var actions : List.< Action > = new List.< Action > ();
+static var actions : List.< Action > = new List.< Action >();
 static var currentAction : Action;
+static var undoContainer : Transform;
 
 // Public classes
 public class ObjectAttributes {
@@ -70,40 +73,21 @@ public class ObjectAttributes {
 	var values : String = "";
 }
 
-// Private classes
 public class Action {
-	enum eActionType {
-		Transformation,
-		Deletion
-	}
+	var originalObject : GameObject;
+	var storedObject : GameObject;
+	var storedPosition : Vector3;
+	var storedRotation : Vector3;
+	var storedScale : Vector3;
 	
-	var obj : GameObject;
-	var objPath : String;
-	var position : Vector3;
-	var rotation : Vector3;
-	var scale : Vector3;
-	var type : String;
-	
-	function Action ( o : GameObject, t : String ) {
-		obj = o;
-		position = o.transform.localPosition;
-		rotation = o.transform.localEulerAngles;
-		scale = o.transform.localScale;
-		type = t;
+	function Action ( o : GameObject ) {
+		originalObject = o;
+		storedObject = MonoBehaviour.Instantiate ( originalObject );
+		storedObject.name = storedObject.name.Replace("(Clone)","");
 		
-		if ( o.GetComponent ( Prefab ) ) {
-			objPath = o.GetComponent ( Prefab ).path + "/" + o.GetComponent ( Prefab ).id;
-		}
-	}
-	
-	function UndoAction () {
-		if ( !obj ) { return; }
-		
-		if ( type == "transform" ) {
-			obj.transform.localPosition = position;
-			obj.transform.localEulerAngles = rotation;
-			obj.transform.localScale = scale;		
-		}
+		storedPosition = originalObject.transform.position;
+		storedRotation = originalObject.transform.localEulerAngles;
+		storedScale = originalObject.transform.localScale;		
 	}
 }
 
@@ -112,39 +96,19 @@ public class Action {
 // Undo buffer
 ////////////////////
 static function UndoAction ( action : Action ) {
-	// Check for lost object
-	if ( action.obj == null ) {
-		for ( var a : Action in actions ) {
-			if ( a.objPath == action.objPath ) {
-				action.obj = a.obj;
-			}
-		}
-	}
+	action.storedObject.transform.parent = currentLevel.transform;
+	action.storedObject.transform.position = action.storedPosition;
+	action.storedObject.transform.localEulerAngles = action.storedRotation;
+	action.storedObject.transform.localScale = action.storedScale;
+	action.storedObject.SetActive ( true );
 	
-	if ( action.type != "delete" ) {
-		action.UndoAction ();
-		
-		var bounds : Bounds;
-		
-		if ( selectedObject.GetComponentInChildren(MeshRenderer) ) {
-			bounds = selectedObject.GetComponentInChildren(MeshRenderer).bounds;
-		} else if ( selectedObject.GetComponentInChildren(SkinnedMeshRenderer) ) {
-			bounds = selectedObject.GetComponentInChildren(SkinnedMeshRenderer).sharedMesh.bounds;
-		} else {
-			bounds = selectedObject.GetComponentInChildren(MeshFilter).sharedMesh.bounds;
+	if ( action.originalObject ) {
+		if ( action.originalObject == selectedObject ) {
+			SelectObject ( action.storedObject );
+			FitSelectionBox ();
 		}
 		
-		selectBox.position = bounds.center;
-		
-	} else {
-		var newObj : GameObject = Instantiate ( Resources.Load ( action.objPath ) ) as GameObject;
-		newObj.transform.parent = currentLevel.transform;
-		newObj.transform.localPosition = action.position;
-		newObj.transform.localEulerAngles = action.rotation;
-		newObj.transform.localScale = action.scale;
-		
-		action.obj = newObj;
-	
+		Destroy ( action.originalObject );
 	}
 	
 	actions.Remove ( action );
@@ -156,8 +120,12 @@ static function UndoAction ( action : Action ) {
 	}
 }
 
-static function AddAction ( obj : GameObject, type : String ) {
-	var newAction : Action = new Action ( obj, type );
+static function AddAction ( obj : GameObject ) {
+	var newAction : Action = new Action ( obj );
+	
+	newAction.storedObject.transform.parent = undoContainer;
+	newAction.storedObject.transform.localPosition = Vector3.zero;
+	newAction.storedObject.SetActive ( false );
 	
 	actions.Add ( newAction );
 	
@@ -261,6 +229,13 @@ static function AddObject ( obj : GameObject ) {
 		newObject.transform.localPosition = Vector3.zero;
 	
 	} else {
+		// Check for shapes
+		if ( newObject.GetComponent ( Shape ) ) {
+			for ( var s : Component in workspace.GetComponentsInChildren(Shape) ) {
+				Destroy ( (s as Shape).gameObject );
+			}
+		}
+		
 		newObject.transform.parent = currentLevel.transform;
 		newObject.transform.position = GetSpawnPosition();
 		
@@ -418,17 +393,16 @@ public function AddShape ( shape : Shape ) {
 	if ( !combinedMesh ) {
 		combinedMesh = Instantiate ( Resources.Load ( "Prefabs/Editor/CombinedMesh" ) as GameObject ).GetComponent ( CombinedMesh );
 		combinedMesh.gameObject.name = "CombinedMesh";
-		combinedMesh.transform.parent = workspace;
+		combinedMesh.transform.parent = currentLevel.transform;
 		combinedMesh.transform.localPosition = Vector3.zero;
 		combinedMesh.transform.localEulerAngles = Vector3.zero;
 		combinedMesh.transform.localScale = Vector3.one;
 	}
 	
-	combinedMesh.Add ( shape.GetComponent(MeshFilter).sharedMesh, shape.transform );
+	AddAction ( combinedMesh.gameObject );
 	
-	DeselectObject ();
+	combinedMesh.Add ( shape.GetComponent(MeshFilter).sharedMesh, shape.transform, defaultMaterial );
 	
-	Destroy ( shape.gameObject );
 }
 
 
@@ -522,7 +496,7 @@ static function FitSelectionBox () {
 	
 	selectBox.gameObject.SetActive ( true );
 	
-	if ( selectedObject.GetComponent(Trigger) && !selectedObject.GetComponent(InteractiveObject) || selectedObject.GetComponent(Surface) ) {
+	if ( selectedObject.GetComponent(Trigger) && !selectedObject.GetComponent(InteractiveObject) ) {
  		doWireframe = true;
 	}
 	
@@ -547,7 +521,7 @@ static function GetSelectedObject () : GameObject {
 // Delete selected objects
 static function DeleteSelected () {
 	var obj : GameObject = selectedObject;
-	AddAction ( obj, "delete" );
+	AddAction ( obj );
 	DeselectObject ();
 	Destroy ( obj );	
 }
@@ -589,10 +563,6 @@ static function DeselectObject ( nextObject : GameObject ) {
 	
 	}
 	
-	focusEnabled = false;
-	
-	var renderer : MeshRenderer = selectedObject.GetComponent ( MeshRenderer );
-	
 	selectBox.gameObject.SetActive ( false );
 	
 	selectedObject = null;
@@ -604,12 +574,77 @@ static function DeselectObject ( nextObject : GameObject ) {
 	}
 }
 
+// Select face
+static function FindSubMesh ( mesh : Mesh, triangleIndex : int ) : int {
+	var triangle : int[] = new int [3];
+	triangle[0] = mesh.triangles[triangleIndex * 3];
+	triangle[1] = mesh.triangles[triangleIndex * 3 + 1];
+	triangle[2] = mesh.triangles[triangleIndex * 3 + 2];
+							
+	for ( var i : int = 0; i < mesh.subMeshCount; i++ ) {
+		var subMeshTriangles : int[] = mesh.GetTriangles ( i );
+		
+		for ( var j : int = 0; j < subMeshTriangles.Length; j += 3 ) {
+			if ( subMeshTriangles[j] == triangle[0] && subMeshTriangles[j+1] == triangle[1] && subMeshTriangles[j+2] == triangle[2] ) {
+				return i;
+			}
+		}
+	}
+	
+	return 0;
+}
+
+static function SelectSubMesh ( obj : GameObject, triangleIndex : int ) {
+	if ( selectedObject ) { 
+		DeselectObject ();
+	}
+	
+	var mf : MeshFilter = obj.GetComponent(MeshFilter);
+	var mesh : Mesh = mf.sharedMesh;
+	var subMesh : int = FindSubMesh ( mesh, triangleIndex );
+	var triangles : int[] = mesh.GetTriangles(subMesh);
+	var vertices : Vector3[] = new Vector3[triangles.Length];
+	
+	for ( var i : int = 0; i < vertices.Length; i++ ) {
+		vertices[i] = mesh.vertices[triangles[i]];
+		vertices[i] = obj.transform.TransformPoint ( vertices[i] );
+	}
+	
+	selectBox.gameObject.SetActive ( true );
+	selectBox.transform.position = obj.transform.position;
+	selectBox.GetComponent ( EditorSelectionBox ).Fit ( vertices, triangles, false );
+}
+
+static function SelectTriangle ( obj : GameObject, triangleIndex : int ) {
+	if ( selectedObject ) { 
+		DeselectObject ();
+	}
+	
+	var mf : MeshFilter = obj.GetComponent(MeshFilter);
+	var mesh : Mesh = mf.mesh;
+	var vertices : Vector3[] = new Vector3[3];
+	var triangle : int[] = new int[3];
+	triangle[0] = 0;
+	triangle[1] = 1;
+	triangle[2] = 2;
+	
+	for ( var i : int = 0; i < vertices.Length; i++ ) {
+		vertices[i] = mesh.vertices [ mesh.triangles [ triangleIndex * 3 + i ] ];
+		vertices[i] = obj.transform.TransformPoint ( vertices[i] );
+	}
+	
+	selectBox.gameObject.SetActive ( true );
+	selectBox.transform.position = obj.transform.position;
+	selectBox.GetComponent ( EditorSelectionBox ).Fit ( vertices, triangle, false );
+}
+
 // Select object
 static function SelectObject ( obj : GameObject ) {
 	transformEnd = null;
 		
-	if ( !obj || obj.GetComponent ( OGButton3D ) || obj.GetComponent ( CombinedMesh ) ) {
+	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
 		return;
+	
 	}
 	
 	if ( selectedObject ) { 
@@ -617,7 +652,7 @@ static function SelectObject ( obj : GameObject ) {
 	}
 	
 	selectedObject = obj;
-	
+		
 	if ( obj.GetComponent ( EditorVertexButton ) ) {
 		SetGrabMode ( true );
 		
@@ -635,9 +670,16 @@ static function SelectObject ( obj : GameObject ) {
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
 	
+	inspector.transformDisplay.SetActive ( obj.GetComponent ( CombinedMesh ) == null );
+	
 	// Shape
 	if ( obj.GetComponent ( Shape ) ) {
 		inspector.AddMenu ( "Shape", obj );
+	}
+	
+	// CombinedMesh
+	if ( obj.GetComponent ( CombinedMesh ) ) {
+		inspector.AddMenu ( "CombinedMesh", obj );
 	}
 	
 	// Prefab
@@ -646,12 +688,12 @@ static function SelectObject ( obj : GameObject ) {
 	}
 	
 	// LightSource
-	if ( obj.GetComponent(LightSource) ) {
+	if ( obj.GetComponent ( LightSource ) ) {
 		inspector.AddMenu ( "Light", obj );
 	}
 	
 	// Actor
-	if ( obj.GetComponent(Actor) ) {
+	if ( obj.GetComponent ( Actor ) ) {
 		inspector.AddMenu ( "Actor", obj );
 		inspector.AddMenu ( "Path", obj );
 	}
@@ -732,14 +774,14 @@ static function SetPickMode ( state : boolean ) {
 
 // Set grab mode
 static function SetGrabMode ( state : boolean ) {
-	if ( !selectedObject ) {
+	if ( !selectedObject || selectedObject.GetComponent ( CombinedMesh ) ) {
 		return;
 	}
 		
 	grabMode = state;
 	
 	if ( grabMode ) {
-		AddAction ( selectedObject, "transform" );
+		AddAction ( selectedObject );
 		
 		grabOrigPoint = selectedObject.transform.position;
 		
@@ -766,14 +808,14 @@ static function SetGrabMode ( state : boolean ) {
 
 // Set rotate mode
 static function SetRotateMode ( state : boolean ) {
-	if ( !selectedObject || selectedObject.GetComponent ( EditorVertexButton ) ) {
+	if ( !selectedObject || selectedObject.GetComponent ( EditorVertexButton ) || selectedObject.GetComponent ( CombinedMesh ) ) {
 		return;
 	}
 		
 	rotateMode = state;
 	
 	if ( rotateMode ) {
-		AddAction ( selectedObject, "transform" );
+		AddAction ( selectedObject );
 		
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Rotate Mode" );
@@ -795,14 +837,14 @@ static function SetRotateMode ( state : boolean ) {
 
 // Set scale mode
 static function SetScaleMode ( state : boolean ) {
-	if ( !selectedObject || selectedObject.GetComponent ( EditorVertexButton ) ) {
+	if ( !selectedObject || selectedObject.GetComponent ( EditorVertexButton ) || selectedObject.GetComponent ( CombinedMesh ) ) {
 		return;
 	}
 		
 	scaleMode = state;
 	
 	if ( scaleMode ) {
-		AddAction ( selectedObject, "transform" );
+		AddAction ( selectedObject );
 		
 		OGRoot.GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Scale Mode" );
@@ -949,6 +991,8 @@ function Start () {
 	instance = this;
 	selectBox = _selectBox;
 	selectBoxDefaultMesh = _selectBoxDefaultMesh;
+	undoContainer = _undoContainer;
+	defaultMaterial = _defaultMaterial;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	
