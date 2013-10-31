@@ -4,18 +4,19 @@
 // Prerequisites
 ////////////////////
 // Public vars
-var sensitivity : float = 2.5;
-var speed : float = 10.0;
-var renderMode : int = 0;
-var gizmo : Transform;
-var gizmoX : Material;
-var gizmoY : Material;
-var gizmoZ : Material;
-var gridDark : Material;
-var gridBright : Material;
-var cursorMaterial : Material;
-var boundingBoxMaterial : Material;
-var selectedBoundingBoxMaterial : Material;
+public var sensitivity : float = 2.5;
+public var speed : float = 10.0;
+public var renderMode : int = 0;
+public var gizmo : Transform;
+public var gizmoX : Material;
+public var gizmoY : Material;
+public var gizmoZ : Material;
+public var gridDark : Material;
+public var gridBright : Material;
+public var cursorMaterial : Material;
+public var boundingBoxMaterial : Material;
+public var selectedBoundingBoxMaterial : Material;
+public var locked : boolean = false;
 
 @HideInInspector var fixPoint : Vector3;
 @HideInInspector var drawBoxes : List.< GameObject > = new List.< GameObject > ();
@@ -28,7 +29,6 @@ var selectedBoundingBoxMaterial : Material;
 private var skyboxCamera : GameObject;
 private var clickTimer : float = 0;
 private var clickThreshold : float = 0.25;
-private var locked : boolean = false;
 
 
 ////////////////////
@@ -379,7 +379,7 @@ function SetFixPointToSelected () {
 
 // Update
 function Update () {
-	if ( locked || OGRoot.currentPage.pageName != "MenuBase" ) { return; }
+	if ( locked ) { return; }
 	
 	// position
 	var x = transform.localPosition.x;

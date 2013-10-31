@@ -20,6 +20,7 @@ class EditorModes extends OGPage {
 	static function SetTitle ( ttl : String ) {
 		title.text = ttl;
 		data.gameObject.SetActive ( ttl != "Pick Mode" );
+		Camera.main.GetComponent(EditorCamera).locked = ttl != "Pick Mode";
 	}
 	
 	static function SetMessage ( msg : String ) {

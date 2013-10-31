@@ -318,6 +318,12 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	override function StartPage () {
 		EditorCore.SetInspector ( this );
+	
+		Camera.main.GetComponent(EditorCamera).locked = false;
+	}
+	
+	override function ExitPage () {
+		Camera.main.GetComponent(EditorCamera).locked = true;
 	}
 	
 		

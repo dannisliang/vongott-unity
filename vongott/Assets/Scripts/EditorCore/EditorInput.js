@@ -221,10 +221,13 @@ function Update () {
 					if ( obj.GetComponent ( CombinedMesh ) ) {
 						//EditorCore.SelectTriangle ( obj, mouseHit.triangleIndex );
 						EditorCore.pickerCallback ( mouseHit.triangleIndex );
-						EditorCore.pickerCallback = null;
 						
-						EditorCore.SetPickMode ( false );
-						EditorCore.ReselectObject ();
+						if ( !Input.GetKey ( KeyCode.LeftShift ) ) {
+							EditorCore.pickerCallback = null;
+							
+							EditorCore.SetPickMode ( false );
+							EditorCore.ReselectObject ();
+						}
 					
 						return;				
 				

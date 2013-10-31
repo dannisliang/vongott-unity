@@ -3,6 +3,7 @@
 class EditorInspectorCombinedMesh extends MonoBehaviour {
 	public var buttonContainer : Transform;
 	public var buttonPrefab : GameObject;
+	public var addButton : Transform;
 	
 	private var combinedMesh : CombinedMesh;
 	
@@ -49,9 +50,13 @@ class EditorInspectorCombinedMesh extends MonoBehaviour {
 		listItem.allTriangleBtn.target = this.gameObject;
 		listItem.allTriangleBtn.argument = i.ToString();
 		
-		listItem.removeBtn.target = this.gameObject;
-		listItem.removeBtn.message = "RemoveMaterial";
-		listItem.removeBtn.argument = i.ToString();
+		if ( i == 0 ) {
+			listItem.removeBtn.gameObject.SetActive ( false );
+		} else {
+			listItem.removeBtn.target = this.gameObject;
+			listItem.removeBtn.message = "RemoveMaterial";
+			listItem.removeBtn.argument = i.ToString();
+		}
 		
 		listItem.sourceBtn.target = this.gameObject;
 		listItem.sourceBtn.message = "PickMaterial";
@@ -59,6 +64,8 @@ class EditorInspectorCombinedMesh extends MonoBehaviour {
 		
 		listItem.gameObject.transform.parent = buttonContainer;
 		listItem.gameObject.transform.localPosition = new Vector3 ( 0, i * 60, 0 );
+		
+		addButton.localPosition = new Vector3 ( 10, 40 + (i+1) * 60, 0 );
 	}
 	
 	private function AddTriangles ( triangles : int[], subMeshIndex : int ) {
@@ -101,6 +108,8 @@ class EditorInspectorCombinedMesh extends MonoBehaviour {
 	}
 	
 	public function AddAllTriangles ( n : String ) {
+		EditorCore.AddAction ( combinedMesh.gameObject );
+		
 		var subMeshIndex : int = int.Parse ( n );
 		var mesh : Mesh = combinedMesh.GetComponent(MeshFilter).sharedMesh;
 		
@@ -114,6 +123,8 @@ class EditorInspectorCombinedMesh extends MonoBehaviour {
 	}
 	
 	public function SetTriangles ( n : String ) {
+		EditorCore.AddAction ( combinedMesh.gameObject );
+		
 		var subMeshIndex : int = int.Parse ( n );
 		
 		EditorCore.pickerType = CombinedMesh;
@@ -122,9 +133,7 @@ class EditorInspectorCombinedMesh extends MonoBehaviour {
 			triangle[0] = combinedMesh.GetComponent(MeshFilter).sharedMesh.triangles [ triangleIndex * 3 ];
 			triangle[1] = combinedMesh.GetComponent(MeshFilter).sharedMesh.triangles [ triangleIndex * 3 + 1 ];
 			triangle[2] = combinedMesh.GetComponent(MeshFilter).sharedMesh.triangles [ triangleIndex * 3 + 2 ];
-		
-			Debug.Log ( "SubMesh: " + subMeshIndex + " | Triangle: " + triangleIndex ); 
-		
+				
 			AddTriangles ( triangle, subMeshIndex );
 		};
 		
@@ -142,6 +151,8 @@ class EditorInspectorCombinedMesh extends MonoBehaviour {
 	}
 	
 	public function AddMaterial () {
+		EditorCore.AddAction ( combinedMesh.gameObject );
+		
 		combinedMesh.GetComponent(MeshFilter).mesh.subMeshCount += 1;
 		
 		var mats : Material[] = new Material[combinedMesh.GetComponent(MeshRenderer).sharedMaterials.Length+1];
@@ -158,6 +169,8 @@ class EditorInspectorCombinedMesh extends MonoBehaviour {
 	}
 	
 	public function RemoveMaterial ( n : String ) {
+		EditorCore.AddAction ( combinedMesh.gameObject );
+		
 		var i : int = int.Parse ( n );
 		
 		var matList : List.< Material > = new List.< Material > ();
