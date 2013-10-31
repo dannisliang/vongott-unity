@@ -144,7 +144,13 @@ group: navigation
 	
 	- Optimisations
 	
-	- Boolean mesh implementation for architecture
+	- Modelling features:
+	
+		- Boolean operations
+		
+		- Vertex, "face" and edge modification
+		
+		- Automatic UVs 
 	
 	- Undo functionality &#x2713; 
 
