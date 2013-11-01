@@ -14,6 +14,13 @@ class OGPopUp extends OGWidget {
 	
 	var selectedOption : String;
 	@HideInInspector var originalZ : float = 99;
+	
+	// Set options
+	public function SetOptions ( strings : String[] ) {
+		yield WaitForEndOfFrame();
+		
+		options = strings;
+	}
 				
 	// Draw
 	override function Draw ( x : float, y : float ) {	

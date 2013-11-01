@@ -146,7 +146,7 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Conversation editor
 	function ConversationEditor () {
-		OGRoot.GoToPage ( "Conversations" );
+		OGRoot.GoToPage ( "ConversationMap" );
 	}
 	
 	// Quest editor

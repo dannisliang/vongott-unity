@@ -5,6 +5,7 @@
 class OGScrollView extends OGWidget {
 	var touchControl : boolean = false;
 	var scrollLength : float = 512;
+	var scrollWidth : float = 512;
 	var viewWidth : float = 100;
 	var viewHeight : float = 100;
 	var alwaysVertical = false;
@@ -23,6 +24,14 @@ class OGScrollView extends OGWidget {
 			viewHeight = transform.localScale.y;
 		}
 		
+		if ( scrollWidth < viewWidth - ( inset * 2 ) ) {
+			scrollWidth = viewWidth - ( inset * 2 );
+		}
+		
+		if ( scrollLength < viewHeight - ( inset * 2 ) ) {
+			scrollLength = viewHeight - ( inset * 2 );
+		}
+		
 		transform.localScale = new Vector3 ( 1, 1, 1 );
 		
 		// Update content
@@ -35,18 +44,22 @@ class OGScrollView extends OGWidget {
 					w.manualDraw = true;
 				}
 			
-				// Update the scroll length
-				if ( scrollLength < w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset ) {
-					scrollLength = w.gameObject.transform.localPosition.y + w.gameObject.transform.localScale.y + inset;
+				// Update the scroll area
+				if ( scrollLength < w.gameObject.transform.position.y + w.gameObject.transform.localScale.y + inset ) {
+					scrollLength = w.gameObject.transform.position.y + w.gameObject.transform.localScale.y + inset;
+				}
+				
+				if ( scrollWidth < w.gameObject.transform.position.x + w.gameObject.transform.localScale.x + inset ) {
+					scrollWidth = w.gameObject.transform.position.x + w.gameObject.transform.localScale.x + inset;
 				}
 			}
 		}
 		
-		// Touch control
-		if ( touchControl && colliderRect.Contains ( Input.mousePosition ) ) {
-			if ( Input.GetMouseButton ( 0 ) ) {
-				position.x = Input.mousePosition.x - transform.position.x;
-				position.y = Input.mousePosition.y - transform.position.y;
+		// Drag control
+		if ( colliderRect.Contains ( Input.mousePosition ) ) {
+			if ( Input.GetMouseButton ( 2 ) ) {
+				position.x -= Input.GetAxis("Mouse X") * 18;
+				position.y += Input.GetAxis("Mouse Y") * 18;
 			} 
 		}
 	}
@@ -59,7 +72,7 @@ class OGScrollView extends OGWidget {
 		position = GUI.BeginScrollView (
 			Rect ( x, y, viewWidth, viewHeight ),
 			position,
-			Rect ( -inset, -inset, viewWidth - ( inset * 2 ), scrollLength ),
+			Rect ( -inset, -inset, scrollWidth, scrollLength ),
 			alwaysHorizontal,
 			alwaysVertical
 		);
