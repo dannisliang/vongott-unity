@@ -38,6 +38,7 @@ class EditorConversationMap extends OGPage {
 	private var bottomLines : float[] = new float[999];
 	private var rootBottomLines : float[] = new float[999];
 	private var currentConvo : ConversationTree;
+	private var nodeIndexCounter : int = 0;
 	
 	
 	////////////////////
@@ -92,7 +93,7 @@ class EditorConversationMap extends OGPage {
 	
 	function Populate () : IEnumerator {
 		yield WaitForEndOfFrame ();
-		
+				
 		currentConvo = Loader.LoadConversationTree ( selector.text );
 		
 		var i : int = 0;
@@ -100,6 +101,10 @@ class EditorConversationMap extends OGPage {
 		for ( var rootNode : ConversationRootNode in currentConvo.rootNodes ) {
 			CreateRootNode ( rootNode );
 		}
+		
+		yield WaitForEndOfFrame ();
+		
+		UpdateRootNodes ();
 	}
 	
 	function LoadConversation () {
@@ -310,10 +315,32 @@ class EditorConversationMap extends OGPage {
 	public function SetOrphaned ( node : EditorConversationNode ) {
 		node.targetPos += new Vector3 ( -10, 10, 0 );
 		node.SetRootNode ( -1 );
+		node.rootIndex = -1;
+		node.nodeIndex = -1;
+	}
+	
+	// ^ Check exising node
+	private function CheckExisting ( newNode : ConversationNode ) : EditorConversationNode {
+		for ( var n : Component in nodeContainer.GetComponentsInChildren ( EditorConversationNode ) ) {
+			var existingNode = n as EditorConversationNode;
+			
+			if ( existingNode.initRootIndex == newNode.rootIndex && existingNode.initNodeIndex == newNode.nodeIndex  ) {
+				return existingNode;
+			}
+		}
+	
+		return null;
 	}
 	
 	// ^ From data reference
 	public function CreateNode ( nodeSender : EditorConversationNode, reference : ConversationNode, outputIndex : int ) {
+		var existing : EditorConversationNode = CheckExisting ( reference );
+		
+		if ( existing ) {
+			nodeSender.SetConnection ( outputIndex, existing );
+			return;
+		}
+		
 		var newNode : EditorConversationNode = Instantiate ( nodePrefab );
 		
 		newNode.SetData ( reference );
@@ -391,8 +418,22 @@ class EditorConversationMap extends OGPage {
 		
 		Destroy ( removeNode.gameObject );
 	}	
-		
+	
+	private function SetDirty () {
+		for ( var n : Component in nodeContainer.GetComponentsInChildren ( EditorConversationNode ) ) {
+			( n as EditorConversationNode ).dirty = true;
+		}
+	}
+	
 	private function UpdateNodePosition ( rootIndex : int, node : EditorConversationNode, offset : int, minHeight : float ) {			
+		if ( !node.dirty ) { return; }
+		
+		node.dirty = false;
+		
+		node.rootIndex = rootIndex;
+		node.nodeIndex = nodeIndexCounter;
+
+		
 		var pos : Vector3;
 		pos.x = 200 + offset * cellDistance;
 		pos.y = bottomLines[offset];
@@ -404,11 +445,13 @@ class EditorConversationMap extends OGPage {
 		}
 		
 		if ( rootBottomLines[node.GetRootNode()+1] < bottomLines[offset] ) { rootBottomLines[node.GetRootNode()+1] = bottomLines[offset]; }
-		if ( pos.y < scrollView.transform.position.y + 30 ) { pos.y = scrollView.transform.position.y + 30; } 
+		if ( pos.y < scrollView.transform.position.y + 30 ) { pos.y = scrollView.transform.position.y + 30; }
 		
 		if ( minHeight > -1 ) {
 			node.targetPos = pos;
 		}
+		
+		nodeIndexCounter++;
 		
 		for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
 			if ( node.activeOutputs[i] && node.connectedTo[i] ) {
@@ -418,16 +461,10 @@ class EditorConversationMap extends OGPage {
 				
 				nodeIOPoints.Add ( new KeyValuePair.< int, Vector3[] > ( i, points ) );
 				
-				var addedOffset : int = 2;
-				
-				if ( node.connectedTo[i].selectedType == "Condition" || node.connectedTo[i].selectedType == "Consequence" || node.selectedType == "Condition"  || node.selectedType == "Consequence" ) {
-					addedOffset = 1;
-				}
-				
 				if ( node.GetRootNode() == node.connectedTo[i].GetRootNode() ) {
-					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + addedOffset, node.transform.position.y );
+					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, node.transform.position.y );
 				} else {
-					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + addedOffset, -1 );
+					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, -1 );
 				}
 			}
 		}
@@ -445,6 +482,20 @@ class EditorConversationMap extends OGPage {
 		}
 	}
 	
+	private function UpdateRootNodes () {
+		nodeIOPoints.Clear ();
+		SetDirty ();
+		bottomLines = new float[999];
+		rootBottomLines = new float[999];
+				
+		rootBottomLines[0] = scrollView.transform.position.y + 30;
+								
+		for ( var i : int = 0; i < rootNodes.childCount; i++ ) {
+			nodeIndexCounter = 0;
+			UpdateRootNodePosition ( rootNodes.GetChild(i).GetComponent(EditorConversationRootNode), i );
+		}
+	}
+	
 	
 	////////////////////
 	// Update
@@ -454,15 +505,6 @@ class EditorConversationMap extends OGPage {
 			connectMode = false;
 		}
 		
-		// Update node positions
-		nodeIOPoints.Clear ();
-		bottomLines = new float[999];
-		rootBottomLines = new float[999];
-		
-		rootBottomLines[0] = scrollView.transform.position.y + 30;
-								
-		for ( var i : int = 0; i < rootNodes.childCount; i++ ) {
-			UpdateRootNodePosition ( rootNodes.GetChild(i).GetComponent(EditorConversationRootNode), i );
-		}
+		UpdateRootNodes ();
 	}
 }

@@ -38,6 +38,13 @@ class EditorConversationNode extends MonoBehaviour {
 		public var outputSuccess : OGButton;
 	}
 	
+	public var initRootIndex : int = -1;
+	public var initNodeIndex : int = -1;
+	
+	public var rootIndex : int = -1;
+	public var nodeIndex : int = -1;
+	public var dirty : boolean = false;
+	
 	public var extraButtonsContainer : Transform;
 	public var removeBtn : OGButton;
 	public var frame : Transform;
@@ -75,6 +82,9 @@ class EditorConversationNode extends MonoBehaviour {
 	// Set data
 	public function SetData ( reference : ConversationNode ) {
 		ClearConnections();
+		
+		initRootIndex = reference.rootIndex;
+		initNodeIndex = reference.nodeIndex;
 		
 		switch ( reference.type ) {
 			case "Speak":
@@ -325,12 +335,6 @@ class EditorConversationNode extends MonoBehaviour {
 	// Set root node
 	public function SetRootNode ( i : int ) {
 		displayedRootNode = i;
-		
-		if ( i > -1 ) {
-			rootNodeLabel.text = displayedRootNode.ToString ();
-		} else {
-			rootNodeLabel.text = "";
-		}
 	}
 	
 	public function GetRootNode () : int {
@@ -345,6 +349,9 @@ class EditorConversationNode extends MonoBehaviour {
 		if ( activeOutputs.Length < 1 || connectedTo.Length < 0 ) {
 			Init ();
 		}
+	
+		// Display the right id data
+		rootNodeLabel.text = rootIndex + " : " + nodeIndex;
 	
 		// Check for invalid values
 		var integer : int = 0;

@@ -10,6 +10,9 @@ public class ConversationRootNode {
 }
 
 public class ConversationNode {
+	var rootIndex : int = -1;
+	var nodeIndex : int = -1;
+	
 	var type : String;
 	var connectedTo : List.< ConversationNode > = new List.< ConversationNode >();
 

@@ -580,6 +580,8 @@ static function DeserializeConversationNode ( obj : EditorConversationNode ) : J
 	var node : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	var connectedTo : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 
+	node.AddField ( "rootIndex", obj.rootIndex );
+	node.AddField ( "nodeIndex", obj.nodeIndex ); 
 	node.AddField ( "type", obj.selectedType );
 
 	switch ( obj.selectedType ) {

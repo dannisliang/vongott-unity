@@ -54,8 +54,10 @@ class Actor extends InteractiveObject {
 	var path : List.< PathNode > = new List.< PathNode >();
 	var inventory : InventoryEntry[] = new InventoryEntry [4];
 	
+	var currentConvoRoot : int = 0;
 	var conversationTree : String;
 	var conversations : List.< Conversation > = new List.< Conversation >();																																							
+	
 	var target : Transform;
 
 	var speed : float = 0.0;
@@ -63,7 +65,6 @@ class Actor extends InteractiveObject {
 	var waiting : boolean = false;
 	var talking : boolean = false;
 
-	@HideInInspector var currentConvoRoot : int = 0;
 	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
 	@HideInInspector var nodeTimer : float = 0;

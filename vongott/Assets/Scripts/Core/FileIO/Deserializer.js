@@ -678,7 +678,9 @@ static function DeserializeMesh ( m : JSONObject ) : Mesh {
 // Node
 static function DeserializeConversationNode ( n : JSONObject ) : ConversationNode {
 	var node : ConversationNode = new ConversationNode();
-			
+	
+	if ( n.HasField ( "rootIndex" ) ) { node.rootIndex = n.GetField ( "rootIndex" ).n; }
+	if ( n.HasField ( "nodeIndex" ) ) { node.nodeIndex = n.GetField ( "nodeIndex" ).n; }
 	node.type = n.GetField ( "type" ).str;
 	
 	switch ( n.GetField ( "type" ).str ) {	
@@ -702,7 +704,7 @@ static function DeserializeConversationNode ( n : JSONObject ) : ConversationNod
 			node.consequenceBool = n.GetField("consequenceBool").b;
 			break;
 			
-		case "Endconvo":
+		case "EndConvo":
 			node.action = n.GetField("action").str;
 			node.nextRoot = n.GetField("nextRoot").n;
 			break;
