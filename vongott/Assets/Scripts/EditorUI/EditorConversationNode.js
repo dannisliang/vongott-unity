@@ -31,7 +31,13 @@ class EditorConversationNode extends MonoBehaviour {
 		public var nextRoot : OGPopUp;
 	}
 	
-	public var lineMaterial : Material;	
+	public class Exchange {
+		public var item : OGButton;
+		public var credits : OGTextField;
+		public var outputFailed : OGButton;
+		public var outputSuccess : OGButton;
+	}
+	
 	public var extraButtonsContainer : Transform;
 	public var removeBtn : OGButton;
 	public var frame : Transform;
@@ -39,27 +45,74 @@ class EditorConversationNode extends MonoBehaviour {
 	public var selectedType : String;
 	public var allTypes : GameObject[];
 	public var input : OGButton;
+	public var rootNodeLabel : OGLabel;
 	
 	public var speak : Speak;
 	public var condition : Condition;
 	public var consequence : Consequence;
 	public var gameEvent : EventNode;
 	public var endConvo : EndConvo;
+	public var exchange : Exchange;
 	
 	public var connectedTo : EditorConversationNode[] = new EditorConversationNode[3];
 	public var activeOutputs : OGButton[] = new OGButton[3];
 	
 	public var targetPos : Vector3;
 	
+	public var rootNodes : List.< int > = new List.< int >();
+	public var displayedRootNode : int = -1;
+	
 	// Init
 	public function Start () {
-		SetType ( type.GetComponentInChildren(OGPopUp).selectedOption );
 		targetPos = this.transform.position;
 	}
 	
 	public function Init () {
 		activeOutputs = new OGButton[3];
 		connectedTo = new EditorConversationNode[3];
+	}
+	
+	// Set data
+	public function SetData ( reference : ConversationNode ) {
+		ClearConnections();
+		
+		switch ( reference.type ) {
+			case "Speak":
+				ChangeSpeaker ( reference.speaker );
+				for ( var str : String in reference.lines ) {
+					AddLine ( str );
+				}				
+				break;
+				
+			case "GameEvent":
+				gameEvent.event.text = reference.event;
+				break;
+				
+			case "Condition":
+				condition.flag.text = reference.condition;
+				break;
+				
+			case "Consequence":
+				consequence.flag.text = reference.consequence;
+				if ( reference.consequenceBool ) {
+					consequence.bool.selectedOption = "True";
+				} else {
+					consequence.bool.selectedOption = "False";
+				}				
+				break;
+			
+			case "EndConvo":
+				endConvo.action.selectedOption = reference.action;
+				endConvo.nextRoot.selectedOption = reference.nextRoot.ToString ();
+				break;
+				
+			case "Exchange":
+				exchange.item.text = reference.item;
+				exchange.credits.text = reference.credits.ToString ();
+				break;
+		}
+		
+		SetType ( reference.type );
 	}
 	
 	// Switch type
@@ -106,14 +159,19 @@ class EditorConversationNode extends MonoBehaviour {
 				SetActive ( 1, null );
 				SetActive ( 2, null );
 				break;
-		}
+				
+			case "Exchange":
+				AdjustFrame ( 300, 80, 1 );
+				SetActive ( 0, exchange.outputFailed );
+				SetActive ( 1, exchange.outputSuccess );
+				SetActive ( 2, null );
+				break;
+		}	
 	}
 	
 	// I/O
 	public function RemoveNode () {
-		EditorConversationMap.GetInstance().RemoveNode ( this );
-		
-		
+		EditorConversationMap.GetInstance().RemoveNode ( this );	
 	}
 	
 	public function CreateNode ( n : String ) {
@@ -121,9 +179,14 @@ class EditorConversationNode extends MonoBehaviour {
 				
 		EditorConversationMap.GetInstance().CreateNode ( this, i );
 	}
-		
+	
+	public function ClearConnections () {
+		connectedTo = new EditorConversationNode[3];
+		activeOutputs = new OGButton[3];
+	}
+	
 	public function SetConnection ( i : int, input : EditorConversationNode ) {
-		if ( connectedTo[i] && !input ) {
+		if ( connectedTo[i] && !input ) {			
 			EditorConversationMap.GetInstance().SetOrphaned ( connectedTo[i] );
 		}
 		
@@ -132,6 +195,7 @@ class EditorConversationNode extends MonoBehaviour {
 	
 	public function SetActive ( i : int, output : OGButton ) {
 		if ( connectedTo[i] && !output ) {
+			SetConnection ( i, null );
 			EditorConversationMap.GetInstance().SetOrphaned ( connectedTo[i] );
 		}
 		
@@ -174,27 +238,60 @@ class EditorConversationNode extends MonoBehaviour {
 		OGRoot.GoToPage ( "Picker" );
 	}
 	
-	// Speak	
-	public function RemoveLine ( n : String ) {
-		var i : int = int.Parse ( n );
+	// Items
+	public function PickItem ( btn : OGButton ) {
+		EditorPicker.mode = "item";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "ConversationMap";
+				
+		OGRoot.GoToPage ( "Picker" );
+	}
 	
-		Destroy ( speak.lines.GetChild(i).gameObject );	
+	// Speak	
+	public function ChangeSpeaker ( speaker : String ) {
+		speak.speakerPopUp.selectedOption = speaker;
+	
+		if ( speaker == "Player" ) {
+			speak.addBtn.gameObject.SetActive ( true );
+		} else {
+			speak.addBtn.gameObject.SetActive ( false );
+			RemoveLine ( "1" );
+			RemoveLine ( "2" );
+		}
 		
 		StartCoroutine ( SortLines () );
 	}
 	
-	public function AddLine () {
+	public function RemoveLine ( n : String ) {
+		var i : int = int.Parse ( n );
+	
+		if ( speak.lines.childCount-1 >= i ) {
+			Destroy ( speak.lines.GetChild(i).gameObject );	
+			StartCoroutine ( SortLines () );
+		}
+	}
+	
+	public function AddLine ( str : String ) {
 		var i : int = speak.lines.childCount;
 	
 		var line : EditorConversationNodeLine = Instantiate ( speak.linePrefab ) as EditorConversationNodeLine;
 		line.gameObject.name = i.ToString(); 
 		
+		line.SetText ( str );
 		line.SetTarget ( this.gameObject, i );
 		
 		line.transform.parent = speak.lines;
 		line.transform.localScale = Vector3.one;
 	
 		StartCoroutine ( SortLines () );
+	}
+	
+	public function AddLine ( btn : OGButton ) {
+		AddLine ( "" );
+	}
+	
+	public function AddLine () {
+		AddLine ( "" );
 	}
 	
 	public function SortLines () : IEnumerator {
@@ -205,7 +302,7 @@ class EditorConversationNode extends MonoBehaviour {
 			speak.lines.GetChild(i).GetComponent(EditorConversationNodeLine).SetRemoveable(i>0);
 			speak.addBtn.transform.localPosition = new Vector3 ( 80, 30 + i * 30, 0 );
 			
-			if ( speak.lines.childCount < 3 ) {
+			if ( speak.lines.childCount < 3 && speak.speakerPopUp.selectedOption == "Player" ) {
 				speak.addBtn.gameObject.SetActive ( true );
 				AdjustFrame ( 420, 30 + (i*30) + 50, 1 );
 			} else {
@@ -224,7 +321,22 @@ class EditorConversationNode extends MonoBehaviour {
 		extraButtonsContainer.localPosition = new Vector3 ( frame.localScale.x + 10, 0, 0 );
 		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x, 10, -4 );
 	}
-				
+	
+	// Set root node
+	public function SetRootNode ( i : int ) {
+		displayedRootNode = i;
+		
+		if ( i > -1 ) {
+			rootNodeLabel.text = displayedRootNode.ToString ();
+		} else {
+			rootNodeLabel.text = "";
+		}
+	}
+	
+	public function GetRootNode () : int {
+		return displayedRootNode;
+	}
+										
 	// Update
 	function Update () {
 		this.transform.position = Vector3.Lerp ( this.transform.position, targetPos, Time.deltaTime * 10 );
@@ -234,16 +346,18 @@ class EditorConversationNode extends MonoBehaviour {
 			Init ();
 		}
 	
+		// Check for invalid values
+		var integer : int = 0;
+		if ( !int.TryParse ( exchange.credits.text, integer ) ) {
+			exchange.credits.text = "0";
+		}
+	
 		// Check for extra buttons
 		for ( var i : int = 0; i < extraButtonsContainer.childCount; i++ ) {
 			if ( activeOutputs[i] && !connectedTo[i] ) {
 				extraButtonsContainer.GetChild(i).gameObject.SetActive ( true );
 				extraButtonsContainer.GetChild(i).position = new Vector3 ( activeOutputs[i].transform.position.x + 30, activeOutputs[i].transform.position.y, 0 );
 			} else {
-				if ( !activeOutputs[i] && connectedTo[i] ) {
-					SetConnection ( i, null );
-				}
-				
 				extraButtonsContainer.GetChild(i).gameObject.SetActive ( false );
 			}
 		}

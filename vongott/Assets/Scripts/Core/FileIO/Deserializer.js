@@ -173,7 +173,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newAct.GetComponent(Actor).SetPathType ( act.GetField ( "pathType" ).str );
 		newAct.GetComponent(Actor).path = DeserializePath ( act.GetField ( "path" ) );
 		newAct.GetComponent(Actor).inventory = DeserializeInventory ( act.GetField ( "inventory" ) );
-		newAct.GetComponent(Actor).conversations = DeserializeConversationsToGame ( act.GetField ( "conversations" ) );
+		if ( act.HasField ( "conversationTree" ) ) { newAct.GetComponent(Actor).conversationTree = act.GetField ( "conversationTree" ).str; }
 		
 		newAct.transform.localScale = DeserializeVector3 ( act.GetField("localScale") );
 		newAct.transform.localPosition = DeserializeVector3 ( act.GetField("localPosition") );
@@ -675,6 +675,70 @@ static function DeserializeMesh ( m : JSONObject ) : Mesh {
 ////////////////////
 // Conversations
 ////////////////////
+// Node
+static function DeserializeConversationNode ( n : JSONObject ) : ConversationNode {
+	var node : ConversationNode = new ConversationNode();
+			
+	node.type = n.GetField ( "type" ).str;
+	
+	switch ( n.GetField ( "type" ).str ) {	
+		case "Speak":
+			node.speaker = n.GetField("speaker").str;
+			for ( var i : int; i < n.GetField("lines").list.Count; i++ ) {
+				node.lines.Add ( n.GetField("lines").list[i].str );
+			}
+			break;
+			
+		case "GameEvent":
+			node.event = n.GetField("event").str;
+			break;
+			
+		case "Condition":
+			node.condition = n.GetField("condition").str;
+			break;
+			
+		case "Consequence":
+			node.consequence = n.GetField("consequence").str;
+			node.consequenceBool = n.GetField("consequenceBool").b;
+			break;
+			
+		case "Endconvo":
+			node.action = n.GetField("action").str;
+			node.nextRoot = n.GetField("nextRoot").n;
+			break;
+			
+		case "Exchange":
+			node.credits = n.GetField("credits").n;
+			node.item = n.GetField("credits").str;
+			break;
+	}
+
+	for ( var ni : int; ni < n.GetField("connectedTo").list.Count; ni++ ) {
+		node.connectedTo.Add ( DeserializeConversationNode ( n.GetField("connectedTo").list[ni] ) );
+	}
+	
+	return node;
+}
+
+// Tree
+static function DeserializeConversationTree ( str : String ) : ConversationTree {
+	var obj : JSONObject = new JSONObject ( str, false );	
+	var tree : ConversationTree = new ConversationTree();
+	
+	for ( var rno : Object in obj.GetField("rootNodes").list ) {
+		var rn : JSONObject = rno as JSONObject;
+		var rootNode : ConversationRootNode = new ConversationRootNode ();
+		
+		rootNode.auto = rn.GetField("auto").b;
+		
+		rootNode.connectedTo = DeserializeConversationNode (rn.GetField("connectedTo"));	
+		
+		tree.rootNodes.Add ( rootNode );
+	}
+	
+	return tree;
+}
+
 // To game
 static function DeserializeConversationsToGame ( convos : JSONObject ) : List.< Conversation > {
 	var conversations : List.< Conversation > = new List.< Conversation >();

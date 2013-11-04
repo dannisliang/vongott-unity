@@ -7,8 +7,13 @@ class EditorConversationRootNode extends MonoBehaviour {
 	public var connectedTo : EditorConversationNode;
 	public var indexLabel : OGLabel;
 	public var nodeContainer : Transform;
+	public var auto : OGTickBox;
 	
 	public function SetConnection ( node : EditorConversationNode ) {
+		if ( connectedTo && !node ) {
+			EditorConversationMap.GetInstance().SetOrphaned ( connectedTo );
+		}
+		
 		connectedTo = node;
 	}
 	

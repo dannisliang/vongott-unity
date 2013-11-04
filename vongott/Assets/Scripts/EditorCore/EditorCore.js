@@ -952,6 +952,10 @@ static function GetConvos ( chapter : String, scene: String, name: String ) : St
 	return TrimFileNames ( Directory.GetFiles ( Application.dataPath + "/Story/Conversations/" + chapter + "/" + scene + "/" + name, "*.vgconvo" ) );
 }
 
+static function GetConvoTrees ( chapter : String, scene: String ) : String[] {
+	return TrimFileNames ( Directory.GetFiles ( Application.dataPath + "/Story/Conversations/" + chapter + "/" + scene, "*.vgconvo" ) );
+}
+
 
 ////////////////////
 // Set inspector instance

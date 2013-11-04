@@ -260,9 +260,7 @@ class Conversation {
 		if ( endQuest != "" && endQuest != "(none)" ) {
 			QuestManager.EndQuest ( endQuest );
 		}
-		
-		UIConversation.convo = this;
-				
+						
 		entries.Clear ();
 		
 		actor = GameCore.GetInteractiveObject().GetComponent(Actor);

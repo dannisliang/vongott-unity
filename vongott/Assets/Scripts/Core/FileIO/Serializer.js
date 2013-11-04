@@ -132,7 +132,6 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
 		
 		var act : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-		var conversations : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 		
 		act.AddField ( "model", obj.GetComponent(Actor).model );
 		act.AddField ( "affiliation", obj.GetComponent(Actor).affiliation.ToString() );
@@ -141,25 +140,8 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		act.AddField ( "pathType", obj.GetComponent(Actor).pathType.ToString() );
 		act.AddField ( "path", SerializePath ( obj.GetComponent(Actor).path ) );
 		act.AddField ( "inventory", SerializeInventory ( obj.GetComponent(Actor).inventory ) );
-		
-		for ( var c : Conversation in obj.GetComponent(Actor).conversations ) {
-			var convo : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-			
-			convo.AddField ( "condition", c.condition );
-			convo.AddField ( "conditionBool", c.conditionBool );
-			convo.AddField ( "startQuest", c.startQuest );
-			convo.AddField ( "endQuest", c.endQuest );
-			convo.AddField ( "forced", c.forced );
-			
-			convo.AddField ( "chapter", c.chapter );
-			convo.AddField ( "scene", c.scene );
-			convo.AddField ( "name", c.name );
-			convo.AddField ( "conversation", c.conversation );
-		
-			conversations.Add ( convo );
-		}
-		
-		act.AddField ( "conversations", conversations );
+				
+		act.AddField ( "conversationTree", obj.GetComponent(Actor).conversationTree );
 		
 		act.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
 		act.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
@@ -594,6 +576,85 @@ static function SerializeMesh ( m : Mesh ) : JSONObject {
 ////////////////////
 // Serialize conversation
 ////////////////////
+static function DeserializeConversationNode ( obj : EditorConversationNode ) : JSONObject {
+	var node : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	var connectedTo : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+
+	node.AddField ( "type", obj.selectedType );
+
+	switch ( obj.selectedType ) {
+		case "Speak":
+			var lines : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+			
+			for ( var l : int = 0; l < obj.speak.lines.childCount; l++ ) {
+				lines.Add ( obj.speak.lines.GetChild(l).GetComponent(EditorConversationNodeLine).line.text );
+			}
+			
+			node.AddField ( "speaker", obj.speak.speakerPopUp.selectedOption );
+			node.AddField ( "lines", lines );
+			break;
+		
+		case "GameEvent":
+			node.AddField ( "event", obj.gameEvent.event.text );
+			break;
+		
+		case "Condition":
+			node.AddField ( "condition", obj.condition.flag.text );
+			break;
+			
+		case "Consequence":
+			node.AddField ( "consequence", obj.consequence.flag.text );
+			node.AddField ( "consequenceBool", obj.consequence.bool.selectedOption == "True" );
+			break;
+			
+		case "EndConvo":
+			node.AddField ( "action", obj.endConvo.action.selectedOption );
+			node.AddField ( "nextRoot", int.Parse(obj.endConvo.nextRoot.selectedOption) );
+			break;
+			
+		case "Exchange":
+			node.AddField ( "item", obj.exchange.item.text );
+			node.AddField ( "credits", int.Parse(obj.exchange.credits.text) );
+			break;
+	
+	}
+
+	for ( var i : int = 0; i < obj.connectedTo.Length; i++ ) {
+		if ( obj.activeOutputs[i] && obj.connectedTo[i] ) {
+			connectedTo.Add ( DeserializeConversationNode ( obj.connectedTo[i] ) );
+		}
+	}
+
+	node.AddField ( "connectedTo", connectedTo );
+
+	return node;
+}
+
+static function SerializeConversationRootNode ( obj : EditorConversationRootNode ) : JSONObject {
+	var rootNode : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	
+	rootNode.AddField ( "auto", obj.auto.isChecked );
+	
+	if ( obj.connectedTo ) {
+		rootNode.AddField ( "connectedTo", DeserializeConversationNode ( obj.connectedTo ) );
+	}
+	
+	return rootNode;
+}
+
+static function SerializeConversationTree ( obj : Transform ) : JSONObject {
+	var conversationTree : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	var rootNodes : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+	
+	for ( var i : int = 0; i < obj.childCount; i++ ) {
+		rootNodes.Add ( SerializeConversationRootNode ( obj.GetChild(i).GetComponent ( EditorConversationRootNode ) ) );
+	}
+	
+	conversationTree.AddField ( "rootNodes", rootNodes ); 
+	
+	return conversationTree;
+}
+
 static function SerializeConversation ( c : List.< EditorConversationEntry > ) : JSONObject {
 	var conversation : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 	

@@ -54,6 +54,7 @@ class Actor extends InteractiveObject {
 	var path : List.< PathNode > = new List.< PathNode >();
 	var inventory : InventoryEntry[] = new InventoryEntry [4];
 	
+	var conversationTree : String;
 	var conversations : List.< Conversation > = new List.< Conversation >();																																							
 	var target : Transform;
 
@@ -62,6 +63,7 @@ class Actor extends InteractiveObject {
 	var waiting : boolean = false;
 	var talking : boolean = false;
 
+	@HideInInspector var currentConvoRoot : int = 0;
 	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
 	@HideInInspector var nodeTimer : float = 0;
@@ -182,14 +184,11 @@ class Actor extends InteractiveObject {
 	}
 	
 	function Talk () : IEnumerator {
-		if ( conversations.Count > 0 ) {
+		if ( !String.IsNullOrEmpty ( conversationTree ) ) {
 			yield WaitForEndOfFrame();
-		
-			GameCore.GetPlayerObject().GetComponent(Player).TalkTo ( this );
-			
-			conversations[currentConvo].Init ();
-			
 			talking = true;				
+		
+			ConversationManager.StartConversation ( conversationTree, this );
 		}
 	}
 	
@@ -214,10 +213,6 @@ class Actor extends InteractiveObject {
 	function StopTalking ( endAction : String ) {
 		talking = false;
 		
-		FindNextConvo ();
-		
-		StartCoroutine ( GameCore.GetPlayerObject().GetComponent(Player).StopTalking () );
-	
 		switch ( endAction ) {
 			case "Attack":
 				SetAffiliation ( "Enemy" );
@@ -231,12 +226,6 @@ class Actor extends InteractiveObject {
 			case "RunAway":
 				SetAffiliation ( "Enemy" );
 				SetMood ( "Scared" );
-				break;
-				
-			case "FireTrigger":
-				if ( this.GetComponent(Trigger) && this.GetComponent(Trigger).activation == Trigger.eTriggerActivation.EndConvo ) {
-					this.GetComponent(Trigger).Activate();
-				}
 				break;
 			
 		} 

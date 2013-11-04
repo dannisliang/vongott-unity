@@ -332,6 +332,12 @@ function OnGUI () {
 ////////////////////
 // Update
 ////////////////////
+public function ExecuteWithDelay ( func : Function, time : float ) : IEnumerator {
+	yield WaitForSeconds ( time );
+
+	func ();
+}
+
 function Update () {
 	if ( playerObject == null ) {
 		FindPlayer ();

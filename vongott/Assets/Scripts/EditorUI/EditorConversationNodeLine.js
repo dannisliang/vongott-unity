@@ -5,6 +5,10 @@ class EditorConversationNodeLine extends MonoBehaviour {
 	var removeBtn : OGButton;
 	var outputBtn : OGButton;
 
+	public function SetText ( str : String ) {
+		line.text = str;
+	}
+
 	public function SetTarget ( obj : GameObject, i : int ) {
 		outputBtn.target = obj;
 		outputBtn.argument = i.ToString();

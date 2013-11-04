@@ -54,13 +54,19 @@ class EventManager extends MonoBehaviour {
 		}
 	}
 	
-	public static function GiveItem ( path : String, cost : int ) {
-		if ( InventoryManager.credits >= cost ) {
+	public static function GiveItem ( path : String, credits : int ) {
+		if ( InventoryManager.credits + credits >= 0 ) {
 			var obj : GameObject = Resources.Load ( "Items/" + path ) as GameObject;
 			
 			InventoryManager.AddItem ( obj.GetComponent ( Item ) );
-			InventoryManager.ChangeCredits ( -cost );		
-			GameCore.Print ( "EventManager | Bought " + path + " for " + cost + " credits" );
+			InventoryManager.ChangeCredits ( credits );		
+			GameCore.Print ( "EventManager | Got " + path );
+			
+			if ( credits < 0 ) {
+				GameCore.Print ( "EventManager | " + credits + " credits deducted" );
+			} else {
+				GameCore.Print ( "EventManager | " + credits + " credits added" );
+			}
 			
 		} else {
 			GameCore.Print ( "EventManager | Not enough credits to buy " + path );

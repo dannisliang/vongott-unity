@@ -1,11 +1,7 @@
 #pragma strict
 
 class EditorInspectorActor extends MonoBehaviour {
-	var convoBox : GameObject;
-	var convoContainer : Transform;
-	var convoPrefab : EditorInspectorConvo;
-	var convos : List.< EditorInspectorConvo > = new List.< EditorInspectorConvo >();
-	@HideInInspector var convoBottomLine : float = 0;
+	var convo : OGButton;
 	
 	var stateBox : GameObject;
 	var affiliation : OGPopUp;
@@ -18,49 +14,16 @@ class EditorInspectorActor extends MonoBehaviour {
 	//////////////////////
 	// Conversation
 	//////////////////////		
-	// Add convo
-	function AddConvo () : EditorInspectorConvo {
-		var convo : EditorInspectorConvo = Instantiate ( convoPrefab );
-		convos.Add ( convo );
-		convo.transform.parent = convoContainer;
-		convo.transform.localPosition = new Vector3 ( 0, convoBottomLine, 0 );
-		convo.label.text = convos.IndexOf ( convo ).ToString();
-		convo.inspector = this.gameObject;
-		convo.Init ();
-				
-		convoBottomLine += 190;
-		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
-	
-		return convo;
-	}
-	
-	function AddConvoAndUpdate () {
-		AddConvo ();
+	// Pick convo
+	public function PickConvo ( btn : OGButton ) {
+		EditorPicker.mode = "conversation";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "MenuBase";
 		
-		UpdateObject ();
-	}
-	
-	// Remove convo
-	function RemoveConvo () {
-		convoBottomLine -= 190;
-		convoContainer.GetComponent ( OGScrollView ).scrollLength = convoBottomLine;
-	
-		Destroy ( convos[convos.Count-1].gameObject );
-		convos.RemoveAt ( convos.Count-1 );
+		EditorPicker.func = UpdateObject;
 		
-		UpdateObject ();
+		OGRoot.GoToPage ( "Picker" );
 	}
-	
-	function ClearConvos () {
-		for ( var i = 0; i < convos.Count; i++ ) {
-			Destroy ( convos[i].gameObject );
-		}
-		
-		convos.Clear ();
-		convoBottomLine = 0;
-		convoContainer.GetComponent ( OGScrollView ).scrollLength = 0;
-	}
-
 		
 	//////////////////////
 	// Inventory
@@ -105,20 +68,10 @@ class EditorInspectorActor extends MonoBehaviour {
 		mood.selectedOption = a.mood.ToString();
 		
 		// conversation
-		ClearConvos();
-		convoContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - convoContainer.position.y;
-		
-		for ( var i = 0; i < a.conversations.Count; i++ ) {
-			var c : Conversation = a.conversations[i];
-			var convo : EditorInspectorConvo = AddConvo ();
-			if ( c.condition ) { convo.condition.text = c.condition; }
-			
-			if ( c.condition != "" ) { convo.condition.text = c.condition; }
-			convo.conditionBool.isChecked = c.conditionBool;
-			convo.forced.isChecked = c.forced;
-			if ( c.startQuest != "" ) { convo.startQuest.text = c.startQuest; }
-			if ( c.endQuest != "" ) { convo.endQuest.text = c.endQuest; }
-			convo.conversation.text = c.chapter + "/" + c.scene + "/" + c.name + "/" + c.conversation;
+		if ( !String.IsNullOrEmpty ( a.conversationTree ) ) {
+			convo.text = a.conversationTree;
+		} else {
+			convo.text = "(none)";
 		}
 				
 		// inventory
@@ -149,20 +102,7 @@ class EditorInspectorActor extends MonoBehaviour {
 			a.SetAffiliation ( affiliation.selectedOption );
 			a.SetMood ( mood.selectedOption );
 		
-			a.conversations.Clear ();
-			
-			for ( var i = 0; i < convos.Count; i++ ) {
-				var control : EditorInspectorConvo = convos[i];
-				var newConvo : Conversation = ReadConvoPath ( control.conversation.text );
-				
-				newConvo.condition = control.condition.text;
-				newConvo.conditionBool = control.conditionBool.isChecked;
-				newConvo.forced = control.forced.isChecked;
-				newConvo.startQuest = control.startQuest.text;
-				newConvo.endQuest = control.endQuest.text;
-				
-				a.conversations.Add ( newConvo );
-			}
+			a.conversationTree = convo.text;
 		} 	
 	}
 }

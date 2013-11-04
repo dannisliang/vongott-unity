@@ -25,6 +25,21 @@ class Loader {
 		return input;
 	}
 	
+	static function LoadConversationTree ( path : String ) : ConversationTree {
+		var tree : ConversationTree;
+		
+		path = Application.dataPath + "/Story/Conversations/" + path + ".vgconvo";
+		
+		Debug.Log ( "Loader | Loading conversation tree: " + path );
+		
+		var input : String = ReadFile ( path );	
+		if ( !input ) { return null; }
+		
+		tree = Deserializer.DeserializeConversationTree ( input );
+		
+		return tree;
+	}
+	
 	static function LoadConversationToEditor ( path : String ) : List.< EditorConversationEntry > {
 		var entries : List.< EditorConversationEntry >;
 		

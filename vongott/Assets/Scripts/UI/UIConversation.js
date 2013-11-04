@@ -14,8 +14,7 @@ class UIConversation extends OGPage {
 	static var lines : OGLabel[];
 	static var highlight : GameObject;
 	static var currentHighlight : int = 0;
-	static var convo : Conversation;
-	
+		
 	
 	////////////////////
 	// Convo progression
@@ -24,6 +23,18 @@ class UIConversation extends OGPage {
 	static function HighlightOption ( index : int ) {
 		highlight.transform.localPosition = new Vector3 ( lines[index].transform.localPosition.x - 10, lines[index].transform.localPosition.y - 7.5, 0 );
 		currentHighlight = index;
+	}
+	
+	static function NextOption () {
+		if ( currentHighlight < ConversationManager.GetOptions() ) {
+			HighlightOption ( currentHighlight + 1 );
+		}
+	}
+
+	static function PreviousOption () {
+		if ( currentHighlight > 0 ) {
+			HighlightOption ( currentHighlight - 1 );
+		}
 	}
 
 	// Set option
@@ -61,6 +72,8 @@ class UIConversation extends OGPage {
 		actorName = _actorName;
 		lines = _lines;
 		highlight = _highlight;
+		
+		currentHighlight = 0;
 	}
 	
 	////////////////////
@@ -71,22 +84,22 @@ class UIConversation extends OGPage {
 			// Let the mouse pick
 			for ( var i = 0; i < lines.Length; i++ ) {
 				if ( lines[i].mouseOver ) {
-					convo.HighlightOption ( i );
+					HighlightOption ( i );
 				}
 			}
 			
 			
 			if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetMouseButtonDown(0) ) {
-				convo.SelectOption ();
+				ConversationManager.NextNode ( currentHighlight );
 			} else if ( Input.GetKeyDown ( KeyCode.UpArrow ) ) {
-				convo.PreviousOption ();
+				PreviousOption ();
 			} else if ( Input.GetKeyDown ( KeyCode.DownArrow ) ) {
-				convo.NextOption ();
+				NextOption ();
 			}
 		
 		} else {
 			if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetMouseButtonDown(0) ) {
-				convo.NextEntry ();
+				ConversationManager.NextNode ( 0 );
 			}
 		}
 	}

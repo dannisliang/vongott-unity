@@ -187,13 +187,9 @@ class EditorPicker extends OGPage {
 			for ( var s : String in EditorCore.GetConvoScenes ( c ) ) {
 				CreateLine ( "/scene " + s );
 			
-				for ( var n : String in EditorCore.GetConvoNames ( c, s ) ) {
-					CreateLine ( "//" + n );
+				for ( var i : String in EditorCore.GetConvoTrees ( c, s ) ) {
+					CreateButton ( c + "/" + s + "/" + i );
 				
-					for ( var i : String in EditorCore.GetConvos ( c, s, n ) ) {
-						CreateButton ( c + "/" + s + "/" + n + "/" + i );
-					
-					}
 				}
 			}
 		}

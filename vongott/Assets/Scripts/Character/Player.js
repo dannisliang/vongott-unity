@@ -48,14 +48,12 @@ class Player extends MonoBehaviour {
 		GameCore.Print ( "Player | conversation with " + a.displayName + " started" ); 
 	}
 	
-	function StopTalking () : IEnumerator {
+	function StopTalking () {
 		GameCore.Print ( "Player | conversation with " + talkingTo.displayName + " ended" ); 
 		
 		talkingTo = null;
 	
-		yield WaitForSeconds ( 1 );
-		
-		GameCore.ToggleControls ( true );
+		StartCoroutine ( GameCore.GetInstance().ExecuteWithDelay ( function () { GameCore.ToggleControls ( true ); }, 1 ) );
 	}
 	
 	
