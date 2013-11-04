@@ -55,8 +55,7 @@ class Actor extends InteractiveObject {
 	var inventory : InventoryEntry[] = new InventoryEntry [4];
 	
 	var currentConvoRoot : int = 0;
-	var conversationTree : String;
-	var conversations : List.< Conversation > = new List.< Conversation >();																																							
+	var conversationTree : String;																																							
 	
 	var target : Transform;
 
@@ -65,7 +64,6 @@ class Actor extends InteractiveObject {
 	var waiting : boolean = false;
 	var talking : boolean = false;
 
-	@HideInInspector var currentConvo : int = 0;
 	@HideInInspector var currentNode : int = 0;
 	@HideInInspector var nodeTimer : float = 0;
 	@HideInInspector var shootTimer : float = 0;
@@ -157,39 +155,12 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Player interaction
 	////////////////////
-	function CheckForcedConvo () : boolean {
-		if ( conversations.Count > 0 ) { 
-			return conversations[currentConvo].forced;
-		} else {
-			return false;
-		}
-	}
-	
-	function FindNextConvo () {
-		for ( var i = 0; i < conversations.Count; i++ ) {
-			var validConvo : boolean = FlagManager.GetFlag ( conversations[i].condition, conversations[i].conditionBool );
-			var doneConvo : boolean = conversations[i].done;
-			
-			// If the convo's flag is true and it's not done yet, pick this
-			if ( validConvo && !doneConvo ) {
-				currentConvo = i;
-				
-				break;
-			
-			// If the convo's flag is true and it's already been done, store it in case there are no more convos
-			} else if ( validConvo && doneConvo ) {
-				currentConvo = i;
-				
-			}
-		}
-	}
-	
 	function Talk () : IEnumerator {
 		if ( !String.IsNullOrEmpty ( conversationTree ) ) {
 			yield WaitForEndOfFrame();
 			talking = true;				
 		
-			ConversationManager.StartConversation ( conversationTree, this );
+			ConversationManager.StartConversation ( this );
 		}
 	}
 	
@@ -486,7 +457,7 @@ class Actor extends InteractiveObject {
 		// check for interaction
 		if ( GameCore.controlsActive ) {
 			if ( affiliation == eAffiliation.Ally && !talking  ) {
-				if ( CheckForcedConvo() ) {
+				if ( ConversationManager.CheckForcedConvo( this ) ) {
 					StartCoroutine ( Talk() );
 				}
 			}

@@ -84,8 +84,15 @@ public class ConversationManager {
 		return currentNode.lines.Count;
 	}
 	
-	public static function StartConversation ( path : String, actor : Actor ) {
-		currentConvo = Loader.LoadConversationTree ( path );
+	public static function CheckForcedConvo ( actor : Actor ) : boolean {
+		var convo : ConversationTree = Loader.LoadConversationTree ( actor.conversationTree );
+		var rootNode : ConversationRootNode = convo.rootNodes[actor.currentConvoRoot];
+		
+		return rootNode.auto;
+	}
+	
+	public static function StartConversation ( actor : Actor ) {
+		currentConvo = Loader.LoadConversationTree ( actor.conversationTree );
 		currentActor = actor;
 	
 		GameCamera.GetInstance().StorePosRot();

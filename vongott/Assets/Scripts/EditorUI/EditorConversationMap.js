@@ -74,6 +74,8 @@ class EditorConversationMap extends OGPage {
 	function Create () {
 		if ( creator.chapter.text == "" || creator.scene.text == "" || creator.name.text == "" ) { return; }
 		
+		ClearNodes ();
+								
 		SelectFileMode ( "Load" );
 		selector.text = creator.chapter.text + "/" + creator.scene.text + "/" + creator.name.text;
 		
