@@ -385,7 +385,7 @@ static function CreateSurface () {
 // Shape
 ////////////////////
 // Solidify
-public function AddShape ( shape : Shape ) {
+public function AddShape ( shape : Shape, method : BooleanRTLib.BooleanType ) {
 	Debug.Log ( "EditorCore | Adding shape " + shape );
 	
 	var combinedMesh : CombinedMesh = workspace.gameObject.FindObjectOfType ( CombinedMesh );
@@ -401,7 +401,7 @@ public function AddShape ( shape : Shape ) {
 	
 	AddAction ( combinedMesh.gameObject );
 	
-	combinedMesh.Add ( shape.gameObject, defaultMaterial );
+	combinedMesh.Add ( shape.gameObject, defaultMaterial, method );
 	
 }
 

@@ -40,15 +40,16 @@ class CombinedMesh extends MonoBehaviour {
 		obj.GetComponent(MeshFilter).mesh = mesh;
 	}
 		
-	public function Add ( objAdded : GameObject, materialAdded : Material ) {
+	public function Add ( objAdded : GameObject, materialAdded : Material, method : BooleanRTLib.BooleanType ) {
 		var objBefore : GameObject = this.gameObject;
 		var materials : Material[] = this.renderer.materials;
 		var nrt : BooleanRT = this.GetComponent(BooleanRT);		
 		var tmpMtl : Material = objAdded.renderer.material;
+		var tmpUVs : Vector2[] = objAdded.GetComponent(MeshFilter).mesh.uv;
 
 		nrt.recalCollider = true;
         nrt.recalculateNormals = true;
-        nrt.type = BooleanRTLib.BooleanType.Union;
+        nrt.type = method;
         
         nrt.obj1 = objBefore.transform;
         nrt.obj2 = objAdded.transform;
@@ -58,6 +59,7 @@ class CombinedMesh extends MonoBehaviour {
         
 		nrt.ExecuteNow ();
 		
+		objAdded.GetComponent(MeshFilter).mesh.uv = tmpUVs;
 		objAdded.renderer.material = tmpMtl;
 	}
 	
