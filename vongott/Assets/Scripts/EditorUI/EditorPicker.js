@@ -275,6 +275,7 @@ class EditorPicker extends OGPage {
 				break;
 				
 			case "items":
+			case "item":
 				InitItems ();
 				break;
 		

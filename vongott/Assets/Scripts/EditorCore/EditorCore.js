@@ -401,7 +401,7 @@ public function AddShape ( shape : Shape ) {
 	
 	AddAction ( combinedMesh.gameObject );
 	
-	combinedMesh.Add ( shape.GetComponent(MeshFilter).sharedMesh, shape.transform, defaultMaterial );
+	combinedMesh.Add ( shape.gameObject, defaultMaterial );
 	
 }
 
@@ -499,6 +499,10 @@ static function FitSelectionBox () {
 	if ( selectedObject.GetComponent(Trigger) && !selectedObject.GetComponent(InteractiveObject) ) {
  		doWireframe = true;
 	}
+	
+	selectBox.transform.position = selectedObject.transform.position;
+	selectBox.transform.localScale = selectedObject.transform.localScale;
+	selectBox.transform.localEulerAngles = selectedObject.transform.localEulerAngles;
 	
 	selectBox.GetComponent ( EditorSelectionBox ).Fit( selectedObject, doWireframe );
 }

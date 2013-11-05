@@ -25,6 +25,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		OGRoot.GoToPage ( "Picker" );
 	}
 		
+		
 	//////////////////////
 	// Inventory
 	//////////////////////
@@ -36,24 +37,6 @@ class EditorInspectorActor extends MonoBehaviour {
 		EditorBrowserWindow.initMode = "Equip";
 		EditorBrowserWindow.argument = i.ToString();
 		OGRoot.GoToPage ( "BrowserWindow" );
-	}
-
-	//////////////////////
-	// Interpretation
-	//////////////////////
-	// Convo path
-	function ReadConvoPath ( path : String ) : Conversation {
-		var c : Conversation = new Conversation ();
-		var split : String[] = Regex.Split ( path, "/" ); 		
-		
-		if ( path != "(none)" ) {		
-			c.chapter = split[0];
-			c.scene = split[1];
-			c.name = split[2];
-			c.conversation = split[3];
-		}
-		
-		return c;
 	}
 	
 	

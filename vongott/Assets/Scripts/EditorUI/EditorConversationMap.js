@@ -34,7 +34,7 @@ class EditorConversationMap extends OGPage {
 	public var scrollView : OGScrollView;
 	public var nodeContainer : Transform;
 	
-	private var nodeIOPoints : List.< KeyValuePair.< int, Vector3[] > > = new List.< KeyValuePair.< int, Vector3[] > > ();
+	private var nodeIOPoints : List.< KeyValuePair.< int, Transform[] > > = new List.< KeyValuePair.< int, Transform[] > > ();
 	private var bottomLines : float[] = new float[999];
 	private var rootBottomLines : float[] = new float[999];
 	private var currentConvo : ConversationTree;
@@ -122,6 +122,14 @@ class EditorConversationMap extends OGPage {
 	
 	// Exit
 	function Exit () {
+		ClearNodes ();
+	
+		creator.chapter.text = "";
+		creator.scene.text = "";
+		creator.name.text = "";
+	
+		selector.text = "(none)";
+	
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 	
@@ -143,7 +151,7 @@ class EditorConversationMap extends OGPage {
 	
 	public function ClearNodes () {
 		currentConvo = null;
-		
+				
 		for ( var i : int = 0; i < rootNodes.childCount; i++ ) {
 			RemoveRootNode ( rootNodes.GetChild ( i ).GetComponent ( EditorConversationRootNode ), true );
 		}
@@ -153,6 +161,8 @@ class EditorConversationMap extends OGPage {
 		connectionCallback = callback;
 		connectOutput = activeOutput;
 		connectMode = true;
+		
+		UpdateRootNodes ();
 	}
 	
 	public function GetRootStrings() : String[] {
@@ -169,9 +179,9 @@ class EditorConversationMap extends OGPage {
 	////////////////////
 	// Draw lines
 	////////////////////
-	public function GetOutputPosition ( o : OGButton ) : Vector3 {
-		if ( o ) {
-			return o.transform.position + new Vector3 ( o.transform.localScale.x/2, o.transform.localScale.y/2, 0 ) + new Vector3 ( scrollView.inset, scrollView.inset, 0 ) - new Vector3 ( scrollView.position.x, scrollView.position.y, 0 ) - scrollView.transform.localPosition;
+	public function GetOutputPosition ( t : Transform ) : Vector3 {
+		if ( t ) {
+			return t.position + new Vector3 ( t.localScale.x/2, t.localScale.y/2, 0 ) + new Vector3 ( scrollView.inset, scrollView.inset, 0 ) - new Vector3 ( scrollView.position.x, scrollView.position.y, 0 ) - scrollView.transform.localPosition;
 		} else {
 			return Vector3.zero;
 		}
@@ -189,7 +199,7 @@ class EditorConversationMap extends OGPage {
 		var p3 : Vector3;
 		
 		if ( connectMode ) {
-			p0 = GetOutputPosition(connectOutput);
+			p0 = GetOutputPosition(connectOutput.transform);
 			p3 = new Vector3 ( Input.mousePosition.x, Screen.height-Input.mousePosition.y, -20 )-scrollView.transform.localPosition;
 			p1 = p0 + Vector3.right * 20;
 			p2 = p1;
@@ -199,9 +209,9 @@ class EditorConversationMap extends OGPage {
 			Handles.DrawLine ( p2, p3 );
 		}
 		
-		for ( var kvp : KeyValuePair.< int, Vector3[] > in nodeIOPoints ) {
-			p0 = kvp.Value[0];
-			p3 = kvp.Value[1];
+		for ( var kvp : KeyValuePair.< int, Transform[] > in nodeIOPoints ) {
+			p0 = GetOutputPosition(kvp.Value[0]);
+			p3 = GetOutputPosition(kvp.Value[1]);
 			p1 = p0 + Vector3.right * ( 20 + ( kvp.Key * 5 ) );
 			p2 = p1;
 			p2.y = p3.y;
@@ -239,6 +249,8 @@ class EditorConversationMap extends OGPage {
 		noButton.gameObject.SetActive ( false );
 		saveButton.gameObject.SetActive ( true );
 		scrollView.gameObject.SetActive ( true );
+		
+		UpdateRootNodes ();
 	}
 	
 	
@@ -260,6 +272,10 @@ class EditorConversationMap extends OGPage {
 			addRootNode.transform.position = rootNode.transform.position + new Vector3 ( 0, 30, 0 );
 			rootNodeBackground.localScale = new Vector3 ( 140, 75 + i * 30, 1 );
 		}
+		
+		yield WaitForEndOfFrame ();
+		
+		UpdateRootNodes ();
 	}
 	
 	public function CreateRootNode ( reference : ConversationRootNode ) {
@@ -269,6 +285,8 @@ class EditorConversationMap extends OGPage {
 		if ( reference.connectedTo ) {
 			CreateNode ( newRootNode, reference.connectedTo );
 		}
+		
+		UpdateRootNodes ();
 	}
 	
 	public function CreateRootNode ( btn : OGButton ) {
@@ -283,7 +301,7 @@ class EditorConversationMap extends OGPage {
 		newRootNode.transform.localScale = Vector3.one;
 		
 		StartCoroutine ( SortRootNodes () );
-		
+				
 		return newRootNode;
 	}
 	
@@ -319,6 +337,8 @@ class EditorConversationMap extends OGPage {
 		node.SetRootNode ( -1 );
 		node.rootIndex = -1;
 		node.nodeIndex = -1;
+		
+		UpdateRootNodes ();
 	}
 	
 	// ^ Check exising node
@@ -349,13 +369,15 @@ class EditorConversationMap extends OGPage {
 	
 		newNode.transform.parent = nodeContainer;
 		newNode.transform.localScale = Vector3.one;
-		newNode.transform.position = new Vector3 ( nodeSender.transform.position.x, nodeSender.transform.position.y, 0 );
+		newNode.transform.position = new Vector3 ( nodeSender.targetPos.x, nodeSender.targetPos.y, 0 );
 		
 		nodeSender.SetConnection ( outputIndex, newNode );
 	
 		for ( var i : int = 0; i < reference.connectedTo.Count; i++ ) {
 			CreateNode ( newNode, reference.connectedTo[i], i );
 		}
+		
+		UpdateRootNodes ();
 	}
 	
 	public function CreateNode ( rootSender : EditorConversationRootNode, reference : ConversationNode ) {
@@ -372,6 +394,8 @@ class EditorConversationMap extends OGPage {
 		for ( var i : int = 0; i < reference.connectedTo.Count; i++ ) {
 			CreateNode ( newNode, reference.connectedTo[i], i );
 		}
+		
+		UpdateRootNodes ();
 	}
 	
 	// ^ From scratch
@@ -385,6 +409,8 @@ class EditorConversationMap extends OGPage {
 		newNode.transform.position = new Vector3 ( fromRootNode.output.transform.position.x + 30, fromRootNode.output.transform.position.y, 0 );
 		
 		fromRootNode.SetConnection ( newNode );
+		
+		UpdateRootNodes ();
 		
 		return newNode;
 	}
@@ -400,17 +426,21 @@ class EditorConversationMap extends OGPage {
 		
 		fromNode.SetConnection ( outputIndex, newNode );
 		
+		UpdateRootNodes ();
+		
 		return newNode;
 	}
 	
 	public function RemoveNodeRecursively ( removeNode : EditorConversationNode ) {
 		for ( var i : int = 0; i < removeNode.connectedTo.Length; i++ ) {
 			if ( removeNode.connectedTo[i] ) {
-				RemoveNode ( removeNode.connectedTo[i] );
+				RemoveNodeRecursively ( removeNode.connectedTo[i] );
 			}
 		}
 		
 		RemoveNode ( removeNode );
+		
+		UpdateRootNodes ();
 	}
 	
 	public function RemoveNode ( removeNode : EditorConversationNode ) {
@@ -419,6 +449,8 @@ class EditorConversationMap extends OGPage {
 		}
 		
 		Destroy ( removeNode.gameObject );
+		
+		UpdateRootNodes ();
 	}	
 	
 	private function SetDirty () {
@@ -434,7 +466,6 @@ class EditorConversationMap extends OGPage {
 		
 		node.rootIndex = rootIndex;
 		node.nodeIndex = nodeIndexCounter;
-
 		
 		var pos : Vector3;
 		pos.x = 200 + offset * cellDistance;
@@ -457,14 +488,14 @@ class EditorConversationMap extends OGPage {
 		
 		for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
 			if ( node.activeOutputs[i] && node.connectedTo[i] ) {
-				var points : Vector3[] = new Vector3[2];
-				points[0] = GetOutputPosition ( node.activeOutputs[i] );
-				points[1] = GetOutputPosition ( node.connectedTo[i].input );
+				var points : Transform[] = new Transform[2];
+				points[0] = node.activeOutputs[i].transform;
+				points[1] = node.connectedTo[i].input.transform;
 				
-				nodeIOPoints.Add ( new KeyValuePair.< int, Vector3[] > ( i, points ) );
+				nodeIOPoints.Add ( new KeyValuePair.< int, Transform[] > ( i, points ) );
 				
 				if ( node.GetRootNode() == node.connectedTo[i].GetRootNode() ) {
-					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, node.transform.position.y );
+					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, node.targetPos.y );
 				} else {
 					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, -1 );
 				}
@@ -474,17 +505,17 @@ class EditorConversationMap extends OGPage {
 	
 	private function UpdateRootNodePosition ( rootNode : EditorConversationRootNode, index : int ) {
 		if ( rootNode.connectedTo ) {				
-			var rootPoints : Vector3[] = new Vector3[2];
-			rootPoints[0] = GetOutputPosition ( rootNode.output );
-			rootPoints[1] = GetOutputPosition ( rootNode.connectedTo.input );
+			var rootPoints : Transform[] = new Transform[2];
+			rootPoints[0] = rootNode.output.transform;
+			rootPoints[1] = rootNode.connectedTo.input.transform;
 		
-			nodeIOPoints.Add ( new KeyValuePair.< int, Vector3[] > ( index, rootPoints ) );
+			nodeIOPoints.Add ( new KeyValuePair.< int, Transform[] > ( index, rootPoints ) );
 		
 			UpdateNodePosition ( index, rootNode.connectedTo, 0, rootBottomLines[index] + 30 );
 		}
 	}
 	
-	private function UpdateRootNodes () {
+	private function UpdateAllRootNodes () {
 		nodeIOPoints.Clear ();
 		SetDirty ();
 		bottomLines = new float[999];
@@ -498,6 +529,20 @@ class EditorConversationMap extends OGPage {
 		}
 	}
 	
+	private function UpdateRootNodesTimed () : IEnumerator {
+		yield WaitForEndOfFrame();
+		
+		UpdateAllRootNodes ();
+		
+		yield WaitForEndOfFrame();
+		
+		UpdateAllRootNodes ();
+	}
+	
+	public function UpdateRootNodes () {
+		StartCoroutine ( UpdateRootNodesTimed() );
+	}
+	
 	
 	////////////////////
 	// Update
@@ -507,6 +552,7 @@ class EditorConversationMap extends OGPage {
 			connectMode = false;
 		}
 		
-		UpdateRootNodes ();
+		// Keep the root nodes visible
+		rootNodes.transform.parent.localPosition = Vector3.Lerp ( rootNodes.transform.parent.localPosition, new Vector3 ( 0, 40 + scrollView.position.y, 0 ), Time.deltaTime * 10 );
 	}
 }

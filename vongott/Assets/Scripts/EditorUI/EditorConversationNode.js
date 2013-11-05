@@ -49,6 +49,7 @@ class EditorConversationNode extends MonoBehaviour {
 	public var removeBtn : OGButton;
 	public var frame : Transform;
 	public var type : Transform;
+	public var typeSelector : OGPopUp;
 	public var selectedType : String;
 	public var allTypes : GameObject[];
 	public var input : OGButton;
@@ -132,7 +133,11 @@ class EditorConversationNode extends MonoBehaviour {
 		}
 		
 		selectedType = type;
-				
+		
+		if ( typeSelector.selectedOption != type ) {
+			typeSelector.selectedOption = type;
+		}
+		
 		switch ( type ) {
 			case "Speak":
 				if ( speak.lines.childCount < 1 ) {
@@ -164,7 +169,6 @@ class EditorConversationNode extends MonoBehaviour {
 			
 			case "EndConvo":
 				AdjustFrame ( 200, 80, 1 );
-				endConvo.nextRoot.SetOptions ( EditorConversationMap.GetInstance().GetRootStrings() );
 				SetActive ( 0, null );
 				SetActive ( 1, null );
 				SetActive ( 2, null );
@@ -193,6 +197,8 @@ class EditorConversationNode extends MonoBehaviour {
 	public function ClearConnections () {
 		connectedTo = new EditorConversationNode[3];
 		activeOutputs = new OGButton[3];
+		
+		EditorConversationMap.GetInstance().UpdateRootNodes ();
 	}
 	
 	public function SetConnection ( i : int, input : EditorConversationNode ) {
@@ -201,6 +207,8 @@ class EditorConversationNode extends MonoBehaviour {
 		}
 		
 		connectedTo[i] = input;
+		
+		EditorConversationMap.GetInstance().UpdateRootNodes ();
 	}
 	
 	public function SetActive ( i : int, output : OGButton ) {
@@ -228,6 +236,10 @@ class EditorConversationNode extends MonoBehaviour {
 		);
 	}
 	
+	public function TryConnect ( btn : OGButton ) {
+		TryConnect ( "0" );
+	}
+	
 	public function TryConnect () {
 		TryConnect ( "0" );
 	}
@@ -237,6 +249,8 @@ class EditorConversationNode extends MonoBehaviour {
 			EditorConversationMap.GetInstance().connectionCallback ( this );
 			EditorConversationMap.GetInstance().connectMode = false;
 		}
+		
+		EditorConversationMap.GetInstance().UpdateRootNodes ();
 	}
 	
 	// Flags
@@ -330,6 +344,8 @@ class EditorConversationNode extends MonoBehaviour {
 		type.localPosition = new Vector3 ( (x/2) - 85, 0, 0 );
 		extraButtonsContainer.localPosition = new Vector3 ( frame.localScale.x + 10, 0, 0 );
 		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x, 10, -4 );
+		
+		EditorConversationMap.GetInstance().UpdateRootNodes ();
 	}
 	
 	// Set root node
@@ -350,8 +366,13 @@ class EditorConversationNode extends MonoBehaviour {
 			Init ();
 		}
 	
+		// Display the correct number of root nodes
+		if ( selectedType == "EndConvo" ) {
+			endConvo.nextRoot.SetOptions ( EditorConversationMap.GetInstance().GetRootStrings() );
+		}
+	
 		// Display the right id data
-		rootNodeLabel.text = rootIndex + " : " + nodeIndex;
+		rootNodeLabel.text = rootIndex.ToString();
 	
 		// Check for invalid values
 		var integer : int = 0;

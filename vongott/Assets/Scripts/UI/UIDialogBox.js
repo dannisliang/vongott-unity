@@ -17,7 +17,6 @@ class UIDialogBox extends OGPage {
 	static var buttonOK : GameObject;
 	static var buttonCancel : GameObject;
 	static var input : OGTextField;
-	static var convo : Conversation;
 	static var action : Function;
 	
 	
@@ -42,25 +41,13 @@ class UIDialogBox extends OGPage {
 		if ( action ) {
 			action ();
 		}
-	
-		if ( convo ) {
-			OGRoot.GoToPage ( "Conversation" );
-			convo.NextEntry();
-			
-		} else {
-			OGRoot.GoToPage ( "HUD" );
-		}
+
+		OGRoot.GoToPage ( "HUD" );
 	}
 	
 	// Cancel
 	function Cancel () {
-		if ( convo ) {
-			OGRoot.GoToPage ( "Conversation" );
-			convo.NextEntry();
-			
-		} else {
-			OGRoot.GoToPage ( "HUD" );
-		}
+		OGRoot.GoToPage ( "HUD" );
 	}
 	
 

@@ -679,6 +679,8 @@ static function DeserializeMesh ( m : JSONObject ) : Mesh {
 static function DeserializeConversationNode ( n : JSONObject ) : ConversationNode {
 	var node : ConversationNode = new ConversationNode();
 	
+	if ( !n ) { Debug.LogWarning ( "Deserializer | Loose end!" ); return; }
+	
 	if ( n.HasField ( "rootIndex" ) ) { node.rootIndex = n.GetField ( "rootIndex" ).n; }
 	if ( n.HasField ( "nodeIndex" ) ) { node.nodeIndex = n.GetField ( "nodeIndex" ).n; }
 	node.type = n.GetField ( "type" ).str;
@@ -739,99 +741,6 @@ static function DeserializeConversationTree ( str : String ) : ConversationTree 
 	}
 	
 	return tree;
-}
-
-// To game
-static function DeserializeConversationsToGame ( convos : JSONObject ) : List.< Conversation > {
-	var conversations : List.< Conversation > = new List.< Conversation >();
-		
-	if ( convos ) {		
-		for ( var o : Object in convos.list ) {
-			var c : JSONObject = o as JSONObject;
-			
-			var convo : Conversation = new Conversation ();
-			
-			if ( c.HasField ( "condition" ) ) { convo.condition = c.GetField ( "condition" ).str; }
-			if ( c.HasField ( "conditionBool" ) ) { convo.conditionBool = c.GetField ( "conditionBool" ).b; }
-			if ( c.HasField ( "startQuest" ) ) { convo.startQuest = c.GetField ( "startQuest" ).str; }
-			if ( c.HasField ( "endQuest" ) ) { convo.endQuest = c.GetField ( "endQuest" ).str; }
-			if ( c.HasField ( "forced" ) ) { convo.forced = c.GetField ( "forced" ).b; }
-			
-			convo.chapter = c.GetField ( "chapter" ).str;
-			convo.scene = c.GetField ( "scene" ).str;
-			convo.name = c.GetField ( "name" ).str;
-			convo.conversation = c.GetField ( "conversation" ).str;
-						
-			conversations.Add ( convo );
-		}
-	}
-	
-	return conversations;
-}
-
-// To editor
-static function DeserializeConversationToEditor ( str : String ) : List.< EditorConversationEntry > {
-	var c : JSONObject = new JSONObject ( str, false );
-	var conversation : List.< EditorConversationEntry > = new List.< EditorConversationEntry >();
-			
-	for ( var o = 0; o < c.list.Count; o++ ) {
-		var e : JSONObject = c.list[o] as JSONObject;
-		var entryObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/UI/EditorConversationEntry" ) ) as GameObject;
-		var entry : EditorConversationEntry = entryObj.GetComponent ( EditorConversationEntry );
-		
-		entry.index.text = o.ToString();
-		entry.type.selectedOption = e.GetField ( "type" ).str;
-		
-		// lines
-		if ( e.GetField ( "type" ).str == "Line" ) {
-			entry.line.condition.text = e.GetField ( "condition" ).str;
-			entry.line.conditionBool.isChecked = e.GetField ( "conditionBool" ).b;
-			entry.line.consequence.text = e.GetField ( "consequence" ).str;
-			entry.line.consequenceBool.isChecked = e.GetField ( "consequenceBool" ).b;
-			entry.line.speaker.selectedOption = e.GetField ( "speaker" ).str;
-			entry.line.line.text = e.GetField ( "line" ).str;
-			entry.line.endConvo.selectedOption = e.GetField ( "endConvo" ).str;
-			if ( e.HasField ( "gameEvent" ) && e.GetField ( "gameEvent" ).str != "" ) {
-				entry.line.gameEvent.text = e.GetField ( "gameEvent" ).str;
-			} else {
-				entry.line.gameEvent.text = "(none)";
-			}
-		
-		// groups
-		} else if ( e.GetField ( "type" ).str == "Group" ) {
-			entry.group.condition.text = e.GetField ( "condition" ).str;
-			entry.group.conditionBool.isChecked = e.GetField ( "conditionBool" ).b;
-			entry.group.options.selectedOption = e.GetField ( "options" ).list.Count.ToString();
-			entry.group.groupType.selectedOption = e.GetField ( "groupType" ).str;
-			entry.group.speaker.selectedOption = e.GetField ( "speaker" ).str;
-			
-			for ( var i = 0; i < e.GetField ( "options" ).list.Count; i++ ) {
-				var gl : JSONObject = e.GetField ( "options" ).list[i] as JSONObject;		
-				var groupLineObj : GameObject = Instantiate ( Resources.Load ( "Prefabs/UI/EditorConversationGroupLine" ) ) as GameObject;
-				var groupLine : EditorConversationGroupLine = groupLineObj.GetComponent ( EditorConversationGroupLine );
-			
-				groupLine.SetIndex ( i );
-				groupLine.consequence.text = gl.GetField ( "consequence" ).str;
-				groupLine.consequenceBool.isChecked = gl.GetField ( "consequenceBool" ).b;
-				groupLine.line.text = gl.GetField ( "line" ).str;
-				groupLine.endConvo.selectedOption = gl.GetField ( "endConvo" ).str;
-				if ( gl.HasField ( "gameEvent" ) && gl.GetField ( "gameEvent" ).str != "" ) {
-					groupLine.gameEvent.text = gl.GetField ( "gameEvent" ).str;
-				} else {
-					groupLine.gameEvent.text = "(none)";
-				}
-			
-				groupLine.transform.parent = entry.group.container;
-				groupLine.transform.localPosition = new Vector3 ( 20, (i+1) * 50, 0 );
-				groupLine.transform.localScale = Vector3.one;
-			
-			}
-		}
-	
-		conversation.Add ( entry );
-	}
-	
-	return conversation;
 }
 
 

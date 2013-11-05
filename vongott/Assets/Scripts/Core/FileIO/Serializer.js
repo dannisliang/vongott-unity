@@ -657,58 +657,6 @@ static function SerializeConversationTree ( obj : Transform ) : JSONObject {
 	return conversationTree;
 }
 
-static function SerializeConversation ( c : List.< EditorConversationEntry > ) : JSONObject {
-	var conversation : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
-	
-	for ( var e : EditorConversationEntry in c ) {
-		var gLine : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-		var entry : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-		entry.AddField ( "type", e.type.selectedOption );		
-		 
-		// line
-		if ( e.type.selectedOption == "Line" ) {
-			var l = e.line;
-						
-			entry.AddField ( "condition", l.condition.text );
-			entry.AddField ( "conditionBool", l.conditionBool.isChecked );
-			entry.AddField ( "consequence", l.consequence.text );
-			entry.AddField ( "consequenceBool", l.consequenceBool.isChecked );
-			entry.AddField ( "speaker", l.speaker.selectedOption );
-			entry.AddField ( "line", l.line.text );
-			entry.AddField ( "endConvo", l.endConvo.selectedOption );
-			entry.AddField ( "gameEvent", l.gameEvent.text );			
-		
-		// group
-		} else if ( e.type.selectedOption == "Group" ) {
-			var g = e.group;
-			var options : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
-			
-			for ( var i = 0; i < g.container.childCount; i++ ) {
-				var gl : EditorConversationGroupLine = g.container.GetChild ( i ).gameObject.GetComponent ( EditorConversationGroupLine );
-				var groupLine : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-																																																																																																																																																																															
-				groupLine.AddField ( "consequence", gl.consequence.text );
-				groupLine.AddField ( "consequenceBool", gl.consequenceBool.isChecked );
-				groupLine.AddField ( "line", gl.line.text );
-				groupLine.AddField ( "endConvo", gl.endConvo.selectedOption );
-				groupLine.AddField ( "gameEvent", gl.gameEvent.text );
-				
-				options.Add ( groupLine );
-			}
-			
-			entry.AddField ( "condition", g.condition.text );
-			entry.AddField ( "conditionBool", g.conditionBool.isChecked );
-			entry.AddField ( "groupType", g.groupType.selectedOption );
-			entry.AddField ( "options", options );
-			entry.AddField ( "speaker", g.speaker.selectedOption );			
-		}
-		
-		conversation.Add ( entry );
-	}
-	
-	return conversation;
-}
-
 
 ////////////////////
 // Serialize quest

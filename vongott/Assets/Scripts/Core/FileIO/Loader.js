@@ -40,30 +40,6 @@ class Loader {
 		return tree;
 	}
 	
-	static function LoadConversationToEditor ( path : String ) : List.< EditorConversationEntry > {
-		var entries : List.< EditorConversationEntry >;
-		
-		path = Application.dataPath + "/Story/Conversations/" + path + ".vgconvo";
-		
-		var input : String = ReadFile ( path );	
-		if ( !input ) { return null; }
-		
-		entries = Deserializer.DeserializeConversationToEditor ( input );
-		
-		return entries;
-	}
-	
-	static function LoadConversationToGame ( path : String ) : String {
-		var entries : List.< EditorConversationEntry >;
-		
-		path = Application.dataPath + "/Story/Conversations/" + path + ".vgconvo";
-				
-		var input : String = ReadFile ( path );	
-		if ( !input ) { return null; }
-		
-		return input;
-	}
-	
 	static function LoadScreenshot ( path : String ) : byte[] {
 		var input : String = ReadFile ( path );	
 		if ( !input ) { return null; }
