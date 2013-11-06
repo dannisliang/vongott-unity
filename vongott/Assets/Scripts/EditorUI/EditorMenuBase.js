@@ -37,6 +37,15 @@ class EditorMenuBase extends OGPage {
 
 	// Open file
 	function OpenFile () {
+		EditorOpenFile.baseDir = "Maps";
+		EditorOpenFile.fileType = "vgmap";
+		OGRoot.GoToPage ( "OpenFile" );
+	}
+	
+	// Import OBJ
+	function ImportOBJ () {
+		EditorOpenFile.baseDir = "ImportOBJ";
+		EditorOpenFile.fileType = "obj";
 		OGRoot.GoToPage ( "OpenFile" );
 	}
 		

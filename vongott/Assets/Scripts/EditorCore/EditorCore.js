@@ -943,6 +943,21 @@ static function LoadFile ( path : String ) {
 	currentLevel.transform.localPosition = Vector3.zero;
 }
 
+// Load OBJ
+static function LoadOBJ ( objName : String ) {
+	var go : GameObject = new GameObject ( objName, MeshFilter, MeshRenderer, MeshCollider );
+	var mi : OBJImporter = new OBJImporter();
+		
+	go.transform.parent = currentLevel.transform.parent;
+	
+	var mesh : Mesh = mi.ImportFile ( Application.dataPath + "/ImportOBJ/" + objName + ".obj" );
+	mesh.name = objName;
+	
+	go.GetComponent(MeshFilter).mesh = mesh;
+	go.GetComponent(MeshCollider).mesh = mesh;
+	go.GetComponent(MeshRenderer).material = defaultMaterial;
+}
+
 // Load conversations from library
 static function GetConvoChapters () : String[] {
 	return TrimFileNames ( Directory.GetDirectories ( Application.dataPath + "/Story/Conversations", "*" ) );

@@ -6,24 +6,29 @@ class EditorOpenFile extends OGPage {
 	////////////////////
 	// Prerequisites
 	////////////////////
+	// Static vars
+	public static var baseDir : String = "Maps";
+	public static var fileType : String = "vgmap";
+		
 	// Public vars
-	var container : GameObject;	
-	var mapList : OGScrollView;
-	var title : OGLabel;
-	var selectedFile : String = "";
-	var previewPane : OGImage;
-	var fileInfo : OGLabel;
-	var previewLoading : GameObject;
-	var fileLoading : GameObject;
-	var fileLoadingLabel : OGLabel;
+	public var container : GameObject;	
+	public var mapList : OGScrollView;
+	public var title : OGLabel;
+	public var selectedFile : String = "";
+	public var previewPane : OGImage;
+	public var fileInfo : OGLabel;
+	public var previewLoading : GameObject;
+	public var fileLoading : GameObject;
+	public var fileLoadingLabel : OGLabel;
 									
 					
 	////////////////////
 	// Navigation
 	////////////////////
 	// List files
-	function ListFiles () : String[] {		
-		var files : String[] = Directory.GetFiles ( Application.dataPath + "/Maps", "*.vgmap" );
+	function ListFiles () : String[] {	
+		var files : String[] = Directory.GetFiles ( Application.dataPath + "/" + baseDir, "*." + fileType );
+
 		
 		return files;
 	}
@@ -44,34 +49,47 @@ class EditorOpenFile extends OGPage {
 		selectedFile = name;
 		btn.style = "listitemselected";
 		
-		var dataPath : String = Application.dataPath + "/Maps/" + name + ".vgmap";
+		var dataPath : String = Application.dataPath + "/" + baseDir + "/" + name + "." + fileType;
 		var tempImage : Texture2D = new Texture2D ( 0, 0 );
 		
-		previewLoading.SetActive ( true );
-		
-		Loom.RunAsync ( function () {
-			var bytes : byte[] = Loader.LoadScreenshot ( dataPath );			
+		if ( fileType == "vgmap" ) {
+			previewLoading.SetActive ( true );
 			
-			Loom.QueueOnMainThread ( function () {
-				tempImage.LoadImage ( bytes );
-				previewPane.image = tempImage;
+			Loom.RunAsync ( function () {
+				var bytes : byte[] = Loader.LoadScreenshot ( dataPath );			
 				
-				previewLoading.SetActive ( false );
+				Loom.QueueOnMainThread ( function () {
+					tempImage.LoadImage ( bytes );
+					previewPane.image = tempImage;
+					
+					previewLoading.SetActive ( false );
+				} );
 			} );
-		} );
-		
-		fileInfo.text = "<map name>\n<actor count>\n<item count>\n<trigger count>\n<filesize>";
+			
+			fileInfo.text = "<map name>\n<actor count>\n<item count>\n<trigger count>\n<filesize>";
+		}
 	}
 	
 	// Open
 	function LoadSelectedFile () : IEnumerator {
 		fileLoading.SetActive ( true );
-		fileLoadingLabel.text = "Loading " + selectedFile + "...";
+		
+		if ( fileType == "vgmap" ) {
+			fileLoadingLabel.text = "Loading " + selectedFile + "...";
+		} else if ( fileType == "obj" ) {
+			fileLoadingLabel.text = "Importing " + selectedFile + "...";
+		}
+		
 		container.SetActive ( false );
 		
 		yield new WaitForSeconds ( 0.5 );
 	
-		EditorCore.LoadFile ( selectedFile );
+		if ( fileType == "vgmap" ) {
+			EditorCore.LoadFile ( selectedFile );
+		} else if ( fileType == "obj" ) {
+			EditorCore.LoadOBJ ( selectedFile );
+		}
+		
 		OGRoot.GoToPage ( "MenuBase" );
 	}
 	
