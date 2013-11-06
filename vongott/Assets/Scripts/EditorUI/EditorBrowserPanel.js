@@ -29,14 +29,14 @@ class EditorBrowserPanel extends MonoBehaviour {
 	public function Init ( tab : String, category : String ) {
 		if ( tab == "Shapes" ) {
 			shapeButtons.SetActive ( true );
-			fileList.gameObject.SetActive ( false );
+			//fileList.gameObject.SetActive ( false );
 		
 			currentTab = tab;
 			title.text = currentTab;
 		
 		} else {
 			shapeButtons.SetActive ( false );
-			fileList.gameObject.SetActive ( true );
+			//fileList.gameObject.SetActive ( true );
 			
 			resourcesFolder = EditorFileSystem.GetResources();
 			
@@ -140,16 +140,17 @@ class EditorBrowserPanel extends MonoBehaviour {
 	// Deselect all
 	function DeselectAll () {
 		var i : int = 0;
+		var c : Component;
 		var btn : OGButton;
 		
-		for ( i = 0; i < fileList.transform.childCount; i++ ) {
-			btn = fileList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
-			btn.style = "listitem";		
+		for ( c in fileList.GetComponentsInChildren(OGButton) ) {
+			btn = c as OGButton;
+			btn.style = "listitem";
 		}
 		
-		for ( i = 0; i < shapeButtons.transform.childCount; i++ ) {
-			btn = shapeButtons.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
-			btn.style = "listitem";		
+		for ( c in shapeButtons.GetComponentsInChildren(OGButton) ) {
+			btn = c as OGButton;
+			btn.style = "listitem";
 		}
 	}
 		

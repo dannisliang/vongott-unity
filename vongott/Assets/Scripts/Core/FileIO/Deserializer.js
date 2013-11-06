@@ -420,6 +420,53 @@ static function DeserializeMultiLineString ( lines : JSONObject ) : String {
 	return newString;
 }
 
+// .obj file
+static function DeserializeOBJ ( lines : String[] ) : Mesh {
+	var mesh : Mesh = new Mesh ();
+	var vertices : List.< Vector3 > = new List.< Vector3 > ();
+	var uvs : List.< Vector2 > = new List.< Vector2 > ();
+	var triangles : List.< int > = new List.< int > ();
+	
+	for ( var i : int = 0; i < lines.Length; i++ ) {
+		var group : String[] = lines[i].Split ( " "[0] );
+		
+		// Vertices
+		if ( group[0] == "v" ) {
+			var v3 : Vector3 = Vector3.zero;
+			
+			v3.x = float.Parse(group[1]);
+			v3.y = float.Parse(group[2]);
+			v3.z = float.Parse(group[3]);
+			
+			vertices.Add ( v3 );
+		
+		// UVs
+		} else if ( group[0] == "vt" ) {
+			var v2 : Vector2 = Vector2.zero;
+		
+			v2.x = float.Parse(group[1]);
+			v2.y = float.Parse(group[2]);
+		
+			uvs.Add ( v2 );
+			
+		// Triangles
+		} else if ( group[0] == "f" ) {
+			var pair0 : String[] = group[1].Split ( "/"[0] );
+			var pair1 : String[] = group[2].Split ( "/"[0] );
+			var pair2 : String[] = group[3].Split ( "/"[0] );
+		
+			triangles.Add ( int.Parse ( pair0[0] ) );
+			triangles.Add ( int.Parse ( pair1[0] ) );
+			triangles.Add ( int.Parse ( pair2[0] ) );
+		}
+	}
+	
+	mesh.vertices = vertices.ToArray();
+	mesh.uv = uvs.ToArray();
+	mesh.triangles = triangles.ToArray();
+	
+	return mesh;
+}
 
 ////////////////////
 // Deserialize components individually

@@ -23,7 +23,9 @@ class CombinedMesh extends MonoBehaviour {
 			this.gameObject.AddComponent(BooleanRT);
 		}
 		
-		this.GetComponent(MeshFilter).mesh = new Mesh ();
+		if ( !this.GetComponent(MeshFilter).mesh ) {
+			this.GetComponent(MeshFilter).mesh = new Mesh ();
+		}
 	}
 	
 	private function FixUV ( obj : Transform ) {
@@ -41,6 +43,8 @@ class CombinedMesh extends MonoBehaviour {
 	}
 		
 	public function Add ( objAdded : GameObject, materialAdded : Material, method : BooleanRTLib.BooleanType ) {
+		EditorCore.AddAction ( this.gameObject );
+		
 		var objBefore : GameObject = this.gameObject;
 		var materials : Material[] = this.renderer.materials;
 		var nrt : BooleanRT = this.GetComponent(BooleanRT);		

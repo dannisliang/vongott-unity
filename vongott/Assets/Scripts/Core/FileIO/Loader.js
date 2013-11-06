@@ -3,6 +3,28 @@
 import System.IO;
 
 class Loader {
+	static function ReadFileToArray ( path : String ) : String[] {
+		if ( !File.Exists ( path ) ) {
+			Debug.LogError ( "Loader | no such file: " + path );
+			return null;
+		}
+		
+		var sr : StreamReader = new File.OpenText( path );
+		var input : List.<String> = new List.<String>();
+		var line : String = "";
+		
+		line = sr.ReadLine();
+		
+		while ( line != null ) {
+			input.Add ( line );
+			line = sr.ReadLine();
+		}
+	
+		sr.Close();
+		
+		return input.ToArray();
+	}
+
 	static function ReadFile ( path : String ) : String {
 		if ( !File.Exists ( path ) ) {
 			Debug.LogError ( "Loader | no such file: " + path );
@@ -15,6 +37,8 @@ class Loader {
 		
 		line = sr.ReadLine();
 		
+		
+		
 		while ( line != null ) {
 			input += line;
 			line = sr.ReadLine();
@@ -23,6 +47,13 @@ class Loader {
 		sr.Close();
 		
 		return input;
+	}
+	
+	static function LoadOBJ ( path : String ) : Mesh {
+		var mesh : Mesh = new Mesh();
+		var strings : String[] = ReadFileToArray ( path );
+		
+		return Deserializer.DeserializeOBJ ( strings );
 	}
 	
 	static function LoadConversationTree ( path : String ) : ConversationTree {

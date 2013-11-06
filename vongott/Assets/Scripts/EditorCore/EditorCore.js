@@ -524,6 +524,8 @@ static function GetSelectedObject () : GameObject {
 
 // Delete selected objects
 static function DeleteSelected () {
+	if ( selectedObject.GetComponent(Shape) ) { return; }
+	
 	var obj : GameObject = selectedObject;
 	AddAction ( obj );
 	DeselectObject ();
@@ -537,6 +539,8 @@ static function IsObjectSelected ( obj : GameObject ) : boolean {
 
 // Duplicate object
 static function DuplicateObject () {
+	if ( selectedObject.GetComponent(Shape) ) { return; }
+	
 	var newObj : GameObject = Instantiate ( selectedObject );
 	newObj.transform.parent = currentLevel.transform;
 

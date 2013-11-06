@@ -16,6 +16,7 @@ class Prefab extends MonoBehaviour {
 	}
 	
 	var id : String;
+	var description : String;
 	var path : String;
 	var materialPath : String;
 
