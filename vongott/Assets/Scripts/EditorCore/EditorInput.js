@@ -292,7 +292,19 @@ function Update () {
 			}
 		
 		}
-		
+	
+	// first person mode
+	} else if ( EditorCore.firstPersonMode ) {
+		// Escape key: first person mode off
+		if ( Input.GetKeyDown ( KeyCode.P ) ) {
+			EditorCore.SetFirstPersonMode( false );
+		}
+	
+		if ( Input.GetKey ( KeyCode.W ) ) {
+			Camera.main.GetComponent(EditorCamera).MoveFixPoint ( Camera.main.GetComponent(EditorCamera).transform.forward * 2 );
+		}
+	
+				
 	// camera mode
 	} else if ( OGRoot.currentPage.pageName == "MenuBase" ) {	
 		// Z key
@@ -310,6 +322,10 @@ function Update () {
 		// G key: grab mode
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {
 			EditorCore.SetGrabMode( true );
+
+		// P key: first person mode
+		} else if ( Input.GetKeyDown ( KeyCode.P ) ) {
+			EditorCore.SetFirstPersonMode( true );
 
 		// S key
 		} else if ( Input.GetKeyDown ( KeyCode.S ) ) {

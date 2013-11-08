@@ -91,6 +91,20 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		return o;
 	
+	// check if imported mesh
+	} else if ( obj.GetComponent(ImportedMesh) ) {
+		var imh : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		
+		imh.AddField ( "mesh", SerializeMesh ( obj.GetComponent(MeshFilter).sharedMesh ) );
+		imh.AddField ( "material", "Editor/editor_checker" );
+		imh.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
+		imh.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		imh.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+		
+		o.AddField ( "ImportedMesh", imh );
+		
+		return o;
+	
 	// check if lightsource
 	} else if ( obj.GetComponent(LightSource) ) {
 		// guid

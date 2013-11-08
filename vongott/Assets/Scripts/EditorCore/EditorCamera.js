@@ -361,6 +361,10 @@ function SetFixPoint ( point : Vector3 ) {
 	fixPoint = point;
 }
 
+function MoveFixPoint ( direction : Vector3 ) {
+	fixPoint += direction * Time.deltaTime;
+}
+
 function SetFixPointToSelected () {
 	if ( !EditorCore.GetSelectedObject() ) {
 		return;
@@ -381,89 +385,105 @@ function SetFixPointToSelected () {
 function Update () {
 	if ( locked ) { return; }
 	
-	// position
-	var x = transform.localPosition.x;
-	var y = transform.localPosition.y;
-	var z = transform.localPosition.z;
-	var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
-	var horizontal = Camera.main.transform.TransformDirection ( Vector3.left );
-	var vertical = Camera.main.transform.TransformDirection ( Vector3.down );
+	// First person mode
+	if ( EditorCore.firstPersonMode ) {
+		var xDelta : float = Input.GetAxis("Mouse X") * sensitivity * 5;
+		var yDelta : float = Input.GetAxis("Mouse Y") * sensitivity * 5;
+		var rot : Vector3 = this.transform.localEulerAngles;
 	
-	// right mouse click
-	if ( Input.GetMouseButtonDown(1) && !Input.GetKey ( KeyCode.LeftAlt ) ) {
-		RefreshFixPoint ( true );
+		rot.y += xDelta;
+		rot.x -= yDelta;
+		rot.z = 0;
 	
-	// right mouse drag
-	} else if ( Input.GetMouseButton(1) ) {  
-		if ( !Input.GetKey ( KeyCode.LeftAlt ) )  { 
-			var target : Vector3 = fixPoint;
-			
-			transform.RotateAround ( target, Quaternion.Euler(0, -45, 0) * ( target - this.transform.position ), Input.GetAxis("Mouse Y") * sensitivity );
-	       	transform.RotateAround ( target, Vector3.up, Input.GetAxis("Mouse X") * sensitivity );
-	        transform.rotation = Quaternion.Lerp( transform.rotation, Quaternion.LookRotation( target - transform.position ), 50 * Time.deltaTime );
-			
-		} else {
-			var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
-			var rotationY : float = -transform.localEulerAngles.x + Input.GetAxis("Mouse Y") * sensitivity;
+		this.transform.position = Vector3.Slerp ( this.transform.position, fixPoint + new Vector3 ( 0, 1.8, 0 ), Time.deltaTime * 5 );
+		this.transform.localRotation = Quaternion.Slerp ( this.transform.localRotation, Quaternion.Euler(rot.x, rot.y, rot.z), Time.deltaTime * 5 );
+	
+	// Normal mode
+	} else {	
+		// position
+		var x = transform.localPosition.x;
+		var y = transform.localPosition.y;
+		var z = transform.localPosition.z;
+		var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
+		var horizontal = Camera.main.transform.TransformDirection ( Vector3.left );
+		var vertical = Camera.main.transform.TransformDirection ( Vector3.down );
 		
-			transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+		// right mouse click
+		if ( Input.GetMouseButtonDown(1) && !Input.GetKey ( KeyCode.LeftAlt ) ) {
+			RefreshFixPoint ( true );
 		
-		}
-	
-	// middle mouse drag
-	} else if ( Input.GetMouseButton(2) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {        
-        var panSensitivity : float = sensitivity; 
-			
-		if ( Camera.main.orthographic ) {
-			panSensitivity = panSensitivity * ( Camera.main.orthographicSize / 2 );
-		}
-        
-        var h = Input.GetAxis("Mouse X") * panSensitivity / 8;
-        var v = Input.GetAxis("Mouse Y") * panSensitivity / 8;
-
-	    if ( Input.GetKey( KeyCode.LeftControl ) ) {
-        	h = h * 4;
-        	v = v * 4;
-        } else if ( Input.GetKey( KeyCode.LeftShift ) ) {
-        	h = h / 4;
-        	v = v / 4;
-        } 
-        
-    	transform.position = transform.position + vertical * v;
-    	transform.position = transform.position + horizontal * h;
-		
-	}
-	
-	// skybox camera
-	if ( skyboxCamera ) {
-		skyboxCamera.transform.rotation = transform.rotation;
-		skyboxCamera.transform.localPosition = transform.position / 40;
-	}
-	
-	// scroll wheel
-	if ( !EditorCore.rotateMode && !EditorCore.scaleMode ) {
-		var translation = Input.GetAxis("Mouse ScrollWheel");
-		var spd : float = speed;
-					
-		if ( translation != 0.0 && !OGRoot.mouseOver ) {				
-			if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) ) {
-				spd = spd / 4;
-			} else if ( Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.RightControl ) ) {
-				spd = spd * 4;
-			}
-			
-			if ( !Camera.main.orthographic || Camera.main.orthographic && Input.GetKey ( KeyCode.LeftAlt ) ) {
-				transform.position = transform.position + forward * ( translation * spd );
-			
+		// right mouse drag
+		} else if ( Input.GetMouseButton(1) ) {  
+			if ( !Input.GetKey ( KeyCode.LeftAlt ) )  { 
+				var target : Vector3 = fixPoint;
+				
+				transform.RotateAround ( target, Quaternion.Euler(0, -45, 0) * ( target - this.transform.position ), Input.GetAxis("Mouse Y") * sensitivity );
+		       	transform.RotateAround ( target, Vector3.up, Input.GetAxis("Mouse X") * sensitivity );
+		        transform.rotation = Quaternion.Lerp( transform.rotation, Quaternion.LookRotation( target - transform.position ), 50 * Time.deltaTime );
+				
 			} else {
-				if ( Camera.main.orthographicSize > translation * speed ) {
-					RefreshFixPoint ( false );
-					Camera.main.orthographicSize -= translation * speed;
-					transform.position = fixPoint - forward * ( Camera.main.orthographicSize * 4 );
+				var rotationX : float = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
+				var rotationY : float = -transform.localEulerAngles.x + Input.GetAxis("Mouse Y") * sensitivity;
+			
+				transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+			
+			}
+		
+		// middle mouse drag
+		} else if ( Input.GetMouseButton(2) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {        
+	        var panSensitivity : float = sensitivity; 
+				
+			if ( Camera.main.orthographic ) {
+				panSensitivity = panSensitivity * ( Camera.main.orthographicSize / 2 );
+			}
+	        
+	        var h = Input.GetAxis("Mouse X") * panSensitivity / 8;
+	        var v = Input.GetAxis("Mouse Y") * panSensitivity / 8;
+	
+		    if ( Input.GetKey( KeyCode.LeftControl ) ) {
+	        	h = h * 4;
+	        	v = v * 4;
+	        } else if ( Input.GetKey( KeyCode.LeftShift ) ) {
+	        	h = h / 4;
+	        	v = v / 4;
+	        } 
+	        
+	    	transform.position = transform.position + vertical * v;
+	    	transform.position = transform.position + horizontal * h;
+			
+		}
+		
+		// skybox camera
+		if ( skyboxCamera ) {
+			skyboxCamera.transform.rotation = transform.rotation;
+			skyboxCamera.transform.localPosition = transform.position / 40;
+		}
+		
+		// scroll wheel
+		if ( !EditorCore.rotateMode && !EditorCore.scaleMode ) {
+			var translation = Input.GetAxis("Mouse ScrollWheel");
+			var spd : float = speed;
+						
+			if ( translation != 0.0 && !OGRoot.mouseOver ) {				
+				if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) ) {
+					spd = spd / 4;
+				} else if ( Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.RightControl ) ) {
+					spd = spd * 4;
 				}
-			
-			} 
-			
+				
+				if ( !Camera.main.orthographic || Camera.main.orthographic && Input.GetKey ( KeyCode.LeftAlt ) ) {
+					transform.position = transform.position + forward * ( translation * spd );
+				
+				} else {
+					if ( Camera.main.orthographicSize > translation * speed ) {
+						RefreshFixPoint ( false );
+						Camera.main.orthographicSize -= translation * speed;
+						transform.position = fixPoint - forward * ( Camera.main.orthographicSize * 4 );
+					}
+				
+				} 
+				
+			}
 		}
 	}
 }

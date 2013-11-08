@@ -228,6 +228,10 @@ class EditorMenuBase extends OGPage {
 			case "CombinedMesh":
 				menuObj.GetComponent(EditorInspectorCombinedMesh).Init(selectedObj);
 				break;
+				
+			case "ImportedMesh":
+				menuObj.GetComponent(EditorInspectorImportedMesh).Init(selectedObj);
+				break;
 			
 			case "Light":
 				menuObj.GetComponent(EditorInspectorLight).Init(selectedObj);

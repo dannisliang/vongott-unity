@@ -25,6 +25,7 @@ static var initPos : Vector3 = new Vector3 ( -4, 5,-10 );
 static var initRot : Vector3 = new Vector3 ( 24.9, 21.8, 0 );
 
 // modes
+static var firstPersonMode : boolean = false;
 static var grabMode : boolean = false;
 static var rotateMode : boolean = false;
 static var scaleMode : boolean = false;
@@ -690,6 +691,11 @@ static function SelectObject ( obj : GameObject ) {
 		inspector.AddMenu ( "CombinedMesh", obj );
 	}
 	
+	// ImportedMesh
+	if ( obj.GetComponent ( ImportedMesh ) ) {
+		inspector.AddMenu ( "ImportedMesh", obj );
+	}
+	
 	// Prefab
 	if ( obj.GetComponent ( Prefab ) ) {
 		inspector.AddMenu ( "Prefab", obj );
@@ -778,6 +784,11 @@ static function SetPickMode ( state : boolean ) {
 		pickerType = null;
 	
 	}
+}
+
+// Set player mode
+static function SetFirstPersonMode ( state : boolean ) {
+	firstPersonMode = state;
 }
 
 // Set grab mode
@@ -945,16 +956,16 @@ static function LoadFile ( path : String ) {
 
 // Load OBJ
 static function LoadOBJ ( objName : String ) {
-	var go : GameObject = new GameObject ( objName, MeshFilter, MeshRenderer, MeshCollider );
+	var go : GameObject = new GameObject ( objName, MeshFilter, MeshRenderer, MeshCollider, ImportedMesh );
 	var mi : OBJImporter = new OBJImporter();
 		
-	go.transform.parent = currentLevel.transform.parent;
+	go.transform.parent = currentLevel.transform;
 	
 	var mesh : Mesh = mi.ImportFile ( Application.dataPath + "/ImportOBJ/" + objName + ".obj" );
 	mesh.name = objName;
 	
 	go.GetComponent(MeshFilter).mesh = mesh;
-	go.GetComponent(MeshCollider).mesh = mesh;
+	go.GetComponent(MeshCollider).sharedMesh = mesh;
 	go.GetComponent(MeshRenderer).material = defaultMaterial;
 }
 

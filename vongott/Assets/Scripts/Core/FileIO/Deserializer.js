@@ -101,6 +101,21 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newCbm.name = obj.GetField("name").str;
 		
 		return newCbm;
+		
+	// check if combined mesh
+	} else if ( obj.HasField("ImportedMesh") ) {
+		var imp : JSONObject = obj.GetField("ImportedMesh");
+		var newImp : GameObject = new GameObject ( obj.GetField("name").str, ImportedMesh, MeshFilter, MeshCollider, MeshRenderer );
+		
+		newImp.GetComponent(MeshFilter).sharedMesh = DeserializeMesh ( imp.GetField("mesh") );
+		newImp.GetComponent(MeshCollider).sharedMesh = newImp.GetComponent(MeshFilter).sharedMesh;
+		newImp.GetComponent(MeshRenderer).sharedMaterial = Resources.Load ( "Materials/" + imp.GetField("material").str ) as Material;
+		
+		newImp.transform.localScale = DeserializeVector3 ( imp.GetField("localScale") );
+		newImp.transform.localPosition = DeserializeVector3 ( imp.GetField("localPosition") );
+		newImp.transform.localEulerAngles = DeserializeVector3 ( imp.GetField("localEulerAngles") );
+				
+		return newImp;
 
 	// check if lightsource
 	} else if ( obj.HasField("LightSource") ) {

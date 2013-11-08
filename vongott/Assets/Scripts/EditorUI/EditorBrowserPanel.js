@@ -142,15 +142,19 @@ class EditorBrowserPanel extends MonoBehaviour {
 		var i : int = 0;
 		var c : Component;
 		var btn : OGButton;
+				
+		if ( shapeButtons.activeSelf ) {
+			for ( c in shapeButtons.GetComponentsInChildren(OGButton) ) {
+				btn = c as OGButton;
+				btn.style = "listitem";
+			}
 		
-		for ( c in fileList.GetComponentsInChildren(OGButton) ) {
-			btn = c as OGButton;
-			btn.style = "listitem";
-		}
+		} else {
+			for ( c in fileList.GetComponentsInChildren(OGButton) ) {
+				btn = c as OGButton;
+				btn.style = "listitem";
+			}
 		
-		for ( c in shapeButtons.GetComponentsInChildren(OGButton) ) {
-			btn = c as OGButton;
-			btn.style = "listitem";
 		}
 	}
 		
@@ -207,7 +211,9 @@ class EditorBrowserPanel extends MonoBehaviour {
 	// Clear all
 	private function ClearList () {
 		for ( var i = 0; i < fileList.childCount; i++ ) {
-			Destroy ( fileList.GetChild ( i ).gameObject );
+			if ( fileList.GetChild ( i ).gameObject != shapeButtons ) {
+				Destroy ( fileList.GetChild ( i ).gameObject );
+			}
 		}
 	}
 
