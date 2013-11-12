@@ -6,7 +6,7 @@ class EditorCursorText extends MonoBehaviour {
 	var z : Transform;
 	
 	function Update () {
-		var fixPoint : Vector3 = Camera.main.GetComponent(EditorCamera).fixPoint;
+		var fixPoint : Vector3 = Camera.main.GetComponent(EditorCamera).cursor.position;
 		var dist : float = ( Vector3.Distance ( Camera.main.transform.position, fixPoint ) * 0.04 ) + 0.1;
 		
 		var xPos : Vector3 = Camera.main.WorldToScreenPoint ( fixPoint + new Vector3 ( dist, 0, 0 ) );

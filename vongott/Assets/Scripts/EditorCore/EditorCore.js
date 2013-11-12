@@ -153,7 +153,7 @@ static function GetSpawnPosition () : Vector3 {
 	var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
 	var position = Camera.main.transform.position + forward * distance;
 	
-	var fixPoint : Vector3 = Camera.main.GetComponent ( EditorCamera ).fixPoint;
+	var fixPoint : Vector3 = Camera.main.GetComponent ( EditorCamera ).cursor.position;
 	var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
 	var hit : RaycastHit;
 	
@@ -786,9 +786,35 @@ static function SetPickMode ( state : boolean ) {
 	}
 }
 
-// Set player mode
+// Set first person mode
+static function ToggleFirstPersonGhost ( state : boolean ) {
+	EditorCamera.GetInstance().cursor.GetComponent(Rigidbody).useGravity = !state;
+	EditorCamera.GetInstance().cursor.GetComponent(CapsuleCollider).enabled = !state;
+	EditorCamera.GetInstance().cursor.GetComponent(Rigidbody).velocity = Vector3.zero;
+}
+
+static function ToggleFirstPersonGhost () {
+	ToggleFirstPersonGhost ( EditorCamera.GetInstance().cursor.GetComponent(Rigidbody).useGravity );
+}
+
+static function GetFirstPersonGhost () : boolean {
+	return !EditorCamera.GetInstance().cursor.GetComponent(Rigidbody).useGravity;
+}
+
 static function SetFirstPersonMode ( state : boolean ) {
 	firstPersonMode = state;
+	ToggleFirstPersonGhost ( !firstPersonMode );
+	
+	if ( firstPersonMode ) {
+		OGRoot.GoToPage ( "Modes" );
+		EditorModes.SetTitle ( "First Person Mode" );
+		EditorModes.SetMessage ( "" );
+		EditorModes.SetHeight ( 32 );
+	
+	} else {
+		OGRoot.GoToPage ( "MenuBase" );
+	
+	}
 }
 
 // Set grab mode
@@ -966,7 +992,7 @@ static function LoadOBJ ( objName : String ) {
 	
 	go.GetComponent(MeshFilter).mesh = mesh;
 	go.GetComponent(MeshCollider).sharedMesh = mesh;
-	go.GetComponent(MeshRenderer).material = defaultMaterial;
+	//go.GetComponent(MeshRenderer).material = defaultMaterial;
 }
 
 // Load conversations from library

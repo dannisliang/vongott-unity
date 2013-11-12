@@ -7,6 +7,8 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	// Public vars
 	var generic : GameObject;
 
+	var infoLabel : OGLabel;
+
 	var doorLocked : OGTickBox;
 	var doorLockLevel : OGPopUp;
 
@@ -65,6 +67,12 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	
 	
 	//////////////////
+	// Item
+	//////////////////
+	
+	
+	
+	//////////////////
 	// Wall
 	//////////////////
 	function FlipWall () {				
@@ -108,6 +116,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	//////////////////
 	function Init ( o : GameObject ) {
 		obj = o;
+		infoLabel.text = "";
 		
 		doorLocked.transform.parent.gameObject.SetActive ( false );
 		textField.transform.parent.gameObject.SetActive ( false );
@@ -128,6 +137,18 @@ class EditorInspectorPrefab extends MonoBehaviour {
 			doorLocked.transform.parent.gameObject.SetActive ( true );
 			doorLocked.isChecked = obj.GetComponent ( Door ).locked;
 			doorLockLevel.selectedOption = obj.GetComponent ( Door ).lockLevel.ToString();
+		}
+		
+		if ( obj.GetComponent ( Item ) ) {
+			var item : Item = obj.GetComponent ( Item );
+			
+			infoLabel.text += item.title + "\n\n";
+			infoLabel.text += item.desc + "\n\n";
+			
+			for ( var a : Item.Attribute in item.attr ) {
+				infoLabel.text += a.type.ToString() + ": " + a.val + "\n";
+			}
+			
 		}
 		
 		if ( obj.GetComponent(Prefab).path.Contains ( "Walls" ) && obj.GetComponent(Prefab).canChangeMaterial  ) {

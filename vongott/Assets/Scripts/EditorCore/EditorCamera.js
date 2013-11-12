@@ -3,11 +3,15 @@
 ////////////////////
 // Prerequisites
 ////////////////////
+// Static vars
+public static var instance : EditorCamera;
+
 // Public vars
 public var sensitivity : float = 2.5;
 public var speed : float = 10.0;
 public var renderMode : int = 0;
 public var gizmo : Transform;
+public var cursor : Transform;
 public var gizmoX : Material;
 public var gizmoY : Material;
 public var gizmoZ : Material;
@@ -17,19 +21,24 @@ public var cursorMaterial : Material;
 public var boundingBoxMaterial : Material;
 public var selectedBoundingBoxMaterial : Material;
 public var locked : boolean = false;
-
-@HideInInspector var fixPoint : Vector3;
-@HideInInspector var drawBoxes : List.< GameObject > = new List.< GameObject > ();
-
-@HideInInspector var fixPointX : Vector3;
-@HideInInspector var fixPointY : Vector3;
-@HideInInspector var fixPointZ : Vector3;
+public var drawBoxes : List.< GameObject > = new List.< GameObject > ();
 
 // Private vars
 private var skyboxCamera : GameObject;
 private var clickTimer : float = 0;
 private var clickThreshold : float = 0.25;
+private var fixPointX : Vector3;
+private var fixPointY : Vector3;
+private var fixPointZ : Vector3;
 
+
+////////////////////
+// Static functions
+////////////////////
+// Return instance
+public static function GetInstance() : EditorCamera {
+	return instance;
+}
 
 ////////////////////
 // Public functions
@@ -135,36 +144,36 @@ function DrawGrid () {
 
 // Cursor
 function DrawCursor () {
-	var r : float = ( Vector3.Distance ( this.transform.position, fixPoint ) ) * 0.04;
+	var r : float = ( Vector3.Distance ( this.transform.position, cursor.position ) ) * 0.04;
 	
 	gizmoX.SetPass ( 0 );
 	GL.Begin ( GL.LINES );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
-	GL.Vertex3 ( fixPoint.x + r, fixPoint.y, fixPoint.z );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y, cursor.position.z );
+	GL.Vertex3 ( cursor.position.x + r, cursor.position.y, cursor.position.z );
 	GL.End ();
 	
 	GL.Begin ( GL.TRIANGLES );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
-	GL.Vertex3 ( fixPoint.x + (r/3), fixPoint.y, fixPoint.z );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y + (r/3), fixPoint.z );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y, cursor.position.z );
+	GL.Vertex3 ( cursor.position.x + (r/3), cursor.position.y, cursor.position.z );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y + (r/3), cursor.position.z );
 	GL.End ();
 		
 	gizmoY.SetPass ( 0 );
 	GL.Begin ( GL.LINES );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y + r, fixPoint.z );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y, cursor.position.z );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y + r, cursor.position.z );
 	GL.End ();
 		
 	gizmoZ.SetPass ( 0 );
 	GL.Begin ( GL.LINES );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z + r );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y, cursor.position.z );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y, cursor.position.z + r );
 	GL.End ();
 	
 	GL.Begin ( GL.TRIANGLES );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y, fixPoint.z + (r/3) );
-	GL.Vertex3 ( fixPoint.x, fixPoint.y + (r/3), fixPoint.z );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y, cursor.position.z );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y, cursor.position.z + (r/3) );
+	GL.Vertex3 ( cursor.position.x, cursor.position.y + (r/3), cursor.position.z );
 	GL.End ();
 }
 
@@ -267,8 +276,10 @@ function OnPostRender () {
 	// bounding boxes
 	DrawBoundingBoxes ();
 
-		// cursor
-	DrawCursor ();
+	// cursor
+	if ( !EditorCore.firstPersonMode ) {
+		DrawCursor ();
+	}
 	
 	// path
 	if ( EditorCore.GetSelectedObject() && EditorCore.GetSelectedObject().GetComponent(Actor) && EditorCore.GetSelectedObject().GetComponent(Actor).path.Count > 0 ) {
@@ -279,6 +290,7 @@ function OnPostRender () {
 // Init
 function Start () {
 	skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
+	instance = this;
 }
 
 // Toggle lock
@@ -349,20 +361,20 @@ function RefreshFixPoint ( useMouse : boolean ) {
 	var hit : RaycastHit;
 				
 	if ( useMouse && Physics.Raycast ( Camera.main.ScreenPointToRay(Input.mousePosition), hit, Mathf.Infinity ) ) {
-		fixPoint = hit.point;
+		cursor.position = hit.point;
 	
 	} else if ( Physics.Raycast ( Camera.main.transform.position, Camera.main.transform.forward, hit, Mathf.Infinity ) ) {
-		fixPoint = hit.point;
+		cursor.position = hit.point;
 	
 	}
 }
 
 function SetFixPoint ( point : Vector3 ) {
-	fixPoint = point;
+	cursor.position = point;
 }
 
 function MoveFixPoint ( direction : Vector3 ) {
-	fixPoint += direction * Time.deltaTime;
+	cursor.position += direction * Time.deltaTime;
 }
 
 function SetFixPointToSelected () {
@@ -384,22 +396,28 @@ function SetFixPointToSelected () {
 // Update
 function Update () {
 	if ( locked ) { return; }
-	
+
 	// First person mode
 	if ( EditorCore.firstPersonMode ) {
-		var xDelta : float = Input.GetAxis("Mouse X") * sensitivity * 5;
-		var yDelta : float = Input.GetAxis("Mouse Y") * sensitivity * 5;
+		var xDelta : float = Input.GetAxis("Mouse X") * sensitivity * 8;
+		var yDelta : float = Input.GetAxis("Mouse Y") * sensitivity * 8;
 		var rot : Vector3 = this.transform.localEulerAngles;
 	
 		rot.y += xDelta;
 		rot.x -= yDelta;
 		rot.z = 0;
 	
-		this.transform.position = Vector3.Slerp ( this.transform.position, fixPoint + new Vector3 ( 0, 1.8, 0 ), Time.deltaTime * 5 );
+		this.transform.position = cursor.position + new Vector3 ( 0, 1.7, 0 );
 		this.transform.localRotation = Quaternion.Slerp ( this.transform.localRotation, Quaternion.Euler(rot.x, rot.y, rot.z), Time.deltaTime * 5 );
 	
+		// skybox camera
+		if ( skyboxCamera ) {
+			skyboxCamera.transform.rotation = transform.rotation;
+			skyboxCamera.transform.localPosition = transform.position / 40;
+		}
+	
 	// Normal mode
-	} else {	
+	} else {			
 		// position
 		var x = transform.localPosition.x;
 		var y = transform.localPosition.y;
@@ -415,7 +433,7 @@ function Update () {
 		// right mouse drag
 		} else if ( Input.GetMouseButton(1) ) {  
 			if ( !Input.GetKey ( KeyCode.LeftAlt ) )  { 
-				var target : Vector3 = fixPoint;
+				var target : Vector3 = cursor.position;
 				
 				transform.RotateAround ( target, Quaternion.Euler(0, -45, 0) * ( target - this.transform.position ), Input.GetAxis("Mouse Y") * sensitivity );
 		       	transform.RotateAround ( target, Vector3.up, Input.GetAxis("Mouse X") * sensitivity );
@@ -478,7 +496,7 @@ function Update () {
 					if ( Camera.main.orthographicSize > translation * speed ) {
 						RefreshFixPoint ( false );
 						Camera.main.orthographicSize -= translation * speed;
-						transform.position = fixPoint - forward * ( Camera.main.orthographicSize * 4 );
+						transform.position = cursor.position - forward * ( Camera.main.orthographicSize * 4 );
 					}
 				
 				} 

@@ -296,13 +296,51 @@ function Update () {
 	// first person mode
 	} else if ( EditorCore.firstPersonMode ) {
 		// Escape key: first person mode off
-		if ( Input.GetKeyDown ( KeyCode.P ) ) {
+		if ( Input.GetKeyDown ( KeyCode.P ) || Input.GetKeyDown ( KeyCode.Escape ) ) {
 			EditorCore.SetFirstPersonMode( false );
 		}
 	
-		if ( Input.GetKey ( KeyCode.W ) ) {
-			Camera.main.GetComponent(EditorCamera).MoveFixPoint ( Camera.main.GetComponent(EditorCamera).transform.forward * 2 );
+		var speed : float = 3;
+	
+		if ( Input.GetKey ( KeyCode.LeftShift ) ) {
+			speed = 8;
 		}
+	
+		if ( Input.GetKey ( KeyCode.W ) ) {
+			Camera.main.GetComponent(EditorCamera).MoveFixPoint ( Camera.main.GetComponent(EditorCamera).transform.forward * speed );
+		}
+		
+		if ( Input.GetKey ( KeyCode.S ) ) {
+			Camera.main.GetComponent(EditorCamera).MoveFixPoint ( -Camera.main.GetComponent(EditorCamera).transform.forward * speed );
+		}
+		
+		if ( Input.GetKey ( KeyCode.A ) ) {
+			Camera.main.GetComponent(EditorCamera).MoveFixPoint ( -Camera.main.GetComponent(EditorCamera).transform.right * speed );
+		}
+		
+		if ( Input.GetKey ( KeyCode.D ) ) {
+			Camera.main.GetComponent(EditorCamera).MoveFixPoint ( Camera.main.GetComponent(EditorCamera).transform.right * speed );
+		}
+		
+		if ( Input.GetKeyDown ( KeyCode.F ) ) {
+			EditorCore.ToggleFirstPersonGhost();
+		}
+		
+		if ( EditorCore.GetFirstPersonGhost() ) {
+			if ( Input.GetKey ( KeyCode.Space ) ) {
+				Camera.main.GetComponent(EditorCamera).MoveFixPoint ( Vector3.up * speed );
+			}
+			
+			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+				Camera.main.GetComponent(EditorCamera).MoveFixPoint ( -Vector3.up * speed );
+			}
+		} else {
+			if ( Input.GetKeyDown ( KeyCode.Space ) ) {
+				Camera.main.GetComponent(EditorCamera).cursor.GetComponent(Rigidbody).velocity.y = 4;
+			}
+		}
+		
+		
 	
 				
 	// camera mode
@@ -339,7 +377,7 @@ function Update () {
 				}
 			
 			// Scale mode	
-			} else if ( !EditorCore.GetSelectedObject().GetComponent(Surface) ) {
+			} else if ( EditorCore.GetSelectedObject() && !EditorCore.GetSelectedObject().GetComponent(Surface) ) {
 				EditorCore.SetScaleMode( true );
 			
 			}
@@ -359,10 +397,10 @@ function Update () {
 		// numpad period: center object
 		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) ) {
 			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).fixPoint = EditorCore.GetSelectedObject().transform.renderer.bounds.center;
+				Camera.main.GetComponent ( EditorCamera ).cursor.position = EditorCore.GetSelectedObject().transform.renderer.bounds.center;
 				Camera.main.GetComponent ( EditorCamera ).FocusOn ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
 			} else {
-				Camera.main.GetComponent ( EditorCamera ).fixPoint = Vector3.zero;
+				Camera.main.GetComponent ( EditorCamera ).cursor.position = Vector3.zero;
 				Camera.main.GetComponent ( EditorCamera ).FocusOn ( Vector3.zero );
 			}
 		
@@ -373,25 +411,25 @@ function Update () {
 		// numpad 7: top/bottom view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad7 ) ) {			
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				Camera.main.GetComponent ( EditorCamera ).GoToBottomOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
+				Camera.main.GetComponent ( EditorCamera ).GoToBottomOf ( Camera.main.GetComponent(EditorCamera).cursor.position );
 			} else {
-				Camera.main.GetComponent ( EditorCamera ).GoToTopOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
+				Camera.main.GetComponent ( EditorCamera ).GoToTopOf ( Camera.main.GetComponent(EditorCamera).cursor.position );
 			}
 		
 		// numpad 3: right/left view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad3 ) ) {			
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				Camera.main.GetComponent ( EditorCamera ).GoToLeftOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
+				Camera.main.GetComponent ( EditorCamera ).GoToLeftOf ( Camera.main.GetComponent(EditorCamera).cursor.position );
 			} else {
-				Camera.main.GetComponent ( EditorCamera ).GoToRightOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
+				Camera.main.GetComponent ( EditorCamera ).GoToRightOf ( Camera.main.GetComponent(EditorCamera).cursor.position );
 			}
 			
 		// numpad 1: front/back view
 		} else if ( Input.GetKeyDown ( KeyCode.Keypad1 ) ) {			
 			if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				Camera.main.GetComponent ( EditorCamera ).GoToBackOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
+				Camera.main.GetComponent ( EditorCamera ).GoToBackOf ( Camera.main.GetComponent(EditorCamera).cursor.position );
 			} else {
-				Camera.main.GetComponent ( EditorCamera ).GoToFrontOf ( Camera.main.GetComponent(EditorCamera).fixPoint );
+				Camera.main.GetComponent ( EditorCamera ).GoToFrontOf ( Camera.main.GetComponent(EditorCamera).cursor.position );
 			}
 		
 		// left mouse button

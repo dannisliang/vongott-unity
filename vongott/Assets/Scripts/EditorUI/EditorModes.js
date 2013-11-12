@@ -19,8 +19,8 @@ class EditorModes extends OGPage {
 	
 	static function SetTitle ( ttl : String ) {
 		title.text = ttl;
-		data.gameObject.SetActive ( ttl != "Pick Mode" );
-		Camera.main.GetComponent(EditorCamera).locked = ttl != "Pick Mode";
+		data.gameObject.SetActive ( ttl != "Pick Mode" && ttl != "First Person Mode" );
+		Camera.main.GetComponent(EditorCamera).locked = ttl != "Pick Mode" && ttl != "First Person Mode";
 	}
 	
 	static function SetMessage ( msg : String ) {
