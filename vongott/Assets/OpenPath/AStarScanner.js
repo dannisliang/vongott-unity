@@ -25,26 +25,38 @@ class AStarScanner extends MonoBehaviour {
 	function SetMap () {
 		if ( mapType == AStarMap.AStarMapType.Grid ) {
 			map = new AStarGridMap ( transform.position, gridSize, spacing );
-		} else {
-			var meshes : List.<Mesh> = new List.<Mesh>();
-			
-			for ( var mf : MeshFilter in GameObject.FindObjectsOfType(MeshFilter) ) {
-				if ( mf.gameObject.tag == "walkable" ) {
-					meshes.Add ( mf.sharedMesh );
-				}
-			}
 		
-			map = new AStarWaypointMap ( meshes, spacing );
+		} else {
+			map = new AStarWaypointMap ( GameObject.FindObjectsOfType(EditorNavNodeContainer) );
+		
 		}
 	}
 	
-	function Init () {
+	function Init () : IEnumerator {
+		yield WaitForEndOfFrame ();
+	
 		GetBounds ();
 		SetMap ();
+		
+		yield WaitForEndOfFrame ();
+		
+		for ( var n : EditorNavNodeContainer in GameObject.FindObjectsOfType(EditorNavNodeContainer) ) {
+			Destroy ( n.gameObject ); 
+		}
 	}
 	
 	function Start () {
-		Init ();
+		StartCoroutine ( Init () );
+	}
+	
+	function Update () {
+		if ( map == null || map.nodes == null ) { return; }
+		
+		for ( var node : AStarNode in map.nodes ) {
+			for ( var n : AStarNode in node.neighbors ) {
+				Debug.DrawLine ( node.position, n.position, Color.white );
+			}
+		}
 	}
 	
 	function FindPath ( start : Vector3, goal : Vector3 ) : List.<AStarNode> {

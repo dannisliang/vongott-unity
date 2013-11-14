@@ -85,6 +85,8 @@ public class ConversationManager {
 	}
 	
 	public static function CheckForcedConvo ( actor : Actor ) : boolean {
+		if ( String.IsNullOrEmpty ( actor.conversationTree ) ) { return false; }
+		
 		var convo : ConversationTree = Loader.LoadConversationTree ( actor.conversationTree );
 		var rootNode : ConversationRootNode = convo.rootNodes[actor.currentConvoRoot];
 		

@@ -18,6 +18,7 @@ class GameCamera extends MonoBehaviour {
 	public var xRayShader : Shader;
 	public var regularShader : Shader;
 	public var boundingBoxMaterial : Material;
+	public var firstPerson : boolean = false;	
 	
 	public static var instance : GameCamera;
 	
@@ -38,6 +39,12 @@ class GameCamera extends MonoBehaviour {
 	////////////////////
 	// Positioning and rotation
 	////////////////////
+	function ToggleFirstPerson () {
+		firstPerson = !firstPerson;
+	
+		GameCore.GetPlayerObject().GetComponentInChildren(SkinnedMeshRenderer).enabled = !firstPerson;
+	}
+	
 	function StorePosRot () {
 		storedPos = this.transform.position;
 		storedRot = this.transform.eulerAngles;
@@ -233,7 +240,7 @@ class GameCamera extends MonoBehaviour {
 	}
 		
 	function ConvoFocus ( a : Actor, smooth : boolean ) {
-		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
+		var height : Vector3 = new Vector3 ( 0, 1.5, 0 );
 		var player : Player = GameCore.GetPlayer();
 		var camPos : Vector3 = player.transform.position + height + ( player.transform.right * 0.6 ) - ( player.transform.forward * 0.6 );		
 		var lookPos : Vector3 = a.transform.position + height; 
@@ -251,7 +258,7 @@ class GameCamera extends MonoBehaviour {
 	}
 	
 	function ConvoFocus ( p : Player, smooth : boolean ) {
-		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
+		var height : Vector3 = new Vector3 ( 0, 1.5, 0 );
 		var actor : Actor = GameCore.GetPlayer().talkingTo;
 		var camPos : Vector3 =  actor.transform.position + height + ( actor.transform.right * 0.6 ) - ( actor.transform.forward * 0.6 );		
 		var lookPos : Vector3 = p.transform.position + height; 
@@ -285,9 +292,7 @@ class GameCamera extends MonoBehaviour {
 	function Update () {
 		// Check for interaction
 		var hit : RaycastHit;
-		
 		Debug.DrawRay ( transform.position, transform.forward * 4, Color.yellow );
-				
 		if ( Physics.Raycast ( transform.position, transform.forward, hit, 4 ) ) {
 			if ( hit.collider.GetComponent ( InteractiveObject ) && GameCore.GetInteractiveObject() != hit.collider.GetComponent(InteractiveObject) ) {
 				hit.collider.GetComponent ( InteractiveObject ).Focus ();
@@ -295,6 +300,7 @@ class GameCamera extends MonoBehaviour {
 				
 		} else if ( GameCore.GetInteractiveObject() && !GameCore.interactiveObjectLocked ) {
 				GameCore.GetInteractiveObject().Unfocus ();
+		
 		}
 		
 		// Bounding box modifier
@@ -336,8 +342,19 @@ class GameCamera extends MonoBehaviour {
 
         if ( dist > distance ) { dist = distance; }
         if ( dist < 0.0 ) { dist = 0.0; }
-
-        transform.position = ray.GetPoint(dist);
+		
+		if ( !firstPerson ) {
+        	transform.position = ray.GetPoint(dist);
+        } else {
+        	transform.position = GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, GameCore.GetPlayerObject().GetComponent(PlayerController).capsule.height - 0.05, 0 );
+        	
+        	var playerRot : Vector3 = this.transform.localEulerAngles;
+        	playerRot.x = 0;
+        	playerRot.z = 0;
+        	
+        	GameCore.GetPlayerObject().transform.rotation = Quaternion.Euler ( playerRot );
+        
+        }
         
         if ( skyboxCamera ) {
 			skyboxCamera.transform.rotation = transform.rotation;

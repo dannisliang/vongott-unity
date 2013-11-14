@@ -356,6 +356,10 @@ function Update () {
 				EditorCore.ToggleWireframe();
 		
 			}
+			
+		// N key
+		} else if ( Input.GetKeyDown ( KeyCode.N ) ) {
+			EditorCore.UpdateNavNodes ();
 		
 		// G key: grab mode
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {

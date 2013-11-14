@@ -3,7 +3,8 @@
 class AStarMap {
 	enum AStarMapType {
 		Grid,
-		Waypoint
+		Waypoint,
+		NavMesh
 	}
 	
 	var mapType : AStarMapType = AStarMapType.Grid;
@@ -84,45 +85,26 @@ class AStarMap {
 	}
 }
 
+public class AStarNavMeshMap extends AStarMap {
+	
+}
+
 public class AStarWaypointMap extends AStarMap {
-	function AStarWaypointMap ( meshes : List.<Mesh>, spacing : float ) {
+	function AStarWaypointMap ( nodeContainers : EditorNavNodeContainer[] ) {
 		mapType = AStarMapType.Waypoint;
 		
 		var tempList : List.<AStarNode> = new List.<AStarNode>();
 		
-		for ( var m : Mesh in meshes ) {
-			for ( var v : Vector3 in m.vertices ) {
-				if ( CheckWalkable ( v, spacing ) ) {
-					var n : AStarNode = new AStarNode ( v.x, v.y, v.z );
-					tempList.Add ( n );
-				}
-			}
+		for ( var n : EditorNavNodeContainer in nodeContainers ) {
+			n.FindNeighbors ( nodeContainers );
+			
+			tempList.Add ( n.node );
 		}
 		
 		nodes = ListToGrid ( tempList );
-	
-		for ( var nd : AStarNode in nodes ) {
-			FindNeighbors ( nd );
-		}
-	}
-	
-	private function FindNeighbors ( node : AStarNode ) {
-		var tempList : List.<AStarNode> = new List.<AStarNode>();
-		
-		for ( var i = 0; i < nodes.GetLength(0); i++ ) {
-			if ( !Physics.Linecast ( node.position, nodes[i,0,0].position ) ) {
-				tempList.Add ( nodes[i,0,0] );
-			}
-		}
-		
-		node.neighbors = ListToArray ( tempList );
 	}
 	
 	override function GetNeighbors ( node : AStarNode ) : AStarNode [] {
-		if ( node.neighbors == null ) {
-			FindNeighbors ( node );	
-		}
-		
 		return node.neighbors;
 	}
 }
@@ -204,11 +186,7 @@ public class AStarGridMap extends AStarMap {
 			}
 		}
 		
-		node.neighbors = new AStarNode[tempList.Count];
-		
-		for ( var i = 0; i < tempList.Count; i++ ) {
-			node.neighbors[i] = tempList[i];
-		}
+		node.neighbors = tempList.ToArray();
 	}
 	
 	override function GetNeighbors ( node : AStarNode ) : AStarNode[] {

@@ -278,6 +278,18 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		}
 		
 		return newTrg;
+		
+	// check navnode
+	} else if ( obj.HasField("NavNode") ) {
+		var nav : JSONObject = obj.GetField("NavNode");
+		
+		var newNav : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/nav_node" ) as GameObject );
+		newNav.transform.localPosition = DeserializeVector3 ( nav.GetField("localPosition") );
+		newNav.layer = 15;
+		
+		newNav.name = obj.GetField("name").str;
+				
+		return newNav;
 	
 	} else {
 		var o : GameObject = new GameObject ( obj.GetField ( "name" ).str );

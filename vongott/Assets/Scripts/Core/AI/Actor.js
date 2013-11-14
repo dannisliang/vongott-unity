@@ -389,15 +389,17 @@ class Actor extends InteractiveObject {
 		
 		// Go to navpoint
 		} else if ( pathType == ePathType.NavPoint && path.Count > 0 && currentNode < path.Count ) {
-			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.5 ) {
+			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 1.0 ) {
 				waiting = true;
 				ClearPath();
 			
 			} else if ( pathFinder.nodes.Count > 0 ) {
 				if ( this.GetComponent(LocalAvoidance) && this.GetComponent(LocalAvoidance).detecting ) {
 					TurnTo ( this.GetComponent(LocalAvoidance).targetDirection );
+				
 				} else {
 					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
+				
 				}
 										
 				if ( path[currentNode].running ) {
@@ -482,7 +484,7 @@ class Actor extends InteractiveObject {
 		
 		if ( !inventory ) { inventory = new InventoryEntry [4]; }
 		
-		if ( !GameCore.started ) { return; }
+		if ( !GameCore.running ) { return; }
 				
 		var forward = transform.TransformDirection (Vector3.forward);
 				

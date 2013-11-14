@@ -141,6 +141,11 @@ class EditorMenuBase extends OGPage {
 		EditorCore.AddTrigger ();
 	}
 	
+	function AddNavNode () {
+		EditorCore.AddNavNode ();
+	}
+	
+	
 	////////////////////
 	// Edit menu
 	////////////////////

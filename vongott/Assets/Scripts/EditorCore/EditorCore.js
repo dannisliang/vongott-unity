@@ -149,17 +149,17 @@ static function UndoCurrentAction () {
 ////////////////////
 // Get spawn position
 static function GetSpawnPosition () : Vector3 {
-	var distance : float = 5.0;
-	var forward = Camera.main.transform.TransformDirection ( Vector3.forward );
-	var position = Camera.main.transform.position + forward * distance;
+	return Camera.main.GetComponent ( EditorCamera ).cursor.position;
+}
+
+// Add nav node
+static function AddNavNode () {
+	var newNode : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/nav_node" ) as GameObject );
+	newNode.transform.parent = currentLevel.transform;
+	newNode.transform.position = GetSpawnPosition();
+	newNode.name = newNode.name.Replace("(Clone)","");
 	
-	var fixPoint : Vector3 = Camera.main.GetComponent ( EditorCamera ).cursor.position;
-	var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
-	var hit : RaycastHit;
-	
-	position = fixPoint;
-	
-	return position;
+	SelectObject ( newNode );
 }
 
 // Add light
@@ -408,6 +408,24 @@ public function AddShape ( shape : Shape, method : BooleanRTLib.BooleanType ) {
 
 
 ////////////////////
+// Nav nodes
+////////////////////
+// Get all
+public static function GetNavNodes () : EditorNavNodeContainer[] {
+	return GameObject.FindObjectsOfType(EditorNavNodeContainer);
+}
+
+// Update all
+public static function UpdateNavNodes () {
+	var allNodes : EditorNavNodeContainer[] = GetNavNodes ();
+
+	for ( var nnc : EditorNavNodeContainer in allNodes ) {
+		nnc.FindNeighbors ( allNodes );
+	}
+}
+
+
+////////////////////
 // Actor
 ////////////////////
 // Get actor form GUID
@@ -544,6 +562,7 @@ static function DuplicateObject () {
 	
 	var newObj : GameObject = Instantiate ( selectedObject );
 	newObj.transform.parent = currentLevel.transform;
+	newObj.name = newObj.name.Replace("(Clone)","");
 
 	if ( newObj.GetComponent(GUID) ) { 
 		newObj.GetComponent(GUID).NewGUID();

@@ -20,6 +20,7 @@ public var gridBright : Material;
 public var cursorMaterial : Material;
 public var boundingBoxMaterial : Material;
 public var selectedBoundingBoxMaterial : Material;
+public var navMaterial : Material;
 public var locked : boolean = false;
 public var drawBoxes : List.< GameObject > = new List.< GameObject > ();
 
@@ -109,6 +110,7 @@ function DrawPath ( actor : Actor ) {
 		DrawLine ( pointA, pointB, cursorMaterial );
 	}
 }
+
 
 // Grid
 function DrawGrid () {
@@ -249,6 +251,21 @@ function DrawBoundingBoxes () {
 	}
 }
 
+// Nav nodes
+function DrawNavNodes () {
+	navMaterial.SetPass ( 0 );
+	
+	GL.Begin ( GL.LINES );
+	
+	for ( var nnc : EditorNavNodeContainer in EditorCore.GetNavNodes() ) {
+		for ( var n : AStarNode in nnc.node.neighbors ) { 
+			DrawLine ( nnc.node.position, n.position );
+		}
+	}
+	
+	GL.End ();
+}
+
 // Rendering
 function OnPreRender () {
 	// wireframe
@@ -285,6 +302,9 @@ function OnPostRender () {
 	if ( EditorCore.GetSelectedObject() && EditorCore.GetSelectedObject().GetComponent(Actor) && EditorCore.GetSelectedObject().GetComponent(Actor).path.Count > 0 ) {
 		DrawPath ( EditorCore.GetSelectedObject().GetComponent(Actor) );
 	}
+	
+	// draw nav nodes
+	DrawNavNodes ();
 }
 
 // Init

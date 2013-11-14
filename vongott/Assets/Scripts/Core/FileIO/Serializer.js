@@ -224,6 +224,16 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 	
 		return o;
 	
+	// check navnode
+	} else if ( obj.GetComponent(EditorNavNodeContainer) ) {		
+		var nav : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	
+		nav.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+	
+		o.AddField ( "NavNode", nav );
+	
+		return o;
+	
 	// anything else
 	} else {
 		// components

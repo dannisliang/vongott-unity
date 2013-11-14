@@ -42,12 +42,11 @@ class EditorMeshEdit extends MonoBehaviour {
 	public var selectedMaterial : Material;
 		
 	public var target : GameObject;
-		
-	private var drawTriangle : Vector3[] = new Vector3[3];
-	private var drawQuad : Vector3[] = new Vector3[4];
-	private var drawVertices : Vector3[];
-	
+			
 	private var selectedVertices : List.< int > = new List.< int > ();
+	private var selectedTriangles : List.< Triangle > = new List.< Triangle > ();
+	private var selectedEdges : List.< Edge > = new List.< Edge > ();
+	
 	private var vertexCaches : Dictionary.< int, VertexCache > = new Dictionary.< int, VertexCache > ();
 	private var selectionBounds : Bounds;
 	private var origMousePos : Vector3;
@@ -63,101 +62,33 @@ class EditorMeshEdit extends MonoBehaviour {
 		var position : Vector3;
 	}
 	
-	// Triangle
 	private class Triangle {
-		var indexes : int[] = new int[3];
-		var vertices : Vector3 [] = new Vector3[3];
+		var indices : int[] = new int[3];
 	
-		function Triangle ( mesh : Mesh, t0 : int, t1 : int, t2 : int ) {
-			indexes[0] = t0;
-			indexes[1] = t1;
-			indexes[2] = t2;
-			
-			vertices[0] = mesh.vertices[t0];
-			vertices[1] = mesh.vertices[t1];
-			vertices[2] = mesh.vertices[t2];
-		}
-	
-		function Triangle ( v0 : Vector3, v1 : Vector3, v2 : Vector3 ) {
-			vertices[0] = v0;
-			vertices[1] = v1;
-			vertices[2] = v2;
-		}
-		
-		function TransformPoint ( t : Transform ) {
-			t.TransformPoint ( vertices[0] );
-			t.TransformPoint ( vertices[1] );
-			t.TransformPoint ( vertices[2] );
-		}
-		
-		static function GetQuad ( t0 : Triangle, t1 : Triangle ) : Quad {
-			var verts : List.<Vector3> = new List.<Vector3>();
-			
-			for ( var v0 : Vector3 in t0.vertices ) {
-				verts.Add ( v0 );
-			}
-			
-			for ( var v1 : Vector3 in t1.vertices ) {
-				if ( !verts.Contains ( v1 ) ) {
-					verts.Add ( v1 );
-				}
-			}
-			
-			if ( verts.Count < 4 ) {
-				Debug.LogError ( "EditorMeshEdit | Couldn't find quad for " + t0 + " and " + t1 );
-			}
-			
-			return new Quad ( verts[0], verts[1], verts[2], verts[3] );
+		function Triangle ( a : int, b : int, c : int ) {
+			indices[0] = a;
+			indices[1] = b;
+			indices[2] = c;
 		}
 	}
 	
-	// Quad
+	private class Edge {
+		var indices : int[] = new int[2];
+	
+		function Edge ( a : int, b : int ) {
+			indices[0] = a;
+			indices[1] = b;
+		}
+	}
+	
 	private class Quad {
-		var indexes : int[] = new int[4];
-		var vertices : Vector3 [] = new Vector3[4];
-		
-		function Quad ( mesh : Mesh, t0 : int, t1 : int, t2 : int, t3 : int ) {
-			indexes[0] = t0;
-			indexes[1] = t1;
-			indexes[2] = t2;
-			indexes[3] = t3;
-			
-			vertices[0] = mesh.vertices[t0];
-			vertices[1] = mesh.vertices[t1];
-			vertices[2] = mesh.vertices[t2];
-			vertices[3] = mesh.vertices[t3];
-		}
-					
-		function Quad ( v0 : Vector3, v1 : Vector3, v2 : Vector3, v3 : Vector3 ) {
-			vertices[0] = v0;
-			vertices[1] = v1;
-			vertices[2] = v2;
-			vertices[3] = v3;
-		}
-		
-		function TransformPoint ( t : Transform ) {
-			t.TransformPoint ( vertices[0] );
-			t.TransformPoint ( vertices[1] );
-			t.TransformPoint ( vertices[2] );
-			t.TransformPoint ( vertices[3] );
-		}
+		var vertices : int[] = new int[4];
 	}
 	
 	
 	//////////////////
 	// Helper functions
 	//////////////////
-	// Find adjacent triangle
-	private function FindAdjacentTriangle ( t : Triangle, m : Mesh ) : Triangle {
-		for ( var i : int in m.triangles ) {
-			if ( t.indexes[1] == i && t.indexes[2] == i+1 ) {
-				return new Triangle ( m, i, i+1, i+2 ); 
-			} 
-		}
-		
-		return null;
-	}
-	
 	// Find similar vertices
 	private function FindSimilarVertices ( vertices : Vector3[], vertex : int ) : int[] {
 		var tempList : List.< int > = new List.< int > ();
@@ -180,59 +111,82 @@ class EditorMeshEdit extends MonoBehaviour {
 		return new Vector3 ( Round ( v.x, factor ), Round ( v.y, factor ), Round ( v.z, factor ) );
 	}
 	
-	// Draw vertex
-	private function Draw2DVertex ( v : Vector3 ) {
-		GL.Vertex3 ( v.x / Screen.width, v.y / Screen.height, v.z );
-	}
-	
-	private function DrawVertex ( v : Vector3 ) {
-		v += target.transform.position;
-		GL.Vertex3 ( v.x, v.y, v.z );
-	}
-	
-	// Draw border
-	private function Draw2DBounds ( b : Bounds ) {
-		b.center += target.transform.position;
+	// Get triangles
+	private function GetTriangles ( mesh : Mesh ) : Triangle[] {
+		var list : List.< Triangle > = new List.< Triangle > ();
 		
-		Draw2DLine ( new Vector3 ( b.min.x, b.min.y, 0 ), new Vector3 ( b.min.x, b.max.y, 0 ) );
-		Draw2DLine ( new Vector3 ( b.min.x, b.max.y, 0 ), new Vector3 ( b.max.x, b.max.y, 0 ) );
-		Draw2DLine ( new Vector3 ( b.max.x, b.max.y, 0 ), new Vector3 ( b.max.x, b.min.y, 0 ) );
-		Draw2DLine ( new Vector3 ( b.max.x, b.min.y, 0 ), new Vector3 ( b.min.x, b.min.y, 0 ) );
+		for ( var i : int = 0; i < mesh.triangles.Length; i += 3 ) {
+			var t : Triangle = new Triangle ( mesh.triangles[i], mesh.triangles[i+1], mesh.triangles[i+2] );
+			list.Add ( t );
+		}
+		
+		return list.ToArray();
 	}
 	
-	// Draw line
-	private function Draw2DLine ( from : Vector3, to : Vector3 ) {
-		Draw2DVertex ( from );
-		Draw2DVertex ( to );
+	// Get edges
+	private function GetEdges ( mesh : Mesh ) : Edge[] {
+		var list : List.< Edge > = new List.< Edge > ();
+		
+		for ( var i : int = 0; i < mesh.vertices.Length; i++ ) {
+			var a : int = i;
+			var b : int = i+1;
+			
+			if ( b >= mesh.vertices.Length ) {
+				b = 0;
+			}
+			
+			var e : Edge = new Edge ( a, b );
+			list.Add ( e );
+		}
+		
+		return list.ToArray();
 	}
 	
-	private function DrawLine ( from : Vector3, to : Vector3 ) {
-		DrawVertex ( from );
-		DrawVertex ( to );
+	// Selection
+	private function SelectAll () {
+		ClearSelection ();
+		
+		for ( var i : int = 0; i < target.GetComponent(MeshFilter).mesh.vertices.Length; i++ ) {
+			selectedVertices.Add ( i );
+		}
 	}
 	
-	// Draw box
-	private function DrawBox ( v : Vector3 ) {
-		var right : Vector3 = this.camera.transform.right * 0.02;
-		var up : Vector3 = this.camera.transform.up * 0.02;
-	
-		DrawVertex ( v - right + up );
-		DrawVertex ( v + right + up );
-		DrawVertex ( v + right - up );
-		DrawVertex ( v - right - up );
+	private function SelectNone () {
+		selectedVertices.Clear ();
 	}
 	
 	// Get median point
-	private function GetMedianPoint ( mesh : Mesh, indices : List.< int > ) : Vector3 {
+	private function GetMedianPoint ( indices : int[] ) : Vector3 {
 		var result : Vector3;
+		var mesh : Mesh = target.GetComponent(MeshFilter).mesh;
 		
 		for ( var i : int in indices ) {
 			result += mesh.vertices[i];
 		}
 		
-		result /= indices.Count;
+		result /= indices.Length;
 	
 		return result;
+	}
+	
+	// Can raycast to
+	private function CanRaycastTo ( v : Vector3 ) : boolean {
+		return !Physics.Linecast ( this.camera.ScreenToWorldPoint ( Input.mousePosition ), v );
+	}
+	
+	private function CanRaycastTo ( t : Triangle ) : boolean {				
+		return CanRaycastTo ( GetMedianPoint ( t.indices ) );
+	}
+	
+	private function CanRaycastTo ( e : Edge ) : boolean {				
+		return CanRaycastTo ( GetMedianPoint ( e.indices ) );
+	}
+	
+	// Get mouse distance
+	private function GetMouseDistance ( v : Vector3 ) : float {
+		var mousePos : Vector3 = Input.mousePosition;
+	
+		return ( this.camera.WorldToScreenPoint ( v ) - mousePos ).sqrMagnitude;
 	}
 	
 	// Rotate around pivot
@@ -246,7 +200,7 @@ class EditorMeshEdit extends MonoBehaviour {
 	}
 	
 	// Find offsets
-	private function FindOffsets ( mesh : Mesh, indices : List.< int > ) {
+	private function FindMouseOffsets ( mesh : Mesh, indices : int[] ) {
 		var vertices : Vector3[] = mesh.vertices;
 		
 		vertexCaches.Clear ();
@@ -264,8 +218,47 @@ class EditorMeshEdit extends MonoBehaviour {
 		}
 	}
 	
+	// Get visible vertices
+	private function GetVisibleVertices ( vertices : Vector3[] ) : int[] {
+		var visible : List.< int > = new List.< int > ();
+		
+		for ( var v : int = 0; v < vertices.Length; v++ ) {
+			if ( CanRaycastTo ( vertices[v] ) ) {
+				visible.Add ( v );
+			}
+		}
+		
+		return visible.ToArray();
+	}
+	
+	// Get visible triangles
+	private function GetVisibleTriangles ( triangles : Triangle[] ) : Triangle[] {
+		var visible : List.< Triangle > = new List.< Triangle > ();
+		
+		for ( var t : int = 0; t < triangles.Length; t++ ) {
+			if ( CanRaycastTo ( triangles[t] ) ) {
+				visible.Add ( triangles[t] );
+			}
+		}
+		
+		return visible.ToArray();
+	}
+	
+	// Get visible edges
+	private function GetVisibleEdges ( edges : Edge[] ) : Edge[] {
+		var visible : List.< Edge > = new List.< Edge > ();
+		
+		for ( var e : int = 0; e < edges.Length; e++ ) {
+			if ( CanRaycastTo ( edges[e] ) ) {
+				visible.Add ( edges[e] );
+			}
+		}
+		
+		return visible.ToArray();
+	}
+	
 	// Cache vertices
-	private function CacheVertices ( mesh : Mesh, indices : List.< int > ) {
+	private function CacheVertices ( mesh : Mesh, indices : int[] ) {
 		var vertices : Vector3[] = mesh.vertices;
 		
 		vertexCaches.Clear ();
@@ -277,8 +270,12 @@ class EditorMeshEdit extends MonoBehaviour {
 		}
 	}
 	
+	
+	//////////////////
+	// Transform
+	//////////////////
 	// Grab vertices
-	private function GrabVertices ( mesh : Mesh, indices : List.< int > ) {
+	private function GrabVertices ( mesh : Mesh, indices : int[] ) {
 		var vertices : Vector3[] = mesh.vertices;		
 		var mousePos : Vector3 = Input.mousePosition;
 	
@@ -311,28 +308,15 @@ class EditorMeshEdit extends MonoBehaviour {
 		}
 				
 		RefreshMesh ( vertices );
-	
-		drawVertices = mesh.vertices;
 	}
 	
 	// Rotate vertices
-	private function RotateVertices ( mesh : Mesh, indices : List.< int > ) {
+	private function RotateVertices ( mesh : Mesh, indices : int [] ) {
 		var vertices : Vector3[] = mesh.vertices;
 		var mousePos : Vector3 = Input.mousePosition;
-		var medianPoint : Vector3 = GetMedianPoint ( mesh, indices );
+		var medianPoint : Vector3 = GetMedianPoint ( indices );
 		var angle : Vector3 = this.camera.transform.forward;
-		var amount : float = Input.GetAxis("Mouse ScrollWheel");
-		
-		if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-			amount *= 4;
-		
-		} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-			amount *= 20;
-		
-		} else {
-			amount *= 10;
-		
-		}
+		var amount : float = ( this.camera.WorldToScreenPoint ( medianPoint ).x - Input.mousePosition.x ) * 0.1;
 		
 		switch ( transformLock ) {
 			case TransformLock.X:
@@ -349,7 +333,7 @@ class EditorMeshEdit extends MonoBehaviour {
 		}
 		
 		for ( var i : int in indices ) {
-			var point : Vector3 = RotateAroundPivot ( vertices[i], medianPoint, angle * amount );
+			var point : Vector3 = RotateAroundPivot ( vertexCaches[i].position, medianPoint, angle * amount );
 																																																																																				
 			for ( var v : int in FindSimilarVertices ( vertices, i ) ) {
 				vertices[v] = point;
@@ -357,44 +341,17 @@ class EditorMeshEdit extends MonoBehaviour {
 		}
 		
 		RefreshMesh ( vertices );
-	
-		drawVertices = mesh.vertices;
 	}
 	
 	// Scale vertices
-	private function ScaleVertices ( mesh : Mesh, indices : List.< int > ) {
+	private function ScaleVertices ( mesh : Mesh, indices : int[] ) {
 		var vertices : Vector3[] = mesh.vertices;		
 		var mousePos : Vector3 = Input.mousePosition;
-		var medianPoint : Vector3 = GetMedianPoint ( mesh, indices );
-		var amount : float = 1;
-		
-		if ( Input.GetAxis("Mouse ScrollWheel") < 0 ) {
-			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-				amount = 0.9;
-			
-			} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				amount = 0.5;
-			
-			} else {
-				amount = 0.8;
-			
-			}
-		
-		} else if ( Input.GetAxis("Mouse ScrollWheel") > 0 ) {
-			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-				amount = 1.1;
-			
-			} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
-				amount = 1.5;
-			
-			} else {
-				amount = 1.2;
-			
-			}
-		}
+		var medianPoint : Vector3 = GetMedianPoint ( indices );
+		var amount : float = Vector3.Distance ( Input.mousePosition, this.camera.WorldToScreenPoint ( medianPoint ) ) * 0.005;
 	
 		for ( var i : int in indices ) {
-			var point : Vector3 = ScaleAroundPivot ( vertices[i], medianPoint, amount );
+			var point : Vector3 = ScaleAroundPivot ( vertexCaches[i].position, medianPoint, amount );
 						
 			switch ( transformLock ) {
 				case TransformLock.Y:
@@ -416,12 +373,31 @@ class EditorMeshEdit extends MonoBehaviour {
 		}
 				
 		RefreshMesh ( vertices );
-	
-		drawVertices = mesh.vertices;
 	}
 	
-	// Mode input
+	
+	//////////////////
+	// Modes
+	//////////////////
 	private function HandleModeInput ( mesh : Mesh ) {
+		// Edit modes
+		if ( Input.GetKey ( KeyCode.LeftShift ) && Input.GetKeyDown ( KeyCode.V ) && editMode != EditMode.Vertices ) {
+			editMode = EditMode.Vertices;
+			selectedTriangles.Clear ();
+			selectedEdges.Clear ();
+		
+		} else if ( Input.GetKey ( KeyCode.LeftShift ) && Input.GetKeyDown ( KeyCode.T ) && editMode != EditMode.Triangles ) {
+			editMode = EditMode.Triangles;
+			selectedVertices.Clear ();
+			selectedEdges.Clear ();
+			
+		} else if ( Input.GetKey ( KeyCode.LeftShift ) && Input.GetKeyDown ( KeyCode.E ) && editMode != EditMode.Edges ) {
+			editMode = EditMode.Edges;
+			selectedVertices.Clear ();
+			selectedTriangles.Clear ();
+			
+		}
+		
 		// Cancel		
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			Cancel ();
@@ -430,17 +406,17 @@ class EditorMeshEdit extends MonoBehaviour {
 		// Transform modes
 		if ( selectedVertices.Count > 0 && transformMode == TransformMode.None ) {
 			if ( Input.GetKeyDown ( KeyCode.G ) ) {
-				FindOffsets ( mesh, selectedVertices );
+				FindMouseOffsets ( mesh, selectedVertices.ToArray() );
 			
 				transformMode = TransformMode.Grab;
 			
 			} else if ( Input.GetKeyDown ( KeyCode.R ) ) {				
-				CacheVertices ( mesh, selectedVertices );
+				CacheVertices ( mesh, selectedVertices.ToArray() );
 				
 				transformMode = TransformMode.Rotate;
 			
 			} else if ( Input.GetKeyDown ( KeyCode.S ) ) {
-				CacheVertices ( mesh, selectedVertices );
+				CacheVertices ( mesh, selectedVertices.ToArray() );
 				
 				transformMode = TransformMode.Scale;
 			
@@ -451,22 +427,30 @@ class EditorMeshEdit extends MonoBehaviour {
 		}
 		
 		// Selection modes
-		if ( Input.GetMouseButton ( 0 ) ) {
-			mouseButtonTimer += Time.deltaTime;
-		} else {
-			origMousePos = Vector3.zero;
-			mouseButtonTimer = 0;
-		}
-		
-		if ( mouseButtonTimer > 0.1 ) {
-			if ( origMousePos == Vector3.zero ) {
+		if ( Input.GetKeyDown ( KeyCode.B ) ) {
+			if ( selectMode == SelectMode.Normal ) {
 				origMousePos = Input.mousePosition;
+				selectMode = SelectMode.Box;
+			
+			} else {
+				origMousePos = Vector3.zero;
+				selectMode = SelectMode.Normal;
+		
 			}
-			selectMode = SelectMode.Box;
 		
 		} else if ( Input.GetKeyDown ( KeyCode.C ) ) {
 			selectMode = SelectMode.Circle;
-		}
+		
+		} else if ( Input.GetKeyDown ( KeyCode.A ) && transformMode == TransformMode.None ) {
+			if ( selectedVertices.Count == 0 ) {
+				SelectAll ();
+				
+			} else {
+				SelectNone ();
+			
+			}
+		
+		} 
 	}
 	
 	// Lock input
@@ -495,51 +479,207 @@ class EditorMeshEdit extends MonoBehaviour {
 		}
 	}
 	
+	
+	////////////////////
+	// Selection
+	////////////////////
+	private function ClearSelection () {
+		selectedVertices.Clear ();
+		selectedEdges.Clear ();
+		selectedTriangles.Clear ();
+	}
+	
+	private function AddSelection ( e : Edge, clearFirst : boolean ) {
+		if ( clearFirst ) {
+			ClearSelection ();
+			
+			selectedEdges.Add ( e );
+			
+			for ( var i : int in e.indices ) {
+				if ( !selectedVertices.Contains ( i ) ) {
+					selectedVertices.Add ( i );
+				}
+			}
+		
+		} else {
+			if ( selectedEdges.Contains ( e ) ) {
+				selectedEdges.Remove ( e );
+			
+				for ( var i : int in e.indices ) {
+					if ( selectedVertices.Contains ( i ) ) {
+						selectedVertices.Remove ( i );
+					}
+				}
+			
+			} else {
+				selectedEdges.Add ( e );
+				
+				for ( var i : int in e.indices ) {
+					if ( !selectedVertices.Contains ( i ) ) {
+						selectedVertices.Add ( i );
+					}
+				}
+			
+			}
+		}
+	}
+	
+	private function AddSelection ( t : Triangle, clearFirst : boolean ) {
+		if ( clearFirst ) {
+			ClearSelection ();
+			
+			selectedTriangles.Add ( t );
+			
+			for ( var i : int in t.indices ) {
+				if ( !selectedVertices.Contains ( i ) ) {
+					selectedVertices.Add ( i );
+				}
+			}
+		
+		} else {
+			if ( selectedTriangles.Contains ( t ) ) {
+				selectedTriangles.Remove ( t );
+			
+				for ( var i : int in t.indices ) {
+					if ( selectedVertices.Contains ( i ) ) {
+						selectedVertices.Remove ( i );
+					}
+				}
+			
+			} else {
+				selectedTriangles.Add ( t );
+				
+				for ( var i : int in t.indices ) {
+					if ( !selectedVertices.Contains ( i ) ) {
+						selectedVertices.Add ( i );
+					}
+				}
+			
+			}
+		}
+	}
+	
+	// Edge selection
+	private function HandleEdgeSelection ( edges : Edge[] ) {
+		if ( Input.GetMouseButtonDown ( 0 ) ) {
+			var clickedEdge : Edge;
+			var visibleEdges : Edge[] = GetVisibleEdges ( edges );
+			var radius : float = 60;
+			
+			for ( var e : Edge in visibleEdges ) {
+				if ( GetMouseDistance ( GetMedianPoint ( e.indices ) ) < radius ) {
+					clickedEdge = e;
+					break;
+				}
+			}
+		
+			if ( clickedEdge == null ) {		
+				if ( !Input.GetKey ( KeyCode.LeftShift ) ) {
+					ClearSelection ();
+				}
+				
+			} else {
+				if ( Input.GetKey ( KeyCode.LeftShift ) ) {
+					AddSelection ( clickedEdge, false );
+				
+				} else {
+					AddSelection ( clickedEdge, true );
+					
+				}
+			}
+		
+		}
+	}
+	
+	// Triangle selection
+	private function HandleTriangleSelection ( triangles : Triangle[] ) {
+		if ( Input.GetMouseButtonDown ( 0 ) ) {
+			var clickedTriangle : Triangle;
+			var visibleTriangles : Triangle[] = GetVisibleTriangles ( triangles );
+			var radius : float = 80;
+			
+			for ( var t : Triangle in visibleTriangles ) {
+				if ( GetMouseDistance ( GetMedianPoint ( t.indices ) ) < radius ) {
+					clickedTriangle = t;
+					break;
+				}
+			}
+			
+			if ( clickedTriangle == null ) {
+				if ( !Input.GetKey ( KeyCode.LeftShift ) ) {
+					ClearSelection ();
+				}
+			
+			} else {
+				if ( Input.GetKey ( KeyCode.LeftShift ) ) {
+					AddSelection ( clickedTriangle, false );
+				
+				} else {
+					AddSelection ( clickedTriangle, true );
+					
+				}
+		
+			}
+		}
+	}
+	
+	// Quad selection
+	private function HandleQuadSelection ( vertices : Vector3[] ) {
+		if ( Input.GetMouseButtonDown ( 0 ) ) {
+			var visibleVertices : int[] = GetVisibleVertices ( vertices );
+						
+			System.Array.Sort ( visibleVertices, function ( a : int, b : int ) {
+				return GetMouseDistance ( vertices[a] ).CompareTo ( GetMouseDistance ( vertices[b] ) );
+			} );
+			
+			// Add the closest verts
+			for ( var i : int = 0; i < 4; i++ ) {
+				for ( var vert : int in FindSimilarVertices ( vertices, visibleVertices[i] ) ) {
+					selectedVertices.Add ( vert );
+				}
+			}
+		}
+	}
+	
 	// Vertex selection
-	private function HandleVertexSelection () {
+	private function HandleVertexSelection ( vertices : Vector3[] ) {
 		var i : int = 0;
 		var screenPoint : Vector3;
 		
 		if ( selectMode == SelectMode.Box ) {
-			if ( Input.GetMouseButton ( 0 ) ) {
-				var currentMousePos : Vector3 = Input.mousePosition;
-				var left : float;
-				var right : float;
-				var top : float;
-				var bottom : float;
-				
-				if ( origMousePos.x < currentMousePos.x ) { left = origMousePos.x; right = currentMousePos.x; } else { left = currentMousePos.x; right = origMousePos.x; }
-				if ( origMousePos.y > currentMousePos.y ) { top = origMousePos.y; bottom = currentMousePos.y; } else { top = currentMousePos.y; bottom = origMousePos.y; }
-				
-				selectionBounds = new Bounds ( new Vector3 ( left + (right-left)/2, bottom + (top-bottom)/2, 0 ), new Vector3 ( right - left, bottom - top, 0 ) );
-								
-				// Loop through all visible vertices
-				for ( i = 0; i < drawVertices.Length; i++ ) {				
-					
-					screenPoint = this.camera.WorldToScreenPoint ( drawVertices[i] );
-					screenPoint.z = 0;
-					
-					// If the points is within the selected box, select the vertex
-					if ( screenPoint.x > selectionBounds.min.x && screenPoint.x < selectionBounds.max.x && screenPoint.y < selectionBounds.max.y && screenPoint.y > selectionBounds.min.x ) {
-						if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-							if ( selectedVertices.Contains ( i ) ) {
-								selectedVertices.Remove ( i );	
-							}
-																			
-						} else if ( !selectedVertices.Contains ( i ) ) {
-							selectedVertices.Add ( i );
-						
-						}
-					
-					} else if ( selectedVertices.Contains ( i ) ) {
-						selectedVertices.Remove ( i );	
-					
-					} 
-				}
+			var currentMousePos : Vector3 = Input.mousePosition;
+			var left : float;
+			var right : float;
+			var top : float;
+			var bottom : float;
 			
-			} else {
-				selectMode = SelectMode.Normal;
+			if ( origMousePos.x < currentMousePos.x ) { left = origMousePos.x; right = currentMousePos.x; } else { left = currentMousePos.x; right = origMousePos.x; }
+			if ( origMousePos.y > currentMousePos.y ) { top = origMousePos.y; bottom = currentMousePos.y; } else { top = currentMousePos.y; bottom = origMousePos.y; }
+			
+			selectionBounds = new Bounds ( new Vector3 ( left + (right-left)/2, bottom + (top-bottom)/2, 0 ), new Vector3 ( right - left, bottom - top, 0 ) );
+							
+			// Loop through all visible vertices
+			for ( i = 0; i < vertices.Length; i++ ) {				
 				
+				screenPoint = this.camera.WorldToScreenPoint ( vertices[i] );
+				screenPoint.z = 0;
+				
+				// If the point is within the selected box, select the vertex
+				if ( CanRaycastTo ( vertices[i] ) && screenPoint.x > selectionBounds.min.x && screenPoint.x < selectionBounds.max.x && screenPoint.y < selectionBounds.max.y && screenPoint.y > selectionBounds.min.y ) {
+					if ( Input.GetKey ( KeyCode.LeftShift ) ) {
+						if ( selectedVertices.Contains ( i ) ) {
+							selectedVertices.Remove ( i );	
+						}
+																		
+					} else if ( !selectedVertices.Contains ( i ) ) {
+						selectedVertices.Add ( i );
+					
+					}
+				
+				} else if ( selectedVertices.Contains ( i ) ) {
+					selectedVertices.Remove ( i );	
+				
+				} 
 			}
 	
 		} else {			
@@ -551,12 +691,12 @@ class EditorMeshEdit extends MonoBehaviour {
 				}
 			
 				// Loop through all visible vertices
-				for ( i = 0; i < drawVertices.Length; i++ ) {				
-					screenPoint = this.camera.WorldToScreenPoint ( drawVertices[i] );
+				for ( i = 0; i < vertices.Length; i++ ) {				
+					screenPoint = this.camera.WorldToScreenPoint ( vertices[i] );
 					screenPoint.z = 0;
 					
-					// If the distance is short enough, select or deselect the vertex
-					if ( Vector3.Distance ( Input.mousePosition, screenPoint ) < radius ) {
+					// If the distance is short enough, and the vertex can be raycast to, select or deselect it
+					if ( CanRaycastTo ( vertices[i] ) && Vector3.Distance ( Input.mousePosition, screenPoint ) < radius ) {
 						if ( Input.GetKey ( KeyCode.LeftShift ) ) {
 							if ( selectedVertices.Contains ( i ) ) {
 								selectedVertices.Remove ( i );
@@ -578,7 +718,7 @@ class EditorMeshEdit extends MonoBehaviour {
 				
 				// If nothing is selected, clear
 				if ( !Input.GetKey ( KeyCode.LeftShift ) ) {
-					selectedVertices.Clear ();
+					ClearSelection ();
 				}
 			}
 		
@@ -627,58 +767,196 @@ class EditorMeshEdit extends MonoBehaviour {
 	//////////////////
 	// Draw
 	//////////////////
+	// Draw vertex
+	private function Draw2DVertex ( v : Vector3 ) {
+		GL.Vertex3 ( v.x / Screen.width, v.y / Screen.height, v.z );
+	}
+	
+	private function DrawVertex ( v : Vector3 ) {
+		v += target.transform.position;
+		GL.Vertex3 ( v.x, v.y, v.z );
+	}
+	
+	// Draw border
+	private function Draw2DBounds ( b : Bounds ) {
+		b.center += target.transform.position;
+		
+		Draw2DLine ( new Vector3 ( b.min.x, b.min.y, 0 ), new Vector3 ( b.min.x, b.max.y, 0 ) );
+		Draw2DLine ( new Vector3 ( b.min.x, b.max.y, 0 ), new Vector3 ( b.max.x, b.max.y, 0 ) );
+		Draw2DLine ( new Vector3 ( b.max.x, b.max.y, 0 ), new Vector3 ( b.max.x, b.min.y, 0 ) );
+		Draw2DLine ( new Vector3 ( b.max.x, b.min.y, 0 ), new Vector3 ( b.min.x, b.min.y, 0 ) );
+	}
+	
+	// Draw line
+	private function Draw2DLine ( from : Vector3, to : Vector3 ) {
+		Draw2DVertex ( from );
+		Draw2DVertex ( to );
+	}
+	
+	private function DrawLine ( from : Vector3, to : Vector3 ) {
+		DrawVertex ( from );
+		DrawVertex ( to );
+	}
+	
+	// Draw box
+	private function DrawBox ( v : Vector3 ) {
+		var right : Vector3 = this.camera.transform.right * 0.02;
+		var up : Vector3 = this.camera.transform.up * 0.02;
+	
+		DrawVertex ( v - right + up );
+		DrawVertex ( v + right + up );
+		DrawVertex ( v + right - up );
+		DrawVertex ( v - right - up );
+	}
+	
+	// Draw vertices
+	private function DrawVertices ( mesh : Mesh ) {
+		// Highlights
+		highlightMaterial.SetPass(0);
+		GL.Begin ( GL.QUADS );
+		
+		for ( var v : Vector3 in mesh.vertices ) {
+			DrawBox ( v );
+		}
+		
+		GL.End ();
+		
+		// Selection
+		selectedMaterial.SetPass(0);
+		GL.Begin ( GL.QUADS );
+		
+		for ( var h : int = 0; h < selectedVertices.Count; h++ ) {
+			DrawBox ( mesh.vertices[selectedVertices[h]] );							
+		}
+		
+		GL.End ();
+	}
+	
+	// Draw triangles
+	private function DrawTriangles ( mesh : Mesh ) {
+		var triangles : Triangle[] = GetTriangles ( mesh );
+		
+		// Highlights
+		highlightMaterial.SetPass(0);
+		GL.Begin ( GL.QUADS );
+		
+		for ( var t : Triangle in triangles ) {
+			DrawBox ( GetMedianPoint ( t.indices ) );
+		}
+		
+		GL.End ();
+		
+		GL.Begin ( GL.LINES );
+		
+		for ( var t : Triangle in triangles ) {
+			DrawTriangle ( t, mesh );
+		}
+		
+		GL.End ();
+		
+		// Selection
+		selectedMaterial.SetPass(0);
+		GL.Begin ( GL.QUADS );
+		
+		for ( var t : Triangle in selectedTriangles ) {
+			DrawBox ( GetMedianPoint ( t.indices ) );
+		}
+		
+		GL.End ();
+		
+		GL.Begin ( GL.TRIANGLES );
+		
+		for ( var t : int = 0; t < selectedTriangles.Count; t++ ) {
+			DrawTriangleFace ( selectedTriangles[t], mesh );			
+		}
+			
+		GL.End ();
+	}
+	
+	// Draw edges
+	private function DrawEdges ( mesh : Mesh ) {
+		var edges : Edge[] = GetEdges ( mesh );
+		
+		// Highlights
+		highlightMaterial.SetPass(0);
+		GL.Begin ( GL.QUADS );
+		
+		for ( var e : Edge in edges ) {
+			DrawBox ( GetMedianPoint ( e.indices ) );
+		}
+		
+		GL.End ();
+		
+		GL.Begin ( GL.LINES );
+		
+		for ( var e : Edge in edges ) {
+			DrawEdge ( e, mesh );
+		}
+		
+		GL.End ();
+		
+		// Selection
+		selectedMaterial.SetPass(0);
+		
+		GL.Begin ( GL.QUADS );
+		
+		for ( var e : Edge in selectedEdges ) {
+			DrawBox ( GetMedianPoint ( e.indices ) );
+		}
+		
+		GL.End ();
+		
+		GL.Begin ( GL.LINES );
+		
+		for ( var e : int = 0; e < selectedEdges.Count; e++ ) {
+			DrawEdge ( selectedEdges[e], mesh );			
+		}
+			
+		GL.End ();
+	}
+	
+	// Draw edge
+	private function DrawEdge( e : Edge, mesh : Mesh ) {
+		DrawVertex ( mesh.vertices[e.indices[0]] );
+		DrawVertex ( mesh.vertices[e.indices[1]] );
+	}
+	
+	// Draw triangle
+	private function DrawTriangle ( t : Triangle, mesh : Mesh ) {
+		DrawLine ( mesh.vertices[t.indices[0]], mesh.vertices[t.indices[1]] );
+		DrawLine ( mesh.vertices[t.indices[1]], mesh.vertices[t.indices[2]] );
+		DrawLine ( mesh.vertices[t.indices[2]], mesh.vertices[t.indices[0]] );
+	}
+	
+	private function DrawTriangleFace ( t : Triangle, mesh : Mesh ) {
+		DrawVertex ( mesh.vertices[t.indices[0]] );
+		DrawVertex ( mesh.vertices[t.indices[1]] );
+		DrawVertex ( mesh.vertices[t.indices[2]] );
+	}
+	
+	// Render
 	function OnPostRender () {
 		if ( !target ) { return; }
 	
 		var mesh : Mesh = target.GetComponent(MeshFilter).mesh;
+		var vertices : Vector3[] = mesh.vertices;
 		
-		if ( editMode == EditMode.Triangles ) {
-			highlightMaterial.SetPass(0);
-			
-			GL.Begin ( GL.TRIANGLES );
-			
-			DrawVertex ( drawTriangle[0] );
-			DrawVertex ( drawTriangle[1] );
-			DrawVertex ( drawTriangle[2] );
-			
-			GL.End ();
-			
-		} else if ( editMode == EditMode.Quads ) {
-			highlightMaterial.SetPass(0);
-			
-			GL.Begin ( GL.QUADS );
-			
-			DrawVertex ( drawQuad[0] );
-			DrawVertex ( drawQuad[1] );
-			DrawVertex ( drawQuad[2] );
-			DrawVertex ( drawQuad[3] );
-			
-			GL.End ();
-			
-		} else if ( editMode == EditMode.Vertices && drawVertices != null ) {
-			highlightMaterial.SetPass(0);
-			
-			GL.Begin ( GL.QUADS );
-			
-			for ( var v : Vector3 in drawVertices ) {
-				DrawBox ( v );
-			}
-			
-			GL.End ();
-			
-			for ( var h : int = 0; h < selectedVertices.Count; h++ ) {
-				selectedMaterial.SetPass(0);
-			
-				GL.Begin ( GL.QUADS );
+		switch ( editMode ) {
+			case EditMode.Vertices:
+				DrawVertices ( mesh );	
+				break;
 				
-				DrawBox ( drawVertices[selectedVertices[h]] );
+			case EditMode.Triangles:
+				DrawTriangles ( mesh );
+				break;
 				
-				GL.End ();			
-			}
+			case EditMode.Edges:
+				DrawEdges ( mesh );
+				break;
 		}
 		
 		if ( selectMode == SelectMode.Box ) {
-			selectedMaterial.SetPass(0);
+			highlightMaterial.SetPass(0);
 			
 			GL.Begin ( GL.LINES );
 			GL.LoadOrtho();
@@ -698,7 +976,6 @@ class EditorMeshEdit extends MonoBehaviour {
 		
 		var mesh : Mesh = target.GetComponent(MeshFilter).mesh;
 		var vertices : Vector3[] = mesh.vertices;
-		var triangles : int[] = mesh.triangles;
 		var mouseHit : RaycastHit;
 		var mousePos : Vector3 = Input.mousePosition;
 		
@@ -710,7 +987,7 @@ class EditorMeshEdit extends MonoBehaviour {
 		if ( transformMode == TransformMode.Grab ) {
 			HandleLockInput ();
 			
-			GrabVertices ( mesh, selectedVertices );
+			GrabVertices ( mesh, selectedVertices.ToArray() );
 		
 			if ( Input.GetMouseButtonDown ( 0 ) ) {
 				Apply ();
@@ -720,7 +997,7 @@ class EditorMeshEdit extends MonoBehaviour {
 		} else if ( transformMode == TransformMode.Rotate ) {
 			HandleLockInput ();
 			
-			RotateVertices ( mesh, selectedVertices );
+			RotateVertices ( mesh, selectedVertices.ToArray() );
 		
 			if ( Input.GetMouseButtonDown ( 0 ) ) {
 				Apply ();
@@ -730,7 +1007,7 @@ class EditorMeshEdit extends MonoBehaviour {
 		} else if ( transformMode == TransformMode.Scale ) {
 			HandleLockInput ();
 			
-			ScaleVertices ( mesh, selectedVertices );
+			ScaleVertices ( mesh, selectedVertices.ToArray() );
 		
 			if ( Input.GetMouseButtonDown ( 0 ) ) {
 				Apply ();
@@ -738,24 +1015,21 @@ class EditorMeshEdit extends MonoBehaviour {
 		
 		// Select
 		} else {
-			// Individual vertices
 			if ( editMode == EditMode.Vertices ) {
-				drawVertices = mesh.vertices;
-				
-				HandleVertexSelection ();
+				HandleVertexSelection ( vertices );
+			
+			} else if ( editMode == EditMode.Quads ) {
+				HandleQuadSelection ( vertices );
+			
+			} else if ( editMode == EditMode.Triangles ) {
+				var triangles : Triangle[] = GetTriangles ( mesh );
+				HandleTriangleSelection ( triangles );
+			
+			} else if ( editMode == EditMode.Edges ) {
+				var edges : Edge[] = GetEdges ( mesh );
+				HandleEdgeSelection ( edges );
+			
 			}
 		}
-	}
-	
-	
-	//////////////////
-	// Init
-	//////////////////
-	public function Init ( obj : GameObject ) {
-		target = obj;
-	}
-	
-	function OnEnable () {
-		//Init ( EditorCore.GetSelectedObject() );
 	}
 }
