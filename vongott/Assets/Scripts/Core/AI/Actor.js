@@ -367,21 +367,9 @@ class Actor extends InteractiveObject {
 		} else if ( waiting ) {
 			speed = 0;
 		
-		// Direct target
-		} else if ( InSight ( goal ) ) {
-			if ( Vector3.Distance ( transform.position, goal ) < 1.0 ) {
-				waiting = true;
-				ClearPath();
-			
-			} else {
-				TurnTowards ( goal );
-				WalkForward ();
-			
-			}
-		
 		// Patrolling
 		} else if ( pathType == ePathType.Patrolling && path.Count > 0 ) {
-			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.1 ) {
+			if ( Vector3.Distance ( transform.position, path[currentNode].position ) < 0.5 ) {
 				nodeTimer = path[currentNode].duration;
 								
 				if ( currentNode < path.Count - 1 ) {
@@ -404,6 +392,18 @@ class Actor extends InteractiveObject {
 				nodeTimer -= Time.deltaTime;
 			
 			}	
+		
+		// Direct target
+		} else if ( InSight ( goal ) ) {
+			if ( Vector3.Distance ( transform.position, goal ) < 1.0 ) {
+				waiting = true;
+				ClearPath();
+			
+			} else {
+				TurnTowards ( goal );
+				WalkForward ();
+			
+			}
 		
 		// Go to navpoint
 		} else if ( pathType == ePathType.NavPoint && path.Count > 0 && currentNode < path.Count ) {
