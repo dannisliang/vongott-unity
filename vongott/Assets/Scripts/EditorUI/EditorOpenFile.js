@@ -9,6 +9,7 @@ class EditorOpenFile extends OGPage {
 	// Static vars
 	public static var baseDir : String = "Maps";
 	public static var fileType : String = "vgmap";
+	public static var asNavMesh : boolean;
 		
 	// Public vars
 	public var container : GameObject;	
@@ -29,7 +30,6 @@ class EditorOpenFile extends OGPage {
 	function ListFiles () : String[] {	
 		var files : String[] = Directory.GetFiles ( Application.dataPath + "/" + baseDir, "*." + fileType );
 
-		
 		return files;
 	}
 	
@@ -87,7 +87,7 @@ class EditorOpenFile extends OGPage {
 		if ( fileType == "vgmap" ) {
 			EditorCore.LoadFile ( selectedFile );
 		} else if ( fileType == "obj" ) {
-			EditorCore.LoadOBJ ( selectedFile );
+			EditorCore.LoadOBJ ( selectedFile, asNavMesh );
 		}
 		
 		OGRoot.GoToPage ( "MenuBase" );
@@ -105,13 +105,15 @@ class EditorOpenFile extends OGPage {
 	// Clear list
 	function ClearList () {
 		for ( var i = 0; i < mapList.transform.childCount; i++ ) {
-			DestroyImmediate ( mapList.transform.GetChild ( i ).gameObject );
+			Destroy ( mapList.transform.GetChild ( i ).gameObject );
 		}
 	}
 	
 	// Populate list
-	function PopulateList () {
+	function PopulateList () : IEnumerator {
 		ClearList ();
+		
+		yield WaitForEndOfFrame ();
 		
 		previewLoading.SetActive ( false );
 		
@@ -141,8 +143,12 @@ class EditorOpenFile extends OGPage {
 		fileLoading.SetActive ( false );
 		container.SetActive ( true );
 		
-		PopulateList();
+		StartCoroutine ( PopulateList() );
 		title.text = "Open a map file";
+	}
+	
+	override function ExitPage () {
+		ClearList ();
 	}
 	
 	

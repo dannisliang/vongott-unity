@@ -104,6 +104,19 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		o.AddField ( "ImportedMesh", imh );
 		
 		return o;
+		
+	// check if nav mesh
+	} else if ( obj.GetComponent(AStarNavMesh) ) {
+		var nvm : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		
+		nvm.AddField ( "mesh", SerializeMesh ( obj.GetComponent(MeshFilter).sharedMesh ) );
+		nvm.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
+		nvm.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
+		nvm.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
+		
+		o.AddField ( "NavMesh", nvm );
+		
+		return o;
 	
 	// check if lightsource
 	} else if ( obj.GetComponent(LightSource) ) {

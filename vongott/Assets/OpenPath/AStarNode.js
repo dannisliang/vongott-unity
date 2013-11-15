@@ -9,7 +9,7 @@ class AStarNode implements IComparable {
 	var size : int;	
 	var parent : AStarNode;
 	var active : boolean = false;
-	var neighbors : AStarNode[];
+	var neighbors : List.<AStarNode> = new List.<AStarNode>();
 	var index : Vector3;
 	
 	function AStarNode () {

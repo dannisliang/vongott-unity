@@ -99,6 +99,11 @@ class EditorMenuBase extends OGPage {
 		EditorCore.ToggleGizmos ();
 	}
 	
+	// Toggle navigation
+	function ToggleNavigation () {
+		EditorCore.ToggleNavigation ();
+	}
+	
 	
 	////////////////////
 	// Add menu
@@ -143,6 +148,10 @@ class EditorMenuBase extends OGPage {
 	
 	function AddNavNode () {
 		EditorCore.AddNavNode ();
+	}
+	
+	function AddNavMesh () {
+		EditorCore.AddNavMesh ();
 	}
 	
 	

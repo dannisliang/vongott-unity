@@ -27,9 +27,9 @@ class AStar {
 			}
 			
 			// Examine each node adjacent to the current node
-			var neighbors : AStarNode[] = map.GetNeighbors ( currentNode );
+			var neighbors : List.<AStarNode> = map.GetNeighbors ( currentNode );
 						
-			for ( var nIndex = 0; nIndex != neighbors.Length; nIndex++ ) {		
+			for ( var nIndex = 0; nIndex != neighbors.Count; nIndex++ ) {		
 				// Get the cost estimate for the end node
 				var endNode : AStarNode = neighbors[nIndex] as AStarNode;
 				var incrementalCost : float = GetCost ( currentNode, endNode );

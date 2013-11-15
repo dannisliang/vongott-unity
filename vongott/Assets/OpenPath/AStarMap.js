@@ -50,7 +50,7 @@ class AStarMap {
 		return node.index;
 	}
 	
-	function GetNeighbors ( node : AStarNode ) : AStarNode[] {
+	function GetNeighbors ( node : AStarNode ) : List.<AStarNode> {
 		return;
 	}
 	
@@ -90,9 +90,11 @@ public class AStarNavMeshMap extends AStarMap {
 		mapType = AStarMapType.NavMesh;
 		
 		nodes = ListToGrid ( navMesh.GetNodes () );
+	
+		MonoBehaviour.Destroy ( navMesh.gameObject );
 	}
 	
-	override function GetNeighbors ( node : AStarNode ) : AStarNode [] {
+	override function GetNeighbors ( node : AStarNode ) : List.<AStarNode> {
 		return node.neighbors;
 	}
 }
@@ -112,7 +114,7 @@ public class AStarWaypointMap extends AStarMap {
 		nodes = ListToGrid ( tempList );
 	}
 	
-	override function GetNeighbors ( node : AStarNode ) : AStarNode [] {
+	override function GetNeighbors ( node : AStarNode ) : List.<AStarNode> {
 		return node.neighbors;
 	}
 }
@@ -194,10 +196,10 @@ public class AStarGridMap extends AStarMap {
 			}
 		}
 		
-		node.neighbors = tempList.ToArray();
+		node.neighbors = tempList;
 	}
 	
-	override function GetNeighbors ( node : AStarNode ) : AStarNode[] {
+	override function GetNeighbors ( node : AStarNode ) : List.<AStarNode> {
 		if ( node.neighbors == null ) {
 			FindNeighbors ( node );
 		}

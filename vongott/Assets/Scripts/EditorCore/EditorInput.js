@@ -146,7 +146,7 @@ function Update () {
 				y = 0;
 				z = 0;
 			}
-			
+						
 			var o : GameObject = EditorCore.selectedObject;
 			
 			var rotate : Vector3 = new Vector3 (
@@ -179,7 +179,7 @@ function Update () {
 			}		
 			
 			if ( EditorCore.rotateMode ) {
-				o.transform.localEulerAngles = rotate;
+				o.transform.localRotation = Quaternion.Euler ( rotate );
 				EditorCore.gizmo.transform.localEulerAngles = Vector3.zero;
 				EditorCore.FitSelectionBox ();
 	

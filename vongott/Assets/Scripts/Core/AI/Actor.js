@@ -58,6 +58,7 @@ class Actor extends InteractiveObject {
 	var conversationTree : String;																																							
 	
 	var target : Transform;
+	var goal : Vector3;
 
 	var speed : float = 0.0;
 	var aiming : boolean = false;
@@ -126,7 +127,7 @@ class Actor extends InteractiveObject {
 		}
 	}
 	
-	// Set mood
+	// Set path type
 	public function SetPathType ( str : String ) {
 		if ( str == "patrolling" || str == "Patrolling" ) {
 			pathType = ePathType.Patrolling;
@@ -302,8 +303,13 @@ class Actor extends InteractiveObject {
 	////////////////////
 	// Path finding
 	////////////////////
+	function InSight ( v : Vector3 ) : boolean {
+		return !Physics.Linecast ( head.position, v + new Vector3 ( 0, 0.5, 0 ), vision.layerMask );
+	}
+	
 	function FindPath ( v : Vector3 ) {
-		pathFinder.SetGoal ( v );
+		goal = v;
+		pathFinder.SetGoal ( goal );
 	}
 		
 	function ClearPath () {
@@ -360,6 +366,18 @@ class Actor extends InteractiveObject {
 		// Waiting
 		} else if ( waiting ) {
 			speed = 0;
+		
+		// Direct target
+		} else if ( InSight ( goal ) ) {
+			if ( Vector3.Distance ( transform.position, goal ) < 1.0 ) {
+				waiting = true;
+				ClearPath();
+			
+			} else {
+				TurnTowards ( goal );
+				WalkForward ();
+			
+			}
 		
 		// Patrolling
 		} else if ( pathType == ePathType.Patrolling && path.Count > 0 ) {

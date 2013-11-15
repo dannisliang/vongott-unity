@@ -29,7 +29,7 @@ class AStarWayPoint extends MonoBehaviour {
 			}
 		}
 		
-		node.neighbors = tempList.ToArray();
+		node.neighbors = tempList;
 	}
 	
 	function Update () {

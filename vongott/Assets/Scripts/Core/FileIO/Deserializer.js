@@ -102,7 +102,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		
 		return newCbm;
 		
-	// check if combined mesh
+	// check if imported mesh
 	} else if ( obj.HasField("ImportedMesh") ) {
 		var imp : JSONObject = obj.GetField("ImportedMesh");
 		var newImp : GameObject = new GameObject ( obj.GetField("name").str, ImportedMesh, MeshFilter, MeshCollider, MeshRenderer );
@@ -116,6 +116,21 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newImp.transform.localEulerAngles = DeserializeVector3 ( imp.GetField("localEulerAngles") );
 				
 		return newImp;
+		
+	// check if nav mesh
+	} else if ( obj.HasField("NavMesh") ) {
+		var nvm : JSONObject = obj.GetField("NavMesh");
+		var newNvm : GameObject = new GameObject ( obj.GetField("name").str, AStarNavMesh, MeshFilter, MeshCollider, MeshRenderer );
+		
+		newNvm.GetComponent(MeshFilter).sharedMesh = DeserializeMesh ( nvm.GetField("mesh") );
+		newNvm.GetComponent(MeshCollider).sharedMesh = newNvm.GetComponent(MeshFilter).sharedMesh;
+		newNvm.GetComponent(MeshRenderer).sharedMaterial = Resources.Load ( "Materials/Editor/editor_navmesh" ) as Material;
+		
+		newNvm.transform.localScale = DeserializeVector3 ( nvm.GetField("localScale") );
+		newNvm.transform.localPosition = DeserializeVector3 ( nvm.GetField("localPosition") );
+		newNvm.transform.localEulerAngles = DeserializeVector3 ( nvm.GetField("localEulerAngles") );
+				
+		return newNvm;
 
 	// check if lightsource
 	} else if ( obj.HasField("LightSource") ) {
@@ -787,7 +802,7 @@ static function DeserializeConversationNode ( n : JSONObject ) : ConversationNod
 			
 		case "Exchange":
 			node.credits = n.GetField("credits").n;
-			node.item = n.GetField("credits").str;
+			node.item = n.GetField("item").str;
 			break;
 	}
 

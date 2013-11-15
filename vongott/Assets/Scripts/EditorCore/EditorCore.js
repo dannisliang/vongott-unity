@@ -11,6 +11,7 @@ public var _selectBox : Transform;
 public var _selectBoxDefaultMesh : Mesh;
 public var _undoContainer : Transform;
 public var _defaultMaterial : Material;
+public var _navMeshMaterial : Material;
 
 // Static vars
 static var menusActive : boolean = false;
@@ -62,6 +63,7 @@ static var grabOrigPoint : Vector3;
 static var running : boolean = false;
 static var stringClipboard : String = "";
 static var defaultMaterial : Material;
+static var navMeshMaterial : Material;
 
 // undo
 static var actions : List.< Action > = new List.< Action >();
@@ -160,6 +162,14 @@ static function AddNavNode () {
 	newNode.name = newNode.name.Replace("(Clone)","");
 	
 	SelectObject ( newNode );
+}
+
+// Add nav mesh
+static function AddNavMesh () {
+	EditorOpenFile.baseDir = "ImportOBJ";
+	EditorOpenFile.fileType = "obj";
+	EditorOpenFile.asNavMesh = true;
+	OGRoot.GoToPage ( "OpenFile" );
 }
 
 // Add light
@@ -492,6 +502,14 @@ static function ToggleTextured () {
 // Toggle gizmos
 static function ToggleGizmos () {
 	noGizmos = !noGizmos;
+}
+
+// Toggle navigation
+static function ToggleNavigation () {
+	var navMesh : AStarNavMesh = GameObject.FindObjectOfType ( AStarNavMesh );
+	if ( navMesh != null ) {
+		navMesh.GetComponent ( MeshRenderer ).enabled = !navMesh.GetComponent ( MeshRenderer ).enabled;
+	}
 }
 
 
@@ -1000,8 +1018,8 @@ static function LoadFile ( path : String ) {
 }
 
 // Load OBJ
-static function LoadOBJ ( objName : String ) {
-	var go : GameObject = new GameObject ( objName, MeshFilter, MeshRenderer, MeshCollider, ImportedMesh );
+static function LoadOBJ ( objName : String, asNavMesh : boolean ) {
+	var go : GameObject = new GameObject ( objName, MeshFilter, MeshRenderer, MeshCollider );
 	var mi : OBJImporter = new OBJImporter();
 		
 	go.transform.parent = currentLevel.transform;
@@ -1011,7 +1029,17 @@ static function LoadOBJ ( objName : String ) {
 	
 	go.GetComponent(MeshFilter).mesh = mesh;
 	go.GetComponent(MeshCollider).sharedMesh = mesh;
-	//go.GetComponent(MeshRenderer).material = defaultMaterial;
+	
+	if ( asNavMesh ) {
+		go.AddComponent(AStarNavMesh);
+		go.GetComponent(MeshRenderer).material = navMeshMaterial;
+	
+	} else {
+		go.GetComponent(MeshRenderer).material = defaultMaterial;
+
+	}
+			
+	SelectObject ( go );
 }
 
 // Load conversations from library
@@ -1076,6 +1104,7 @@ function Start () {
 	selectBoxDefaultMesh = _selectBoxDefaultMesh;
 	undoContainer = _undoContainer;
 	defaultMaterial = _defaultMaterial;
+	navMeshMaterial = _navMeshMaterial;
 
 	currentLevel = workspace.transform.GetChild(0).gameObject;
 	

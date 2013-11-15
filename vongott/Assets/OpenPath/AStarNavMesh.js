@@ -4,22 +4,22 @@ import System.Collections.Generic;
 
 class AStarNavMesh extends MonoBehaviour {	
 	private class Triangle {
-		var vertices : Vector3[];
-		var node : AStarNode;
+		var mesh : Mesh;
+		var indices : int[];
 		
-		function Triangle ( v0 : Vector3, v1 : Vector3, v2 : Vector3 ) {
-			vertices = new Vector3[3];
-			vertices[0] = v0;
-			vertices[1] = v1;
-			vertices[2] = v2;
+		function Triangle ( v0 : int, v1 : int, v2 : int ) {
+			indices = new int[3];
+			indices[0] = v0;
+			indices[1] = v1;
+			indices[2] = v2;
 		}
 		
 		private function IsNeighborTo ( t : Triangle ) : boolean {
 			var similarVertices : int = 0;
 			
-			for ( var thisVertex : Vector3 in vertices ) {
-				for ( var thatVertex : Vector3 in t.vertices ) {
-					if ( thisVertex == thatVertex ) {
+			for ( var thisVertex : int in indices ) {
+				for ( var thatVertex : int in t.indices ) {
+					if ( mesh.vertices [ thisVertex ] == mesh.vertices [ thatVertex ] ) {
 						similarVertices++;
 					}
 				}
@@ -28,60 +28,77 @@ class AStarNavMesh extends MonoBehaviour {
 			return similarVertices > 1;
 		}
 		
-		public function FindNeighbors ( triangles : Triangle[] ) {
-			var tempList : List.< AStarNode > = new List.< AStarNode > ();
+		public function GetNeighbors ( triangles : Triangle[] ) : int[] {
+			var tempList : List.< int > = new List.< int > ();
 			
-			for ( var t : Triangle in triangles ) {
-				if ( IsNeighborTo ( t ) ) {
-					tempList.Add ( t.node );
+			for ( var i : int = 0; i < triangles.Length; i++ ) {
+				if ( IsNeighborTo ( triangles[i] ) ) {
+					tempList.Add ( i );
 				}
 			}
 			
-			node.neighbors = tempList.ToArray();
+			return tempList.ToArray();
 		}
 		
-		public function GetMedianPoint () : Vector3 {
+		public function GetMedianPoint ( mesh : Mesh ) : Vector3 {
 			var result : Vector3;
 			
-			for ( var i : int = 0; i < vertices.Length; i++ ) {
-				result += vertices[i];
+			for ( var i : int = 0; i < indices.Length; i++ ) {
+				result += mesh.vertices[indices[i]];
 			}
 			
-			result /= vertices.Length;
+			result /= indices.Length;
 		
 			return result;
 		}
 	}
 	
+	private function MakeNeighbors ( a : AStarNode, b : AStarNode ) {
+		if ( !a.neighbors.Contains ( b ) ) {
+			a.neighbors.Add ( b );
+		}
+		
+		if ( !b.neighbors.Contains ( a ) ) {
+			b.neighbors.Add ( a );
+		}
+	}
+	
 	public function GetNodes () : List.< AStarNode > {
 		var mesh : Mesh = this.GetComponent(MeshFilter).mesh;
-		var triangleList : List.< Triangle > = new List.< Triangle > ();
-		var triangleArray : Triangle[];
-		var newNodes : List.< AStarNode > = new List.< AStarNode > ();
+		var triangles : List.< Triangle > = new List.< Triangle > ();
+		var allNodes : List.< AStarNode > = new List.< AStarNode > ();
+		
+		var i : int = 0;
+		var nb : int = 0;
 		
 		// Create triangles
-		for ( var i : int = 0; i < mesh.triangles.Length; i += 3 ) {
+		for ( i = 0; i < mesh.triangles.Length; i += 3 ) {
 			var triangle : Triangle = new Triangle (
-				this.transform.TransformPoint ( mesh.vertices [ mesh.triangles [ i ] ] ),
-				this.transform.TransformPoint ( mesh.vertices [ mesh.triangles [ i + 1 ] ] ),
-				this.transform.TransformPoint ( mesh.vertices [ mesh.triangles [ i + 2 ] ] )
+				mesh.triangles [ i ],
+				mesh.triangles [ i + 1 ],
+				mesh.triangles [ i + 2 ]
 			);
 			
-			var node : AStarNode = new AStarNode ();
-			node.position = triangle.GetMedianPoint ();
-		
-			triangle.node = node;
+			triangle.mesh = mesh;
 			
-			triangleList.Add ( triangle );
+			triangles.Add ( triangle );
+			
+			// Create median node
+			var mn : AStarNode = new AStarNode ();
+			mn.position = this.transform.TransformPoint ( triangle.GetMedianPoint ( mesh ) );
+			
+			// Add median node to list
+			allNodes.Add ( mn );
 		}
 		
-		triangleArray = triangleList.ToArray();
-				
-		for ( var t : Triangle in triangleArray ) {
-			t.FindNeighbors ( triangleArray );
-			newNodes.Add ( t.node );
+		// Connect median nodes
+		for ( i = 0; i < allNodes.Count; i++ ) {			
+			for ( nb in triangles[i].GetNeighbors ( triangles.ToArray() ) ) {
+				MakeNeighbors ( allNodes [ i ], allNodes [ nb ] );
+			}
 		}
 		
-		return newNodes;
+		// Return
+		return allNodes;
 	}
 }

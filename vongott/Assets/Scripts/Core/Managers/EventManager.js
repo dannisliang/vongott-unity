@@ -58,9 +58,10 @@ class EventManager extends MonoBehaviour {
 		if ( InventoryManager.credits + credits >= 0 ) {
 			var obj : GameObject = Resources.Load ( "Items/" + path ) as GameObject;
 			
+			GameCore.Print ( "EventManager | Got " + path );
+			
 			InventoryManager.AddItem ( obj.GetComponent ( Item ) );
 			InventoryManager.ChangeCredits ( credits );		
-			GameCore.Print ( "EventManager | Got " + path );
 			
 			if ( credits < 0 ) {
 				GameCore.Print ( "EventManager | " + credits + " credits deducted" );

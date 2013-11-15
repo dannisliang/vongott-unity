@@ -57,8 +57,8 @@ class AStarScanner extends MonoBehaviour {
 	function Update () {
 		if ( map != null && map.nodes != null ) {
 			for ( var n : AStarNode in map.nodes ) {
-				for ( var a : AStarNode in n.neighbors ) {
-					Debug.DrawLine ( n.position, a.position );
+				for ( var nb : AStarNode in n.neighbors ) {
+					Debug.DrawLine ( n.position, (n.position + nb.position) / 2 );
 				}
 			}
 		}
@@ -90,6 +90,7 @@ class AStarScanner extends MonoBehaviour {
 			Gizmos.color = new Color ( 1, 1, 1, 0.5 );
 			if ( n.parent ) { Gizmos.color = Color.red; }
 			if ( n.active ) { Gizmos.color = Color.green; }
+			if ( n.neighbors.Count < 1 ) { Gizmos.color = Color.red; }
 
 			Gizmos.DrawCube ( n.position, new Vector3 ( 0.1, 0.1, 0.1 ) );
 			
@@ -106,7 +107,7 @@ class AStarScanner extends MonoBehaviour {
 			
 			var currentDistance : float = ( pos - (n as AStarNode).position ).magnitude;
 			
-			if ( currentDistance < shortestDistance ) {
+			if ( currentDistance < shortestDistance && ( n as AStarNode ).neighbors.Count > 0 ) {
 				shortestDistance = currentDistance;
 				node = n as AStarNode;
 				
