@@ -26,8 +26,13 @@ class AStarScanner extends MonoBehaviour {
 		if ( mapType == AStarMap.AStarMapType.Grid ) {
 			map = new AStarGridMap ( transform.position, gridSize, spacing );
 		
+		} else if ( mapType == AStarMap.AStarMapType.NavMesh ) {
+			var navMesh : AStarNavMesh = GameObject.FindObjectOfType ( AStarNavMesh );
+			
+			map = new AStarNavMeshMap ( navMesh );
+		
 		} else {
-			map = new AStarWaypointMap ( GameObject.FindObjectsOfType(EditorNavNodeContainer) );
+			map = new AStarWaypointMap ( GameObject.FindObjectsOfType(AStarWayPoint) );
 		
 		}
 	}
@@ -40,7 +45,7 @@ class AStarScanner extends MonoBehaviour {
 		
 		yield WaitForEndOfFrame ();
 		
-		for ( var n : EditorNavNodeContainer in GameObject.FindObjectsOfType(EditorNavNodeContainer) ) {
+		for ( var n : AStarWayPoint in GameObject.FindObjectsOfType(AStarWayPoint) ) {
 			Destroy ( n.gameObject ); 
 		}
 	}
@@ -50,11 +55,11 @@ class AStarScanner extends MonoBehaviour {
 	}
 	
 	function Update () {
-		if ( map == null || map.nodes == null ) { return; }
-		
-		for ( var node : AStarNode in map.nodes ) {
-			for ( var n : AStarNode in node.neighbors ) {
-				Debug.DrawLine ( node.position, n.position, Color.white );
+		if ( map != null && map.nodes != null ) {
+			for ( var n : AStarNode in map.nodes ) {
+				for ( var a : AStarNode in n.neighbors ) {
+					Debug.DrawLine ( n.position, a.position );
+				}
 			}
 		}
 	}

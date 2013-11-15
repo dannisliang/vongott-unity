@@ -225,7 +225,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		return o;
 	
 	// check navnode
-	} else if ( obj.GetComponent(EditorNavNodeContainer) ) {		
+	} else if ( obj.GetComponent(AStarWayPoint) ) {		
 		var nav : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	
 		nav.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );

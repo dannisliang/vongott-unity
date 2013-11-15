@@ -1,15 +1,15 @@
 ﻿#pragma strict
 
-class EditorNavNodeContainer extends MonoBehaviour {
+class AStarWayPoint extends MonoBehaviour {
 	public var layerMask : LayerMask;
 	public var node : AStarNode = new AStarNode();
 	
-	public function FindNeighbors ( allNodes : EditorNavNodeContainer [] ) {
+	public function FindNeighbors ( allNodes : AStarWayPoint [] ) {
 		var tempList : List.< AStarNode > = new List.< AStarNode > ();
 		
 		node.position = this.transform.position;
 		
-		for ( var nodeContainer : EditorNavNodeContainer in allNodes ) {
+		for ( var nodeContainer : AStarWayPoint in allNodes ) {
 			if ( nodeContainer != this ) {
 				var hit : RaycastHit;
 				var here : Vector3 = this.transform.position + new Vector3 ( 0, 0.5, 0 );

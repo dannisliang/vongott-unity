@@ -86,16 +86,24 @@ class AStarMap {
 }
 
 public class AStarNavMeshMap extends AStarMap {
+	function AStarNavMeshMap ( navMesh : AStarNavMesh ) {
+		mapType = AStarMapType.NavMesh;
+		
+		nodes = ListToGrid ( navMesh.GetNodes () );
+	}
 	
+	override function GetNeighbors ( node : AStarNode ) : AStarNode [] {
+		return node.neighbors;
+	}
 }
 
 public class AStarWaypointMap extends AStarMap {
-	function AStarWaypointMap ( nodeContainers : EditorNavNodeContainer[] ) {
+	function AStarWaypointMap ( nodeContainers : AStarWayPoint[] ) {
 		mapType = AStarMapType.Waypoint;
 		
 		var tempList : List.<AStarNode> = new List.<AStarNode>();
 		
-		for ( var n : EditorNavNodeContainer in nodeContainers ) {
+		for ( var n : AStarWayPoint in nodeContainers ) {
 			n.FindNeighbors ( nodeContainers );
 			
 			tempList.Add ( n.node );

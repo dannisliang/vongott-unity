@@ -6,10 +6,23 @@ class AStarPathFinder extends MonoBehaviour {
 	var speed : float = 4.0;
 	var stoppingDistance : float = 0.1;
 	var nodeDistance : float = 1.0;
+	var target : Transform;
 	var autoChase : boolean = false;
 	
 	@HideInInspector var nodes : List.<AStarNode> = new List.<AStarNode>();
 	@HideInInspector var goal : Vector3;
+	
+	function SetGoalAfterSeconds ( s : float ) : IEnumerator {
+		yield WaitForSeconds ( s );
+				
+		SetGoal ( target );
+	}
+	
+	function Start () {
+		if ( target != null ) {
+			StartCoroutine ( SetGoalAfterSeconds ( 2 ) );
+		}
+	}
 	
 	function ClearNodes () {
 		for ( var node : AStarNode in nodes ) {
@@ -23,11 +36,7 @@ class AStarPathFinder extends MonoBehaviour {
 	function SetGoal ( t : Transform ) {
 		// If there is a goal, create the nodes
 		if ( t ) {
-			if ( goal == t.position ) { return; }
-		
-			ClearNodes ();
-			goal = t.position;
-			UpdatePosition ();
+			SetGoal ( t.position );
 		
 		} else {
 			ClearNodes ();
@@ -76,7 +85,7 @@ class AStarPathFinder extends MonoBehaviour {
 			}
 		}
 			
-		// If there are nodes to follow
+		// If there are nodes to follow		
 		if ( nodes && nodes.Count > 0 ) {
 			if ( ( transform.position - ( nodes[currentNode] as AStarNode ).position ).magnitude < nodeDistance && currentNode < nodes.Count - 1 ) {
 				currentNode++;

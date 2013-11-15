@@ -18,6 +18,10 @@ class AStarNode implements IComparable {
 		parent = null;
 	}
 	
+	function AStarNode ( v : Vector3 ) {
+		AStarNode ( v.x, v.y, v.z );
+	}
+	
 	function AStarNode ( x : float, y : float, z : float ) {
 		position.x = x;
 		position.y = y;

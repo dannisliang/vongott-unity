@@ -411,15 +411,15 @@ public function AddShape ( shape : Shape, method : BooleanRTLib.BooleanType ) {
 // Nav nodes
 ////////////////////
 // Get all
-public static function GetNavNodes () : EditorNavNodeContainer[] {
-	return GameObject.FindObjectsOfType(EditorNavNodeContainer);
+public static function GetNavNodes () : AStarWayPoint[] {
+	return GameObject.FindObjectsOfType(AStarWayPoint);
 }
 
 // Update all
 public static function UpdateNavNodes () {
-	var allNodes : EditorNavNodeContainer[] = GetNavNodes ();
+	var allNodes : AStarWayPoint[] = GetNavNodes ();
 
-	for ( var nnc : EditorNavNodeContainer in allNodes ) {
+	for ( var nnc : AStarWayPoint in allNodes ) {
 		nnc.FindNeighbors ( allNodes );
 	}
 }
