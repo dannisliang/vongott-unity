@@ -341,6 +341,28 @@ static function SerializeMultiLineString ( str : String ) : JSONObject {
 	return lines;
 }
 
+// nav mesh
+static function SerializeNavMesh ( nodes : AStarNode[] ) : JSONObject {
+	var sNodes : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+	
+	for ( var node : AStarNode in nodes ) {
+		var sNode : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+		var sNeighbors : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+		
+		for ( var n : AStarNode in node.neighbors ) {
+			sNeighbors.Add ( System.Array.IndexOf ( nodes, n ) );
+		}
+		
+		sNode.AddField ( "position", SerializeVector3 ( node.position ) );
+		sNode.AddField ( "neighbors", sNeighbors );
+	
+		sNodes.Add ( sNode );
+	}
+	
+	return sNodes;
+}
+
+
 ////////////////////
 // Serialize components individually
 ////////////////////

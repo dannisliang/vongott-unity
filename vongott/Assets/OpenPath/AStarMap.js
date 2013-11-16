@@ -1,13 +1,12 @@
 #pragma strict
 
+public enum AStarMapType {
+	Grid,
+	Waypoint,
+	NavMesh
+}
+
 class AStarMap {
-	enum AStarMapType {
-		Grid,
-		Waypoint,
-		NavMesh
-	}
-	
-	var mapType : AStarMapType = AStarMapType.Grid;
 	var nodes : AStarNode[,,] = null;
 
 	function GetNode ( x : int, y : int, z : int ) : AStarNode {
@@ -87,8 +86,6 @@ class AStarMap {
 
 public class AStarNavMeshMap extends AStarMap {
 	function AStarNavMeshMap ( navMesh : AStarNavMesh ) {
-		mapType = AStarMapType.NavMesh;
-		
 		nodes = ListToGrid ( navMesh.GetNodes () );
 	
 		MonoBehaviour.Destroy ( navMesh.gameObject );
@@ -101,8 +98,6 @@ public class AStarNavMeshMap extends AStarMap {
 
 public class AStarWaypointMap extends AStarMap {
 	function AStarWaypointMap ( nodeContainers : AStarWayPoint[] ) {
-		mapType = AStarMapType.Waypoint;
-		
 		var tempList : List.<AStarNode> = new List.<AStarNode>();
 		
 		for ( var n : AStarWayPoint in nodeContainers ) {
@@ -120,9 +115,7 @@ public class AStarWaypointMap extends AStarMap {
 }
 
 public class AStarGridMap extends AStarMap {	
-	function AStarGridMap ( start : Vector3, size : Vector3, spacing : float ) {
-		mapType = AStarMapType.Grid;
-		
+	function AStarGridMap ( start : Vector3, size : Vector3, spacing : float, layerMask : LayerMask ) {
 		nodes = new AStarNode [ size.x, size.y, size.z ];
 		
 		var x : int;
@@ -132,16 +125,22 @@ public class AStarGridMap extends AStarMap {
 		for ( x = 0; x < size.x; x++ ) {
 			for ( z = 0; z < size.z; z++ ) {
 				var from : Vector3 = new Vector3 ( start.x + (x*spacing), start.y + (size.y*spacing), start.z + (z*spacing) );
-				var hits : RaycastHit[] = Physics.RaycastAll ( from, Vector3.down, Mathf.Infinity );
+				var hits : RaycastHit[] = Physics.RaycastAll ( from, Vector3.down, Mathf.Infinity, layerMask );
 				
 				for ( var h : RaycastHit in hits ) {										
 					var p : Vector3 = h.point; 
-					if ( CheckWalkable ( p, spacing ) && h.collider.gameObject.tag != "dynamic" ) {
+					//if ( CheckWalkable ( p, spacing ) ) {
 						var m : AStarNode = new AStarNode ( p.x, p.y, p.z );
 						m.index = Round ( start, p, spacing );
 						nodes [ m.index.x, m.index.y, m.index.z ] = m;
-					}
+					//}
 				}
+			}
+		}
+		
+		for ( var a : AStarNode in nodes ) {
+			if ( a != null ) {
+				FindNeighbors ( a );
 			}
 		}		
 	}
@@ -200,10 +199,6 @@ public class AStarGridMap extends AStarMap {
 	}
 	
 	override function GetNeighbors ( node : AStarNode ) : List.<AStarNode> {
-		if ( node.neighbors == null ) {
-			FindNeighbors ( node );
-		}
-		
 		return node.neighbors;		
 	}
 }

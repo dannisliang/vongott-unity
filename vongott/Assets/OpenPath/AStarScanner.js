@@ -1,8 +1,9 @@
 #pragma strict
 
 class AStarScanner extends MonoBehaviour {
+	var layerMask : LayerMask;
 	var gridSize : Vector3;
-	var mapType : AStarMap.AStarMapType;
+	var mapType : AStarMapType;
 	var map : AStarMap = null;
 	var heuristic : float = 10.0;
 	var spacing : float = 1.0;
@@ -23,10 +24,10 @@ class AStarScanner extends MonoBehaviour {
 	}
 	
 	function SetMap () {
-		if ( mapType == AStarMap.AStarMapType.Grid ) {
-			map = new AStarGridMap ( transform.position, gridSize, spacing );
+		if ( mapType == AStarMapType.Grid ) {
+			map = new AStarGridMap ( transform.position, gridSize, spacing, layerMask );
 		
-		} else if ( mapType == AStarMap.AStarMapType.NavMesh ) {
+		} else if ( mapType == AStarMapType.NavMesh ) {
 			var navMesh : AStarNavMesh = GameObject.FindObjectOfType ( AStarNavMesh );
 			
 			map = new AStarNavMeshMap ( navMesh );
@@ -57,8 +58,10 @@ class AStarScanner extends MonoBehaviour {
 	function Update () {
 		if ( map != null && map.nodes != null ) {
 			for ( var n : AStarNode in map.nodes ) {
-				for ( var nb : AStarNode in n.neighbors ) {
-					Debug.DrawLine ( n.position, (n.position + nb.position) / 2 );
+				if ( n != null ) {
+					for ( var nb : AStarNode in n.neighbors ) {
+						Debug.DrawLine ( n.position, (n.position + nb.position) / 2 );
+					}
 				}
 			}
 		}

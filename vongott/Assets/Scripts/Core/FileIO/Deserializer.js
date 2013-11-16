@@ -510,6 +510,28 @@ static function DeserializeOBJ ( lines : String[] ) : Mesh {
 	return mesh;
 }
 
+// nav mesh
+static function DeserializeNavMesh ( sNodes : JSONObject ) : AStarNode[] {
+	var nodes : AStarNode[] = new AStarNode[sNodes.list.Count];
+	
+	// Init nodes
+	for ( var i : int = 0; i < nodes.Length; i++ ) {
+		var sNode : JSONObject = sNodes.list[i] as JSONObject;
+		
+		nodes[i] = new AStarNode ();
+		nodes[i].position = DeserializeVector3 ( sNode.GetField ( "position" ) );
+	}
+	
+	// Get neighbours
+	for ( i = 0; i < nodes.Length; i++ ) {
+		for ( var n : Object in (sNodes.list[i] as JSONObject).GetField ( "neighbors" ).list ) {
+			nodes[i].neighbors.Add ( nodes [ (n as JSONObject).n ] );
+		}
+	}
+	
+	return nodes;
+}
+
 ////////////////////
 // Deserialize components individually
 ////////////////////
