@@ -59,7 +59,10 @@ class OPScanner extends MonoBehaviour {
 	
 	function Start () {
 		if ( scanOnEnable ) {
-			Scan ();
+			//Scan ();
+		
+			GetBounds ();
+		SetMap ();
 		}
 	}
 	

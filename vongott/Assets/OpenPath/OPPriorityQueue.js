@@ -48,8 +48,8 @@ class OPPriorityQueue implements IComparer {
 		return mn;
 	}
 	
-	function Contains ( node : System.Object ) : boolean {
-		return nodes.Contains ( node as OPNode );
+	function Contains ( node : OPNode ) : boolean {
+		return nodes.Contains ( node );
 	}
 	
 	function Remove ( node : OPNode ) {
