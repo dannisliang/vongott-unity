@@ -2,7 +2,7 @@
 
 import System.Collections.Generic;
 
-class AStarNavMesh extends MonoBehaviour {	
+class OPNavMesh extends MonoBehaviour {	
 	private class Triangle {
 		var mesh : Mesh;
 		var indices : int[];
@@ -53,7 +53,7 @@ class AStarNavMesh extends MonoBehaviour {
 		}
 	}
 	
-	private function MakeNeighbors ( a : AStarNode, b : AStarNode ) {
+	private function MakeNeighbors ( a : OPNode, b : OPNode ) {
 		if ( !a.neighbors.Contains ( b ) ) {
 			a.neighbors.Add ( b );
 		}
@@ -63,16 +63,16 @@ class AStarNavMesh extends MonoBehaviour {
 		}
 	}
 	
-	public function GetNodes () : List.< AStarNode > {
+	public function GetNodes () : OPNode[] {
 		var mesh : Mesh = this.GetComponent(MeshFilter).mesh;
 		var triangles : List.< Triangle > = new List.< Triangle > ();
-		var allNodes : List.< AStarNode > = new List.< AStarNode > ();
+		var allNodes : List.< OPNode > = new List.< OPNode > ();
 		
 		var i : int = 0;
 		var nb : int = 0;
-		
+
 		// Create triangles
-		for ( i = 0; i < mesh.triangles.Length; i += 3 ) {
+		for ( i = 0; i < mesh.triangles.Length; i += 3 ) {			
 			var triangle : Triangle = new Triangle (
 				mesh.triangles [ i ],
 				mesh.triangles [ i + 1 ],
@@ -84,7 +84,7 @@ class AStarNavMesh extends MonoBehaviour {
 			triangles.Add ( triangle );
 			
 			// Create median node
-			var mn : AStarNode = new AStarNode ();
+			var mn : OPNode = new OPNode ();
 			mn.position = this.transform.TransformPoint ( triangle.GetMedianPoint ( mesh ) );
 			
 			// Add median node to list
@@ -99,6 +99,6 @@ class AStarNavMesh extends MonoBehaviour {
 		}
 		
 		// Return
-		return allNodes;
+		return allNodes.ToArray();
 	}
 }

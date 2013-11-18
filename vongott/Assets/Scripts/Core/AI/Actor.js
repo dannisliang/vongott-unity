@@ -75,7 +75,7 @@ class Actor extends InteractiveObject {
 	@HideInInspector var canShoot : boolean = false;
 	@HideInInspector var firstNodeTriggered : boolean = false;
 	
-	@HideInInspector var pathFinder : AStarPathFinder;
+	@HideInInspector var pathFinder : OPPathFinder;
 			
 
 	////////////////////
@@ -87,18 +87,18 @@ class Actor extends InteractiveObject {
 			DestroyImmediate ( this.GetComponent ( Animator ) );
 			DestroyImmediate ( this.GetComponent ( Rigidbody ) );
 			DestroyImmediate ( this.GetComponent ( BoxCollider ) );
-			DestroyImmediate ( this.GetComponent ( AStarPathFinder ) );			
+			DestroyImmediate ( this.GetComponent ( OPPathFinder ) );			
 		}
 	}
 	
 	// Start
 	function Start () {				
-		pathFinder = this.GetComponent ( AStarPathFinder );
+		pathFinder = this.GetComponent ( OPPathFinder );
 		
 		initPosition = this.transform.position;
 		
 		if ( !EditorCore.running ) {
-			this.GetComponent ( AStarPathFinder ).scanner = GameCore.scanner;
+			this.GetComponent ( OPPathFinder ).scanner = GameCore.scanner;
 			waiting = pathType == ePathType.NavPoint;
 			
 		}
@@ -313,8 +313,8 @@ class Actor extends InteractiveObject {
 	}
 		
 	function ClearPath () {
-		if ( this.GetComponent ( AStarPathFinder ).nodes.Count > 0 ) {
-			this.GetComponent ( AStarPathFinder ).ClearNodes ();
+		if ( this.GetComponent ( OPPathFinder ).nodes.Count > 0 ) {
+			this.GetComponent ( OPPathFinder ).ClearNodes ();
 		}
 	}	
 	
@@ -416,7 +416,7 @@ class Actor extends InteractiveObject {
 					TurnTo ( this.GetComponent(LocalAvoidance).targetDirection );
 				
 				} else {
-					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
+					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as OPNode ).position );
 				
 				}
 										
@@ -564,7 +564,7 @@ class Actor extends InteractiveObject {
 				
 				// Follow path
 				if ( pathFinder.nodes.Count > 0 ) {
-					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as AStarNode ).position );
+					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as OPNode ).position );
 					RunForward ();
 				}
 																

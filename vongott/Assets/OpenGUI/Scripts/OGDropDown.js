@@ -7,9 +7,12 @@ import System.Collections.Generic;
 
 class OGDropDown extends OGWidget {	
 	// Classes
-	private class DropDownItem {
+	public class DropDownItem {
 		var name : String;
 		var message : String;
+		var submenu : DropDownItem[];
+		var isDown : boolean = false;
+		var isChecked : boolean = false;
 	}
 	
 	// Vars
@@ -20,27 +23,92 @@ class OGDropDown extends OGWidget {
 	var target : GameObject;
 	var submenu : DropDownItem[];
 	
+	private var modifiedColliderRect : Rect = new Rect ( 0, 0, 1, 1 );
+	
 	// Draw
 	override function Draw ( x : float, y : float ) {	
 		if ( !guiStyle ) { guiStyle = GUI.skin.button; }
-		
-		// button
-		if ( GUI.Button ( Rect ( x + guiStyle.padding.left, y, ( title.Length * 8 ), transform.localScale.y ), title, GUI.skin.label ) ) {
-			isDown = !isDown;
-		}
 				
-		// submenu
+		// Submenu items
 		if ( isDown ) {
-			colliderRect = new Rect ( x - offset.x, y + offset.y, ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, ( submenu.Length * ( 12 + guiStyle.padding.top ) ) + ( guiStyle.padding.top + guiStyle.padding.bottom ) );
-			GUI.Box ( colliderRect, "", guiStyle );
+			var size : Vector2 = new Vector2 ( this.transform.localScale.x, offset.y );
+			GUI.Box ( modifiedColliderRect, "", guiStyle );
 			
-			for ( var i = 0; i < submenu.Length; i++ ) {			
-				if ( GUI.Button ( Rect ( x - offset.x + guiStyle.padding.left, y + offset.y + ( guiStyle.padding.top / 2 ) + ( ( 12 + guiStyle.padding.top ) * i ), ( guiStyle.padding.left + guiStyle.padding.right ) + transform.localScale.x, transform.localScale.y ), submenu[i].name, GUI.skin.label ) ) {
-					if ( target ) { target.SendMessage(submenu[i].message); }
-					isDown = false;
-				}
+			// Title button
+			if ( GUI.Button ( Rect ( x, y, ( title.Length * 8 ), transform.localScale.y ), title, GUI.skin.label ) ) {
+				isDown = false;
 			}
+			
+			for ( var i : int = 0; i < submenu.Length; i++ ) {
+				// This submenu
+				if ( GUI.Button ( Rect ( modifiedColliderRect.xMin + offset.x, modifiedColliderRect.yMin + size.y, this.transform.localScale.x, this.transform.localScale.y ), submenu[i].name, GUI.skin.label ) ) {
+					if ( target && !String.IsNullOrEmpty ( submenu[i].message ) ) { target.SendMessage(submenu[i].message, submenu[i] ); }
+				
+					if ( submenu[i].submenu.Length < 1 ) {
+						isDown = false;
+						submenu[i].isDown = false;
+					} else {
+						submenu[i].isDown = !submenu[i].isDown;
+					}
+				}
+				
+				// Extra symbol
+				var symbol : String = "";
+				
+				if ( submenu[i].submenu.Length > 0 ) {
+					if ( submenu[i].isDown ) {
+						symbol = ":";
+					
+					} else {
+						symbol = ">";
+					
+					}
+					
+				} else if ( submenu[i].isChecked ) {
+					symbol = "✓";
+				
+				}
+				
+				GUI.Label ( Rect ( modifiedColliderRect.xMin + offset.x/2 + this.transform.localScale.x, modifiedColliderRect.yMin + size.y, 20, 20 ), symbol, GUI.skin.label );
+				
+				// Sub-submenus
+				if ( submenu[i].isDown ) {
+					if ( submenu[i].submenu.Length > 0 ) {
+						size.x += transform.localScale.x;
+					}
+					
+					for ( var s : int = 0; s < submenu[i].submenu.Length; s++ ) {
+						if ( GUI.Button ( Rect ( modifiedColliderRect.center.x + offset.x, modifiedColliderRect.yMin + size.y + s * this.transform.localScale.y, this.transform.localScale.x, this.transform.localScale.y ), submenu[i].submenu[s].name, GUI.skin.label ) ) {
+							if ( target && !String.IsNullOrEmpty ( submenu[i].submenu[s].message ) ) { target.SendMessage(submenu[i].submenu[s].message, submenu[i].submenu[s]); }
+							
+							submenu[i].isDown = false;
+						}
+						
+						if ( submenu[i].submenu[s].isChecked ) {
+							GUI.Label ( Rect ( modifiedColliderRect.center.x - 10 + this.transform.localScale.x, modifiedColliderRect.yMin + size.y, 20, 20 ), "✓", GUI.skin.label );
+						
+						}
+					}
+				}
+				
+				size.y += transform.localScale.y + offset.y;
+			}
+			
+			modifiedColliderRect = new Rect ( x, y + this.transform.localScale.y + offset.y, size.x + offset.x * 2, size.y );
+			SetCollider ();
+		
+		} else {
+			// Title button
+			if ( GUI.Button ( Rect ( x, y, ( title.Length * 8 ), transform.localScale.y ), title, GUI.skin.label ) ) {
+				isDown = true;
+			}
+		
 		}
+	}
+	
+	// Collider
+	override function SetCollider () {
+		colliderRect = modifiedColliderRect;
 	}
 	
 	// Update

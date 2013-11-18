@@ -28,7 +28,7 @@ class GameCore extends MonoBehaviour {
 	
 	static var state : eGameState;
 	static var playerObject:GameObject;
-	static var scanner:AStarScanner;
+	static var scanner:OPScanner;
 	
 	static var running = false;
 	static var controlsActive = true;
@@ -262,7 +262,7 @@ class GameCore extends MonoBehaviour {
 		levelContainer = _levelContainer;
 		
 		// AStar scanner
-		scanner = this.GetComponent(AStarScanner);
+		scanner = this.GetComponent(OPScanner);
 			
 		// Load level
 		if ( nextLevel != "" ) {

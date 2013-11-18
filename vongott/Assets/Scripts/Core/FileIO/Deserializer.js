@@ -120,7 +120,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 	// check if nav mesh
 	} else if ( obj.HasField("NavMesh") ) {
 		var nvm : JSONObject = obj.GetField("NavMesh");
-		var newNvm : GameObject = new GameObject ( obj.GetField("name").str, AStarNavMesh, MeshFilter, MeshCollider, MeshRenderer );
+		var newNvm : GameObject = new GameObject ( obj.GetField("name").str, OPNavMesh, MeshFilter, MeshCollider, MeshRenderer );
 		
 		newNvm.GetComponent(MeshFilter).sharedMesh = DeserializeMesh ( nvm.GetField("mesh") );
 		newNvm.GetComponent(MeshCollider).sharedMesh = newNvm.GetComponent(MeshFilter).sharedMesh;
@@ -338,6 +338,15 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 		Camera.main.GetComponent(EditorCamera).RefreshFixPoint ( false );
 	}
 	
+	// nav nodes
+	if ( obj.HasField ( "NavNodes" ) ) {
+		if ( EditorCore.running ) {
+			EditorCore.navNodes = DeserializeNavNodes ( obj.GetField ( "NavNodes" ) );
+		} else {
+			GameCore.GetInstance().GetComponent(OPScanner).SetMap ( DeserializeNavNodes ( obj.GetField ( "NavNodes" ) ) );
+		}
+	}
+	
 	// skybox
 	if ( obj.HasField ( "Skybox" ) ) {
 		var parent : Transform = GameObject.FindWithTag("SkyboxCamera").transform.parent;
@@ -511,14 +520,14 @@ static function DeserializeOBJ ( lines : String[] ) : Mesh {
 }
 
 // nav mesh
-static function DeserializeNavMesh ( sNodes : JSONObject ) : AStarNode[] {
-	var nodes : AStarNode[] = new AStarNode[sNodes.list.Count];
+static function DeserializeNavNodes ( sNodes : JSONObject ) : OPNode[] {
+	var nodes : OPNode[] = new OPNode[sNodes.list.Count];
 	
 	// Init nodes
 	for ( var i : int = 0; i < nodes.Length; i++ ) {
 		var sNode : JSONObject = sNodes.list[i] as JSONObject;
 		
-		nodes[i] = new AStarNode ();
+		nodes[i] = new OPNode ();
 		nodes[i].position = DeserializeVector3 ( sNode.GetField ( "position" ) );
 	}
 	

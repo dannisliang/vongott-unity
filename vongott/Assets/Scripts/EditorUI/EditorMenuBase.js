@@ -146,14 +146,6 @@ class EditorMenuBase extends OGPage {
 		EditorCore.AddTrigger ();
 	}
 	
-	function AddNavNode () {
-		EditorCore.AddNavNode ();
-	}
-	
-	function AddNavMesh () {
-		EditorCore.AddNavMesh ();
-	}
-	
 	
 	////////////////////
 	// Edit menu
@@ -185,6 +177,44 @@ class EditorMenuBase extends OGPage {
 	// Flag editor
 	function FlagEditor () {
 		OGRoot.GoToPage ( "Flags" );
+	}
+	
+	
+	////////////////////
+	// Navigation
+	////////////////////
+	function AddNavGrid () {
+		EditorConfirmDialog.message = "This will delete all previous navigation data. Continue?";
+		EditorConfirmDialog.sender  = "MenuBase";
+		EditorConfirmDialog.yesAction = function () {
+		
+		};
+		
+		OGRoot.GoToPage ( "ConfirmDialog" );
+	}
+	
+	function AddNavNode () {	
+		EditorCore.AddNavNode ();
+	}
+	
+	function AddNavMesh () {
+		EditorConfirmDialog.message = "This will delete all previous navigation data. Continue?";
+		EditorConfirmDialog.sender  = "MenuBase";
+		EditorConfirmDialog.yesAction = function () {
+			EditorCore.AddNavMesh ();
+		};
+		
+		OGRoot.GoToPage ( "ConfirmDialog" );
+	}
+	
+	function BakeNodes () {
+		EditorConfirmDialog.message = "Generating the navigation nodes might take a minute. Continue?";
+		EditorConfirmDialog.sender  = "MenuBase";
+		EditorConfirmDialog.yesAction = function () {
+			EditorCore.GetInstance().BakeNavNodes ();
+		};
+		
+		OGRoot.GoToPage ( "ConfirmDialog" );
 	}
 	
 	

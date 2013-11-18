@@ -19,6 +19,7 @@ static var selectedObject : GameObject;
 static var selectedPlane : SurfacePlane;
 static var selectedVertex : int;
 static var currentLevel : GameObject;
+static var navNodes : OPNode[];
 
 // Load on init
 static var initMap : String;
@@ -152,24 +153,6 @@ static function UndoCurrentAction () {
 // Get spawn position
 static function GetSpawnPosition () : Vector3 {
 	return Camera.main.GetComponent ( EditorCamera ).cursor.position;
-}
-
-// Add nav node
-static function AddNavNode () {
-	var newNode : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/nav_node" ) as GameObject );
-	newNode.transform.parent = currentLevel.transform;
-	newNode.transform.position = GetSpawnPosition();
-	newNode.name = newNode.name.Replace("(Clone)","");
-	
-	SelectObject ( newNode );
-}
-
-// Add nav mesh
-static function AddNavMesh () {
-	EditorOpenFile.baseDir = "ImportOBJ";
-	EditorOpenFile.fileType = "obj";
-	EditorOpenFile.asNavMesh = true;
-	OGRoot.GoToPage ( "OpenFile" );
 }
 
 // Add light
@@ -418,20 +401,66 @@ public function AddShape ( shape : Shape, method : BooleanRTLib.BooleanType ) {
 
 
 ////////////////////
-// Nav nodes
+// Path finding
 ////////////////////
 // Get all
-public static function GetNavNodes () : AStarWayPoint[] {
-	return GameObject.FindObjectsOfType(AStarWayPoint);
+public static function GetNavNodes () : OPWayPoint[] {
+	return GameObject.FindObjectsOfType(OPWayPoint);
 }
 
 // Update all
 public static function UpdateNavNodes () {
-	var allNodes : AStarWayPoint[] = GetNavNodes ();
+	var allNodes : OPWayPoint[] = GetNavNodes ();
 
-	for ( var nnc : AStarWayPoint in allNodes ) {
+	for ( var nnc : OPWayPoint in allNodes ) {
 		nnc.FindNeighbors ( allNodes );
 	}
+}
+
+// Add nav node
+static function AddNavNode () {
+	var newNode : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/nav_node" ) as GameObject );
+	newNode.transform.parent = currentLevel.transform;
+	newNode.transform.position = GetSpawnPosition();
+	newNode.name = newNode.name.Replace("(Clone)","");
+	
+	SelectObject ( newNode );
+}
+
+// Add nav mesh
+static function AddNavMesh () {
+	EditorOpenFile.baseDir = "ImportOBJ";
+	EditorOpenFile.fileType = "obj";
+	EditorOpenFile.asNavMesh = true;
+	OGRoot.GoToPage ( "OpenFile" );
+}
+
+// Bake
+private function ScanForNodes () : IEnumerator {
+	var scanner : OPScanner = this.GetComponent(OPScanner);
+	
+	EditorLoading.message = "Baking navigation nodes...";
+	OGRoot.GoToPage ( "Loading" );
+	
+	yield WaitForEndOfFrame();
+	
+	yield scanner.Init ();
+	
+	yield WaitForEndOfFrame();
+	
+	if ( scanner.map == null ) {
+		Debug.LogError ( "EditorCore | No map found in scanner!" );
+	
+	} else {
+		navNodes = scanner.map.nodes;
+	
+	}
+	
+	OGRoot.GoToPage ( "MenuBase" );
+}
+
+public function BakeNavNodes () {
+	StartCoroutine ( ScanForNodes () );
 }
 
 
@@ -506,7 +535,7 @@ static function ToggleGizmos () {
 
 // Toggle navigation
 static function ToggleNavigation () {
-	var navMesh : AStarNavMesh = GameObject.FindObjectOfType ( AStarNavMesh );
+	var navMesh : OPNavMesh = GameObject.FindObjectOfType ( OPNavMesh );
 	if ( navMesh != null ) {
 		navMesh.GetComponent ( MeshRenderer ).enabled = !navMesh.GetComponent ( MeshRenderer ).enabled;
 	}
@@ -1031,7 +1060,7 @@ static function LoadOBJ ( objName : String, asNavMesh : boolean ) {
 	go.GetComponent(MeshCollider).sharedMesh = mesh;
 	
 	if ( asNavMesh ) {
-		go.AddComponent(AStarNavMesh);
+		go.AddComponent(OPNavMesh);
 		go.GetComponent(MeshRenderer).material = navMeshMaterial;
 	
 	} else {

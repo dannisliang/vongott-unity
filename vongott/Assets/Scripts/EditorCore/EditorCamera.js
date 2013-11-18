@@ -257,8 +257,8 @@ function DrawNavNodes () {
 	
 	GL.Begin ( GL.LINES );
 	
-	for ( var nnc : AStarWayPoint in EditorCore.GetNavNodes() ) {
-		for ( var n : AStarNode in nnc.node.neighbors ) { 
+	for ( var nnc : OPWayPoint in EditorCore.GetNavNodes() ) {
+		for ( var n : OPNode in nnc.node.neighbors ) { 
 			DrawLine ( nnc.node.position, n.position );
 		}
 	}

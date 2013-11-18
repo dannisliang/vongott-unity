@@ -106,7 +106,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		return o;
 		
 	// check if nav mesh
-	} else if ( obj.GetComponent(AStarNavMesh) ) {
+	} else if ( obj.GetComponent(OPNavMesh) ) {
 		var nvm : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 		
 		nvm.AddField ( "mesh", SerializeMesh ( obj.GetComponent(MeshFilter).sharedMesh ) );
@@ -238,7 +238,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		return o;
 	
 	// check navnode
-	} else if ( obj.GetComponent(AStarWayPoint) ) {		
+	} else if ( obj.GetComponent(OPWayPoint) ) {		
 		var nav : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	
 		nav.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
@@ -342,14 +342,14 @@ static function SerializeMultiLineString ( str : String ) : JSONObject {
 }
 
 // nav mesh
-static function SerializeNavMesh ( nodes : AStarNode[] ) : JSONObject {
+static function SerializeNavNodes ( nodes : OPNode[] ) : JSONObject {
 	var sNodes : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 	
-	for ( var node : AStarNode in nodes ) {
+	for ( var node : OPNode in nodes ) {
 		var sNode : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 		var sNeighbors : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 		
-		for ( var n : AStarNode in node.neighbors ) {
+		for ( var n : OPNode in node.neighbors ) {
 			sNeighbors.Add ( System.Array.IndexOf ( nodes, n ) );
 		}
 		

@@ -186,8 +186,12 @@ class OGWidget extends MonoBehaviour {
 		return pos;
 	}
 	
-	function OnGUI () {
+	public function SetCollider () {
 		colliderRect = new Rect ( transform.position.x, transform.position.y, transform.localScale.x, transform.localScale.y );
+	}
+	
+	function OnGUI () {
+		SetCollider ();
 		
 		GUI.depth = transform.localPosition.z;
 				

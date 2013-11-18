@@ -1,15 +1,15 @@
 ﻿#pragma strict
 
-class AStarWayPoint extends MonoBehaviour {
+class OPWayPoint extends MonoBehaviour {
 	public var layerMask : LayerMask;
-	public var node : AStarNode = new AStarNode();
+	public var node : OPNode = new OPNode();
 	
-	public function FindNeighbors ( allNodes : AStarWayPoint [] ) {
-		var tempList : List.< AStarNode > = new List.< AStarNode > ();
+	public function FindNeighbors ( allNodes : OPWayPoint [] ) {
+		var tempList : List.< OPNode > = new List.< OPNode > ();
 		
 		node.position = this.transform.position;
 		
-		for ( var nodeContainer : AStarWayPoint in allNodes ) {
+		for ( var nodeContainer : OPWayPoint in allNodes ) {
 			if ( nodeContainer != this ) {
 				var hit : RaycastHit;
 				var here : Vector3 = this.transform.position + new Vector3 ( 0, 0.5, 0 );
