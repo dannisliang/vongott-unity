@@ -59,18 +59,18 @@ class OPPathFinder extends MonoBehaviour {
 	function UpdatePosition () {
 		var start : Vector3 = this.transform.position;
 					
-		Loom.RunAsync ( function () {
+		//Loom.RunAsync ( function () {
 			var newNodes : List.<OPNode> = scanner.FindPath ( start, goal );
 									
 			for ( var node : OPNode in newNodes ) {
 				node.active = true;
 			}
 			
-			Loom.QueueOnMainThread ( function () {
+		//	Loom.QueueOnMainThread ( function () {
 				nodes = newNodes;
 				currentNode = 0;
-			} );
-		} );
+		//	} );
+		//} );
 	}
 	
 	function Update () {

@@ -194,7 +194,7 @@ class EditorMenuBase extends OGPage {
 	}
 	
 	function AddNavNode () {	
-		EditorCore.AddNavNode ();
+		EditorCore.AddWayPoint ();
 	}
 	
 	function AddNavMesh () {
@@ -215,6 +215,18 @@ class EditorMenuBase extends OGPage {
 		};
 		
 		OGRoot.GoToPage ( "ConfirmDialog" );
+	}
+	
+	public function SetToWayPoint () {
+		EditorCore.GetInstance().GetComponent(OPScanner).mapType = OPMapType.WayPoint;
+	}
+	
+	public function SetToGrid () {
+		EditorCore.GetInstance().GetComponent(OPScanner).mapType = OPMapType.Grid;
+	}
+	
+	public function SetToNavMesh () {
+		EditorCore.GetInstance().GetComponent(OPScanner).mapType = OPMapType.NavMesh;
 	}
 	
 	

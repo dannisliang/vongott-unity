@@ -359,7 +359,7 @@ function Update () {
 			
 		// N key
 		} else if ( Input.GetKeyDown ( KeyCode.N ) ) {
-			EditorCore.UpdateNavNodes ();
+			EditorCore.UpdateWayPoints ();
 		
 		// G key: grab mode
 		} else if ( Input.GetKeyDown ( KeyCode.G ) ) {

@@ -404,13 +404,13 @@ public function AddShape ( shape : Shape, method : BooleanRTLib.BooleanType ) {
 // Path finding
 ////////////////////
 // Get all
-public static function GetNavNodes () : OPWayPoint[] {
+public static function GetWayPoints () : OPWayPoint[] {
 	return GameObject.FindObjectsOfType(OPWayPoint);
 }
 
 // Update all
-public static function UpdateNavNodes () {
-	var allNodes : OPWayPoint[] = GetNavNodes ();
+public static function UpdateWayPoints () {
+	var allNodes : OPWayPoint[] = GetWayPoints ();
 
 	for ( var nnc : OPWayPoint in allNodes ) {
 		nnc.FindNeighbors ( allNodes );
@@ -418,8 +418,8 @@ public static function UpdateNavNodes () {
 }
 
 // Add nav node
-static function AddNavNode () {
-	var newNode : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/nav_node" ) as GameObject );
+static function AddWayPoint () {
+	var newNode : GameObject = Instantiate ( Resources.Load ( "Prefabs/Editor/waypoint" ) as GameObject );
 	newNode.transform.parent = currentLevel.transform;
 	newNode.transform.position = GetSpawnPosition();
 	newNode.name = newNode.name.Replace("(Clone)","");

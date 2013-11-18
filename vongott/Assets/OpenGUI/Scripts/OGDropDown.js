@@ -37,6 +37,10 @@ class OGDropDown extends OGWidget {
 			// Title button
 			if ( GUI.Button ( Rect ( x, y, ( title.Length * 8 ), transform.localScale.y ), title, GUI.skin.label ) ) {
 				isDown = false;
+				
+				for ( var sub : DropDownItem in submenu ) {
+					sub.isDown = false;
+				}
 			}
 			
 			for ( var i : int = 0; i < submenu.Length; i++ ) {
@@ -78,14 +82,23 @@ class OGDropDown extends OGWidget {
 					}
 					
 					for ( var s : int = 0; s < submenu[i].submenu.Length; s++ ) {
-						if ( GUI.Button ( Rect ( modifiedColliderRect.center.x + offset.x, modifiedColliderRect.yMin + size.y + s * this.transform.localScale.y, this.transform.localScale.x, this.transform.localScale.y ), submenu[i].submenu[s].name, GUI.skin.label ) ) {
+						// Button
+						if ( GUI.Button ( Rect ( modifiedColliderRect.center.x + offset.x, modifiedColliderRect.yMin + offset.y + s * this.transform.localScale.y, this.transform.localScale.x, this.transform.localScale.y ), submenu[i].submenu[s].name, GUI.skin.label ) ) {
 							if ( target && !String.IsNullOrEmpty ( submenu[i].submenu[s].message ) ) { target.SendMessage(submenu[i].submenu[s].message, submenu[i].submenu[s]); }
 							
+							for ( var sm : DropDownItem in submenu[i].submenu ) {
+								sm.isChecked = false;
+							}
+							
+							submenu[i].submenu[s].isChecked = true;
+							
 							submenu[i].isDown = false;
+							isDown = false;
 						}
 						
+						// Symbol
 						if ( submenu[i].submenu[s].isChecked ) {
-							GUI.Label ( Rect ( modifiedColliderRect.center.x - 10 + this.transform.localScale.x, modifiedColliderRect.yMin + size.y, 20, 20 ), "✓", GUI.skin.label );
+							GUI.Label ( Rect ( modifiedColliderRect.center.x - 10 + this.transform.localScale.x, modifiedColliderRect.yMin + offset.y + s * this.transform.localScale.y, 20, 20 ), "✓", GUI.skin.label );
 						
 						}
 					}
@@ -94,7 +107,7 @@ class OGDropDown extends OGWidget {
 				size.y += transform.localScale.y + offset.y;
 			}
 			
-			modifiedColliderRect = new Rect ( x, y + this.transform.localScale.y + offset.y, size.x + offset.x * 2, size.y );
+			modifiedColliderRect = new Rect ( x, y + this.transform.localScale.y , size.x + offset.x * 2, size.y );
 			SetCollider ();
 		
 		} else {

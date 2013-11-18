@@ -2,7 +2,7 @@
 
 public enum OPMapType {
 	Grid,
-	Waypoint,
+	WayPoint,
 	NavMesh
 }
 
@@ -17,17 +17,6 @@ class OPMap {
 		}
 		
 		return null;
-	}
-	
-	function ListToGrid ( list : List.<OPNode> ) : OPNode[,,] {
-		var newArray : OPNode[,,] = new OPNode[list.Count,1,1];
-										
-		for ( var i : int = 0; i < newArray.GetLength(0); i++ ) {
-			var node : OPNode = list[i];
-			newArray[i,0,0] = node;
-		}
-		
-		return newArray;
 	}
 	
 	function ListToArray ( list : List.<OPNode> ) : OPNode[] {
@@ -45,7 +34,7 @@ class OPMap {
 	}
 	
 	function GetNeighbors ( node : OPNode ) : List.<OPNode> {
-		return;
+		return node.neighbors;
 	}
 	
 	function Reset () {
@@ -62,10 +51,6 @@ public class OPNavMeshMap extends OPMap {
 		nodes = navMesh.GetNodes ();
 	
 		MonoBehaviour.Destroy ( navMesh.gameObject );
-	}
-	
-	override function GetNeighbors ( node : OPNode ) : List.<OPNode> {
-		return node.neighbors;
 	}
 }
 
@@ -84,10 +69,6 @@ public class OPWayPointMap extends OPMap {
 		for ( var n : OPWayPoint in GameObject.FindObjectsOfType(OPWayPoint) ) {
 			MonoBehaviour.Destroy ( n.gameObject ); 
 		}
-	}
-	
-	override function GetNeighbors ( node : OPNode ) : List.<OPNode> {
-		return node.neighbors;
 	}
 }
 
@@ -132,7 +113,15 @@ public class OPGridMap extends OPMap {
 			
 			for ( var i : int = 0; i < 50; i++ ) {
 				if ( Physics.Raycast ( currentHit.point + Vector3.down, Vector3.down, currentHit, Mathf.Infinity, layerMask ) ) {
-					hits.Add ( currentHit );
+					var left : boolean = Physics.Raycast ( currentHit.point, Vector3.left, spacing/2, layerMask );
+					var right : boolean = Physics.Raycast ( currentHit.point, -Vector3.left, spacing/2, layerMask );
+					var forward : boolean = Physics.Raycast ( currentHit.point, Vector3.forward, spacing/2, layerMask );
+					var back : boolean = Physics.Raycast ( currentHit.point, -Vector3.forward, spacing/2, layerMask );
+					var up : boolean = Physics.Raycast ( currentHit.point, -Vector3.down, spacing/2, layerMask );
+					
+					if ( !left && !right && !forward && !back && !up ) {
+						hits.Add ( currentHit );
+					}
 				
 				} else {
 					break;
@@ -148,13 +137,9 @@ public class OPGridMap extends OPMap {
 		thisNode.neighbors.Clear ();
 		
 		for ( var thatNode : OPNode in nodes ) {			
-			if ( ( thisNode.position - thatNode.position ).sqrMagnitude <= spacing * 2.1 ) {
+			if ( ( thisNode.position - thatNode.position ).sqrMagnitude <= spacing * 1.1 ) {
 				thisNode.neighbors.Add ( thatNode );
 			}
 		}
-	}
-	
-	override function GetNeighbors ( node : OPNode ) : List.<OPNode> {
-		return node.neighbors;		
 	}
 }
