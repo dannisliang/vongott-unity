@@ -1,19 +1,11 @@
-#pragma strict
+﻿#pragma strict
+
+import System.IO;
 
 class MainMenuLoad extends OGPage {
-	var mainMenu : MainMenu;
-	
-	var mapList : OGScrollView;
-	
-	// Clear list
-	function ClearList () {
-		for ( var i = 0; i < mapList.transform.childCount; i++ ) {
-			DestroyImmediate ( mapList.transform.GetChild ( i ).gameObject );
-		}
-	}
-	
-	// Trim filename
-	function TrimFileName ( p : String ) : String {
+	public var levelList : Transform;
+
+	private function TrimFileName ( p : String ) : String {
 		var path = p.Split("\\"[0]);
 		var fileName = path[path.Length-1];
 		var extention = fileName.Split("."[0]);
@@ -21,43 +13,40 @@ class MainMenuLoad extends OGPage {
 		
 		return name;
 	}
-	
-	// Select map
-	function SelectFile ( name : String ) {
-		LoadingManager.nextScene = name;
-		LoadingManager.nextSpawnPoint = "";
-		Application.LoadLevel ( "loading" );
+
+	private function CreateButton ( mapName : String ) {
+		var btn : OGButton = new GameObject ( mapName, OGButton ).GetComponent ( OGButton );
+		var index : int = levelList.childCount;
+		
+		btn.text = mapName;
+		btn.target = this.gameObject;
+		btn.message = "LoadFile";
+		btn.argument = mapName;
+		
+		btn.transform.parent = levelList;
+		btn.transform.localScale = new Vector3 ( 200, 30, 1 );
+		btn.transform.localPosition = new Vector3 ( 0, index * 40, 0 );
 	}
 	
-	// Populate list
-	function PopulateList () {		
-		ClearList ();
-		
-		var paths : String[] = Directory.GetFiles ( Application.dataPath + "/Maps", "*.vgmap" );
-			
-		for ( var i = 0; i < paths.Length; i++ ) {
-			var name = TrimFileName ( paths[i] );
-			var obj : GameObject = new GameObject ( name );
-			var btn = obj.AddComponent ( OGButton );
-		
-			btn.text = name;
-			btn.target = this.gameObject;
-			btn.message = "SelectFile";
-			btn.argument = name;
-			
-			obj.transform.parent = mapList.transform;
-			obj.transform.localScale = new Vector3 ( 468, 30, 1 );
-			obj.transform.localPosition = new Vector3 ( 0, i * 32, -2 );
+	private function PopulateMaps () {
+		var files : String[] = Directory.GetFiles ( Application.dataPath + "/Maps", "*.vgmap" );
+	
+		for ( var s : String in files ) {
+			CreateButton ( TrimFileName ( s ) );
 		}
+	}
+	
+	public function LoadFile ( mapName : String ) {		
+		LoadingManager.nextScene = mapName;
+	
+		Application.LoadLevel ( "loading" );
+	}
+
+	public function GoBack () {
+		OGRoot.GoToPage ( "MenuBase" );
 	}
 	
 	override function StartPage () {
-		PopulateList ();
-	}
-	
-	override function UpdatePage () {
-		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-			mainMenu.Transition ( "" );
-		}
+		PopulateMaps ();
 	}
 }

@@ -64,7 +64,7 @@ class EditorFileSystem extends MonoBehaviour {
 			return returnArray;
 		}
 	
-		function FindFolder ( n : String ) : Folder {
+		function FindFolder ( n : String ) : Folder {		
 			for ( var f : Folder in subFolders ) {
 				if ( n == f.name ) {
 					return f;
@@ -136,18 +136,13 @@ class EditorFileSystem extends MonoBehaviour {
 		var prefabsFolder : Folder = new Folder ( "Prefabs" );
 		resourcesFolder.AddFolder ( prefabsFolder, false );
 		
-		prefabsFolder.AddFolder ( new Folder ( "Airducts" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Buildings" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Decor" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Doors" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Fences" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Furniture" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Interfaces" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Roofs" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Stairs" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Skyboxes" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Vehicles" ), true );
-		prefabsFolder.AddFolder ( new Folder ( "Walls" ), true );
 		prefabsFolder.AddFolder ( new Folder ( "Windows" ), true );		
 	}
 	

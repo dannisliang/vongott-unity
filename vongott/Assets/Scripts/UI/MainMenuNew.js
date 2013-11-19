@@ -1,15 +1,11 @@
-#pragma strict
+﻿#pragma strict
 
 class MainMenuNew extends OGPage {
-	var mainMenu : MainMenu;
-		
-	function NewGame () {
-		Application.LoadLevel ( "game" );
-	}
+	public function StartGame () {
 	
-	function Update () {
-		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-			mainMenu.Transition ( "" );
-		}
+	}
+
+	public function GoBack () {
+		OGRoot.GoToPage ( "MenuBase" );
 	}
 }

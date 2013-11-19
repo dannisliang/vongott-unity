@@ -35,6 +35,8 @@ class EditorBrowserPanel extends MonoBehaviour {
 			title.text = currentTab;
 		
 		} else {
+			Debug.Log ( "EditorBrowserPanel | Finding " + tab + " > " + category );
+			
 			shapeButtons.SetActive ( false );
 			//fileList.gameObject.SetActive ( true );
 			
@@ -46,9 +48,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 			popupMenu.options = resourcesFolder.FindFolder(tab).GetFolderNames();
 			
 			popupMenu.selectedOption = category;
-			
-			Debug.Log ( "EditorBrowserPanel | Finding " + tab + " > " + category );
-			
+						
 			PopulateList ( resourcesFolder.FindFolder(tab).FindFolder(category) );
 		}
 	}
@@ -98,7 +98,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 			case "Prefabs":
 				popupMenu.gameObject.SetActive ( true );
 				if ( currentPrefabsCategory == "" ) {
-					currentPrefabsCategory = "Walls";
+					currentPrefabsCategory = "Doors";
 				}
 				category = currentPrefabsCategory;
 				break;

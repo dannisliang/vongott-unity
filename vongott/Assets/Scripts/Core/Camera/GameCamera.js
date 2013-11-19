@@ -27,7 +27,6 @@ class GameCamera extends MonoBehaviour {
 	// Init
 	////////////////////																	
 	function Start () {
-		player = GameObject.FindObjectOfType ( PlayerController );
 		instance = this;
 	}
 	
@@ -317,6 +316,11 @@ class GameCamera extends MonoBehaviour {
 	}
 	
 	function LateUpdate () {
+		if ( player == null ) {
+			player = GameObject.FindObjectOfType ( PlayerController );
+			return;
+		}
+        
         var target : Vector3 = player.transform.position;
         target.y += offset.y;
         target += transform.right * offset.x;

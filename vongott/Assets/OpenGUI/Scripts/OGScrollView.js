@@ -49,8 +49,8 @@ class OGScrollView extends OGWidget {
 					scrollLength = w.gameObject.transform.position.y + w.gameObject.transform.localScale.y + inset;
 				}
 				
-				if ( scrollWidth < w.gameObject.transform.position.x + w.gameObject.transform.localScale.x + inset ) {
-					scrollWidth = w.gameObject.transform.position.x + w.gameObject.transform.localScale.x + inset;
+				if ( scrollWidth < w.gameObject.transform.localPosition.x + w.gameObject.transform.localScale.x + inset ) {
+					scrollWidth = w.gameObject.transform.localPosition.x + w.gameObject.transform.localScale.x + inset;
 				}
 			}
 		}
