@@ -39,18 +39,23 @@ class OPScanner extends MonoBehaviour {
 			map = new OPNavMeshMap ( navMesh );
 		
 		} else {
-			map = new OPWayPointMap ( GameObject.FindObjectsOfType(OPWayPoint) );
+			map = new OPWayPointMap ( GameObject.FindObjectsOfType ( OPWayPoint ) );
 		
 		}
 	}
 	
 	function Init () : IEnumerator {
+		Debug.Log ( "OPScanner | Scanning for navigation nodes as " + mapType + "..." );
+		
 		yield WaitForEndOfFrame ();
 	
 		GetBounds ();
 		SetMap ();
 		
 		yield WaitForEndOfFrame ();
+		
+		
+		Debug.Log ( "OPScanner | ...scan complete!" );
 	}
 	
 	function Scan () {
@@ -59,10 +64,7 @@ class OPScanner extends MonoBehaviour {
 	
 	function Start () {
 		if ( scanOnEnable ) {
-			//Scan ();
-		
-			GetBounds ();
-		SetMap ();
+			Scan ();
 		}
 	}
 	
