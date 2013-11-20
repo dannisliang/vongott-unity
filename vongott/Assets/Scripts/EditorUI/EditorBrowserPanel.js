@@ -7,12 +7,10 @@ class EditorBrowserPanel extends MonoBehaviour {
 	public var title : OGLabel;	
 	public var inspectorName : OGLabel;
 	public var replaceButton : GameObject;
-	public var shapeButtons : GameObject;
 					
 	// Private vars
 	private var resourcesFolder : EditorFileSystem.Folder;
 	private var selectedFile : Object;
-	private var selectedShape : String;
 	private var currentTab : String = "";
 	private var currentFolder : EditorFileSystem.Folder;
 	private var currentActorsCategory : String = "";
@@ -27,30 +25,18 @@ class EditorBrowserPanel extends MonoBehaviour {
 	
 	// Init
 	public function Init ( tab : String, category : String ) {
-		if ( tab == "Shapes" ) {
-			shapeButtons.SetActive ( true );
-			//fileList.gameObject.SetActive ( false );
+		Debug.Log ( "EditorBrowserPanel | Finding " + tab + " > " + category );
 		
-			currentTab = tab;
-			title.text = currentTab;
+		resourcesFolder = EditorFileSystem.GetResources();
+			
+		currentTab = tab;
+		title.text = currentTab;
 		
-		} else {
-			Debug.Log ( "EditorBrowserPanel | Finding " + tab + " > " + category );
-			
-			shapeButtons.SetActive ( false );
-			//fileList.gameObject.SetActive ( true );
-			
-			resourcesFolder = EditorFileSystem.GetResources();
-			
-			currentTab = tab;
-			title.text = currentTab;
-			
-			popupMenu.options = resourcesFolder.FindFolder(tab).GetFolderNames();
-			
-			popupMenu.selectedOption = category;
-						
-			PopulateList ( resourcesFolder.FindFolder(tab).FindFolder(category) );
-		}
+		popupMenu.options = resourcesFolder.FindFolder(tab).GetFolderNames();
+		
+		popupMenu.selectedOption = category;
+					
+		PopulateList ( resourcesFolder.FindFolder(tab).FindFolder(category) );
 	}
 
 	// Pick category
@@ -102,11 +88,6 @@ class EditorBrowserPanel extends MonoBehaviour {
 				}
 				category = currentPrefabsCategory;
 				break;
-				
-			default:
-				popupMenu.gameObject.SetActive ( false );
-				category = "Shapes";
-				break;
 		}
 		
 		Init ( tab, category );
@@ -114,26 +95,15 @@ class EditorBrowserPanel extends MonoBehaviour {
 
 	// Place object
 	public function PlaceObject () {
-		if ( currentTab == "Shapes" ) {
-			EditorCore.AddObject ( Resources.Load ( "Shapes/" + selectedShape ) as GameObject );
-		
-		} else {
-			if ( selectedFile.GetType() == GameObject ) {
-				EditorCore.AddObject ( selectedFile as GameObject );
-			}
-	
+		if ( selectedFile.GetType() == GameObject ) {
+			EditorCore.AddObject ( selectedFile as GameObject );
 		}
 	}
 
 	// Replace object
 	public function ReplaceObject () {
-		if ( currentTab == "Shapes" ) {
-			EditorCore.ReplaceSelectedObject ( Resources.Load ( "Shapes/" + selectedShape ) as GameObject );
-		
-		} else {
-			if ( selectedFile.GetType() == GameObject ) {
-				EditorCore.ReplaceSelectedObject ( selectedFile as GameObject );
-			}
+		if ( selectedFile.GetType() == GameObject ) {
+			EditorCore.ReplaceSelectedObject ( selectedFile as GameObject );
 		}
 	}
 
@@ -143,29 +113,10 @@ class EditorBrowserPanel extends MonoBehaviour {
 		var c : Component;
 		var btn : OGButton;
 				
-		if ( shapeButtons.activeSelf ) {
-			for ( c in shapeButtons.GetComponentsInChildren(OGButton) ) {
-				btn = c as OGButton;
-				btn.style = "listitem";
-			}
-		
-		} else {
-			for ( c in fileList.GetComponentsInChildren(OGButton) ) {
-				btn = c as OGButton;
-				btn.style = "listitem";
-			}
-		
+		for ( c in fileList.GetComponentsInChildren(OGButton) ) {
+			btn = c as OGButton;
+			btn.style = "listitem";
 		}
-	}
-		
-	// Select shape
-	public function SelectShape ( btn : OGButton ) {
-		DeselectAll ();
-		
-		btn.style = "listitemselected";
-		
-		inspectorName.text = btn.text;
-		selectedShape = "shape_" + btn.gameObject.name;
 	}
 	
 	// Select file
@@ -211,9 +162,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 	// Clear all
 	private function ClearList () {
 		for ( var i = 0; i < fileList.childCount; i++ ) {
-			if ( fileList.GetChild ( i ).gameObject != shapeButtons ) {
-				Destroy ( fileList.GetChild ( i ).gameObject );
-			}
+			Destroy ( fileList.GetChild ( i ).gameObject );
 		}
 	}
 

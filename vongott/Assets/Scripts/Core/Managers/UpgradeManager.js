@@ -183,7 +183,7 @@ class UpgradeManager {
 				break;
 				
 			case eAbilityID.Speed:
-				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = 1.0;
+//				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = 1.0;
 				break;
 				
 			case eAbilityID.XRay:
@@ -267,7 +267,7 @@ class UpgradeManager {
 				break;
 				
 			case eAbilityID.Speed:
-				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = upgrade.ability.value;
+//				GameCore.GetPlayerObject().GetComponent(PlayerController).speedModifier = upgrade.ability.value;
 				break;
 				
 			case eAbilityID.XRay:

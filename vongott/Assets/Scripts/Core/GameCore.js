@@ -79,10 +79,8 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Controls
 	////////////////////
-	static function ToggleControls ( state : boolean ) {
-		playerObject.GetComponent(PlayerController).enabled = state;
-		
-		Camera.main.GetComponent(GameCamera).enabled = state;
+	static function ToggleControls ( state : boolean ) {		
+		GameCamera.GetInstance().enabled = state;
 		
 		controlsActive = state;
 		

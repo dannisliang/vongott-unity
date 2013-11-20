@@ -1,3 +1,5 @@
+#pragma strict
+
 class Player extends MonoBehaviour {
 	////////////////////
 	// Prerequisites
@@ -43,7 +45,6 @@ class Player extends MonoBehaviour {
 		GameCore.ToggleControls ( false );
 		
 		talkingTo = a;
-		this.GetComponent(PlayerController).state = PlayerController.PlayerState.Idle;
 		
 		GameCore.Print ( "Player | conversation with " + a.displayName + " started" ); 
 	}
@@ -96,20 +97,20 @@ class Player extends MonoBehaviour {
 			item = equippedItem.GetComponent ( Item );
 		}
 		
-		var slot : Equipment.eEquipmentSlot = item.eqSlot;
+		var slot : eEquipmentSlot = ( item as Equipment ).eqSlot;
 		var target : GameObject;
 		var adjustPosition : Vector3;
 		var adjustRotation : Vector3;
 		
-		if ( slot == Equipment.eEquipmentSlot.Hands ) {
+		if ( slot == eEquipmentSlot.Hands ) {
 			target = hand;
 		
 			adjustPosition = new Vector3 ( 0.222, -0.006, -0.060 );
 			adjustRotation = new Vector3 ( 16, 182, 8.5 );
-		} else if ( slot == Equipment.eEquipmentSlot.Torso ) {
+		} else if ( slot == eEquipmentSlot.Torso ) {
 			target = torso;
 		
-		} else if ( slot == Equipment.eEquipmentSlot.Head ) {
+		} else if ( slot == eEquipmentSlot.Head ) {
 			target = head;
 		
 		} else {

@@ -1,199 +1,154 @@
 #pragma strict
 
-class PlayerController extends MonoBehaviour {
-	enum PlayerState {
-		Idle,
-		Jumping,
-		Falling,
-		Crouching,
-		Aiming,
-		Shooting
+public enum ePlayerControlMode {
+	ThirdPerson,
+	FirstPerson
+}
+
+public enum ePlayerBodyState {
+	Idle,
+	Jumping,
+	Falling,
+	Crouching
+}
+
+public enum ePlayerActionState {
+	Idle,
+	Shooting,
+	Interacting
+}
+
+class PlayerController {
+	public static var bodyState : ePlayerBodyState = ePlayerBodyState.Idle;
+	public static var actionState : ePlayerActionState = ePlayerActionState.Idle;
+	public static var controlMode : ePlayerControlMode = ePlayerControlMode.ThirdPerson;
+	public static var speed : float = 0.0;
+
+	private static var capsule : CapsuleCollider;
+	private static var distGround : float = float.PositiveInfinity;
+
+	public static function SetControlMode ( mode : ePlayerControlMode ) {
+		controlMode = mode;
 	}
+
+	public static function Update ( player : Player ) {
+		if ( !capsule ) {
+			capsule = player.transform.collider as CapsuleCollider;
+		}
 	
-	var state : PlayerState = PlayerState.Idle;
-	var speed : float = 0.0;
-	var acceleration : float = 3.0;
-	var runningSpeed : float = 5.0;
-	var speedModifier : float = 1.0;
-	var distGround : float = 0.0;
-	var isGrounded : boolean = true;
-	var inCrawlspace : boolean = false;
-	var capsule : CapsuleCollider;
-	var crouchMode : boolean = false;
-	var aimMode : boolean = false;
-	var shootMode : boolean = false;
-	var sideStep : float;
-
-	function Start () {		
-		capsule = transform.collider as CapsuleCollider;
-		distGround = collider.bounds.extents.y;
-	}
-
-	function OnDisable () {
-		speed = 0;
-		this.GetComponent(Animator).SetFloat("Speed", speed );
-	}
-
-	function Update () {
-		// Get grounded
-		isGrounded = Physics.Raycast ( transform.position, -transform.up, distGround + 0.1 );
+		var isGrounded : boolean = true;
+		var groundHit : RaycastHit;
 		
-		// Get crawlspace
-		inCrawlspace = Physics.Raycast ( transform.position, transform.up, 1.8, 9 );
-								
-		// Set state
-		if ( !crouchMode && Input.GetKeyDown ( KeyCode.Space ) && state != PlayerState.Jumping && state != PlayerState.Falling ) {
-			state = PlayerState.Jumping;
-			
-		} else if ( !inCrawlspace && Input.GetKeyDown ( KeyCode.C ) ) {
-			crouchMode = !crouchMode;
+		if ( Physics.Raycast ( player.transform.position + Vector3.up * 0.05, -player.transform.up, groundHit, distGround, 9 ) ) {
+			distGround = ( player.transform.position - groundHit.point ).sqrMagnitude;
 		
-		}
-		
-		// Get camera target rotation
-		var yRotation : float = Camera.main.transform.eulerAngles.y;
-		
-		// Get input
-		var v = Input.GetAxisRaw("Vertical");
-		var h = Input.GetAxisRaw("Horizontal");
-		
-		// Mouse controls
-		aimMode = false;
-		shootMode = false;
-		
-		if ( Input.GetMouseButton(1) ) {
-			transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z ), 10 * Time.deltaTime );
-		
-			aimMode = true;
-		
-			if ( this.GetComponent(Player).equippedItem ) {				
-				// Raycast
-				var here : Vector3 = this.GetComponent(Player).equippedItem.transform.position;
-				var there : Vector3 = Camera.main.transform.position + Camera.main.transform.forward * this.GetComponent(Player).GetEquipmentAttribute( eItemAttribute.FireRange );
-				var hit : RaycastHit;
-				var target : Vector3;
-																			
-				if ( Physics.Linecast ( Camera.main.transform.position, there, hit ) ) {					
-					target = hit.point;
-					Debug.DrawLine ( here, target, Color.green );
-				} else {
-					target = there;
-					Debug.DrawLine ( here, target, Color.red );
-				}
-			
-				// Shoot
-				if ( Input.GetMouseButton(0) ) {
-					this.GetComponent(Player).Shoot ( target );
-					shootMode = true;
-				}
-			}				
-		}
-														
-		// Set speed		
-		if ( v != 0.0 || h != 0.0 ) {
-			
-			// right forward
-			if ( h == 1 && v == 1 ) {
-				yRotation += 45;
-			
-			// left forward
-			} else if ( h == -1 && v == 1 ) {
-				yRotation -= 45;
-			
-			// left back
-			} else if ( h == -1 && v == -1 ) {
-				yRotation -= 135;
-			
-			// right back
-			} else if ( h == 1 && v == -1 ) {
-				yRotation += 135;
-			
-			// left
-			} else if ( h == -1 && v == 0 ) {
-				yRotation -= 90;
-			
-			// right
-			} else if ( h == 1 && v == 0 ) {
-				yRotation += 90;
-			
-			// back
-			} else if ( v == -1 && h == 0 ) {
-				yRotation += 180;
-			
-			}
-			
-			var rotationTarget : Quaternion = Quaternion.Euler ( transform.eulerAngles.x, yRotation, transform.eulerAngles.z );	
-						
-			if ( !Input.GetMouseButton(1) ) {
-				transform.rotation = Quaternion.Slerp ( transform.rotation, rotationTarget, ( 5 * speedModifier ) * Time.deltaTime );
-			} else {
-				sideStep = h;
-			}
-			
-			var targetSpeed : float = 0.1;
-			
-			if ( speed < targetSpeed ) { speed = targetSpeed; }
-			
-			if ( !crouchMode && !aimMode && Input.GetKey ( KeyCode.LeftShift ) ) {
-				targetSpeed = speedModifier;
-			
-			} else if ( state == PlayerState.Jumping ) {
-				targetSpeed = speedModifier;
-			
-			} else if ( state == PlayerState.Falling ) { 
-				targetSpeed = 0.15;
-			
-			} else {
-				targetSpeed = 0.25;
-			
-			}
-			
-			speed = Mathf.Lerp ( speed, targetSpeed, acceleration * Time.deltaTime );		
-					
 		} else {
-			if ( state != PlayerState.Jumping ) { state = PlayerState.Idle; }
-			
-			if ( speed > 0.0 ) {
-				speed -= 0.02;
+			distGround = float.PositiveInfinity;
+		
+		}
+		
+		isGrounded = distGround < 0.1;
+		
+		var inCrawlspace = Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
+		
+		// Jumping
+		if ( Input.GetKeyDown ( KeyCode.Space ) ) {
+			if ( bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
+				bodyState = ePlayerBodyState.Jumping;
 			}
 		
+		// Crouching
+		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) ) {
+			if ( bodyState == ePlayerBodyState.Crouching && !inCrawlspace ) {
+				bodyState = ePlayerBodyState.Idle;
+			
+			} else {
+				bodyState = ePlayerBodyState.Crouching;
+			
+			}
+	
+		}
+				
+		// Shoot
+		if ( Input.GetMouseButton ( 0 ) ) {
+			actionState = ePlayerActionState.Shooting;
+		
+		// Interact
+		} else if ( Input.GetMouseButtonDown ( 2 ) ) {
+			actionState = ePlayerActionState.Interacting;
+		
 		}
 		
-		if ( crouchMode ) {
-			state = PlayerState.Crouching;
+		// Locomotion
+		var deltaVertical : float = Input.GetAxisRaw ( "Vertical" );
+		var deltaHorizontal : float = Input.GetAxisRaw ( "Horizontal" );
+		var targetSpeed : float = 0.1;
+		
+		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
+			// Direction
+			if ( controlMode == ePlayerControlMode.ThirdPerson ) {
+				ThirdPersonController.Update ( player, deltaVertical, deltaHorizontal );
+			
+			} else {
+				FirstPersonController.Update ( player, deltaVertical, deltaHorizontal );
+			
+			}
+			
+			// Sprint
+			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
+				if ( bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
+					targetSpeed = 1.0;
+				}
+			
+			// Walk
+			} else {
+				targetSpeed = 0.15;
+				
+				if ( deltaVertical > 0.5 ) { deltaVertical = 0.5; }
+				else if ( deltaVertical < -0.5 ) { deltaVertical = -0.5; }
+				
+				if ( deltaHorizontal > 0.5 ) { deltaHorizontal = 0.5; }
+				else if ( deltaHorizontal < -0.5 ) { deltaHorizontal = -0.5; }
+			
+			}
+			
+		} else {
+			if ( bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
+				bodyState = ePlayerBodyState.Idle;
+			}
+			
+			targetSpeed = 0;
+		
 		}
 		
-		if ( aimMode ) {
-			state = PlayerState.Aiming;
-		}
-		
-		if ( shootMode ) {
-			state = PlayerState.Shooting;
-		}
+		// ^ Accelerate speed
+		speed = Mathf.Lerp ( speed, targetSpeed, 5 * Time.deltaTime );
 		
 		// Set capsule size
-		if ( state == PlayerState.Crouching ) {
-			capsule.height = 1.0;
-			capsule.center = new Vector3 ( 0, 0.5, 0 );
+		if ( bodyState == ePlayerBodyState.Crouching ) {
+			capsule.height = 0.9;
+			capsule.center = new Vector3 ( 0, 0.45, 0 );
+		
 		} else {
 			capsule.height = 1.7;
 			capsule.center = new Vector3 ( 0, 0.85, 0 );
-		}
-		
-		// Detect end of jump
-		if ( isGrounded && ( state == PlayerState.Jumping || state == PlayerState.Falling ) ) {
-			state = PlayerState.Idle;
 		
 		}
 		
-		// Only for animations without transformation
-		//this.transform.position = this.transform.position + this.transform.forward * ( speed * runningSpeed * Time.deltaTime );
+		if ( isGrounded && ( bodyState == ePlayerBodyState.Falling || bodyState == ePlayerBodyState.Jumping ) ) {
+			bodyState = ePlayerBodyState.Idle;
+			
+		}
 		
-		this.GetComponent(Animator).SetFloat("Speed", speed * ( 1 + Time.deltaTime ) );
+		player.GetComponent(Animator).SetFloat ( "DeltaVertical", deltaVertical );
+		player.GetComponent(Animator).SetFloat ( "DeltaHorizontal", deltaHorizontal );
 		
-		this.GetComponent(Animator).SetBool("Jumping", state == PlayerState.Jumping || state == PlayerState.Falling );
-		this.GetComponent(Animator).SetBool("Crouching", state == PlayerState.Crouching );
-		this.GetComponent(Animator).SetBool("Aiming", state == PlayerState.Aiming );
-		this.GetComponent(Animator).SetBool("Shooting", state == PlayerState.Shooting );
+		player.GetComponent(Animator).SetFloat ( "Speed", speed );
+		player.GetComponent(Animator).SetBool ( "Jumping", bodyState == ePlayerBodyState.Jumping || bodyState == ePlayerBodyState.Falling );
+		player.GetComponent(Animator).SetBool ( "Crouching", bodyState == ePlayerBodyState.Crouching );
+		player.GetComponent(Animator).SetBool ( "Shooting", actionState == ePlayerActionState.Shooting );
+		player.GetComponent(Animator).SetBool ( "Interacting", actionState == ePlayerActionState.Interacting );
+		player.GetComponent(Animator).SetBool ( "FirstPerson", controlMode == ePlayerControlMode.FirstPerson );
+
 	}
 }

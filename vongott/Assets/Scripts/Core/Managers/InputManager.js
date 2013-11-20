@@ -3,16 +3,12 @@
 class InputManager extends MonoBehaviour {
 	public static var escFunction : Function;
 	
-	private var player : PlayerController;
+	private var player : Player;
 	
 	private function GameCameraControls () {
-		if ( Input.GetKeyDown ( KeyCode.F4 ) ) {
+		if ( Input.GetMouseButtonDown ( 2 ) ) {
 			GameCamera.GetInstance().ToggleFirstPerson ();
 		}
-	}
-	
-	private function MovementControls () {
-		
 	}
 	
 	private function MenuControls () {
@@ -22,7 +18,16 @@ class InputManager extends MonoBehaviour {
 		
 		// Menu shortcuts
 		} else {
+			if ( Input.GetKeyDown(KeyCode.I) ) {
+				OGRoot.GoToPage ( "Inventory" );
+				
+			} else if ( Input.GetKeyDown(KeyCode.Q) ) {
+				OGRoot.GoToPage ( "Quests" );
 			
+			} else if ( Input.GetKeyDown(KeyCode.U) ) {
+				OGRoot.GoToPage ( "ModWheel" );
+			
+			}
 		
 		}
 	}
@@ -30,7 +35,8 @@ class InputManager extends MonoBehaviour {
 	function Update () {
 		// Get instances
 		if ( !player ) {
-			player = GameCore.GetPlayerObject().GetComponentInChildren(PlayerController);
+			player = GameCore.GetPlayer();
+			return;
 		}
 	
 		// The escape key can always be used
@@ -40,9 +46,12 @@ class InputManager extends MonoBehaviour {
 		
 		// In-game controls
 		if ( GameCore.controlsActive ) {
-			GameCameraControls ();
-			MovementControls ();
 			MenuControls ();
+			
+			if ( GameCore.controlsActive ) {
+				PlayerController.Update ( player );
+				GameCameraControls ();
+			}
 		
 		// Menus
 		} else {

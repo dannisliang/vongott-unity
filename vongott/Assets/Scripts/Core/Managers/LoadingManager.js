@@ -3,9 +3,7 @@
 class LoadingManager extends MonoBehaviour {
 	public static var nextScene : String;
 	public static var nextSpawnPoint : String;
-	
-	private var loadingDone : boolean = false;
-	
+		
 	function Start () {
 		DontDestroyOnLoad(this);
 		

@@ -1001,13 +1001,20 @@ static function TrimFileNames ( paths : String[] ) : String[] {
 
 // Save file
 function DoSave ( path : String ) : IEnumerator {
-	yield new WaitForEndOfFrame();
+	EditorLoading.message = "Saving...";
+	OGRoot.GoToPage ( "Loading" );
 	
+	yield WaitForEndOfFrame();
+		
 	var tex : Texture2D = new Texture2D(Screen.width, Screen.height);	
 	tex.ReadPixels(new Rect(0,0,Screen.width,Screen.height),0,0);
 	TextureScale.Bilinear ( tex, tex.width * 0.25, tex.height * 0.25 );	
 	
 	Saver.SaveMap ( path, EditorCore.currentLevel, tex );
+	
+	yield WaitForEndOfFrame();
+	
+	OGRoot.GoToPage ( "MenuBase" );
 }
 
 function SaveFile ( path : String ) {

@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 class GameCamera extends MonoBehaviour {
-	private var player : PlayerController;
+	private var player : Player;
 	private var skyboxCamera : GameObject;
 	private var storedPos : Vector3;
 	private var storedRot : Vector3;
@@ -42,6 +42,15 @@ class GameCamera extends MonoBehaviour {
 		firstPerson = !firstPerson;
 	
 		GameCore.GetPlayerObject().GetComponentInChildren(SkinnedMeshRenderer).enabled = !firstPerson;
+	
+		// Camera control
+		if ( firstPerson ) {
+			PlayerController.controlMode = ePlayerControlMode.FirstPerson;
+			
+		} else {
+			PlayerController.controlMode = ePlayerControlMode.ThirdPerson;
+		
+		}
 	}
 	
 	function StorePosRot () {
@@ -317,7 +326,7 @@ class GameCamera extends MonoBehaviour {
 	
 	function LateUpdate () {
 		if ( player == null ) {
-			player = GameObject.FindObjectOfType ( PlayerController );
+			player = GameCore.GetPlayer();
 			return;
 		}
         
@@ -350,7 +359,7 @@ class GameCamera extends MonoBehaviour {
 		if ( !firstPerson ) {
         	transform.position = ray.GetPoint(dist);
         } else {
-        	transform.position = GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, GameCore.GetPlayerObject().GetComponent(PlayerController).capsule.height - 0.05, 0 );
+        	transform.position = GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, 1.65, 0 );
         	
         	var playerRot : Vector3 = this.transform.localEulerAngles;
         	playerRot.x = 0;

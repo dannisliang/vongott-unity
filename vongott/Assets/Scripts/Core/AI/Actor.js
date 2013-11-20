@@ -515,7 +515,7 @@ class Actor extends InteractiveObject {
 		var hit : RaycastHit;
 		
 		var inSight : boolean = angle < vision.angle && Physics.Raycast ( here, direction, hit, vision.distance, vision.layerMask ) && hit.collider.gameObject == GameCore.GetPlayerObject();
-		var inEarshot : boolean = distance < hearing && GameCore.GetPlayerObject().GetComponent(PlayerController).runningSpeed > 0.5;
+		var inEarshot : boolean = distance < hearing && PlayerController.speed > 0.5;
 		
 		aiming = false;
 																										

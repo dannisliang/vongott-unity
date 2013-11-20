@@ -48,14 +48,6 @@ class UIHUD extends OGPage {
 	// Update
 	////////////////////
 	override function UpdatePage () {
-		if ( Input.GetKeyDown(KeyCode.I) ) {
-			OGRoot.GoToPage ( "Inventory" );
-		} else if ( Input.GetKeyDown(KeyCode.Q) ) {
-			OGRoot.GoToPage ( "Quests" );
-		} else if ( Input.GetMouseButtonDown(2) ) {
-			OGRoot.GoToPage ( "ModWheel" );
-		}
-		
 		if ( notificationTimer > 0.0 ) {
 			notificationTimer -= Time.deltaTime;
 		} else if ( !notificationIndefinite ) {

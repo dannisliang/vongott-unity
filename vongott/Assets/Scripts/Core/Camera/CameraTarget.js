@@ -18,11 +18,6 @@ static var instance : Transform;
 ////////////////////
 // Camera functions
 ////////////////////
-// Is player crouching?
-function IsCrouching () : boolean {
-	return player.GetComponent(PlayerController).state == PlayerController.PlayerState.Crouching;
-}
-
 // Compensate for walls
 function CompensateForWalls ( newPos : Vector3 ) {
 	var to : Vector3 = cam.transform.TransformPoint(newPos);
@@ -98,9 +93,7 @@ function LateUpdate () {
 	var convoCam = new Vector3 ( 0, 1.65, 0 );
 	var aimCam = new Vector3 ( 0, 1.65, 0 );
 	
-	if ( IsCrouching() ) {
-		adjustment = crouchCam;
-	} else if ( OGRoot.currentPage && OGRoot.currentPage.pageName == "Conversation" ) {
+	if ( OGRoot.currentPage && OGRoot.currentPage.pageName == "Conversation" ) {
 		adjustment = convoCam;
 	} else if ( Input.GetMouseButton(1) ) {
 		adjustment = aimCam;
