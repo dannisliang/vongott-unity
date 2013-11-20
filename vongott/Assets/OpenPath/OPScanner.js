@@ -47,6 +47,8 @@ class OPScanner extends MonoBehaviour {
 	function Init () : IEnumerator {
 		Debug.Log ( "OPScanner | Scanning for navigation nodes as " + mapType + "..." );
 		
+		var timeTaken : float = Time.time;
+		
 		yield WaitForEndOfFrame ();
 	
 		GetBounds ();
@@ -54,8 +56,9 @@ class OPScanner extends MonoBehaviour {
 		
 		yield WaitForEndOfFrame ();
 		
+		timeTaken = ( Time.time - timeTaken ) * 10;
 		
-		Debug.Log ( "OPScanner | ...scan complete!" );
+		Debug.Log ( "OPScanner | ...scan completed in " + timeTaken + " seconds" );
 	}
 	
 	function Scan () {

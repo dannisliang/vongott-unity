@@ -12,15 +12,15 @@ class OPPathFinder extends MonoBehaviour {
 	@HideInInspector var nodes : List.<OPNode> = new List.<OPNode>();
 	@HideInInspector var goal : Vector3;
 	
-	function SetGoalAfterFrame () : IEnumerator {
-		yield WaitForEndOfFrame();
+	function SetGoalAfterSeconds ( s : float ) : IEnumerator {
+		yield WaitForSeconds ( s );
 				
 		SetGoal ( target );
 	}
 	
 	function Start () {
 		if ( target != null ) {
-			StartCoroutine ( SetGoalAfterFrame () );
+			StartCoroutine ( SetGoalAfterSeconds ( 2 ) );
 		}
 	}
 	

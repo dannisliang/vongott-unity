@@ -4,7 +4,6 @@ import System.Collections.Generic;
 
 class OPNavMesh extends MonoBehaviour {	
 	private class Triangle {
-		var mesh : Mesh;
 		var indices : int[];
 		
 		function Triangle ( v0 : int, v1 : int, v2 : int ) {
@@ -14,12 +13,12 @@ class OPNavMesh extends MonoBehaviour {
 			indices[2] = v2;
 		}
 		
-		private function IsNeighborTo ( t : Triangle ) : boolean {
+		private function IsNeighborTo ( t : Triangle, vertices : Vector3[] ) : boolean {
 			var similarVertices : int = 0;
 			
 			for ( var thisVertex : int in indices ) {
 				for ( var thatVertex : int in t.indices ) {
-					if ( mesh.vertices [ thisVertex ] == mesh.vertices [ thatVertex ] ) {
+					if ( vertices[thisVertex] == vertices[thatVertex] ) {
 						similarVertices++;
 					}
 				}
@@ -28,16 +27,16 @@ class OPNavMesh extends MonoBehaviour {
 			return similarVertices > 1;
 		}
 		
-		public function GetNeighbors ( triangles : Triangle[] ) : int[] {
+		public function GetNeighbors ( triangles : Triangle[], vertices : Vector3[] ) : List.< int > {
 			var tempList : List.< int > = new List.< int > ();
 			
 			for ( var i : int = 0; i < triangles.Length; i++ ) {
-				if ( IsNeighborTo ( triangles[i] ) ) {
+				if ( IsNeighborTo ( triangles[i], vertices ) ) {
 					tempList.Add ( i );
 				}
 			}
 			
-			return tempList.ToArray();
+			return tempList;
 		}
 		
 		public function GetMedianPoint ( mesh : Mesh ) : Vector3 {
@@ -65,7 +64,7 @@ class OPNavMesh extends MonoBehaviour {
 	
 	public function GetNodes () : OPNode[] {
 		var mesh : Mesh = this.GetComponent(MeshFilter).mesh;
-		var triangles : List.< Triangle > = new List.< Triangle > ();
+		var triangleList : List.< Triangle > = new List.< Triangle > ();
 		var allNodes : List.< OPNode > = new List.< OPNode > ();
 		
 		var i : int = 0;
@@ -78,10 +77,8 @@ class OPNavMesh extends MonoBehaviour {
 				mesh.triangles [ i + 1 ],
 				mesh.triangles [ i + 2 ]
 			);
-			
-			triangle.mesh = mesh;
-			
-			triangles.Add ( triangle );
+						
+			triangleList.Add ( triangle );
 			
 			// Create median node
 			var mn : OPNode = new OPNode ();
@@ -91,9 +88,12 @@ class OPNavMesh extends MonoBehaviour {
 			allNodes.Add ( mn );
 		}
 		
+		var triangleArray : Triangle[] = triangleList.ToArray();
+		var vertices : Vector3[] = mesh.vertices;
+		
 		// Connect median nodes
-		for ( i = 0; i < allNodes.Count; i++ ) {			
-			for ( nb in triangles[i].GetNeighbors ( triangles.ToArray() ) ) {
+		for ( i = 0; i < triangleArray.Length; i++ ) {		
+			for ( nb in triangleArray[i].GetNeighbors ( triangleArray, vertices ) ) {
 				MakeNeighbors ( allNodes [ i ], allNodes [ nb ] );
 			}
 		}

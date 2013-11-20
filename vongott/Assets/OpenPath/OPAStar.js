@@ -7,7 +7,9 @@ class OPAStar {
 			
 	// Find a path and return a list of each step
 	static function Search ( start : OPNode, goal : OPNode, map : OPMap, heuristicWeight : float ) : List.<OPNode> {
-		Debug.Log ( "OpenPath | Searching for best route from " + start.position + " to " + goal.position );
+		var timeTaken : float = Time.time;
+		
+		Debug.Log ( "OPAstar | Searching for best route from " + start.position + " to " + goal.position );
 		
 		// Add the starting node to the open list
 		openList = new OPPriorityQueue ();
@@ -81,7 +83,9 @@ class OPAStar {
 		
 		} else {
 			// Path complete
-			Debug.Log ( "OpenPath | Path found!" );	
+			timeTaken = ( Time.time - timeTaken ) * 10;
+			
+			Debug.Log ( "OPAStar | Path found in " + timeTaken.ToString ( "f2" ) + " seconds" );	
 			return GetPath ( currentNode );
 
 		}
