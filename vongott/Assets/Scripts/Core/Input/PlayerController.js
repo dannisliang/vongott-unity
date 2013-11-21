@@ -22,8 +22,11 @@ class PlayerController {
 	public static var bodyState : ePlayerBodyState = ePlayerBodyState.Idle;
 	public static var actionState : ePlayerActionState = ePlayerActionState.Idle;
 	public static var controlMode : ePlayerControlMode = ePlayerControlMode.ThirdPerson;
-	public static var speed : float = 0.0;
-
+	
+	public static var deltaVertical : float;
+	public static var deltaHorizontal : float;
+	public static var deltaCombined : float;
+	
 	private static var capsule : CapsuleCollider;
 	private static var distGround : float = float.PositiveInfinity;
 
@@ -80,9 +83,9 @@ class PlayerController {
 		}
 		
 		// Locomotion
-		var deltaVertical : float = Input.GetAxisRaw ( "Vertical" );
-		var deltaHorizontal : float = Input.GetAxisRaw ( "Horizontal" );
-		var targetSpeed : float = 0.1;
+		deltaVertical = Input.GetAxisRaw ( "Vertical" );
+		deltaHorizontal = Input.GetAxisRaw ( "Horizontal" );
+		deltaCombined = 0.0;
 		
 		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
 			// Direction
@@ -95,15 +98,10 @@ class PlayerController {
 			}
 			
 			// Sprint
-			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-				if ( bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
-					targetSpeed = 1.0;
-				}
+			if ( Input.GetKey ( KeyCode.LeftShift ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
 			
 			// Walk
-			} else {
-				targetSpeed = 0.15;
-				
+			} else {				
 				if ( deltaVertical > 0.5 ) { deltaVertical = 0.5; }
 				else if ( deltaVertical < -0.5 ) { deltaVertical = -0.5; }
 				
@@ -117,12 +115,14 @@ class PlayerController {
 				bodyState = ePlayerBodyState.Idle;
 			}
 			
-			targetSpeed = 0;
-		
 		}
 		
-		// ^ Accelerate speed
-		speed = Mathf.Lerp ( speed, targetSpeed, 5 * Time.deltaTime );
+		// ^ Combined delta
+		if ( Mathf.Abs ( deltaVertical ) > Mathf.Abs ( deltaHorizontal ) ) {
+			deltaCombined = Mathf.Abs ( deltaVertical );
+		} else {
+			deltaCombined = Mathf.Abs ( deltaHorizontal );
+		}
 		
 		// Set capsule size
 		if ( bodyState == ePlayerBodyState.Crouching ) {
@@ -142,8 +142,8 @@ class PlayerController {
 		
 		player.GetComponent(Animator).SetFloat ( "DeltaVertical", deltaVertical );
 		player.GetComponent(Animator).SetFloat ( "DeltaHorizontal", deltaHorizontal );
-		
-		player.GetComponent(Animator).SetFloat ( "Speed", speed );
+		player.GetComponent(Animator).SetFloat ( "DeltaCombined", deltaCombined );
+
 		player.GetComponent(Animator).SetBool ( "Jumping", bodyState == ePlayerBodyState.Jumping || bodyState == ePlayerBodyState.Falling );
 		player.GetComponent(Animator).SetBool ( "Crouching", bodyState == ePlayerBodyState.Crouching );
 		player.GetComponent(Animator).SetBool ( "Shooting", actionState == ePlayerActionState.Shooting );

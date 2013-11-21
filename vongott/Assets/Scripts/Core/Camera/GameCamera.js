@@ -9,6 +9,8 @@ class GameCamera extends MonoBehaviour {
 	private var boundingBoxModifier : float = 1.0;
 	private var boundingBoxDelta : float = 0.1;
 	
+	public var firstPersonLayerMask : LayerMask;
+	public var thirdPersonLayerMask : LayerMask;
 	public var sensitivity : float = 2.5;
 	public var distance : float = 3;
     public var returnSpeed : float = 1.0;
@@ -41,14 +43,16 @@ class GameCamera extends MonoBehaviour {
 	function ToggleFirstPerson () {
 		firstPerson = !firstPerson;
 	
-		GameCore.GetPlayerObject().GetComponentInChildren(SkinnedMeshRenderer).enabled = !firstPerson;
+		//GameCore.GetPlayerObject().GetComponentInChildren(SkinnedMeshRenderer).enabled = !firstPerson;
 	
 		// Camera control
 		if ( firstPerson ) {
 			PlayerController.controlMode = ePlayerControlMode.FirstPerson;
+			this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
 			
 		} else {
 			PlayerController.controlMode = ePlayerControlMode.ThirdPerson;
+			this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
 		
 		}
 	}

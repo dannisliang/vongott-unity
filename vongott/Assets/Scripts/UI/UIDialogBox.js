@@ -60,7 +60,5 @@ class UIDialogBox extends OGPage {
 		buttonOK = _buttonOK;
 		buttonCancel = _buttonCancel;
 		input = _input;
-		
-		MouseLook.SetActive ( false );
 	}
 }
