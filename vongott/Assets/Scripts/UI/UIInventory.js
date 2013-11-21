@@ -59,31 +59,50 @@ class UIInventory extends OGPage {
 		}
 	}
 	
+	// Create image
+	private function CreateImage ( item : Item, parent : Transform ) : OGImage {
+		var image : OGImage = new GameObject ( item.name, OGImage ).GetComponent(OGImage);
+		image.image = item.image;
+		image.transform.parent = parent;
+		image.transform.localScale = new Vector3 ( 90, 90, 1 );
+		image.transform.localEulerAngles = Vector3.zero;
+		
+		return image;
+	}
+	
 	// Populate grid
 	function PopulateGrid () {
 		ClearGrid ();
-				
-		var allSlots : InventoryEntry[,] = InventoryManager.GetSlots();
-		
-		for ( var x : int = 0; x < allSlots.GetLength(0); x++ ) {
-			for ( var y : int = 0; y < allSlots.GetLength(1); y++ ) {
-				if ( allSlots[x,y] != null ) {
-					var item : Item = allSlots[x,y].GetItem();
-					var image : OGImage = new GameObject ( item.name, OGImage ).GetComponent(OGImage);
-					image.image = item.image;
-					image.transform.parent = grid;
-					image.transform.localScale = new Vector3 ( 90, 90, 1 );
-					image.transform.localEulerAngles = Vector3.zero;
+						
+		for ( var x : int = 0; x < InventoryManager.GetSlots().GetLength(0); x++ ) {
+			for ( var y : int = 0; y < InventoryManager.GetSlots().GetLength(1); y++ ) {
+				if ( InventoryManager.GetEntry(x,y) != null ) {
+					var entry : InventoryEntry = InventoryManager.GetEntry(x,y);
+					var item : Item = entry.GetItem();
+					var image : OGImage = CreateImage ( item, grid );
 					image.transform.localPosition = new Vector3 ( x * 90, y * 90, 0 );
-					
 					allImages[x,y] = image;
-				
-					if ( allSlots[x,y].equipped || allSlots[x,y].installed ) {
-						// Show installed or equipped
+								
+					if ( entry.equipped ) {
+						// Show equipped
+					} else if ( entry.installed ) {
+						// Show installed
 					} else {
 						// Show normal
 					}
 				}
+			}
+		}
+		
+		for ( var i : int = 0; i < InventoryManager.GetStash().Length; i++ ) {
+			var reference : InventoryEntryReference = InventoryManager.GetStash()[i];
+			
+			if ( reference != null ) {
+				var slotEntry : InventoryEntry = InventoryManager.GetEntry ( reference.refX, reference.refY );
+				var slotItem : Item = entry.GetItem();
+				
+				var slotImage : OGImage = CreateImage( item, stash );
+				slotImage.transform.localPosition = new Vector3 ( i * 90, 0, 0 );
 			}
 		}
 	}
@@ -195,6 +214,7 @@ class UIInventory extends OGPage {
 		
 		// Dropped somewhere in stash
 		} else if ( mousePosStash.x > 0 && mousePosStash.y > 0 && mousePosStash.y < 90 && stashX < 10 ) {
+			InventoryManager.SetStash ( draggingEntry.x, draggingEntry.y, stashX );
 			draggingEntry = null;
 			PopulateGrid ();
 		

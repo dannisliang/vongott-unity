@@ -15,6 +15,9 @@ class InventoryManager {
 	////////////////////
 	// Get slots
 	static function GetSlots () : InventoryEntry[,] { return slots; }
+	
+	// Get slots
+	static function GetStash () : InventoryEntryReference[] { return stash; }
 
 	// Get entry
 	static function GetEntry ( x : int, y : int ) : InventoryEntry {
