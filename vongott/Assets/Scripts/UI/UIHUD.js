@@ -34,6 +34,8 @@ class UIHUD extends OGPage {
 	// Init
 	////////////////////
 	override function StartPage () {
+		GameCore.state = eGameState.Game;
+		
 		statusBar = _statusBar;
 		notificationBox = _notificationBox;
 		crosshair = _crosshair;

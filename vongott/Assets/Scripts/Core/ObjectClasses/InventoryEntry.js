@@ -6,6 +6,8 @@ class InventoryEntry {
 	var installed : boolean = false;
 	var activated : boolean = false;
 
+	function InventoryEntry () {}
+
 	function InventoryEntry ( item : Item ) {
 		prefabPath = item.GetComponent(Prefab).path + "/" + item.GetComponent(Prefab).id;
 	}
@@ -36,5 +38,15 @@ class InventoryEntry {
 			return null;
 			
 		}
+	}
+}
+
+class InventoryEntryReference extends InventoryEntry {
+	var refX : int;
+	var refY : int;
+	
+	function InventoryEntryReference ( a : int, b : int ) {
+		refX = a;
+		refY = b;
 	}
 }

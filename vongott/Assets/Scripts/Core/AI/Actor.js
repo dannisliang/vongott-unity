@@ -485,7 +485,7 @@ class Actor extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		if ( GameCore.controlsActive && Input.GetMouseButtonDown(0) && !talking ) {
+		if ( GameCore.controlsActive && !talking ) {
 			StartCoroutine ( Talk() );
 			UIHUD.ShowNotification ( "" );
 		}

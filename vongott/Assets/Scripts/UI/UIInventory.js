@@ -7,7 +7,18 @@ private class Inspector {
 	var description : OGLabel;
 	var attrName : OGLabel;
 	var attrVal : OGLabel;
-	var action : OGLabel;
+	var action : OGButton;
+	var discard : OGButton;
+}
+
+private class Point {
+	var x : int;
+	var y : int;
+	
+	function Point ( a : int, b : int ) {
+		x = a;
+		y = b;
+	}
 }
 
 class UIInventory extends OGPage {
@@ -17,95 +28,109 @@ class UIInventory extends OGPage {
 	// Public vars
 	var animations : OGTween[];
 	var grid : Transform;
+	var stash : Transform;
 	var inspector : Inspector;
-	var btnDiscard : OGButton3D;
 	var creditsDisplay : OGLabel;
-	
-	var selectedMaterial : Material;
-	var equippedMaterial : Material;
-	var equippedSelectedMaterial : Material;
-	var normalMaterial : Material;
 	
 	// Private vars
 	private var selectedEntry : InventoryEntry;
-	private var activeButton : OGButton3D;
-	private var buttonsActive : boolean = false;
+	private var draggingEntry : Point;
+	private var listenForDrag : Point;
+	private var mouseClickTimer : float = 0.0;
+	private var allImages : OGImage[,] = new OGImage[10,3];
 	
 	
 	////////////////////
 	// Inventory display
 	////////////////////
+	// Round
+	function Round ( val : float, factor : float ) : float {
+		return Mathf.Round ( val / factor ) * factor;
+	}
+	
 	// Clear grid
 	function ClearGrid () {
 		selectedEntry = null;
-		btnDiscard.gameObject.SetActive ( false );
+		
+		allImages = new OGImage[10,3];
 		
 		for ( var i = 0; i < grid.childCount; i++ ) {
-			grid.GetChild ( i ).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = null;
-			grid.GetChild ( i ).GetChild(0).gameObject.SetActive ( false );
-			grid.GetChild(i).GetComponent(MeshRenderer).material = normalMaterial;
+			Destroy ( grid.GetChild ( i ).gameObject );
 		}
 	}
 	
 	// Populate grid
 	function PopulateGrid () {
 		ClearGrid ();
+				
+		var allSlots : InventoryEntry[,] = InventoryManager.GetSlots();
 		
-		var allSlots : InventoryEntry[] = InventoryManager.GetSlots();
-		
-		for ( var i = 0 ; i < allSlots.Length; i++ ) {
-			if ( allSlots[i] ) {
-				var item : Item = allSlots[i].GetItem();
-				grid.GetChild(i).GetChild(0).gameObject.SetActive ( true );
-				grid.GetChild(i).GetChild(0).GetComponent(MeshRenderer).material.mainTexture = item.image;
-			
-				if ( allSlots[i].equipped || allSlots[i].installed ) {
-					grid.GetChild(i).GetComponent(MeshRenderer).material = equippedMaterial;
-				} else {
-					grid.GetChild(i).GetComponent(MeshRenderer).material = normalMaterial;
+		for ( var x : int = 0; x < allSlots.GetLength(0); x++ ) {
+			for ( var y : int = 0; y < allSlots.GetLength(1); y++ ) {
+				if ( allSlots[x,y] != null ) {
+					var item : Item = allSlots[x,y].GetItem();
+					var image : OGImage = new GameObject ( item.name, OGImage ).GetComponent(OGImage);
+					image.image = item.image;
+					image.transform.parent = grid;
+					image.transform.localScale = new Vector3 ( 90, 90, 1 );
+					image.transform.localEulerAngles = Vector3.zero;
+					image.transform.localPosition = new Vector3 ( x * 90, y * 90, 0 );
+					
+					allImages[x,y] = image;
+				
+					if ( allSlots[x,y].equipped || allSlots[x,y].installed ) {
+						// Show installed or equipped
+					} else {
+						// Show normal
+					}
 				}
 			}
 		}
 	}
 	
 	// Update text
-	function UpdateText ( entry : InventoryEntry, button : OGButton3D ) {
-		if ( entry == null || !buttonsActive ) {
+	function UpdateText () {
+		if ( selectedEntry == null ) {
 			inspector.entryName.text = "";
 			inspector.description.text = "";
 			inspector.attrName.text = "";
 			inspector.attrVal.text = "";
-			inspector.action.text = "";
+			inspector.action.gameObject.SetActive ( false );
+			inspector.discard.gameObject.SetActive ( false );
 		
 			return;
 		}
 		
-		var item = entry.GetItem();
+		var item = selectedEntry.GetItem();
 		
 		inspector.entryName.text = item.title;
 		inspector.description.text = item.desc;
 		inspector.attrName.text = "";
 		inspector.attrVal.text = "";
 		inspector.action.text = "";
-		
+				
 		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
-			if ( entry.equipped ) {
-				inspector.action.text = "[UNEQUIP]";
+			if ( selectedEntry.equipped ) {
+				inspector.action.text = "UNEQUIP";
 			} else {
-				inspector.action.text = "[EQUIP]";
+				inspector.action.text = "EQUIP";
+				
 			}
 			
 		} else if ( item.type == eItemType.Upgrade ) {
-			if ( entry.installed ) {
-				inspector.action.text = "[UNINSTALL]";
+			if ( selectedEntry.installed ) {
+				inspector.action.text = "UNINSTALL";
 			} else {
-				inspector.action.text = "[INSTALL]";
+				inspector.action.text = "INSTALL";
 			}
 			
 		} else if ( item.type == eItemType.Consumable ) {
-			inspector.action.text = "[CONSUME]";
+			inspector.action.text = "CONSUME";
 		
 		}
+		
+		inspector.action.gameObject.SetActive ( true );
+		inspector.discard.gameObject.SetActive ( item.canDrop );
 		
 		for ( var a : Item.Attribute in item.attr ) {
 			inspector.attrName.text += a.type.ToString() + ": \n";
@@ -120,45 +145,63 @@ class UIInventory extends OGPage {
 				inspector.attrVal.text += a.val.ToString() + "\n";
 			}
 		}
+	}
+	
+	// Select slot
+	function SelectSlot () {
+		var allSlots : InventoryEntry[,] = InventoryManager.GetSlots();
+		
+		var mousePos : Vector3 = Input.mousePosition;
+		mousePos.y = Screen.height - mousePos.y;
+		mousePos = mousePos - grid.transform.position;
+		
+		var x : int = Mathf.Floor ( mousePos.x / 90 );
+		var y : int = Mathf.Floor ( mousePos.y / 90 );
+			
+		if ( mousePos.x > 0 && mousePos.y > 0 && x < allSlots.GetLength(0) && y < allSlots.GetLength(1) ) {
+			if ( allSlots[x,y] != null ) {
+				selectedEntry = allSlots[x,y];
 				
-		if ( button ) {
-			if ( entry.equipped || entry.installed ) {
-				button.GetComponent(MeshRenderer).material = equippedSelectedMaterial;
+				UpdateText ();
+			
+				listenForDrag = new Point ( x, y );
 			
 			} else {
-				button.GetComponent(MeshRenderer).material = selectedMaterial;
-			
+				selectedEntry = null;
+		
 			}
 		}
 	}
 	
-	function UpdateText( entry : InventoryEntry ) {
-		UpdateText ( entry, null );
-	}
-	
-	// Select slot
-	function SelectSlot ( b : OGButton3D ) {
-		if ( b == activeButton ) { return; }
+	// Drop on slot
+	function DropOnSlot () {
+		var allSlots : InventoryEntry[,] = InventoryManager.GetSlots();
 		
-		activeButton = b;
+		var mousePos : Vector3 = Input.mousePosition;
+		mousePos.y = Screen.height - mousePos.y;
 		
-		var index : int = int.Parse ( b.gameObject.name );
-		var allSlots : InventoryEntry[] = InventoryManager.GetSlots();
+		var mousePosGrid = mousePos - grid.transform.position;
+		var mousePosStash = mousePos - stash.transform.position;
 		
-		PopulateGrid ();
+		var gridX : int = Mathf.Floor ( mousePosGrid.x / 90 );
+		var gridY : int = Mathf.Floor ( mousePosGrid.y / 90 );
+		var stashX : int = Mathf.Floor ( mousePosStash.x / 90 );
 		
-		UpdateText ( allSlots[index], b );
-			
-		selectedEntry = allSlots[index];
+		// Dropped somewhere on grid
+		if ( mousePosGrid.x > 0 && mousePosGrid.y > 0 && gridX < allSlots.GetLength(0) && gridY < allSlots.GetLength(1) ) {
+			InventoryManager.MoveEntry ( draggingEntry.x, draggingEntry.y, gridX, gridY );
+			draggingEntry = null;
+			PopulateGrid ();			
 		
-		btnDiscard.renderer.material = normalMaterial;
-		btnDiscard.transform.localEulerAngles = -b.transform.localEulerAngles;
-			
-		if ( selectedEntry && selectedEntry.GetItem() && selectedEntry.GetItem().canDrop ) {
-			btnDiscard.gameObject.SetActive ( true );
+		// Dropped somewhere in stash
+		} else if ( mousePosStash.x > 0 && mousePosStash.y > 0 && mousePosStash.y < 90 && stashX < 10 ) {
+			draggingEntry = null;
+			PopulateGrid ();
 		
+		// Dropped somewhere else
 		} else {
-			btnDiscard.gameObject.SetActive ( false );
+			draggingEntry = null;
+			PopulateGrid ();
 		
 		}
 	}
@@ -168,14 +211,14 @@ class UIInventory extends OGPage {
 	// Action buttons
 	////////////////////
 	// Equip entry
-	private function Equip ( entry : InventoryEntry, equip : boolean ) {
-		entry.equipped = equip;
+	private function Equip ( equip : boolean ) {
+		selectedEntry.equipped = equip;
 		
-		var item : Item = entry.GetItem();
+		var item : Item = selectedEntry.GetItem();
 		
 		InventoryManager.Equip ( item, equip );
 		
-		UpdateText ( entry );
+		UpdateText ();
 	}
 	
 	// Destroy entry
@@ -187,9 +230,8 @@ class UIInventory extends OGPage {
 		}
 		
 		InventoryManager.RemoveEntry ( selectedEntry, true );
-		selectedEntry = null;
-		activeButton = null;		
-		UpdateText( null );
+		selectedEntry = null;		
+		UpdateText();
 		ClearGrid ();
 		PopulateGrid ();
 	}
@@ -200,10 +242,10 @@ class UIInventory extends OGPage {
 	}
 	
 	// Install entry
-	private function Install ( entry : InventoryEntry, install : boolean ) {
-		entry.installed = install;
+	private function Install ( install : boolean ) {
+		selectedEntry.installed = install;
 		
-		var item : Item = entry.GetItem();
+		var item : Item = selectedEntry.GetItem();
 		var upgrade : Upgrade = item as Upgrade;
 		
 		
@@ -219,51 +261,35 @@ class UIInventory extends OGPage {
 			UpgradeManager.Remove ( upgrade.upgSlot );
 		}
 		
-		UpdateText ( entry );
+		UpdateText ();
 	}
 	
-	// Transition
-	function Transition ( forward : boolean, callback : Function ) : IEnumerator {
-		var time : float;
+	// Discard button
+	function BtnDiscard () {
+		if ( !selectedEntry ) { return; }
 		
-		for ( var t : OGTween in animations ) {
-			t.Play ( forward );
-		
-			if ( t.move.enabled && t.move.time > time ) { time = t.move.time; }
-			if ( t.rotate.enabled && t.rotate.time > time ) { time = t.rotate.time; }
-			if ( t.scale.enabled && t.scale.time > time ) { time = t.scale.time; }
-		}	
-		
-		if ( callback ) {
-			var targetTime = System.DateTime.Now.AddSeconds ( time );
-			
-			while ( System.DateTime.Now < targetTime ) {
-				yield null;
-			}
-			
-			callback ();
-		}
+		DestroyEntry ();
 	}
 	
-	// Equip button
-	function BtnEquip () {
+	// Action button
+	function BtnAction () {
 		if ( !selectedEntry ) { return; }
 		
 		var item : Item = selectedEntry.GetItem();
 		
 		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
 			if ( !selectedEntry.equipped ) {
-				Equip ( selectedEntry, true );
+				Equip ( true );
 			} else {
-				Equip ( selectedEntry, false );
+				Equip ( false );
 			}
 	
 		} else if ( item.type == eItemType.Upgrade ) {
 			if ( !selectedEntry.installed ) {
-				Install ( selectedEntry, true );
+				Install ( true );
 				
 			} else {
-				Install ( selectedEntry, false );
+				Install ( false );
 			}
 		
 		} else if ( item.type == eItemType.Consumable ) {
@@ -272,86 +298,64 @@ class UIInventory extends OGPage {
 			return;
 		
 		}
-		
-		if ( activeButton ) {
-			if ( selectedEntry.equipped || selectedEntry.installed ) {
-				activeButton.GetComponent(MeshRenderer).material = equippedSelectedMaterial;
-			
-			} else {
-				activeButton.GetComponent(MeshRenderer).material = selectedMaterial;
-			
-			}
-		}
 	}
-	
-	// Discard button
-	function HoverDiscard ( btn : OGButton3D ) {
-		if ( selectedEntry ) {
-			inspector.action.text = "[DROP]";
-			btn.renderer.material = selectedMaterial;
-		}
-	}
-	
-	function OutDiscard ( btn : OGButton3D ) {
-		inspector.action.text = "";
-		btn.renderer.material = normalMaterial;
-	}
-	
-	function BtnDiscard () {
-		if ( !selectedEntry ) { return; }
-		
-		if ( selectedEntry.GetItem().type == eItemType.Upgrade ) {
-			UpgradeManager.Remove ( ( selectedEntry.GetItem() as Upgrade ).upgSlot );
-		}
-		
-		InventoryManager.RemoveEntry ( selectedEntry, false );
-		UpdateText( null );
-		ClearGrid ();
-		PopulateGrid ();
-	}
-	
 	
 	////////////////////
 	// Init
 	////////////////////
-	function SetButtons ( state : boolean ) {
-		buttonsActive = state;
-		
-		for ( var c : Component in grid.GetComponentsInChildren(Collider) ) {
-			if ( c.GetType() == BoxCollider ) {
-				(c as BoxCollider).enabled = state;
-			} else if ( c.GetType() == MeshCollider ) {
-				(c as MeshCollider).enabled = state;
-			}
-		}
-	}
-	
 	override function StartPage () {
-		SetButtons ( false );
+		GameCore.state = eGameState.Menu;
 		
 		creditsDisplay.text = "CREDITS: " + InventoryManager.GetCredits();
 		ClearGrid ();
 		GameCore.GetInstance().SetPause ( true );
 		PopulateGrid ();
-		UpdateText ( null );
+		UpdateText ();
 		
-		StartCoroutine ( Transition ( true, function () { SetButtons ( true ); } ) );
+		InputManager.escFunction = Exit;
 	}
+	
+	override function ExitPage () {
+		draggingEntry = null;
+		mouseClickTimer = 0.0;
+		listenForDrag = null;
+		selectedEntry = null;
+		ClearGrid ();
+	}
+	
+	override function UpdatePage () {
+		if ( Input.GetMouseButtonDown ( 0 ) ) {
+			SelectSlot ();
 		
+		} else if ( Input.GetMouseButtonUp ( 0 ) && draggingEntry ) {
+			DropOnSlot ();
+		
+		}
+		
+		if ( Input.GetMouseButton ( 0 ) ) {
+			mouseClickTimer += GameCore.GetInstance().ignoreTimeScale;
+			
+			if ( listenForDrag && mouseClickTimer > 0.25 ) {
+				draggingEntry = listenForDrag;
+			}
+			
+		} else {
+			mouseClickTimer = 0.0;
+			listenForDrag = null;
+		
+		}
+		
+		if ( draggingEntry != null ) {
+			var mousePos : Vector3 = Input.mousePosition;
+			mousePos.x -= 45;
+			mousePos.y = Screen.height - mousePos.y - 45;
+			mousePos.z = -15;
+			
+			allImages [ draggingEntry.x, draggingEntry.y ].transform.position = mousePos;
+		}
+	}
+	
 	function Exit () {
 		OGRoot.GoToPage ( "HUD" );
-	}
-	
-	
-	////////////////////
-	// Update
-	////////////////////
-	override function UpdatePage () {
-		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
-			SetButtons ( false );
-			UpdateText ( null );
-			btnDiscard.gameObject.SetActive ( false );
-			StartCoroutine ( Transition ( false, Exit )	);
-		}
 	}
 }

@@ -78,8 +78,11 @@ class PlayerController {
 		
 		// Interact
 		} else if ( Input.GetMouseButtonDown ( 2 ) ) {
-			actionState = ePlayerActionState.Interacting;
-		
+			if ( GameCore.GetInteractiveObject() ) {
+				actionState = ePlayerActionState.Interacting;
+				GameCore.GetInteractiveObject().Interact();
+			}
+			
 		}
 		
 		// Locomotion
