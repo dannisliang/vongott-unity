@@ -57,6 +57,10 @@ class UIInventory extends OGPage {
 		for ( var i = 0; i < grid.childCount; i++ ) {
 			Destroy ( grid.GetChild ( i ).gameObject );
 		}
+		
+		for ( i = 0; i < stash.childCount; i++ ) {
+			Destroy ( stash.GetChild ( i ).gameObject );
+		}
 	}
 	
 	// Create image
@@ -64,10 +68,26 @@ class UIInventory extends OGPage {
 		var image : OGImage = new GameObject ( item.name, OGImage ).GetComponent(OGImage);
 		image.image = item.image;
 		image.transform.parent = parent;
-		image.transform.localScale = new Vector3 ( 90, 90, 1 );
+		image.transform.localScale = new Vector3 ( Round ( item.image.width, 90 ), Round ( item.image.height, 90 ), 1 );
 		image.transform.localEulerAngles = Vector3.zero;
 		
 		return image;
+	}
+	
+	// Create remove button
+	private function CreateRemoveButton ( slot : int ) : OGButton {
+		var button : OGButton = new GameObject ( "RemoveButton", OGButton ).GetComponent(OGButton);
+		button.text = "X";
+		button.target = this.gameObject;
+		button.message = "RemoveStashEntry";
+		button.argument = slot.ToString();
+		
+		button.transform.parent = stash;
+		button.transform.localScale = new Vector3 ( 24, 24, 1 );
+		button.transform.localPosition = new Vector3 ( 66 + slot * 90, 0, -20 );
+		button.transform.localEulerAngles = Vector3.zero;
+		
+		return button;
 	}
 	
 	// Populate grid
@@ -80,7 +100,7 @@ class UIInventory extends OGPage {
 					var entry : InventoryEntry = InventoryManager.GetEntry(x,y);
 					var item : Item = entry.GetItem();
 					var image : OGImage = CreateImage ( item, grid );
-					image.transform.localPosition = new Vector3 ( x * 90, y * 90, 0 );
+					image.transform.localPosition = new Vector3 ( x * 90, y * 90, -15 );
 					allImages[x,y] = image;
 								
 					if ( entry.equipped ) {
@@ -102,7 +122,9 @@ class UIInventory extends OGPage {
 				var slotItem : Item = entry.GetItem();
 				
 				var slotImage : OGImage = CreateImage( item, stash );
-				slotImage.transform.localPosition = new Vector3 ( i * 90, 0, 0 );
+				slotImage.transform.localPosition = new Vector3 ( i * 90, 0, -15 );
+			
+				var button : OGButton = CreateRemoveButton ( i );
 			}
 		}
 	}
@@ -130,21 +152,21 @@ class UIInventory extends OGPage {
 				
 		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
 			if ( selectedEntry.equipped ) {
-				inspector.action.text = "UNEQUIP";
+				inspector.action.text = "Unequip";
 			} else {
-				inspector.action.text = "EQUIP";
+				inspector.action.text = "Equip";
 				
 			}
 			
 		} else if ( item.type == eItemType.Upgrade ) {
 			if ( selectedEntry.installed ) {
-				inspector.action.text = "UNINSTALL";
+				inspector.action.text = "Uninstall";
 			} else {
-				inspector.action.text = "INSTALL";
+				inspector.action.text = "Install";
 			}
 			
 		} else if ( item.type == eItemType.Consumable ) {
-			inspector.action.text = "CONSUME";
+			inspector.action.text = "Consume";
 		
 		}
 		
@@ -164,6 +186,11 @@ class UIInventory extends OGPage {
 				inspector.attrVal.text += a.val.ToString() + "\n";
 			}
 		}
+	}
+	
+	// Go to page
+	public function GoToPage ( page : String ) {
+		OGRoot.GoToPage ( page );
 	}
 	
 	// Select slot
@@ -190,6 +217,14 @@ class UIInventory extends OGPage {
 		
 			}
 		}
+	}
+	
+	// Remove stash entry
+	public function RemoveStashEntry ( n : String ) {
+		var i : int = int.Parse ( n );
+		
+		InventoryManager.ClearStashSlot ( i );
+		PopulateGrid ();
 	}
 	
 	// Drop on slot
@@ -367,8 +402,7 @@ class UIInventory extends OGPage {
 		
 		if ( draggingEntry != null ) {
 			var mousePos : Vector3 = Input.mousePosition;
-			mousePos.x -= 45;
-			mousePos.y = Screen.height - mousePos.y - 45;
+			mousePos.y = Screen.height - mousePos.y;
 			mousePos.z = -15;
 			
 			allImages [ draggingEntry.x, draggingEntry.y ].transform.position = mousePos;

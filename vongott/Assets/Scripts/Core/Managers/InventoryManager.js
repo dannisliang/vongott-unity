@@ -39,9 +39,27 @@ class InventoryManager {
 	// Get credits
 	static function GetCredits() : int { return credits; }
 
+	// Clear stash slot
+	static function ClearStashSlot ( i : int ) {
+		stash[i] = null;
+	}
+
+	// Clear stash
+	static function ClearStash () {
+		stash = new InventoryEntryReference[10];
+	}
+
 	// Add item to stash
 	static function SetStash ( refX : int, refY : int, slot : int ) {
+		for ( var i : int = 0; i < stash.Length; i++ ) {
+			if ( stash[i] != null && stash[i].refX == refX && stash[i].refY == refY ) {
+				stash[i] = null;
+			}
+		}
+		
 		stash[slot] = new InventoryEntryReference ( refX, refY );
+	
+		GameCore.Print ( "InventoryManager | Item '" + GetEntry ( refX, refY ).GetItem().title + "' put in stash slot " + slot );
 	}
 
 	// Add item
@@ -60,9 +78,21 @@ class InventoryManager {
 		}
 	}
 
+	// Update stash reference
+	static function UpdateStashReference ( fromX : int, fromY : int, toX : int, toY : int ) {
+		for ( var i : int = 0; i < stash.Length; i++ ) {
+			if ( stash[i] != null && stash[i].refX == fromX && stash[i].refY == fromY ) {
+				stash[i].refX = toX;
+				stash[i].refY = toY;
+			}
+		}
+	}
+
 	// Move entry
 	static function MoveEntry ( fromX : int, fromY : int, toX : int, toY : int ) {
 		var entry : InventoryEntry = slots[fromX, fromY];
+	
+		UpdateStashReference ( fromX, fromY, toX, toY );
 
 		slots[fromX,fromY] = null;
 		slots[toX,toY] = entry;
