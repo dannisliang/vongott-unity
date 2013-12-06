@@ -49,14 +49,14 @@ class EditorActors extends OGPage {
 	}
 	
 	function OK () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	function Add () {
 		if ( currentDir != "" && currentActor != "" ) {
 			EditorCore.AddActor ( currentDir, currentActor );
 			
-			OGRoot.GoToPage ( "MenuBase" );
+			OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		}
 	}
 	

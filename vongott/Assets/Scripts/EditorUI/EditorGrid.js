@@ -14,7 +14,7 @@ class EditorGrid extends OGPage {
 	}
 	
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	function OK () {
@@ -22,6 +22,6 @@ class EditorGrid extends OGPage {
 		EditorCore.snapEnabled = snap.isChecked;
 		EditorCore.gridLineDistance = float.Parse ( darkLine.text );
 		EditorCore.gridLineBrightFrequency = float.Parse ( brightLine.text );
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 }

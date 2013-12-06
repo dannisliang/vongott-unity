@@ -13,25 +13,25 @@ class EditorConfirmDialog extends OGPage {
 
 	function Yes () {
 		if ( yesAction != null ) {
-			OGRoot.GoToPage ( sender );
+			OGRoot.GetInstance().GoToPage ( sender );
 			yesAction ();
 		} 
 	}
 	
 	function No () {
 		if ( noAction != null && sender != "" ) {
-			OGRoot.GoToPage ( sender );
+			OGRoot.GetInstance().GoToPage ( sender );
 			noAction ();
 			Clear ();
 		} else if ( sender != "" ) {
-			OGRoot.GoToPage ( sender );
+			OGRoot.GetInstance().GoToPage ( sender );
 			Clear ();
 		}
 	}
 	
 	function Close () {
 		if ( sender != "" ) {
-			OGRoot.GoToPage ( sender );
+			OGRoot.GetInstance().GoToPage ( sender );
 			Clear ();
 		}
 	}

@@ -7,7 +7,7 @@ class EditorEditAccount extends OGPage {
 	
 	public var username : OGTextField;
 	public var password : OGTextField;
-	public var wallpaper : OGImage;
+	public var wallpaper : OGTexture;
 	public var wallpaperSelect : OGPopUp;
 	public var messages : OGTextField;
 	public var todoList : OGTextField;
@@ -54,10 +54,10 @@ class EditorEditAccount extends OGPage {
 			callback = null;
 		}
 		
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 }

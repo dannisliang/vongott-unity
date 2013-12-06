@@ -123,7 +123,7 @@ class UIModWheel extends OGPage {
 	}
 	
 	function Exit () {
-		OGRoot.GoToPage ( "HUD" );
+		OGRoot.GetInstance().GoToPage ( "HUD" );
 	}
 	
 	function Pick ( b : OGButton3D ) {		

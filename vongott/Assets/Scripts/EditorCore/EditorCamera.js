@@ -468,7 +468,7 @@ function Update () {
 			}
 		
 		// middle mouse drag
-		} else if ( Input.GetMouseButton(2) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {        
+		} else if ( Input.GetMouseButton(2) && !OGRoot.GetInstance().isMouseOver && OGRoot.GetInstance().currentPage.pageName == "MenuBase" ) {        
 	        var panSensitivity : float = sensitivity; 
 				
 			if ( Camera.main.orthographic ) {
@@ -502,7 +502,7 @@ function Update () {
 			var translation = Input.GetAxis("Mouse ScrollWheel");
 			var spd : float = speed;
 						
-			if ( translation != 0.0 && !OGRoot.mouseOver ) {				
+			if ( translation != 0.0 && !OGRoot.GetInstance().isMouseOver ) {				
 				if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) ) {
 					spd = spd / 4;
 				} else if ( Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.RightControl ) ) {

@@ -39,14 +39,14 @@ class EditorMenuBase extends OGPage {
 	function OpenFile () {
 		EditorOpenFile.baseDir = "Maps";
 		EditorOpenFile.fileType = "vgmap";
-		OGRoot.GoToPage ( "OpenFile" );
+		OGRoot.GetInstance().GoToPage ( "OpenFile" );
 	}
 	
 	// Import OBJ
 	function ImportOBJ () {
 		EditorOpenFile.baseDir = "ImportOBJ";
 		EditorOpenFile.fileType = "obj";
-		OGRoot.GoToPage ( "OpenFile" );
+		OGRoot.GetInstance().GoToPage ( "OpenFile" );
 	}
 		
 	// Save file
@@ -61,7 +61,7 @@ class EditorMenuBase extends OGPage {
 	
 	// Rename level
 	function SaveAs () {
-		OGRoot.GoToPage ( "SaveAs" );
+		OGRoot.GetInstance().GoToPage ( "SaveAs" );
 	}
 	
 	// Exit editor
@@ -84,14 +84,14 @@ class EditorMenuBase extends OGPage {
 		EditorCore.ToggleWireframe ();
 	}
 	
-	// Toggle wireframe view
+	// Toggle textured view
 	function ToggleTextured () {
 		EditorCore.ToggleTextured ();
 	}
 	
 	// Set grid
 	function AdjustGrid () {
-		OGRoot.GoToPage ( "Grid" );
+		OGRoot.GetInstance().GoToPage ( "Grid" );
 	}
 	
 	// Toggle gizmos
@@ -108,34 +108,8 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Add menu
 	////////////////////
-	// Prefabs
-	function AddPrefab () {
-		EditorBrowserWindow.initMode = "Add";
-		EditorBrowserWindow.rootFolder = "Prefabs";
-		
-		OGRoot.GoToPage ( "BrowserWindow" );
-	}
-	
-	function AddActor () {
-		EditorBrowserWindow.initMode = "Add";
-		EditorBrowserWindow.rootFolder = "Actors";
-		
-		OGRoot.GoToPage ( "BrowserWindow" );
-	}
-	
-	function AddItem () {
-		EditorBrowserWindow.initMode = "Add";
-		EditorBrowserWindow.rootFolder = "Items";
-		
-		OGRoot.GoToPage ( "BrowserWindow" );
-	}
-	
 	function AddLight () {
 		EditorCore.AddLight ();
-	}
-	
-	function AddSurface () {
-		EditorCore.CreateSurface ();
 	}
 	
 	function AddSpawnPoint () {
@@ -161,22 +135,22 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Conversation editor
 	function ConversationEditor () {
-		OGRoot.GoToPage ( "ConversationMap" );
+		OGRoot.GetInstance().GoToPage ( "ConversationMap" );
 	}
 	
 	// Quest editor
 	function QuestEditor () {
-		OGRoot.GoToPage ( "Quests" );
+		OGRoot.GetInstance().GoToPage ( "Quests" );
 	}
 	
 	// Event editor
 	function EventEditor () {
-		OGRoot.GoToPage ( "Events" );
+		OGRoot.GetInstance().GoToPage ( "Events" );
 	}
 	
 	// Flag editor
 	function FlagEditor () {
-		OGRoot.GoToPage ( "Flags" );
+		OGRoot.GetInstance().GoToPage ( "Flags" );
 	}
 	
 	
@@ -190,7 +164,7 @@ class EditorMenuBase extends OGPage {
 		
 		};
 		
-		OGRoot.GoToPage ( "ConfirmDialog" );
+		OGRoot.GetInstance().GoToPage ( "ConfirmDialog" );
 	}
 	
 	function AddNavNode () {	
@@ -204,7 +178,7 @@ class EditorMenuBase extends OGPage {
 			EditorCore.AddNavMesh ();
 		};
 		
-		OGRoot.GoToPage ( "ConfirmDialog" );
+		OGRoot.GetInstance().GoToPage ( "ConfirmDialog" );
 	}
 	
 	function BakeNodes () {
@@ -214,7 +188,7 @@ class EditorMenuBase extends OGPage {
 			EditorCore.GetInstance().BakeNavNodes ();
 		};
 		
-		OGRoot.GoToPage ( "ConfirmDialog" );
+		OGRoot.GetInstance().GoToPage ( "ConfirmDialog" );
 	}
 	
 	public function SetToWayPoint () {
@@ -234,7 +208,7 @@ class EditorMenuBase extends OGPage {
 	// Help menu
 	////////////////////
 	function ShowHelp () {
-		OGRoot.GoToPage ( "Help" );
+		OGRoot.GetInstance().GoToPage ( "Help" );
 	}
 							
 		
@@ -249,24 +223,24 @@ class EditorMenuBase extends OGPage {
 	// Adjust position
 	function AdjustPosition () {
 		EditorAdjust.adjust = "position";
-		OGRoot.GoToPage ( "Adjust" );
+		OGRoot.GetInstance().GoToPage ( "Adjust" );
 	}
 	
 	// Adjust rotation
 	function AdjustRotation () {
 		EditorAdjust.adjust = "rotation";
-		OGRoot.GoToPage ( "Adjust" );
+		OGRoot.GetInstance().GoToPage ( "Adjust" );
 	}
 	
 	// Adjust scale
 	function AdjustScale () {
 		EditorAdjust.adjust = "scale";
-		OGRoot.GoToPage ( "Adjust" );
+		OGRoot.GetInstance().GoToPage ( "Adjust" );
 	}
 	
 	// Clear the menus
 	function ClearMenus () {		
-		tabs.tabs.Clear ();
+		tabs.ClearTabs ();
 		
 		for ( var c : GameObject in inspectorMenus ) {		
 			c.SetActive ( false );
@@ -430,8 +404,8 @@ class EditorMenuBase extends OGPage {
 				scl.y.text = "Y: " + t.localScale.y.ToString("f2");
 				scl.z.text = "Z: " + t.localScale.z.ToString("f2");
 							
-			} else if ( inspector.activeSelf ) {
-				inspector.SetActive ( false );
+			} else if ( inspector.activeSelf && EditorCore.running ) {
+				//inspector.SetActive ( false );
 
 			}
 		}

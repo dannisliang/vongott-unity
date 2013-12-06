@@ -102,7 +102,7 @@ class EditorInspectorComputer extends MonoBehaviour {
 		EditorEditAccount.currentAccount = currentComputer.GetAccountFromString ( name );
 		EditorEditAccount.callback = UpdateObject;
 		
-		OGRoot.GoToPage ( "EditAccount" );
+		OGRoot.GetInstance().GoToPage ( "EditAccount" );
 	}
 	
 	//////////////////////

@@ -20,10 +20,10 @@ class EditorEditText extends OGPage {
 			objectContent = "";
 		}
 		
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 }

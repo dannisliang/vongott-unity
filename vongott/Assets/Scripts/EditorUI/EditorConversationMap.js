@@ -90,7 +90,7 @@ class EditorConversationMap extends OGPage {
 		
 		EditorPicker.func = LoadConversation;
 		
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	function Populate () : IEnumerator {
@@ -130,7 +130,7 @@ class EditorConversationMap extends OGPage {
 	
 		selector.text = "(none)";
 	
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	

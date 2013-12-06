@@ -19,7 +19,7 @@ class Book extends InteractiveObject {
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
 		
-		OGRoot.GoToPage ( "TextDisplay" );
+		OGRoot.GetInstance().GoToPage ( "TextDisplay" );
 	}
 	
 	public function Exit () : IEnumerator {
@@ -41,7 +41,7 @@ class Book extends InteractiveObject {
 			GameCore.interactiveObjectLocked = true;
 		
 		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
-			OGRoot.GoToPage ( "HUD" );
+			OGRoot.GetInstance().GoToPage ( "HUD" );
 			
 			StartCoroutine ( Exit () );
 			

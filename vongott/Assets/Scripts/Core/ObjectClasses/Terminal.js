@@ -11,13 +11,13 @@ class Terminal extends InteractiveObject {
 	public function LoginSuccess () {
 		UITerminalDisplay.currentCameras = cameras;
 		
-		OGRoot.GoToPage ( "TerminalDisplay" );
+		OGRoot.GetInstance().GoToPage ( "TerminalDisplay" );
 	}
 	
 	public function ShowLogin ( ){
 		UIKeypadDisplay.passCode = passCode;
 		UIKeypadDisplay.successCallback = LoginSuccess;
-		OGRoot.GoToPage ( "KeypadDisplay" );
+		OGRoot.GetInstance().GoToPage ( "KeypadDisplay" );
 	}
 	
 	public function Enter () : IEnumerator {
@@ -53,7 +53,7 @@ class Terminal extends InteractiveObject {
 			GameCore.interactiveObjectLocked = true;
 		
 		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
-			OGRoot.GoToPage ( "HUD" );
+			OGRoot.GetInstance().GoToPage ( "HUD" );
 			UILoginDisplay.Clear ();
 			UIComputerDisplay.Clear ();
 			

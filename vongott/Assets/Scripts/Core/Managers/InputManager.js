@@ -19,13 +19,13 @@ class InputManager extends MonoBehaviour {
 		// Menu shortcuts
 		} else {
 			if ( Input.GetKeyDown(KeyCode.I) ) {
-				OGRoot.GoToPage ( "Inventory" );
+				OGRoot.GetInstance().GoToPage ( "Inventory" );
 				
 			} else if ( Input.GetKeyDown(KeyCode.Q) ) {
-				OGRoot.GoToPage ( "Quests" );
+				OGRoot.GetInstance().GoToPage ( "Quests" );
 			
 			} else if ( Input.GetKeyDown(KeyCode.U) ) {
-				OGRoot.GoToPage ( "ModWheel" );
+				OGRoot.GetInstance().GoToPage ( "ModWheel" );
 			
 			}
 		

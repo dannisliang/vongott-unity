@@ -60,7 +60,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		
 		EditorPicker.func = UpdateObject;
 		
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	function PickMap ( btn : OGButton ) {
@@ -70,7 +70,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		
 		EditorPicker.func = UpdateObject;
 		
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	function PickFlag ( btn : OGButton ) {
@@ -80,7 +80,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		
 		EditorPicker.func = UpdateObject;
 		
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	function AddEvent () {
@@ -109,7 +109,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 			EditorPicker.button = btn;
 			EditorPicker.func = UpdateObject;
 			
-			OGRoot.GoToPage ( "Picker" );
+			OGRoot.GetInstance().GoToPage ( "Picker" );
 		};
 		
 		var dltObj : GameObject = new GameObject ( "Delete" );

@@ -16,7 +16,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	var textPreview : OGLabel;
 	
 	var editTextButton : OGButton;
-	var previewImage : OGImage;
+	var previewImage : OGTexture;
 	var materialButton : OGButton;
 	
 	@HideInInspector var obj : GameObject;
@@ -46,7 +46,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 			}
 		};
 		
-		OGRoot.GoToPage ( "EditText" );
+		OGRoot.GetInstance().GoToPage ( "EditText" );
 	}
 	
 	
@@ -158,7 +158,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 				EditorBrowserWindow.rootFolder = "Materials";
 				EditorBrowserWindow.initMode = "Use";
 				EditorBrowserWindow.callback = GetMaterial;
-				OGRoot.GoToPage ( "BrowserWindow" );
+				OGRoot.GetInstance().GoToPage ( "BrowserWindow" );
 			};
 			
 			materialButton.text = "";

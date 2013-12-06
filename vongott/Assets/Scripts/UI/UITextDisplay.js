@@ -20,7 +20,7 @@ class UITextDisplay extends OGPage {
 	////////////////////
 	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return) ) {
-			OGRoot.GoToPage ( "HUD" );
+			OGRoot.GetInstance().GoToPage ( "HUD" );
 		}
 	}
 }

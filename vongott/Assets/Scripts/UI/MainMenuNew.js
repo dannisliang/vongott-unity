@@ -6,6 +6,6 @@ class MainMenuNew extends OGPage {
 	}
 
 	public function GoBack () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 }

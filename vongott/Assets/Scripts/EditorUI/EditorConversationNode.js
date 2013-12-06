@@ -259,7 +259,7 @@ class EditorConversationNode extends MonoBehaviour {
 		EditorPicker.button = btn;
 		EditorPicker.sender = "ConversationMap";
 				
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	// Items
@@ -268,7 +268,7 @@ class EditorConversationNode extends MonoBehaviour {
 		EditorPicker.button = btn;
 		EditorPicker.sender = "ConversationMap";
 				
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	// Speak	

@@ -1,21 +1,9 @@
-#pragma strict
+﻿#pragma strict
 
-@script AddComponentMenu ("OpenGUI/Page")
+public class OGPage extends MonoBehaviour {
+	public var pageName : String = "New Page";
 
-class OGPage extends MonoBehaviour {
-	
-	var skin : GUISkin = null;
-	var pageName : String = "";
-
-	function Start () {
-		if ( pageName == "" ) {
-			pageName = name;
-		}
-	}
-
-	function StartPage () {}
-
-	function UpdatePage () {}
-	
-	function ExitPage () {};
+	public function StartPage () {}
+	public function UpdatePage () {}
+	public function ExitPage () {}
 }

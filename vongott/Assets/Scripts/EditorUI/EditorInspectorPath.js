@@ -129,7 +129,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		running.transform.localScale = new Vector3 ( 38, 20, 1 );
 		
 		var rtb : OGTickBox = running.AddComponent ( OGTickBox );
-		rtb.label = "Run";
+		rtb.text = "Run";
 		rtb.isChecked = actorNode.running;
 		
 		// position

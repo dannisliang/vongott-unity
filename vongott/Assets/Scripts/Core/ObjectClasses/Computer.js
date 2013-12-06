@@ -46,14 +46,14 @@ class Computer extends InteractiveObject {
 		UIComputerDisplay.currentAccount = a;
 		UIComputerDisplay.currentComputer = this;
 		
-		OGRoot.GoToPage ( "ComputerDisplay" );
+		OGRoot.GetInstance().GoToPage ( "ComputerDisplay" );
 	}
 	
 	public function ShowLogin ( ){
 		UILoginDisplay.title = domain;
 		UILoginDisplay.accounts = validAccounts;
 		UILoginDisplay.successCallback = LoginSuccess;
-		OGRoot.GoToPage ( "LoginDisplay" );
+		OGRoot.GetInstance().GoToPage ( "LoginDisplay" );
 	}
 	
 	public function Enter () : IEnumerator {
@@ -91,7 +91,7 @@ class Computer extends InteractiveObject {
 			GameCore.interactiveObjectLocked = true;
 		
 		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
-			OGRoot.GoToPage ( "HUD" );
+			OGRoot.GetInstance().GoToPage ( "HUD" );
 			UILoginDisplay.Clear ();
 			UIComputerDisplay.Clear ();
 			

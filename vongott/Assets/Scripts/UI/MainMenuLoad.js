@@ -43,7 +43,7 @@ class MainMenuLoad extends OGPage {
 	}
 
 	public function GoBack () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	override function StartPage () {

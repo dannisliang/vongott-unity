@@ -87,13 +87,13 @@ class EditorFlags extends OGPage {
 	
 	
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	function OK () {
 		if ( HasDuplicates() ) { return; }
 		
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	
 		SaveFlags ();
 	}

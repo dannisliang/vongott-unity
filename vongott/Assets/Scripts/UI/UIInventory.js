@@ -37,7 +37,7 @@ class UIInventory extends OGPage {
 	private var draggingEntry : Point;
 	private var listenForDrag : Point;
 	private var mouseClickTimer : float = 0.0;
-	private var allImages : OGImage[,] = new OGImage[10,3];
+	private var allImages : OGTexture[,] = new OGTexture[10,3];
 	
 	
 	////////////////////
@@ -52,7 +52,7 @@ class UIInventory extends OGPage {
 	function ClearGrid () {
 		selectedEntry = null;
 		
-		allImages = new OGImage[10,3];
+		allImages = new OGTexture[10,3];
 		
 		for ( var i = 0; i < grid.childCount; i++ ) {
 			Destroy ( grid.GetChild ( i ).gameObject );
@@ -64,8 +64,8 @@ class UIInventory extends OGPage {
 	}
 	
 	// Create image
-	private function CreateImage ( item : Item, parent : Transform ) : OGImage {
-		var image : OGImage = new GameObject ( item.name, OGImage ).GetComponent(OGImage);
+	private function CreateImage ( item : Item, parent : Transform ) : OGTexture {
+		var image : OGTexture = new GameObject ( item.name, OGTexture ).GetComponent(OGTexture);
 		image.image = item.image;
 		image.transform.parent = parent;
 		image.transform.localScale = new Vector3 ( Round ( item.image.width, 90 ), Round ( item.image.height, 90 ), 1 );
@@ -99,7 +99,7 @@ class UIInventory extends OGPage {
 				if ( InventoryManager.GetEntry(x,y) != null ) {
 					var entry : InventoryEntry = InventoryManager.GetEntry(x,y);
 					var item : Item = entry.GetItem();
-					var image : OGImage = CreateImage ( item, grid );
+					var image : OGTexture = CreateImage ( item, grid );
 					image.transform.localPosition = new Vector3 ( x * 90, y * 90, -15 );
 					allImages[x,y] = image;
 								
@@ -121,7 +121,7 @@ class UIInventory extends OGPage {
 				var slotEntry : InventoryEntry = InventoryManager.GetEntry ( reference.refX, reference.refY );
 				var slotItem : Item = entry.GetItem();
 				
-				var slotImage : OGImage = CreateImage( item, stash );
+				var slotImage : OGTexture = CreateImage( item, stash );
 				slotImage.transform.localPosition = new Vector3 ( i * 90, 0, -15 );
 			
 				var button : OGButton = CreateRemoveButton ( i );
@@ -190,7 +190,7 @@ class UIInventory extends OGPage {
 	
 	// Go to page
 	public function GoToPage ( page : String ) {
-		OGRoot.GoToPage ( page );
+		OGRoot.GetInstance().GoToPage ( page );
 	}
 	
 	// Select slot
@@ -410,6 +410,6 @@ class UIInventory extends OGPage {
 	}
 	
 	function Exit () {
-		OGRoot.GoToPage ( "HUD" );
+		OGRoot.GetInstance().GoToPage ( "HUD" );
 	}
 }

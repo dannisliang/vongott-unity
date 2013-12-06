@@ -23,7 +23,7 @@ class LiftPanel extends InteractiveObject {
 	public function ShowPanel ( ){
 		UILiftPanelDisplay.currentLiftPanel = this;
 		UILiftPanelDisplay.callback = TransitCallback;
-		OGRoot.GoToPage ( "LiftPanelDisplay" );
+		OGRoot.GetInstance().GoToPage ( "LiftPanelDisplay" );
 	}
 	
 	public function Enter () : IEnumerator {
@@ -61,7 +61,7 @@ class LiftPanel extends InteractiveObject {
 	}
 	
 	public function Exit ( i : int ) : IEnumerator {
-		OGRoot.GoToPage ( "HUD" );
+		OGRoot.GetInstance().GoToPage ( "HUD" );
 		
 		inSession = false;
 		

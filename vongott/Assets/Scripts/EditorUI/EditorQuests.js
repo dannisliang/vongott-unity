@@ -88,7 +88,7 @@ class EditorQuests extends OGPage {
 	
 	// Exit
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	// Pick quest
@@ -96,7 +96,7 @@ class EditorQuests extends OGPage {
 		EditorPicker.mode = "quest";
 		EditorPicker.button = selector;
 		EditorPicker.sender = "Quests";
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}	
 	
 	

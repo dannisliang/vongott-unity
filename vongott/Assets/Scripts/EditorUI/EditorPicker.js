@@ -27,7 +27,7 @@ class EditorPicker extends OGPage {
 	function Accept () {
 		button.text = selectedItem;
 		
-		OGRoot.GoToPage ( sender );
+		OGRoot.GetInstance().GoToPage ( sender );
 		
 		if ( func ) { func (); }
 		
@@ -39,7 +39,7 @@ class EditorPicker extends OGPage {
 	
 	// Cancel
 	function Cancel () {
-		OGRoot.GoToPage ( sender );
+		OGRoot.GetInstance().GoToPage ( sender );
 	
 		mode = "";
 		sender = "";
@@ -64,7 +64,7 @@ class EditorPicker extends OGPage {
 		}
 		
 		btn.text += label;
-		btn.style = "listitem";
+		btn.styleName = "listitem";
 		btn.target = this.gameObject;
 		btn.message = "SelectItem";
 		
@@ -87,7 +87,7 @@ class EditorPicker extends OGPage {
 		}
 				
 		lbl.text += Regex.Replace ( label, "[/]", "" );
-		lbl.style = "listitemdisabled";
+		lbl.styleName = "listitemdisabled";
 		
 		obj.transform.parent = scrollView.transform;
 		obj.transform.localPosition = new Vector3 ( 0, scrollView.scrollLength, 0 );
@@ -99,7 +99,7 @@ class EditorPicker extends OGPage {
 	// Deselect all
 	function DeselectAll () {
 		for ( var btn : Component in scrollView.transform.GetComponentsInChildren ( OGButton ) ) {
-			( btn as OGButton ).style = "listitem";		
+			( btn as OGButton ).styleName = "listitem";		
 		}
 	}
 	
@@ -109,7 +109,7 @@ class EditorPicker extends OGPage {
 		
 		var name : String = Regex.Replace ( btn.text, "[. ]", "" );
 		selectedItem = name;
-		btn.style = "listitemselected";
+		btn.styleName = "listitemselected";
 	}
 	
 	// Clear items
@@ -129,9 +129,9 @@ class EditorPicker extends OGPage {
 			var btn : OGButton = scrollView.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
 			
 			if ( btn.text.Contains ( filter.text ) ) {
-				btn.style = "listitem";
+				btn.styleName = "listitem";
 			} else {
-				btn.style = "listitemdisabled";
+				btn.styleName = "listitemdisabled";
 			}
 		}
 	}

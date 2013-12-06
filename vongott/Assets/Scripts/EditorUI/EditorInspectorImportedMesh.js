@@ -73,7 +73,7 @@ class EditorInspectorImportedMesh extends MonoBehaviour {
 			importedMesh.GetComponent(MeshRenderer).sharedMaterials = mats;	
 		};
 		
-		OGRoot.GoToPage ( "BrowserWindow" );
+		OGRoot.GetInstance().GoToPage ( "BrowserWindow" );
 		
 	}
 }

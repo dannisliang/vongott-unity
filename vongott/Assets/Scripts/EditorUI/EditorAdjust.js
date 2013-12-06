@@ -40,12 +40,12 @@ class EditorAdjust extends OGPage {
 			EditorCore.GetSelectedObject().transform.localScale = new Vector3 ( newX, newY, newZ );
 		}
 		
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		EditorCore.SelectObject ( EditorCore.GetSelectedObject() );
 	}
 	
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		EditorCore.SelectObject ( EditorCore.GetSelectedObject() );
 	}
 }

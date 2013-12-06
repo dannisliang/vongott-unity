@@ -58,7 +58,7 @@ class UILoginDisplay extends OGPage {
 	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) ) {
 			Clear ();
-			OGRoot.GoToPage ( "HUD" );
+			OGRoot.GetInstance().GoToPage ( "HUD" );
 		
 		} else if ( Input.GetKeyDown(KeyCode.Return) && accounts != null ) {
 			CheckCredentials ();

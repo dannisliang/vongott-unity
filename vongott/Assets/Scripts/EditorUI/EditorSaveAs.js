@@ -15,12 +15,12 @@ class EditorSaveAs extends OGPage {
 	function OK () {
 		EditorCore.currentLevel.name = newName.text;
 		EditorCore.GetInstance().SaveFile ( EditorCore.currentLevel.name );
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	// Cancel
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 
 	////////////////////
@@ -28,7 +28,7 @@ class EditorSaveAs extends OGPage {
 	////////////////////
 	override function UpdatePage () {
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-			OGRoot.GoToPage ( "MenuBase" );
+			OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		}
 	}
 }

@@ -3,7 +3,7 @@
 class EditorModes extends OGPage {
 	var _title : OGLabel;
 	var _message : OGLabel;
-	var _background : OGRect;
+	var _background : OGSlicedSprite;
 	var _data : Transform;
 	
 	var dataX : OGLabel;
@@ -13,7 +13,7 @@ class EditorModes extends OGPage {
 																	
 	static var title : OGLabel;
 	static var message : OGLabel;
-	static var background : OGRect;
+	static var background : OGSlicedSprite;
 	static var data : Transform;
 	static var callback : Function;
 	

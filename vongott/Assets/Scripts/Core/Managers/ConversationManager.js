@@ -63,7 +63,7 @@ public class ConversationManager {
 	}
 	
 	private static function Exit () {
-		OGRoot.GoToPage ( "HUD" );
+		OGRoot.GetInstance().GoToPage ( "HUD" );
 		
 		currentActor.StopTalking ( endAction );
 		GameCore.GetPlayer().StopTalking ();
@@ -102,7 +102,7 @@ public class ConversationManager {
 		
 		currentNode = currentConvo.rootNodes[actor.currentConvoRoot].connectedTo;
 		
-		OGRoot.GoToPage ( "Conversation" );
+		OGRoot.GetInstance().GoToPage ( "Conversation" );
 	
 		DisplayNode ( true );
 	}

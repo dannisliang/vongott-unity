@@ -42,12 +42,12 @@ class UIDialogBox extends OGPage {
 			action ();
 		}
 
-		OGRoot.GoToPage ( "HUD" );
+		OGRoot.GetInstance().GoToPage ( "HUD" );
 	}
 	
 	// Cancel
 	function Cancel () {
-		OGRoot.GoToPage ( "HUD" );
+		OGRoot.GetInstance().GoToPage ( "HUD" );
 	}
 	
 

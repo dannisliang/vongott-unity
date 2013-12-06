@@ -2,6 +2,6 @@
 
 class EditorHelp extends OGPage {
 	function Close () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 }

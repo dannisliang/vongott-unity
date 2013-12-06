@@ -26,7 +26,7 @@ class Keypad extends InteractiveObject {
 		UIKeypadDisplay.passCode = passCode;
 		UIKeypadDisplay.successCallback = LoginSuccess;
 		UIHUD.ShowNotification ( "" );
-		OGRoot.GoToPage ( "KeypadDisplay" );
+		OGRoot.GetInstance().GoToPage ( "KeypadDisplay" );
 	}
 	
 	public function Enter () : IEnumerator {
@@ -42,7 +42,7 @@ class Keypad extends InteractiveObject {
 	public function Exit () : IEnumerator {
 		inSession = false;
 		
-		OGRoot.GoToPage ( "HUD" );
+		OGRoot.GetInstance().GoToPage ( "HUD" );
 		
 		iTween.MoveTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "position", tempPos, "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
 		iTween.RotateTo ( GameCamera.GetInstance().gameObject, iTween.Hash ( "rotation", tempRot, "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );

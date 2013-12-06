@@ -344,7 +344,7 @@ function Update () {
 	
 				
 	// camera mode
-	} else if ( OGRoot.currentPage.pageName == "MenuBase" ) {	
+	} else if ( OGRoot.GetInstance().currentPage.pageName == "MenuBase" ) {	
 		// Z key
 		if ( Input.GetKeyDown ( KeyCode.Z ) ) {
 			// Undo
@@ -437,7 +437,7 @@ function Update () {
 			}
 		
 		// left mouse button
-		} else if ( Input.GetMouseButtonDown(0) && !OGRoot.mouseOver && OGRoot.currentPage.pageName == "MenuBase" ) {
+		} else if ( Input.GetMouseButtonDown(0) && !OGRoot.GetInstance().isMouseOver && OGRoot.GetInstance().currentPage.pageName == "MenuBase" ) {
 			var newRay : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
 			var hit : RaycastHit;
 			var goal : GameObject;

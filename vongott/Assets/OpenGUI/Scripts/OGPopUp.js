@@ -3,91 +3,179 @@
 @script AddComponentMenu ("OpenGUI/PopUp")
 
 class OGPopUp extends OGWidget {	
-	var title : String;
-	var isUp = false;
-	var options : String[];
-	var messageTarget : GameObject;
-	var message : String;
-	var passSelectedOption : boolean = false;
-	var padding : Vector2 = new Vector2 ( 8.0, 8.0 );
-	var indicator : String = "";
+	public var title : String;
+	public var options : String[];
+	public var target : GameObject;
+	public var message : String;
+	public var passSelectedOption : boolean = false;
 	
-	var selectedOption : String;
-	@HideInInspector var originalZ : float = 99;
+	@HideInInspector public var selectedOption : String;
 	
-	// Set options
-	public function SetOptions ( strings : String[] ) {
-		yield WaitForEndOfFrame();
+	private var background : OGSlicedSprite;
+	private var label : OGLabel;
+	private var optionLabels : GameObject;
+	private var timeStamp : float;
+	private var isUp = false;
+	
+	private function GetMouseOverOption () : int {
+		for ( var i : int = 0; i < optionLabels.transform.childCount; i++ ) {
+			if ( CheckMouseOver ( optionLabels.transform.GetChild(i).GetComponent(OGLabel).drawRct ) ) {
+				return i;
+			}
+		}
 		
-		options = strings;
+		return -1;
 	}
-				
-	// Draw
-	override function Draw ( x : float, y : float ) {	
-		if ( !guiStyle ) { guiStyle = GUI.skin.box; }
+	
+	public function SetOptions ( list : String[] ) {
+		options = list;
+	}
+
+	override function OnMouseUp () {
+		var mouseOverOption : int = GetMouseOverOption ();
 		
-		var textStyle : GUIStyle = new GUIStyle();
-		textStyle.font = GUI.skin.label.font;
-		textStyle.normal.textColor = guiStyle.normal.textColor;
-		textStyle.fontSize = guiStyle.fontSize;
-		textStyle.alignment = guiStyle.alignment;
+		if ( Time.time - timeStamp > 0.5 || mouseOverOption != -1 ) {
+			OnMouseCancel ();
+		}
 		
-		var activeStyle : GUIStyle = new GUIStyle ();
-		activeStyle.normal.background = guiStyle.active.background;
-		activeStyle.border = guiStyle.border;
-		activeStyle.margin = guiStyle.margin;
-		activeStyle.padding = guiStyle.padding;
-																				
-		if ( !isUp ) {			
-			var label : String;
-			
-			if ( selectedOption ) {
-				label = selectedOption;
-			} else {
-				label = title;
-			}
-			
-			GUI.Box ( Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), transform.localScale.y ), "", guiStyle );
-			
-			GUI.Label ( Rect ( x + transform.localScale.x - 20, y + transform.localScale.y - 18, 20, 20 ), indicator, textStyle );
-			
-			if ( GUI.Button ( Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), transform.localScale.y ), label, textStyle ) ) {
-				isUp = true;
-			}
-		} else {			
-			GUI.Box ( Rect ( x, y, transform.localScale.x + (guiStyle.padding.left * 2), ( options.Length * (guiStyle.fontSize + guiStyle.padding.top) ) + ( guiStyle.padding.top * 2 ) ), "", activeStyle );
-			
-			for ( var i = 0; i < options.Length; i++ ) {			
-				if ( GUI.Button ( Rect ( x + guiStyle.padding.left, y + guiStyle.padding.top + ( ( guiStyle.fontSize + guiStyle.padding.top ) * i ), transform.localScale.x + ( guiStyle.padding.left * 2 ), guiStyle.fontSize + guiStyle.padding.top ), options[i], textStyle ) ) {
-					selectedOption = options[i];
-					isUp = false;
-					
-					if ( messageTarget && message ) {
-						if ( passSelectedOption ) {
-							messageTarget.SendMessage ( message, selectedOption );
-						} else {
-							messageTarget.SendMessage ( message );
-						}
-					}
+		if ( mouseOverOption != -1 ) {
+			selectedOption = options[mouseOverOption];
+		}
+	}
+	
+	override function OnMouseDown () {
+		if ( !isUp && GetMouseOverOption() == -1 ) {		
+			isUp = true;
+			timeStamp = Time.time;
+		}
+	}
+	
+	override function OnMouseOver () {
+		if ( isUp ) {
+			for ( l in optionLabels.transform.GetComponentsInChildren.<OGLabel>() ) {
+				if ( CheckMouseOver ( l.drawRct ) ) {
+					l.styles.basic = styles.hover;
+				} else {
+					l.styles.basic = styles.basic;
 				}
 			}
 		}
 	}
 	
-	// Update
-	override function UpdateWidget () {		
-		if ( originalZ == 99 ) {
-			originalZ = transform.localPosition.z;
+	override function OnMouseCancel () {
+		isUp = false;
+		
+		OGRoot.GetInstance().ReleaseWidget ();
+	}
+	
+	override function UpdateWidget () {
+		if ( !optionLabels && !this.transform.Find("Options") ) {
+			optionLabels = new GameObject ( "Options" );
+			optionLabels.transform.parent = this.transform;
+			optionLabels.transform.localPosition = new Vector3 ( 0, 1, 0 );
+			optionLabels.transform.localScale = Vector3.one;
+			optionLabels.transform.localEulerAngles = Vector3.zero;
+		
+		} else if ( !optionLabels ) {
+			optionLabels = this.transform.Find("Options").gameObject;
+		
+		} else if ( optionLabels.transform.childCount != options.Length ) {
+			for ( var x : int = 0; x < optionLabels.transform.childCount; x++ ) {
+				DestroyImmediate ( optionLabels.transform.GetChild(x).gameObject );
+			}
+			
+			var tempList : List.< OGLabel > = new List.< OGLabel > ();
+			
+			for ( var i : int = 0; i < options.Length; i++ ) {
+				var lbl : OGLabel = new GameObject ( options[i], OGLabel ).GetComponent ( OGLabel );
+				lbl.transform.parent = optionLabels.transform;
+				lbl.transform.localScale = Vector3.one;
+				lbl.transform.localEulerAngles = Vector3.zero;
+				lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
+			}
+		
+		} else {
+			optionLabels.SetActive ( isUp );
+			
+			for ( var o : int = 0; o < options.Length; o++ ) {
+				var l : OGLabel = optionLabels.transform.GetChild ( o ).GetComponent ( OGLabel );
+				l.transform.localScale = Vector3.one;
+				l.transform.localEulerAngles = Vector3.zero;
+				l.transform.localPosition = new Vector3 ( 0, o, 0 );
+				l.hidden = true;
+				l.styles.basic = styles.basic;
+				l.text = options[o];
+			}
+		
 		}
 		
-		/*if ( isUp ) {
-			transform.localPosition.z = -10;
-		} else {
-			transform.localPosition.z = originalZ;
-		}*/
+		if ( background == null ) {
+			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
+				background = this.gameObject.GetComponentInChildren ( OGSlicedSprite );
+				
+			} else {			
+				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
+				newSprite.transform.parent = this.transform;
+				newSprite.styles.basic = this.styles.basic;
+			}
 		
-		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-			isUp = false;
+		} else {
+			
+			background.transform.localEulerAngles = Vector3.zero;
+			background.transform.localPosition = Vector3.zero;
+			
+			background.pivot.x = pivot.x;
+			background.pivot.y = RelativeY.Top;
+								
+			if ( isUp ) {
+				background.styles.basic = styles.active;
+				background.transform.localScale = new Vector3 ( 1, optionLabels.transform.childCount+1.1, 1 );
+			} else {
+				background.styles.basic = styles.basic;
+				background.transform.localScale = Vector3.one;
+			}
+			
+			background.isDrawn = isDrawn;
+			background.hidden = true;
+		
+			mouseOver = CheckMouseOver ( background.drawRct );
+		}
+		
+		if ( label == null ) {
+			if ( this.gameObject.GetComponentInChildren ( OGLabel ) ) {
+				label = this.gameObject.GetComponentInChildren ( OGLabel );
+				
+			} else {				
+				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
+				newLabel.transform.parent = this.transform;
+			}
+		
+		} else {
+			if ( String.IsNullOrEmpty ( selectedOption ) ) {
+				label.text = title;
+			} else {
+				label.text = selectedOption;
+			}
+			
+			label.transform.localScale = Vector3.one;
+			label.transform.localEulerAngles = Vector3.zero;
+			label.transform.localPosition = Vector3.zero;
+			
+			label.pivot.x = pivot.x;
+			label.pivot.y = RelativeY.Top;
+			
+			if ( isUp ) {
+				label.styles.basic = styles.active;
+			} else {
+				label.styles.basic = styles.basic;
+			}
+			
+			label.isDrawn = isDrawn;
+			label.hidden = true;
+		}
+		
+		if ( mouseOver ) {
+			OnMouseOver ();
 		}
 	}
 }

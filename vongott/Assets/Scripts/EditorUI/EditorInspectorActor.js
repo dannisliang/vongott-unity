@@ -8,7 +8,7 @@ class EditorInspectorActor extends MonoBehaviour {
 	var mood : OGPopUp;
 	
 	var inventoryBox : GameObject;
-	var inventorySlots : OGImage[];
+	var inventorySlots : OGTexture[];
 	
 	
 	//////////////////////
@@ -22,7 +22,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		
 		EditorPicker.func = UpdateObject;
 		
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 		
 		
@@ -36,7 +36,7 @@ class EditorInspectorActor extends MonoBehaviour {
 		EditorBrowserWindow.rootFolder = "Items";
 		EditorBrowserWindow.initMode = "Equip";
 		EditorBrowserWindow.argument = i.ToString();
-		OGRoot.GoToPage ( "BrowserWindow" );
+		OGRoot.GetInstance().GoToPage ( "BrowserWindow" );
 	}
 	
 	

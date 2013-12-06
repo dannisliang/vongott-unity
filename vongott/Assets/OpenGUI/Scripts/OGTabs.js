@@ -1,103 +1,145 @@
-#pragma strict
+﻿#pragma strict
 
-@script AddComponentMenu ("OpenGUI/Tabs")
-
-class OGTabs extends OGWidget {
-	private class Tab {
-		var label : String;
-		var object : GameObject;
+public class OGTabs extends OGWidget {
+	public class Tab {
+		public var title : String = "Tab";
+		public var content : GameObject;
+	}
 	
-		function Tab ( l : String, o : GameObject) {
-			label = l;
-			object = o;
+	public var activeTab : int;
+	public var tabs : Tab[];
+	
+	private function CreateTabObject () {
+		var container : GameObject = new GameObject ( "Tab" );
+		var background : OGSlicedSprite = new GameObject ( "Background", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
+		var label : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
+		
+		background.transform.parent = container.transform;
+		label.transform.parent = container.transform;
+		
+		background.transform.localScale = Vector3.one;
+		background.transform.localEulerAngles = Vector3.zero;
+		background.transform.localPosition = Vector3.zero;
+		
+		label.transform.localScale = Vector3.one;
+		label.transform.localEulerAngles = Vector3.zero;
+		label.transform.localPosition = Vector3.zero;
+		
+		container.transform.parent = this.transform;
+	}
+
+	public function AddTab ( tabName : String, tabObject : GameObject, switchTo : boolean ) {
+		var list : List.< Tab > = new List.< Tab > ( tabs );
+		var newTab : Tab = new Tab ();
+
+		newTab.title = tabName;
+		newTab.content = tabObject;
+
+		list.Add ( newTab );
+
+		if ( switchTo ) {
+			activeTab = tabs.Length;
+		}
+
+		tabs = list.ToArray();
+	}
+
+	public function ClearTabs () {
+		ClearTabObjects ();
+		tabs = new Tab[0];
+	}
+
+	private function ClearTabObjects () {
+		for ( var i : int = 0; i < this.transform.childCount; i++ ) {
+			DestroyImmediate ( this.transform.GetChild ( i ).gameObject );
 		}
 	}
 	
-	enum TabDirection {
-		Horizontal,
-		Vertical
+	private function MakeTabObjects () {		
+		for ( var i : int = 0; i < tabs.Length; i++ ) {
+			CreateTabObject ();
+		}
 	}
 	
-	var messageTarget : GameObject;
-	var tabs : List.<Tab> = new List.<Tab>();
-	var direction : TabDirection = TabDirection.Horizontal;
-	var activeTab = 0;
+	private function UpdateTabObjects () {
+		var anyMouseOver : boolean = false;
 		
-	@HideInInspector var boxPos : Vector2 = Vector2.zero; 
-	
-	function AddTab ( label : String, object : GameObject ) {
-		AddTab ( label, object, false );
+		if ( this.transform.childCount == 0 ) {
+			MakeTabObjects ();
+		
+		} else if ( this.transform.childCount != tabs.Length ) {
+			ClearTabObjects ();
+		
+		} else {
+			for ( var i : int = 0; i < this.transform.childCount; i++ ) {
+				var t : Transform = this.transform.GetChild ( i );
+				
+				if ( t == null ) {
+					ClearTabObjects ();
+					break;
+				}
+				
+				var container : GameObject = t.gameObject;
+				
+				if ( i >= tabs.Length ) {
+					DestroyImmediate ( container );
+					continue;
+				}
+				
+				var label : OGLabel = container.GetComponentInChildren ( OGLabel );
+				var background : OGSlicedSprite = container.GetComponentInChildren ( OGSlicedSprite );
+							
+				label.text = tabs[i].title;
+						
+				if ( activeTab != i ) {
+					label.styles.basic = styles.basic;
+					background.styles.basic = styles.basic;
+					
+					if ( tabs[i].content != null ) {
+						tabs[i].content.SetActive ( false );
+					}
+					
+				} else {
+					label.styles.basic = styles.active;
+					background.styles.basic = styles.active;
+					
+					if ( tabs[i].content != null ) {
+						tabs[i].content.SetActive ( true );
+					}
+				}
+				
+				label.hidden = true;
+				background.hidden = true;
+				
+				if ( !anyMouseOver ) {
+					anyMouseOver = CheckMouseOver ( background.drawRct );
+				}
+										
+				container.name = i + ": " + tabs[i].title;
+				container.transform.localScale = new Vector3 ( 1.0 / this.transform.childCount, 1, 1 );
+				container.transform.localPosition = new Vector3 ( (i*1.0) / this.transform.childCount, 0, 0 );
+			}
+			
+			mouseOver = anyMouseOver;
+		}
 	}
 	
-	function AddTab ( label : String, object : GameObject, switchTo : boolean ) {
-		var newTab : Tab = new Tab ( label, object );
-		tabs.Add ( newTab );
-		
-		if ( switchTo ) {
-			ActivateTab ( newTab );	
-		
-		} else if ( tabs.Count == 1 ) {
-			Start ();
-		
+	override function OnMouseDown () {
+		for ( var i : int = 0; i < this.transform.childCount; i++ ) {			
+			if ( CheckMouseOver ( this.transform.GetChild(i).GetComponentInChildren(OGSlicedSprite).drawRct ) ) {
+				activeTab = i;
+				return;
+			}
 		}
 	}
 	
 	override function UpdateWidget () {
+		if ( tabs == null ) { return; }
+		
+		UpdateTabObjects ();
 
-	}
-	
-	function ActivateTab ( i : int ) {
-		ActivateTab ( tabs[i] );
-	}
-	
-	function ActivateTab ( tab : Tab ) {
-		for ( var t : Tab in tabs ) {
-			if ( t.object ) { t.object.SetActive ( t == tab ); }
-		}
-		
-		if ( direction == TabDirection.Vertical ) {
-			boxPos.y = tabs.IndexOf ( tab ) * ( transform.localScale.y / tabs.Count );
-		} else {
-			boxPos.x = tabs.IndexOf ( tab ) * ( transform.localScale.x / tabs.Count );
-		}
-	}
-	
-	function Start () {
-		if ( tabs.Count > 0 ) {
-			ActivateTab ( tabs[0] );
-		}
-	}
-	
-	override function Draw ( x : float, y : float ) {
-		if ( !guiStyle ) { guiStyle = GUI.skin.box; }
-		
-		var textStyle : GUIStyle = new GUIStyle();
-		textStyle.font = GUI.skin.label.font;
-		textStyle.normal.textColor = guiStyle.normal.textColor;
-		textStyle.fontSize = guiStyle.fontSize;
-		textStyle.alignment = guiStyle.alignment;
-				
-		if ( direction == TabDirection.Horizontal && tabs.Count > 0 ) {
-			GUI.Box ( Rect ( x + boxPos.x, y, ( transform.localScale.x / tabs.Count ), transform.localScale.y ), "", guiStyle );
-			
-			for ( var i = 0; i < tabs.Count; i++ ) {				
-				if ( GUI.Button ( Rect ( x + ( i * ( transform.localScale.x / tabs.Count ) ), y, ( transform.localScale.x / tabs.Count ), transform.localScale.y ), tabs[i].label, textStyle ) ) {
-					if ( tabs[i].label != "" ) {	
-						ActivateTab ( tabs[i] );
-						activeTab = i;
-					}
-				}
-			}
-		} else if ( tabs.Count > 0 ) {
-			GUI.Box ( Rect ( x, y + boxPos.y, transform.localScale.x, transform.localScale.y ), "", guiStyle );
-			for ( i = 0; i < tabs.Count; i++ ) {				
-				if ( GUI.Button ( Rect ( x, y + ( i * transform.localScale.y ), transform.localScale.x, transform.localScale.y ), tabs[i].label, textStyle ) ) {
-					if ( tabs[i].label != "" ) {
-						ActivateTab ( tabs[i] );
-						activeTab = i;
-					}
-				}
-			}
-		}
+		if ( activeTab >= tabs.Length && tabs.Length > 0 ) {
+			activeTab = tabs.Length - 1;
+	 	} 
 	}
 }

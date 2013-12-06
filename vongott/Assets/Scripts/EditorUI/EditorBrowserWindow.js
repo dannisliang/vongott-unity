@@ -13,7 +13,7 @@ class EditorBrowserWindow extends OGPage {
 	var fileAttr : OGLabel;
 	var fileInfo : OGLabel;
 	var breadCrumbs : Transform;
-	var preview2D : OGImage;
+	var preview2D : OGTexture;
 			
 	// Static vars
 	static var rootFolder : String = "Actors";
@@ -98,7 +98,7 @@ class EditorBrowserWindow extends OGPage {
 	function DeselectAll () {
 		for ( var i = 0; i < fileList.transform.childCount; i++ ) {
 			var btn : OGButton = fileList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
-			btn.style = "listitem";		
+			btn.styleName = "listitem";		
 		}
 	}
 	
@@ -110,7 +110,7 @@ class EditorBrowserWindow extends OGPage {
 		btn.text = objName;
 		btn.target = this.gameObject;
 		btn.message = "Select" + type;
-		btn.style = "listitem";
+		btn.styleName = "listitem";
 		
 		obj.transform.parent = fileList;
 		obj.transform.localScale = new Vector3 ( 468, 30, 1 );
@@ -137,7 +137,7 @@ class EditorBrowserWindow extends OGPage {
 			var btn : OGButton = obj.AddComponent ( OGButton );
 			
 			if ( i == strings.Length - 1 ) {
-				btn.style = "listitem";
+				btn.styleName = "listitem";
 			}	
 			
 			btn.target = this.gameObject;
@@ -204,7 +204,7 @@ class EditorBrowserWindow extends OGPage {
 		DeselectAll ();
 		
 		selectedFile = currentFolder.FindFile ( btn.text );
-		btn.style = "listitemselected";
+		btn.styleName = "listitemselected";
 	
 		if ( selectedFile.GetType() == GameObject ) {	
 			var obj : GameObject = selectedFile as GameObject;
@@ -233,7 +233,7 @@ class EditorBrowserWindow extends OGPage {
 		DeselectAll ();
 		
 		selectedFolder = currentFolder.FindFolder ( btn.text );
-		btn.style = "listitemselected";
+		btn.styleName = "listitemselected";
 		
 		SetMode ( "Open" );
 	}
@@ -247,7 +247,7 @@ class EditorBrowserWindow extends OGPage {
 	function OK () {
 		EditorCore.ClearPreview ();
 		
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	// Set mode
@@ -263,12 +263,12 @@ class EditorBrowserWindow extends OGPage {
 		
 		if ( mode == "Add" ) {
 			EditorCore.AddObject ( selectedFile as GameObject );
-			OGRoot.GoToPage ( "MenuBase" );
+			OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		
 		} else if ( mode == "Equip" ) {
 			EditorCore.EquipItem ( (selectedFile as GameObject), int.Parse(argument) );
 			EditorCore.ReselectObject();
-			OGRoot.GoToPage ( "MenuBase" );
+			OGRoot.GetInstance().GoToPage ( "MenuBase" );
 			
 		} else if ( mode == "Open" ) {
 			PopulateList ( selectedFolder );
@@ -279,7 +279,7 @@ class EditorBrowserWindow extends OGPage {
 			}
 			
 			EditorCore.ReselectObject();
-			OGRoot.GoToPage ( "MenuBase" );
+			OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		}
 		
 	}

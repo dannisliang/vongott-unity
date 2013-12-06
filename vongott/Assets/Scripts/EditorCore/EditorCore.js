@@ -308,7 +308,7 @@ static function PreviewObject ( obj : GameObject ) : ObjectAttributes {
 	return attributes;
 }
 
-static function GetObjectIcon ( obj : GameObject, image : OGImage ) : IEnumerator {
+static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumerator {
 	ClearPreview ();
 	
 	yield new WaitForEndOfFrame();
@@ -432,7 +432,7 @@ static function AddNavMesh () {
 	EditorOpenFile.baseDir = "ImportOBJ";
 	EditorOpenFile.fileType = "obj";
 	EditorOpenFile.asNavMesh = true;
-	OGRoot.GoToPage ( "OpenFile" );
+	OGRoot.GetInstance().GoToPage ( "OpenFile" );
 }
 
 // Bake
@@ -440,7 +440,7 @@ private function ScanForNodes () : IEnumerator {
 	var scanner : OPScanner = this.GetComponent(OPScanner);
 	
 	EditorLoading.message = "Baking navigation nodes...";
-	OGRoot.GoToPage ( "Loading" );
+	OGRoot.GetInstance().GoToPage ( "Loading" );
 	
 	yield WaitForEndOfFrame();
 	
@@ -456,7 +456,7 @@ private function ScanForNodes () : IEnumerator {
 	
 	}
 	
-	OGRoot.GoToPage ( "MenuBase" );
+	OGRoot.GetInstance().GoToPage ( "MenuBase" );
 }
 
 public function BakeNavNodes () {
@@ -838,14 +838,14 @@ static function SetPickMode ( state : boolean ) {
 	pickMode = state;
 	
 	if ( pickMode ) {
-		OGRoot.GoToPage ( "Modes" );
+		OGRoot.GetInstance().GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Pick Mode" );
 		EditorModes.SetMessage ( "" );
 		EditorModes.SetHeight ( 50 );
 		
 	} else {
 		if ( pickerSender == "" ) { pickerSender = "MenuBase"; }
-		OGRoot.GoToPage ( pickerSender );
+		OGRoot.GetInstance().GoToPage ( pickerSender );
 		pickerSender = "";
 		pickerType = null;
 	
@@ -872,13 +872,13 @@ static function SetFirstPersonMode ( state : boolean ) {
 	ToggleFirstPersonGhost ( !firstPersonMode );
 	
 	if ( firstPersonMode ) {
-		OGRoot.GoToPage ( "Modes" );
+		OGRoot.GetInstance().GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "First Person Mode" );
 		EditorModes.SetMessage ( "" );
 		EditorModes.SetHeight ( 32 );
 	
 	} else {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	
 	}
 }
@@ -896,7 +896,7 @@ static function SetGrabMode ( state : boolean ) {
 		
 		grabOrigPoint = selectedObject.transform.position;
 		
-		OGRoot.GoToPage ( "Modes" );
+		OGRoot.GetInstance().GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Grab Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse mouse to move" );
 		EditorModes.SetHeight ( 90 );
@@ -909,7 +909,7 @@ static function SetGrabMode ( state : boolean ) {
 		grabOrigPoint = selectedObject.transform.position;
 	
 	} else {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		
 		SetRestriction ( null );
 		gizmo.SetActive ( false );
@@ -928,7 +928,7 @@ static function SetRotateMode ( state : boolean ) {
 	if ( rotateMode ) {
 		AddAction ( selectedObject );
 		
-		OGRoot.GoToPage ( "Modes" );
+		OGRoot.GetInstance().GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Rotate Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to rotate\nHold Shift or Ctrl to change speed" );
 		EditorModes.SetHeight ( 110 );
@@ -938,7 +938,7 @@ static function SetRotateMode ( state : boolean ) {
 		gizmo.transform.rotation = selectedObject.transform.rotation;
 	
 	} else {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		
 		SetRestriction ( null );
 		gizmo.SetActive ( false );
@@ -957,7 +957,7 @@ static function SetScaleMode ( state : boolean ) {
 	if ( scaleMode ) {
 		AddAction ( selectedObject );
 		
-		OGRoot.GoToPage ( "Modes" );
+		OGRoot.GetInstance().GoToPage ( "Modes" );
 		EditorModes.SetTitle ( "Scale Mode" );
 		EditorModes.SetMessage ( "Press X, Y or Z to change axis\nUse scroll wheel to scale\nHold Shift or Ctrl to change speed" );
 		EditorModes.SetHeight ( 110 );
@@ -967,7 +967,7 @@ static function SetScaleMode ( state : boolean ) {
 		gizmo.transform.rotation = selectedObject.transform.rotation;
 	
 	} else {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		
 		SetRestriction ( null );
 		gizmo.SetActive ( false );
@@ -1002,7 +1002,7 @@ static function TrimFileNames ( paths : String[] ) : String[] {
 // Save file
 function DoSave ( path : String ) : IEnumerator {
 	EditorLoading.message = "Saving...";
-	OGRoot.GoToPage ( "Loading" );
+	OGRoot.GetInstance().GoToPage ( "Loading" );
 	
 	yield WaitForEndOfFrame();
 		
@@ -1014,7 +1014,7 @@ function DoSave ( path : String ) : IEnumerator {
 	
 	yield WaitForEndOfFrame();
 	
-	OGRoot.GoToPage ( "MenuBase" );
+	OGRoot.GetInstance().GoToPage ( "MenuBase" );
 }
 
 function SaveFile ( path : String ) {

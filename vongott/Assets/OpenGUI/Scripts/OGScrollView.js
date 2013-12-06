@@ -1,120 +1,107 @@
-#pragma strict
+﻿#pragma strict
 
-@script AddComponentMenu ("OpenGUI/ScrollView")
+public class OGScrollView extends OGWidget {
+	public var size : Vector2;
+	public var position : Vector2;
+	public var padding : Vector2 = new Vector2 ( 10, 10 );
+	public var elasticity : float = 2;
 
-class OGScrollView extends OGWidget {
-	var touchControl : boolean = false;
-	var scrollLength : float = 512;
-	var scrollWidth : float = 512;
-	var viewWidth : float = 100;
-	var viewHeight : float = 100;
-	var alwaysVertical = false;
-	var alwaysHorizontal = false;
-	var inset : float = 10;
-	var position : Vector2 = Vector2.zero;
-		
-	// Update
-	override function UpdateWidget () {		
-		// Adopt view width and height from localScale
-		if ( transform.localScale.x != 1 ) {
-			viewWidth = transform.localScale.x;
+	// TODO: Deprecate
+	@HideInInspector public var scrollLength : float = 0;
+	@HideInInspector public var scrollWidth : float = 0;
+	@HideInInspector public var viewHeight : float = 0;
+	@HideInInspector public var inset : float = 0;
+
+	private var dragging : boolean = false;
+
+	override function UpdateWidget () {
+		if ( stretch.width != ScreenSize.None ) {
+			size.x = RecalcScale().x * Screen.width;
 		}
-		
-		if ( transform.localScale.y != 1 ) {
-			viewHeight = transform.localScale.y;
+
+		if ( stretch.height != ScreenSize.None ) {
+			size.y = RecalcScale().y * Screen.height;
 		}
+
+		// Reset scale	
+		this.transform.localScale = Vector3.one;
 		
-		if ( scrollWidth < viewWidth - ( inset * 2 ) ) {
-			scrollWidth = viewWidth - ( inset * 2 );
-		}
-		
-		if ( scrollLength < viewHeight - ( inset * 2 ) ) {
-			scrollLength = viewHeight - ( inset * 2 );
-		}
-		
-		transform.localScale = new Vector3 ( 1, 1, 1 );
-		
-		// Update content
-		for ( var c : Component in transform.GetComponentsInChildren (OGWidget) ) {			
-			var w : OGWidget = c as OGWidget;
+		// Scrolling
+		var drag : Vector2;
+		var amount : Vector2;
+		drag.x = Input.GetAxis ( "Mouse X" ); 
+		drag.y = Input.GetAxis ( "Mouse Y" );
+	
+		// ^ Scroll wheel	
+		if ( CheckMouseOver ( drawRct ) ) {
+			var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
+
+			if ( scroll > 0 ) {
+				amount.y = 20;
 			
-			if ( w != this ) {
-				// Make sure the widgets aren't drawn automatically
-				if ( !w.manualDraw ) {
-					w.manualDraw = true;
-				}
-			
-				// Update the scroll area
-				if ( scrollLength < w.gameObject.transform.position.y + w.gameObject.transform.localScale.y + inset ) {
-					scrollLength = w.gameObject.transform.position.y + w.gameObject.transform.localScale.y + inset;
-				}
-				
-				if ( scrollWidth < w.gameObject.transform.localPosition.x + w.gameObject.transform.localScale.x + inset ) {
-					scrollWidth = w.gameObject.transform.localPosition.x + w.gameObject.transform.localScale.x + inset;
-				}
+			} else if ( scroll < 0 ) {
+				amount.y = -20;
+			}	
+		
+			if ( Input.GetMouseButtonDown ( 2 ) ) {
+				dragging = true;
 			}
 		}
 		
-		// Drag control
-		if ( colliderRect.Contains ( Input.mousePosition ) ) {
+		// ^ Drag
+		if ( dragging ) { 	
 			if ( Input.GetMouseButton ( 2 ) ) {
-				position.x -= Input.GetAxis("Mouse X") * 18;
-				position.y += Input.GetAxis("Mouse Y") * 18;
-			} 
+				amount.x = Mathf.Floor ( drag.x * 20 );
+				amount.y = -Mathf.Floor ( drag.y * 20 );
+			}
+			
+			if ( Input.GetMouseButtonUp ( 2 ) ) {
+				dragging = false;
+			}
+		
+		// ^ Snap back
+		} else {
+			if ( position.y > 0 ) {
+				position.y = Mathf.Lerp ( position.y, 0, Time.deltaTime * padding.y );
+			}
+			
+			if ( position.x > 0 ) {
+				position.x = Mathf.Lerp ( position.x, 0, Time.deltaTime * padding.x );
+			}
+		}	
+
+		// ^ Elasticity
+		if ( position.x + amount.x < padding.x * elasticity ) {
+			position.x += amount.x / Mathf.Clamp ( position.x, 1, padding.x * elasticity );
 		}
+
+		if ( position.y + amount.y < padding.x * elasticity ) {
+			position.y += amount.y / Mathf.Clamp ( position.y, 1, padding.y * elasticity );;
+		}	
+		
+		
+		// Update all widgets
+		for ( var w : OGWidget in this.gameObject.GetComponentsInChildren.<OGWidget>() ) {
+			if ( w != this ) {
+				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
+				w.drawDepth -= drawDepth;
+				w.clipRct = drawRct;
+			}
+		}
+
 	}
 	
-	// Draw
-	override function Draw ( x : float, y : float ) {
-		colliderRect = new Rect ( transform.position.x, transform.position.y, viewWidth, viewHeight );
+	override function DrawGL () {
+		GL.TexCoord2 ( drawCrd.x, drawCrd.y );
+		GL.Vertex3 ( drawRct.x, drawRct.y, -this.transform.position.z );
 		
-		// Start scroll view
-		position = GUI.BeginScrollView (
-			Rect ( x, y, viewWidth, viewHeight ),
-			position,
-			Rect ( -inset, -inset, scrollWidth, scrollLength ),
-			alwaysHorizontal,
-			alwaysVertical
-		);
+		GL.TexCoord2 ( drawCrd.x, drawCrd.y + drawCrd.height );
+		GL.Vertex3 ( drawRct.x, drawRct.y + drawRct.height, -this.transform.position.z );
 		
-		// Queue up widgets for drawing
-		var queue : List.< List.< OGWidget > > = new List.< List.< OGWidget > >();
+		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y + drawCrd.height );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y + drawRct.height, -this.transform.position.z );
 		
-		// ^ create 30 batches
-		for ( var k = 0; k < 30; k++ ) {
-			queue.Add ( new List.< OGWidget >() );
-		}
-		
-		// ^ put widgets into their batches
-		for ( var c : Component in transform.GetComponentsInChildren (OGWidget) ) {
-			var w : OGWidget = c as OGWidget;
-			
-			if ( w != this ) {
-				// Queue index is based on the Z position
-				var index : int = w.transform.localPosition.z;
-				var count : int = queue.Count;
-				
-				// Make sure the index is between 0 and the amount of batches in the queue
-				if ( index > 0 ) { index = 0; }
-				else { index = Mathf.Abs( index ); }																																																										
-				if ( index >= count ) { index = count - 1; }
-				
-				// Add the widget to the batch
-				queue[index].Add ( w );
-			}
-		}
-	
-		// Draw widgets
-		for ( var i = 0; i < queue.Count; i++ ) {
-			for ( var item : OGWidget in queue[i] ) {
-				if ( item != null ) {
-					item.Draw ( item.transform.position.x - transform.position.x + item.adjustPivot.x, item.transform.position.y - transform.position.y + item.adjustPivot.y );
-				}
-			}
-		}
-	
-		// End scroll view
-		GUI.EndScrollView();
-
+		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, -this.transform.position.z );
 	}
 }

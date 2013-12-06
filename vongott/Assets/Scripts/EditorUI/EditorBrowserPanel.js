@@ -115,7 +115,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 				
 		for ( c in fileList.GetComponentsInChildren(OGButton) ) {
 			btn = c as OGButton;
-			btn.style = "listitem";
+			btn.styleName = "listitem";
 		}
 	}
 	
@@ -123,7 +123,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 	public function SelectFile ( btn : OGButton ) {
 		DeselectAll ();
 		
-		btn.style = "listitemselected";
+		btn.styleName = "listitemselected";
 		
 		selectedFile = currentFolder.FindFile ( btn.gameObject.name );
 								
@@ -133,7 +133,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 	// Create list item
 	private function CreateButton ( objName : String, index : int, type : String ) {
 		var obj : GameObject = new GameObject ( objName );
-		var img = obj.AddComponent ( OGImage );
+		var img = obj.AddComponent ( OGTexture );
 		var btn = obj.AddComponent ( OGButton );
 		
 		var xPos : float = 0;
@@ -146,7 +146,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 	
 		btn.target = this.gameObject;
 		btn.message = "Select" + type;
-		btn.style = "listitem";
+		btn.styleName = "listitem";
 		
 		StartCoroutine ( EditorCore.GetObjectIcon ( currentFolder.FindFile ( btn.gameObject.name ) as GameObject, img ) );
 		

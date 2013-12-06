@@ -19,7 +19,7 @@ class EditorInspectorConvo extends MonoBehaviour {
 		
 		EditorPicker.func = inspector.GetComponent(EditorInspectorActor).UpdateObject;
 		
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	// Pick quest
@@ -30,7 +30,7 @@ class EditorInspectorConvo extends MonoBehaviour {
 		
 		EditorPicker.func = inspector.GetComponent(EditorInspectorActor).UpdateObject;
 		
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	// Pick convo
@@ -41,7 +41,7 @@ class EditorInspectorConvo extends MonoBehaviour {
 		
 		EditorPicker.func = inspector.GetComponent(EditorInspectorActor).UpdateObject;
 		
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 		
 	// Init

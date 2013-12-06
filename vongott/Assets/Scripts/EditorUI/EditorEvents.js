@@ -76,7 +76,7 @@ class EditorEvents extends OGPage {
 		EditorPicker.button = btn;
 		EditorPicker.sender = "Events";
 				
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	function PickActor ( btn : OGButton ) {
@@ -96,7 +96,7 @@ class EditorEvents extends OGPage {
 		EditorPicker.button = btn;
 		EditorPicker.sender = "Events";
 				
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	function PickEvent ( btn : OGButton ) {
@@ -105,7 +105,7 @@ class EditorEvents extends OGPage {
 		EditorPicker.sender = "Events";
 		EditorPicker.func = Load;
 						
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	function CreateEvent () {	
@@ -122,7 +122,7 @@ class EditorEvents extends OGPage {
 		EditorPicker.button = btn;
 		EditorPicker.sender = "Events";
 				
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	function PickFlag ( btn : OGButton ) {
@@ -130,7 +130,7 @@ class EditorEvents extends OGPage {
 		EditorPicker.button = btn;
 		EditorPicker.sender = "Events";
 				
-		OGRoot.GoToPage ( "Picker" );
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 
 	function SelectMode () {
@@ -322,7 +322,7 @@ class EditorEvents extends OGPage {
 	
 	// Exit
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		
 		Clear ();
 	}

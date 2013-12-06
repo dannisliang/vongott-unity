@@ -90,8 +90,7 @@ class UIComputerDisplay extends OGPage {
 	
 	private function PopulateMessages () {
 		messageString.text = currentAccount.messages;
-		messageString.CalcHeight();
-		
+	
 		messageContainer.scrollLength = messageString.transform.localScale.y + 50;
 		messageTextField.transform.parent.localPosition = new Vector3 ( 0, messageContainer.scrollLength - 40, 0 );
 		

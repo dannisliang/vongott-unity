@@ -1,11 +1,11 @@
 #pragma strict
 
 class EditorInspectorSurface extends MonoBehaviour {
-	var previewImage : OGImage;
+	var previewImage : OGTexture;
 	var tilingValue : OGLabel;
 	var materialButton : OGButton;
 	
-	var foliagePreview : OGImage;
+	var foliagePreview : OGTexture;
 	var foliageDensity : OGLabel;
 	var foliageSource : OGButton;
 	
@@ -24,7 +24,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 			EditorBrowserWindow.rootFolder = "Materials";
 			EditorBrowserWindow.initMode = "Use";
 			EditorBrowserWindow.callback = GetMaterial;
-			OGRoot.GoToPage ( "BrowserWindow" );
+			OGRoot.GetInstance().GoToPage ( "BrowserWindow" );
 		};
 		
 		materialButton.text = "";
@@ -48,7 +48,7 @@ class EditorInspectorSurface extends MonoBehaviour {
 			EditorBrowserWindow.rootFolder = "Foliage";
 			EditorBrowserWindow.initMode = "Use";
 			EditorBrowserWindow.callback = GetFoliage;
-			OGRoot.GoToPage ( "BrowserWindow" );
+			OGRoot.GetInstance().GoToPage ( "BrowserWindow" );
 		};
 		
 		foliageSource.text = "";

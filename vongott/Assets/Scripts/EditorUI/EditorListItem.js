@@ -2,5 +2,5 @@
 
 class EditorListItem extends MonoBehaviour {
 	var button : OGButton;
-	var image : OGImage;
+	var image : OGTexture;
 }

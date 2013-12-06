@@ -16,7 +16,7 @@ class EditorOpenFile extends OGPage {
 	public var mapList : OGScrollView;
 	public var title : OGLabel;
 	public var selectedFile : String = "";
-	public var previewPane : OGImage;
+	public var previewPane : OGTexture;
 	public var fileInfo : OGLabel;
 	public var previewLoading : GameObject;
 	public var fileLoading : GameObject;
@@ -37,7 +37,7 @@ class EditorOpenFile extends OGPage {
 	function DeselectAll () {
 		for ( var i = 0; i < mapList.transform.childCount; i++ ) {
 			var btn : OGButton = mapList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
-			btn.style = "listitem";		
+			btn.styleName = "listitem";		
 		}
 	}
 	
@@ -47,7 +47,7 @@ class EditorOpenFile extends OGPage {
 		
 		var name : String = btn.text;
 		selectedFile = name;
-		btn.style = "listitemselected";
+		btn.styleName = "listitemselected";
 		
 		var dataPath : String = Application.dataPath + "/" + baseDir + "/" + name + "." + fileType;
 		var tempImage : Texture2D = new Texture2D ( 0, 0 );
@@ -90,7 +90,7 @@ class EditorOpenFile extends OGPage {
 			EditorCore.LoadOBJ ( selectedFile, asNavMesh );
 		}
 		
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	function OpenFile () {
@@ -99,7 +99,7 @@ class EditorOpenFile extends OGPage {
 	
 	// Cancel
 	function Cancel () {
-		OGRoot.GoToPage ( "MenuBase" );
+		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	// Clear list
@@ -127,7 +127,7 @@ class EditorOpenFile extends OGPage {
 			btn.text = name;
 			btn.target = this.gameObject;
 			btn.message = "SelectFile";
-			btn.style = "listitem";
+			btn.styleName = "listitem";
 			
 			obj.transform.parent = mapList.transform;
 			obj.transform.localScale = new Vector3 ( 456, 30, 1 );
@@ -157,7 +157,7 @@ class EditorOpenFile extends OGPage {
 	////////////////////
 	override function UpdatePage () {
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-			OGRoot.GoToPage ( "MenuBase" );
+			OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		}
 	}
 }
