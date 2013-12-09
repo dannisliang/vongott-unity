@@ -15,12 +15,14 @@ public class OGScrollView extends OGWidget {
 	private var dragging : boolean = false;
 	
 	override function UpdateWidget () {
+		selectable = false;
+		
 		if ( stretch.width != ScreenSize.None ) {
-			size.x = RecalcScale().x * Screen.width;
+			size.x = RecalcScale().x;
 		}
 
 		if ( stretch.height != ScreenSize.None ) {
-			size.y = RecalcScale().y * Screen.height;
+			size.y = RecalcScale().y;
 		}
 
 		mouseRct = drawRct;
@@ -92,10 +94,21 @@ public class OGScrollView extends OGWidget {
 		for ( var w : OGWidget in this.gameObject.GetComponentsInChildren.<OGWidget>() ) {
 			if ( w != this ) {
 				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
-				w.drawDepth -= drawDepth;
 				w.clipRct = drawRct;
+
+				// Make sure the widgets are always at least 1 unit over the background
+				if ( w.transform.localPosition.z > -1 ) {
+					var newPos : Vector3 = w.transform.localPosition;
+					newPos.z = -1;
+					w.transform.localPosition = newPos;
+				}
 			}
 		}
+
+		// Make sure the background is always above 0 units away
+		if ( this.transform.position.z < 1 ) {
+			this.transform.position = new Vector3 ( this.transform.position.x, this.transform.position.y, 1 );
+		}	
 
 	}
 	

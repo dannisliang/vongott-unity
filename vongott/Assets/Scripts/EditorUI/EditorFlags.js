@@ -29,7 +29,9 @@ class EditorFlags extends OGPage {
 			textField.maxLength = 48;
 			textField.regex = "^a-zA-Z0-9_-";
 			textField.text = name;
-												
+						
+			textField.GetDefaultStyles();
+
 			// Delete button
 			var btnPick : GameObject = new GameObject ( "btn" );
 			button = btnPick.AddComponent ( OGButton );
@@ -41,6 +43,8 @@ class EditorFlags extends OGPage {
 			button.message = "DeleteFlag";
 			button.argument = "0";
 			button.text = "X";
+
+			button.GetDefaultStyles();
 		}
 	}
 	
@@ -140,8 +144,7 @@ class EditorFlags extends OGPage {
 			bottomLine += 30;
 		}
 		
-		scrollView.scrollLength = bottomLine;
-		
+		OGRoot.GetInstance().SetDirty();	
 	}
 		
 	function SaveFlags () {

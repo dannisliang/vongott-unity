@@ -2,7 +2,7 @@
 
 class OGButton extends OGWidget {
 	public var hiddenString : String;
-	public var text : String;
+	public var text : String = "";
 	public var target : GameObject;
 	public var message : String;
 	public var argument : String;
@@ -37,15 +37,16 @@ class OGButton extends OGWidget {
 	override function OnMouseCancel () {
 		isDown = false;
 		OGRoot.GetInstance().ReleaseWidget ();
-		UpdateWidget ();
 	}
 	
 	override function OnMouseDown () {
 		isDown = true;
-		UpdateWidget ();
+		OGRoot.GetInstance().SetDirty();
 	}
 	
 	override function UpdateWidget () {
+		selectable = true;
+		
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {

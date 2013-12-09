@@ -32,7 +32,7 @@ public class OGLabel extends OGWidget {
 		}
 
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
-			var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
+			var shouldClip : boolean = false;//clipRct.width > 0 && clipRct.height > 0;
 
 			if ( shouldClip ) {  
 				var leftClip : float = shouldClip ? Mathf.Clamp ( clipRct.x - ( position.x + x ), 0, 1 ) : 0;
@@ -144,6 +144,8 @@ public class OGLabel extends OGWidget {
 	override function UpdateWidget () {
 		if ( styles.basic == null ) { return; }
 
+		selectable = true;
+
 		if ( !overrideFontSize ) {
 			fontSize = styles.basic.text.fontSize;
 		}
@@ -211,7 +213,7 @@ public class OGLabel extends OGWidget {
 		}
 
 		lineWidth = widestLine;
-		lineHeight = tallestGlyph * styles.basic.text.lineHeight;
+		lineHeight = styles.basic.text.fontSize * styles.basic.text.lineHeight;
 		spacing = widestGlyph / 2 * styles.basic.text.spacing;		
 
 		drawLines = lineList.ToArray ();

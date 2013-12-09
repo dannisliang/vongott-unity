@@ -205,6 +205,8 @@ public class OGSlicedSprite extends OGWidget {
 			drawBrd = RecalcBorder ( styles.basic.border );
 			pixelBrd = styles.basic.border;
 		}
+	
+		mouseRct = drawRct;
 	}
 	
 	

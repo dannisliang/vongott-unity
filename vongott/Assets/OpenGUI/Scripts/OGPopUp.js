@@ -8,6 +8,7 @@ class OGPopUp extends OGWidget {
 	public var target : GameObject;
 	public var message : String;
 	public var passSelectedOption : boolean = false;
+	public var isUp = false;
 	
 	@HideInInspector public var selectedOption : String;
 	
@@ -15,7 +16,6 @@ class OGPopUp extends OGWidget {
 	private var label : OGLabel;
 	private var optionLabels : GameObject;
 	private var timeStamp : float;
-	private var isUp = false;
 	
 	private function GetMouseOverOption () : int {
 		for ( var i : int = 0; i < optionLabels.transform.childCount; i++ ) {
@@ -29,6 +29,7 @@ class OGPopUp extends OGWidget {
 	
 	public function SetOptions ( list : String[] ) {
 		options = list;
+		OGRoot.GetInstance().SetDirty();
 	}
 
 	override function OnMouseUp () {
@@ -40,14 +41,26 @@ class OGPopUp extends OGWidget {
 		
 		if ( mouseOverOption != -1 ) {
 			selectedOption = options[mouseOverOption];
+
+			if ( target != null && !String.IsNullOrEmpty ( message ) ) {
+				if ( passSelectedOption ) {
+					target.SendMessage ( message, selectedOption );
+				} else {
+					target.SendMessage ( message );
+				}
+			}	
 		}
+		
+		OGRoot.GetInstance().SetDirty();
 	}
 	
 	override function OnMouseDown () {
 		if ( !isUp && GetMouseOverOption() == -1 ) {		
-			isUp = true;
+			ToggleUp ( true );
 			timeStamp = Time.time;
 		}
+		
+		OGRoot.GetInstance().SetDirty();
 	}
 	
 	override function OnMouseOver () {
@@ -67,31 +80,45 @@ class OGPopUp extends OGWidget {
 		
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
+
+	private function ToggleUp ( state : boolean ) {
+		isUp = state;
+
+		if ( state ) {
+			label.styles.basic = styles.active;
+			background.styles.basic = styles.active;
+			background.transform.localScale = new Vector3 ( 1, optionLabels.transform.childCount+1.1, 1 );
+		} else {
+			label.styles.basic = styles.basic;
+			background.styles.basic = styles.basic;
+			background.transform.localScale = Vector3.one;
+		}
+		
+		optionLabels.SetActive ( state );
 	
+		OGRoot.GetInstance().SetDirty();
+	}
+		
 	override function UpdateWidget () {
+		// Option labels
 		if ( !optionLabels && !this.transform.Find("Options") ) {
 			optionLabels = new GameObject ( "Options" );
 			optionLabels.transform.parent = this.transform;
 			optionLabels.transform.localPosition = new Vector3 ( 0, 1, 0 );
 			optionLabels.transform.localScale = Vector3.one;
 			optionLabels.transform.localEulerAngles = Vector3.zero;
-		
+
 		} else if ( !optionLabels ) {
 			optionLabels = this.transform.Find("Options").gameObject;
-		
+	
+		} else if ( optionLabels.transform.childCount == 0 ) {
+			for ( var i : int = 0; i < options.Length; i++ ) {
+				new GameObject ( options[i], OGLabel ).transform.parent = optionLabels.transform;
+			}
+
 		} else if ( optionLabels.transform.childCount != options.Length ) {
 			for ( var x : int = 0; x < optionLabels.transform.childCount; x++ ) {
 				DestroyImmediate ( optionLabels.transform.GetChild(x).gameObject );
-			}
-			
-			var tempList : List.< OGLabel > = new List.< OGLabel > ();
-			
-			for ( var i : int = 0; i < options.Length; i++ ) {
-				var lbl : OGLabel = new GameObject ( options[i], OGLabel ).GetComponent ( OGLabel );
-				lbl.transform.parent = optionLabels.transform;
-				lbl.transform.localScale = Vector3.one;
-				lbl.transform.localEulerAngles = Vector3.zero;
-				lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
 			}
 		
 		} else {
@@ -110,7 +137,8 @@ class OGPopUp extends OGWidget {
 			}
 		
 		}
-		
+	
+		// Background	
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
 				background = this.gameObject.GetComponentInChildren ( OGSlicedSprite );
@@ -124,7 +152,7 @@ class OGPopUp extends OGWidget {
 		} else {
 			
 			background.transform.localEulerAngles = Vector3.zero;
-			background.transform.localPosition = Vector3.zero;
+			background.transform.localPosition = new Vector3 ( 0, 0, 1 );
 			
 			background.pivot.x = pivot.x;
 			background.pivot.y = RelativeY.Top;
@@ -140,7 +168,7 @@ class OGPopUp extends OGWidget {
 			background.isDrawn = isDrawn;
 			background.hidden = true;
 		
-			mouseOver = CheckMouseOver ( background.drawRct );
+			mouseRct = background.drawRct;
 		}
 		
 		if ( label == null ) {
@@ -174,10 +202,6 @@ class OGPopUp extends OGWidget {
 			
 			label.isDrawn = isDrawn;
 			label.hidden = true;
-		}
-		
-		if ( mouseOver ) {
-			OnMouseOver ();
 		}
 	}
 }

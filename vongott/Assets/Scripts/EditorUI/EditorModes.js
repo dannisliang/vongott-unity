@@ -45,6 +45,8 @@ class EditorModes extends OGPage {
 		dataX.text = "X: " + dataVector.x.ToString("f2");
 		dataY.text = "Y: " + dataVector.y.ToString("f2");
 		dataZ.text = "Z: " + dataVector.z.ToString("f2");
+	
+		OGRoot.GetInstance().SetDirty();
 	}
 	
 	override function StartPage () {

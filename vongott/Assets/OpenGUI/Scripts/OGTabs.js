@@ -10,22 +10,13 @@ public class OGTabs extends OGWidget {
 	public var tabs : Tab[];
 	
 	private function CreateTabObject () {
-		var container : GameObject = new GameObject ( "Tab" );
-		var background : OGSlicedSprite = new GameObject ( "Background", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
-		var label : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
+		var btn : OGButton = new GameObject ( "Tab", OGButton ).GetComponent(OGButton);
+
+		btn.transform.localScale = Vector3.one;
+		btn.transform.localEulerAngles = Vector3.zero;
+		btn.transform.localPosition = Vector3.zero;
 		
-		background.transform.parent = container.transform;
-		label.transform.parent = container.transform;
-		
-		background.transform.localScale = Vector3.one;
-		background.transform.localEulerAngles = Vector3.zero;
-		background.transform.localPosition = Vector3.zero;
-		
-		label.transform.localScale = Vector3.one;
-		label.transform.localEulerAngles = Vector3.zero;
-		label.transform.localPosition = Vector3.zero;
-		
-		container.transform.parent = this.transform;
+		btn.transform.parent = this.transform;
 	}
 
 	public function AddTab ( tabName : String, tabObject : GameObject, switchTo : boolean ) {
@@ -62,7 +53,7 @@ public class OGTabs extends OGWidget {
 	}
 	
 	private function UpdateTabObjects () {
-		var anyMouseOver : boolean = false;
+		var anyMouseOver : Rect = new Rect ( 0, 0, 0, 0 );
 		
 		if ( this.transform.childCount == 0 ) {
 			MakeTabObjects ();
@@ -79,63 +70,50 @@ public class OGTabs extends OGWidget {
 					break;
 				}
 				
-				var container : GameObject = t.gameObject;
-				
 				if ( i >= tabs.Length ) {
-					DestroyImmediate ( container );
+					DestroyImmediate ( t.gameObject );
 					continue;
 				}
 				
-				var label : OGLabel = container.GetComponentInChildren ( OGLabel );
-				var background : OGSlicedSprite = container.GetComponentInChildren ( OGSlicedSprite );
-							
-				label.text = tabs[i].title;
+				var btn : OGButton = t.GetComponent(OGButton);
+				btn.text = tabs[i].title;
 						
 				if ( activeTab != i ) {
-					label.styles.basic = styles.basic;
-					background.styles.basic = styles.basic;
+					btn.styles.basic = styles.basic;
 					
-					if ( tabs[i].content != null ) {
+					if ( tabs[i].content != null && tabs[i].content.activeSelf ) {
 						tabs[i].content.SetActive ( false );
 					}
 					
 				} else {
-					label.styles.basic = styles.active;
-					background.styles.basic = styles.active;
+					btn.styles.basic = styles.active;
 					
-					if ( tabs[i].content != null ) {
+					if ( tabs[i].content != null && !tabs[i].content.activeSelf ) {
 						tabs[i].content.SetActive ( true );
 					}
 				}
 				
-				label.hidden = true;
-				background.hidden = true;
-				
-				if ( !anyMouseOver ) {
-					anyMouseOver = CheckMouseOver ( background.drawRct );
-				}
-										
-				container.name = i + ": " + tabs[i].title;
-				container.transform.localScale = new Vector3 ( 1.0 / this.transform.childCount, 1, 1 );
-				container.transform.localPosition = new Vector3 ( (i*1.0) / this.transform.childCount, 0, 0 );
+				btn.hidden = true;
+				btn.target = this.gameObject;
+				btn.message = "SetActiveTab";
+				btn.argument = i.ToString();
+				btn.styles.active = styles.active;
+
+				btn.gameObject.name = i + ": " + tabs[i].title;
+				btn.transform.localScale = new Vector3 ( 1.0 / this.transform.childCount, 1, 1 );
+				btn.transform.localPosition = new Vector3 ( (i*1.0) / this.transform.childCount, 0, 0 );
 			}
-			
-			mouseOver = anyMouseOver;
 		}
 	}
-	
-	override function OnMouseDown () {
-		for ( var i : int = 0; i < this.transform.childCount; i++ ) {			
-			if ( CheckMouseOver ( this.transform.GetChild(i).GetComponentInChildren(OGSlicedSprite).drawRct ) ) {
-				activeTab = i;
-				return;
-			}
-		}
+
+	public function SetActiveTab ( n : String ) {
+		activeTab = int.Parse ( n );
+		UpdateWidget ();
 	}
 	
 	override function UpdateWidget () {
 		if ( tabs == null ) { return; }
-		
+	
 		UpdateTabObjects ();
 
 		if ( activeTab >= tabs.Length && tabs.Length > 0 ) {

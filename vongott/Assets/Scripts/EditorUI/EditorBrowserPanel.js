@@ -37,6 +37,8 @@ class EditorBrowserPanel extends MonoBehaviour {
 		popupMenu.selectedOption = category;
 					
 		PopulateList ( resourcesFolder.FindFolder(tab).FindFolder(category) );
+	
+		OGRoot.GetInstance().SetDirty();
 	}
 
 	// Pick category
@@ -107,52 +109,30 @@ class EditorBrowserPanel extends MonoBehaviour {
 		}
 	}
 
-	// Deselect all
-	function DeselectAll () {
-		var i : int = 0;
-		var c : Component;
-		var btn : OGButton;
-				
-		for ( c in fileList.GetComponentsInChildren(OGButton) ) {
-			btn = c as OGButton;
-			btn.styleName = "listitem";
-		}
-	}
-	
 	// Select file
-	public function SelectFile ( btn : OGButton ) {
-		DeselectAll ();
-		
-		btn.styleName = "listitemselected";
-		
-		selectedFile = currentFolder.FindFile ( btn.gameObject.name );
+	public function SelectFile ( name : String ) {
+		selectedFile = currentFolder.FindFile ( name );
 								
-		inspectorName.text = btn.gameObject.name;
+		inspectorName.text = name;
 	}
 
 	// Create list item
 	private function CreateButton ( objName : String, index : int, type : String ) {
 		var obj : GameObject = new GameObject ( objName );
-		var img = obj.AddComponent ( OGTexture );
-		var btn = obj.AddComponent ( OGButton );
+		var btn = obj.AddComponent ( OGListItem );
 		
-		var xPos : float = 0;
-		var yPos : float = index * 45;
-	
-		if ( index % 2 != 0 ) {
-			xPos = 90;
-			yPos = (index-1) * 45;
-		}
-	
+		btn.text = objName;	
 		btn.target = this.gameObject;
 		btn.message = "Select" + type;
-		btn.styleName = "listitem";
-		
-		StartCoroutine ( EditorCore.GetObjectIcon ( currentFolder.FindFile ( btn.gameObject.name ) as GameObject, img ) );
+		btn.argument = objName;
+
+		//StartCoroutine ( EditorCore.GetObjectIcon ( currentFolder.FindFile ( btn.gameObject.name ) as GameObject, img ) );
 		
 		obj.transform.parent = fileList;
-		obj.transform.localScale = new Vector3 ( 80, 80, 1 );
-		obj.transform.localPosition = new Vector3 ( xPos, yPos, -2 );
+		obj.transform.localScale = new Vector3 ( 180, 30, 1 );
+		obj.transform.localPosition = new Vector3 ( 0, index * 30, -2 );
+	
+		btn.GetDefaultStyles();
 	}
 
 	function Update () {

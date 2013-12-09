@@ -1,7 +1,7 @@
 #pragma strict
 
 class OGListItem extends OGWidget {
-	public var text : String;
+	public var text : String = "";
 	public var selected : boolean = false;
 	public var object : Object;
 	public var target : GameObject;
@@ -44,9 +44,12 @@ class OGListItem extends OGWidget {
 		}
 
 		Action ();
+		OGRoot.GetInstance().SetDirty();
 	}
 	
 	override function UpdateWidget () {
+		selectable = true;
+		
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
@@ -56,8 +59,11 @@ class OGListItem extends OGWidget {
 				var newSprite : OGSprite = new GameObject ( "Sprite", OGSprite ).GetComponent ( OGSprite );
 				newSprite.transform.parent = this.transform;
 				newSprite.styles.basic = this.styles.basic;
+				
+				UpdateWidget ();
+				return;
 			}
-		
+
 		} else {
 			background.transform.localScale = Vector3.one;
 			background.transform.localEulerAngles = Vector3.zero;
@@ -72,7 +78,7 @@ class OGListItem extends OGWidget {
 				background.styles.basic = this.styles.basic;
 			}
 
-			mouseOver = CheckMouseOver ( background.drawRct );
+			mouseRct = background.drawRct;
 		}
 		
 		// Label
@@ -85,6 +91,9 @@ class OGListItem extends OGWidget {
 				newLabel.transform.parent = this.transform;
 				newLabel.text = text;
 				newLabel.styles.basic = this.styles.basic;
+
+				UpdateWidget ();
+				return;
 			}
 		
 		} else {
@@ -101,10 +110,6 @@ class OGListItem extends OGWidget {
 			} else {
 				label.styles.basic = this.styles.basic;
 			}
-		}
-				
-		if ( mouseOver ) {
-			OnMouseOver ();
 		}
 	}
 }

@@ -315,6 +315,7 @@ class EditorMenuBase extends OGPage {
 				menuObj.GetComponent(EditorInspectorLiftPanel).Init(selectedObj);
 				break;
 		}
+	
 	}
 		
 	function AddMenu ( menu : String, selectedObj : GameObject ) {
@@ -338,6 +339,8 @@ class EditorMenuBase extends OGPage {
 		tabs.AddTab ( menu, menuObj, hasPriority );	
 		
 		DisplayMenu ( menu, menuObj, selectedObj );
+		
+		OGRoot.GetInstance().SetDirty( 10 );
 	}
 	
 			
@@ -405,7 +408,9 @@ class EditorMenuBase extends OGPage {
 				scl.z.text = "Z: " + t.localScale.z.ToString("f2");
 							
 			} else if ( inspector.activeSelf && EditorCore.running ) {
-				//inspector.SetActive ( false );
+				inspector.SetActive ( false );
+
+				OGRoot.GetInstance().SetDirty();
 
 			}
 		}

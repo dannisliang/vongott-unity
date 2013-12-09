@@ -58,8 +58,9 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var mouseOver : boolean = false;
 	@HideInInspector public var scrollOffset : Vector3;
 	@HideInInspector public var offset : Vector3;
-	@HideInInspector public var clipping : Vector4;
 	@HideInInspector public var hidden : boolean = false;
+	@HideInInspector public var selectable : boolean = false;
+	@HideInInspector public var outOfBounds : boolean = false;
 	@HideInInspector public var root : OGRoot;
 	
 	// TODO: Deprecate
@@ -79,7 +80,19 @@ public class OGWidget extends MonoBehaviour {
 	
 		return null;
 	}
-	
+
+	// Combine rects
+	public function CombineRects ( a : Rect, b : Rect ) : Rect {
+		var result : Rect = new Rect ( 0, 0, 0, 0 );
+		
+		result.x = ( a.x < b.x ) ? a.x : b.x;
+		result.y = ( a.y < b.y ) ? a.y : b.y;
+		result.xMax = ( a.xMax > b.xMax ) ? a.xMax : b.xMax;
+		result.yMax = ( a.yMax > b.yMax ) ? a.yMax : b.yMax;
+
+		return result;
+	}
+
 	// Check mouseover
 	public function CheckMouseOver () : boolean {
 		if ( mouseRct != null ) {
@@ -129,8 +142,6 @@ public class OGWidget extends MonoBehaviour {
 		
 		newPos.y += this.transform.lossyScale.y;
 								
-		newPos.x += clipping.x;
-		
 		newPos.y = Screen.height - newPos.y;
 		
 		return newPos;
@@ -215,20 +226,20 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Calculate clipping
 	private function CalcClipping () {
-		var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0 && !this.GetComponent(OGLabel);
+		var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
 
 		if ( shouldClip ) {
-			var leftClip : float = Mathf.Clamp ( clipRct.x - drawRct.x, 0, 1 );
-			var rightClip : float = Mathf.Clamp ( ( drawRct.x + drawRct.width ) - ( clipRct.x + clipRct.width ), 0, 1 );
-			var bottomClip : float = Mathf.Clamp ( clipRct.y - drawRct.y, 0, 1 );
-			var topClip : float = Mathf.Clamp ( ( drawRct.y + drawRct.height ) - ( clipRct.y + clipRct.height ), 0, 1 );
+			var leftClip : float = Mathf.Clamp ( clipRct.x - drawRct.x, 0, float.PositiveInfinity );
+			var rightClip : float = Mathf.Clamp ( ( drawRct.x + drawRct.width ) - ( clipRct.x + clipRct.width ), 0, float.PositiveInfinity );
+			var bottomClip : float = Mathf.Clamp ( clipRct.y - drawRct.y, 0, float.PositiveInfinity );
+			var topClip : float = Mathf.Clamp ( ( drawRct.y + drawRct.height ) - ( clipRct.y + clipRct.height ), 0, float.PositiveInfinity );
 		
 			drawRct.x = drawRct.x + leftClip - rightClip;
 			drawRct.width = drawRct.width - leftClip - rightClip;	
 			drawRct.y = drawRct.y + bottomClip;
 			drawRct.height = drawRct.height - topClip - bottomClip;	
 		
-			isDrawn = ( drawRct.height >= 0 && drawRct.width >= 0 );
+			isDrawn = drawRct.height > 0 && drawRct.width > 0;
 		}
 	}
 	

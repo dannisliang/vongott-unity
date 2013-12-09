@@ -99,16 +99,19 @@ class OGDropDown extends OGWidget {
 			} else if ( selectedItem.GetType() == DropDownItemNested ) {
 				OnMouseCancel ();
 			}
-		
+			
 		} else if ( Time.time - timeStamp > 0.5 ) {
 			OnMouseCancel ();
 		}
+
+		OGRoot.GetInstance().SetDirty();
 	}
 	
 	override function OnMouseDown () {
 		if ( !isDown && GetMouseOverOption() == -1 ) {		
 			isDown = true;
 			timeStamp = Time.time;
+			OGRoot.GetInstance().SetDirty();
 		}
 	}
 	
@@ -122,7 +125,7 @@ class OGDropDown extends OGWidget {
 				
 				if ( CheckMouseOver ( l.drawRct ) ) {
 					l.styles.basic = styles.hover;
-				} else if ( currentNestedMenu[i].isTicked ) {
+				} else if ( currentNestedMenu[i] && currentNestedMenu[i].isTicked ) {
 					l.styles.basic = styles.ticked;       
 				} else {
 					l.styles.basic = styles.basic;
@@ -166,7 +169,7 @@ class OGDropDown extends OGWidget {
 			nestedMenuContainer.transform.localPosition = new Vector3 ( 1, 1.1, 0 );
 			nestedMenuContainer.transform.localScale = Vector3.one;
 			nestedMenuContainer.transform.localEulerAngles = Vector3.zero;
-		
+	
 		} else if ( !nestedMenuContainer ) {
 			nestedMenuContainer = FindChild("NestedMenu");
 		
@@ -311,7 +314,7 @@ class OGDropDown extends OGWidget {
 					background.transform.localScale = new Vector3 ( 1, submenuContainer.transform.childCount + 0.2, 1 );
 				}
 				
-				mouseRct = background.drawRct;
+				mouseRct = CombineRects ( background.drawRct, label.drawRct );
 			
 			} else {
 				background.isDrawn = false;
@@ -346,11 +349,5 @@ class OGDropDown extends OGWidget {
 			label.isDrawn = isDrawn;
 			label.hidden = true;			
 		}
-		
-		// Mouseover
-		if ( mouseOver ) {
-			OnMouseOver ();
-		}
 	}
-	
 }

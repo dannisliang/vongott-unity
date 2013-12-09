@@ -12,12 +12,13 @@ class OGRoot extends MonoBehaviour {
 	@HideInInspector public var unicode : Dictionary.< int, int >[];
 	@HideInInspector public var isMouseOver : boolean = false;
 
-	private var dirty : boolean = false;
+	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
 	private var labels : OGLabel[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
-	
+	private var screenRect : Rect;
+
 	public static function GetInstance () {
 		return instance;
 	}
@@ -49,14 +50,14 @@ class OGRoot extends MonoBehaviour {
 					
 	}
 
-	public function ResetStyles () {
-		if ( !widgets ) { return; }
-		
-		for ( var w : OGWidget in this.transform.GetComponentsInChildren.<OGWidget>(true) ) {
-			skin.GetDefaultStyles ( w );
-		}	
-	}
+	public function SetCurrentPage ( page : OGPage ) {
+		currentPage = page;
 
+		for ( var p : OGPage in this.GetComponentsInChildren.<OGPage>(true) ) {
+			p.gameObject.SetActive ( p == currentPage );
+		}
+	}
+	
 	public function GoToPage ( pageName : String ) {
 		if ( currentPage != null ) {
 			currentPage.ExitPage ();
@@ -123,10 +124,16 @@ class OGRoot extends MonoBehaviour {
 	
 	public function ReleaseWidget () {
 		downWidget = null;
+	
+		SetDirty ();
+	}
+
+	public function SetDirty ( frames : int ) {
+		dirtyCounter = frames;
 	}
 
 	public function SetDirty () {
-		dirty = true;
+		SetDirty ( 2 );
 	}
 
 	public function Start () {
@@ -152,9 +159,9 @@ class OGRoot extends MonoBehaviour {
 		}
 
 		// Update all widgets
-		if ( dirty ) {
+		if ( dirtyCounter > 0 ) {
 			UpdateWidgets ();
-			dirty = false;
+			dirtyCounter--;
 		}
 	}
 
@@ -164,6 +171,7 @@ class OGRoot extends MonoBehaviour {
 
 		for ( var w : OGWidget in widgets ) {
 			if ( w.isDrawn && w.CheckMouseOver() ) {
+				w.OnMouseOver ();
 				mouseOver.Add ( w );
 			}
 		}
@@ -171,9 +179,9 @@ class OGRoot extends MonoBehaviour {
 		// Is mouse over anything?
 		isMouseOver = mouseOver.Count > 0;
 
-		// Update active widget
-		if ( downWidget ) {
-			downWidget.UpdateWidget ();
+		// Update mouse-over widgets
+		for ( w in mouseOver ) {
+			w.UpdateWidget ();
 		}
 
 		// Click
@@ -181,7 +189,7 @@ class OGRoot extends MonoBehaviour {
 			var topWidget : OGWidget;
 			
 			for ( var mw : OGWidget in mouseOver ) {
-				if ( topWidget == null || mw.transform.position.z < topWidget.transform.position.z ) {
+				if ( ( topWidget == null || mw.transform.position.z < topWidget.transform.position.z ) && mw.selectable ) {
 					topWidget = mw;
 				}
 			}
@@ -209,7 +217,7 @@ class OGRoot extends MonoBehaviour {
 			}
 		
 		// Dragging
-		} else if ( Input.GetMouseButton ( 0 ) ) {
+		} else if ( Input.GetMouseButton ( 0 ) || Input.GetMouseButton ( 2 ) ) {
 			if ( downWidget ) {
 				downWidget.OnMouseDrag ();
 			}
@@ -218,11 +226,23 @@ class OGRoot extends MonoBehaviour {
 		} else if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			if ( downWidget ) {
 				downWidget.OnMouseCancel ();
+				ReleaseWidget ();
 			}
 		}
 	}	
 
+
+        public function Intersect ( w : Transform ) : boolean {
+		var c1 : boolean = w.position.x + w.lossyScale.x > 0;
+		var c2 : boolean = w.position.x < Screen.width;
+		var c3 : boolean = w.position.y + w.lossyScale.y > 0;
+		var c4 : boolean = w.position.y < Screen.height;
+		return c1 && c2 && c3 && c4;
+	}
+     
 	public function UpdateWidgets () {
+		screenRect = new Rect ( 0, Screen.width, 0, Screen.height );
+
 		if ( currentPage == null ) { return; }
 		
 		// Index font unicode
@@ -233,14 +253,14 @@ class OGRoot extends MonoBehaviour {
 		// Update widget lists	
 		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
 		labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
-		
+
 		for ( var w : OGWidget in widgets ) {
-			if ( w == null || !w.isDrawn ) { continue; }
+			if ( w == null ) { continue; }
 			
 			if ( w.transform.localPosition.z < 0 ) {
 				w.transform.localPosition = new Vector3 ( w.transform.localPosition.x, w.transform.localPosition.y, 0 );
 			}
-			
+		
 			w.root = this;			
 			w.Recalculate ();
 			w.UpdateWidget ();

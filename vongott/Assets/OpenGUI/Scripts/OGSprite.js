@@ -23,4 +23,11 @@ public class OGSprite extends OGWidget {
 		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y );
 		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, drawDepth );
 	}
+
+	////////////////
+	// Update
+	////////////////
+	override function UpdateWidget () {
+		mouseRct = drawRct;
+	}
 }

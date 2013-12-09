@@ -15,10 +15,6 @@ public class OGRootInspector extends Editor {
 			root.ReloadFonts (); 
 		}
 	
-		if ( GUILayout.Button ( "Reset styles" ) ) {
-			root.ResetStyles (); 
-		}
-		
 		GUI.backgroundColor = Color.green;
 		if ( GUILayout.Button ( "Update", GUILayout.Height ( 30 ) ) ) {
 			root.SetDirty ();

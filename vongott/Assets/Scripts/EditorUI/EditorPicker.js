@@ -52,16 +52,13 @@ class EditorPicker extends OGPage {
 	}
 	
 	function CreateButton ( label : String, useNesting : boolean ) {
-		var obj : GameObject = new GameObject ( label );
+		var obj : GameObject = new GameObject ( scrollView.transform.childCount + ": " + label );
 		var btn : OGListItem = obj.AddComponent ( OGListItem );
 		
 		var split : String [] = label.Split ( "/"[0] );
+		var inset : float = 0;
 		
-		if ( useNesting ) {
-			for ( var i = 0; i < split.Length - 1; i++ ) {
-				btn.text += ".         ";
-			}
-		}
+		inset = ( split.Length - 1 ) * 20;
 		
 		btn.text += label;
 		btn.target = this.gameObject;
@@ -69,30 +66,29 @@ class EditorPicker extends OGPage {
 		btn.argument= btn.text;
 
 		obj.transform.parent = scrollView.transform;
-		obj.transform.localPosition = new Vector3 ( 0, scrollView.scrollLength, 0 );
-		obj.transform.localScale = new Vector3 ( 570, 20, 1 );
+		obj.transform.localPosition = new Vector3 ( inset, scrollView.scrollLength, 0 );
+		obj.transform.localScale = new Vector3 ( 570 - inset, 20, 1 );
 	
 		btn.GetDefaultStyles ();
 	}
 	
 	// Create line
 	function CreateLine ( label : String ) {
-		var obj : GameObject = new GameObject ( label );
+		var obj : GameObject = new GameObject ( scrollView.transform.childCount + ": " + label );
 		var lbl : OGLabel = obj.AddComponent ( OGLabel );
 		
 		var split : String [] = label.Split ( "/"[0] );
-		
-		for ( var i = 0; i < split.Length - 1; i++ ) {
-			lbl.text += ".         ";
-		}
+		var inset : float = 0;
+
+		inset = ( split.Length - 1 ) * 20;
 				
 		lbl.text += Regex.Replace ( label, "[/]", "" );
 		
 		obj.transform.parent = scrollView.transform;
-		obj.transform.localPosition = new Vector3 ( 0, scrollView.scrollLength, 0 );
-		obj.transform.localScale = new Vector3 ( 570, 20, 1 );
-		
-		scrollView.scrollLength += 20;
+		obj.transform.localScale = new Vector3 ( 570 - inset, 20, 1 );
+		obj.transform.localPosition = new Vector3 ( inset, 0, 0 );
+
+		lbl.GetDefaultStyles ();
 	}
 	
 	// Deselect all
@@ -106,8 +102,7 @@ class EditorPicker extends OGPage {
 	function SelectItem ( path : String ) {
 		DeselectAll ();
 		
-		var name : String = Regex.Replace ( path, "[. ]", "" );
-		selectedItem = name;
+		selectedItem = path;
 	}
 	
 	// Clear items
@@ -153,8 +148,10 @@ class EditorPicker extends OGPage {
 		yield WaitForEndOfFrame ();
 	
 		for ( var i = 0; i < scrollView.transform.childCount; i++ ) {
-			scrollView.transform.GetChild(i).localPosition = new Vector3 ( scrollView.transform.GetChild(i).localPosition.x, i* 20, scrollView.transform.GetChild(i).localPosition.z );
+			scrollView.transform.GetChild(i).localPosition = new Vector3 ( scrollView.transform.GetChild(i).localPosition.x, i* 20, 0 );
 		}
+	
+		OGRoot.GetInstance().SetDirty();
 	}
 	
 	// Quests
@@ -191,6 +188,8 @@ class EditorPicker extends OGPage {
 				}
 			}
 		}
+		
+		StartCoroutine ( SortList () );
 	}
 	
 	// Maps

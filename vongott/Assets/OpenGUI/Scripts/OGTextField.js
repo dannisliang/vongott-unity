@@ -89,7 +89,7 @@ public class OGTextField extends OGWidget {
 			background.isDrawn = isDrawn;
 			background.hidden = true;
 		
-			mouseOver = CheckMouseOver ( background.drawRct );
+			mouseRct = background.drawRct;
 		}
 				
 		// Regex
