@@ -13,11 +13,11 @@ class OGButton extends OGWidget {
 
 	private var background : OGSlicedSprite;
 	private var label : OGLabel;
-	
+	private var isDown : boolean = false;
+
 	override function OnMouseUp () {
-		label.styles.basic = this.styles.basic;
-		background.styles.basic = this.styles.basic;
-		
+		isDown = false;
+
 		if ( func ) {
 			func ();
 				
@@ -25,7 +25,7 @@ class OGButton extends OGWidget {
 			if ( !String.IsNullOrEmpty ( argument ) ) {
 				target.SendMessage ( message, argument );
 			} else {	
-				target.SendMessage ( message );
+				target.SendMessage ( message, this );
 			}
 
 		} else {
@@ -39,15 +39,12 @@ class OGButton extends OGWidget {
 	}
 	
 	override function OnMouseCancel () {
-		label.styles.basic = styles.basic;
-		background.styles.basic = styles.basic;
-		
+		isDown = false;
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
 	
 	override function OnMouseDown () {
-		label.styles.basic = styles.active;
-		background.styles.basic = styles.active;
+		isDown = true;
 	}
 	
 	override function UpdateWidget () {
@@ -69,7 +66,6 @@ class OGButton extends OGWidget {
 		
 			background.isDrawn = isDrawn;
 			background.hidden = true;
-			background.styles.basic = this.styles.basic;
 			mouseOver = CheckMouseOver ( background.drawRct );
 		}
 		
@@ -93,11 +89,21 @@ class OGButton extends OGWidget {
 			
 			label.isDrawn = isDrawn;
 			label.hidden = true;
-			label.styles.basic = this.styles.basic;
 		}
-				
+		
+		// Styles
+		if ( isDown ) {
+			label.styles.basic = this.styles.active;
+			background.styles.basic = this.styles.active;
+		} else {	
+			label.styles.basic = this.styles.basic;
+			background.styles.basic = this.styles.basic;
+		}
+
 		if ( mouseOver ) {
 			OnMouseOver ();
+		} else if ( isDown ) {
+			OnMouseCancel ();
 		}
 	}
 }

@@ -12,11 +12,6 @@ public class OGSlicedSprite extends OGWidget {
 	private function RecalcBorder ( border : OGSlicedSpriteOffset ) : OGSlicedSpriteOffset {
 		return new OGSlicedSpriteOffset ( border.left / 256, border.right / 256, border.top / 144, border.bottom / 144 );
 	}
-	
-	// Pixel border (based on screen size)
-	private function RecalcPixelBorder ( border : OGSlicedSpriteOffset ) : OGSlicedSpriteOffset {
-		return new OGSlicedSpriteOffset ( border.left / Screen.width, border.right / Screen.width, border.top / Screen.height, border.bottom / Screen.height );
-	}
 
 
 	//////////////////
@@ -204,11 +199,11 @@ public class OGSlicedSprite extends OGWidget {
 	
 	//////////////////
 	// Update
-	//////////////////
+	//////////////////	
 	override function UpdateWidget () {
 		if ( styles.basic != null ) {
 			drawBrd = RecalcBorder ( styles.basic.border );
-			pixelBrd = RecalcPixelBorder ( styles.basic.border );
+			pixelBrd = styles.basic.border;
 		}
 	}
 	

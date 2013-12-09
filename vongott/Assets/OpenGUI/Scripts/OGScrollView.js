@@ -13,7 +13,7 @@ public class OGScrollView extends OGWidget {
 	@HideInInspector public var inset : float = 0;
 
 	private var dragging : boolean = false;
-
+	
 	override function UpdateWidget () {
 		if ( stretch.width != ScreenSize.None ) {
 			size.x = RecalcScale().x * Screen.width;

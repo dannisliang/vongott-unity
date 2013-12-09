@@ -21,14 +21,37 @@ class OGRoot extends MonoBehaviour {
 		return instance;
 	}
 
+	public function GetUnicode ( index : int ) : Dictionary.< int, int > {
+		if ( unicode == null ) {
+			ReloadFonts ();
+		}
+
+		return unicode[index];
+	}
+
 	public function ReloadFonts () {
 		unicode = new Dictionary.< int, int > [ skin.fonts.Length ];
+		
+		for ( var i : int = 0; i < skin.fonts.Length; i++ ) {
+			if ( unicode[i] == null ) {
+				unicode[i] = new Dictionary.< int, int >();
+				
+				for ( var c : int = 0; c < skin.fonts[i].characterInfo.Length; c++ ) {
+					if ( unicode[i].ContainsKey ( skin.fonts[i].characterInfo[c].index ) ) {
+						unicode[i][skin.fonts[i].characterInfo[c].index] = c;
+					} else {
+						unicode[i].Add ( skin.fonts[i].characterInfo[c].index, c );
+					}
+				}
+			}
+		}
+					
 	}
 
 	public function ResetStyles () {
 		if ( !widgets ) { return; }
 		
-		for ( var w : OGWidget in widgets ) {
+		for ( var w : OGWidget in this.transform.GetComponentsInChildren.<OGWidget>(true) ) {
 			skin.GetDefaultStyles ( w );
 		}	
 	}
@@ -40,7 +63,7 @@ class OGRoot extends MonoBehaviour {
 			currentPage.gameObject.SetActive ( false );
 		}
 		
-		for ( var p : OGPage in this.GetComponentsInChildren.<OGPage>() ) {
+		for ( var p : OGPage in this.GetComponentsInChildren.<OGPage>(true) ) {
 			if ( p.pageName == pageName ) {
 				currentPage = p;
 			}
@@ -56,8 +79,8 @@ class OGRoot extends MonoBehaviour {
 	public function OnPostRender () {
 		if ( widgets != null ) {
 			GL.PushMatrix();
-			GL.LoadOrtho();
-			
+			GL.LoadPixelMatrix ();
+
 			GL.Begin(GL.QUADS);
 			skin.atlas.SetPass(0);
 			
@@ -100,8 +123,16 @@ class OGRoot extends MonoBehaviour {
 	public function ReleaseWidget () {
 		downWidget = null;
 	}
-	
+
+	public function Start () {
+		if ( currentPage != null && Application.isPlaying ) {
+			currentPage.StartPage ();
+		}
+	}
+
 	public function Update () {
+		if ( currentPage == null ) { return; }
+		
 		if ( instance == null ) {
 			instance = this;
 		}
@@ -111,20 +142,6 @@ class OGRoot extends MonoBehaviour {
 			ReloadFonts ();
 		}
 		
-		for ( var i : int = 0; i < skin.fonts.Length; i++ ) {
-			if ( unicode[i] == null ) {
-				unicode[i] = new Dictionary.< int, int >();
-				
-				for ( var c : int = 0; c < skin.fonts[i].characterInfo.Length; c++ ) {
-					if ( unicode[i].ContainsKey ( skin.fonts[i].characterInfo[c].index ) ) {
-						unicode[i][skin.fonts[i].characterInfo[c].index] = c;
-					} else {
-						unicode[i].Add ( skin.fonts[i].characterInfo[c].index, c );
-					}
-				}
-			}
-		}
-					
 		mouseOver.Clear ();
 	
 		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
@@ -195,8 +212,6 @@ class OGRoot extends MonoBehaviour {
 		isMouseOver = mouseOver.Count > 0;
 
 		// Update current page
-		if ( currentPage != null ) {
-			currentPage.UpdatePage ();
-		}
+		currentPage.UpdatePage ();
 	}
 }

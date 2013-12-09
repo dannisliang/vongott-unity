@@ -81,8 +81,8 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Check mouseover
 	public function CheckMouseOver ( rect : Rect ) : boolean {
-		var x : float = Input.mousePosition.x / Screen.width;
-		var y : float = Input.mousePosition.y / Screen.height;
+		var x : float = Input.mousePosition.x;
+		var y : float = Input.mousePosition.y;
 		
 		return x > rect.x && y > rect.y && y < rect.y + rect.height && x < rect.x + rect.width;
 	}
@@ -105,12 +105,7 @@ public class OGWidget extends MonoBehaviour {
 	public function RecalcScale () : Vector3 {
 		CalcStretch ();
 		
-		var newScl : Vector3 = this.transform.lossyScale;
-		
-		newScl.x = newScl.x / Screen.width;
-		newScl.y = newScl.y / Screen.height;
-		
-		return newScl;
+		return this.transform.lossyScale;
 	}
 	
 	// Position (based on screen size)
@@ -127,8 +122,7 @@ public class OGWidget extends MonoBehaviour {
 								
 		newPos.x += clipping.x;
 		
-		newPos.x = newPos.x / Screen.width;
-		newPos.y = ( Screen.height - newPos.y ) / Screen.height;
+		newPos.y = Screen.height - newPos.y;
 		
 		return newPos;
 	}

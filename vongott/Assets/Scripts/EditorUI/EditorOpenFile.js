@@ -33,21 +33,9 @@ class EditorOpenFile extends OGPage {
 		return files;
 	}
 	
-	// Deselect all
-	function DeselectAll () {
-		for ( var i = 0; i < mapList.transform.childCount; i++ ) {
-			var btn : OGButton = mapList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
-			btn.styleName = "listitem";		
-		}
-	}
-	
 	// Select map
-	function SelectFile ( btn : OGButton ) {
-		DeselectAll ();
-		
-		var name : String = btn.text;
+	function SelectFile ( name : String ) {
 		selectedFile = name;
-		btn.styleName = "listitemselected";
 		
 		var dataPath : String = Application.dataPath + "/" + baseDir + "/" + name + "." + fileType;
 		var tempImage : Texture2D = new Texture2D ( 0, 0 );
@@ -66,7 +54,7 @@ class EditorOpenFile extends OGPage {
 				} );
 			} );
 			
-			fileInfo.text = "<map name>\n<actor count>\n<item count>\n<trigger count>\n<filesize>";
+			fileInfo.text = name;
 		}
 	}
 	
@@ -122,16 +110,19 @@ class EditorOpenFile extends OGPage {
 		for ( var i = 0; i < paths.Length; i++ ) {
 			var name = EditorCore.TrimFileName ( paths[i] );
 			var obj : GameObject = new GameObject ( name );
-			var btn = obj.AddComponent ( OGButton );
+			var btn = obj.AddComponent ( OGListItem );
 		
 			btn.text = name;
 			btn.target = this.gameObject;
 			btn.message = "SelectFile";
-			btn.styleName = "listitem";
-			
+			btn.argument = name;
+
 			obj.transform.parent = mapList.transform;
 			obj.transform.localScale = new Vector3 ( 456, 30, 1 );
 			obj.transform.localPosition = new Vector3 ( 0, i * 32, -2 );
+	
+			btn.GetDefaultStyles ();	
+			
 		}
 	}
 	

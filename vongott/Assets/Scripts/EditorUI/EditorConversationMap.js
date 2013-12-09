@@ -188,6 +188,8 @@ class EditorConversationMap extends OGPage {
 	}
 	
 	function OnGUI () {
+		return;
+		
 		Handles.BeginGUI ();
 		GUILayout.BeginArea ( Rect ( scrollView.transform.localPosition.x, scrollView.transform.localPosition.y, scrollView.scrollWidth, scrollView.scrollLength ) );
 		

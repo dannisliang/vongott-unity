@@ -40,6 +40,43 @@ public class OGWidgetStyles {
 	public var ticked : OGStyle;
 	public var thumb : OGStyle;
 
+	public static function IsStyleUsed ( styleName : String, widgetName : String ) : boolean {
+		if ( styleName == "Basic" ) { return true; }
+		
+		switch ( widgetName ) {
+			case "OGButton": case "OGPopup":
+				if ( styleName == "Active" ) { return true; }
+				if ( styleName == "Hover" ) { return true; }
+				break;
+
+			case "OGDropDown":
+				if ( styleName == "Active" ) { return true; }
+				if ( styleName == "Hover" ) { return true; }
+				if ( styleName == "Ticked" ) { return true; }
+				break;
+
+			case "OGTickBox":
+				if ( styleName == "Hover" ) { return true; }
+				if ( styleName == "Ticked" ) { return true; }
+				break;
+
+			case "OGSlider":
+				if ( styleName == "Thumb" ) { return true; }
+				break;
+
+			case "OGTabs": case "OGListItem":
+				if ( styleName == "Active" ) { return true; }
+				break;
+		}
+
+		return false;
+	}
+
+	public static function GetNames() : String[] {
+		var names : String[] = [ "Basic", "Active", "Hover", "Ticked", "Thumb" ];
+		return names;
+	}
+
 	public function GetStyle ( str : String ) {
 		var result : OGStyle;
 		
@@ -113,8 +150,9 @@ public class OGSkin extends MonoBehaviour {
 	public function ResetDefaults () {
 		defaults = [
 			new OGStyleReference ( "OGButton", new OGWidgetStyles() ),
-			new OGStyleReference ( "OGLabel", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGDropDown", new OGWidgetStyles() ),
+			new OGStyleReference ( "OGLabel", new OGWidgetStyles() ),
+			new OGStyleReference ( "OGListItem", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGPopUp", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGScrollView", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGSlider", new OGWidgetStyles() ),

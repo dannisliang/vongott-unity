@@ -14,8 +14,8 @@ public class OGLabel extends OGWidget {
 			this.info = info;
 			this.relativeSize = relativeSize;
 			uv = new Vector2[4];
-			vert = new Rect ( ( info.vert.x / Screen.width ) * relativeSize, ( info.vert.y / Screen.height ) * relativeSize, ( info.vert.width / Screen.width ) * relativeSize, ( info.vert.height / Screen.height ) * relativeSize );
-			width = ( ( info.width + 1 ) * relativeSize ) / Screen.width;
+			vert = new Rect ( info.vert.x * relativeSize, info.vert.y * relativeSize, info.vert.width * relativeSize, info.vert.height * relativeSize );
+			width = ( ( info.width + 1 ) * relativeSize );
 			position.y = vert.height + vert.y;
 
 			if ( info.flipped ) {
@@ -34,30 +34,50 @@ public class OGLabel extends OGWidget {
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
 			var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
 
-			var leftClip : float = shouldClip ? Mathf.Clamp ( clipRct.x - ( position.x + x ), 0, 1 ) : 0;
-		       	var leftClipRange : float = shouldClip ? Mathf.Clamp ( leftClip - vert.width, 0, 1 ) : 0;
-			var rightClip : float = shouldClip ? Mathf.Clamp ( ( position.x + x + width ) - ( clipRct.x + clipRct.width ), 0, 1 ) : 0;
-		       	var rightClipRange : float = shouldClip ? Mathf.Clamp ( rightClip - vert.width, 0, 1 ) : 0;
-			var bottomClip : float = shouldClip ? Mathf.Clamp ( clipRct.y - ( position.y + y ), 0, 1 ) : 0;
-			var bottomClipRange : float = shouldClip ? Mathf.Clamp ( bottomClip + vert.height, 0, 1 ) : 0;
-			var topClip : float = shouldClip ? Mathf.Clamp ( ( position.y + y - vert.height ) - ( clipRct.y + clipRct.height ), 0, 1 ) : 0;
-			var topClipRange : float = shouldClip ? Mathf.Clamp ( topClip + vert.height, 0, 1 ) : 0;
+			if ( shouldClip ) {  
+				var leftClip : float = shouldClip ? Mathf.Clamp ( clipRct.x - ( position.x + x ), 0, 1 ) : 0;
+				var leftClipRange : float = shouldClip ? Mathf.Clamp ( leftClip - vert.width, 0, 1 ) : 0;
+				var rightClip : float = shouldClip ? Mathf.Clamp ( ( position.x + x + width ) - ( clipRct.x + clipRct.width ), 0, 1 ) : 0;
+				var rightClipRange : float = shouldClip ? Mathf.Clamp ( rightClip - vert.width, 0, 1 ) : 0;
+				var bottomClip : float = shouldClip ? Mathf.Clamp ( clipRct.y - ( position.y + y ), 0, 1 ) : 0;
+				var bottomClipRange : float = shouldClip ? Mathf.Clamp ( bottomClip + vert.height, 0, 1 ) : 0;
+				var topClip : float = shouldClip ? Mathf.Clamp ( ( position.y + y - vert.height ) - ( clipRct.y + clipRct.height ), 0, 1 ) : 0;
+				var topClipRange : float = shouldClip ? Mathf.Clamp ( topClip + vert.height, 0, 1 ) : 0;
 
-			// Bottom Left
-			GL.TexCoord2 ( uv[0].x, uv[0].y );
-			GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y + bottomClip - topClipRange, z );
+				// Bottom Left
+				GL.TexCoord2 ( uv[0].x, uv[0].y );
+				GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y + bottomClip - topClipRange, z );
+				
+				// Top left
+				GL.TexCoord2 ( uv[1].x, uv[1].y );
+				GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y - vert.height + bottomClipRange - topClip, z );
+
+				// Top right
+				GL.TexCoord2 ( uv[2].x, uv[2].y );
+				GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y - vert.height + bottomClipRange - topClip, z );
 			
-			// Top left
-			GL.TexCoord2 ( uv[1].x, uv[1].y );
-			GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y - vert.height + bottomClipRange - topClip, z );
+				// Bottom right
+				GL.TexCoord2 ( uv[3].x, uv[3].y );
+				GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y + bottomClip - topClipRange, z );
+			
+			} else {
+				// Bottom Left
+				GL.TexCoord2 ( uv[0].x, uv[0].y );
+				GL.Vertex3 ( position.x + x, position.y + y, z );
+				
+				// Top left
+				GL.TexCoord2 ( uv[1].x, uv[1].y );
+				GL.Vertex3 ( position.x + x, position.y + y - vert.height, z );
 
-			// Top right
-			GL.TexCoord2 ( uv[2].x, uv[2].y );
-			GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y - vert.height + bottomClipRange - topClip, z );
+				// Top right
+				GL.TexCoord2 ( uv[2].x, uv[2].y );
+				GL.Vertex3 ( position.x + x + vert.width, position.y + y - vert.height, z );
+			
+				// Bottom right
+				GL.TexCoord2 ( uv[3].x, uv[3].y );
+				GL.Vertex3 ( position.x + x + vert.width, position.y + y, z );
 		
-			// Bottom right
-			GL.TexCoord2 ( uv[3].x, uv[3].y );
-			GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y + bottomClip - topClipRange, z );
+			}
 		}
 	}
 	
@@ -133,7 +153,7 @@ public class OGLabel extends OGWidget {
 		}
 
 		var characterInfo : CharacterInfo[] = root.skin.fonts [ styles.basic.text.fontIndex ].characterInfo;
-		var unicodeDictionary : Dictionary.< int, int > = root.unicode [ styles.basic.text.fontIndex ];
+		var unicodeDictionary : Dictionary.< int, int > = root.GetUnicode ( styles.basic.text.fontIndex );
 
 		var tallestGlyph : float = 0;
 		var widestGlyph : float = 0;
@@ -175,7 +195,7 @@ public class OGLabel extends OGWidget {
 			}
 
 			if ( !linebreak ) {
-				linebreak = lineList[lineCount].width + word.width + spacing > drawRct.width - styles.basic.text.padding.left / Screen.width;
+				linebreak = lineList[lineCount].width + word.width + spacing > drawRct.width - styles.basic.text.padding.left;
 			}
 
 			if ( linebreak ) {
@@ -191,8 +211,8 @@ public class OGLabel extends OGWidget {
 		}
 
 		lineWidth = widestLine;
-		lineHeight = ( tallestGlyph * styles.basic.text.lineHeight ) / Screen.height;
-		spacing = ( widestGlyph / 2 * styles.basic.text.spacing ) / Screen.width;		
+		lineHeight = tallestGlyph * styles.basic.text.lineHeight;
+		spacing = widestGlyph / 2 * styles.basic.text.spacing;		
 
 		drawLines = lineList.ToArray ();
 		
@@ -200,10 +220,10 @@ public class OGLabel extends OGWidget {
 			// Position
 			var x : float = drawRct.x;
 			var y : float = drawRct.y + drawRct.height;
-			var leftPadding : float = styles.basic.text.padding.left * 1.0 / Screen.width;
-			var rightPadding : float = styles.basic.text.padding.right * 1.0 / Screen.width;
-			var topPadding : float = styles.basic.text.padding.top * 1.0 / Screen.height;
-			var bottomPadding : float = styles.basic.text.padding.bottom * 1.0 / Screen.height;				
+			var leftPadding : float = styles.basic.text.padding.left;
+			var rightPadding : float = styles.basic.text.padding.right;
+			var topPadding : float = styles.basic.text.padding.top;
+			var bottomPadding : float = styles.basic.text.padding.bottom;				
 			var line : Line = drawLines[l];
 
 			// Calculate offset for alignment
@@ -276,10 +296,11 @@ public class OGLabel extends OGWidget {
 	override function DrawGL () {
 		if ( drawRct == null || drawLines == null ) { return; }
 		
+		/*
 		if ( styles.basic.text.shadowSize > 0 ) {
 			GL.Color ( styles.basic.text.shadowColor );
 			DrawLines ( styles.basic.text.shadowSize );
-		}	
+		}*/	
 	
 		GL.Color ( styles.basic.text.fontColor );
 		

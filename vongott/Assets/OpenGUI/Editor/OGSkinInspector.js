@@ -127,24 +127,20 @@ public class OGSkinInspector extends Editor {
 
 				EditorGUILayout.BeginVertical ();
 
-				var names : String[] = [
-					"Basic",
-					"Active",
-					"Hover",
-					"Ticked",
-					"Thumb"
-				];
+				var names : String[] = OGWidgetStyles.GetNames();
 
 				for ( var k : int = 0; k < names.Length; k++ ) {
-					var styleName : String = names[k];
-					var style : OGStyle = sr.styles.GetStyle ( names[k] );
-					var styleIndex : int = GetStyleIndex ( skin, style );		
-					
-					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField ( styleName, GUILayout.Width ( 80 ) );
-					styleIndex = EditorGUILayout.Popup ( styleIndex, GetStyles ( skin ) );
-					EditorGUILayout.EndHorizontal ();
-					sr.styles.SetStyle ( names[k], skin.styles [ styleIndex ] );
+					if ( OGWidgetStyles.IsStyleUsed ( names[k], sr.type ) ) {
+						var stateName : String = names[k];
+						var style : OGStyle = sr.styles.GetStyle ( names[k] );
+						var styleIndex : int = GetStyleIndex ( skin, style );		
+						
+						EditorGUILayout.BeginHorizontal();
+						EditorGUILayout.LabelField ( stateName, GUILayout.Width ( 80 ) );
+						styleIndex = EditorGUILayout.Popup ( styleIndex, GetStyles ( skin ) );
+						EditorGUILayout.EndHorizontal ();
+						sr.styles.SetStyle ( names[k], skin.styles [ styleIndex ] );
+					}
 				}
 
 				EditorGUILayout.EndVertical ();

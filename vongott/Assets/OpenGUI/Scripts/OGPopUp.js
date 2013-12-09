@@ -95,8 +95,10 @@ class OGPopUp extends OGWidget {
 			}
 		
 		} else {
-			optionLabels.SetActive ( isUp );
-			
+			if ( optionLabels.activeSelf != isUp ) {
+				optionLabels.SetActive ( isUp );
+			}
+
 			for ( var o : int = 0; o < options.Length; o++ ) {
 				var l : OGLabel = optionLabels.transform.GetChild ( o ).GetComponent ( OGLabel );
 				l.transform.localScale = Vector3.one;

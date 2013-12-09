@@ -53,7 +53,7 @@ class EditorPicker extends OGPage {
 	
 	function CreateButton ( label : String, useNesting : boolean ) {
 		var obj : GameObject = new GameObject ( label );
-		var btn : OGButton = obj.AddComponent ( OGButton );
+		var btn : OGListItem = obj.AddComponent ( OGListItem );
 		
 		var split : String [] = label.Split ( "/"[0] );
 		
@@ -64,15 +64,15 @@ class EditorPicker extends OGPage {
 		}
 		
 		btn.text += label;
-		btn.styleName = "listitem";
 		btn.target = this.gameObject;
 		btn.message = "SelectItem";
-		
+		btn.argument= btn.text;
+
 		obj.transform.parent = scrollView.transform;
 		obj.transform.localPosition = new Vector3 ( 0, scrollView.scrollLength, 0 );
 		obj.transform.localScale = new Vector3 ( 570, 20, 1 );
-		
-		scrollView.scrollLength += 20;
+	
+		btn.GetDefaultStyles ();
 	}
 	
 	// Create line
@@ -87,7 +87,6 @@ class EditorPicker extends OGPage {
 		}
 				
 		lbl.text += Regex.Replace ( label, "[/]", "" );
-		lbl.styleName = "listitemdisabled";
 		
 		obj.transform.parent = scrollView.transform;
 		obj.transform.localPosition = new Vector3 ( 0, scrollView.scrollLength, 0 );
@@ -104,12 +103,11 @@ class EditorPicker extends OGPage {
 	}
 	
 	// Highlight item
-	function SelectItem ( btn : OGButton ) {
+	function SelectItem ( path : String ) {
 		DeselectAll ();
 		
-		var name : String = Regex.Replace ( btn.text, "[. ]", "" );
+		var name : String = Regex.Replace ( path, "[. ]", "" );
 		selectedItem = name;
-		btn.styleName = "listitemselected";
 	}
 	
 	// Clear items

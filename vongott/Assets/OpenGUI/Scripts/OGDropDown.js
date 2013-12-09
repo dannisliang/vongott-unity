@@ -190,8 +190,11 @@ class OGDropDown extends OGWidget {
 		
 		} else if ( currentNestedMenu != null ) {
 			nestedMenuContainer.transform.localPosition = new Vector3 ( 1, 1.1, 0 );
-			nestedMenuContainer.SetActive ( isDown );
-						
+			
+			if ( nestedMenuContainer.activeSelf != isDown ) {
+				nestedMenuContainer.SetActive ( isDown );
+			}			
+
 			for ( i = 0; i < currentNestedMenu.Length; i++ ) {
 				lbl = nestedMenuContainer.transform.GetChild ( i ).GetComponent ( OGLabel );
 				lbl.transform.localScale = Vector3.one;
@@ -213,9 +216,10 @@ class OGDropDown extends OGWidget {
 					DestroyImmediate ( nestedMenuContainer.transform.GetChild(i).gameObject );
 				}
 			}
-			
-			nestedMenuContainer.SetActive ( false );
-			
+				
+			if ( nestedMenuContainer.activeSelf ) { 
+				nestedMenuContainer.SetActive ( false );
+			}	
 		}
 		
 		// Submenu container
@@ -249,8 +253,11 @@ class OGDropDown extends OGWidget {
 		
 		} else if ( submenu != null ) {
 			submenuContainer.transform.localPosition = new Vector3 ( 0, 1.1, 0 );
-			submenuContainer.SetActive ( isDown );
-			
+
+			if ( submenuContainer.activeSelf != isDown ) {
+				submenuContainer.SetActive ( isDown );
+			}
+
 			for ( i = 0; i < submenuContainer.transform.childCount; i++ ) {
 				lbl = submenuContainer.transform.GetChild ( i ).GetComponent ( OGLabel );
 				lbl.transform.localScale = Vector3.one;
@@ -328,13 +335,14 @@ class OGDropDown extends OGWidget {
 		} else {
 			label.text = title;
 			
-			label.transform.localScale = new Vector3 ( ( ( label.lineWidth * Screen.width ) + 5 ) / this.transform.lossyScale.x, 1, 1 );
+			label.transform.localScale = new Vector3 ( label.lineWidth / this.transform.lossyScale.x, 1, 1 );
 			label.transform.localEulerAngles = Vector3.zero;
 			label.transform.localPosition = Vector3.zero;
 			
 			label.pivot.x = pivot.x;
 			label.pivot.y = RelativeY.Top;
-					
+			
+			label.styles.basic = this.styles.basic;		
 			label.isDrawn = isDrawn;
 			label.hidden = true;			
 		}
