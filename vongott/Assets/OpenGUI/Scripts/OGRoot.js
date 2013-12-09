@@ -5,13 +5,14 @@ import System.Collections.Generic;
 @script ExecuteInEditMode();
 class OGRoot extends MonoBehaviour {
 	public static var instance : OGRoot;
-	
+
 	public var skin : OGSkin;
 	public var currentPage : OGPage;
-	
+
 	@HideInInspector public var unicode : Dictionary.< int, int >[];
 	@HideInInspector public var isMouseOver : boolean = false;
 
+	private var dirty : boolean = false;
 	private var widgets : OGWidget[];
 	private var labels : OGLabel[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
@@ -74,10 +75,12 @@ class OGRoot extends MonoBehaviour {
 		
 			currentPage.StartPage ();
 		}
+
+		SetDirty ();
 	}
 
 	public function OnPostRender () {
-		if ( widgets != null ) {
+		if ( widgets != null && labels != null ) {
 			GL.PushMatrix();
 			GL.LoadPixelMatrix ();
 
@@ -106,9 +109,7 @@ class OGRoot extends MonoBehaviour {
 				skin.fonts[f].material.SetPass(0);
 
 				for ( var l : OGLabel in labels ) {
-					if ( l == null || l.styles.basic == null || l.styles.basic.text.fontIndex != f ) { continue; }
-					
-					if ( l.isDrawn ) {
+					if ( l != null && l.styles.basic != null && l.styles.basic.text.fontIndex == f && l.isDrawn ) {
 						l.DrawGL ();
 					}
 				}
@@ -124,45 +125,57 @@ class OGRoot extends MonoBehaviour {
 		downWidget = null;
 	}
 
+	public function SetDirty () {
+		dirty = true;
+	}
+
 	public function Start () {
 		if ( currentPage != null && Application.isPlaying ) {
 			currentPage.StartPage ();
 		}
+
+		UpdateWidgets ();
 	}
 
 	public function Update () {
-		if ( currentPage == null ) { return; }
-		
 		if ( instance == null ) {
 			instance = this;
 		}
 
-		// Index font unicode
-		if ( unicode == null || unicode.Length != skin.fonts.Length ) {
-			ReloadFonts ();
+		// Only update these when playing
+		if ( Application.isPlaying && currentPage != null ) {
+			// Current page
+			currentPage.UpdatePage ();
+
+			// Mouse interaction
+			UpdateMouse ();	
 		}
-		
+
+		// Update all widgets
+		if ( dirty ) {
+			UpdateWidgets ();
+			dirty = false;
+		}
+	}
+
+	public function UpdateMouse () {
+		// Check all widgets
 		mouseOver.Clear ();
-	
-		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
-		labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
-		
+
 		for ( var w : OGWidget in widgets ) {
-			if ( w == null ) { continue; }
-			
-			if ( w.transform.localPosition.z < 0 ) {
-				w.transform.localPosition = new Vector3 ( w.transform.localPosition.x, w.transform.localPosition.y, 0 );
-			}
-			
-			w.root = this;			
-			w.Recalculate ();
-			w.UpdateWidget ();
-		
-			if ( w.mouseOver ) {
+			if ( w.isDrawn && w.CheckMouseOver() ) {
 				mouseOver.Add ( w );
 			}
 		}
-		
+
+		// Is mouse over anything?
+		isMouseOver = mouseOver.Count > 0;
+
+		// Update active widget
+		if ( downWidget ) {
+			downWidget.UpdateWidget ();
+		}
+
 		// Click
 		if ( Input.GetMouseButtonDown ( 0 ) ) {
 			var topWidget : OGWidget;
@@ -177,17 +190,17 @@ class OGRoot extends MonoBehaviour {
 				downWidget.OnMouseCancel ();
 			}
 			
-			if ( topWidget == null ) { return; }
-			
- 			topWidget.OnMouseDown ();
-			downWidget = topWidget;
-		
+			if ( topWidget != null ) {
+				topWidget.OnMouseDown ();
+				downWidget = topWidget;
+			}
+
 		// Release
 		} else if ( Input.GetMouseButtonUp ( 0 ) ) {
 			if ( downWidget ) {
-				if ( downWidget.mouseOver ) {
+				if ( downWidget.CheckMouseOver() ) {
 					downWidget.OnMouseUp ();
-				
+
 				} else {
 					downWidget.OnMouseCancel ();
 				
@@ -207,11 +220,31 @@ class OGRoot extends MonoBehaviour {
 				downWidget.OnMouseCancel ();
 			}
 		}
+	}	
 
-		// Is mouse over anything?
-		isMouseOver = mouseOver.Count > 0;
-
-		// Update current page
-		currentPage.UpdatePage ();
+	public function UpdateWidgets () {
+		if ( currentPage == null ) { return; }
+		
+		// Index font unicode
+		if ( unicode == null || unicode.Length != skin.fonts.Length ) {
+			ReloadFonts ();
+		}
+	
+		// Update widget lists	
+		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
+		labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
+		
+		for ( var w : OGWidget in widgets ) {
+			if ( w == null || !w.isDrawn ) { continue; }
+			
+			if ( w.transform.localPosition.z < 0 ) {
+				w.transform.localPosition = new Vector3 ( w.transform.localPosition.x, w.transform.localPosition.y, 0 );
+			}
+			
+			w.root = this;			
+			w.Recalculate ();
+			w.UpdateWidget ();
+		}
+		
 	}
 }

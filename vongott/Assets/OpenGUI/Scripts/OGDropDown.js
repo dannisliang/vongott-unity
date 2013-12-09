@@ -311,13 +311,13 @@ class OGDropDown extends OGWidget {
 					background.transform.localScale = new Vector3 ( 1, submenuContainer.transform.childCount + 0.2, 1 );
 				}
 				
-				mouseOver = CheckMouseOver ( background.drawRct, label.drawRct );
+				mouseRct = background.drawRct;
 			
 			} else {
 				background.isDrawn = false;
 				background.styles.basic = styles.basic;
 				background.transform.localScale = Vector3.one;
-				mouseOver = CheckMouseOver ( label.drawRct );
+				mouseRct = label.drawRct;
 			
 			}
 		}

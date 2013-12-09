@@ -53,6 +53,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var drawCrd : Rect;
 	@HideInInspector public var drawRct : Rect;
 	@HideInInspector public var clipRct : Rect;
+	@HideInInspector public var mouseRct : Rect;
 	@HideInInspector public var drawDepth : float;
 	@HideInInspector public var mouseOver : boolean = false;
 	@HideInInspector public var scrollOffset : Vector3;
@@ -80,6 +81,14 @@ public class OGWidget extends MonoBehaviour {
 	}
 	
 	// Check mouseover
+	public function CheckMouseOver () : boolean {
+		if ( mouseRct != null ) {
+			return CheckMouseOver ( mouseRct );
+		} else {
+			return false;
+		}	
+	}
+	
 	public function CheckMouseOver ( rect : Rect ) : boolean {
 		var x : float = Input.mousePosition.x;
 		var y : float = Input.mousePosition.y;

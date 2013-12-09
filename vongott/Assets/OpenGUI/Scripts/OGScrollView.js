@@ -23,6 +23,8 @@ public class OGScrollView extends OGWidget {
 			size.y = RecalcScale().y * Screen.height;
 		}
 
+		mouseRct = drawRct;
+
 		// Reset scale	
 		this.transform.localScale = Vector3.one;
 		
@@ -33,8 +35,12 @@ public class OGScrollView extends OGWidget {
 		drag.y = Input.GetAxis ( "Mouse Y" );
 	
 		// ^ Scroll wheel	
-		if ( CheckMouseOver ( drawRct ) ) {
+		if ( CheckMouseOver () ) {
 			var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
+
+			if ( scroll != 0 ) {
+				OGRoot.GetInstance().SetDirty();	
+			}
 
 			if ( scroll > 0 ) {
 				amount.y = 20;
@@ -50,6 +56,8 @@ public class OGScrollView extends OGWidget {
 		
 		// ^ Drag
 		if ( dragging ) { 	
+			OGRoot.GetInstance().SetDirty();	
+		
 			if ( Input.GetMouseButton ( 2 ) ) {
 				amount.x = Mathf.Floor ( drag.x * 20 );
 				amount.y = -Mathf.Floor ( drag.y * 20 );

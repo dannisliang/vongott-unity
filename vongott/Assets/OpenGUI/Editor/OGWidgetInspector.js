@@ -93,6 +93,8 @@ public class OGWidgetInspector extends Editor {
 			if ( GUI.changed ) {
 				( target as OGWidget ).UpdateWidget();
 				EditorUtility.SetDirty ( target );
+			
+				OGRoot.GetInstance().SetDirty();
 			}
 		}
 	}

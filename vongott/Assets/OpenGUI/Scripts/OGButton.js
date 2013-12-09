@@ -16,8 +16,6 @@ class OGButton extends OGWidget {
 	private var isDown : boolean = false;
 
 	override function OnMouseUp () {
-		isDown = false;
-
 		if ( func ) {
 			func ();
 				
@@ -32,19 +30,19 @@ class OGButton extends OGWidget {
 			Debug.LogWarning ( "OGButton '" + this.gameObject.name + "' | Target/message missing!" );
 		
 		}
-	}
-	
-	override function OnMouseOver () {
-	
+
+		OnMouseCancel ();
 	}
 	
 	override function OnMouseCancel () {
 		isDown = false;
 		OGRoot.GetInstance().ReleaseWidget ();
+		UpdateWidget ();
 	}
 	
 	override function OnMouseDown () {
 		isDown = true;
+		UpdateWidget ();
 	}
 	
 	override function UpdateWidget () {
@@ -59,6 +57,8 @@ class OGButton extends OGWidget {
 				newSprite.styles.basic = this.styles.basic;
 			}
 		
+			UpdateWidget ();
+
 		} else {
 			background.transform.localScale = Vector3.one;
 			background.transform.localEulerAngles = Vector3.zero;
@@ -66,7 +66,7 @@ class OGButton extends OGWidget {
 		
 			background.isDrawn = isDrawn;
 			background.hidden = true;
-			mouseOver = CheckMouseOver ( background.drawRct );
+			mouseRct = background.drawRct;
 		}
 		
 		// Label
@@ -81,6 +81,9 @@ class OGButton extends OGWidget {
 				newLabel.styles.basic = this.styles.basic;
 			}
 		
+			UpdateWidget ();
+			return;
+
 		} else {
 			label.text = text;
 			label.transform.localScale = Vector3.one;
@@ -98,12 +101,6 @@ class OGButton extends OGWidget {
 		} else {	
 			label.styles.basic = this.styles.basic;
 			background.styles.basic = this.styles.basic;
-		}
-
-		if ( mouseOver ) {
-			OnMouseOver ();
-		} else if ( isDown ) {
-			OnMouseCancel ();
 		}
 	}
 }
