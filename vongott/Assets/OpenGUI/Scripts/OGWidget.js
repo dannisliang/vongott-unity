@@ -130,7 +130,7 @@ public class OGWidget extends MonoBehaviour {
 	}
 	
 	// Position (based on screen size)
-	private function RecalcPosition () : Vector3 {
+	public function RecalcPosition () : Vector3 {
 		CalcAnchor ();
 		CalcPivot ();
 		
@@ -253,7 +253,7 @@ public class OGWidget extends MonoBehaviour {
 		drawDepth = -this.transform.position.z;
 			
 		drawRct = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		CalcClipping ();	
+		//CalcClipping ();	
 
 		scrollOffset = Vector3.zero;	
 	}	

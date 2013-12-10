@@ -13,10 +13,9 @@ public class OGScrollView extends OGWidget {
 	@HideInInspector public var inset : float = 0;
 
 	private var dragging : boolean = false;
-	
+	private var widgets : OGWidget[];
+
 	override function UpdateWidget () {
-		selectable = false;
-		
 		if ( stretch.width != ScreenSize.None ) {
 			size.x = RecalcScale().x;
 		}
@@ -54,8 +53,6 @@ public class OGScrollView extends OGWidget {
 		
 		// ^ Drag
 		if ( dragging ) { 	
-			SetDirty();	
-		
 			if ( Input.GetMouseButton ( 2 ) ) {
 				amount.x = Mathf.Floor ( drag.x * 20 );
 				amount.y = -Mathf.Floor ( drag.y * 20 );
@@ -87,18 +84,18 @@ public class OGScrollView extends OGWidget {
 		
 		
 		// Update all widgets
-		for ( var w : OGWidget in this.gameObject.GetComponentsInChildren.<OGWidget>() ) {
+		if ( !widgets || widgets.Length != this.gameObject.GetComponentsInChildren.<OGWidget>().Length ) {
+			widgets = this.gameObject.GetComponentsInChildren.<OGWidget>();
+		}
+
+		for ( var i : int = 0; i < widgets.Length; i++ ) {
+			var w : OGWidget = widgets[i];
+			
 			if ( w != this ) {
 				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
 				w.clipRct = drawRct;
-/*
-				// Make sure the widgets are always at least 1 unit over the background
-				if ( w.transform.localPosition.z > -1 ) {
-					var newPos : Vector3 = w.transform.localPosition;
-					newPos.z = -1;
-					w.transform.localPosition = newPos;
-				}
-*/			}
+				w.Recalculate();
+			}
 		}
 
 		// Make sure the background is always above 0 units away

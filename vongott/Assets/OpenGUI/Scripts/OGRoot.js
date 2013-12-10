@@ -3,11 +3,23 @@
 import System.Collections.Generic;
 
 @script ExecuteInEditMode();
+class OGLine {
+	public var start : Vector3;
+	public var end : Vector3;
+
+	function OGLine ( start : Vector3, end : Vector3 ) {
+		this.start = start;
+		this.end = end;
+	}
+}
+
 class OGRoot extends MonoBehaviour {
 	public static var instance : OGRoot;
 
 	public var skin : OGSkin;
 	public var currentPage : OGPage;
+	public var lineMaterial : Material;
+	public var lines : OGLine[];
 
 	@HideInInspector public var unicode : Dictionary.< int, int >[];
 	@HideInInspector public var isMouseOver : boolean = false;
@@ -83,13 +95,20 @@ class OGRoot extends MonoBehaviour {
 
 	public function OnPostRender () {
 		if ( widgets != null && labels != null ) {
+			var i : int = 0;
+			var o : int = 0;
+			var w : OGWidget;
+			
 			GL.PushMatrix();
 			GL.LoadPixelMatrix ();
 
+			// Draw quads
 			GL.Begin(GL.QUADS);
 			skin.atlas.SetPass(0);
 			
-			for ( var w : OGWidget in widgets ) {
+			for ( i = 0; i < widgets.Length; i++ ) {
+				w = widgets[i];
+				
 				if ( w == null || w.GetComponent ( OGLabel ) ) { continue; }
 				
 				if ( w.isDrawn ) {
@@ -99,26 +118,41 @@ class OGRoot extends MonoBehaviour {
 			
 			GL.End ();
 			
-			for ( var f : int = 0; f < skin.fonts.Length; f++ ) {
+			// Draw labels
+			for ( i = 0; i < skin.fonts.Length; i++ ) {
 				if ( skin.fonts[0] == null ) { continue; }
 				
 				GL.Begin(GL.QUADS);
 				
 				if ( skin.fontShader != null ) {
-					skin.fonts[f].material.shader = skin.fontShader;
+					skin.fonts[i].material.shader = skin.fontShader;
 				}
 				
-				skin.fonts[f].material.SetPass(0);
+				skin.fonts[i].material.SetPass(0);
 
-				for ( var l : OGLabel in labels ) {
-					if ( l != null && l.styles.basic != null && l.styles.basic.text.fontIndex == f && l.isDrawn ) {
-						l.DrawGL ();
+				for ( o = 0; o < labels.Length; o++ ) {
+					w = labels[o];
+					
+					if ( w != null && w.styles.basic != null && w.styles.basic.text.fontIndex == i && w.isDrawn ) {
+						w.DrawGL ();
 					}
 				}
 				
 				GL.End ();
 			}
 			
+			// Draw lines
+			if ( lines != null && lines.Length > 0 ) {
+				GL.Begin(GL.LINES);
+				lineMaterial.SetPass(0);
+				for ( i = 0; i < lines.Length; i++ ) {
+					GL.Vertex3 ( lines[i].start.x, Screen.height - lines[i].start.y, 0 );
+					GL.Vertex3 ( lines[i].end.x, Screen.height - lines[i].end.y, 0 );
+				}	
+			
+				GL.End();
+			}
+
 			GL.PopMatrix();
 		}
 	}
@@ -290,6 +324,5 @@ class OGRoot extends MonoBehaviour {
 			w.Recalculate ();
 			w.UpdateWidget ();
 		}
-		
 	}
 }

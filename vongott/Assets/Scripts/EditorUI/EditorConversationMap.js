@@ -8,6 +8,16 @@ class EditorConversationMap extends OGPage {
 		public var name : OGTextField;
 	}
 	
+	public class IOReference {
+		public var rank : int = 0;
+		public var transforms : Transform[];
+	
+		function IOReference ( rank : int, transforms : Transform[] ) {
+			this.rank = rank;
+			this.transforms = transforms;
+		}
+	}
+
 	public static var instance : EditorConversationMap;
 	
 	public var fileModeSwitch : OGPopUp;
@@ -34,12 +44,13 @@ class EditorConversationMap extends OGPage {
 	public var scrollView : OGScrollView;
 	public var nodeContainer : Transform;
 	
-	private var nodeIOPoints : List.< KeyValuePair.< int, Transform[] > > = new List.< KeyValuePair.< int, Transform[] > > ();
+	private var nodeIOPoints : IOReference[] = new IOReference[0];
 	private var bottomLines : float[] = new float[999];
 	private var rootBottomLines : float[] = new float[999];
 	private var currentConvo : ConversationTree;
 	private var nodeIndexCounter : int = 0;
-	
+	private var root : OGRoot;
+
 	
 	////////////////////
 	// File I/O
@@ -181,51 +192,53 @@ class EditorConversationMap extends OGPage {
 	////////////////////
 	public function GetOutputPosition ( t : Transform ) : Vector3 {
 		if ( t ) {
-			return t.position + new Vector3 ( t.localScale.x/2, t.localScale.y/2, 0 ) + new Vector3 ( scrollView.inset, scrollView.inset, 0 ) - new Vector3 ( scrollView.position.x, scrollView.position.y, 0 ) - scrollView.transform.localPosition;
+			return t.position + scrollView.position + new Vector3 ( scrollView.padding.x + t.lossyScale.x/2, scrollView.padding.y + t.lossyScale.y/2, 0 );
 		} else {
 			return Vector3.zero;
 		}
 	}
 	
-/*	function OnGUI () {
-		return;
-		
-		Handles.BeginGUI ();
-		GUILayout.BeginArea ( Rect ( scrollView.transform.localPosition.x, scrollView.transform.localPosition.y, scrollView.scrollWidth, scrollView.scrollLength ) );
-		
-		Handles.color = lineColor;
-		
+	function DrawLines () {
+		if ( !nodeIOPoints ) { return; }
+
+		//Handles.color = lineColor;
 		var p0 : Vector3;
 		var p1 : Vector3;
 		var p2 : Vector3;
 		var p3 : Vector3;
 		
-		if ( connectMode ) {
+		if ( !connectMode ) {
+			root.lines = new OGLine [ nodeIOPoints.Length * 3 ];
+	
+			for ( var i : int = 0; i < nodeIOPoints.Length; i++ ) {
+				var io : IOReference = nodeIOPoints[i];
+				
+				p0 = GetOutputPosition(io.transforms[0]);
+				p3 = GetOutputPosition(io.transforms[1]);
+				p1 = p0 + Vector3.right * ( 20 + ( io.rank * 5 ) );
+				p2 = p1;
+				p2.y = p3.y;
+
+				root.lines [ i * 3 ] = new OGLine ( p0, p1 );
+				root.lines [ 1 + i * 3 ] = new OGLine ( p1, p2 );
+				root.lines [ 2 + i * 3 ] = new OGLine ( p2, p3 );
+			}
+		
+		} else {
+			root.lines = new OGLine [ 3 ];
+			
 			p0 = GetOutputPosition(connectOutput.transform);
-			p3 = new Vector3 ( Input.mousePosition.x, Screen.height-Input.mousePosition.y, -20 )-scrollView.transform.localPosition;
+			p3 = new Vector3 ( Input.mousePosition.x, Screen.height-Input.mousePosition.y, 0 );
 			p1 = p0 + Vector3.right * 20;
 			p2 = p1;
 			p2.y = p3.y;
-			Handles.DrawLine ( p0, p1 );
-			Handles.DrawLine ( p1, p2 );
-			Handles.DrawLine ( p2, p3 );
+			
+			root.lines [ 0 ] = new OGLine ( p0, p1 );
+			root.lines [ 1 ] = new OGLine ( p1, p2 );
+			root.lines [ 2 ] = new OGLine ( p2, p3 );
 		}
-		
-		for ( var kvp : KeyValuePair.< int, Transform[] > in nodeIOPoints ) {
-			p0 = GetOutputPosition(kvp.Value[0]);
-			p3 = GetOutputPosition(kvp.Value[1]);
-			p1 = p0 + Vector3.right * ( 20 + ( kvp.Key * 5 ) );
-			p2 = p1;
-			p2.y = p3.y;
-			Handles.DrawLine ( p0, p1 );
-			Handles.DrawLine ( p1, p2 );
-			Handles.DrawLine ( p2, p3 );
-		}
-		
-		GUILayout.EndArea();
-		Handles.EndGUI ();
 	}
-*/	
+	
 	
 	////////////////////
 	// Prompt
@@ -488,13 +501,15 @@ class EditorConversationMap extends OGPage {
 		
 		nodeIndexCounter++;
 		
+		var tempList : List.< IOReference > = new List.< IOReference > ( nodeIOPoints );
+
 		for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
 			if ( node.activeOutputs[i] && node.connectedTo[i] ) {
 				var points : Transform[] = new Transform[2];
 				points[0] = node.activeOutputs[i].transform;
 				points[1] = node.connectedTo[i].input.transform;
 				
-				nodeIOPoints.Add ( new KeyValuePair.< int, Transform[] > ( i, points ) );
+				tempList.Add ( new IOReference ( i, points ) );
 				
 				if ( node.GetRootNode() == node.connectedTo[i].GetRootNode() ) {
 					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, node.targetPos.y );
@@ -503,6 +518,8 @@ class EditorConversationMap extends OGPage {
 				}
 			}
 		}
+
+		nodeIOPoints = tempList.ToArray();
 	}
 	
 	private function UpdateRootNodePosition ( rootNode : EditorConversationRootNode, index : int ) {
@@ -510,19 +527,26 @@ class EditorConversationMap extends OGPage {
 			var rootPoints : Transform[] = new Transform[2];
 			rootPoints[0] = rootNode.output.transform;
 			rootPoints[1] = rootNode.connectedTo.input.transform;
-		
-			nodeIOPoints.Add ( new KeyValuePair.< int, Transform[] > ( index, rootPoints ) );
-		
+			
+			if ( !nodeIOPoints ) {
+				nodeIOPoints = new IOReference[0];
+			}
+
+			var tempList : List.< IOReference > = new List.< IOReference > ( nodeIOPoints );
+			tempList.Add ( new IOReference ( index, rootPoints ) );
+			nodeIOPoints = tempList.ToArray();
+
 			UpdateNodePosition ( index, rootNode.connectedTo, 0, rootBottomLines[index] + 30 );
 		}
 	}
 	
 	private function UpdateAllRootNodes () {
-		nodeIOPoints.Clear ();
-		SetDirty ();
+		nodeIOPoints = null;
 		bottomLines = new float[999];
 		rootBottomLines = new float[999];
 				
+		SetDirty ();
+		
 		rootBottomLines[0] = scrollView.transform.position.y + 30;
 								
 		for ( var i : int = 0; i < rootNodes.childCount; i++ ) {
@@ -550,11 +574,17 @@ class EditorConversationMap extends OGPage {
 	// Update
 	////////////////////
 	function Update () {
+		if ( root ) {
+			DrawLines ();
+		} else {
+			root = OGRoot.GetInstance();
+		}
+		
 		if ( Input.GetKeyDown ( KeyCode.Escape ) || Input.GetMouseButtonDown ( 1 ) ) {
 			connectMode = false;
 		}
 		
 		// Keep the root nodes visible
-		rootNodes.transform.parent.localPosition = Vector3.Lerp ( rootNodes.transform.parent.localPosition, new Vector3 ( 0, 40 + scrollView.position.y, 0 ), Time.deltaTime * 10 );
+		rootNodes.transform.parent.localPosition = Vector3.Lerp ( rootNodes.transform.parent.localPosition, new Vector3 ( 0, 40 - scrollView.position.y, 0 ), Time.deltaTime * 10 );
 	}
 }
