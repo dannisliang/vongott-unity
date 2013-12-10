@@ -22,6 +22,7 @@ public class OGTickBox extends OGWidget {
 		isTicked = !isTicked;
 		
 		OGRoot.GetInstance().ReleaseWidget ();
+		SetDirty ();
 	}
 	
 	override function UpdateWidget () {

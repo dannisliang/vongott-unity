@@ -32,7 +32,7 @@ public class OGLabel extends OGWidget {
 		}
 
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
-			var shouldClip : boolean = false;//clipRct.width > 0 && clipRct.height > 0;
+			var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
 
 			if ( shouldClip ) {  
 				var leftClip : float = shouldClip ? Mathf.Clamp ( clipRct.x - ( position.x + x ), 0, 1 ) : 0;
@@ -142,6 +142,10 @@ public class OGLabel extends OGWidget {
 	/////////////////
 	// Update
 	/////////////////
+	function OnEnable () {
+		selectable = true;	
+	}
+	
 	function Update () {
 		if ( oldString != text ) {
 			SetDirty();
@@ -150,8 +154,6 @@ public class OGLabel extends OGWidget {
 	}	
 	
 	override function UpdateWidget () {
-		selectable = true;
-		
 		if ( styles.basic == null ) { return; }
 
 		if ( !overrideFontSize ) {

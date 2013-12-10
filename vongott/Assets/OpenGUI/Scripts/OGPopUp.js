@@ -17,6 +17,10 @@ class OGPopUp extends OGWidget {
 	private var optionLabels : GameObject;
 	private var timeStamp : float;
 	
+	
+	////////////////////
+	// Options
+	////////////////////
 	private function GetMouseOverOption () : int {
 		for ( var i : int = 0; i < optionLabels.transform.childCount; i++ ) {
 			if ( CheckMouseOver ( optionLabels.transform.GetChild(i).GetComponent(OGLabel).drawRct ) ) {
@@ -32,6 +36,10 @@ class OGPopUp extends OGWidget {
 		SetDirty();
 	}
 
+	
+	////////////////////
+	// Interaction
+	////////////////////
 	override function OnMouseUp () {
 		var mouseOverOption : int = GetMouseOverOption ();
 		
@@ -99,6 +107,14 @@ class OGPopUp extends OGWidget {
 		SetDirty();
 	}
 		
+	
+	////////////////////
+	// Update
+	////////////////////
+	function OnEnable () {
+		selectable = true;
+	}
+	
 	override function UpdateWidget () {
 		// Option labels
 		if ( !optionLabels && !this.transform.Find("Options") ) {

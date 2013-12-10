@@ -15,6 +15,10 @@ class OGButton extends OGWidget {
 	private var label : OGLabel;
 	private var isDown : boolean = false;
 
+	
+	////////////////////
+	// Interact
+	////////////////////
 	override function OnMouseUp () {
 		if ( func ) {
 			func ();
@@ -44,9 +48,15 @@ class OGButton extends OGWidget {
 		SetDirty();
 	}
 	
+
+	////////////////////
+	// Update
+	////////////////////
+	function OnEnable () {
+		selectable = true;	
+	}
+	
 	override function UpdateWidget () {
-		selectable = true;
-		
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {

@@ -33,6 +33,10 @@ class OGDropDown extends OGWidget {
 	private var timeStamp : float;
 	private var currentNestedMenu : DropDownItemNested[];
 	
+	
+	////////////////////
+	// Interaction
+	////////////////////
 	private function SelectItem ( item : DropDownItem ) {
 		if ( item.GetType() == DropDownItemRoot && ( item as DropDownItemRoot ).nestedMenu.Length > 0 ) {
 			( item as DropDownItemRoot ).isDown = !( item as DropDownItemRoot ).isDown;
@@ -156,6 +160,14 @@ class OGDropDown extends OGWidget {
 		}
 		
 		OGRoot.GetInstance().ReleaseWidget ();
+	}
+	
+	
+	////////////////////
+	// Update
+	////////////////////
+	function OnEnable () {
+		selectable = true;
 	}
 	
 	override function UpdateWidget () {

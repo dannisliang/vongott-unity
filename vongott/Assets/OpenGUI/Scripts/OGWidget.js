@@ -48,8 +48,6 @@ public class OGWidget extends MonoBehaviour {
 	public var stretch : Stretch = new Stretch();
 	
 	@HideInInspector public var styles : OGWidgetStyles = new OGWidgetStyles();
-	@HideInInspector public var drawPos : Vector3;
-	@HideInInspector public var drawScl : Vector3;
 	@HideInInspector public var drawCrd : Rect;
 	@HideInInspector public var drawRct : Rect;
 	@HideInInspector public var clipRct : Rect;
@@ -249,8 +247,8 @@ public class OGWidget extends MonoBehaviour {
 	public function Recalculate () {
 		if ( !styles.basic ) { return; }
 		
-		drawScl = RecalcScale ();
-		drawPos = RecalcPosition ();
+		var drawScl : Vector3 = RecalcScale ();
+		var drawPos : Vector3 = RecalcPosition ();
 		drawCrd = RecalcCoords ( styles.basic.coordinates );
 		drawDepth = -this.transform.position.z;
 			
@@ -286,9 +284,6 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
-	public function OnEnable () {
-		SetDirty ();
-	}
 	public function UpdateWidget () {} 
 	public function GetDefaultStyles () {
 		GetRoot().skin.GetDefaultStyles ( this );
@@ -296,18 +291,17 @@ public class OGWidget extends MonoBehaviour {
 	public function SetDirty () {
 		if ( OGRoot.GetInstance() == null ) { return; }
 
-		OGRoot.GetInstance().SetDirty ( this );
-		
+		OGRoot.GetInstance().SetDirty ();
+		/*
 		var children : OGWidget[] = this.GetComponentsInChildren.<OGWidget>();
 		
 		for ( var w : int = 0; w < children.Length; w++ ) {
 			OGRoot.GetInstance().SetDirty ( children[w] );
-		}
+		}*/
 	}
 
 	//////////////////
 	// Draw
 	//////////////////
 	public function DrawGL () {}
-	public function DrawGUI () {}
 }

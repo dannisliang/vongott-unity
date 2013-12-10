@@ -54,7 +54,7 @@ public class OGScrollView extends OGWidget {
 		
 		// ^ Drag
 		if ( dragging ) { 	
-			OGRoot.GetInstance().SetDirty();	
+			SetDirty();	
 		
 			if ( Input.GetMouseButton ( 2 ) ) {
 				amount.x = Mathf.Floor ( drag.x * 20 );
@@ -91,14 +91,14 @@ public class OGScrollView extends OGWidget {
 			if ( w != this ) {
 				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
 				w.clipRct = drawRct;
-
+/*
 				// Make sure the widgets are always at least 1 unit over the background
 				if ( w.transform.localPosition.z > -1 ) {
 					var newPos : Vector3 = w.transform.localPosition;
 					newPos.z = -1;
 					w.transform.localPosition = newPos;
 				}
-			}
+*/			}
 		}
 
 		// Make sure the background is always above 0 units away

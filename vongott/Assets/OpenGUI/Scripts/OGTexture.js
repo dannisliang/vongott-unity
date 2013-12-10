@@ -26,6 +26,7 @@ public class OGTexture extends OGWidget {
 		}
 	}
 	
+	/*
 	override function DrawGUI () {
 		if ( mainTexture ) {						
 			var x : float = this.transform.position.x + offset.x + scrollOffset.x;
@@ -47,5 +48,5 @@ public class OGTexture extends OGWidget {
 				GUI.DrawTexture ( Rect ( x, y, transform.lossyScale.x, transform.lossyScale.y ), mainTexture, scale, alphaBlend, 0.0 );
 			}
 		}
-	}
+	}*/
 }
