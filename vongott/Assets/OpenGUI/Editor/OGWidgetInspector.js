@@ -94,7 +94,7 @@ public class OGWidgetInspector extends Editor {
 				( target as OGWidget ).UpdateWidget();
 				EditorUtility.SetDirty ( target );
 			
-				OGRoot.GetInstance().SetDirty();
+				( target as OGWidget ).SetDirty();
 			}
 		}
 	}

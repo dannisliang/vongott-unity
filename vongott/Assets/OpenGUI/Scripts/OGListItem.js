@@ -44,7 +44,7 @@ class OGListItem extends OGWidget {
 		}
 
 		Action ();
-		OGRoot.GetInstance().SetDirty();
+		SetDirty();
 	}
 	
 	override function UpdateWidget () {
@@ -74,8 +74,13 @@ class OGListItem extends OGWidget {
 			
 			if ( selected ) {
 				background.styles.basic = this.styles.active;
+			
+			} else if ( disabled ) {
+				background.styles.basic = this.styles.disabled;
+
 			} else {
 				background.styles.basic = this.styles.basic;
+			
 			}
 
 			mouseRct = background.drawRct;
@@ -107,6 +112,10 @@ class OGListItem extends OGWidget {
 			
 			if ( selected ) {
 				label.styles.basic = this.styles.active;
+			
+			} else if ( disabled ) {
+				label.styles.basic = this.styles.disabled;
+			
 			} else {
 				label.styles.basic = this.styles.basic;
 			}

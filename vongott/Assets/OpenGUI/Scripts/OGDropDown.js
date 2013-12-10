@@ -104,14 +104,14 @@ class OGDropDown extends OGWidget {
 			OnMouseCancel ();
 		}
 
-		OGRoot.GetInstance().SetDirty();
+		SetDirty();
 	}
 	
 	override function OnMouseDown () {
 		if ( !isDown && GetMouseOverOption() == -1 ) {		
 			isDown = true;
 			timeStamp = Time.time;
-			OGRoot.GetInstance().SetDirty();
+			SetDirty();
 		}
 	}
 	

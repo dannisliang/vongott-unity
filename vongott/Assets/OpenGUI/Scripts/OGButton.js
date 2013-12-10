@@ -41,7 +41,7 @@ class OGButton extends OGWidget {
 	
 	override function OnMouseDown () {
 		isDown = true;
-		OGRoot.GetInstance().SetDirty();
+		SetDirty();
 	}
 	
 	override function UpdateWidget () {

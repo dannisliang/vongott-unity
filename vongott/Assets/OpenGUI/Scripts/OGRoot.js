@@ -14,6 +14,7 @@ class OGRoot extends MonoBehaviour {
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
+	private var dirtyWidgets : List.< OGWidget > = new List.< OGWidget > ();
 	private var labels : OGLabel[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
@@ -128,6 +129,10 @@ class OGRoot extends MonoBehaviour {
 		SetDirty ();
 	}
 
+	public function SetDirty ( w : OGWidget ) {
+		dirtyWidgets.Add ( w );
+	}
+
 	public function SetDirty ( frames : int ) {
 		dirtyCounter = frames;
 	}
@@ -163,13 +168,27 @@ class OGRoot extends MonoBehaviour {
 			UpdateWidgets ();
 			dirtyCounter--;
 		}
+
+		// Update individual widgets
+		for ( var i : int = 0; i < dirtyWidgets.Count; i++ ) {
+			dirtyWidgets[i].root = this;			
+			dirtyWidgets[i].Recalculate ();
+			dirtyWidgets[i].UpdateWidget ();
+			
+			dirtyWidgets.RemoveAt ( i );
+		}
 	}
 
 	public function UpdateMouse () {
+		var i : int = 0;
+		var w : OGWidget;
+
 		// Check all widgets
 		mouseOver.Clear ();
 
-		for ( var w : OGWidget in widgets ) {
+		for ( i = 0; i < widgets.Length; i++ ) {
+			w = widgets[i];
+			
 			if ( w.isDrawn && w.CheckMouseOver() ) {
 				w.OnMouseOver ();
 				mouseOver.Add ( w );
@@ -180,17 +199,21 @@ class OGRoot extends MonoBehaviour {
 		isMouseOver = mouseOver.Count > 0;
 
 		// Update mouse-over widgets
-		for ( w in mouseOver ) {
-			w.UpdateWidget ();
+		for ( i = 0; i < mouseOver.Count; i++ ) {
+			if ( mouseOver[i] != null ) {
+				mouseOver[i].UpdateWidget ();
+			}
 		}
 
 		// Click
 		if ( Input.GetMouseButtonDown ( 0 ) ) {
 			var topWidget : OGWidget;
 			
-			for ( var mw : OGWidget in mouseOver ) {
-				if ( ( topWidget == null || mw.transform.position.z < topWidget.transform.position.z ) && mw.selectable ) {
-					topWidget = mw;
+			for ( i = 0; i < mouseOver.Count; i++ ) {
+				w = mouseOver[i];
+				
+				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.selectable ) {
+					topWidget = w;
 				}
 			}
 			
@@ -239,7 +262,7 @@ class OGRoot extends MonoBehaviour {
 		var c4 : boolean = w.position.y < Screen.height;
 		return c1 && c2 && c3 && c4;
 	}
-     
+    
 	public function UpdateWidgets () {
 		screenRect = new Rect ( 0, Screen.width, 0, Screen.height );
 
@@ -254,7 +277,9 @@ class OGRoot extends MonoBehaviour {
 		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
 		labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
 
-		for ( var w : OGWidget in widgets ) {
+		for ( var i : int = 0; i < widgets.Length; i++ ) {
+			var w : OGWidget = widgets[i];
+
 			if ( w == null ) { continue; }
 			
 			if ( w.transform.localPosition.z < 0 ) {

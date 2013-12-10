@@ -367,7 +367,7 @@ class EditorConversationNode extends MonoBehaviour {
 		}
 	
 		// Display the correct number of root nodes
-		if ( selectedType == "EndConvo" ) {
+		if ( selectedType == "EndConvo" && endConvo.nextRoot.options.Length != EditorConversationMap.GetInstance().GetRootStrings().Length ) {
 			endConvo.nextRoot.SetOptions ( EditorConversationMap.GetInstance().GetRootStrings() );
 		}
 	

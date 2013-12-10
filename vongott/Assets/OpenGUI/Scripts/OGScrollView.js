@@ -40,10 +40,6 @@ public class OGScrollView extends OGWidget {
 		if ( CheckMouseOver () ) {
 			var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
 
-			if ( scroll != 0 ) {
-				OGRoot.GetInstance().SetDirty();	
-			}
-
 			if ( scroll > 0 ) {
 				amount.y = 20;
 			

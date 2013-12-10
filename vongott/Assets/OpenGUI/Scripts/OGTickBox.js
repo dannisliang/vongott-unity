@@ -53,7 +53,7 @@ public class OGTickBox extends OGWidget {
 				background.styles.basic = styles.basic;
 			}
 		
-			mouseOver = CheckMouseOver ( background.drawRct );
+			mouseRct = background.drawRct;
 		}
 		
 		// Label

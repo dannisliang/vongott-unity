@@ -39,12 +39,14 @@ public class OGWidgetStyles {
 	public var active : OGStyle;
 	public var ticked : OGStyle;
 	public var thumb : OGStyle;
+	public var disabled : OGStyle;
 
 	public static function IsStyleUsed ( styleName : String, widgetName : String ) : boolean {
 		if ( styleName == "Basic" ) { return true; }
+		if ( styleName == "Disabled" ) { return true; }
 		
 		switch ( widgetName ) {
-			case "OGButton": case "OGPopup":
+			case "OGButton": case "OGPopUp":
 				if ( styleName == "Active" ) { return true; }
 				if ( styleName == "Hover" ) { return true; }
 				break;
@@ -73,7 +75,7 @@ public class OGWidgetStyles {
 	}
 
 	public static function GetNames() : String[] {
-		var names : String[] = [ "Basic", "Active", "Hover", "Ticked", "Thumb" ];
+		var names : String[] = [ "Basic", "Active", "Hover", "Ticked", "Thumb", "Disabled" ];
 		return names;
 	}
 
@@ -100,6 +102,10 @@ public class OGWidgetStyles {
 			case "Thumb":
 				result = thumb;
 				break;
+
+			case "Disabled":
+				result = disabled;
+				break;	
 		}
 
 		return result;
@@ -126,6 +132,10 @@ public class OGWidgetStyles {
 			case "Thumb":
 				thumb = stl;
 				break;
+			
+			case "Disabled":
+				disabled = stl;
+				break;	
 		}
 	}
 }

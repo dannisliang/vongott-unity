@@ -29,7 +29,7 @@ class OGPopUp extends OGWidget {
 	
 	public function SetOptions ( list : String[] ) {
 		options = list;
-		OGRoot.GetInstance().SetDirty();
+		SetDirty();
 	}
 
 	override function OnMouseUp () {
@@ -51,7 +51,7 @@ class OGPopUp extends OGWidget {
 			}	
 		}
 		
-		OGRoot.GetInstance().SetDirty();
+		SetDirty();
 	}
 	
 	override function OnMouseDown () {
@@ -60,7 +60,7 @@ class OGPopUp extends OGWidget {
 			timeStamp = Time.time;
 		}
 		
-		OGRoot.GetInstance().SetDirty();
+		SetDirty();
 	}
 	
 	override function OnMouseOver () {
@@ -96,7 +96,7 @@ class OGPopUp extends OGWidget {
 		
 		optionLabels.SetActive ( state );
 	
-		OGRoot.GetInstance().SetDirty();
+		SetDirty();
 	}
 		
 	override function UpdateWidget () {

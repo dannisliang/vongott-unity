@@ -83,7 +83,7 @@ class UIConversation extends OGPage {
 		if ( highlight.activeSelf ) {
 			// Let the mouse pick
 			for ( var i = 0; i < lines.Length; i++ ) {
-				if ( lines[i].mouseOver ) {
+				if ( lines[i].CheckMouseOver() ) {
 					HighlightOption ( i );
 				}
 			}

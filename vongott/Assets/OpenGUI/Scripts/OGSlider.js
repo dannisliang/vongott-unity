@@ -67,7 +67,7 @@ public class OGSlider extends OGWidget {
 			thumb.hidden = true;
 			thumb.isDrawn = isDrawn;
 		
-			mouseOver = CheckMouseOver ( thumb.drawRct, background.drawRct );
+			mouseRct = CombineRects ( thumb.drawRct, background.drawRct );
 		}
 		
 		// Slider

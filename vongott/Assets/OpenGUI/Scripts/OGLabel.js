@@ -97,8 +97,8 @@ public class OGLabel extends OGWidget {
 		}	
 
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
-			for ( var g : Glyph in glyphs ) {
-				g.Draw ( position.x + x, position.y + y, z, clipRct );
+			for ( var i : int = 0; i < glyphs.Count; i++ ) {
+				glyphs[i].Draw ( position.x + x, position.y + y, z, clipRct );
 			}
 		}
 	}
@@ -119,8 +119,8 @@ public class OGLabel extends OGWidget {
 		}
 
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
-			for ( var w : Word in words ) {
-				w.Draw ( position.x + x, position.y + y, z, clipRct );
+			for ( var i : int = 0; i < words.Count; i++ ) {
+				words[i].Draw ( position.x + x, position.y + y, z, clipRct );
 			}
 		}
 	}
@@ -136,15 +136,23 @@ public class OGLabel extends OGWidget {
 	private var drawLines : Line[];
 	private var lineHeight : float;
 	private var spacing : float;
-	
+	private var oldString : String = "";
+
 
 	/////////////////
 	// Update
 	/////////////////
+	function Update () {
+		if ( oldString != text ) {
+			SetDirty();
+			oldString = text;
+		}
+	}	
+	
 	override function UpdateWidget () {
-		if ( styles.basic == null ) { return; }
-
 		selectable = true;
+		
+		if ( styles.basic == null ) { return; }
 
 		if ( !overrideFontSize ) {
 			fontSize = styles.basic.text.fontSize;
@@ -163,7 +171,6 @@ public class OGLabel extends OGWidget {
 		var widestLine : float = 0;
 
 		var lineList : List.< Line > = new List.< Line >();	
-		var wordList : List.< Word > = new List.< Word >();
 		var displayedText = text.Replace ( "\\n", " \\n" );
 		var strings : String[] = displayedText.Split ( " "[0] );
 
@@ -220,8 +227,8 @@ public class OGLabel extends OGWidget {
 		
 		for ( var l : int = 0; l < drawLines.Length; l++ ) {
 			// Position
-			var x : float = drawRct.x;
-			var y : float = drawRct.y + drawRct.height;
+			var x : float = 0;
+			var y : float = 0;
 			var leftPadding : float = styles.basic.text.padding.left;
 			var rightPadding : float = styles.basic.text.padding.right;
 			var topPadding : float = styles.basic.text.padding.top;
@@ -290,8 +297,8 @@ public class OGLabel extends OGWidget {
 	// Draw
 	//////////////////	
 	private function DrawLines ( shadowOffset : float ) {
-		for ( var line : Line in drawLines ) {	
-			line.Draw ( shadowOffset, shadowOffset, drawDepth, clipRct );
+		for ( var i : int = 0; i < drawLines.Length; i++ ) {	
+			drawLines[i].Draw ( drawRct.x + shadowOffset, drawRct.y + drawRct.height + shadowOffset, drawDepth, clipRct );
 		}
 	}
 			

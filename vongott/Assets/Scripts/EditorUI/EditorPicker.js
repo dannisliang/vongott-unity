@@ -66,7 +66,7 @@ class EditorPicker extends OGPage {
 		btn.argument= btn.text;
 
 		obj.transform.parent = scrollView.transform;
-		obj.transform.localPosition = new Vector3 ( inset, scrollView.scrollLength, 0 );
+		obj.transform.localPosition = new Vector3 ( inset, 0, 0 );
 		obj.transform.localScale = new Vector3 ( 570 - inset, 20, 1 );
 	
 		btn.GetDefaultStyles ();
@@ -91,17 +91,9 @@ class EditorPicker extends OGPage {
 		lbl.GetDefaultStyles ();
 	}
 	
-	// Deselect all
-	function DeselectAll () {
-		for ( var btn : Component in scrollView.transform.GetComponentsInChildren ( OGButton ) ) {
-			( btn as OGButton ).styleName = "listitem";		
-		}
-	}
 	
 	// Highlight item
 	function SelectItem ( path : String ) {
-		DeselectAll ();
-		
 		selectedItem = path;
 	}
 	
@@ -111,20 +103,18 @@ class EditorPicker extends OGPage {
 			Destroy ( scrollView.transform.GetChild ( i ).gameObject );
 		}
 		
-		scrollView.scrollLength = 0;
-		
 		CreateButton ( "(none)" );
 	}
 	
 	// Apply filter
 	function ApplyFilter () {
 		for ( var i = 0; i < scrollView.transform.childCount; i++ ) {
-			var btn : OGButton = scrollView.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
+			var btn : OGListItem = scrollView.transform.GetChild ( i ).gameObject.GetComponent ( OGListItem );
 			
 			if ( btn.text.Contains ( filter.text ) ) {
-				btn.styleName = "listitem";
+				btn.disabled = false;
 			} else {
-				btn.styleName = "listitemdisabled";
+				btn.disabled = true;
 			}
 		}
 	}
@@ -148,7 +138,7 @@ class EditorPicker extends OGPage {
 		yield WaitForEndOfFrame ();
 	
 		for ( var i = 0; i < scrollView.transform.childCount; i++ ) {
-			scrollView.transform.GetChild(i).localPosition = new Vector3 ( scrollView.transform.GetChild(i).localPosition.x, i* 20, 0 );
+			scrollView.transform.GetChild(i).localPosition = new Vector3 ( scrollView.transform.GetChild(i).localPosition.x, i * 20, 0 );
 		}
 	
 		OGRoot.GetInstance().SetDirty();
@@ -161,6 +151,8 @@ class EditorPicker extends OGPage {
 		for ( var obj : Object in allQuests.list ) {
 			CreateButton ( (obj as JSONObject).GetField ( "id" ).str );
 		}
+		
+		StartCoroutine ( SortList () );
 	}
 	
 	// Events
@@ -197,6 +189,8 @@ class EditorPicker extends OGPage {
 		for ( var name : String in Directory.GetFiles ( Application.dataPath + "/Maps", "*.vgmap" ) ) {
 			CreateButton ( EditorCore.TrimFileName ( name ), false );
 		}
+		
+		StartCoroutine ( SortList () );
 	}
 	
 	// Flags

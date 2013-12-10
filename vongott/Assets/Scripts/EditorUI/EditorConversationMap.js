@@ -187,7 +187,7 @@ class EditorConversationMap extends OGPage {
 		}
 	}
 	
-	function OnGUI () {
+/*	function OnGUI () {
 		return;
 		
 		Handles.BeginGUI ();
@@ -225,7 +225,7 @@ class EditorConversationMap extends OGPage {
 		GUILayout.EndArea();
 		Handles.EndGUI ();
 	}
-	
+*/	
 	
 	////////////////////
 	// Prompt
