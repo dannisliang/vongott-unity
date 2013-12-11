@@ -124,19 +124,31 @@ class OGPopUp extends OGWidget {
 			optionLabels.transform.localScale = Vector3.one;
 			optionLabels.transform.localEulerAngles = Vector3.zero;
 
+			SetDirty ();
+			return;
+
 		} else if ( !optionLabels ) {
 			optionLabels = this.transform.Find("Options").gameObject;
-	
+
+			SetDirty ();
+			return;
+
 		} else if ( optionLabels.transform.childCount == 0 ) {
 			for ( var i : int = 0; i < options.Length; i++ ) {
 				new GameObject ( options[i], OGLabel ).transform.parent = optionLabels.transform;
 			}
 
+			SetDirty ();
+			return;
+
 		} else if ( optionLabels.transform.childCount != options.Length ) {
 			for ( var x : int = 0; x < optionLabels.transform.childCount; x++ ) {
 				DestroyImmediate ( optionLabels.transform.GetChild(x).gameObject );
 			}
-		
+
+			SetDirty ();
+			return;
+
 		} else {
 			if ( optionLabels.activeSelf != isUp ) {
 				optionLabels.SetActive ( isUp );
@@ -164,6 +176,9 @@ class OGPopUp extends OGWidget {
 				newSprite.transform.parent = this.transform;
 				newSprite.styles.basic = this.styles.basic;
 			}
+
+			SetDirty ();
+			return;
 		
 		} else {
 			
@@ -195,6 +210,9 @@ class OGPopUp extends OGWidget {
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
 			}
+
+			SetDirty ();
+			return;
 		
 		} else {
 			if ( String.IsNullOrEmpty ( selectedOption ) ) {

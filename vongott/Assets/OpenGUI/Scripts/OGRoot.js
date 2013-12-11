@@ -20,13 +20,13 @@ class OGRoot extends MonoBehaviour {
 	public var currentPage : OGPage;
 	public var lineMaterial : Material;
 	public var lines : OGLine[];
+	public var lineClip : Rect;
 
 	@HideInInspector public var unicode : Dictionary.< int, int >[];
 	@HideInInspector public var isMouseOver : boolean = false;
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
-	private var dirtyWidgets : List.< OGWidget > = new List.< OGWidget > ();
 	private var labels : OGLabel[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
@@ -146,8 +146,21 @@ class OGRoot extends MonoBehaviour {
 				GL.Begin(GL.LINES);
 				lineMaterial.SetPass(0);
 				for ( i = 0; i < lines.Length; i++ ) {
-					GL.Vertex3 ( lines[i].start.x, Screen.height - lines[i].start.y, 0 );
-					GL.Vertex3 ( lines[i].end.x, Screen.height - lines[i].end.y, 0 );
+					var noClip : boolean = lineClip.width <= 0 || lineClip.height <= 0;
+					var containsStart : boolean = lineClip.Contains ( lines[i].start );
+					var containsEnd : boolean = lineClip.Contains ( lines[i].end );
+
+					if ( noClip || containsStart ) {
+						GL.Vertex3 ( lines[i].start.x, Screen.height - lines[i].start.y, 0 );
+					} else if ( containsEnd ) {
+						GL.Vertex3 ( Mathf.Clamp ( lines[i].start.x, lineClip.xMin, lineClip.xMax ), Mathf.Clamp ( Screen.height - lines[i].start.y, lineClip.yMin, lineClip.yMax ), 0 );
+					}
+					
+					if ( noClip || containsEnd ) {
+						GL.Vertex3 ( lines[i].end.x, Screen.height - lines[i].end.y, 0 );
+					} else if ( containsStart ) {
+						GL.Vertex3 ( Mathf.Clamp ( lines[i].end.x, lineClip.xMin, lineClip.xMax ), Mathf.Clamp ( Screen.height - lines[i].end.y, lineClip.yMin, lineClip.yMax ), 0 );
+					}
 				}	
 			
 				GL.End();
@@ -161,10 +174,6 @@ class OGRoot extends MonoBehaviour {
 		downWidget = null;
 	
 		SetDirty ();
-	}
-
-	public function SetDirty ( w : OGWidget ) {
-		dirtyWidgets.Add ( w );
 	}
 
 	public function SetDirty ( frames : int ) {
@@ -201,15 +210,6 @@ class OGRoot extends MonoBehaviour {
 		if ( dirtyCounter > 0 ) {
 			UpdateWidgets ();
 			dirtyCounter--;
-		}
-
-		// Update individual widgets
-		for ( var i : int = 0; i < dirtyWidgets.Count; i++ ) {
-			dirtyWidgets[i].root = this;			
-			dirtyWidgets[i].Recalculate ();
-			dirtyWidgets[i].UpdateWidget ();
-			
-			dirtyWidgets.RemoveAt ( i );
 		}
 	}
 
@@ -316,10 +316,6 @@ class OGRoot extends MonoBehaviour {
 
 			if ( w == null ) { continue; }
 			
-			if ( w.transform.localPosition.z < 0 ) {
-				w.transform.localPosition = new Vector3 ( w.transform.localPosition.x, w.transform.localPosition.y, 0 );
-			}
-		
 			w.root = this;			
 			w.Recalculate ();
 			w.UpdateWidget ();

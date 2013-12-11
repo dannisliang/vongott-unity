@@ -52,7 +52,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var drawRct : Rect;
 	@HideInInspector public var clipRct : Rect;
 	@HideInInspector public var mouseRct : Rect;
-	@HideInInspector public var drawDepth : float;
+	public var drawDepth : float;
 	@HideInInspector public var scrollOffset : Vector3;
 	@HideInInspector public var offset : Vector3;
 	@HideInInspector public var hidden : boolean = false;
@@ -284,6 +284,9 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
+	public function OnEnable () {
+		SetDirty();
+	}
 	public function UpdateWidget () {} 
 	public function GetDefaultStyles () {
 		GetRoot().skin.GetDefaultStyles ( this );
@@ -291,13 +294,7 @@ public class OGWidget extends MonoBehaviour {
 	public function SetDirty () {
 		if ( OGRoot.GetInstance() == null ) { return; }
 
-		OGRoot.GetInstance().SetDirty ();
-		/*
-		var children : OGWidget[] = this.GetComponentsInChildren.<OGWidget>();
-		
-		for ( var w : int = 0; w < children.Length; w++ ) {
-			OGRoot.GetInstance().SetDirty ( children[w] );
-		}*/
+		OGRoot.GetInstance().SetDirty();
 	}
 
 	//////////////////

@@ -341,7 +341,7 @@ class EditorConversationNode extends MonoBehaviour {
 	// Frame
 	private function AdjustFrame ( x : float, y : float, z : float ) {
 		frame.localScale = new Vector3 ( x, y, z );
-		type.localPosition = new Vector3 ( (x/2) - 85, 0, 0 );
+		type.localPosition = new Vector3 ( (x/2) - 85, 0, -2 );
 		extraButtonsContainer.localPosition = new Vector3 ( frame.localScale.x + 10, 0, 0 );
 		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x, 10, -4 );
 		
@@ -383,10 +383,15 @@ class EditorConversationNode extends MonoBehaviour {
 		// Check for extra buttons
 		for ( var i : int = 0; i < extraButtonsContainer.childCount; i++ ) {
 			if ( activeOutputs[i] && !connectedTo[i] ) {
-				extraButtonsContainer.GetChild(i).gameObject.SetActive ( true );
-				extraButtonsContainer.GetChild(i).position = new Vector3 ( activeOutputs[i].transform.position.x + 30, activeOutputs[i].transform.position.y, 0 );
-			} else {
+				if ( !extraButtonsContainer.GetChild(i).gameObject.activeSelf ) {
+					extraButtonsContainer.GetChild(i).gameObject.SetActive ( true );
+				}
+
+				extraButtonsContainer.GetChild(i).position = new Vector3 ( activeOutputs[i].transform.position.x + 30, activeOutputs[i].transform.position.y, this.transform.position.z );
+			
+			} else if ( extraButtonsContainer.GetChild(i).gameObject.activeSelf ) {
 				extraButtonsContainer.GetChild(i).gameObject.SetActive ( false );
+			
 			}
 		}
 	}

@@ -38,6 +38,10 @@ class EditorConversationRootNode extends MonoBehaviour {
 	}
 	
 	function Update () {
-		extraButton.gameObject.SetActive ( connectedTo == null );
+		if ( connectedTo && extraButton.gameObject.activeSelf ) {
+			extraButton.gameObject.SetActive ( false );
+		} else if ( !connectedTo && !extraButton.gameObject.activeSelf ) {
+			extraButton.gameObject.SetActive ( true );
+		}	
 	}
 }

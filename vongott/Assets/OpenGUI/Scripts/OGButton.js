@@ -41,6 +41,7 @@ class OGButton extends OGWidget {
 	override function OnMouseCancel () {
 		isDown = false;
 		OGRoot.GetInstance().ReleaseWidget ();
+		SetDirty();
 	}
 	
 	override function OnMouseDown () {
@@ -68,7 +69,8 @@ class OGButton extends OGWidget {
 				newSprite.styles.basic = this.styles.basic;
 			}
 		
-			UpdateWidget ();
+			SetDirty ();
+			return;
 
 		} else {
 			background.transform.localScale = Vector3.one;
@@ -77,6 +79,7 @@ class OGButton extends OGWidget {
 		
 			background.isDrawn = isDrawn;
 			background.hidden = true;
+			background.pivot = this.pivot;
 			mouseRct = background.drawRct;
 		}
 		
@@ -92,7 +95,7 @@ class OGButton extends OGWidget {
 				newLabel.styles.basic = this.styles.basic;
 			}
 		
-			UpdateWidget ();
+			SetDirty ();
 			return;
 
 		} else {
@@ -103,6 +106,7 @@ class OGButton extends OGWidget {
 			
 			label.isDrawn = isDrawn;
 			label.hidden = true;
+			label.pivot = this.pivot;
 		}
 		
 		// Styles

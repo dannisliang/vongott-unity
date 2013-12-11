@@ -44,7 +44,7 @@ class EditorConversationMap extends OGPage {
 	public var scrollView : OGScrollView;
 	public var nodeContainer : Transform;
 	
-	private var nodeIOPoints : IOReference[] = new IOReference[0];
+	private var nodeIOPoints : List.< IOReference > = new List.< IOReference >();
 	private var bottomLines : float[] = new float[999];
 	private var rootBottomLines : float[] = new float[999];
 	private var currentConvo : ConversationTree;
@@ -207,10 +207,12 @@ class EditorConversationMap extends OGPage {
 		var p2 : Vector3;
 		var p3 : Vector3;
 		
+		root.lineClip = scrollView.drawRct;
+
 		if ( !connectMode ) {
-			root.lines = new OGLine [ nodeIOPoints.Length * 3 ];
+			root.lines = new OGLine [ nodeIOPoints.Count * 3 ];
 	
-			for ( var i : int = 0; i < nodeIOPoints.Length; i++ ) {
+			for ( var i : int = 0; i < nodeIOPoints.Count; i++ ) {
 				var io : IOReference = nodeIOPoints[i];
 				
 				p0 = GetOutputPosition(io.transforms[0]);
@@ -485,6 +487,7 @@ class EditorConversationMap extends OGPage {
 		var pos : Vector3;
 		pos.x = 200 + offset * cellDistance;
 		pos.y = bottomLines[offset];
+		pos.z = scrollView.transform.position.z;
 		if ( pos.y < minHeight ) { pos.y = minHeight; }
 		bottomLines[offset] = pos.y + node.frame.transform.localScale.y + 20;
 		
@@ -501,15 +504,13 @@ class EditorConversationMap extends OGPage {
 		
 		nodeIndexCounter++;
 		
-		var tempList : List.< IOReference > = new List.< IOReference > ( nodeIOPoints );
-
 		for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
 			if ( node.activeOutputs[i] && node.connectedTo[i] ) {
 				var points : Transform[] = new Transform[2];
 				points[0] = node.activeOutputs[i].transform;
 				points[1] = node.connectedTo[i].input.transform;
 				
-				tempList.Add ( new IOReference ( i, points ) );
+				nodeIOPoints.Add ( new IOReference ( i, points ) );
 				
 				if ( node.GetRootNode() == node.connectedTo[i].GetRootNode() ) {
 					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, node.targetPos.y );
@@ -518,8 +519,6 @@ class EditorConversationMap extends OGPage {
 				}
 			}
 		}
-
-		nodeIOPoints = tempList.ToArray();
 	}
 	
 	private function UpdateRootNodePosition ( rootNode : EditorConversationRootNode, index : int ) {
@@ -528,13 +527,7 @@ class EditorConversationMap extends OGPage {
 			rootPoints[0] = rootNode.output.transform;
 			rootPoints[1] = rootNode.connectedTo.input.transform;
 			
-			if ( !nodeIOPoints ) {
-				nodeIOPoints = new IOReference[0];
-			}
-
-			var tempList : List.< IOReference > = new List.< IOReference > ( nodeIOPoints );
-			tempList.Add ( new IOReference ( index, rootPoints ) );
-			nodeIOPoints = tempList.ToArray();
+			nodeIOPoints.Add ( new IOReference ( index, rootPoints ) );
 
 			UpdateNodePosition ( index, rootNode.connectedTo, 0, rootBottomLines[index] + 30 );
 		}
@@ -547,6 +540,12 @@ class EditorConversationMap extends OGPage {
 				
 		SetDirty ();
 		
+		if ( nodeIOPoints ) {
+			nodeIOPoints.Clear ();
+		} else {
+			nodeIOPoints = new List.< IOReference >();
+		}
+
 		rootBottomLines[0] = scrollView.transform.position.y + 30;
 								
 		for ( var i : int = 0; i < rootNodes.childCount; i++ ) {

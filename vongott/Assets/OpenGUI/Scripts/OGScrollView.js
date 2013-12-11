@@ -97,25 +97,19 @@ public class OGScrollView extends OGWidget {
 				w.Recalculate();
 			}
 		}
-
-		// Make sure the background is always above 0 units away
-		if ( this.transform.position.z < 1 ) {
-			this.transform.position = new Vector3 ( this.transform.position.x, this.transform.position.y, 1 );
-		}	
-
 	}
 	
 	override function DrawGL () {
 		GL.TexCoord2 ( drawCrd.x, drawCrd.y );
-		GL.Vertex3 ( drawRct.x, drawRct.y, -this.transform.position.z );
+		GL.Vertex3 ( drawRct.x, drawRct.y, drawDepth - 10 );
 		
 		GL.TexCoord2 ( drawCrd.x, drawCrd.y + drawCrd.height );
-		GL.Vertex3 ( drawRct.x, drawRct.y + drawRct.height, -this.transform.position.z );
+		GL.Vertex3 ( drawRct.x, drawRct.y + drawRct.height, drawDepth - 10 );
 		
 		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y + drawCrd.height );
-		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y + drawRct.height, -this.transform.position.z );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y + drawRct.height, drawDepth - 10 );
 		
 		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y );
-		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, -this.transform.position.z );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, drawDepth - 10 );
 	}
 }
