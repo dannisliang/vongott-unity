@@ -298,7 +298,7 @@ class EditorConversationMap extends OGPage {
 	public function CreateRootNode ( reference : ConversationRootNode ) {
 		var newRootNode : EditorConversationRootNode = CreateRootNode ();
 		
-		newRootNode.auto.isChecked = reference.auto;
+		newRootNode.auto.isTicked = reference.auto;
 		if ( reference.connectedTo ) {
 			CreateNode ( newRootNode, reference.connectedTo );
 		}

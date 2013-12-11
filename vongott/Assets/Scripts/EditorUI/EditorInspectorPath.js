@@ -66,16 +66,17 @@ class EditorInspectorPath extends MonoBehaviour {
 		// label
 		var label : GameObject = new GameObject ( "Label" );
 		label.transform.parent = node.transform;
-		label.transform.localPosition = new Vector3 ( 0, 0, -2 );
+		label.transform.localPosition = new Vector3 ( 0, 0, 0 );
 		label.transform.localScale = new Vector3 ( 100, 20, 1 );
 		
 		var l : OGLabel = label.AddComponent ( OGLabel );
 		l.text = "PathNode" + nodes.Count.ToString();
-		
+		l.GetDefaultStyles();
+
 		// pick node
 		var buttonPick : GameObject = new GameObject ( "ButtonPick" );
 		buttonPick.transform.parent = node.transform;
-		buttonPick.transform.localPosition = new Vector3 ( 190, 47, -2 );
+		buttonPick.transform.localPosition = new Vector3 ( 190, 47, 0 );
 		buttonPick.transform.localScale = new Vector3 ( 70, 20, 0 );
 		
 		var bp : OGButton = buttonPick.AddComponent ( OGButton );
@@ -83,11 +84,12 @@ class EditorInspectorPath extends MonoBehaviour {
 		bp.target = this.gameObject;
 		bp.message = "PickNode";
 		bp.argument = nodes.Count.ToString();
-		
+		bp.GetDefaultStyles();
+
 		// delete node
 		var buttonDelete : GameObject = new GameObject ( "ButtonDelete" );
 		buttonDelete.transform.parent = node.transform;
-		buttonDelete.transform.localPosition = new Vector3 ( 270, 30, -2 );
+		buttonDelete.transform.localPosition = new Vector3 ( 270, 30, 0 );
 		buttonDelete.transform.localScale = new Vector3 ( 20, 20, 0 );
 		
 		var bd : OGButton = buttonDelete.AddComponent ( OGButton );
@@ -95,60 +97,66 @@ class EditorInspectorPath extends MonoBehaviour {
 		bd.target = this.gameObject;
 		bd.message = "DeleteNode";
 		bd.argument = nodes.Count.ToString();
-		
+		bd.GetDefaultStyles();
+
 		// idle time
 		var idleTime : GameObject = new GameObject ( "IdleTime" );
 		idleTime.transform.parent = node.transform;
-		idleTime.transform.localPosition = new Vector3 ( 10, 20, -2 );
+		idleTime.transform.localPosition = new Vector3 ( 10, 20, 0 );
 		idleTime.transform.localScale = Vector3.one;
 		
 		// ^ input
 		var input : GameObject = new GameObject ( "Input" );
 		input.transform.parent = idleTime.transform;
-		input.transform.localPosition = new Vector3 ( 60, 0, -2 );
+		input.transform.localPosition = new Vector3 ( 60, 0, 0 );
 		input.transform.localScale = new Vector3 ( 60, 20, 1 );
 		
 		var tf : OGTextField = input.AddComponent ( OGTextField );
 		tf.text = actorNode.duration.ToString();
 		tf.maxLength = 4;
 		tf.regex = "^0-9";
+		tf.GetDefaultStyles();		
 
 		// ^ label
 		var itLabel : GameObject = new GameObject ( "Label" );
 		itLabel.transform.parent = idleTime.transform;
-		itLabel.transform.localPosition = new Vector3 ( 0, 2, -2 );
+		itLabel.transform.localPosition = new Vector3 ( 0, 2, 0 );
 		itLabel.transform.localScale = new Vector3 ( 100, 20, 0 );
 		
 		var il : OGLabel = itLabel.AddComponent ( OGLabel );
 		il.text = "Idle (s)";
-		
+		il.GetDefaultStyles();
+
 		// running
 		var running : GameObject = new GameObject ( "Running" );
 		running.transform.parent = node.transform;
-		running.transform.localPosition = new Vector3 ( 190, 20, -2 );
-		running.transform.localScale = new Vector3 ( 38, 20, 1 );
+		running.transform.localPosition = new Vector3 ( 190, 20, 0 );
+		running.transform.localScale = new Vector3 ( 70, 16, 1 );
 		
 		var rtb : OGTickBox = running.AddComponent ( OGTickBox );
 		rtb.text = "Run";
-		rtb.isChecked = actorNode.running;
-		
+		rtb.isTicked = actorNode.running;
+		rtb.GetDefaultStyles();
+
 		// position
 		var posLabel : GameObject = new GameObject ( "Label" );
 		posLabel.transform.parent = idleTime.transform;
-		posLabel.transform.localPosition = new Vector3 ( 0, 30, -2 );
+		posLabel.transform.localPosition = new Vector3 ( 0, 30, 0 );
 		posLabel.transform.localScale = new Vector3 ( 100, 20, 0 );
 		
 		var pl : OGLabel = posLabel.AddComponent ( OGLabel );
 		pl.text = "Position:";
+		pl.GetDefaultStyles();
 
 		// ^ numbers
 		var numLabel : GameObject = new GameObject ( "Position" );
 		numLabel.transform.parent = idleTime.transform;
-		numLabel.transform.localPosition = new Vector3 ( 60, 30, -2 );
+		numLabel.transform.localPosition = new Vector3 ( 60, 30, 0 );
 		numLabel.transform.localScale = new Vector3 ( 200, 20, 1 );
 		
 		var nl : OGLabel = numLabel.AddComponent ( OGLabel );
 		nl.text = actorNode.position.x.ToString("f2") + ", " + actorNode.position.y.ToString("f2") + ", " + actorNode.position.z.ToString("f2");
+		nl.GetDefaultStyles();
 
 		// add node
 		nodes.Add ( node );
@@ -210,7 +218,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 			for ( var i = 0; i < a.path.Count; i++ ) {
 				var duration : String = nodes[i].GetComponentInChildren(OGTextField).text;
-				var running : boolean = nodes[i].GetComponentInChildren(OGTickBox).isChecked;
+				var running : boolean = nodes[i].GetComponentInChildren(OGTickBox).isTicked;
 				
 				a.path[i].running = running;
 				

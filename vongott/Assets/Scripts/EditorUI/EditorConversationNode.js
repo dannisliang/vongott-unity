@@ -212,6 +212,14 @@ class EditorConversationNode extends MonoBehaviour {
 	}
 	
 	public function SetActive ( i : int, output : OGButton ) {
+		if ( !connectedTo || connectedTo.Length != 3 ) {
+			connectedTo = new EditorConversationNode[3];
+		}
+		
+		if ( !activeOutputs || activeOutputs.Length != 3 ) {
+			activeOutputs = new OGButton[3];
+		}
+		
 		if ( connectedTo[i] && !output ) {
 			SetConnection ( i, null );
 			EditorConversationMap.GetInstance().SetOrphaned ( connectedTo[i] );

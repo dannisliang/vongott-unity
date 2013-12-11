@@ -4,6 +4,7 @@ public class OGScrollView extends OGWidget {
 	public var size : Vector2;
 	public var position : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
+	public var canDrag : boolean = true;
 	public var elasticity : float = 2;
 
 	// TODO: Deprecate
@@ -46,7 +47,7 @@ public class OGScrollView extends OGWidget {
 				amount.y = -20;
 			}	
 		
-			if ( Input.GetMouseButtonDown ( 2 ) ) {
+			if ( Input.GetMouseButtonDown ( 2 ) && canDrag ) {
 				dragging = true;
 			}
 		}

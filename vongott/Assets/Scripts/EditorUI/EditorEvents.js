@@ -169,7 +169,7 @@ class EditorEvents extends OGPage {
 		eventDelay.text = "0";
 		
 		eventCondition.text = "(none)";
-		eventConditionBool.isChecked = false;
+		eventConditionBool.isTicked = false;
 	
 		eventType.selectedOption = "";
 		
@@ -187,7 +187,7 @@ class EditorEvents extends OGPage {
 		nextPath.button.hiddenString = "";
 		
 		setFlag.button.text = "(none)";
-		setFlag.tickBox.isChecked = false;
+		setFlag.tickBox.isTicked = false;
 		
 		travel.button.text = "(none)";
 		travel.textField.text = "";
@@ -208,10 +208,10 @@ class EditorEvents extends OGPage {
 			
 			if ( e.condition != "" ) {
 				eventCondition.text = e.condition;
-				eventConditionBool.isChecked = e.conditionBool;
+				eventConditionBool.isTicked = e.conditionBool;
 			} else {
 				eventCondition.text = "(none)";
-				eventConditionBool.isChecked = false;
+				eventConditionBool.isTicked = false;
 			}
 			
 			switch ( e.type ) {
@@ -238,7 +238,7 @@ class EditorEvents extends OGPage {
 				case GameEvent.eEventType.SetFlag:
 					eventType.selectedOption = "SetFlag";
 					setFlag.button.text = e.flagName;
-					setFlag.tickBox.isChecked = e.flagBool;
+					setFlag.tickBox.isTicked = e.flagBool;
 					break;
 					
 				case GameEvent.eEventType.Travel:
@@ -272,7 +272,7 @@ class EditorEvents extends OGPage {
 			
 		if ( eventCondition.text != "" ) {
 			currentEvent.condition = eventCondition.text;
-			currentEvent.conditionBool = eventConditionBool.isChecked;
+			currentEvent.conditionBool = eventConditionBool.isTicked;
 		} else {
 			currentEvent.condition = "";
 			currentEvent.conditionBool = false;
@@ -300,7 +300,7 @@ class EditorEvents extends OGPage {
 			case "SetFlag":
 				currentEvent.type = GameEvent.eEventType.SetFlag;
 				currentEvent.flagName = setFlag.button.text;
-				currentEvent.flagBool = setFlag.tickBox.isChecked;
+				currentEvent.flagBool = setFlag.tickBox.isTicked;
 				break;
 				
 			case "Travel":

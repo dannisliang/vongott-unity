@@ -9,7 +9,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	
 	function PopulateEvents ( trg : Trigger ) {
 		activation.selectedOption = trg.activation.ToString();
-		fireOnce.isChecked = trg.fireOnce;
+		fireOnce.isTicked = trg.fireOnce;
 		
 		eventContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - eventContainer.position.y;
 				
@@ -175,7 +175,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 			var trg : Trigger = obj.GetComponent ( Trigger );
 			
 			trg.SetActivationType ( activation.selectedOption );
-			trg.fireOnce = fireOnce.isChecked;
+			trg.fireOnce = fireOnce.isTicked;
 			
 			trg.events.Clear();
 			

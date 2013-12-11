@@ -135,7 +135,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 		
 		if ( obj.GetComponent ( Door ) ) {
 			doorLocked.transform.parent.gameObject.SetActive ( true );
-			doorLocked.isChecked = obj.GetComponent ( Door ).locked;
+			doorLocked.isTicked = obj.GetComponent ( Door ).locked;
 			doorLockLevel.selectedOption = obj.GetComponent ( Door ).lockLevel.ToString();
 		}
 		
@@ -183,7 +183,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	//////////////////
 	function Update () {
 		if ( obj && obj.GetComponent ( Door ) ) {
-			obj.GetComponent ( Door ).locked = doorLocked.isChecked;
+			obj.GetComponent ( Door ).locked = doorLocked.isTicked;
 			obj.GetComponent ( Door ).lockLevel = int.Parse(doorLockLevel.selectedOption);
 		}
 	}

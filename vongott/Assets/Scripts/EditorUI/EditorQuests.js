@@ -44,7 +44,7 @@ class EditorQuests extends OGPage {
 		if ( currentQuest ) {
 			currentQuest.title = title.text;
 			currentQuest.desc = description.text;
-			currentQuest.isMainQuest = mainQuest.isChecked;
+			currentQuest.isMainQuest = mainQuest.isTicked;
 			currentQuest.skillPoints = int.Parse ( skillPoints.text );
 			
 			Saver.SaveQuest ( currentQuest );
@@ -67,7 +67,7 @@ class EditorQuests extends OGPage {
 	
 		title.text = currentQuest.title;
 		description.text = currentQuest.desc;
-		mainQuest.isChecked = currentQuest.isMainQuest;
+		mainQuest.isTicked = currentQuest.isMainQuest;
 		skillPoints.text = currentQuest.skillPoints.ToString();
 	}
 	

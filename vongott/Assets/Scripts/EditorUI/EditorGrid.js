@@ -7,8 +7,8 @@ class EditorGrid extends OGPage {
 	var brightLine : OGTextField;
 	
 	override function StartPage () {
-		visible.isChecked = EditorCore.gridEnabled;
-		snap.isChecked = EditorCore.snapEnabled;
+		visible.isTicked = EditorCore.gridEnabled;
+		snap.isTicked = EditorCore.snapEnabled;
 		darkLine.text = EditorCore.gridLineDistance.ToString();
 		brightLine.text = EditorCore.gridLineBrightFrequency.ToString();
 	}
@@ -18,8 +18,8 @@ class EditorGrid extends OGPage {
 	}
 	
 	function OK () {
-		EditorCore.gridEnabled = visible.isChecked;
-		EditorCore.snapEnabled = snap.isChecked;
+		EditorCore.gridEnabled = visible.isTicked;
+		EditorCore.snapEnabled = snap.isTicked;
 		EditorCore.gridLineDistance = float.Parse ( darkLine.text );
 		EditorCore.gridLineBrightFrequency = float.Parse ( brightLine.text );
 		OGRoot.GetInstance().GoToPage ( "MenuBase" );

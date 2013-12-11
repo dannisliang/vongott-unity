@@ -694,7 +694,7 @@ static function DeserializeConversationNode ( obj : EditorConversationNode ) : J
 static function SerializeConversationRootNode ( obj : EditorConversationRootNode ) : JSONObject {
 	var rootNode : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	
-	rootNode.AddField ( "auto", obj.auto.isChecked );
+	rootNode.AddField ( "auto", obj.auto.isTicked );
 	
 	if ( obj.connectedTo ) {
 		rootNode.AddField ( "connectedTo", DeserializeConversationNode ( obj.connectedTo ) );

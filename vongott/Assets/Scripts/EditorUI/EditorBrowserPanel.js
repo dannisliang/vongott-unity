@@ -130,7 +130,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 		
 		obj.transform.parent = fileList;
 		obj.transform.localScale = new Vector3 ( 180, 30, 1 );
-		obj.transform.localPosition = new Vector3 ( 0, index * 30, -2 );
+		obj.transform.localPosition = new Vector3 ( 0, index * 30, 0 );
 	
 		btn.GetDefaultStyles();
 	}

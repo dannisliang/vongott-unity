@@ -52,7 +52,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var drawRct : Rect;
 	@HideInInspector public var clipRct : Rect;
 	@HideInInspector public var mouseRct : Rect;
-	public var drawDepth : float;
+	@HideInInspector public var drawDepth : float;
 	@HideInInspector public var scrollOffset : Vector3;
 	@HideInInspector public var offset : Vector3;
 	@HideInInspector public var hidden : boolean = false;

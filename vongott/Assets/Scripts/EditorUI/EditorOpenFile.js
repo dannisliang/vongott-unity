@@ -119,7 +119,7 @@ class EditorOpenFile extends OGPage {
 
 			obj.transform.parent = mapList.transform;
 			obj.transform.localScale = new Vector3 ( 456, 30, 1 );
-			obj.transform.localPosition = new Vector3 ( 0, i * 32, -2 );
+			obj.transform.localPosition = new Vector3 ( 0, i * 32, 0 );
 	
 			btn.GetDefaultStyles ();	
 			

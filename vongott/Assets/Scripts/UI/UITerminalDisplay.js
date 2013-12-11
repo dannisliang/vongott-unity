@@ -21,7 +21,7 @@ class UITerminalDisplay extends OGPage {
 				currentCameras[i].SetTarget ( targetControls[i].selectedOption );
 				
 				if ( currentCameras[i].door ) {
-					currentCameras[i].door.locked = doorControls[i].isChecked;
+					currentCameras[i].door.locked = doorControls[i].isTicked;
 				}			
 			}
 		}
@@ -38,7 +38,7 @@ class UITerminalDisplay extends OGPage {
 				
 				if ( currentCameras[i].door ) {
 					doorControls[i].gameObject.SetActive ( true );
-					doorControls[i].isChecked = currentCameras[i].door.locked;
+					doorControls[i].isTicked = currentCameras[i].door.locked;
 				} else {
 					doorControls[i].gameObject.SetActive ( false );
 				}
