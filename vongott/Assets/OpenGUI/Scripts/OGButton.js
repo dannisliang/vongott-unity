@@ -7,12 +7,13 @@ class OGButton extends OGWidget {
 	public var message : String;
 	public var argument : String;
 	public var func : Function;
-	public var image : Texture2D;
+	public var enableImage : boolean = false;
+	public var imageScale : float = 1;
 	public var imageOffset : Vector2 = Vector2.zero;
-	public var imageScale : Vector2 = Vector2.one;
 
 	private var background : OGSlicedSprite;
 	private var label : OGLabel;
+	private var image : OGSprite;
 	private var isDown : boolean = false;
 
 	
@@ -58,6 +59,36 @@ class OGButton extends OGWidget {
 	}
 	
 	override function UpdateWidget () {
+		// Image
+		if ( image == null ) {
+			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
+				image = this.gameObject.GetComponentInChildren ( OGSprite );
+			
+			} else {
+				var newImage : OGSprite = new GameObject ( "Sprite", OGSprite ).GetComponent ( OGSprite );
+				newImage.transform.parent = this.transform;
+				image = newImage;
+			}
+
+			SetDirty ();
+			return;
+		
+		} else {
+			if ( enableImage ) {
+				image.transform.localScale = new Vector3 ( image.styles.basic.coordinates.width / this.transform.localScale.x, image.styles.basic.coordinates.height / this.transform.localScale.y, 1 ) * imageScale;
+				image.transform.localPosition = new Vector3 ( 0.5 + imageOffset.x, 0.5 + imageOffset.y, 0 );
+				image.transform.localEulerAngles = Vector3.zero;
+
+				image.styles.basic = this.styles.thumb;
+				image.pivot.x = RelativeX.Center;
+				image.pivot.y = RelativeY.Center;
+				image.hidden = true;
+			}
+
+			image.isDrawn = enableImage;
+
+		}
+		
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
@@ -67,6 +98,7 @@ class OGButton extends OGWidget {
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
 				newSprite.transform.parent = this.transform;
 				newSprite.styles.basic = this.styles.basic;
+				background = newSprite;
 			}
 		
 			SetDirty ();

@@ -62,7 +62,7 @@ public class OGScrollView extends OGWidget {
 			if ( Input.GetMouseButtonUp ( 2 ) ) {
 				dragging = false;
 			}
-		
+	
 		// ^ Snap back
 		} else {
 			if ( position.y > 0 ) {

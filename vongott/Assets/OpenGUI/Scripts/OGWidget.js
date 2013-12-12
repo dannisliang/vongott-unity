@@ -114,10 +114,12 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Coordinates (based on texture size)
 	private function RecalcCoords ( coords : Rect ) : Rect {
-		coords.x /= 256;
-		coords.y /= 144;
-		coords.width /= 256;
-		coords.height /= 144;
+		if ( root ) {
+			coords.x /= root.texWidth;
+			coords.y /= root.texHeight;
+			coords.width /= root.texWidth;
+			coords.height /= root.texHeight;
+		}
 
 		return coords;
 	}
@@ -285,6 +287,9 @@ public class OGWidget extends MonoBehaviour {
 	// Update
 	//////////////////
 	public function OnEnable () {
+		SetDirty();
+	}
+	public function OnDisable () {
 		SetDirty();
 	}
 	public function UpdateWidget () {} 

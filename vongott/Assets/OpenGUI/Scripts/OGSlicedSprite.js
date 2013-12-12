@@ -10,7 +10,7 @@ public class OGSlicedSprite extends OGWidget {
 	//////////////////
 	// Border (based on texture size)
 	private function RecalcBorder ( border : OGSlicedSpriteOffset ) : OGSlicedSpriteOffset {
-		return new OGSlicedSpriteOffset ( border.left / 256, border.right / 256, border.top / 144, border.bottom / 144 );
+		return new OGSlicedSpriteOffset ( border.left / root.texWidth, border.right / root.texWidth, border.top / root.texHeight, border.bottom / root.texHeight );
 	}
 
 

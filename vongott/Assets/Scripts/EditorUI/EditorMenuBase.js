@@ -1,31 +1,32 @@
 #pragma strict
 
 private class VectorDisplay {
-	var x : OGLabel;
-	var y : OGLabel;
-	var z : OGLabel;
+	public var x : OGLabel;
+	public var y : OGLabel;
+	public var z : OGLabel;
 }
 
 class EditorMenuBase extends OGPage {	
 	////////////////////
 	// Public vars
 	////////////////////
-	var objectName : OGLabel;
-	var levelName : OGLabel;
+	public var objectName : OGLabel;
+	public var levelName : OGLabel;
+	public var menuBackground : OGSlicedSprite;
 	
-	var inspector : GameObject;
-	var inspectorMenus : GameObject[];
+	public var inspector : GameObject;
+	public var inspectorMenus : GameObject[];
 	
-	var pos : VectorDisplay;
-	var rot : VectorDisplay;
-	var scl : VectorDisplay;
+	public var pos : VectorDisplay;
+	public var rot : VectorDisplay;
+	public var scl : VectorDisplay;
 	
-	var tabs : OGTabs;
+	public var tabs : OGTabs;
 	
-	var initName : boolean = false;
+	public var initName : boolean = false;
 	
-	var transformDisplay : GameObject;
-	
+	public var transformDisplay : GameObject;
+
 	
 	////////////////////
 	// File menu
@@ -383,15 +384,17 @@ class EditorMenuBase extends OGPage {
 			if ( EditorCore.GetSelectedObject() ) {
 				if ( !inspector.activeSelf ) {
 					inspector.SetActive ( true );
+					pos.x.transform.parent.gameObject.SetActive ( true );
+					rot.x.transform.parent.gameObject.SetActive ( true );
+					scl.x.transform.parent.gameObject.SetActive ( true );
+				
+					menuBackground.stretch.widthOffset = -340;
+					levelName.anchor.xOffset = -340;
 				}
 				
 				if ( EditorCore.GetSelectedObject().GetComponent(GUID) ) {
 					objectName.text = EditorCore.GetSelectedObject().GetComponent(GUID).GUID;
 				}
-				
-				pos.x.transform.parent.gameObject.SetActive ( true );
-				rot.x.transform.parent.gameObject.SetActive ( true );
-				scl.x.transform.parent.gameObject.SetActive ( true );
 				
 				var t = EditorCore.GetSelectedObject().transform;
 				
@@ -409,8 +412,8 @@ class EditorMenuBase extends OGPage {
 							
 			} else if ( inspector.activeSelf && EditorCore.running ) {
 				inspector.SetActive ( false );
-
-				OGRoot.GetInstance().SetDirty();
+				menuBackground.stretch.widthOffset = -20;
+				levelName.anchor.xOffset = -20;
 
 			}
 		}

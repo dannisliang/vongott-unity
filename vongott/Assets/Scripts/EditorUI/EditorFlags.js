@@ -23,7 +23,7 @@ class EditorFlags extends OGPage {
 			textField = txtName.AddComponent ( OGTextField );
 			
 			txtName.transform.parent = instance.transform;
-			txtName.transform.localPosition = new Vector3 ( 0, 0, -2 );
+			txtName.transform.localPosition = new Vector3 ( 0, 0, 0 );
 			txtName.transform.localScale = new Vector3 ( 440, 20, 1 );
 			
 			textField.maxLength = 48;
@@ -37,7 +37,7 @@ class EditorFlags extends OGPage {
 			button = btnPick.AddComponent ( OGButton );
 			
 			btnPick.transform.parent = instance.transform;
-			btnPick.transform.localPosition = new Vector3 ( 450, 0, -2 );
+			btnPick.transform.localPosition = new Vector3 ( 450, 0, 0 );
 			btnPick.transform.localScale = new Vector3 ( 20, 20, 1 );
 			
 			button.message = "DeleteFlag";

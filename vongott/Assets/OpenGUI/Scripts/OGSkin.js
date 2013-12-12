@@ -49,6 +49,7 @@ public class OGWidgetStyles {
 			case "OGButton": case "OGPopUp":
 				if ( styleName == "Active" ) { return true; }
 				if ( styleName == "Hover" ) { return true; }
+				if ( styleName == "Thumb" ) { return true; }
 				break;
 
 			case "OGDropDown":
@@ -155,7 +156,7 @@ public class OGSkin extends MonoBehaviour {
 	@HideInInspector public var fonts : Font[];
 	@HideInInspector public var fontShader : Shader;
 	public var styles : OGStyle[];	
-	public var defaults : OGStyleReference [] = new OGStyleReference[0];
+	@HideInInspector public var defaults : OGStyleReference [] = new OGStyleReference[0];
 	
 	public function ResetDefaults () {
 		defaults = [

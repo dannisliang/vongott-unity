@@ -30,17 +30,17 @@ class EditorInspectorImportedMesh extends MonoBehaviour {
 		var lbl : OGLabel = new GameObject ( i.ToString() + "_lbl", OGLabel ).GetComponent(OGLabel);
 						
 		if ( m ) {
-			btn.image = m.mainTexture as Texture2D;
+			//btn.image = m.mainTexture as Texture2D;
 			lbl.text = m.name.Replace(" (Instance)", "");
 		} else {
-			btn.image = null;
+			//btn.image = null;
 			lbl.text = "(none)";
 		}
 		
 		btn.target = this.gameObject;
 		btn.message = "PickMaterial";
 		btn.argument = i.ToString();
-		btn.imageScale = new Vector2 ( 0.8, 0.8 );
+		btn.imageScale = 0.8;
 		btn.imageOffset = new Vector2 ( 7.5, 7.5 );
 		
 		btn.transform.parent = buttonContainer;

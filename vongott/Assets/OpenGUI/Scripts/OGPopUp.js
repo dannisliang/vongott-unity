@@ -133,7 +133,7 @@ class OGPopUp extends OGWidget {
 			SetDirty ();
 			return;
 
-		} else if ( optionLabels.transform.childCount == 0 ) {
+		} else if ( options != null && optionLabels.transform.childCount == 0 ) {
 			for ( var i : int = 0; i < options.Length; i++ ) {
 				new GameObject ( options[i], OGLabel ).transform.parent = optionLabels.transform;
 			}

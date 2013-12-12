@@ -116,8 +116,6 @@ public class OGTextField extends OGWidget {
 
 		// Listen for input
 		if ( listening ) {
-			SetDirty();
-			
 			// Specific keys
 			if ( Input.GetKey ( KeyCode.LeftArrow ) && cursorPosition > 0 ) {
 				CheckBypass ( function () {

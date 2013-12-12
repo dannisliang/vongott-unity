@@ -350,7 +350,7 @@ class OGDropDown extends OGWidget {
 		} else {
 			label.text = title;
 			
-			label.transform.localScale = new Vector3 ( label.lineWidth / this.transform.lossyScale.x, 1, 1 );
+			label.transform.localScale = new Vector3 ( ( label.lineWidth + label.styles.basic.text.padding.left + label.styles.basic.text.padding.right + 5 ) / this.transform.lossyScale.x, 1, 1 );
 			label.transform.localEulerAngles = Vector3.zero;
 			label.transform.localPosition = Vector3.zero;
 			

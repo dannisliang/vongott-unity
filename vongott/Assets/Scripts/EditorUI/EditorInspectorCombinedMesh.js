@@ -35,10 +35,10 @@ class EditorInspectorCombinedMesh extends MonoBehaviour {
 		listItem.nameLbl.text = i.ToString();
 		
 		if ( m ) {
-			listItem.sourceBtn.image = m.mainTexture as Texture2D;
+			//listItem.sourceBtn.image = m.mainTexture as Texture2D;
 			listItem.nameLbl.text += ": " + m.name;
 		} else {
-			listItem.sourceBtn.image = null;
+			//listItem.sourceBtn.image = null;
 			listItem.nameLbl.text += ": (none)";
 		}
 		

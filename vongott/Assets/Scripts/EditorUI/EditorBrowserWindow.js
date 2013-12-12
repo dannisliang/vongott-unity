@@ -31,7 +31,7 @@ class EditorBrowserWindow extends OGPage {
 	@HideInInspector var breadPos : float = 0;
 	
 	@HideInInspector var navCursor : int = 0;
-	@HideInInspector var navList : List.< OGButton > = new List.< OGButton >();
+	@HideInInspector var navList : List.< OGListItem > = new List.< OGListItem >();
 	
 	////////////////////
 	// Init
@@ -94,28 +94,21 @@ class EditorBrowserWindow extends OGPage {
 		}
 	}
 	
-	// Deselect all
-	function DeselectAll () {
-		for ( var i = 0; i < fileList.transform.childCount; i++ ) {
-			var btn : OGButton = fileList.transform.GetChild ( i ).gameObject.GetComponent ( OGButton );
-			btn.styleName = "listitem";		
-		}
-	}
-	
 	// Create list item
 	private function CreateButton ( objName : String, index : int, type : String ) {
 		var obj : GameObject = new GameObject ( objName );
-		var btn = obj.AddComponent ( OGButton );
+		var btn = obj.AddComponent ( OGListItem );
 	
 		btn.text = objName;
 		btn.target = this.gameObject;
 		btn.message = "Select" + type;
-		btn.styleName = "listitem";
 		
 		obj.transform.parent = fileList;
 		obj.transform.localScale = new Vector3 ( 468, 30, 1 );
-		obj.transform.localPosition = new Vector3 ( 0, index * 32, -2 );
-		
+		obj.transform.localPosition = new Vector3 ( 0, index * 32, 0 );
+	
+		btn.GetDefaultStyles();
+
 		navList.Add ( btn );
 	}
 	
@@ -200,11 +193,8 @@ class EditorBrowserWindow extends OGPage {
 	}
 	
 	// Select file 
-	function SelectFile ( btn : OGButton ) {
-		DeselectAll ();
-		
+	function SelectFile ( btn : OGListItem ) {
 		selectedFile = currentFolder.FindFile ( btn.text );
-		btn.styleName = "listitemselected";
 	
 		if ( selectedFile.GetType() == GameObject ) {	
 			var obj : GameObject = selectedFile as GameObject;
@@ -218,7 +208,7 @@ class EditorBrowserWindow extends OGPage {
 			var mat : Material = selectedFile as Material;
 			
 			if ( mat.mainTexture ) {
-				preview2D.image = mat.mainTexture as Texture2D;
+				preview2D.mainTexture = mat.mainTexture as Texture2D;
 			}
 			
 			fileAttr.text = mat.name;
@@ -229,11 +219,8 @@ class EditorBrowserWindow extends OGPage {
 	}
 	
 	// Select folder
-	function SelectFolder ( btn : OGButton ) {
-		DeselectAll ();
-		
+	function SelectFolder ( btn : OGListItem ) {
 		selectedFolder = currentFolder.FindFolder ( btn.text );
-		btn.styleName = "listitemselected";
 		
 		SetMode ( "Open" );
 	}

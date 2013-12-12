@@ -24,10 +24,13 @@ class OGRoot extends MonoBehaviour {
 
 	@HideInInspector public var unicode : Dictionary.< int, int >[];
 	@HideInInspector public var isMouseOver : boolean = false;
+	@HideInInspector public var texWidth : int = 256;
+	@HideInInspector public var texHeight : int = 256;
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
 	private var labels : OGLabel[];
+	private var textures : OGTexture[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
 	private var screenRect : Rect;
@@ -109,7 +112,7 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
 				
-				if ( w == null || w.GetComponent ( OGLabel ) ) { continue; }
+				if ( w == null || w.GetComponent ( OGLabel ) || w.GetComponent ( OGTexture ) ) { continue; }
 				
 				if ( w.isDrawn ) {
 					w.DrawGL ();
@@ -166,6 +169,13 @@ class OGRoot extends MonoBehaviour {
 				GL.End();
 			}
 
+			// Draw textures
+			if ( textures != null && textures.Length > 0 ) {
+				for ( i = 0; i < textures.Length; i++ ) {	
+					textures[i].DrawGL();
+				}
+			}
+
 			GL.PopMatrix();
 		}
 	}
@@ -208,6 +218,9 @@ class OGRoot extends MonoBehaviour {
 
 		// Update all widgets
 		if ( dirtyCounter > 0 ) {
+			texWidth = skin.atlas.mainTexture.width;
+			texHeight = skin.atlas.mainTexture.height;
+
 			UpdateWidgets ();
 			dirtyCounter--;
 		}
@@ -310,6 +323,7 @@ class OGRoot extends MonoBehaviour {
 		// Update widget lists	
 		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
 		labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
+		textures = currentPage.gameObject.GetComponentsInChildren.<OGTexture>();
 
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];

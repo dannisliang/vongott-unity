@@ -166,6 +166,8 @@ class EditorConversationMap extends OGPage {
 		for ( var i : int = 0; i < rootNodes.childCount; i++ ) {
 			RemoveRootNode ( rootNodes.GetChild ( i ).GetComponent ( EditorConversationRootNode ), true );
 		}
+	
+		root.lines = new OGLine[0];
 	}
 	
 	public function ConnectNodes ( callback : Function, activeOutput : OGButton ) {
