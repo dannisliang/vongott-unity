@@ -43,6 +43,9 @@ public class OGSprite extends OGWidget {
 	// Update
 	////////////////
 	override function UpdateWidget () {
+		tile.x = Mathf.Floor ( tile.x ); 
+		tile.y = Mathf.Floor ( tile.y ); 
+		
 		selectable = false;
 	
 		mouseRct = drawRct;

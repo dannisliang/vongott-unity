@@ -43,6 +43,7 @@ public class OGWidget extends MonoBehaviour {
 	}
 
 	public var isDrawn : boolean = true;
+	public var isDraggable : boolean = false;
 	public var pivot : Pivot = new Pivot();
 	public var anchor : Anchor = new Anchor();	
 	public var stretch : Stretch = new Stretch();
@@ -54,6 +55,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var mouseRct : Rect;
 	@HideInInspector public var drawDepth : float;
 	@HideInInspector public var scrollOffset : Vector3;
+	@HideInInspector public var dragOffset : Vector3;
 	@HideInInspector public var offset : Vector3;
 	@HideInInspector public var hidden : boolean = false;
 	@HideInInspector public var disabled : boolean = false;

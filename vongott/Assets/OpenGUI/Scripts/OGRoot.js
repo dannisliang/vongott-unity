@@ -250,6 +250,8 @@ class OGRoot extends MonoBehaviour {
 	}
 
 	public function UpdateMouse () {
+		if ( widgets == null ) { return; }
+		
 		var i : int = 0;
 		var w : OGWidget;
 
@@ -299,6 +301,8 @@ class OGRoot extends MonoBehaviour {
 		// Release
 		} else if ( Input.GetMouseButtonUp ( 0 ) ) {
 			if ( downWidget ) {
+				downWidget.dragOffset = Vector3.zero;
+
 				if ( downWidget.CheckMouseOver() ) {
 					downWidget.OnMouseUp ();
 
@@ -313,6 +317,21 @@ class OGRoot extends MonoBehaviour {
 		} else if ( Input.GetMouseButton ( 0 ) || Input.GetMouseButton ( 2 ) ) {
 			if ( downWidget ) {
 				downWidget.OnMouseDrag ();
+			
+				if ( downWidget.isDraggable ) {
+					var mousePos : Vector3 = Input.mousePosition;
+					mousePos.y = Screen.height - mousePos.y;
+
+					if ( downWidget.dragOffset == Vector3.zero ) {
+						downWidget.dragOffset = downWidget.transform.position - mousePos;
+					}
+
+					var newPos : Vector3 = downWidget.transform.position;
+					newPos = mousePos + downWidget.dragOffset;
+					downWidget.transform.position = newPos;
+					SetDirty ();
+					//downWidget.Recalculate ();
+				}
 			}
 		
 		// Escape key

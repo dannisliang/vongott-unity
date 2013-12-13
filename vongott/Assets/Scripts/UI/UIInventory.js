@@ -100,7 +100,7 @@ class UIInventory extends OGPage {
 					var entry : InventoryEntry = InventoryManager.GetEntry(x,y);
 					var item : Item = entry.GetItem();
 					var image : OGTexture = CreateImage ( item, grid );
-					image.transform.localPosition = new Vector3 ( x * 90, y * 90, -15 );
+					image.transform.localPosition = new Vector3 ( x * 90, y * 90, 0 );
 					allImages[x,y] = image;
 								
 					if ( entry.equipped ) {
@@ -122,7 +122,7 @@ class UIInventory extends OGPage {
 				var slotItem : Item = entry.GetItem();
 				
 				var slotImage : OGTexture = CreateImage( item, stash );
-				slotImage.transform.localPosition = new Vector3 ( i * 90, 0, -15 );
+				slotImage.transform.localPosition = new Vector3 ( i * 90, 0, 0 );
 			
 				var button : OGButton = CreateRemoveButton ( i );
 			}
@@ -403,7 +403,7 @@ class UIInventory extends OGPage {
 		if ( draggingEntry != null ) {
 			var mousePos : Vector3 = Input.mousePosition;
 			mousePos.y = Screen.height - mousePos.y;
-			mousePos.z = -15;
+			mousePos.z = 0;
 			
 			allImages [ draggingEntry.x, draggingEntry.y ].transform.position = mousePos;
 		}

@@ -238,10 +238,12 @@ class GameCore extends MonoBehaviour {
 	}
 	
 	// Start
-	function Start () {	
+	function Awake () {
 		// Instance
 		instance = this;
-		
+	}
+	
+	function Start () {	
 		if ( !running ) {
 			// Quests
 			QuestManager.Init();
