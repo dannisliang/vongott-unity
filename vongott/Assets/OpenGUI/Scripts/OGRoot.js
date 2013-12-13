@@ -34,6 +34,7 @@ class OGRoot extends MonoBehaviour {
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
 	private var screenRect : Rect;
+	private var textureMaterial : Material;
 
 	public static function GetInstance () {
 		return instance;
@@ -174,12 +175,21 @@ class OGRoot extends MonoBehaviour {
 				GL.End();
 			}
 
+			
 			// Draw textures
 			if ( textures != null && textures.Length > 0 ) {
+				GL.Begin(GL.QUADS);
 				for ( i = 0; i < textures.Length; i++ ) {	
-					textures[i].DrawGL();
+					if ( textures[i].mainTexture != null ) {
+						textureMaterial.mainTexture = textures[i].mainTexture;
+						textureMaterial.SetPass(0);
+						textures[i].DrawGL();
+					}
 				}
+
+				GL.End();
 			}
+
 
 			GL.PopMatrix();
 		}
@@ -210,6 +220,14 @@ class OGRoot extends MonoBehaviour {
 	public function Update () {
 		if ( instance == null ) {
 			instance = this;
+		}
+
+		if ( textureMaterial == null && skin != null && skin.atlas != null ) {
+			textureMaterial = new Material ( skin.atlas.shader );
+		
+		} else if ( skin != null && skin.atlas != null && textureMaterial.shader != skin.atlas.shader ) {
+			textureMaterial.shader = skin.atlas.shader;
+
 		}
 
 		// Only update these when playing

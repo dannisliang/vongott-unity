@@ -24,11 +24,27 @@ public class OGTexture extends OGWidget {
 				mainTexture.wrapMode = TextureWrapMode.Repeat;
 			}
 		}
+		
+		drawCrd = new Rect ( 0, 0, 1, 1 );
 	}
 
 	override function DrawGL () {
-		if ( mainTexture ) {
-			Graphics.DrawTexture ( drawRct, mainTexture );
-		}
+		if ( drawCrd == null || drawRct == null ) { return; }
+	
+		// Bottom Left	
+		GL.TexCoord2 ( drawCrd.x, drawCrd.y );
+		GL.Vertex3 ( drawRct.x, drawRct.y, drawDepth );
+		
+		// Top left
+		GL.TexCoord2 ( drawCrd.x, drawCrd.y + drawCrd.height );
+		GL.Vertex3 ( drawRct.x, drawRct.y + drawRct.height, drawDepth );
+		
+		// Top right
+		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y + drawCrd.height );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y + drawRct.height, drawDepth );
+		
+		// Bottom right
+		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, drawDepth );
 	}
 }

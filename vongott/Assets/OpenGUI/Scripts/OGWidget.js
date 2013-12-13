@@ -114,12 +114,19 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Coordinates (based on texture size)
 	private function RecalcCoords ( coords : Rect ) : Rect {
-		if ( root ) {
+		if ( this.GetComponent(OGTexture) ) {
+			coords.x = 0;
+			coords.y = 0;
+			coords.width = 1;
+			coords.height = 1;
+
+		} else if ( root ) {
 			coords.x /= root.texWidth;
 			coords.y /= root.texHeight;
 			coords.width /= root.texWidth;
 			coords.height /= root.texHeight;
 		}
+
 
 		return coords;
 	}
