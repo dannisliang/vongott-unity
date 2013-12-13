@@ -63,7 +63,7 @@ public class OGWidgetStyles {
 				if ( styleName == "Ticked" ) { return true; }
 				break;
 
-			case "OGSlider":
+			case "OGSlider": case "OGTextField":
 				if ( styleName == "Thumb" ) { return true; }
 				break;
 

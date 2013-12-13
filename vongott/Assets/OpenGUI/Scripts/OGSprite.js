@@ -28,6 +28,8 @@ public class OGSprite extends OGWidget {
 	// Update
 	////////////////
 	override function UpdateWidget () {
+		selectable = false;
+		
 		mouseRct = drawRct;
 	}
 }

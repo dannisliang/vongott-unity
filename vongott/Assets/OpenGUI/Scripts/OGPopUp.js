@@ -201,7 +201,8 @@ class OGPopUp extends OGWidget {
 		
 			mouseRct = background.drawRct;
 		}
-		
+
+		// Title label		
 		if ( label == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGLabel ) ) {
 				label = this.gameObject.GetComponentInChildren ( OGLabel );

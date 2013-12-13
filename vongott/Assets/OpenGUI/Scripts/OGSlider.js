@@ -59,7 +59,7 @@ public class OGSlider extends OGWidget {
 		} else {
 			thumb.transform.localScale = new Vector3 ( this.transform.lossyScale.y / this.transform.lossyScale.x, 1, 1 );
 			thumb.transform.localEulerAngles = Vector3.zero;
-			thumb.transform.localPosition = new Vector3 ( sliderValue, 0.5, -1 );
+			thumb.transform.localPosition = new Vector3 ( sliderValue, 0.5, 0 );
 			
 			thumb.pivot.x = RelativeX.Center;
 			thumb.pivot.y = RelativeY.Center;

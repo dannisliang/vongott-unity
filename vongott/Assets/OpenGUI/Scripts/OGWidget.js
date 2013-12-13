@@ -297,9 +297,9 @@ public class OGWidget extends MonoBehaviour {
 		GetRoot().skin.GetDefaultStyles ( this );
 	}
 	public function SetDirty () {
-		if ( OGRoot.GetInstance() == null ) { return; }
-
-		OGRoot.GetInstance().SetDirty();
+		if ( GetRoot() ) {
+			GetRoot().SetDirty();
+		}
 	}
 
 	//////////////////

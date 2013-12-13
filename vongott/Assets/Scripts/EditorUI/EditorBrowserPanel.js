@@ -19,7 +19,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 	
 	// Start
 	function Start () {
-		transform.localPosition = new Vector3 ( -200, 0, 0 );
+		transform.localPosition = new Vector3 ( -200, 0, 5 );
 	
 	}
 	
@@ -48,11 +48,11 @@ class EditorBrowserPanel extends MonoBehaviour {
 
 	// Toggle panel
 	private function TogglePanel () {
-		if ( transform.localPosition.x == 0 ) {
-			transform.localPosition = new Vector3 ( -200, 0, 0 );
+		if ( transform.localPosition.x == 10 ) {
+			transform.localPosition = new Vector3 ( -200, 0, 5 );
 			
 		} else {
-			transform.localPosition = new Vector3 ( 0, 0, 0 );
+			transform.localPosition = new Vector3 ( 10, 0, 5 );
 		
 		}
 	}

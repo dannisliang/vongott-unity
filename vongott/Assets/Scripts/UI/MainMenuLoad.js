@@ -15,14 +15,15 @@ class MainMenuLoad extends OGPage {
 	}
 
 	private function CreateButton ( mapName : String ) {
-		var btn : OGButton = new GameObject ( mapName, OGButton ).GetComponent ( OGButton );
+		var btn : OGListItem = new GameObject ( mapName, OGListItem ).GetComponent ( OGListItem );
 		var index : int = levelList.childCount;
 		
 		btn.text = mapName;
 		btn.target = this.gameObject;
 		btn.message = "LoadFile";
 		btn.argument = mapName;
-		
+		btn.GetDefaultStyles();
+
 		btn.transform.parent = levelList;
 		btn.transform.localScale = new Vector3 ( 200, 30, 1 );
 		btn.transform.localPosition = new Vector3 ( 0, index * 40, 0 );

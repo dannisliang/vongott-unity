@@ -132,8 +132,8 @@ public class OGLabel extends OGWidget {
 	public var alignment : TextAnchor;
 
 	@HideInInspector public var lineWidth : float = 0;
-
-	private var drawLines : Line[];
+	@HideInInspector public var drawLines : Line[];
+	
 	private var lineHeight : float;
 	private var spacing : float;
 	private var oldString : String = "";
@@ -142,10 +142,6 @@ public class OGLabel extends OGWidget {
 	/////////////////
 	// Update
 	/////////////////
-	function OnEnable () {
-		selectable = true;	
-	}
-	
 	function Update () {
 		if ( oldString != text ) {
 			SetDirty();
@@ -154,6 +150,8 @@ public class OGLabel extends OGWidget {
 	}	
 	
 	override function UpdateWidget () {
+		selectable = false;
+
 		if ( styles.basic == null ) { return; }
 
 		if ( !overrideFontSize ) {
@@ -173,19 +171,13 @@ public class OGLabel extends OGWidget {
 		var widestLine : float = 0;
 
 		var lineList : List.< Line > = new List.< Line >();	
-		var displayedText = text.Replace ( "\\n", " \\n" );
+		var displayedText = text.Replace ( "\n", " \n" );
 		var strings : String[] = displayedText.Split ( " "[0] );
 
 		lineList.Add ( new Line () );
 
 		for ( var s : int = 0; s < strings.Length; s++ ) {
 			var word : Word = new Word ();
-			var linebreak : boolean = false;
-
-			if ( strings[s].Contains ( "\\n" ) ) {
-				strings[s] = strings[s].Replace ( "\\n", "" );
-				linebreak = true;
-			}
 
 			for ( var i : int = 0; i < strings[s].Length; i++ ) {
 				var unicodeIndex : int = strings[s][i];
@@ -205,11 +197,14 @@ public class OGLabel extends OGWidget {
 				}
 			}
 
-			if ( !linebreak ) {
-				linebreak = lineList[lineCount].width + word.width + spacing > drawRct.width - styles.basic.text.padding.left;
+			if ( styles.basic.text.wordWrap ) {
+				 if ( lineList[lineCount].width + word.width + spacing > drawRct.width - styles.basic.text.padding.left ) {
+					lineCount++;
+					lineList.Add ( new Line () );
+				 }
 			}
 
-			if ( linebreak ) {
+			if ( strings[s].Contains ( "\n" ) ) {
 				lineCount++;
 				lineList.Add ( new Line () );
 			}

@@ -201,6 +201,8 @@ public class OGSlicedSprite extends OGWidget {
 	// Update
 	//////////////////	
 	override function UpdateWidget () {
+		selectable = false;
+		
 		if ( styles.basic != null ) {
 			drawBrd = RecalcBorder ( styles.basic.border );
 			pixelBrd = styles.basic.border;
