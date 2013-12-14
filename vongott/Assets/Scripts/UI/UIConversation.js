@@ -26,7 +26,7 @@ class UIConversation extends OGPage {
 	}
 	
 	static function NextOption () {
-		if ( currentHighlight < ConversationManager.GetOptions() ) {
+		if ( currentHighlight < ConversationManager.GetOptions() - 1 ) {
 			HighlightOption ( currentHighlight + 1 );
 		}
 	}

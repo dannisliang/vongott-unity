@@ -248,7 +248,6 @@ class Player extends MonoBehaviour {
 	
 	function StopAutoHeal () {
 		automaticHeal = 0;
-		UpgradeManager.Deactivate ( eSlotID.Torso );
 	}
 	
 	function HasFullHealth () : boolean {		
@@ -263,7 +262,7 @@ class Player extends MonoBehaviour {
 			health = UpgradeManager.GetAbility ( eAbilityID.MaxHealth );
 		
 		} else {
-			StopAutoHeal ();
+			UpgradeManager.Deactivate ( eSlotID.Torso );
 			return;
 			
 		}

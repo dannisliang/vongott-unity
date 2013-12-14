@@ -1,7 +1,5 @@
 #pragma strict
 
-@script AddComponentMenu ("OpenGUI/Tween")
-
 class OGTween extends MonoBehaviour {
 	enum TweenMessageSend {
 		Begin,
@@ -75,7 +73,9 @@ class OGTween extends MonoBehaviour {
 				"time", move.time,
 				"easetype", move.easing,
 				"islocal", true,
-				"ignoretimescale", ignoreTimeScale
+				"ignoretimescale", ignoreTimeScale,
+				"onupdatetarget", this.gameObject,
+				"onupdate", "SetDirty"
 			) );
 		}
 		
@@ -90,7 +90,9 @@ class OGTween extends MonoBehaviour {
 				"time", rotate.time,
 				"easetype", rotate.easing,
 				"islocal", true,
-				"ignoretimescale", ignoreTimeScale
+				"ignoretimescale", ignoreTimeScale,
+				"onupdatetarget", this.gameObject,
+				"onupdate", "SetDirty"
 			) );
 		}
 		
@@ -105,7 +107,9 @@ class OGTween extends MonoBehaviour {
 				"time", scale.time,
 				"easetype", scale.easing,
 				"islocal", true,
-				"ignoretimescale", ignoreTimeScale
+				"ignoretimescale", ignoreTimeScale,
+				"onupdatetarget", this.gameObject,
+				"onupdate", "SetDirty"
 			) );
 		}
 		

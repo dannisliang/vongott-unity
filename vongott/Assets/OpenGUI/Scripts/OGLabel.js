@@ -285,6 +285,9 @@ public class OGLabel extends OGWidget {
 				line.position.y = y;
 			}
 		}
+		
+		mouseRct = drawRct;
+		
 	}
 	
 

@@ -164,6 +164,7 @@ public class OGWidget extends MonoBehaviour {
 		if ( !stretch ) { return; }
 		
 		var newScale : Vector3 = this.transform.localScale;
+		
 		if ( this.GetComponent(OGScrollView) ) {
 			newScale.x = this.GetComponent(OGScrollView).size.x;
 			newScale.y = this.GetComponent(OGScrollView).size.y;
@@ -181,7 +182,14 @@ public class OGWidget extends MonoBehaviour {
 			newScale.y = ( Screen.height * stretch.heightFactor ) + stretch.heightOffset;
 		}
 		
-		this.transform.localScale = newScale;
+		if ( !this.GetComponent(OGScrollView) ) {
+			this.transform.localScale = newScale;
+		
+		} else {
+			this.GetComponent(OGScrollView).size.x = newScale.x;
+			this.GetComponent(OGScrollView).size.y = newScale.y;
+		}
+	
 	}
 	
 	// Anchor (based on screen size)

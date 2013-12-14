@@ -50,8 +50,6 @@ class UIInventory extends OGPage {
 	
 	// Clear grid
 	function ClearGrid () {
-		selectedEntry = null;
-		
 		allImages = new OGTexture[10,3];
 		
 		for ( var i = 0; i < grid.childCount; i++ ) {
@@ -387,16 +385,15 @@ class UIInventory extends OGPage {
 	override function UpdatePage () {
 		if ( Input.GetMouseButtonDown ( 0 ) ) {
 			SelectSlot ();
-		
+			mouseClickTimer = Time.time;
+
 		} else if ( Input.GetMouseButtonUp ( 0 ) && draggingEntry ) {
 			DropOnSlot ();
 		
 		}
 		
 		if ( Input.GetMouseButton ( 0 ) ) {
-			mouseClickTimer += GameCore.GetInstance().ignoreTimeScale;
-			
-			if ( listenForDrag && mouseClickTimer > 0.25 ) {
+			if ( listenForDrag && Time.time - mouseClickTimer > 0.25 ) {
 				draggingEntry = listenForDrag;
 			}
 			

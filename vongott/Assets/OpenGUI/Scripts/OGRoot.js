@@ -179,13 +179,13 @@ class OGRoot extends MonoBehaviour {
 			// Draw textures
 			if ( textures != null && textures.Length > 0 && textureMaterials.Length == textures.Length ) {
 				for ( i = 0; i < textures.Length; i++ ) {	
-					GL.Begin(GL.QUADS);
 					if ( textures[i].isDrawn && textures[i].mainTexture != null ) {
+						GL.Begin(GL.QUADS);
 						textureMaterials[i].mainTexture = textures[i].mainTexture;
 						textureMaterials[i].SetPass(0);
 						textures[i].DrawGL();
+						GL.End();
 					}
-					GL.End();
 				}
 			}
 
@@ -213,7 +213,7 @@ class OGRoot extends MonoBehaviour {
 			currentPage.StartPage ();
 		}
 
-		UpdateWidgets ();
+		SetDirty();
 	}
 
 	public function Update () {
@@ -225,14 +225,6 @@ class OGRoot extends MonoBehaviour {
 		this.transform.localPosition = Vector3.zero;
 		this.transform.localEulerAngles = Vector3.zero;
 
-		if ( ( textureMaterials == null || textureMaterials.Length != textures.Length ) && skin != null && skin.atlas != null ) {
-			textureMaterials = new Material[textures.Length];
-
-			for ( var i : int = 0; i < textureMaterials.Length; i++ ) {
-				textureMaterials[i] = new Material ( skin.atlas.shader );
-			}
-		}
-
 		// Only update these when playing
 		if ( Application.isPlaying && currentPage != null ) {
 			// Current page
@@ -242,14 +234,29 @@ class OGRoot extends MonoBehaviour {
 			UpdateMouse ();	
 		}
 
-		// Update all widgets
+		// Dirty
 		if ( dirtyCounter > 0 ) {
 			texWidth = skin.atlas.mainTexture.width;
 			texHeight = skin.atlas.mainTexture.height;
 
-			UpdateWidgets ();
+			UpdateWidgets ( false );
 			dirtyCounter--;
+		
+		// Update positions
+		} else {
+			UpdateWidgets ( true );
+
 		}
+		
+		// Update textures
+		if ( ( textureMaterials == null || textureMaterials.Length != textures.Length ) && skin != null && skin.atlas != null ) {
+			textureMaterials = new Material[textures.Length];
+
+			for ( var i : int = 0; i < textureMaterials.Length; i++ ) {
+				textureMaterials[i] = new Material ( skin.atlas.shader );
+			}
+		}
+
 	}
 
 	public function UpdateMouse () {
@@ -257,21 +264,6 @@ class OGRoot extends MonoBehaviour {
 		
 		var i : int = 0;
 		var w : OGWidget;
-
-		// Check all widgets
-		mouseOver.Clear ();
-
-		for ( i = 0; i < widgets.Length; i++ ) {
-			w = widgets[i];
-			
-			if ( w.isDrawn && w.CheckMouseOver() ) {
-				w.OnMouseOver ();
-				mouseOver.Add ( w );
-			}
-		}
-
-		// Is mouse over anything?
-		isMouseOver = mouseOver.Count > 0;
 
 		// Update mouse-over widgets
 		for ( i = 0; i < mouseOver.Count; i++ ) {
@@ -365,30 +357,46 @@ class OGRoot extends MonoBehaviour {
 		var c4 : boolean = w.position.y < Screen.height;
 		return c1 && c2 && c3 && c4;
 	}
-    
-	public function UpdateWidgets () {
+   
+	public function UpdateWidgets ( onlyPositions : boolean ) {
 		screenRect = new Rect ( 0, Screen.width, 0, Screen.height );
 
 		if ( currentPage == null ) { return; }
 		
-		// Index font unicode
-		if ( unicode == null || unicode.Length != skin.fonts.Length ) {
-			ReloadFonts ();
+		mouseOver.Clear ();
+		
+		if ( !onlyPositions ) {
+			// Index font unicode
+			if ( unicode == null || unicode.Length != skin.fonts.Length ) {
+				ReloadFonts ();
+			}
+		
+			// Update widget lists	
+			widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
+			labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
+			textures = currentPage.gameObject.GetComponentsInChildren.<OGTexture>();
 		}
-	
-		// Update widget lists	
-		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
-		labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
-		textures = currentPage.gameObject.GetComponentsInChildren.<OGTexture>();
 
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];
 
-			if ( w == null ) { continue; }
+			if ( w == null || !w.isDrawn ) { continue; }
 			
-			w.root = this;			
+			// Check mouse
+			if ( w.CheckMouseOver() ) {
+				w.OnMouseOver ();
+				mouseOver.Add ( w );
+			}
+			
+			if ( !onlyPositions ) {
+				w.root = this;			
+				w.UpdateWidget ();
+			}
+			
 			w.Recalculate ();
-			w.UpdateWidget ();
 		}
+		
+		// Is mouse over anything?
+		isMouseOver = mouseOver.Count > 0;
 	}
 }

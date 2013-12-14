@@ -84,7 +84,7 @@ public class OGWidgetInspector extends Editor {
 
 			EditorGUILayout.Space();
 			
-			// Automatic update	
+			// Reset style	
 			if ( GUILayout.Button ( "Reset style" ) ) {
 				( target as OGWidget ).GetDefaultStyles();
 			}
