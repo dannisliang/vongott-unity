@@ -42,8 +42,8 @@ class InventoryEntry {
 }
 
 class InventoryEntryReference extends InventoryEntry {
-	var refX : int;
-	var refY : int;
+	var refX : int = -1;
+	var refY : int = -1;
 	
 	function InventoryEntryReference ( a : int, b : int ) {
 		refX = a;

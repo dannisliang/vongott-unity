@@ -48,7 +48,7 @@ class OGListItem extends OGWidget {
 	}
 	
 	override function UpdateWidget () {
-		selectable = true;
+		isSelectable = true;
 		
 		// Background		
 		if ( background == null ) {

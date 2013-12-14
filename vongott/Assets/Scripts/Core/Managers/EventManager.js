@@ -1,11 +1,6 @@
 ﻿#pragma strict
 
 class EventManager extends MonoBehaviour {
-	//////////////////
-	// Prerequisites
-	//////////////////
-
-	
 	/////////////////
 	// Main functions
 	/////////////////
@@ -55,13 +50,13 @@ class EventManager extends MonoBehaviour {
 	}
 	
 	public static function GiveItem ( path : String, credits : int ) {
-		if ( InventoryManager.credits + credits >= 0 ) {
+		if ( InventoryManager.GetInstance().credits + credits >= 0 ) {
 			var obj : GameObject = Resources.Load ( "Items/" + path ) as GameObject;
 			
 			GameCore.Print ( "EventManager | Got " + path );
 			
-			InventoryManager.AddItem ( obj.GetComponent ( Item ) );
-			InventoryManager.ChangeCredits ( credits );		
+			InventoryManager.GetInstance().AddItem ( obj.GetComponent ( Item ) );
+			InventoryManager.GetInstance().ChangeCredits ( credits );		
 			
 			if ( credits < 0 ) {
 				GameCore.Print ( "EventManager | " + credits + " credits deducted" );

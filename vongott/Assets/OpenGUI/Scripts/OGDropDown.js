@@ -166,11 +166,9 @@ class OGDropDown extends OGWidget {
 	////////////////////
 	// Update
 	////////////////////
-	function OnEnable () {
-		selectable = true;
-	}
-	
 	override function UpdateWidget () {
+		isSelectable = true;
+
 		var i : int;
 		var lbl : OGLabel;
 		

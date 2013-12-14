@@ -111,11 +111,9 @@ class OGPopUp extends OGWidget {
 	////////////////////
 	// Update
 	////////////////////
-	function OnEnable () {
-		selectable = true;
-	}
-	
 	override function UpdateWidget () {
+		isSelectable = true;
+
 		// Option labels
 		if ( !optionLabels && !this.transform.Find("Options") ) {
 			optionLabels = new GameObject ( "Options" );

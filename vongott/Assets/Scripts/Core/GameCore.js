@@ -247,10 +247,7 @@ class GameCore extends MonoBehaviour {
 		if ( !running ) {
 			// Quests
 			QuestManager.Init();
-			
-			// Inventory
-			InventoryManager.Init();
-			
+						
 			// Upgrades
 			UpgradeManager.Init();
 			
@@ -293,7 +290,7 @@ class GameCore extends MonoBehaviour {
 		QuestManager.Clear();
 		
 		// Inventory
-		InventoryManager.Clear();
+		InventoryManager.GetInstance().Clear();
 		
 		// Upgrades
 		UpgradeManager.Clear();

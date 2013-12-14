@@ -7,9 +7,12 @@ public class TransformInspector : Editor
 {
 	public override void OnInspectorGUI()
 	{
- 
 		Transform t = (Transform)target;
  
+ 		if ( t.GetComponent<OGRoot>() ) {
+			return;
+		}
+
 		// Replicate the standard transform inspector gui
 		EditorGUI.indentLevel = 0;
 		Vector3 position = EditorGUILayout.Vector3Field("Position", t.localPosition);

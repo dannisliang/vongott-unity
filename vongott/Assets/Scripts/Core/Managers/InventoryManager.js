@@ -1,32 +1,37 @@
 #pragma strict
 
-class InventoryManager {
-	////////////////////
-	// Prerequisites
-	////////////////////
-	// Static vars
-	static var slots : InventoryEntry[,] = new InventoryEntry[10,3];
-	static var stash : InventoryEntryReference[] = new InventoryEntryReference[10];
-	static var credits : int = 0;
+class InventoryManager extends MonoBehaviour {
+	private var slots : InventoryEntry[,];
+	private var stash : InventoryEntryReference[];
+	public var credits : int = 0;
+
+	public static var instance : InventoryManager;
 
 
 	////////////////////
 	// Static functions
 	////////////////////
+	static function GetInstance () : InventoryManager {
+		return instance;
+	}
+
 	// Get slots
-	static function GetSlots () : InventoryEntry[,] { return slots; }
+	public function GetSlots () : InventoryEntry[,] { return slots; }
 	
 	// Get slots
-	static function GetStash () : InventoryEntryReference[] { return stash; }
+	public function GetStash () : InventoryEntryReference[] { return stash; }
 
 	// Get entry
-	static function GetEntry ( x : int, y : int ) : InventoryEntry {
+	public function GetEntry ( x : int, y : int ) : InventoryEntry {
 		if ( slots[x,y] != null ) {
-			if ( slots[x,y].GetType() == InventoryEntryReference ) {
-				return slots [ ( slots[x,y] as InventoryEntryReference ).refX, ( slots[x,y] as InventoryEntryReference ).refY ];
+			var slot : InventoryEntry = slots[x,y];
+		
+			if ( slots.GetType() == InventoryEntryReference ) {
+				var ref : InventoryEntryReference = slot as InventoryEntryReference;
+				return slots [ ref.refX, ref.refY ];
 			
 			} else {
-				return slots[x,y];
+				return slot;
 				
 			}
 				
@@ -37,33 +42,33 @@ class InventoryManager {
 	}
 
 	// Get credits
-	static function GetCredits() : int { return credits; }
+	public function GetCredits() : int { return credits; }
 
 	// Clear stash slot
-	static function ClearStashSlot ( i : int ) {
+	public function ClearStashSlot ( i : int ) {
 		stash[i] = null;
 	}
 
 	// Clear stash
-	static function ClearStash () {
+	public function ClearStash () {
 		stash = new InventoryEntryReference[10];
 	}
 
 	// Add item to stash
-	static function SetStash ( refX : int, refY : int, slot : int ) {
+	public function SetStash ( refX : int, refY : int, slot : int ) {
 		for ( var i : int = 0; i < stash.Length; i++ ) {
 			if ( stash[i] != null && stash[i].refX == refX && stash[i].refY == refY ) {
 				stash[i] = null;
 			}
 		}
-		
+	
 		stash[slot] = new InventoryEntryReference ( refX, refY );
 	
 		GameCore.Print ( "InventoryManager | Item '" + GetEntry ( refX, refY ).GetItem().title + "' put in stash slot " + slot );
 	}
 
 	// Add item
-	static function AddItem ( item : Item ) {
+	public function AddItem ( item : Item ) {
 		for ( var x : int = 0; x < slots.GetLength(0); x++ ) {
 			for ( var y : int = 0; y < slots.GetLength(1); y++ ) {
 				if ( slots[x,y] == null ) {
@@ -79,7 +84,7 @@ class InventoryManager {
 	}
 
 	// Update stash reference
-	static function UpdateStashReference ( fromX : int, fromY : int, toX : int, toY : int ) {
+	public function UpdateStashReference ( fromX : int, fromY : int, toX : int, toY : int ) {
 		for ( var i : int = 0; i < stash.Length; i++ ) {
 			if ( stash[i] != null && stash[i].refX == fromX && stash[i].refY == fromY ) {
 				stash[i].refX = toX;
@@ -89,7 +94,7 @@ class InventoryManager {
 	}
 
 	// Move entry
-	static function MoveEntry ( fromX : int, fromY : int, toX : int, toY : int ) {
+	public function MoveEntry ( fromX : int, fromY : int, toX : int, toY : int ) {
 		var entry : InventoryEntry = slots[fromX, fromY];
 	
 		UpdateStashReference ( fromX, fromY, toX, toY );
@@ -101,18 +106,18 @@ class InventoryManager {
 	}
 
 	// Change credits amount
-	static function ChangeCredits ( amount : int ) {
+	public function ChangeCredits ( amount : int ) {
 		credits += amount;
 	}
 
 	// Eqip entry
-	static function Equip ( i : Item, equip : boolean ) {
+	public function Equip ( i : Item, equip : boolean ) {
 		var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
 		player.Equip ( MonoBehaviour.Instantiate (i) as Item, equip );
 	}
 
 	// Remove entry
-	static function RemoveEntry ( x : int, y : int, delete : boolean ) {
+	public function RemoveEntry ( x : int, y : int, delete : boolean ) {
 		if ( !delete ) {
 			var droppedItem : Item = MonoBehaviour.Instantiate ( slots[x,y].GetItem() );
 			droppedItem.transform.parent = GameCore.GetPlayerObject().transform.parent;
@@ -129,7 +134,7 @@ class InventoryManager {
 		slots[x,y] = null;
 	}
 
-	static function RemoveEntry ( e : InventoryEntry, delete : boolean ) {
+	public function RemoveEntry ( e : InventoryEntry, delete : boolean ) {
 		for ( var x : int = 0; x < slots.GetLength(0); x++ ) {
 			for ( var y : int = 0; y < slots.GetLength(1); y++ ) {
 				if ( slots[x,y] == e ) {
@@ -143,12 +148,17 @@ class InventoryManager {
 	}
 
 	// Init inventory
-	static function Init () {
-
+	function Start () {
+		instance = this;
+		
+	       	slots = new InventoryEntry[10,3];
+		stash = new InventoryEntryReference[10];
+		
+		GameCore.Print ( "InventoryManager | Started" );
 	}
 
 	// Clear
-	static function Clear () {
+	public function Clear () {
 		for ( var x : int = 0; x < slots.GetLength(0); x++ ) {
 			for ( var y : int = 0; y < slots.GetLength(1); y++ ) {
 				slots[x,y] = null;

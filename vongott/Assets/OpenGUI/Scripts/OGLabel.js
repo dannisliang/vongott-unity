@@ -150,8 +150,6 @@ public class OGLabel extends OGWidget {
 	}	
 	
 	override function UpdateWidget () {
-		selectable = false;
-
 		if ( styles.basic == null ) { return; }
 
 		if ( !overrideFontSize ) {

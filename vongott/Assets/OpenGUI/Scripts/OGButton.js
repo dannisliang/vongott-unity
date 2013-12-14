@@ -54,11 +54,9 @@ class OGButton extends OGWidget {
 	////////////////////
 	// Update
 	////////////////////
-	function OnEnable () {
-		selectable = true;	
-	}
-	
 	override function UpdateWidget () {
+		isSelectable = true;	
+
 		// Image
 		if ( image == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {

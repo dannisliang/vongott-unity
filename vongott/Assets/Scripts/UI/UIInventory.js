@@ -66,11 +66,15 @@ class UIInventory extends OGPage {
 	// Create image
 	private function CreateImage ( item : Item, parent : Transform ) : OGTexture {
 		var image : OGTexture = new GameObject ( item.name, OGTexture ).GetComponent(OGTexture);
-		image.image = item.image;
+		image.mainTexture = item.image;
+		image.isSelectable = true;
+		image.isDraggable = true;
+		image.resetAfterDrag = true;
 		image.transform.parent = parent;
-		image.transform.localScale = new Vector3 ( Round ( item.image.width, 90 ), Round ( item.image.height, 90 ), 1 );
+		//image.transform.localScale = new Vector3 ( Round ( item.image.width, 90 ), Round ( item.image.height, 90 ), 1 );
+		image.transform.localScale = new Vector3 ( 90, 90, 1 );
 		image.transform.localEulerAngles = Vector3.zero;
-		
+
 		return image;
 	}
 	
@@ -81,10 +85,11 @@ class UIInventory extends OGPage {
 		button.target = this.gameObject;
 		button.message = "RemoveStashEntry";
 		button.argument = slot.ToString();
-		
+		button.GetDefaultStyles();
+
 		button.transform.parent = stash;
 		button.transform.localScale = new Vector3 ( 24, 24, 1 );
-		button.transform.localPosition = new Vector3 ( 66 + slot * 90, 0, -20 );
+		button.transform.localPosition = new Vector3 ( 66 + slot * 90, 0, 0 );
 		button.transform.localEulerAngles = Vector3.zero;
 		
 		return button;
@@ -94,13 +99,13 @@ class UIInventory extends OGPage {
 	function PopulateGrid () {
 		ClearGrid ();
 						
-		for ( var x : int = 0; x < InventoryManager.GetSlots().GetLength(0); x++ ) {
-			for ( var y : int = 0; y < InventoryManager.GetSlots().GetLength(1); y++ ) {
-				if ( InventoryManager.GetEntry(x,y) != null ) {
-					var entry : InventoryEntry = InventoryManager.GetEntry(x,y);
+		for ( var x : int = 0; x < InventoryManager.GetInstance().GetSlots().GetLength(0); x++ ) {
+			for ( var y : int = 0; y < InventoryManager.GetInstance().GetSlots().GetLength(1); y++ ) {
+				if ( InventoryManager.GetInstance().GetEntry(x,y) != null ) {
+					var entry : InventoryEntry = InventoryManager.GetInstance().GetEntry(x,y);
 					var item : Item = entry.GetItem();
 					var image : OGTexture = CreateImage ( item, grid );
-					image.transform.localPosition = new Vector3 ( x * 90, y * 90, 0 );
+					image.transform.localPosition = new Vector3 ( x * 90, y * 90, 5 );
 					allImages[x,y] = image;
 								
 					if ( entry.equipped ) {
@@ -114,21 +119,22 @@ class UIInventory extends OGPage {
 			}
 		}
 		
-		for ( var i : int = 0; i < InventoryManager.GetStash().Length; i++ ) {
-			var reference : InventoryEntryReference = InventoryManager.GetStash()[i];
+		for ( var i : int = 0; i < InventoryManager.GetInstance().GetStash().Length; i++ ) {
+			var reference : InventoryEntryReference = InventoryManager.GetInstance().GetStash()[i];
 			
 			if ( reference != null ) {
-				var slotEntry : InventoryEntry = InventoryManager.GetEntry ( reference.refX, reference.refY );
-				var slotItem : Item = entry.GetItem();
+				if ( reference.refX != -1 && reference.refY != -1 ) {
+					var slotEntry : InventoryEntry = InventoryManager.GetInstance().GetEntry ( reference.refX, reference.refY );
+					var slotItem : Item = slotEntry.GetItem();
+					var slotImage : OGTexture = CreateImage( slotItem, stash );
+					slotImage.transform.localPosition = new Vector3 ( i * 90, 0, 5 );
 				
-				var slotImage : OGTexture = CreateImage( item, stash );
-				slotImage.transform.localPosition = new Vector3 ( i * 90, 0, 0 );
-			
-				var button : OGButton = CreateRemoveButton ( i );
+					var button : OGButton = CreateRemoveButton ( i );
+				}
 			}
 		}
 	}
-	
+
 	// Update text
 	function UpdateText () {
 		if ( selectedEntry == null ) {
@@ -195,7 +201,7 @@ class UIInventory extends OGPage {
 	
 	// Select slot
 	function SelectSlot () {
-		var allSlots : InventoryEntry[,] = InventoryManager.GetSlots();
+		var allSlots : InventoryEntry[,] = InventoryManager.GetInstance().GetSlots();
 		
 		var mousePos : Vector3 = Input.mousePosition;
 		mousePos.y = Screen.height - mousePos.y;
@@ -223,13 +229,13 @@ class UIInventory extends OGPage {
 	public function RemoveStashEntry ( n : String ) {
 		var i : int = int.Parse ( n );
 		
-		InventoryManager.ClearStashSlot ( i );
+		InventoryManager.GetInstance().ClearStashSlot ( i );
 		PopulateGrid ();
 	}
 	
 	// Drop on slot
 	function DropOnSlot () {
-		var allSlots : InventoryEntry[,] = InventoryManager.GetSlots();
+		var allSlots : InventoryEntry[,] = InventoryManager.GetInstance().GetSlots();
 		
 		var mousePos : Vector3 = Input.mousePosition;
 		mousePos.y = Screen.height - mousePos.y;
@@ -243,13 +249,13 @@ class UIInventory extends OGPage {
 		
 		// Dropped somewhere on grid
 		if ( mousePosGrid.x > 0 && mousePosGrid.y > 0 && gridX < allSlots.GetLength(0) && gridY < allSlots.GetLength(1) ) {
-			InventoryManager.MoveEntry ( draggingEntry.x, draggingEntry.y, gridX, gridY );
+			InventoryManager.GetInstance().MoveEntry ( draggingEntry.x, draggingEntry.y, gridX, gridY );
 			draggingEntry = null;
 			PopulateGrid ();			
 		
 		// Dropped somewhere in stash
 		} else if ( mousePosStash.x > 0 && mousePosStash.y > 0 && mousePosStash.y < 90 && stashX < 10 ) {
-			InventoryManager.SetStash ( draggingEntry.x, draggingEntry.y, stashX );
+			InventoryManager.GetInstance().SetStash ( draggingEntry.x, draggingEntry.y, stashX );
 			draggingEntry = null;
 			PopulateGrid ();
 		
@@ -271,7 +277,7 @@ class UIInventory extends OGPage {
 		
 		var item : Item = selectedEntry.GetItem();
 		
-		InventoryManager.Equip ( item, equip );
+		InventoryManager.GetInstance().Equip ( item, equip );
 		
 		UpdateText ();
 	}
@@ -284,7 +290,7 @@ class UIInventory extends OGPage {
 			UpgradeManager.Remove ( ( selectedEntry.GetItem() as Upgrade ).upgSlot );
 		}
 		
-		InventoryManager.RemoveEntry ( selectedEntry, true );
+		InventoryManager.GetInstance().RemoveEntry ( selectedEntry, true );
 		selectedEntry = null;		
 		UpdateText();
 		ClearGrid ();
@@ -361,7 +367,7 @@ class UIInventory extends OGPage {
 	override function StartPage () {
 		GameCore.state = eGameState.Menu;
 		
-		creditsDisplay.text = "CREDITS: " + InventoryManager.GetCredits();
+		creditsDisplay.text = "CREDITS: " + InventoryManager.GetInstance().GetCredits();
 		ClearGrid ();
 		GameCore.GetInstance().SetPause ( true );
 		PopulateGrid ();
@@ -404,8 +410,6 @@ class UIInventory extends OGPage {
 			var mousePos : Vector3 = Input.mousePosition;
 			mousePos.y = Screen.height - mousePos.y;
 			mousePos.z = 0;
-			
-			allImages [ draggingEntry.x, draggingEntry.y ].transform.position = mousePos;
 		}
 	}
 	

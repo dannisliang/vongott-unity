@@ -43,7 +43,9 @@ public class OGWidget extends MonoBehaviour {
 	}
 
 	public var isDrawn : boolean = true;
+	public var isSelectable : boolean = false;
 	public var isDraggable : boolean = false;
+	public var resetAfterDrag : boolean = false;
 	public var pivot : Pivot = new Pivot();
 	public var anchor : Anchor = new Anchor();	
 	public var stretch : Stretch = new Stretch();
@@ -56,10 +58,10 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var drawDepth : float;
 	@HideInInspector public var scrollOffset : Vector3;
 	@HideInInspector public var dragOffset : Vector3;
+	@HideInInspector public var dragOrigPos : Vector3;
 	@HideInInspector public var offset : Vector3;
 	@HideInInspector public var hidden : boolean = false;
 	@HideInInspector public var disabled : boolean = false;
-	@HideInInspector public var selectable : boolean = false;
 	@HideInInspector public var outOfBounds : boolean = false;
 	@HideInInspector public var isDirty : boolean = false;
 	@HideInInspector public var root : OGRoot;
@@ -257,7 +259,7 @@ public class OGWidget extends MonoBehaviour {
 	// Apply all calculations
 	public function Recalculate () {
 		if ( !styles.basic ) { return; }
-		
+
 		var drawScl : Vector3 = RecalcScale ();
 		var drawPos : Vector3 = RecalcPosition ();
 		drawCrd = RecalcCoords ( styles.basic.coordinates );
@@ -295,15 +297,14 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
-	public function OnEnable () {
-		SetDirty();
-	}
-	public function OnDisable () {
-		SetDirty();
-	}
+	public function Start () { SetDirty(); }
+	public function OnEnable () { SetDirty(); }
+	public function OnDisable () { SetDirty(); }
+	public function OnDestroy () { SetDirty(); }
 	public function UpdateWidget () {} 
 	public function GetDefaultStyles () {
 		GetRoot().skin.GetDefaultStyles ( this );
+		SetDirty();
 	}
 	public function SetDirty () {
 		if ( GetRoot() ) {

@@ -34,7 +34,7 @@ class OGRoot extends MonoBehaviour {
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
 	private var screenRect : Rect;
-	private var textureMaterial : Material;
+	private var textureMaterials : Material[];
 
 	public static function GetInstance () {
 		return instance;
@@ -177,17 +177,16 @@ class OGRoot extends MonoBehaviour {
 
 			
 			// Draw textures
-			if ( textures != null && textures.Length > 0 ) {
-				GL.Begin(GL.QUADS);
+			if ( textures != null && textures.Length > 0 && textureMaterials.Length == textures.Length ) {
 				for ( i = 0; i < textures.Length; i++ ) {	
-					if ( textures[i].mainTexture != null ) {
-						textureMaterial.mainTexture = textures[i].mainTexture;
-						textureMaterial.SetPass(0);
+					GL.Begin(GL.QUADS);
+					if ( textures[i].isDrawn && textures[i].mainTexture != null ) {
+						textureMaterials[i].mainTexture = textures[i].mainTexture;
+						textureMaterials[i].SetPass(0);
 						textures[i].DrawGL();
 					}
+					GL.End();
 				}
-
-				GL.End();
 			}
 
 
@@ -222,12 +221,16 @@ class OGRoot extends MonoBehaviour {
 			instance = this;
 		}
 
-		if ( textureMaterial == null && skin != null && skin.atlas != null ) {
-			textureMaterial = new Material ( skin.atlas.shader );
-		
-		} else if ( skin != null && skin.atlas != null && textureMaterial.shader != skin.atlas.shader ) {
-			textureMaterial.shader = skin.atlas.shader;
+		this.transform.localScale = Vector3.one;
+		this.transform.localPosition = Vector3.zero;
+		this.transform.localEulerAngles = Vector3.zero;
 
+		if ( ( textureMaterials == null || textureMaterials.Length != textures.Length ) && skin != null && skin.atlas != null ) {
+			textureMaterials = new Material[textures.Length];
+
+			for ( var i : int = 0; i < textureMaterials.Length; i++ ) {
+				textureMaterials[i] = new Material ( skin.atlas.shader );
+			}
 		}
 
 		// Only update these when playing
@@ -284,7 +287,7 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < mouseOver.Count; i++ ) {
 				w = mouseOver[i];
 				
-				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.selectable ) {
+				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable ) {
 					topWidget = w;
 				}
 			}
@@ -301,11 +304,19 @@ class OGRoot extends MonoBehaviour {
 		// Release
 		} else if ( Input.GetMouseButtonUp ( 0 ) ) {
 			if ( downWidget ) {
+				// Draggable
+				if ( downWidget.resetAfterDrag ) {
+					downWidget.transform.position = downWidget.dragOrigPos;
+				}
+				
 				downWidget.dragOffset = Vector3.zero;
+				downWidget.dragOrigPos = Vector3.zero;
 
+				// Mouse over
 				if ( downWidget.CheckMouseOver() ) {
 					downWidget.OnMouseUp ();
 
+				// Mouse out
 				} else {
 					downWidget.OnMouseCancel ();
 				
@@ -323,6 +334,10 @@ class OGRoot extends MonoBehaviour {
 					mousePos.y = Screen.height - mousePos.y;
 
 					if ( downWidget.dragOffset == Vector3.zero ) {
+						if ( downWidget.resetAfterDrag ) {
+							downWidget.dragOrigPos = downWidget.transform.position;
+						}
+
 						downWidget.dragOffset = downWidget.transform.position - mousePos;
 					}
 
@@ -330,7 +345,6 @@ class OGRoot extends MonoBehaviour {
 					newPos = mousePos + downWidget.dragOffset;
 					downWidget.transform.position = newPos;
 					SetDirty ();
-					//downWidget.Recalculate ();
 				}
 			}
 		

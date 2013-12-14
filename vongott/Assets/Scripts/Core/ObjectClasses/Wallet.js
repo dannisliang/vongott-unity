@@ -17,7 +17,7 @@ class Wallet extends InteractiveObject {
 	
 	override function Interact () {
 		if ( Input.GetMouseButton(0) ) {
-			InventoryManager.ChangeCredits ( creditAmount );
+			InventoryManager.GetInstance().ChangeCredits ( creditAmount );
 			Destroy ( this.gameObject );
 			GameCore.SetInteractiveObject ( null );
 			UIHUD.ShowTimedNotification ( "Picked up " + creditAmount + " credits", 2 );

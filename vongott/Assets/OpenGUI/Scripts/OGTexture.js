@@ -1,31 +1,24 @@
 #pragma strict
 
 public class OGTexture extends OGWidget {
+	public var mainTexture : Texture2D;
+	
+	// TODO: Deprecate
 	enum XorY {
 		X,
 		Y
 	}
-	
-	public var mainTexture : Texture2D;
-	
-	// TODO: Deprecate
 	@HideInInspector public var image : Texture2D;
 	@HideInInspector public var scale : ScaleMode;
 	@HideInInspector public var alphaBlend : boolean = true;
 	@HideInInspector public var repeatTexture : Vector2;
 	@HideInInspector public var maintainRatio : XorY;
-	
+
 	override function UpdateWidget () {
 		// TODO: Deprecate
 		if ( image ) { mainTexture = image; }
 		
-		if ( mainTexture ) {
-			if ( mainTexture.wrapMode != TextureWrapMode.Repeat ) {
-				mainTexture.wrapMode = TextureWrapMode.Repeat;
-			}
-		}
-		
-		drawCrd = new Rect ( 0, 0, 1, 1 );
+		mouseRct = drawRct;
 	}
 
 	override function DrawGL () {
