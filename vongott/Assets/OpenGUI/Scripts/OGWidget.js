@@ -139,7 +139,11 @@ public class OGWidget extends MonoBehaviour {
 	public function RecalcScale () : Vector3 {
 		CalcStretch ();
 		
-		return this.transform.lossyScale;
+		if ( this.GetComponent(OGScrollView) ) {
+			return new Vector3 ( this.GetComponent(OGScrollView).size.x, this.GetComponent(OGScrollView).size.y, 1 );
+		} else {
+			return this.transform.lossyScale;
+		}
 	}
 	
 	// Position (based on screen size)
@@ -152,8 +156,13 @@ public class OGWidget extends MonoBehaviour {
 		newPos += offset;
 		newPos += scrollOffset;
 		
-		newPos.y += this.transform.lossyScale.y;
-								
+		
+		if ( this.GetComponent(OGScrollView) ) {
+			newPos.y += this.GetComponent(OGScrollView).size.y;	
+		} else {
+			newPos.y += this.transform.lossyScale.y;
+		}
+
 		newPos.y = Screen.height - newPos.y;
 		
 		return newPos;

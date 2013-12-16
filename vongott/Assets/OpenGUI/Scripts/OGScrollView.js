@@ -4,7 +4,6 @@ public class OGScrollView extends OGWidget {
 	public var size : Vector2;
 	public var position : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
-	public var canDrag : boolean = true;
 	public var elasticity : float = 2;
 
 	// TODO: Deprecate
@@ -13,67 +12,19 @@ public class OGScrollView extends OGWidget {
 	@HideInInspector public var viewHeight : float = 0;
 	@HideInInspector public var inset : float = 0;
 
-	private var dragging : boolean = false;
 	private var widgets : OGWidget[];
 
-	override function UpdateWidget () {
-		if ( stretch.width != ScreenSize.None ) {
-			size.x = RecalcScale().x;
-		}
+	override function OnMouseDrag () {
+		if ( !isDraggable ) { return; }
 
-		if ( stretch.height != ScreenSize.None ) {
-			size.y = RecalcScale().y;
-		}
-
-		mouseRct = drawRct;
-
-		// Reset scale	
-		this.transform.localScale = Vector3.one;
-		
-		// Scrolling
 		var drag : Vector2;
 		var amount : Vector2;
 		drag.x = Input.GetAxis ( "Mouse X" ); 
 		drag.y = Input.GetAxis ( "Mouse Y" );
-	
-		// ^ Scroll wheel	
-		if ( CheckMouseOver () ) {
-			var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
-
-			if ( scroll > 0 ) {
-				amount.y = 20;
-			
-			} else if ( scroll < 0 ) {
-				amount.y = -20;
-			}	
 		
-			if ( Input.GetMouseButtonDown ( 2 ) && canDrag ) {
-				dragging = true;
-			}
-		}
+		amount.x = Mathf.Floor ( drag.x * 20 );
+		amount.y = -Mathf.Floor ( drag.y * 20 );
 		
-		// ^ Drag
-		if ( dragging ) { 	
-			if ( Input.GetMouseButton ( 2 ) ) {
-				amount.x = Mathf.Floor ( drag.x * 20 );
-				amount.y = -Mathf.Floor ( drag.y * 20 );
-			}
-			
-			if ( Input.GetMouseButtonUp ( 2 ) ) {
-				dragging = false;
-			}
-	
-		// ^ Snap back
-		} else {
-			if ( position.y > 0 ) {
-				position.y = Mathf.Lerp ( position.y, 0, Time.deltaTime * padding.y );
-			}
-			
-			if ( position.x > 0 ) {
-				position.x = Mathf.Lerp ( position.x, 0, Time.deltaTime * padding.x );
-			}
-		}	
-
 		// ^ Elasticity
 		if ( position.x + amount.x < padding.x * elasticity ) {
 			position.x += amount.x / Mathf.Clamp ( position.x, 1, padding.x * elasticity );
@@ -83,8 +34,9 @@ public class OGScrollView extends OGWidget {
 			position.y += amount.y / Mathf.Clamp ( position.y, 1, padding.y * elasticity );;
 		}	
 		
-		
-		// Update all widgets
+	}
+
+	private function UpdateChildren () {
 		if ( !widgets || widgets.Length != this.gameObject.GetComponentsInChildren.<OGWidget>().Length ) {
 			widgets = this.gameObject.GetComponentsInChildren.<OGWidget>();
 		}
@@ -97,6 +49,74 @@ public class OGScrollView extends OGWidget {
 				w.clipRct = drawRct;
 			}
 		}
+	}
+
+	private function SnapBack () : IEnumerator {
+		var inPlace : boolean = false;
+		
+		while ( !inPlace ) {
+			if ( position.y > 0 ) {
+				position.y = Mathf.Lerp ( position.y, 0, Time.deltaTime * padding.y );
+				inPlace = false;
+
+				if ( position.y < 1 ) {
+					position.y = 0;
+				}
+
+			} else {
+				inPlace = true;
+			}
+			
+			if ( position.x > 0 ) {
+				position.x = Mathf.Lerp ( position.x, 0, Time.deltaTime * padding.x );
+				inPlace = false;
+
+				if ( position.x < 1 ) {
+					position.x = 0;
+				}
+
+			} else {
+				inPlace = true;
+			}
+
+			UpdateChildren();
+
+			yield;
+		}
+	}
+
+	override function OnMouseCancel () {
+		StartCoroutine ( SnapBack () );
+	}
+
+	override function OnMouseUp () {
+		StartCoroutine ( SnapBack () );
+	}
+
+	override function OnMouseOver () {
+		var amount : Vector2;
+		var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
+
+		if ( scroll > 0 ) {
+			amount.y = 20;
+		
+		} else if ( scroll < 0 ) {
+			amount.y = -20;
+		}
+
+		position += amount;
+
+		UpdateChildren ();	
+	}
+
+	override function UpdateWidget () {
+		mouseRct = drawRct;
+
+		// Reset scale	
+		this.transform.localScale = Vector3.one;
+		
+		// Update all widgets in scroll view
+		UpdateChildren ();
 	}
 	
 	override function DrawGL () {

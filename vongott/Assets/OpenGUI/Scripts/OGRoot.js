@@ -273,7 +273,7 @@ class OGRoot extends MonoBehaviour {
 		}
 
 		// Click
-		if ( Input.GetMouseButtonDown ( 0 ) ) {
+		if ( Input.GetMouseButtonDown ( 0 ) || Input.GetMouseButtonDown ( 2 ) ) {
 			var topWidget : OGWidget;
 			
 			for ( i = 0; i < mouseOver.Count; i++ ) {
@@ -294,16 +294,15 @@ class OGRoot extends MonoBehaviour {
 			}
 
 		// Release
-		} else if ( Input.GetMouseButtonUp ( 0 ) ) {
+		} else if ( Input.GetMouseButtonUp ( 0 ) || Input.GetMouseButtonUp ( 2 ) ) {
 			if ( downWidget ) {
 				// Draggable
-				if ( downWidget.resetAfterDrag ) {
+				if ( downWidget.resetAfterDrag && !downWidget.GetComponent(OGScrollView) ) {
 					downWidget.transform.position = downWidget.dragOrigPos;
+					downWidget.dragOffset = Vector3.zero;
+					downWidget.dragOrigPos = Vector3.zero;
 				}
 				
-				downWidget.dragOffset = Vector3.zero;
-				downWidget.dragOrigPos = Vector3.zero;
-
 				// Mouse over
 				if ( downWidget.CheckMouseOver() ) {
 					downWidget.OnMouseUp ();
@@ -321,7 +320,7 @@ class OGRoot extends MonoBehaviour {
 			if ( downWidget ) {
 				downWidget.OnMouseDrag ();
 			
-				if ( downWidget.isDraggable ) {
+				if ( downWidget.isDraggable && !downWidget.GetComponent(OGScrollView) ) {
 					var mousePos : Vector3 = Input.mousePosition;
 					mousePos.y = Screen.height - mousePos.y;
 
