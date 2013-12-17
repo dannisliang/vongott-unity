@@ -1,0 +1,72 @@
+#pragma strict
+
+public class OGProgressBar extends OGWidget {
+	public var value : float = 0.5;
+	public var padding : Vector2;
+
+	private var background : OGSlicedSprite;
+	private var thumb : OGSprite;
+
+	public function SetValue ( value : float ) {
+		if ( this.value == value ) { return; }
+		
+		this.value = value;
+		SetDirty();
+	}
+
+	override function UpdateWidget () {
+		value = Mathf.Clamp ( value, 0, 1 );
+		
+		// Background		
+		if ( background == null ) {
+			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
+				background = this.gameObject.GetComponentInChildren ( OGSlicedSprite );
+				
+			} else {			
+				var newBg : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
+				newBg.transform.parent = this.transform;
+				newBg.styles.basic = this.styles.basic;
+			
+				background = newBg;
+			}
+		
+		} else {
+			background.transform.localScale = Vector3.one;
+			background.transform.localEulerAngles = Vector3.zero;
+			background.transform.localPosition = Vector3.zero;
+			
+			background.pivot = this.pivot;
+			
+			background.styles.basic = this.styles.basic;
+			background.hidden = true;
+			background.isDrawn = isDrawn;
+		}
+		
+		// Thumb		
+		if ( thumb == null ) {
+			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
+				thumb = this.gameObject.GetComponentInChildren ( OGSprite );
+				
+			} else {			
+				var newThumb : OGSprite = new GameObject ( "Sprite", OGSprite ).GetComponent ( OGSprite );
+				newThumb.transform.parent = this.transform;
+				newThumb.styles.basic = this.styles.thumb;
+			
+				thumb = newThumb;
+			}
+		
+		} else {
+			thumb.transform.localScale = new Vector3 ( value - ((padding.x*2)/this.transform.localScale.x), 1 - ((padding.y*2)/this.transform.localScale.y), 1 );
+			thumb.transform.localEulerAngles = Vector3.zero;
+			thumb.transform.localPosition = new Vector3 ( padding.x / this.transform.localScale.x, padding.y / this.transform.localScale.y );
+			
+			thumb.pivot = this.pivot;
+			
+			thumb.styles.basic = this.styles.thumb;
+			thumb.hidden = true;
+			thumb.isDrawn = isDrawn;
+		}
+	}
+
+
+}

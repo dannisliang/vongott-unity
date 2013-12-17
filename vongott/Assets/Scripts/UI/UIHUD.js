@@ -1,8 +1,8 @@
 #pragma strict
 
 private class StatusBar {
-	var health : OGLabel;
-	var energy : OGLabel;
+	var health : OGProgressBar;
+	var energy : OGProgressBar;
 }
 
 private class NotificationBox {
@@ -56,8 +56,8 @@ class UIHUD extends OGPage {
 			ShowNotification ( "" );
 		}
 		
-		statusBar.health.text = "Health: " + Mathf.Floor ( ( GameCore.GetPlayer().health * 1.0 / UpgradeManager.GetAbility ( eAbilityID.MaxHealth ) * 1.0 ) * 100 ) + "%";
-		statusBar.energy.text = "Energy: " + Mathf.Floor ( GameCore.GetPlayer().energy ) + "%";
+		statusBar.health.SetValue ( ( GameCore.GetPlayer().health * 1.0 / UpgradeManager.GetAbility ( eAbilityID.MaxHealth ) * 1.0 ) );
+		statusBar.energy.SetValue ( GameCore.GetPlayer().energy / 100 );
 	}
 	
 	

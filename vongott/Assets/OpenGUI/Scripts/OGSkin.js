@@ -63,7 +63,7 @@ public class OGWidgetStyles {
 				if ( styleName == "Ticked" ) { return true; }
 				break;
 
-			case "OGSlider": case "OGTextField":
+			case "OGSlider": case "OGTextField": case "OGProgressBar":
 				if ( styleName == "Thumb" ) { return true; }
 				break;
 
@@ -165,6 +165,7 @@ public class OGSkin extends MonoBehaviour {
 			new OGStyleReference ( "OGLabel", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGListItem", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGPopUp", new OGWidgetStyles() ),
+			new OGStyleReference ( "OGProgressBar", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGScrollView", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGSlider", new OGWidgetStyles() ),
 			new OGStyleReference ( "OGTabs", new OGWidgetStyles() ),
