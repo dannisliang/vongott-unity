@@ -48,7 +48,9 @@ class OGListItem extends OGWidget {
 	}
 
 	override function SetDrawn ( drawn : boolean ) {
-		if ( !background || !label ) { return; }
+		if ( !background || !label ) {
+			Build ();
+		}
 		
 		isDrawn = drawn;
 
@@ -56,78 +58,65 @@ class OGListItem extends OGWidget {
 		label.isDrawn = isDrawn;
 	}
 
-	override function UpdateWidget () {
+	override function Build () {
 		isSelectable = true;
-		
+
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
 				background = this.gameObject.GetComponentInChildren ( OGSprite );
-				
 			} else {			
 				var newSprite : OGSprite = new GameObject ( "Sprite", OGSprite ).GetComponent ( OGSprite );
 				newSprite.transform.parent = this.transform;
-				newSprite.styles.basic = this.styles.basic;
-				
-				UpdateWidget ();
-				return;
+				background = newSprite;	
 			}
-
-		} else {
-			background.transform.localScale = Vector3.one;
-			background.transform.localEulerAngles = Vector3.zero;
-			background.transform.localPosition = Vector3.zero;
-		
-			background.isDrawn = isDrawn;
-			background.hidden = true;
-			
-			if ( selected ) {
-				background.styles.basic = this.styles.active;
-			
-			} else if ( disabled ) {
-				background.styles.basic = this.styles.disabled;
-
-			} else {
-				background.styles.basic = this.styles.basic;
-			
-			}
-
-			mouseRct = background.drawRct;
 		}
+
+		background.transform.localScale = Vector3.one;
+		background.transform.localEulerAngles = Vector3.zero;
+		background.transform.localPosition = Vector3.zero;
+	
+		background.hidden = true;
 		
 		// Label
 		if ( label == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGLabel ) ) {
 				label = this.gameObject.GetComponentInChildren ( OGLabel );
-				
 			} else {				
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
-				newLabel.text = text;
-				newLabel.styles.basic = this.styles.basic;
-
-				UpdateWidget ();
-				return;
-			}
-		
-		} else {
-			label.text = text;
-			label.transform.localScale = Vector3.one;
-			label.transform.localEulerAngles = Vector3.zero;
-			label.transform.localPosition = Vector3.zero;
-			
-			label.isDrawn = isDrawn;
-			label.hidden = true;
-			
-			if ( selected ) {
-				label.styles.basic = this.styles.active;
-			
-			} else if ( disabled ) {
-				label.styles.basic = this.styles.disabled;
-			
-			} else {
-				label.styles.basic = this.styles.basic;
+				label = newLabel;
 			}
 		}
+
+		label.transform.localScale = Vector3.one;
+		label.transform.localEulerAngles = Vector3.zero;
+		label.transform.localPosition = Vector3.zero;
+		
+		label.hidden = true;
+	}
+
+	override function UpdateWidget () {
+		if ( !background || !label ) {
+			Build ();
+		}
+
+		// Mouse
+		mouseRct = background.drawRct;
+
+		// Update data
+		label.text = text;
+		
+		if ( selected ) {
+			background.styles.basic = this.styles.active;
+			label.styles.basic = this.styles.active;
+		} else if ( disabled ) {
+			background.styles.basic = this.styles.disabled;
+			label.styles.basic = this.styles.disabled;
+		} else {
+			background.styles.basic = this.styles.basic;
+			label.styles.basic = this.styles.basic;
+		}
+
 	}
 }

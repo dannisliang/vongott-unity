@@ -35,6 +35,12 @@ class OGDropDown extends OGWidget {
 	////////////////////
 	// Interaction
 	////////////////////
+	override function OnMouseUp () {
+		isDown = !isDown;
+
+		SetDrawn ( isDrawn );
+	}
+	
 	private function SelectItem ( item : DropDownItem ) {
 		/*if ( item.GetType() == DropDownItemRoot && ( item as DropDownItemRoot ).nestedMenu.Length > 0 ) {
 			if ( currentNestedMenu != ( item as DropDownItemRoot ).nestedMenu ) {
@@ -69,17 +75,40 @@ class OGDropDown extends OGWidget {
 	// Select item
 	public function SelectItem ( n : String ) {
 		var i : int = int.Parse ( n );
-	
+
+		for ( var o : int = 0; o < container.transform.childCount; o++ ) {
+			container.transform.GetChild(o).Find("Button").GetComponent(OGListItem).selected = o == i;
+		}
+
 		if ( submenu[i].nestedMenu.Length > 0 ) {
 			activeNestedMenu = i;
+		} else {
+			activeNestedMenu = -1;
 		}
+
+		SetDrawn ( isDrawn );
 	}
 
 	// Select nested item
 	public function SelectNestedItem ( n : String ) {
 		var i : int = int.Parse ( n );
+		var item : DropDownItemNested = submenu[activeNestedMenu].nestedMenu[i];
 	
-		Debug.Log ( submenu[activeNestedMenu].nestedMenu[i] );
+		if ( item.tickable ) {
+			if ( item.tickOverrides ) {
+				for ( var o : int = 0; o < submenu[activeNestedMenu].nestedMenu.Length; o++ ) {
+					submenu[activeNestedMenu].nestedMenu[o].isTicked = o == i;
+				}
+			} else {
+				item.isTicked = !item.isTicked;
+			}
+		}
+
+		if ( !String.IsNullOrEmpty ( item.message ) ) {
+			target.SendMessage ( item.message );
+		}
+
+		SetDirty ();
 	}
 	
 	
@@ -113,6 +142,8 @@ class OGDropDown extends OGWidget {
 			var bg : OGSlicedSprite = entry.Find("Background").GetComponent(OGSlicedSprite);	
 			bg.isDrawn = isDrawn && isDown && thisActive;
 		}
+
+		SetDirty ();
 	}
 
 	
@@ -316,10 +347,6 @@ class OGDropDown extends OGWidget {
 		}
 
 		// Mouse
-		if ( isDown ) {	
-			mouseRct = label.drawRct;
-		} else {
-			mouseRct = CombineRects ( background.drawRct, label.drawRct );
-		}
+		mouseRct = label.drawRct;
 	}
 }
