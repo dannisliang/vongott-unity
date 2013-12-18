@@ -14,16 +14,14 @@ class LiftableItem extends InteractiveObject {
 	
 	// Interact
 	override function Interact () {
-		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive ) {
-			if ( !isPickedUp ) {
-				GameCore.GetPlayer().PickUpObject ( this );
-				isPickedUp = true;
-												
-			} else {
-				GameCore.GetPlayer().DropObject ();
-				isPickedUp = false;
-			
-			}
+		if ( !isPickedUp ) {
+			GameCore.GetPlayer().PickUpObject ( this );
+			isPickedUp = true;
+											
+		} else {
+			GameCore.GetPlayer().DropObject ();
+			isPickedUp = false;
+		
 		}
 	}
 }

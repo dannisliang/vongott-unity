@@ -77,7 +77,7 @@ class PlayerController {
 			actionState = ePlayerActionState.Shooting;
 		
 		// Interact
-		} else if ( Input.GetMouseButtonDown ( 2 ) ) {
+		} else if ( Input.GetMouseButtonDown ( 1 ) ) {
 			if ( GameCore.GetInteractiveObject() ) {
 				actionState = ePlayerActionState.Interacting;
 				GameCore.GetInteractiveObject().Interact();

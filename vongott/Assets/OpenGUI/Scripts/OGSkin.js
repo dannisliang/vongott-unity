@@ -40,6 +40,7 @@ public class OGWidgetStyles {
 	public var ticked : OGStyle;
 	public var thumb : OGStyle;
 	public var disabled : OGStyle;
+	public var background : OGStyle;
 
 	public static function IsStyleUsed ( styleName : String, widgetName : String ) : boolean {
 		if ( styleName == "Basic" ) { return true; }

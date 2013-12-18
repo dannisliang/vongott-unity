@@ -267,9 +267,8 @@ public class OGWidget extends MonoBehaviour {
 			drawRct.width = drawRct.width - leftClip - rightClip;	
 			drawRct.y = drawRct.y + bottomClip;
 			drawRct.height = drawRct.height - topClip - bottomClip;	
-		
-			isDrawn = drawRct.height > 0 && drawRct.width > 0;
 		}
+
 	}
 	
 	
@@ -283,9 +282,7 @@ public class OGWidget extends MonoBehaviour {
 		drawDepth = -this.transform.position.z;
 			
 		drawRct = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		//CalcClipping ();	
-
-		scrollOffset = Vector3.zero;	
+		CalcClipping ();	
 	}	
 
 	
@@ -318,10 +315,12 @@ public class OGWidget extends MonoBehaviour {
 	public function OnEnable () { SetDirty(); }
 	public function OnDisable () { SetDirty(); }
 	public function OnDestroy () { SetDirty(); }
+	public function Build () {}
+	public function SetDrawn ( drawn : boolean ) {}
 	public function UpdateWidget () {} 
 	public function GetDefaultStyles () {
 		GetRoot().skin.GetDefaultStyles ( this );
-		SetDirty();
+		Build ();
 	}
 	public function SetDirty () {
 		if ( GetRoot() ) {

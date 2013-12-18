@@ -46,7 +46,16 @@ class OGListItem extends OGWidget {
 		Action ();
 		SetDirty();
 	}
-	
+
+	override function SetDrawn ( drawn : boolean ) {
+		if ( !background || !label ) { return; }
+		
+		isDrawn = drawn;
+
+		background.isDrawn = isDrawn;
+		label.isDrawn = isDrawn;
+	}
+
 	override function UpdateWidget () {
 		isSelectable = true;
 		

@@ -121,7 +121,7 @@ class InventoryManager extends MonoBehaviour {
 		if ( !delete ) {
 			var droppedItem : Item = MonoBehaviour.Instantiate ( slots[x,y].GetItem() );
 			droppedItem.transform.parent = GameCore.GetPlayerObject().transform.parent;
-			droppedItem.transform.position = GameCore.GetPlayerObject().GetComponent(Player).torso.transform.position + ( GameCore.GetPlayerObject().transform.forward * 0.5 );
+			droppedItem.transform.position = GameCore.GetPlayerObject().GetComponent(Player).hand.transform.position + ( GameCore.GetPlayerObject().transform.forward * 0.5 );
 			droppedItem.transform.localEulerAngles = Vector3.zero;
 			droppedItem.transform.localScale = Vector3.one;
 		}

@@ -5,14 +5,8 @@ class Player extends MonoBehaviour {
 	// Prerequisites
 	////////////////////
 	// Public vars
-	public var head : GameObject;
-	public var hand : GameObject;
-	public var torso : GameObject;
-	public var legs : GameObject;
-	public var arms : GameObject;
-	public var foot_r : GameObject;
-	public var foot_l : GameObject;
-	public var back : GameObject;
+	public var head : Transform;
+	public var hand : Transform;
 	
 	public var energy : float = 100;
 	public var health : int = 100;
@@ -45,6 +39,10 @@ class Player extends MonoBehaviour {
 		GameCore.ToggleControls ( false );
 		
 		talkingTo = a;
+		
+		this.GetComponent(Animator).SetFloat ( "DeltaVertical", 0 );
+		this.GetComponent(Animator).SetFloat ( "DeltaHorizontal", 0 );
+		this.GetComponent(Animator).SetFloat ( "DeltaCombined", 0 );
 		
 		GameCore.Print ( "Player | conversation with " + a.displayName + " started" ); 
 	}
@@ -98,7 +96,7 @@ class Player extends MonoBehaviour {
 		}
 		
 		var slot : eEquipmentSlot = ( item as Equipment ).eqSlot;
-		var target : GameObject;
+		var target : Transform;
 		var adjustPosition : Vector3;
 		var adjustRotation : Vector3;
 		
@@ -107,21 +105,16 @@ class Player extends MonoBehaviour {
 		
 			adjustPosition = new Vector3 ( 0.222, -0.006, -0.060 );
 			adjustRotation = new Vector3 ( 16, 182, 8.5 );
-		} else if ( slot == eEquipmentSlot.Torso ) {
-			target = torso;
-		
+	
 		} else if ( slot == eEquipmentSlot.Head ) {
 			target = head;
-		
-		} else {
-			target = foot_r;
 		
 		} 
 		
 		if ( equip ) {					
 			equippedItem = item.gameObject;
 			
-			equippedItem.transform.parent = target.transform;
+			equippedItem.transform.parent = target;
 			equippedItem.transform.localPosition = adjustPosition;
 			equippedItem.transform.localEulerAngles = adjustRotation;
 			equippedItem.GetComponent(BoxCollider).enabled = false;
@@ -303,7 +296,7 @@ class Player extends MonoBehaviour {
 		// Lifting object
 		if ( liftedObject ) {
 			liftedObject.transform.rotation = this.transform.rotation;
-			liftedObject.transform.position = torso.transform.position + this.transform.forward;
+			liftedObject.transform.position = head.position + this.transform.forward;
 		}
 		
 		// Talking

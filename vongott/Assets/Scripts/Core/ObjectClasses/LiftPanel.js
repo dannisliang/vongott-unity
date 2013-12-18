@@ -76,7 +76,7 @@ class LiftPanel extends InteractiveObject {
 		GameCore.interactiveObjectLocked = false;
 		GameCore.ToggleControls ( true );
 	
-		if ( i < 9 ) {
+		if ( i < 9 && i > -1 ) {
 			currentDestination = i;
 		}
 	}
@@ -86,12 +86,12 @@ class LiftPanel extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession && !locked ) {
+		if ( !inSession && !locked ) {
 			StartCoroutine ( Enter () );
 		
-		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
-			StartCoroutine ( Exit ( 99 ) );
-		
+			InputManager.escFunction = function () {
+				StartCoroutine ( Exit ( -1 ) );
+			};
 		}
 	}
 	

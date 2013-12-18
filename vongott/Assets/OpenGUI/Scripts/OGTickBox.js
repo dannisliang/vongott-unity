@@ -24,11 +24,24 @@ public class OGTickBox extends OGWidget {
 		OGRoot.GetInstance().ReleaseWidget ();
 		SetDirty ();
 	}
+
+	////////////////
+	// Set drawn
+	////////////////	
+	override function SetDrawn ( drawn : boolean ) {
+		isDrawn = drawn;
+
+		background.isDrawn = isDrawn;
+		label.isDrawn = isDrawn;
+	}
+
 	
-	override function UpdateWidget () {
-		// TODO: Deprecate
-		isChecked = isTicked;
-	
+	////////////////
+	// Build
+	////////////////	
+	override function Build () {
+		isSelectable = true;
+
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
@@ -37,25 +50,16 @@ public class OGTickBox extends OGWidget {
 			} else {			
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
 				newSprite.transform.parent = this.transform;
-				newSprite.styles.basic = this.styles.basic;
+				background = newSprite;
 			}
-		
-		} else {
-			background.transform.localScale = new Vector3 ( this.transform.lossyScale.y / this.transform.lossyScale.x, 1, 1 );
-			background.transform.localEulerAngles = Vector3.zero;
-			background.transform.localPosition = new Vector3 ( 1 - this.transform.lossyScale.y / this.transform.lossyScale.x, 0, 0 );
-		
-			background.isDrawn = isDrawn;
-			background.hidden = true;
-		
-			if ( isTicked ) {
-				background.styles.basic = styles.ticked;
-			} else {
-				background.styles.basic = styles.basic;
-			}
-		
-			mouseRct = background.drawRct;
 		}
+
+		background.transform.localScale = new Vector3 ( this.transform.lossyScale.y / this.transform.lossyScale.x, 1, 1 );
+		background.transform.localEulerAngles = Vector3.zero;
+		background.transform.localPosition = new Vector3 ( 1 - this.transform.lossyScale.y / this.transform.lossyScale.x, 0, 0 );
+	
+		background.isDrawn = isDrawn;
+		background.hidden = true;
 		
 		// Label
 		if ( label == null ) {
@@ -65,21 +69,46 @@ public class OGTickBox extends OGWidget {
 			} else {				
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
-				newLabel.text = text;
-				newLabel.styles.basic = this.styles.basic;
+				label = newLabel;
 			}
-		
-		} else {
-			label.text = text;
-			label.transform.localScale = Vector3.one;
-			label.transform.localEulerAngles = Vector3.zero;
-			label.transform.localPosition = Vector3.zero;
-			
-			label.styles.basic = this.styles.basic;
-			
-			label.isDrawn = isDrawn;
-			label.hidden = true;
-			
 		}
+
+		label.text = text;
+		label.transform.localScale = Vector3.one;
+		label.transform.localEulerAngles = Vector3.zero;
+		label.transform.localPosition = Vector3.zero;
+		
+		label.styles.basic = this.styles.basic;
+		
+		label.isDrawn = isDrawn;
+		label.hidden = true;
+	}
+
+	
+	////////////////
+	// Update
+	////////////////	
+	override function UpdateWidget () {
+		// Null check
+		if ( !background || !label ) {
+			Build ();
+			return;
+		}
+		
+		// TODO: Deprecate
+		isChecked = isTicked;
+
+		// Mouse	
+		mouseRct = background.drawRct;
+		
+		// Update data
+		label.text = text;
+		
+		if ( isTicked ) {
+			background.styles.basic = styles.ticked;
+		} else {
+			background.styles.basic = styles.basic;
+		}
+	
 	}
 }

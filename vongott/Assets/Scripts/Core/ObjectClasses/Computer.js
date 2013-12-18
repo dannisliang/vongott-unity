@@ -82,7 +82,7 @@ class Computer extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession ) {
+		if ( !inSession ) {
 			tempPos = GameCamera.GetInstance().transform.position;
 			tempRot = GameCamera.GetInstance().transform.eulerAngles;
 	
@@ -90,15 +90,15 @@ class Computer extends InteractiveObject {
 			
 			GameCore.interactiveObjectLocked = true;
 		
-		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
-			OGRoot.GetInstance().GoToPage ( "HUD" );
-			UILoginDisplay.Clear ();
-			UIComputerDisplay.Clear ();
-			
-			StartCoroutine ( Exit () );
-			
-			GameCore.interactiveObjectLocked = false;
-		
+			InputManager.escFunction = function () {
+				OGRoot.GetInstance().GoToPage ( "HUD" );
+				UILoginDisplay.Clear ();
+				UIComputerDisplay.Clear ();
+				
+				StartCoroutine ( Exit () );
+				
+				GameCore.interactiveObjectLocked = false;
+			};
 		}
 		
 		

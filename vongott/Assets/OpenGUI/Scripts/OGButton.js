@@ -50,13 +50,25 @@ class OGButton extends OGWidget {
 		SetDirty();
 	}
 	
+	
+	////////////////////
+	// Set drawn
+	////////////////////
+	override function SetDrawn ( drawn : boolean ) {
+		isDrawn = drawn;
+	
+		image.isDrawn = isDrawn;
+		background.isDrawn = isDrawn;
+		label.isDrawn = isDrawn;
+	}
+
 
 	////////////////////
-	// Update
+	// Build
 	////////////////////
-	override function UpdateWidget () {
-		isSelectable = true;	
-
+	override function Build () {
+		isSelectable = true;
+		
 		// Image
 		if ( image == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
@@ -67,25 +79,20 @@ class OGButton extends OGWidget {
 				newImage.transform.parent = this.transform;
 				image = newImage;
 			}
-
-			SetDirty ();
-			return;
-		
-		} else {
-			if ( enableImage ) {
-				image.transform.localScale = new Vector3 ( image.styles.basic.coordinates.width / this.transform.localScale.x, image.styles.basic.coordinates.height / this.transform.localScale.y, 1 ) * imageScale;
-				image.transform.localPosition = new Vector3 ( 0.5 + imageOffset.x, 0.5 + imageOffset.y, 0 );
-				image.transform.localEulerAngles = Vector3.zero;
-
-				image.styles.basic = this.styles.thumb;
-				image.pivot.x = RelativeX.Center;
-				image.pivot.y = RelativeY.Center;
-				image.hidden = true;
-			}
-
-			image.isDrawn = enableImage;
-
 		}
+		
+		if ( enableImage ) {
+			image.transform.localScale = new Vector3 ( image.styles.basic.coordinates.width / this.transform.localScale.x, image.styles.basic.coordinates.height / this.transform.localScale.y, 1 ) * imageScale;
+			image.transform.localPosition = new Vector3 ( 0.5 + imageOffset.x, 0.5 + imageOffset.y, 0 );
+			image.transform.localEulerAngles = Vector3.zero;
+
+			image.styles.basic = this.styles.thumb;
+			image.pivot.x = RelativeX.Center;
+			image.pivot.y = RelativeY.Center;
+			image.hidden = true;
+		}
+
+		image.isDrawn = enableImage;
 		
 		// Background		
 		if ( background == null ) {
@@ -95,23 +102,17 @@ class OGButton extends OGWidget {
 			} else {			
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
 				newSprite.transform.parent = this.transform;
-				newSprite.styles.basic = this.styles.basic;
 				background = newSprite;
 			}
-		
-			SetDirty ();
-			return;
-
-		} else {
-			background.transform.localScale = Vector3.one;
-			background.transform.localEulerAngles = Vector3.zero;
-			background.transform.localPosition = Vector3.zero;
-		
-			background.isDrawn = isDrawn;
-			background.hidden = true;
-			background.pivot = this.pivot;
-			mouseRct = background.drawRct;
 		}
+		
+		background.transform.localScale = Vector3.one;
+		background.transform.localEulerAngles = Vector3.zero;
+		background.transform.localPosition = Vector3.zero;
+	
+		background.isDrawn = isDrawn;
+		background.hidden = true;
+		background.pivot = this.pivot;
 		
 		// Label
 		if ( label == null ) {
@@ -121,24 +122,36 @@ class OGButton extends OGWidget {
 			} else {				
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
-				newLabel.text = text;
-				newLabel.styles.basic = this.styles.basic;
+				label = newLabel;
 			}
-		
-			SetDirty ();
-			return;
-
-		} else {
-			label.text = text;
-			label.transform.localScale = Vector3.one;
-			label.transform.localEulerAngles = Vector3.zero;
-			label.transform.localPosition = Vector3.zero;
-			
-			label.isDrawn = isDrawn;
-			label.hidden = true;
-			label.pivot = this.pivot;
 		}
+
+		label.transform.localScale = Vector3.one;
+		label.transform.localEulerAngles = Vector3.zero;
+		label.transform.localPosition = Vector3.zero;
 		
+		label.isDrawn = isDrawn;
+		label.hidden = true;
+		label.pivot = this.pivot;
+	}
+
+
+	////////////////////
+	// Update
+	////////////////////
+	override function UpdateWidget () {
+		// Null check
+		if ( !image || !label || !background ) {
+			Build ();
+			return;
+		}	
+		
+		// Mouse
+		mouseRct = background.drawRct;
+		
+		// Update data
+		label.text = text;
+
 		// Styles
 		if ( isDown ) {
 			label.styles.basic = this.styles.active;

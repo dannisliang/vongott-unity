@@ -89,6 +89,12 @@ public class OGWidgetInspector extends Editor {
 				( target as OGWidget ).GetDefaultStyles();
 			}
 			
+			GUI.backgroundColor = Color.green;
+			if ( GUILayout.Button ( "Update", GUILayout.Height(30) ) ) {
+				( target as OGWidget ).Build();
+			}
+			GUI.backgroundColor = Color.white;
+			
 			// Automatic update	
 			if ( GUI.changed ) {
 				( target as OGWidget ).SetDirty();

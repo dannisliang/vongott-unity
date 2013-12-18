@@ -279,7 +279,7 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < mouseOver.Count; i++ ) {
 				w = mouseOver[i];
 				
-				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable ) {
+				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable && !w.GetComponent(OGScrollView) ) {
 					topWidget = w;
 				}
 			}

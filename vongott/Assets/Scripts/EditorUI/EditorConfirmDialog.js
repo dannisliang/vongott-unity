@@ -48,15 +48,15 @@ class EditorConfirmDialog extends OGPage {
 		label.text = message;
 		
 		if ( singleButton ) {
-			yesButton.transform.localPosition = new Vector3 ( 140, 40, -2 );
+			yesButton.transform.localPosition = new Vector3 ( 140, 40, 0 );
 			noButton.gameObject.SetActive ( false );
 		
 		} else {
 			yesButton.gameObject.SetActive ( true );
 			noButton.gameObject.SetActive ( true );
 		
-			yesButton.transform.localPosition = new Vector3 ( 70, 40, -2 );
-			noButton.transform.localPosition = new Vector3 ( 210, 40, -2 );
+			yesButton.transform.localPosition = new Vector3 ( 70, 40, 0 );
+			noButton.transform.localPosition = new Vector3 ( 210, 40, 0 );
 		
 		}
 	}

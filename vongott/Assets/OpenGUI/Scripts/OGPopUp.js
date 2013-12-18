@@ -21,6 +21,22 @@ class OGPopUp extends OGWidget {
 	////////////////////
 	// Options
 	////////////////////
+	private function ToggleUp ( state : boolean ) {
+		isUp = state;
+
+		if ( state ) {
+			label.styles.basic = styles.active;
+			background.styles.basic = styles.active;
+			background.transform.localScale = new Vector3 ( 1, optionLabels.transform.childCount+1.1, 1 );
+		} else {
+			label.styles.basic = styles.basic;
+			background.styles.basic = styles.basic;
+			background.transform.localScale = Vector3.one;
+		}
+		
+		SetDrawn ( isDrawn );
+	}
+		
 	private function GetMouseOverOption () : int {
 		for ( var i : int = 0; i < optionLabels.transform.childCount; i++ ) {
 			if ( CheckMouseOver ( optionLabels.transform.GetChild(i).GetComponent(OGLabel).drawRct ) ) {
@@ -33,7 +49,8 @@ class OGPopUp extends OGWidget {
 	
 	public function SetOptions ( list : String[] ) {
 		options = list;
-		SetDirty();
+		
+		Build ();
 	}
 
 	
@@ -89,81 +106,72 @@ class OGPopUp extends OGWidget {
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
 
-	private function ToggleUp ( state : boolean ) {
-		isUp = state;
 
-		if ( state ) {
-			label.styles.basic = styles.active;
-			background.styles.basic = styles.active;
-			background.transform.localScale = new Vector3 ( 1, optionLabels.transform.childCount+1.1, 1 );
-		} else {
-			label.styles.basic = styles.basic;
-			background.styles.basic = styles.basic;
-			background.transform.localScale = Vector3.one;
+	////////////////////
+	// Set drawn
+	////////////////////
+	override function SetDrawn ( drawn : boolean ) {
+		isDrawn = drawn;
+	
+		for ( var i : int = 0; i < optionLabels.transform.childCount; i++ ) {
+			var lbl : OGLabel = optionLabels.transform.GetChild(i).GetComponent(OGLabel);
+			lbl.isDrawn = isDrawn && isUp;
 		}
-		
-		optionLabels.SetActive ( state );
-	
-		SetDirty();
-	}
-		
-	
-	////////////////////
-	// Update
-	////////////////////
-	override function UpdateWidget () {
-		isSelectable = true;
 
-		// Option labels
+		background.isDrawn = isDrawn;
+		label.isDrawn = isDrawn;
+	}
+
+
+	////////////////////
+	// Build
+	////////////////////
+	override function Build () {
+		isSelectable = true;
+		
+		var i : int = 0;
+		var lbl : OGLabel;
+
+		// Option labels container
 		if ( !optionLabels && !this.transform.Find("Options") ) {
 			optionLabels = new GameObject ( "Options" );
 			optionLabels.transform.parent = this.transform;
 			optionLabels.transform.localPosition = new Vector3 ( 0, 1, 0 );
 			optionLabels.transform.localScale = Vector3.one;
 			optionLabels.transform.localEulerAngles = Vector3.zero;
-
-			SetDirty ();
-			return;
-
 		} else if ( !optionLabels ) {
 			optionLabels = this.transform.Find("Options").gameObject;
-
-			SetDirty ();
-			return;
-
-		} else if ( options != null && optionLabels.transform.childCount == 0 ) {
-			for ( var i : int = 0; i < options.Length; i++ ) {
-				new GameObject ( options[i], OGLabel ).transform.parent = optionLabels.transform;
-			}
-
-			SetDirty ();
-			return;
-
-		} else if ( optionLabels.transform.childCount != options.Length ) {
-			for ( var x : int = 0; x < optionLabels.transform.childCount; x++ ) {
-				DestroyImmediate ( optionLabels.transform.GetChild(x).gameObject );
-			}
-
-			SetDirty ();
-			return;
-
-		} else {
-			if ( optionLabels.activeSelf != isUp ) {
-				optionLabels.SetActive ( isUp );
-			}
-
-			for ( var o : int = 0; o < options.Length; o++ ) {
-				var l : OGLabel = optionLabels.transform.GetChild ( o ).GetComponent ( OGLabel );
-				l.transform.localScale = Vector3.one;
-				l.transform.localEulerAngles = Vector3.zero;
-				l.transform.localPosition = new Vector3 ( 0, o, 0 );
-				l.hidden = true;
-				l.styles.basic = styles.basic;
-				l.text = options[o];
-			}
-		
 		}
-	
+
+		// Option labels
+		if ( options == null ) {
+			options = new String[0];
+		}
+		
+		// ^ Edit existing or create new ones
+		for ( i = 0; i < options.Length; i++ ) {
+			if ( i < optionLabels.transform.childCount ) {
+				lbl = optionLabels.transform.GetChild(i).GetComponent(OGLabel);
+			} else {
+				lbl = new GameObject ( options[i], OGLabel ).GetComponent(OGLabel);
+				lbl.transform.parent = optionLabels.transform;
+			}
+			
+			lbl.text = options[i];
+			lbl.transform.localScale = Vector3.one;
+			lbl.transform.localEulerAngles = Vector3.zero;
+			lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
+			lbl.hidden = true;
+			lbl.styles.basic = this.styles.basic;
+		}	
+		
+		// ^ Destroy remaining
+		if ( optionLabels.transform.childCount > options.Length ) {
+			for ( i = options.Length; i < optionLabels.transform.childCount; i++ ) {
+				DestroyImmediate ( optionLabels.transform.GetChild(i).gameObject );
+			}	
+		}
+
 		// Background	
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
@@ -172,33 +180,16 @@ class OGPopUp extends OGWidget {
 			} else {			
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
 				newSprite.transform.parent = this.transform;
-				newSprite.styles.basic = this.styles.basic;
+				background = newSprite;
 			}
-
-			SetDirty ();
-			return;
-		
-		} else {
-			
-			background.transform.localEulerAngles = Vector3.zero;
-			background.transform.localPosition = new Vector3 ( 0, 0, 1 );
-			
-			background.pivot.x = pivot.x;
-			background.pivot.y = RelativeY.Top;
-								
-			if ( isUp ) {
-				background.styles.basic = styles.active;
-				background.transform.localScale = new Vector3 ( 1, optionLabels.transform.childCount+1.1, 1 );
-			} else {
-				background.styles.basic = styles.basic;
-				background.transform.localScale = Vector3.one;
-			}
-			
-			background.isDrawn = isDrawn;
-			background.hidden = true;
-		
-			mouseRct = background.drawRct;
 		}
+					
+		background.transform.localEulerAngles = Vector3.zero;
+		background.transform.localPosition = new Vector3 ( 0, 0, 1 );
+		
+		background.pivot.x = pivot.x;
+		background.pivot.y = RelativeY.Top;
+		background.hidden = true;
 
 		// Title label		
 		if ( label == null ) {
@@ -208,33 +199,40 @@ class OGPopUp extends OGWidget {
 			} else {				
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
+				label = newLabel;
 			}
-
-			SetDirty ();
-			return;
-		
-		} else {
-			if ( String.IsNullOrEmpty ( selectedOption ) ) {
-				label.text = title;
-			} else {
-				label.text = selectedOption;
-			}
-			
-			label.transform.localScale = Vector3.one;
-			label.transform.localEulerAngles = Vector3.zero;
-			label.transform.localPosition = Vector3.zero;
-			
-			label.pivot.x = pivot.x;
-			label.pivot.y = RelativeY.Top;
-			
-			if ( isUp ) {
-				label.styles.basic = styles.active;
-			} else {
-				label.styles.basic = styles.basic;
-			}
-			
-			label.isDrawn = isDrawn;
-			label.hidden = true;
 		}
+		
+		label.transform.localScale = Vector3.one;
+		label.transform.localEulerAngles = Vector3.zero;
+		label.transform.localPosition = Vector3.zero;
+		
+		label.pivot.x = pivot.x;
+		label.pivot.y = RelativeY.Top;
+		
+		label.hidden = true;
+	}
+
+
+	////////////////////
+	// Update
+	////////////////////
+	override function UpdateWidget () {
+		// Null check
+		if ( !optionLabels || !label || !background ) {
+			Build ();
+			return;
+		}
+
+		// Mouse
+		mouseRct = background.drawRct;
+
+		// Update data
+		if ( String.IsNullOrEmpty ( selectedOption ) ) {
+			label.text = title;
+		} else {
+			label.text = selectedOption;
+		}
+			
 	}
 }

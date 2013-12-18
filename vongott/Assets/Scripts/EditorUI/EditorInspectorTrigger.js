@@ -111,19 +111,21 @@ class EditorInspectorTrigger extends MonoBehaviour {
 			
 			OGRoot.GetInstance().GoToPage ( "Picker" );
 		};
+		btn.GetDefaultStyles();
 		
 		var dltObj : GameObject = new GameObject ( "Delete" );
 		dltObj.transform.parent = obj.transform;
 		dltObj.transform.localScale = new Vector3 ( 20, 20, 1 );
 		dltObj.transform.localEulerAngles = Vector3.zero;
 		dltObj.transform.localPosition = new Vector3 ( 270, 0, 0 );
-		
+
 		var dlt : OGButton = dltObj.AddComponent ( OGButton );
 		dlt.text = "x";
 		dlt.func = function () {
 			RemoveEvent ( obj );
 		};
-		
+		dlt.GetDefaultStyles();
+
 		if ( e ) {
 			btn.text = e.id;
 		

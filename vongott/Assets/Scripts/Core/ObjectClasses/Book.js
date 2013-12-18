@@ -35,18 +35,18 @@ class Book extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession ) {
+		if ( !inSession ) {
 			StartCoroutine ( Enter () );
 		
 			GameCore.interactiveObjectLocked = true;
 		
-		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
-			OGRoot.GetInstance().GoToPage ( "HUD" );
-			
-			StartCoroutine ( Exit () );
-			
-			GameCore.interactiveObjectLocked = false;
-		
+			InputManager.escFunction = function () {
+				OGRoot.GetInstance().GoToPage ( "HUD" );
+				
+				StartCoroutine ( Exit () );
+				
+				GameCore.interactiveObjectLocked = false;
+			};
 		}
 	}
 	

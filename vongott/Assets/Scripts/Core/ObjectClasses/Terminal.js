@@ -47,23 +47,21 @@ class Terminal extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession ) {
+		if ( !inSession ) {
 			StartCoroutine ( Enter () );
 		
 			GameCore.interactiveObjectLocked = true;
 		
-		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
-			OGRoot.GetInstance().GoToPage ( "HUD" );
-			UILoginDisplay.Clear ();
-			UIComputerDisplay.Clear ();
+			InputManager.escFunction = function () {
+				OGRoot.GetInstance().GoToPage ( "HUD" );
+				UILoginDisplay.Clear ();
+				UIComputerDisplay.Clear ();
+				
+				StartCoroutine ( Exit () );
 			
-			StartCoroutine ( Exit () );
-		
-			GameCore.interactiveObjectLocked = false;
-		
+				GameCore.interactiveObjectLocked = false;
+			};
 		}
-		
-		
 	}
 	
 	override function UpdateObject () {

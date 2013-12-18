@@ -64,20 +64,19 @@ class Keypad extends InteractiveObject {
 	// Update
 	//////////////////
 	override function Interact () {
-		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive && !inSession ) {
+		if ( !inSession ) {
 			tempPos = GameCamera.GetInstance().transform.position;
 			tempRot = GameCamera.GetInstance().transform.eulerAngles;
 	
 			StartCoroutine ( Enter () );
 		
-		} else if ( Input.GetKeyDown(KeyCode.Escape) && inSession ) {
-			UILoginDisplay.Clear ();
-			UIComputerDisplay.Clear ();
-			
-			StartCoroutine ( Exit () );
-		
-		}
+			InputManager.escFunction = function () {
+				UILoginDisplay.Clear ();
+				UIComputerDisplay.Clear ();
 				
+				StartCoroutine ( Exit () );
+			};
+		}
 	}
 	
 	override function UpdateObject () {

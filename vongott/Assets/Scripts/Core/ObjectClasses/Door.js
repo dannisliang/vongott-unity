@@ -76,32 +76,29 @@ class Door extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		if ( Input.GetMouseButtonDown(0) && GameCore.controlsActive ) {
-			if ( locked ) {
-				// TODO: Check if player has the right key in inventory
-				// 	for ( var k : String in player.keys ) {
-				//		if ( k == lockKeyGUID ) {
-				//			Unlock ();
-				//			return;
-				//		}
-				//	}
-				
-				if ( !closed ) {
-					CloseDoor ();
-				
-				} else if ( GameCore.GetPlayer().IsEquippedLockpick() ) {
-					PickLock ( GameCore.GetPlayer() );				
-				
-				} else {
-					UIHUD.ShowNotification ( "This door is locked" );
-				
-				}
+		if ( locked ) {
+			// TODO: Check if player has the right key in inventory
+			// 	for ( var k : String in player.keys ) {
+			//		if ( k == lockKeyGUID ) {
+			//			Unlock ();
+			//			return;
+			//		}
+			//	}
+			
+			if ( !closed ) {
+				CloseDoor ();
+			
+			} else if ( GameCore.GetPlayer().IsEquippedLockpick() ) {
+				PickLock ( GameCore.GetPlayer() );				
 			
 			} else {
-				ToggleDoor ( GameCore.GetPlayerObject().transform );
+				UIHUD.ShowNotification ( "This door is locked" );
 			
 			}
-			
+		
+		} else {
+			ToggleDoor ( GameCore.GetPlayerObject().transform );
+		
 		}
 	}
 }

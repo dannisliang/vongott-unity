@@ -47,12 +47,18 @@ public class OGTextField extends OGWidget {
 			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;
 		
 			cursorPosition = new Vector2 ( editor.graphicalCursorPos.x / this.transform.localScale.x, ( editor.graphicalCursorPos.y - 2 ) / this.transform.localScale.y );
-			
+		
+			if ( !String.IsNullOrEmpty ( regex ) && regex != "\\" && regexPreset != RegExPreset.None ) {
+				text = Regex.Replace ( text, "[" + regex + "]", "" );
+			}
+
 			//GUI.color = new Color ( 1, 1, 1, 1 );
 		}
 	}
 
 	override function UpdateWidget () {
+		isSelectable = true;
+
 		// Cursor
 		if ( cursor == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
@@ -99,6 +105,7 @@ public class OGTextField extends OGWidget {
 			
 			label.isDrawn = isDrawn && !listening;
 			label.hidden = true;
+			label.styles.basic = this.styles.basic;
 		}
 		
 		// Background		

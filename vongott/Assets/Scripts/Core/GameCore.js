@@ -369,10 +369,5 @@ class GameCore extends MonoBehaviour {
 			frameCounter = 0;
 			timeCounter = 0.0f;
 		}
-		
-		// Interactive objects
-		if ( interactiveObject ) {
-			interactiveObject.Interact ();
-		}
 	}
 }

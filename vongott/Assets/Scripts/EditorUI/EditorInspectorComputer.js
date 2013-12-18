@@ -39,17 +39,20 @@ class EditorInspectorComputer extends MonoBehaviour {
 		dlObj.transform.localEulerAngles = Vector3.zero;
 		
 		lbl.text = n;
-		
+		lbl.GetDefaultStyles();
+
 		dl.text = "X";
 		dl.target = this.gameObject;
 		dl.message = "DeleteAccount";
 		dl.argument = n;
-		
+		dl.GetDefaultStyles();
+
 		btn.text = "Edit";
 		btn.target = this.gameObject;
 		btn.message = "EditAccount";
 		btn.argument = n;
-	
+		btn.GetDefaultStyles();
+
 		return obj;
 	}
 	

@@ -110,6 +110,8 @@ public class OGScrollView extends OGWidget {
 	}
 
 	override function UpdateWidget () {
+		isSelectable = true;
+		
 		mouseRct = drawRct;
 
 		// Reset scale	

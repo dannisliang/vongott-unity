@@ -32,9 +32,6 @@ class Actor extends InteractiveObject {
 	
 	var head : Transform;
 	var hand : Transform;
-	var torso : Transform;
-	var footRight : Transform;
-	var footLeft : Transform;
 	
 	var displayName : String = "ActorName";
 	var model : String;
@@ -278,9 +275,9 @@ class Actor extends InteractiveObject {
 			var shootTarget : Vector3;
 		
 			if ( target.GetComponent ( Player ) ) {
-				shootTarget = target.GetComponent ( Player ).torso.transform.position;
+				shootTarget = target.GetComponent ( Player ).head.position;
 			} else if ( target.GetComponent ( Actor ) ) {
-				shootTarget = target.GetComponent ( Actor ).torso.position;
+				shootTarget = target.GetComponent ( Actor ).head.position;
 			}
 		
 			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
@@ -478,7 +475,7 @@ class Actor extends InteractiveObject {
 		if ( GameCore.controlsActive ) {
 			if ( affiliation == eAffiliation.Ally && !talking  ) {
 				if ( ConversationManager.CheckForcedConvo( this ) ) {
-					StartCoroutine ( Talk() );
+					Interact();
 				}
 			}
 		}
@@ -601,7 +598,7 @@ class Actor extends InteractiveObject {
 			shootTimer += Time.deltaTime;			
 		}
 		
-		this.GetComponent(Animator).SetFloat("DeltaCombined", speed / runningSpeed );
+		this.GetComponent(Animator).SetFloat("Speed", speed / runningSpeed );
 		this.GetComponent(Animator).SetBool("Aiming", aiming );
 	}
 }
