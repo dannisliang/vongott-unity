@@ -288,7 +288,7 @@ public class OGWidget extends MonoBehaviour {
 		drawDepth = -this.transform.position.z;
 			
 		drawRct = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		CalcClipping ();	
+		//CalcClipping ();	
 	}	
 
 	

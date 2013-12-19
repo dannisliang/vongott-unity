@@ -55,9 +55,13 @@ class OGButton extends OGWidget {
 	// Set drawn
 	////////////////////
 	override function SetDrawn ( drawn : boolean ) {
+		if ( !image || !label || !background ) {
+			Build ();
+		}	
+		
 		isDrawn = drawn;
 	
-		image.isDrawn = isDrawn;
+		image.isDrawn = isDrawn && enableImage;
 		background.isDrawn = isDrawn;
 		label.isDrawn = isDrawn;
 	}
@@ -92,7 +96,7 @@ class OGButton extends OGWidget {
 			image.hidden = true;
 		}
 
-		image.isDrawn = enableImage;
+		image.isDrawn = isDrawn && enableImage;
 		
 		// Background		
 		if ( background == null ) {
@@ -143,7 +147,6 @@ class OGButton extends OGWidget {
 		// Null check
 		if ( !image || !label || !background ) {
 			Build ();
-			return;
 		}	
 		
 		// Mouse

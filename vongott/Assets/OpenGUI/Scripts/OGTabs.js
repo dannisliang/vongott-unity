@@ -7,28 +7,28 @@ public class OGTabs extends OGWidget {
 	}
 	
 	public var activeTab : int;
-	public var tabs : Tab[];
+	public var tabs : List.<Tab> = new List.<Tab>();
 	
 	public function AddTab ( tabName : String, tabObject : GameObject, switchTo : boolean ) {
-		var list : List.< Tab > = new List.< Tab > ( tabs );
 		var newTab : Tab = new Tab ();
 
 		newTab.title = tabName;
 		newTab.content = tabObject;
 
-		list.Add ( newTab );
+		tabs.Add ( newTab );
 
-		tabs = list.ToArray();
-
-		Build ();
-		
-		if ( switchTo || tabs.Length < 1 ) {
-			activeTab = tabs.Length;
+		if ( switchTo ) {
+			activeTab = tabs.Count - 1;
+		} else if ( tabs.Count < 2 ) {
+			activeTab = 0;
 		}
+		
+		Build ();
 	}
 
 	public function ClearTabs () {
-		tabs = new Tab[0];
+		tabs.Clear ();
+		activeTab = -1;
 		Build ();
 	}
 
@@ -37,12 +37,18 @@ public class OGTabs extends OGWidget {
 	// Set drawn
 	//////////////////
 	override function SetDrawn ( drawn : boolean ) {
+		if ( tabs.Count != this.transform.childCount ) {
+			Build ();
+		}
+		
 		isDrawn = drawn;
 
 		for ( var i : int = 0; i < this.transform.childCount; i++ ) {
 			var btn : OGButton = this.transform.GetChild(i).GetComponent(OGButton);
 			btn.SetDrawn ( isDrawn );
 		}
+
+		SetDirty ();
 	}
 
 
@@ -56,11 +62,11 @@ public class OGTabs extends OGWidget {
 		var btn : OGButton;
 
 		if ( !tabs ) {
-			tabs = new Tab[0];
+			tabs = new List.<Tab>();
 		}
 
 		// Edit existing or create new ones
-		for ( i = 0; i < tabs.Length; i++ ) {
+		for ( i = 0; i < tabs.Count; i++ ) {
 			if ( i < this.transform.childCount ) {
 				btn = this.transform.GetChild(i).GetComponent(OGButton);
 			} else {
@@ -77,13 +83,13 @@ public class OGTabs extends OGWidget {
 			btn.styles.active = this.styles.active;
 
 			btn.gameObject.name = i + ": " + tabs[i].title;
-			btn.transform.localScale = new Vector3 ( 1.0 / this.transform.childCount, 1, 1 );
-			btn.transform.localPosition = new Vector3 ( (i*1.0) / this.transform.childCount, 0, 0 );
+			btn.transform.localScale = new Vector3 ( 1.0 / tabs.Count, 1, 1 );
+			btn.transform.localPosition = new Vector3 ( (i*1.0) / tabs.Count, 0, 0 );
 		}
 
 		// Destroy remaining
-		if ( this.transform.childCount > tabs.Length ) {
-			for ( i = tabs.Length; i < this.transform.childCount; i++ ) {
+		if ( this.transform.childCount > tabs.Count ) {
+			for ( i = tabs.Count; i < this.transform.childCount; i++ ) {
 				DestroyImmediate ( this.transform.GetChild(i).gameObject );
 			}
 		}
@@ -97,18 +103,20 @@ public class OGTabs extends OGWidget {
 	}
 
 	public function SetActiveTab ( tab : int ) {
-		activeTab = tab;
+		if ( tab < 0 || tab >= tabs.Count ) { return; }
 		
-		for ( var i : int = 0; i < this.transform.childCount; i++ ) {
-			var btn : OGButton = this.transform.GetChild(i).GetComponent(OGButton);
-					
+		activeTab = tab;
+	
+		for ( var i : int = 0; i < tabs.Count; i++ ) {
+			var btn : OGButton = this.transform.Find(i + ": " + tabs[i].title).GetComponent(OGButton);
+			
 			if ( activeTab != i ) {
 				btn.styles.basic = styles.basic;
 				
 				if ( tabs[i].content != null && tabs[i].content.activeSelf ) {
 					tabs[i].content.SetActive ( false );
 				}
-				
+
 			} else {
 				btn.styles.basic = styles.active;
 				
@@ -117,18 +125,19 @@ public class OGTabs extends OGWidget {
 				}
 			}
 		}
+
+		SetDirty ();
 	}
 	
 	override function UpdateWidget () {
 		// Null check
-		if ( tabs == null ) {
+		if ( tabs.Count != this.transform.childCount ) {
 			Build ();
-			return;
 		}
 
 		// Update data
-		if ( activeTab >= tabs.Length && tabs.Length > 0 ) {
-			activeTab = tabs.Length - 1;
+		if ( activeTab >= tabs.Count && tabs.Count > 0 ) {
+			SetActiveTab ( tabs.Count - 1 );
 	 	} 
 	}
 }

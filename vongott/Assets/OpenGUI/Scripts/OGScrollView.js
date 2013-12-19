@@ -47,6 +47,17 @@ public class OGScrollView extends OGWidget {
 			if ( w != this ) {
 				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
 				w.clipRct = drawRct;
+
+				var leftOut : boolean = w.drawRct.xMax < this.drawRct.xMin;
+				var rightOut : boolean = w.drawRct.xMin > this.drawRct.xMax;
+				var topOut : boolean = w.drawRct.yMax < this.drawRct.yMin;
+				var bottomOut : boolean = w.drawRct.yMin > this.drawRct.yMax;
+				var anyOut : boolean = leftOut || rightOut || topOut || bottomOut;
+
+				/*
+				if ( w.isDrawn != !anyOut ) {
+					w.SetDrawn ( !anyOut ); 
+				}*/
 			}
 		}
 	}

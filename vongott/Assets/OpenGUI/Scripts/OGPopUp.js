@@ -74,9 +74,11 @@ class OGPopUp extends OGWidget {
 					target.SendMessage ( message );
 				}
 			}	
+		
+			ToggleUp ( false );
 		}
 		
-		SetDirty();
+		SetDrawn ( isDrawn );
 	}
 	
 	override function OnMouseDown () {
@@ -85,7 +87,7 @@ class OGPopUp extends OGWidget {
 			timeStamp = Time.time;
 		}
 		
-		SetDirty();
+		SetDrawn ( isDrawn );
 	}
 	
 	override function OnMouseOver () {
@@ -103,6 +105,10 @@ class OGPopUp extends OGWidget {
 	override function OnMouseCancel () {
 		isUp = false;
 		
+		ToggleUp ( false );
+
+		SetDrawn ( isDrawn );
+
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
 
@@ -120,6 +126,8 @@ class OGPopUp extends OGWidget {
 
 		background.isDrawn = isDrawn;
 		label.isDrawn = isDrawn;
+	
+		SetDirty ();
 	}
 
 
@@ -175,8 +183,8 @@ class OGPopUp extends OGWidget {
 
 		// Background	
 		if ( background == null ) {
-			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
-				background = this.gameObject.GetComponentInChildren ( OGSlicedSprite );
+			if ( this.transform.Find("SlicedSprite") ) {
+				background = this.transform.Find("SlicedSprite").GetComponent ( OGSlicedSprite );
 				
 			} else {			
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
@@ -194,8 +202,8 @@ class OGPopUp extends OGWidget {
 
 		// Title label		
 		if ( label == null ) {
-			if ( this.gameObject.GetComponentInChildren ( OGLabel ) ) {
-				label = this.gameObject.GetComponentInChildren ( OGLabel );
+			if ( this.transform.Find("Label") ) {
+				label = this.transform.Find("Label").GetComponent(OGLabel);
 				
 			} else {				
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
@@ -212,6 +220,12 @@ class OGPopUp extends OGWidget {
 		label.pivot.y = RelativeY.Top;
 		
 		label.hidden = true;
+
+		// Set styles
+		ToggleUp ( isUp );
+
+		// Set drawn
+		SetDrawn ( isDrawn );
 	}
 
 
@@ -220,9 +234,8 @@ class OGPopUp extends OGWidget {
 	////////////////////
 	override function UpdateWidget () {
 		// Null check
-		if ( !optionLabels || !label || !background ) {
+		if ( !optionLabels || !label || !background || optionLabels.transform.childCount != options.Length ) {
 			Build ();
-			return;
 		}
 
 		// Mouse
