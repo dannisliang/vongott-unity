@@ -10,7 +10,7 @@ public class OGTextField extends OGWidget {
 	}
 	
 	public var locked : boolean = false;
-	public var text : String;
+	public var text : String = "";
 	public var maxLength : int = 30;
 	public var regex : String;
 	public var regexPreset : RegExPreset;
@@ -24,17 +24,27 @@ public class OGTextField extends OGWidget {
 	private var listening : boolean = false;
 	private var cursorPosition : Vector2;
 	private var selectCursorPosition : Vector2;
-	private var bypassDuration : float = 0.5;
-	private var bypassTimer : float = 0;
 
+	//////////////////
+	// Interaction
+	//////////////////
 	override function OnMouseDown () {
 		listening = true;
+	
+		SetDirty ();
 	}
 
 	override function OnMouseCancel () {
 		listening = false;
+
+		SetDirty ();
 	}
 
+
+	/////////////////
+	// OnGUI draw
+	/////////////////
+	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
 		if ( listening && isDrawn ) {
 			//GUI.color = new Color ( 0, 0, 0, 0 );
@@ -56,7 +66,27 @@ public class OGTextField extends OGWidget {
 		}
 	}
 
-	override function UpdateWidget () {
+	////////////////////
+	// Set drawn
+	////////////////////
+	override function SetDrawn ( drawn : boolean ) {
+		if ( !cursor || !label || !background ) {
+			Build ();
+		}
+		
+		isDrawn = drawn;
+
+		cursor.isDrawn = isDrawn && listening;
+		label.isDrawn = isDrawn && !listening;
+		background.isDrawn = isDrawn;
+
+		SetDirty ();
+	}
+
+	////////////////////
+	// Build
+	////////////////////
+	override function Build () {
 		isSelectable = true;
 
 		// Cursor
@@ -70,18 +100,14 @@ public class OGTextField extends OGWidget {
 				newCursor.styles.basic = this.styles.thumb;
 				cursor = newCursor;
 			}
-
-			SetDirty ();
-		
-		} else {
-			cursor.transform.localScale = new Vector3 ( 1.5 / this.transform.localScale.x, ( styles.basic.text.fontSize + 4 ) / this.transform.localScale.y, 1 );
-			cursor.transform.localEulerAngles = Vector3.zero;
-			cursor.transform.localPosition = new Vector3 ( cursorPosition.x, cursorPosition.y, 0 );
-			
-			cursor.isDrawn = isDrawn && listening;
-			cursor.hidden = true;
-			cursor.styles.basic = this.styles.thumb;
 		}
+
+		cursor.transform.localScale = new Vector3 ( 1.5 / this.transform.localScale.x, ( styles.basic.text.fontSize + 4 ) / this.transform.localScale.y, 1 );
+		cursor.transform.localEulerAngles = Vector3.zero;
+		cursor.transform.localPosition = new Vector3 ( cursorPosition.x, cursorPosition.y, 0 );
+		
+		cursor.styles.basic = this.styles.thumb;
+		cursor.hidden = true;
 		
 		// Label
 		if ( label == null ) {
@@ -91,22 +117,16 @@ public class OGTextField extends OGWidget {
 			} else {				
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
-				newLabel.text = text;
-				newLabel.styles.basic = this.styles.basic;
+				label = newLabel;
 			}
-
-			SetDirty ();
-		
-		} else {
-			label.text = text;
-			label.transform.localScale = Vector3.one;
-			label.transform.localEulerAngles = Vector3.zero;
-			label.transform.localPosition = Vector3.zero;
-			
-			label.isDrawn = isDrawn && !listening;
-			label.hidden = true;
-			label.styles.basic = this.styles.basic;
 		}
+
+		label.transform.localScale = Vector3.one;
+		label.transform.localEulerAngles = Vector3.zero;
+		label.transform.localPosition = Vector3.zero;
+		
+		label.hidden = true;
+		label.styles.basic = this.styles.basic;
 		
 		// Background		
 		if ( background == null ) {
@@ -116,24 +136,36 @@ public class OGTextField extends OGWidget {
 			} else {			
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
 				newSprite.transform.parent = this.transform;
-				newSprite.styles.basic = this.styles.basic;
+				background = newSprite;
 			}
-	
-			SetDirty ();
-
-		} else {
-			background.transform.localScale = Vector3.one;
-			background.transform.localEulerAngles = Vector3.zero;
-			background.transform.localPosition = new Vector3 ( 0, 0, 1 );
-		
-			background.styles.basic = this.styles.basic;
-			background.isDrawn = isDrawn;
-			background.hidden = true;
-		
-			mouseRct = background.drawRct;
 		}
-				
-		// Regex
+
+		background.transform.localScale = Vector3.one;
+		background.transform.localEulerAngles = Vector3.zero;
+		background.transform.localPosition = new Vector3 ( 0, 0, 1 );
+	
+		background.styles.basic = this.styles.basic;
+		background.hidden = true;
+	
+		mouseRct = background.drawRct;
+
+		SetDirty ();
+	}
+
+
+	////////////////////
+	// Update
+	////////////////////
+	override function UpdateWidget () {
+		// Null check
+		if ( !cursor || !label || !background ) {
+			Build ();
+		}
+		
+		// Update data
+		label.text = text;
+		
+		// ^ Regex presets
 		if ( regexPreset != currentPreset ) {
 			currentPreset = regexPreset;
 			
@@ -153,10 +185,6 @@ public class OGTextField extends OGWidget {
 				regex = "^0-9.";
 				
 			}
-		}
-	
-		if ( listening ) {
-			SetDirty ();
 		}
 	}
 }

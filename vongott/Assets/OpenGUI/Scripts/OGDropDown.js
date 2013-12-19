@@ -22,6 +22,7 @@ class OGDropDown extends OGWidget {
 	// Vars
 	public var title : String;
 	public var target : GameObject;
+	public var padding : RectOffset;
 	public var submenu : DropDownItemRoot[];
 	public var isDown : boolean = false;
 
@@ -36,79 +37,115 @@ class OGDropDown extends OGWidget {
 	// Interaction
 	////////////////////
 	override function OnMouseUp () {
+		CheckTicked ();
+
 		isDown = !isDown;
+		SetSelectedItem ( -1 );
+		activeNestedMenu = -1;
 
 		SetDrawn ( isDrawn );
 	}
-	
-	private function SelectItem ( item : DropDownItem ) {
-		/*if ( item.GetType() == DropDownItemRoot && ( item as DropDownItemRoot ).nestedMenu.Length > 0 ) {
-			if ( currentNestedMenu != ( item as DropDownItemRoot ).nestedMenu ) {
-				currentNestedMenu = ( item as DropDownItemRoot ).nestedMenu;
-				isNestedDown = true;
-			} else {
-				currentNestedMenu = null;
-				isNestedDown = false;
-			}
-		
-		} else {
-			if ( item.tickable && item.GetType() == DropDownItemNested && ( item as DropDownItemNested ).tickOverrides && currentNestedMenu != null ) {
-				for ( var i : DropDownItemNested in currentNestedMenu ) {
-					if ( i == item ) {
-						item.isTicked = true;
-					} else {
-						i.isTicked = false;
-					}
-				}
-				
-				
-			} else if ( item.tickable ) {
-				item.isTicked = !item.isTicked;
-			}
-		
-			if ( target && item.message ) {
-				target.SendMessage ( item.message );
-			}
-		}*/
+
+	override function OnMouseCancel () {
+		Exit ();
 	}
 
-	// Select item
+	// Exit
+	private function Exit () {
+		if ( isDown ) {
+			isDown = false;
+			SetSelectedItem ( -1 );
+
+			SetDrawn ( isDrawn );
+		}
+	}
+
+	// Check ticked
+	private function CheckTicked () {
+		var i : int = 0;
+		var o : int = 0;
+		var btn : OGListItem;
+
+		for ( i = 0; i < container.transform.childCount; i++ ) {
+			btn = container.transform.GetChild(i).Find("Button").GetComponent(OGListItem);
+			btn.isTicked = submenu[i].isTicked;
+			var nested : Transform = container.transform.GetChild(i).Find("NestedMenu");
+			for ( o = 0; o < nested.childCount; o++ ) {
+				btn = nested.GetChild(o).GetComponent(OGListItem);
+				btn.isTicked = submenu[i].nestedMenu[o].isTicked;
+			}
+		}
+	}
+
+	// Set selected item
+	private function SetSelectedItem ( i : int ) {
+		var o : int = 0;
+		
+		for ( o = 0; o < container.transform.childCount; o++ ) {
+			var entry : Transform = container.transform.GetChild(o);
+			entry.Find("Button").GetComponent(OGListItem).selected = o == i;
+			
+			for ( var k = 0; k < entry.Find("NestedMenu").childCount; k++ ) {
+				entry.Find("NestedMenu").GetChild(k).GetComponent(OGListItem).selected = false;
+			}
+		}
+	}
+
+	// Menu item
 	public function SelectItem ( n : String ) {
 		var i : int = int.Parse ( n );
-
-		for ( var o : int = 0; o < container.transform.childCount; o++ ) {
-			container.transform.GetChild(o).Find("Button").GetComponent(OGListItem).selected = o == i;
+		var item : DropDownItemRoot = submenu[i];
+		
+		if ( !String.IsNullOrEmpty ( item.message ) ) {
+			target.SendMessage ( item.message );
 		}
+		
+		if ( item.tickable ) {
+			item.isTicked = !item.isTicked;
+			container.transform.GetChild(i).Find("Button").GetComponent(OGListItem).isTicked = item.isTicked;
+		}
+	}
+
+	public function HoverItem ( n : String ) {
+		var i : int = int.Parse ( n );
+
+		SetSelectedItem ( i );
 
 		if ( submenu[i].nestedMenu.Length > 0 ) {
 			activeNestedMenu = i;
 		} else {
 			activeNestedMenu = -1;
 		}
-
+		
 		SetDrawn ( isDrawn );
 	}
 
-	// Select nested item
+	// Nested item
 	public function SelectNestedItem ( n : String ) {
+		if ( activeNestedMenu < 0 ) { 
+			Debug.LogWarning ( "OGDropDown | Nested menu out of bounds!" );
+			return;
+		}
+		
 		var i : int = int.Parse ( n );
 		var item : DropDownItemNested = submenu[activeNestedMenu].nestedMenu[i];
-	
+		var nested : Transform = container.transform.GetChild(activeNestedMenu).Find("NestedMenu");
+
 		if ( item.tickable ) {
 			if ( item.tickOverrides ) {
 				for ( var o : int = 0; o < submenu[activeNestedMenu].nestedMenu.Length; o++ ) {
 					submenu[activeNestedMenu].nestedMenu[o].isTicked = o == i;
+					nested.GetChild(o).GetComponent(OGListItem).isTicked = o == i;
 				}
 			} else {
 				item.isTicked = !item.isTicked;
+				nested.GetChild(i).GetComponent(OGListItem).isTicked = item.isTicked;
 			}
 		}
 
 		if ( !String.IsNullOrEmpty ( item.message ) ) {
 			target.SendMessage ( item.message );
 		}
-
-		SetDirty ();
 	}
 	
 	
@@ -160,14 +197,15 @@ class OGDropDown extends OGWidget {
 		if ( !container && !FindChild("Submenu") ) {
 			container = new GameObject ( "Submenu" );
 			container.transform.parent = this.transform;
-			container.transform.localPosition = new Vector3 ( 0, 1.1, 0 );
-			container.transform.localScale = Vector3.one;
-			container.transform.localEulerAngles = Vector3.zero;
 		
 		} else if ( container == null ) {
 			container = FindChild("Submenu");
 		}
 
+		container.transform.localPosition = new Vector3 ( 0, 1 + (padding.top*2)/this.transform.localScale.y, 0 );
+		container.transform.localScale = Vector3.one;
+		container.transform.localEulerAngles = Vector3.zero;
+		
 		// Submenu
 		if ( submenu == null ) {
 			submenu = new DropDownItemRoot[0];
@@ -200,17 +238,19 @@ class OGDropDown extends OGWidget {
 				button.transform.parent = entry;
 			}
 
-			button.transform.localPosition = Vector3.zero;
-			button.transform.localScale = Vector3.one;
+			button.transform.localPosition = new Vector3 ( padding.left/this.transform.localScale.x, 0, 2 );
+			button.transform.localScale = new Vector3 ( 1-(padding.left+padding.right)/this.transform.localScale.x, 1, 1 );
 			button.transform.localEulerAngles = Vector3.zero;
 			
 			button.text = submenu[i].name;
 			button.target = this.gameObject;
 			button.message = "SelectItem";
+			button.hoverMessage = "HoverItem";
 			button.argument = i.ToString();
 			button.hidden = true;
-			button.styles.basic = this.styles.basic;
-			button.styles.active = this.styles.active;
+			button.styles.basic = this.styles.active;
+			button.styles.active = this.styles.hover;
+			button.styles.ticked = this.styles.ticked;
 
 			// Nested menu container
 			var nested : Transform;
@@ -222,7 +262,7 @@ class OGDropDown extends OGWidget {
 				nested.parent = entry;
 			}
 
-			nested.localPosition = new Vector3 ( 1, 0, 0 );
+			nested.localPosition = new Vector3 ( 1 - (padding.right*2)/this.transform.localScale.x, 0, 0 );
 			nested.localScale = Vector3.one;
 			nested.localEulerAngles = Vector3.zero;
 
@@ -245,11 +285,12 @@ class OGDropDown extends OGWidget {
 				btn.message = "SelectNestedItem";
 				btn.argument = o.ToString();
 				btn.hidden = true;
-				btn.styles.basic = this.styles.basic;
-				btn.styles.active = this.styles.active;
+				btn.styles.basic = this.styles.active;
+				btn.styles.active = this.styles.hover;
+				btn.styles.ticked = this.styles.ticked;
 
-				btn.transform.localScale = Vector3.one;
-				btn.transform.localPosition = new Vector3 ( 0, o, 0 );
+				btn.transform.localPosition = new Vector3 ( padding.left/this.transform.localScale.x, o, 0 );
+				btn.transform.localScale = new Vector3 ( 1-(padding.left+padding.right)/this.transform.localScale.x, 1, 1 );
 				btn.transform.localEulerAngles = Vector3.zero;
 			}
 
@@ -270,12 +311,12 @@ class OGDropDown extends OGWidget {
 				bg.transform.parent = entry;
 			}
 
-			bg.styles.basic = this.styles.background;
-			bg.transform.localPosition = new Vector3 ( 1, 0, 0 );
+			bg.styles.basic = this.styles.basic;
+			bg.transform.localPosition = new Vector3 ( 1 - (padding.right*2)/this.transform.localScale.x, -padding.top/this.transform.localScale.y, 1 );
 			if ( nested.childCount < 1 ) {
 				bg.transform.localScale = Vector3.one;
 			} else {
-				bg.transform.localScale = new Vector3 ( 1, nested.childCount, 1 );
+				bg.transform.localScale = new Vector3 ( 1, nested.childCount + (padding.top+padding.bottom)/this.transform.localScale.y, 1 );
 			}
 			bg.transform.localEulerAngles = Vector3.zero;
 			bg.hidden = true;
@@ -300,15 +341,12 @@ class OGDropDown extends OGWidget {
 			}
 		}
 			
-		background.transform.localEulerAngles = Vector3.zero;
-		background.transform.localPosition = Vector3.zero;
 		
 		background.hidden = true;
-
-		background.styles.basic = styles.background;
-		background.transform.localPosition = new Vector3 ( 0, 1, 0 );
-		
-		background.transform.localScale = new Vector3 ( 1, container.transform.childCount + 0.2, 1 );
+		background.styles.basic = this.styles.basic;
+		background.transform.localPosition = new Vector3 ( 0, 1 + padding.top/this.transform.localScale.y, 3 );
+		background.transform.localEulerAngles = Vector3.zero;
+		background.transform.localScale = new Vector3 ( 1, container.transform.childCount + (padding.top+padding.bottom)/this.transform.localScale.y, 1 );
 		
 		// Label
 		if ( label == null ) {
@@ -332,7 +370,7 @@ class OGDropDown extends OGWidget {
 		label.hidden = true;
 
 		// Set drawn
-		SetDrawn ( isDrawn );		
+		SetDrawn ( isDrawn );
 	}
 
 

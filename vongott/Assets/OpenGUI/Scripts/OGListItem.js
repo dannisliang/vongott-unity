@@ -3,13 +3,46 @@
 class OGListItem extends OGWidget {
 	public var text : String = "";
 	public var selected : boolean = false;
+	public var isTicked : boolean = false;
 	public var object : Object;
 	public var target : GameObject;
 	public var message : String;
+	public var hoverMessage : String;
 	public var argument : String;
 
 	private var background : OGSprite;
 	private var label : OGLabel;
+
+
+	//////////////////
+	// Interaction
+	//////////////////
+	private function Select () {
+		selected = true;
+
+		for ( var li : OGListItem in this.transform.parent.GetComponentsInChildren.<OGListItem>() ) {
+			if ( li != this ) {
+				li.selected = false;
+			}
+		}
+
+		if ( target != null ) {
+			if ( !String.IsNullOrEmpty ( hoverMessage ) ) {
+				if ( !String.IsNullOrEmpty ( argument ) ) {
+					target.SendMessage ( hoverMessage, argument );
+				
+				} else if ( object != null ) {
+					target.SendMessage ( hoverMessage, object );
+				
+				} else {
+					target.SendMessage ( hoverMessage, this );
+
+				}
+			}
+		}
+		
+		SetDirty ();		
+	}
 
 	private function Action () {
 		if ( target != null ) {
@@ -32,21 +65,20 @@ class OGListItem extends OGWidget {
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
 
-	override function OnMouseDown () {
-		selected = true;
-
-		if ( !Input.GetKeyDown ( KeyCode.LeftShift ) ) {
-			for ( var li : OGListItem in this.transform.parent.GetComponentsInChildren.<OGListItem>() ) {
-				if ( li != this ) {
-					li.selected = false;
-				}
-			}
-		}
-
+	override function OnMouseUp () {
 		Action ();
-		SetDirty();
 	}
 
+	override function OnMouseOver () {
+		if ( !selected ) {
+			Select ();
+		}
+	}
+
+	
+	//////////////////
+	// Set drawn
+	//////////////////
 	override function SetDrawn ( drawn : boolean ) {
 		if ( !background || !label ) {
 			Build ();
@@ -58,6 +90,10 @@ class OGListItem extends OGWidget {
 		label.isDrawn = isDrawn;
 	}
 
+	
+	//////////////////
+	// Build
+	//////////////////
 	override function Build () {
 		isSelectable = true;
 
@@ -96,6 +132,10 @@ class OGListItem extends OGWidget {
 		label.hidden = true;
 	}
 
+	
+	//////////////////
+	// Update
+	//////////////////
 	override function UpdateWidget () {
 		if ( !background || !label ) {
 			Build ();
@@ -113,6 +153,9 @@ class OGListItem extends OGWidget {
 		} else if ( disabled ) {
 			background.styles.basic = this.styles.disabled;
 			label.styles.basic = this.styles.disabled;
+		} else if ( isTicked ) {
+			background.styles.basic = this.styles.ticked;
+			label.styles.basic = this.styles.ticked;
 		} else {
 			background.styles.basic = this.styles.basic;
 			label.styles.basic = this.styles.basic;

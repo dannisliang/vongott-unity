@@ -139,6 +139,7 @@ class OGPopUp extends OGWidget {
 			optionLabels.transform.localPosition = new Vector3 ( 0, 1, 0 );
 			optionLabels.transform.localScale = Vector3.one;
 			optionLabels.transform.localEulerAngles = Vector3.zero;
+
 		} else if ( !optionLabels ) {
 			optionLabels = this.transform.Find("Options").gameObject;
 		}

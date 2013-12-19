@@ -18,6 +18,12 @@ public enum ScreenSize {
 	ScreenHeight
 }
 
+public enum ButtonAction {
+	OnRelease,
+	OnPress,
+	OnHover
+}
+
 public class OGWidget extends MonoBehaviour {
 	public class Stretch {
 		public var width : ScreenSize = ScreenSize.None;

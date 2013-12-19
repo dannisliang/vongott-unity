@@ -40,7 +40,6 @@ public class OGWidgetStyles {
 	public var ticked : OGStyle;
 	public var thumb : OGStyle;
 	public var disabled : OGStyle;
-	public var background : OGStyle;
 
 	public static function IsStyleUsed ( styleName : String, widgetName : String ) : boolean {
 		if ( styleName == "Basic" ) { return true; }
@@ -68,8 +67,13 @@ public class OGWidgetStyles {
 				if ( styleName == "Thumb" ) { return true; }
 				break;
 
-			case "OGTabs": case "OGListItem":
+			case "OGTabs":
 				if ( styleName == "Active" ) { return true; }
+				break;
+			
+			case "OGListItem":
+				if ( styleName == "Active" ) { return true; }
+				if ( styleName == "Ticked" ) { return true; }
 				break;
 		}
 
