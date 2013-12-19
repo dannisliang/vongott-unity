@@ -218,7 +218,9 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Renew GUID
 	function RenewGUID () {
-		EditorCore.GetSelectedObject().GetComponent(GUID).NewGUID();
+		if ( EditorCore.GetSelectedObject().GetComponent(GUID) ) {
+			EditorCore.GetSelectedObject().GetComponent(GUID).NewGUID();
+		}
 	}
 	
 	// Adjust position
@@ -394,6 +396,8 @@ class EditorMenuBase extends OGPage {
 				
 				if ( EditorCore.GetSelectedObject().GetComponent(GUID) ) {
 					objectName.text = EditorCore.GetSelectedObject().GetComponent(GUID).GUID;
+				} else {
+					objectName.text = "N/A";
 				}
 				
 				var t = EditorCore.GetSelectedObject().transform;

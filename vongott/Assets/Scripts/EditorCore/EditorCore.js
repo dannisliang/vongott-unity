@@ -460,7 +460,7 @@ private function ScanForNodes () : IEnumerator {
 }
 
 public function BakeNavNodes () {
-	StartCoroutine ( ScanForNodes () );
+	OGRoot.GetInstance().StartCoroutine ( ScanForNodes () );
 }
 
 

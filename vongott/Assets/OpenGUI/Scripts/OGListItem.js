@@ -67,6 +67,8 @@ class OGListItem extends OGWidget {
 
 	override function OnMouseUp () {
 		Action ();
+
+		SetDirty ();
 	}
 
 	override function OnMouseOver () {
@@ -147,15 +149,15 @@ class OGListItem extends OGWidget {
 		// Update data
 		label.text = text;
 		
-		if ( selected ) {
-			background.styles.basic = this.styles.active;
-			label.styles.basic = this.styles.active;
-		} else if ( disabled ) {
+		if ( disabled ) {
 			background.styles.basic = this.styles.disabled;
 			label.styles.basic = this.styles.disabled;
 		} else if ( isTicked ) {
 			background.styles.basic = this.styles.ticked;
 			label.styles.basic = this.styles.ticked;
+		} else if ( selected ) {
+			background.styles.basic = this.styles.active;
+			label.styles.basic = this.styles.active;
 		} else {
 			background.styles.basic = this.styles.basic;
 			label.styles.basic = this.styles.basic;

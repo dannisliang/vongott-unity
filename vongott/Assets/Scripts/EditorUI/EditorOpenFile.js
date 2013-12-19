@@ -12,15 +12,12 @@ class EditorOpenFile extends OGPage {
 	public static var asNavMesh : boolean;
 		
 	// Public vars
-	public var container : GameObject;	
 	public var mapList : OGScrollView;
 	public var title : OGLabel;
 	public var selectedFile : String = "";
 	public var previewPane : OGTexture;
 	public var fileInfo : OGLabel;
 	public var previewLoading : GameObject;
-	public var fileLoading : GameObject;
-	public var fileLoadingLabel : OGLabel;
 									
 					
 	////////////////////
@@ -34,10 +31,10 @@ class EditorOpenFile extends OGPage {
 	}
 	
 	// Select map
-	function SelectFile ( name : String ) {
-		selectedFile = name;
+	function SelectFile ( btn : OGListItem ) {
+		selectedFile = btn.text;
 		
-		var dataPath : String = Application.dataPath + "/" + baseDir + "/" + name + "." + fileType;
+		var dataPath : String = Application.dataPath + "/" + baseDir + "/" + btn.text + "." + fileType;
 		var tempImage : Texture2D = new Texture2D ( 0, 0 );
 		
 		if ( fileType == "vgmap" ) {
@@ -54,35 +51,46 @@ class EditorOpenFile extends OGPage {
 				} );
 			} );
 			
-			fileInfo.text = name;
+			fileInfo.text = btn.text;
+		}
+		
+		for ( var i : int = 0; i < mapList.transform.childCount; i++ ) {
+			var b : OGListItem = mapList.transform.GetChild(i).GetComponent(OGListItem);
+			if ( b ) {
+				b.isTicked = b == btn;
+			}
 		}
 	}
 	
 	// Open
 	function LoadSelectedFile () : IEnumerator {
-		fileLoading.SetActive ( true );
-		
+		var loadingText : String = "";
+
 		if ( fileType == "vgmap" ) {
-			fileLoadingLabel.text = "Loading " + selectedFile + "...";
+			loadingText = "Loading " + selectedFile + "...";
 		} else if ( fileType == "obj" ) {
-			fileLoadingLabel.text = "Importing " + selectedFile + "...";
+			loadingText = "Importing " + selectedFile + "...";
 		}
 		
-		container.SetActive ( false );
-		
-		yield new WaitForSeconds ( 0.5 );
+		EditorLoading.message = loadingText;
+		OGRoot.GetInstance().GoToPage ( "Loading" );
 	
+		yield WaitForEndOfFrame();
+		yield WaitForSeconds ( 0.5 );
+
 		if ( fileType == "vgmap" ) {
 			EditorCore.LoadFile ( selectedFile );
 		} else if ( fileType == "obj" ) {
 			EditorCore.LoadOBJ ( selectedFile, asNavMesh );
 		}
 		
+		yield WaitForEndOfFrame();
+		
 		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	function OpenFile () {
-		StartCoroutine ( LoadSelectedFile () );
+		EditorCore.GetInstance().StartCoroutine ( LoadSelectedFile () );
 	}
 	
 	// Cancel
@@ -115,10 +123,9 @@ class EditorOpenFile extends OGPage {
 			btn.text = name;
 			btn.target = this.gameObject;
 			btn.message = "SelectFile";
-			btn.argument = name;
 
 			obj.transform.parent = mapList.transform;
-			obj.transform.localScale = new Vector3 ( 456, 30, 1 );
+			obj.transform.localScale = new Vector3 ( 480, 30, 1 );
 			obj.transform.localPosition = new Vector3 ( 0, i * 32, 0 );
 	
 			btn.GetDefaultStyles ();	
@@ -131,9 +138,6 @@ class EditorOpenFile extends OGPage {
 	// Init
 	////////////////////
 	override function StartPage () {
-		fileLoading.SetActive ( false );
-		container.SetActive ( true );
-		
 		StartCoroutine ( PopulateList() );
 		title.text = "Open a map file";
 	}

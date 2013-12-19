@@ -110,10 +110,17 @@ class EditorBrowserPanel extends MonoBehaviour {
 	}
 
 	// Select file
-	public function SelectFile ( name : String ) {
-		selectedFile = currentFolder.FindFile ( name );
+	public function SelectFile ( btn : OGListItem ) {
+		selectedFile = currentFolder.FindFile ( btn.text );
 								
-		inspectorName.text = name;
+		inspectorName.text = btn.text;
+		
+		for ( var i : int = 0; i < fileList.transform.childCount; i++ ) {
+			var b : OGListItem = fileList.transform.GetChild(i).GetComponent(OGListItem);
+			if ( b ) {
+				b.isTicked = b == btn;
+			}
+		}
 	}
 
 	// Create list item
@@ -124,7 +131,6 @@ class EditorBrowserPanel extends MonoBehaviour {
 		btn.text = objName;	
 		btn.target = this.gameObject;
 		btn.message = "Select" + type;
-		btn.argument = objName;
 
 		//StartCoroutine ( EditorCore.GetObjectIcon ( currentFolder.FindFile ( btn.gameObject.name ) as GameObject, img ) );
 		

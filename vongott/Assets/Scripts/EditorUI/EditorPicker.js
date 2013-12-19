@@ -63,7 +63,6 @@ class EditorPicker extends OGPage {
 		btn.text += label;
 		btn.target = this.gameObject;
 		btn.message = "SelectItem";
-		btn.argument= btn.text;
 
 		obj.transform.parent = scrollView.transform;
 		obj.transform.localPosition = new Vector3 ( inset, 0, 0 );
@@ -93,8 +92,15 @@ class EditorPicker extends OGPage {
 	
 	
 	// Highlight item
-	function SelectItem ( path : String ) {
-		selectedItem = path;
+	function SelectItem ( btn : OGListItem ) {
+		selectedItem = btn.text;
+		
+		for ( var i : int = 0; i < scrollView.transform.childCount; i++ ) {
+			var b : OGListItem = scrollView.transform.GetChild(i).GetComponent(OGListItem);
+			if ( b ) {
+				b.isTicked = b == btn;
+			}
+		}
 	}
 	
 	// Clear items
