@@ -39,11 +39,11 @@ Interactive objects, apart from items and upgrades, so far include computers, st
 Conversations are going rather swimmingly thanks to the new node editor.
 <a href="{{ img_path }}convos.jpg"><img src="{{ img_path }}convos.jpg" /></a>
 
-The game still doesn't look like much, but with a few [borrows assets](http://www.moddb.com/mods/new-vision) it's easy to imagine what the engine is currently capable of.
+The game still doesn't look like much, but with a few [borrowed assets](http://www.moddb.com/mods/new-vision) it's easy to imagine what the engine is currently capable of.
 <a href="{{ img_path }}view.jpg"><img src="{{ img_path }}view.jpg" /></a>
 
 ### UI
-As you might notice from the inventory screencap above, I have moved away from the (circular UI paradigm)[http://jeppezapp.com/vongott/2013/08/19/ui-paradigm-and-upgrades/] that I was so confident in. I have to admit, even though it could end up looking cool, the interaction feels like a children's game. It's just not meant to be :)
+As you might notice from the inventory screencap above, I have moved away from the [circular UI paradigm](http://jeppezapp.com/vongott/2013/08/19/ui-paradigm-and-upgrades/) that I was so confident in. I have to admit, even though it could end up looking cool, the interaction feels like a children's game. It's just not meant to be :)
 
 ### Overall progress
 I have recently been focusing on rewriting my GUI framework [OpenGUI](https://github.com/mrzapp/opengui), but I am starting to move back towards core game development. Engine-wise, everything is moving along somewhat desirably, but as far as story and art assets go, we have almost nothing yet. It will catch up later though, it's mainly an issue of timing. I am still fairly confident that this project will be finished, even though it is a mountain of challenges.
