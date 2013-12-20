@@ -11,7 +11,7 @@ public class OGSprite extends OGWidget {
 		var height : float = drawRct.height / tile.y;
 		var x : float = drawRct.x + ( xInt * width );
 		var y : float = drawRct.y + ( yInt * height );
-		
+	
 		// Bottom Left	
 		GL.TexCoord2 ( drawCrd.x, drawCrd.y );
 		GL.Vertex3 ( x, y, drawDepth );

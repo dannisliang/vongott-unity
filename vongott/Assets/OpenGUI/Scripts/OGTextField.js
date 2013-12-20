@@ -164,7 +164,9 @@ public class OGTextField extends OGWidget {
 		
 		// Update data
 		label.text = text;
-		
+	
+		label.clipRct = background.drawRct;
+
 		// ^ Regex presets
 		if ( regexPreset != currentPreset ) {
 			currentPreset = regexPreset;

@@ -3,6 +3,10 @@
 public class OGSlicedSprite extends OGWidget {
 	private var drawBrd : OGSlicedSpriteOffset;
 	private var pixelBrd : OGSlicedSpriteOffset;
+	private var clipTop : float;
+	private var clipRight : float;
+	private var clipBottom : float;
+	private var clipLeft : float;
 
 
 	//////////////////
@@ -12,8 +16,7 @@ public class OGSlicedSprite extends OGWidget {
 	private function RecalcBorder ( border : OGSlicedSpriteOffset ) : OGSlicedSpriteOffset {
 		return new OGSlicedSpriteOffset ( border.left / root.texWidth, border.right / root.texWidth, border.top / root.texHeight, border.bottom / root.texHeight );
 	}
-
-
+	
 	//////////////////
 	// 9-slice drawing
 	//////////////////

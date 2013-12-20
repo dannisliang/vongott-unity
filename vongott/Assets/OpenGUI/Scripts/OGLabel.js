@@ -33,50 +33,60 @@ public class OGLabel extends OGWidget {
 
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
 			var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
+			var shouldDraw : boolean = true;
+			var mod : float = 0;
 
-			if ( shouldClip ) {  
-				var leftClip : float = shouldClip ? Mathf.Clamp ( clipRct.x - ( position.x + x ), 0, 1 ) : 0;
-				var leftClipRange : float = shouldClip ? Mathf.Clamp ( leftClip - vert.width, 0, 1 ) : 0;
-				var rightClip : float = shouldClip ? Mathf.Clamp ( ( position.x + x + width ) - ( clipRct.x + clipRct.width ), 0, 1 ) : 0;
-				var rightClipRange : float = shouldClip ? Mathf.Clamp ( rightClip - vert.width, 0, 1 ) : 0;
-				var bottomClip : float = shouldClip ? Mathf.Clamp ( clipRct.y - ( position.y + y ), 0, 1 ) : 0;
-				var bottomClipRange : float = shouldClip ? Mathf.Clamp ( bottomClip + vert.height, 0, 1 ) : 0;
-				var topClip : float = shouldClip ? Mathf.Clamp ( ( position.y + y - vert.height ) - ( clipRct.y + clipRct.height ), 0, 1 ) : 0;
-				var topClipRange : float = shouldClip ? Mathf.Clamp ( topClip + vert.height, 0, 1 ) : 0;
+			var left : float = position.x + x;
+			var right : float = position.x + x + vert.width;
+			var bottom : float = position.y + y;
+			var top : float = position.y + y - vert.height;
 
+			if ( shouldClip ) {
+				mod = clipRct.x - left;
+				if ( mod > vert.width ) {
+					shouldDraw = false;
+				} else if ( mod > 0 ) {
+					left += mod;
+				}
+				
+				mod = right - (clipRct.x+clipRct.width);
+				if ( mod > vert.width ) {
+					shouldDraw = false;
+				} else if ( mod > 0 ) {
+					right -= mod;
+				}
+
+				mod = clipRct.y - bottom;
+				if ( mod > vert.height ) {
+					shouldDraw = false;
+				} else if ( mod > 0 ) {
+					bottom += mod;
+				}
+
+				mod = top - (clipRct.y+clipRct.height);
+				if ( mod > vert.height ) {
+					shouldDraw = false;
+				} else if ( mod > 0 ) {
+					top -= mod;
+				}
+			}
+			
+			if ( shouldDraw ) {
 				// Bottom Left
 				GL.TexCoord2 ( uv[0].x, uv[0].y );
-				GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y + bottomClip - topClipRange, z );
+				GL.Vertex3 ( left, bottom, z );
 				
 				// Top left
 				GL.TexCoord2 ( uv[1].x, uv[1].y );
-				GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y - vert.height + bottomClipRange - topClip, z );
+				GL.Vertex3 ( left, top, z );
 
 				// Top right
 				GL.TexCoord2 ( uv[2].x, uv[2].y );
-				GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y - vert.height + bottomClipRange - topClip, z );
+				GL.Vertex3 ( right, top, z );
 			
 				// Bottom right
 				GL.TexCoord2 ( uv[3].x, uv[3].y );
-				GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y + bottomClip - topClipRange, z );
-			
-			} else {
-				// Bottom Left
-				GL.TexCoord2 ( uv[0].x, uv[0].y );
-				GL.Vertex3 ( position.x + x, position.y + y, z );
-				
-				// Top left
-				GL.TexCoord2 ( uv[1].x, uv[1].y );
-				GL.Vertex3 ( position.x + x, position.y + y - vert.height, z );
-
-				// Top right
-				GL.TexCoord2 ( uv[2].x, uv[2].y );
-				GL.Vertex3 ( position.x + x + vert.width, position.y + y - vert.height, z );
-			
-				// Bottom right
-				GL.TexCoord2 ( uv[3].x, uv[3].y );
-				GL.Vertex3 ( position.x + x + vert.width, position.y + y, z );
-		
+				GL.Vertex3 ( right, bottom, z );
 			}
 		}
 	}

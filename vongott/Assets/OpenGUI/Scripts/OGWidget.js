@@ -70,6 +70,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var disabled : boolean = false;
 	@HideInInspector public var outOfBounds : boolean = false;
 	@HideInInspector public var isDirty : boolean = false;
+	@HideInInspector public var inScrollView : boolean = false;
 	@HideInInspector public var root : OGRoot;
 	
 	// TODO: Deprecate
@@ -260,21 +261,22 @@ public class OGWidget extends MonoBehaviour {
 	}
 	
 	// Calculate clipping
-	private function CalcClipping () {
+	public function CalcClipping ( tempRct : Rect ) {
 		var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
 
 		if ( shouldClip ) {
-			var leftClip : float = Mathf.Clamp ( clipRct.x - drawRct.x, 0, float.PositiveInfinity );
-			var rightClip : float = Mathf.Clamp ( ( drawRct.x + drawRct.width ) - ( clipRct.x + clipRct.width ), 0, float.PositiveInfinity );
-			var bottomClip : float = Mathf.Clamp ( clipRct.y - drawRct.y, 0, float.PositiveInfinity );
-			var topClip : float = Mathf.Clamp ( ( drawRct.y + drawRct.height ) - ( clipRct.y + clipRct.height ), 0, float.PositiveInfinity );
-		
-			drawRct.x = drawRct.x + leftClip - rightClip;
-			drawRct.width = drawRct.width - leftClip - rightClip;	
-			drawRct.y = drawRct.y + bottomClip;
-			drawRct.height = drawRct.height - topClip - bottomClip;	
+			var clipTop : float = (clipRct.y+clipRct.height) - (tempRct.y+tempRct.height);
+			var clipRight : float = (clipRct.x+clipRct.width) - (tempRct.x+tempRct.width);
+			var clipBottom : float = tempRct.y - clipRct.y;
+			var clipLeft : float = tempRct.x - clipRct.x;
+			
+			if ( clipTop < 0 ) { tempRct.height += clipTop; }
+			if ( clipRight < 0 ) { tempRct.width += clipRight; }
+			if ( clipBottom < 0 ) { tempRct.y -= clipBottom; tempRct.height += clipBottom; }
+			if ( clipLeft < 0 ) { tempRct.x -= clipLeft; tempRct.width +=clipLeft; }
 		}
 
+		return tempRct;
 	}
 	
 	
@@ -287,8 +289,11 @@ public class OGWidget extends MonoBehaviour {
 		drawCrd = RecalcCoords ( styles.basic.coordinates );
 		drawDepth = -this.transform.position.z;
 			
-		drawRct = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		//CalcClipping ();	
+		var tempRct : Rect = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
+		if ( !this.GetComponent(OGLabel) ) {
+			tempRct = CalcClipping ( tempRct );	
+		}
+		drawRct = tempRct;
 	}	
 
 	

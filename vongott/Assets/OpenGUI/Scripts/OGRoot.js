@@ -115,12 +115,7 @@ class OGRoot extends MonoBehaviour {
 				
 				if ( w == null || w.GetComponent ( OGLabel ) || w.GetComponent ( OGTexture ) ) { continue; }
 				
-				if ( w.isDrawn ) {
-					if ( w.clipRct.width < 1 || w.clipRct.height < 1 ) {
-						w.clipRct = new Rect ( 0, 0, Screen.width, Screen.height );
-					}
-
-					//skin.atlas.SetVector ( "_ClipRect", new Vector4 ( w.clipRct.x, w.clipRct.width, w.clipRct.y, w.clipRct.height ) ); 
+				if ( w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
 					w.DrawGL ();
 				}
 			}
