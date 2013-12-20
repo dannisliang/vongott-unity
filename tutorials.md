@@ -7,10 +7,10 @@ group: navigation
 ---
 {% include JB/setup %}
 
+**NOTE:** This is outdated. Essential functionality has to be rewritten and more features need to be added before an updated tutorial can be made.
+ 
 ## Tutorial 1: Creating a map
 In this brief tutorial, we will be looking at how to set up a very simple map. We will be placing and manipulating prefabs (pre-fabricated objects) and surfaces and assign materials to them.
-
-**SOMETHING TO NOTE:** There is almost no undo/redo functionality yet, and no group selection of objects. This is something we can work around in most cases by making it easy to correct our mistakes, but sooner or later, I will have to tackle that feature.
 
 ### Overview
 Below is the screen that starts off any session in the Vongott editor. At the top, you have your basic file/edit/view operations, an "add" menu and a selection of editors for conversations, quests and so on. You'll also find a help button for a quick overview of the keybindings necessary to use the editor. Off to the left is the **ASSET BROWSER**, from which we can look through all prefabs, items and actors.
