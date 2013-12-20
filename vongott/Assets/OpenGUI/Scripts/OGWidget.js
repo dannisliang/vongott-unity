@@ -290,9 +290,9 @@ public class OGWidget extends MonoBehaviour {
 		drawDepth = -this.transform.position.z;
 			
 		var tempRct : Rect = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		if ( !this.GetComponent(OGLabel) ) {
+		/*if ( !this.GetComponent(OGLabel) ) {
 			tempRct = CalcClipping ( tempRct );	
-		}
+		}*/
 		drawRct = tempRct;
 	}	
 
