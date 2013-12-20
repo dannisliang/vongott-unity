@@ -46,9 +46,55 @@ group: navigation
 	
 	- First map
 
-- Animations
+- Animations ( basic placeholders, no transitions )
 
-	- Basic placeholders
+	- Weapons:
+	
+		- Idle single hand
+		
+		- Aiming single hand
+		
+		- Idle dual hand
+		
+		- Aiming dual hand
+		
+	- Idle stances:
+	
+		- Standing
+		
+		- Crouching
+		
+	- Locomotion:
+	
+		- Walking
+		
+		- Walking aiming single hand
+		
+		- Walking aiming dual hand 
+		
+		- Trotting
+		
+		- Sprinting
+		
+		- Crawling ( crouched walk )
+	
+	- Jumping:
+	
+		- Running
+		
+		- Standing
+	
+	- Silly:
+	
+		- He me
+		
+		- He meeee
+		
+		- He me neee
+		
+		- Triangle
+		
+		- Split jump 
 
 - Game core
 	
@@ -69,6 +115,8 @@ group: navigation
 		- Environmental changes
 		
 		- Actor influence &#x2713;
+		
+		- Item purchase &#x2713;
 	
 	- Proper character controls
 	
@@ -95,6 +143,16 @@ group: navigation
 	- More view modes in the asset browser &#x2713;
 	
 	- Optimisations
+	
+	- Modelling features:
+	
+		- Boolean operations
+		
+		- Vertex, "face" and edge modification
+		
+		- Automatic UVs 
+	
+	- Undo functionality &#x2713; 
 
 - Gameplay
 
@@ -106,7 +164,11 @@ group: navigation
 	
 - Prefabs
 	
-	- Architecture
+	- Vehicles
+	
+		- 747 &#x2713;
+		
+		- Lifts &#x2713;
 	
 	- Furniture
 	
@@ -197,6 +259,21 @@ group: navigation
 	- Inventory
 	
 	- HUD
+
+- Animations
+	
+	- Lockpicking
+	
+	- Facial animations
+	
+	- Conversational gestures
+	
+	- Melee animations
+	
+	- Upgrade combination animations
+
+	- Transitions between all animations 
+	
 
 ### Phase 5: Finetuning and more artistic content
 
