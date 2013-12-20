@@ -14,7 +14,7 @@ This is a quick overview of what is currently working in the game.
 <!--more-->
 
 ### Editor
-The editor is shaping up to be an all-round capable tool for stringing together level geometry, events, actors and items.
+The editor is shaping up to be an all-round capable tool for stringing together level geometry, events, actors and items. An important thing to mention is that I have completely dropped trying to weave mesh and do boolean operations within the editor itself, as it is simply too big a mouthful for now. I've written an .obj importer instead, so static level geometry can be created in third party 3d software much more capable of such things.
 <a href="{{ img_path }}overview.jpg"><img src="{{ img_path }}overview.jpg" /></a>
 
 The conversation editor got a major overhaul and is now a node editor instead. This makes for some very flexible conversation possibilities.
