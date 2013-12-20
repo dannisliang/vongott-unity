@@ -24,7 +24,7 @@ Other sub-editors are available as well for events, quests and flags
 <a href="{{ img_path }}quests.jpg"><img src="{{ img_path }}quests.jpg" /></a>
 
 NavMesh baking is now possible courtesy of the [OpenPath](https://github.com/mrzapp/openpath) plugin I have been developing
-<a href="{{ img_path }}pathfinding.jpg"><img src="{{ img_path }}parthfinding.jpg" /></a>
+<a href="{{ img_path }}pathfinding.jpg"><img src="{{ img_path }}pathfinding.jpg" /></a>
 
 Every type of actor and item has its own inspector properties, and more are added as needed
 <a href="{{ img_path }}properties.jpg"><img src="{{ img_path }}properties.jpg" /></a>
