@@ -41,7 +41,7 @@ public class OGLabel extends OGWidget {
 			var bottom : float = position.y + y;
 			var top : float = position.y + y - vert.height;
 
-			/*if ( shouldClip ) {
+			if ( shouldClip ) {
 				mod = clipRct.x - left;
 				if ( mod > vert.width ) {
 					shouldDraw = false;
@@ -69,7 +69,7 @@ public class OGLabel extends OGWidget {
 				} else if ( mod > 0 ) {
 					top -= mod;
 				}
-			}*/
+			}
 			
 			if ( shouldDraw ) {
 				// Bottom Left
@@ -152,13 +152,6 @@ public class OGLabel extends OGWidget {
 	/////////////////
 	// Update
 	/////////////////
-	function Update () {
-		if ( oldString != text ) {
-			SetDirty();
-			oldString = text;
-		}
-	}	
-	
 	override function UpdateWidget () {
 		if ( styles.basic == null ) { return; }
 

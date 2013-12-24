@@ -125,7 +125,7 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Coordinates (based on texture size)
 	private function RecalcCoords ( coords : Rect ) : Rect {
-		if ( this.GetComponent(OGTexture) ) {
+		if ( this.GetType () == OGTexture ) {
 			coords.x = 0;
 			coords.y = 0;
 			coords.width = 1;
@@ -146,8 +146,10 @@ public class OGWidget extends MonoBehaviour {
 	public function RecalcScale () : Vector3 {
 		CalcStretch ();
 		
-		if ( this.GetComponent(OGScrollView) ) {
-			return new Vector3 ( this.GetComponent(OGScrollView).size.x, this.GetComponent(OGScrollView).size.y, 1 );
+		var scrollView : OGScrollView = this as OGScrollView;
+
+		if ( scrollView ) {
+			return new Vector3 ( scrollView.size.x, scrollView.size.y, 1 );
 		} else {
 			return this.transform.lossyScale;
 		}
@@ -159,13 +161,13 @@ public class OGWidget extends MonoBehaviour {
 		CalcPivot ();
 		
 		var newPos : Vector3 = this.transform.position;
+		var scrollView : OGScrollView = this as OGScrollView;
 		
 		newPos += offset;
 		newPos += scrollOffset;
 		
-		
-		if ( this.GetComponent(OGScrollView) ) {
-			newPos.y += this.GetComponent(OGScrollView).size.y;	
+		if ( scrollView ) {
+			newPos.y += scrollView.size.y;	
 		} else {
 			newPos.y += this.transform.lossyScale.y;
 		}
@@ -180,10 +182,11 @@ public class OGWidget extends MonoBehaviour {
 		if ( !stretch ) { return; }
 		
 		var newScale : Vector3 = this.transform.localScale;
-		
-		if ( this.GetComponent(OGScrollView) ) {
-			newScale.x = this.GetComponent(OGScrollView).size.x;
-			newScale.y = this.GetComponent(OGScrollView).size.y;
+		var scrollView : OGScrollView = this as OGScrollView;
+
+		if ( scrollView ) {
+			newScale.x = scrollView.size.x;
+			newScale.y = scrollView.size.y;
 		}
 		
 		if ( stretch.width == ScreenSize.ScreenWidth ) {
@@ -198,12 +201,12 @@ public class OGWidget extends MonoBehaviour {
 			newScale.y = ( Screen.height * stretch.heightFactor ) + stretch.heightOffset;
 		}
 		
-		if ( !this.GetComponent(OGScrollView) ) {
+		if ( !scrollView ) {
 			this.transform.localScale = newScale;
 		
 		} else {
-			this.GetComponent(OGScrollView).size.x = newScale.x;
-			this.GetComponent(OGScrollView).size.y = newScale.y;
+			scrollView.size.x = newScale.x;
+			scrollView.size.y = newScale.y;
 		}
 	
 	}

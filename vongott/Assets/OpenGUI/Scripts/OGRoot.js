@@ -113,7 +113,7 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
 				
-				if ( w == null || w.GetComponent ( OGLabel ) || w.GetComponent ( OGTexture ) ) { continue; }
+				if ( w == null || w.GetType() == OGLabel || w.GetType() == OGTexture ) { continue; }
 				
 				if ( w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
 					w.DrawGL ();
@@ -274,8 +274,14 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < mouseOver.Count; i++ ) {
 				w = mouseOver[i];
 				
-				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable && !w.GetComponent(OGScrollView) ) {
-					topWidget = w;
+				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable ) {
+				        if ( w.GetComponent(OGScrollView) ) {
+						if ( Input.GetMouseButton ( 2 ) ) {	
+							topWidget = w;
+						}
+					} else {
+						topWidget = w;
+					}
 				}
 			}
 			
@@ -333,9 +339,10 @@ class OGRoot extends MonoBehaviour {
 					SetDirty ();
 				}
 			}
-		
+		}
+
 		// Escape key
-		} else if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
+		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			if ( downWidget ) {
 				downWidget.OnMouseCancel ();
 				ReleaseWidget ();

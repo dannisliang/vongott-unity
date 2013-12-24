@@ -14,28 +14,9 @@ public class OGScrollView extends OGWidget {
 
 	private var widgets : OGWidget[];
 
-	override function OnMouseDrag () {
-		if ( !isDraggable ) { return; }
-
-		var drag : Vector2;
-		var amount : Vector2;
-		drag.x = Input.GetAxis ( "Mouse X" ); 
-		drag.y = Input.GetAxis ( "Mouse Y" );
-		
-		amount.x = Mathf.Floor ( drag.x * 20 );
-		amount.y = -Mathf.Floor ( drag.y * 20 );
-		
-		// ^ Elasticity
-		if ( position.x + amount.x < padding.x * elasticity ) {
-			position.x += amount.x / Mathf.Clamp ( position.x, 1, padding.x * elasticity );
-		}
-
-		if ( position.y + amount.y < padding.x * elasticity ) {
-			position.y += amount.y / Mathf.Clamp ( position.y, 1, padding.y * elasticity );;
-		}	
-		
-	}
-
+	////////////////
+	// Update
+	////////////////
 	private function UpdateChildren () {
 		if ( !widgets || widgets.Length != this.gameObject.GetComponentsInChildren.<OGWidget>().Length ) {
 			widgets = this.gameObject.GetComponentsInChildren.<OGWidget>();
@@ -85,12 +66,40 @@ public class OGScrollView extends OGWidget {
 		}
 	}
 
+	//////////////////
+	// Mouse
+	//////////////////
+	override function OnMouseDrag () {
+		if ( !isDraggable ) { return; }
+
+		var drag : Vector2;
+		var amount : Vector2;
+		drag.x = Input.GetAxis ( "Mouse X" ); 
+		drag.y = Input.GetAxis ( "Mouse Y" );
+		
+		amount.x = Mathf.Floor ( drag.x * 20 );
+		amount.y = -Mathf.Floor ( drag.y * 20 );
+		
+		// ^ Elasticity
+		if ( position.x + amount.x < padding.x * elasticity ) {
+			position.x += amount.x / Mathf.Clamp ( position.x, 1, padding.x * elasticity );
+		}
+
+		if ( position.y + amount.y < padding.x * elasticity ) {
+			position.y += amount.y / Mathf.Clamp ( position.y, 1, padding.y * elasticity );;
+		}	
+	}
+
 	override function OnMouseCancel () {
 		StartCoroutine ( SnapBack () );
+	
+		GetRoot().ReleaseWidget ();
 	}
 
 	override function OnMouseUp () {
 		StartCoroutine ( SnapBack () );
+	
+		GetRoot().ReleaseWidget ();
 	}
 
 	override function OnMouseOver () {
