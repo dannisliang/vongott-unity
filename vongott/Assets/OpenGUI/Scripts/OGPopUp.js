@@ -3,7 +3,7 @@
 @script AddComponentMenu ("OpenGUI/PopUp")
 
 class OGPopUp extends OGWidget {	
-	public var title : String;
+	public var title : String = "";
 	public var options : String[];
 	public var target : GameObject;
 	public var message : String;
@@ -172,6 +172,8 @@ class OGPopUp extends OGWidget {
 			lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
 			lbl.hidden = true;
 			lbl.styles.basic = this.styles.basic;
+			lbl.anchor.x = RelativeX.None;
+			lbl.anchor.y = RelativeY.None;
 		}	
 		
 		// ^ Destroy remaining

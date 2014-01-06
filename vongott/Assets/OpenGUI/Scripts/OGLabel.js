@@ -19,10 +19,10 @@ public class OGLabel extends OGWidget {
 			position.y = vert.height + vert.y;
 
 			if ( info.flipped ) {
-				uv[0] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
-				uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
-				uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
-				uv[3] = new Vector2 ( info.uv.x, info.uv.y );
+				uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
+				uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
+				uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
+				uv[0] = new Vector2 ( info.uv.x, info.uv.y );
 			} else {
 				uv[0] = new Vector2 ( info.uv.x, info.uv.y );
 				uv[1] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
@@ -35,6 +35,7 @@ public class OGLabel extends OGWidget {
 			var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
 			var shouldDraw : boolean = true;
 			var mod : float = 0;
+			var flex : float = 5;
 
 			var left : float = position.x + x;
 			var right : float = position.x + x + vert.width;
@@ -42,28 +43,28 @@ public class OGLabel extends OGWidget {
 			var top : float = position.y + y - vert.height;
 
 			if ( shouldClip ) {
-				mod = clipRct.x - left;
+				mod = clipRct.x - left - flex;
 				if ( mod > vert.width ) {
 					shouldDraw = false;
 				} else if ( mod > 0 ) {
 					left += mod;
 				}
 				
-				mod = right - (clipRct.x+clipRct.width);
+				mod = right - (clipRct.x+clipRct.width) - flex;
 				if ( mod > vert.width ) {
 					shouldDraw = false;
 				} else if ( mod > 0 ) {
 					right -= mod;
 				}
 
-				mod = clipRct.y - bottom;
+				mod = clipRct.y - bottom - flex;
 				if ( mod > vert.height ) {
 					shouldDraw = false;
 				} else if ( mod > 0 ) {
 					bottom += mod;
 				}
 
-				mod = top - (clipRct.y+clipRct.height);
+				mod = top - (clipRct.y+clipRct.height) - flex;
 				if ( mod > vert.height ) {
 					shouldDraw = false;
 				} else if ( mod > 0 ) {
@@ -152,6 +153,12 @@ public class OGLabel extends OGWidget {
 	/////////////////
 	// Update
 	/////////////////
+	public function set content ( value : Object ) {
+		text = value as String;
+	
+		SetDirty ();
+	}
+	
 	override function UpdateWidget () {
 		if ( styles.basic == null ) { return; }
 

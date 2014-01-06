@@ -25,8 +25,8 @@ class EditorInspectorLight extends MonoBehaviour {
 		colorSliders.g.sliderValue = lgt.color.g;
 		colorSliders.b.sliderValue = lgt.color.b;
 		
-		range.slider.sliderValue = lgt.range;
-		intensity.slider.sliderValue = lgt.intensity;
+		range.slider.sliderValue = lgt.range / 100;
+		intensity.slider.sliderValue = lgt.intensity / 8;
 	}
 
 	function Update () {
@@ -38,8 +38,8 @@ class EditorInspectorLight extends MonoBehaviour {
 		if ( o != null && o.GetComponent ( LightSource ) ) {
 			var l : LightSource = o.GetComponent ( LightSource );
 			l.SetColor ( new Color ( colorSliders.r.sliderValue, colorSliders.g.sliderValue, colorSliders.b.sliderValue, 1.0 ) );
-			l.SetRange ( range.slider.sliderValue );
-			l.SetIntensity ( intensity.slider.sliderValue );
+			l.SetRange ( range.slider.sliderValue * 100 );
+			l.SetIntensity ( intensity.slider.sliderValue * 8.0 );
 		}
 	}
 }

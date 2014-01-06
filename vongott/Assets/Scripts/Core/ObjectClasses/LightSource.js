@@ -52,7 +52,8 @@ class LightSource extends MonoBehaviour {
 		}
 		
 		if ( hideInGame && !EditorCore.running ) {
-			this.GetComponentInChildren ( MeshRenderer ).enabled = false;
+			this.GetComponent ( MeshRenderer ).enabled = false;
+			this.GetComponent ( BoxCollider ).enabled = false;
 		}
 		
 		SetColor ( color );

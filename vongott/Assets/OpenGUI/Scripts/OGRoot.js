@@ -321,7 +321,7 @@ class OGRoot extends MonoBehaviour {
 			if ( downWidget ) {
 				downWidget.OnMouseDrag ();
 			
-				if ( downWidget.isDraggable && !downWidget.GetComponent(OGScrollView) ) {
+				if ( downWidget.isDraggable && downWidget.GetType() != OGScrollView ) {
 					var mousePos : Vector3 = Input.mousePosition;
 					mousePos.y = Screen.height - mousePos.y;
 

@@ -1004,6 +1004,7 @@ function DoSave ( path : String ) : IEnumerator {
 	EditorLoading.message = "Saving...";
 	OGRoot.GetInstance().GoToPage ( "Loading" );
 	
+	yield WaitForSeconds(0.5);
 	yield WaitForEndOfFrame();
 		
 	var tex : Texture2D = new Texture2D(Screen.width, Screen.height);	
@@ -1055,7 +1056,7 @@ static function LoadFile ( path : String ) {
 
 // Load OBJ
 static function LoadOBJ ( objName : String, asNavMesh : boolean ) {
-	var go : GameObject = new GameObject ( objName, MeshFilter, MeshRenderer, MeshCollider );
+	var go : GameObject = new GameObject ( objName, MeshFilter, MeshRenderer, MeshCollider, ImportedMesh );
 	var mi : OBJImporter = new OBJImporter();
 		
 	go.transform.parent = currentLevel.transform;

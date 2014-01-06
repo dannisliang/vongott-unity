@@ -39,4 +39,12 @@ class InteractiveObject extends MonoBehaviour {
 	function Update () {		
 		UpdateObject ();
 	}
+
+	function OnCollisionEnter ( collision : Collision ) {
+		var other : GameObject = collision.gameObject;
+
+		if ( other.GetComponent(Actor) ) {
+			NPCCollide ( other.GetComponent(Actor) );
+		}
+	}
 }

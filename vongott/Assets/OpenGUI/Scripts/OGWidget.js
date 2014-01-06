@@ -1,12 +1,14 @@
 ﻿#pragma strict
 
 public enum RelativeX {
+	None,
 	Left,
 	Center,
 	Right
 }
 	
 public enum RelativeY {
+	None,
 	Top,
 	Center,
 	Bottom
@@ -217,13 +219,17 @@ public class OGWidget extends MonoBehaviour {
 		
 		var newPos : Vector3 = this.transform.position;
 		
-		if ( anchor.x == RelativeX.Center ) {
+		if ( anchor.x == RelativeX.Left ) {
+			newPos.x = anchor.xOffset;
+		} else if ( anchor.x == RelativeX.Center ) {
 			newPos.x = ( Screen.width / 2 ) + anchor.xOffset;
 		} else if ( anchor.x == RelativeX.Right ) {
 			newPos.x = Screen.width + anchor.xOffset;
 		}
 		
-		if ( anchor.y == RelativeY.Center ) {
+		if ( anchor.y == RelativeY.Top ) {
+			newPos.y = anchor.yOffset;
+		} else if ( anchor.y == RelativeY.Center ) {
 			newPos.y = ( Screen.height / 2 ) + anchor.yOffset;
 		} else if ( anchor.y == RelativeY.Bottom ) {
 			newPos.y = Screen.height + anchor.yOffset;
@@ -235,7 +241,7 @@ public class OGWidget extends MonoBehaviour {
 	// Pivot (based on object size)
 	private function CalcPivot () {
 		switch ( pivot.y ) {
-			case RelativeY.Top:
+			case RelativeY.Top: case RelativeY.None:
 				offset.y = 0;
 				break;
 								
@@ -257,7 +263,7 @@ public class OGWidget extends MonoBehaviour {
 				offset.x = -this.transform.lossyScale.x/2;
 				break;
 			
-			case RelativeX.Left:	
+			case RelativeX.Left: case RelativeX.None:
 				offset.x = 0;
 				break;
 		}
@@ -293,9 +299,9 @@ public class OGWidget extends MonoBehaviour {
 		drawDepth = -this.transform.position.z;
 			
 		var tempRct : Rect = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		/*if ( !this.GetComponent(OGLabel) ) {
+		if ( this.GetType() != OGLabel ) {
 			tempRct = CalcClipping ( tempRct );	
-		}*/
+		}
 		drawRct = tempRct;
 	}	
 

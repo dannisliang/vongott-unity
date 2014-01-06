@@ -2,7 +2,10 @@
 
 public class OGSlider extends OGWidget {
 	public var sliderValue : float = 0;
-	
+	public var sliderLabel : OGLabel;
+	public var toPercent : boolean = true;
+	public var suffix : String = "";
+
 	private var background : OGSprite;
 	private var thumb : OGSlicedSprite;
 	
@@ -14,11 +17,32 @@ public class OGSlider extends OGWidget {
 		if ( sliderValue >= 0 && sliderValue <= 1 ) {
 			sliderValue = ( Input.mousePosition.x - 10 - this.transform.position.x ) / this.transform.lossyScale.x;
 		}
+	
+
+		sliderValue = Mathf.Clamp ( Mathf.Round ( sliderValue * 100 ) / 100, 0, 1 );
+
+		thumb.transform.localPosition = new Vector3 ( sliderValue, 0.5, 0 );
 		
-		sliderValue = Mathf.Clamp ( System.Math.Round ( sliderValue, 2 ), 0, 1 );
+		if ( sliderLabel ) {
+			if ( toPercent ) {
+				sliderLabel.text = ( sliderValue * 100 ).ToString() + suffix;
+			} else {
+				sliderLabel.text = sliderValue.ToString() + suffix;
+			}	
+		}
+
+		SetDirty ();
 	}
 
+	override function OnMouseCancel () {
+		GetRoot().ReleaseWidget();
+	}
 	
+	override function OnMouseUp () {
+		GetRoot().ReleaseWidget();
+	}
+	
+
 	////////////////
 	// Set drawn
 	////////////////

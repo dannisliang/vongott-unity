@@ -14,6 +14,7 @@ public class OGTextField extends OGWidget {
 	public var maxLength : int = 30;
 	public var regex : String;
 	public var regexPreset : RegExPreset;
+	public var padding : Vector2 = new Vector2 ( 10, 10 );
 
 	@HideInInspector public var cursorStyle : OGStyle;
 	
@@ -121,9 +122,9 @@ public class OGTextField extends OGWidget {
 			}
 		}
 
-		label.transform.localScale = Vector3.one;
+		label.transform.localScale = new Vector3 ( 1 - ((padding.x/this.transform.localScale.x)*2), 1 - ((padding.y/this.transform.localScale.y)*2), 1 );
 		label.transform.localEulerAngles = Vector3.zero;
-		label.transform.localPosition = Vector3.zero;
+		label.transform.localPosition = new Vector3 ( padding.x/this.transform.localScale.x, padding.y/this.transform.localScale.y, 0 );
 		
 		label.hidden = true;
 		label.styles.basic = this.styles.basic;
