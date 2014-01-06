@@ -17,7 +17,7 @@ class Trigger extends MonoBehaviour {
 	var boundingBoxMaterial : Material;
 	
 	// Set activation
-	function SetActivationType ( type : String ) {
+	public function SetActivationType ( type : String ) {
 		switch ( type ) {
 			case "Collision":
 				activation = eTriggerActivation.Collision;
@@ -37,15 +37,22 @@ class Trigger extends MonoBehaviour {
 		}	
 	}
 	
+	// Death
+	public function OnDeath () {
+		if ( activation == eTriggerActivation.Death ) {
+			Activate ();
+		}
+	}
+
 	// Check collision
-	function OnTriggerEnter ( collider : Collider ) {
+	public function OnTriggerEnter ( collider : Collider ) {
 		if ( activation != eTriggerActivation.Collision || collider.gameObject != GameCore.GetPlayerObject() ) { return; }
 		
 		Activate ();
 	}
 	
 	// Activate trigger
-	function Activate () {
+	public function Activate () {
 		for ( var event : GameEvent in events ) {
 			EventManager.Fire ( event );
 		}

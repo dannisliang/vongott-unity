@@ -83,6 +83,10 @@ class PlayerController {
 				GameCore.GetInteractiveObject().Interact();
 			}
 			
+		// Idle
+		} else {
+			actionState = ePlayerActionState.Idle;
+		
 		}
 		
 		// Locomotion

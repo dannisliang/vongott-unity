@@ -58,6 +58,14 @@ class GameCore extends MonoBehaviour {
 		return playerObject.GetComponent(Player);
 	}
 	
+	
+	////////////////////
+	// Actors
+	////////////////////
+	public static function GetActors () : Actor[] { 
+		return levelContainer.GetComponentsInChildren.<Actor>();
+	}
+
 	////////////////////
 	// Interactions
 	////////////////////

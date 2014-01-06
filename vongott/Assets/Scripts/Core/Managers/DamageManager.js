@@ -9,8 +9,18 @@ class DamageManager extends MonoBehaviour {
 	
 	// Prefab links
 	public var prefabBullet : GameObject;
+	public var prefabExplosion : GameObject;
+
 	
-	
+	//////////////////
+	// Destroy
+	//////////////////
+	private function DestroyDelayed ( obj : GameObject, seconds : float ) : IEnumerator {
+		yield WaitForSeconds ( seconds );
+
+		Destroy ( obj );
+	}
+
 	//////////////////
 	// Spawn
 	//////////////////
@@ -30,7 +40,29 @@ class DamageManager extends MonoBehaviour {
 		projectile.expirationTime = GetEquipmentAttribute ( weapon, eItemAttribute.FireRange ) / projectile.speed;
 	}
 	
-	
+	// Explosion
+	public function SpawnExplosion ( target : Vector3, radius : float, damageMultiplier : float )  {
+		var explosion : GameObject = Instantiate ( prefabExplosion );
+
+		explosion.transform.parent = GameCore.levelContainer;
+		explosion.transform.position = target;
+
+		// Read all actors
+		var allActors : Actor[] = GameCore.GetActors ();
+
+		for ( var i : int = 0; i < allActors.Length; i++ ) {
+			var a : Actor = allActors[i];
+			var dist : float = (a.transform.position-target).sqrMagnitude;
+
+			if ( dist <= radius ) {
+				a.TakeDamage ( damageMultiplier - dist );
+			}
+		}
+
+		StartCoroutine ( DestroyDelayed ( explosion, 10 ) );
+	}
+
+
 	/////////////////
 	// Get info
 	/////////////////

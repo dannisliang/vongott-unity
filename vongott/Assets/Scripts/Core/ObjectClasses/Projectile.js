@@ -36,7 +36,10 @@ class Projectile extends MonoBehaviour {
 			
 			} else if ( collideWith.GetComponent ( Player ) ) {
 				collideWith.GetComponent ( Player ).TakeDamage ( damage );
-			
+		
+			} else if ( collideWith.GetComponent ( Mine ) ) {
+				collideWith.GetComponent ( Mine ).Detonate ();
+
 			} else {
 				// Leave decal
 			

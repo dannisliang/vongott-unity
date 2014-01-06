@@ -16,12 +16,14 @@ class Player extends MonoBehaviour {
 	
 	public var equippedItem : GameObject;
 	public var talkingTo : Actor;
-	
+
+	// Private vars	
 	private var shield : GameObject;
 	private var liftedObject : LiftableItem;
 	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
-	
+	private var controller : PlayerController;
+
 					
 	////////////////////
 	// Actor interaction
@@ -88,7 +90,28 @@ class Player extends MonoBehaviour {
 			}
 		}
 	}
-	
+
+	// Throw
+	function Throw () {
+		var obj : GameObject = Instantiate ( equippedItem );
+		obj.transform.parent = this.transform.parent;
+		
+		obj.GetComponent(BoxCollider).enabled = true;
+		obj.rigidbody.useGravity = true;
+		obj.rigidbody.isKinematic = false;
+		
+		obj.transform.position = equippedItem.transform.position;
+		obj.transform.eulerAngles = equippedItem.transform.eulerAngles;
+		obj.transform.localScale = Vector3.one;
+
+		obj.rigidbody.velocity = GameCamera.GetInstance().transform.forward * 10;
+
+		// Arm mine
+		if ( obj.GetComponent ( Mine ) ) {
+			obj.GetComponent ( Mine ).Arm();
+		}
+	}
+
 	// Equip
 	function Equip ( item : Item, equip : boolean ) {
 		if ( !item ) {
@@ -119,7 +142,8 @@ class Player extends MonoBehaviour {
 			equippedItem.transform.localEulerAngles = adjustRotation;
 			equippedItem.GetComponent(BoxCollider).enabled = false;
 			equippedItem.GetComponent ( DontGoThroughThings ).enabled = false;
-			Destroy ( equippedItem.rigidbody );
+			equippedItem.rigidbody.useGravity = false;
+			equippedItem.rigidbody.isKinematic = true;
 		
 			if ( IsEquippedWeapon() ) {
 				ResetFire();
@@ -191,24 +215,48 @@ class Player extends MonoBehaviour {
 		GameCore.Print ( "Player | Damage taken: " + amount );
 	}
 	
+	function Shoot () {
+		Shoot ( this.transform.forward * 10 );
+	}
+
 	function Shoot ( target : Vector3 ) {
-		if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
-			shootTimer = 0;
+		if ( equippedItem == null ) { return; }
 		
-			var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
-			var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
+		var eq : Equipment = equippedItem.GetComponent ( Equipment );
 		
-			if ( GameCore.GetInstance().timeScale == 1.0 ) {
-				target += Vector3.one * accuracyDegree;
-			}
-		
-			DamageManager.GetInstance().SpawnBullet ( equippedItem, target, this.gameObject );
-		
-			// Muzzle flash
-			if ( equippedItem.transform.GetChild(0) ) {
-				equippedItem.transform.GetChild(0).gameObject.SetActive ( true );
-			}
-		}
+		if ( eq == null ) { return; }
+
+		switch ( eq.id ) {
+			// Mines
+			case eItemID.Mine:
+				if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
+					shootTimer = 0;
+				
+					Throw ();
+				}
+				break;
+
+			// Bullets
+			default:
+				if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
+					shootTimer = 0;
+				
+					var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
+					var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
+				
+					if ( GameCore.GetInstance().timeScale == 1.0 ) {
+						target += Vector3.one * accuracyDegree;
+					}
+				
+					DamageManager.GetInstance().SpawnBullet ( equippedItem, target, this.gameObject );
+				
+					// Muzzle flash
+					if ( equippedItem.transform.GetChild(0) ) {
+						equippedItem.transform.GetChild(0).gameObject.SetActive ( true );
+					}
+				}
+				break;
+		}	
 	}
 	
 	
@@ -327,6 +375,14 @@ class Player extends MonoBehaviour {
 			shield.transform.eulerAngles = Vector3.zero;
 		}
 		
+		// Player state
+		switch ( PlayerController.actionState ) {
+			case ePlayerActionState.Shooting:
+				Shoot ();
+				break;
+		}
+
+
 		// Calculate energy cost
 		energy -= UpgradeManager.CalculateEnergyCost() * Time.deltaTime;
 	

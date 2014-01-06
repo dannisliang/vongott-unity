@@ -15,7 +15,11 @@ function Awake() {
    partialExtent = minimumExtent*(1.0 - skinWidth); 
    sqrMinimumExtent = minimumExtent*minimumExtent; 
 } 
- 
+
+function SetPreviousPosition ( v : Vector3 ) {
+	previousPosition = v;
+}
+
 function FixedUpdate() { 
    if ( !rigidbody ) { return; }
    

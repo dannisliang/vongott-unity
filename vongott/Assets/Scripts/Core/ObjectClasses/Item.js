@@ -31,8 +31,6 @@ public enum eItemID {
 	Tazer,
 	AssaultRifle,
 	DartGun,
-	Vest,
-	Boots,
 	
 	// Tools
 	Lockpick = 500,
@@ -46,7 +44,10 @@ public enum eItemID {
 	
 	// Upgrades
 	MechanicalUpgrade = 1500,
-	BiologicalUpgrade
+	BiologicalUpgrade,
+
+	// Explosives
+	Mine = 2000
 }
 
 class Item extends InteractiveObject {
@@ -57,8 +58,8 @@ class Item extends InteractiveObject {
 	}
 		
 	// Public vars
-	public var prefabPath : String;
 	public var canDrop : boolean = true;
+	public var isStackable : boolean = true;
 	public var type : eItemType;
 	public var id : eItemID;
 	public var image : Texture2D;
