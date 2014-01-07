@@ -27,6 +27,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var sc : SurveillanceCamera = newPfb.GetComponent(SurveillanceCamera);
 		var kp : Keypad = newPfb.GetComponent(Keypad);
 		var lp : LiftPanel = newPfb.GetComponentInChildren(LiftPanel);
+		var tr : Trigger = newPfb.GetComponent(Trigger);
 		
 		newPfb.GetComponent(Prefab).id = pfb.GetField("id").str;
 		newPfb.GetComponent(Prefab).path = pfb.GetField("path").str;
@@ -42,8 +43,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 			bk.content = DeserializeMultiLineString ( pfb.GetField ( "bookText" ) );
 		}
 		
-		if ( dr != null && pfb.HasField ( "doorLocked" ) ) {
-			dr.locked = pfb.GetField ( "doorLocked" ).b;
+		if ( dr != null ) {
+			if ( pfb.HasField ( "doorLocked" ) ) { dr.locked = pfb.GetField ( "doorLocked" ).b; }
+			if ( pfb.HasField ( "doorClosed" ) ) { dr.closed = pfb.GetField ( "doorClosed" ).b; }
 			dr.lockLevel = pfb.GetField ( "doorLockLevel" ).n;
 		}
 		
@@ -66,7 +68,11 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		if ( lp != null && pfb.HasField ( "liftPanel" ) ) {
 			DeserializeLiftPanel ( pfb.GetField ( "liftPanel" ), lp );
 		}
-		
+	
+		if ( tr != null && pfb.HasField ( "trigger" ) ) {
+			DeserializeTrigger ( pfb.GetField ( "trigger" ), tr );
+		}
+
 		if ( pfb.HasField("materialPath") ) {
 			newPfb.GetComponent(Prefab).materialPath = pfb.GetField("materialPath").str;
 			newPfb.GetComponent(Prefab).ReloadMaterial();
@@ -544,6 +550,13 @@ static function DeserializeNavNodes ( sNodes : JSONObject ) : OPNode[] {
 ////////////////////
 // Deserialize components individually
 ////////////////////
+// Trigger
+static function DeserializeTrigger ( o : JSONObject, tr : Trigger ) {
+	tr.SetActivationType ( o.GetField ( "activation" ).str );
+	tr.fireOnce = o.GetField ( "fireOnce" ).b;
+	tr.events = DeserializeEvents ( o.GetField ( "events" ) );
+}
+
 // LiftPanel
 static function DeserializeLiftPanel ( o : JSONObject, lp : LiftPanel ) {
 	lp.allDestinations.Clear ();
@@ -638,6 +651,12 @@ static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
 			case "NextPath":
 				event.type = GameEvent.eEventType.NextPath;
 				event.nextPathName = evt.GetField ( "nextPathName" ).str;
+				break;
+			
+			case "ToggleDoor":
+				event.type = GameEvent.eEventType.ToggleDoor;
+				event.toggleDoorName = evt.GetField ( "toggleDoorName" ).str;
+				event.toggleDoorBool = evt.GetField ( "toggleDoorBool" ).b;
 				break;
 				
 			case "SetFlag":

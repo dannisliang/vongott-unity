@@ -10,6 +10,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	var infoLabel : OGLabel;
 
 	var doorLocked : OGTickBox;
+	var doorClosed : OGTickBox;
 	var doorLockLevel : OGPopUp;
 
 	var textField : OGTextField;
@@ -136,6 +137,7 @@ class EditorInspectorPrefab extends MonoBehaviour {
 		if ( obj.GetComponent ( Door ) ) {
 			doorLocked.transform.parent.gameObject.SetActive ( true );
 			doorLocked.isTicked = obj.GetComponent ( Door ).locked;
+			doorClosed.isTicked = obj.GetComponent ( Door ).closed;
 			doorLockLevel.selectedOption = obj.GetComponent ( Door ).lockLevel.ToString();
 		}
 		
@@ -184,7 +186,9 @@ class EditorInspectorPrefab extends MonoBehaviour {
 	function Update () {
 		if ( obj && obj.GetComponent ( Door ) ) {
 			obj.GetComponent ( Door ).locked = doorLocked.isTicked;
+			obj.GetComponent ( Door ).closed = doorClosed.isTicked;
 			obj.GetComponent ( Door ).lockLevel = int.Parse(doorLockLevel.selectedOption);
+			obj.GetComponent ( Door ).CheckState();
 		}
 	}
 }

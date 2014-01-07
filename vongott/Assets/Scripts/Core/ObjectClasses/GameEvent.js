@@ -7,7 +7,8 @@ class GameEvent {
 		Travel,
 		NextPath,
 		SetFlag,
-		GiveItem
+		GiveItem,
+		ToggleDoor
 	}
 
 	var id : String = "";
@@ -25,6 +26,9 @@ class GameEvent {
 	
 	var nextPathName : String = "";
 	
+	var toggleDoorName : String = "";
+	var toggleDoorBool : boolean = false;
+
 	var flagName : String = "";
 	var flagBool : boolean = false;
 	

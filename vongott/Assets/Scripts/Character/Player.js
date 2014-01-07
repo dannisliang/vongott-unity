@@ -141,7 +141,6 @@ class Player extends MonoBehaviour {
 			equippedItem.transform.localPosition = adjustPosition;
 			equippedItem.transform.localEulerAngles = adjustRotation;
 			equippedItem.GetComponent(BoxCollider).enabled = false;
-			equippedItem.GetComponent ( DontGoThroughThings ).enabled = false;
 			equippedItem.rigidbody.useGravity = false;
 			equippedItem.rigidbody.isKinematic = true;
 		

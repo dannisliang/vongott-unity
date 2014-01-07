@@ -28,6 +28,11 @@ class EditorEvents extends OGPage {
 		public var button : OGButton;
 	}
 	
+	private class ToggleDoorType {
+		public var button : OGButton;
+		public var popup : OGPopUp;
+	}
+	
 	private class SetFlagType {
 		public var button : OGButton;
 		public var tickBox : OGTickBox;
@@ -52,8 +57,9 @@ class EditorEvents extends OGPage {
 	public var quest : QuestType;
 	public var travel : TravelType;
 	public var nextPath : NextPathType;
+	public var toggleDoor : ToggleDoorType;
 	public var setFlag : SetFlagType;
-	public var giveItem	: GiveItemType;
+	public var giveItem : GiveItemType;
 
 
 	///////////////////
@@ -84,6 +90,18 @@ class EditorEvents extends OGPage {
 		EditorCore.pickerSender = "Events";
 		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
 			if ( hit.collider.gameObject.GetComponent(Actor) ) {
+				btn.text = hit.collider.gameObject.GetComponent(GUID).GUID;
+			}
+		};
+		
+		EditorCore.SetPickMode ( true );
+	}
+	
+	function PickDoor ( btn : OGButton ) {
+		EditorCore.pickerType = Door;
+		EditorCore.pickerSender = "Events";
+		EditorCore.pickerCallback = function ( hit : RaycastHit ) {
+			if ( hit.collider.gameObject.GetComponent(Door) ) {
 				btn.text = hit.collider.gameObject.GetComponent(GUID).GUID;
 			}
 		};
@@ -235,6 +253,12 @@ class EditorEvents extends OGPage {
 					nextPath.button.text = e.nextPathName;
 					break;
 					
+				case GameEvent.eEventType.ToggleDoor:
+					eventType.selectedOption = "ToggleDoor";
+					toggleDoor.button.text = e.toggleDoorName;
+					toggleDoor.popup.selectedOption = e.toggleDoorBool ? "Open" : "Close";
+					break;
+					
 				case GameEvent.eEventType.SetFlag:
 					eventType.selectedOption = "SetFlag";
 					setFlag.button.text = e.flagName;
@@ -297,6 +321,12 @@ class EditorEvents extends OGPage {
 				currentEvent.nextPathName = nextPath.button.text;
 				break;
 				
+			case "ToggleDoor":
+				currentEvent.type = GameEvent.eEventType.ToggleDoor;
+				currentEvent.toggleDoorName = toggleDoor.button.text;
+				currentEvent.toggleDoorBool = toggleDoor.popup.selectedOption == "Open";
+				break;
+			
 			case "SetFlag":
 				currentEvent.type = GameEvent.eEventType.SetFlag;
 				currentEvent.flagName = setFlag.button.text;

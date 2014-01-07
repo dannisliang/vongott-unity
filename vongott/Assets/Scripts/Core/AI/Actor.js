@@ -81,6 +81,8 @@ class Actor extends InteractiveObject {
 	// Awake
 	function Awake () {
 		if ( EditorCore.running ) {
+			MakeRagdoll ( false );
+			
 			DestroyImmediate ( this.GetComponent ( Animator ) );
 			DestroyImmediate ( this.GetComponent ( Rigidbody ) );
 			DestroyImmediate ( this.GetComponent ( BoxCollider ) );
@@ -98,9 +100,8 @@ class Actor extends InteractiveObject {
 			this.GetComponent ( OPPathFinder ).scanner = GameCore.scanner;
 			waiting = pathType == ePathType.NavPoint;
 			
+			MakeRagdoll ( false );
 		}
-
-		MakeRagdoll ( false );
 	}
 	
 	// Set affiliation
@@ -241,7 +242,6 @@ class Actor extends InteractiveObject {
 		equippedItem.transform.localPosition = new Vector3 ( -0.4400277, -0.1216161, 0.187489 );
 		equippedItem.transform.localEulerAngles = new Vector3 ( 85.41418, 290.4283, 271 );
 		equippedItem.GetComponent(BoxCollider).enabled = false;
-		equippedItem.GetComponent ( DontGoThroughThings ).enabled = false;
 		Destroy ( equippedItem.rigidbody );
 		
 	

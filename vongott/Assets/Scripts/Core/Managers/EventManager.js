@@ -25,6 +25,10 @@ class EventManager extends MonoBehaviour {
 			case GameEvent.eEventType.NextPath:
 				NextPath ( event.nextPathName );
 				break;
+			
+			case GameEvent.eEventType.ToggleDoor:
+				ToggleDoor ( event.toggleDoorName, event.toggleDoorBool );
+				break;
 		
 			case GameEvent.eEventType.SetFlag:
 				SetFlag ( event.flagName, event.flagBool );
@@ -98,7 +102,19 @@ class EventManager extends MonoBehaviour {
 			}
 		}
 	}
-	
+
+	public static function ToggleDoor ( n : String, b : boolean ) {
+		var go : GameObject = GameCore.GetObjectFromGUID ( n );
+
+		if ( go && go.GetComponent(Door) ) {
+			var door : Door = go.GetComponent(Door);
+
+			if ( door.closed == b ) {
+				door.Toggle ();
+			}
+		}	
+	}
+
 	public static function SetFlag ( flag : String, bool : boolean ) {
 		FlagManager.SetFlag ( flag, bool );
 	}

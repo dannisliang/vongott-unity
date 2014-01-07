@@ -36,6 +36,8 @@ public class DestructibleObject extends MonoBehaviour {
 	}
 
 	private function CleanUp ( colliders : List.< Collider > ) : IEnumerator {
+		CheckTrigger ();
+		
 		DisableObject ();
 
 		yield WaitForSeconds ( 5.0 );
@@ -47,6 +49,14 @@ public class DestructibleObject extends MonoBehaviour {
 		yield WaitForEndOfFrame ();
 
 		Destroy ( this.gameObject );
+	}
+
+	private function CheckTrigger () {
+		var trigger : Trigger = this.GetComponent ( Trigger );
+
+		if ( trigger != null ) {
+			trigger.OnDeath ();
+		}
 	}
 
 	public function Collapse () {

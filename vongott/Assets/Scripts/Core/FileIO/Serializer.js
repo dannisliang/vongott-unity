@@ -29,6 +29,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		var sc : SurveillanceCamera = obj.GetComponent(SurveillanceCamera);
 		var kp : Keypad = obj.GetComponent(Keypad);
 		var lp : LiftPanel = obj.GetComponentInChildren(LiftPanel);
+		var tr : Trigger = obj.GetComponent(Trigger);
 		
 		pfb.AddField ( "path", obj.GetComponent(Prefab).path );
 		pfb.AddField ( "id", obj.GetComponent(Prefab).id );
@@ -46,6 +47,7 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		
 		if ( dr != null ) {
 			pfb.AddField ( "doorLocked", dr.locked );
+			pfb.AddField ( "doorClosed", dr.closed );
 			pfb.AddField ( "doorLockLevel", dr.lockLevel );
 		}
 		
@@ -68,7 +70,11 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		if ( lp != null ) {
 			pfb.AddField ( "liftPanel", SerializeLiftPanel ( lp ) );
 		}
-		
+	
+		if ( tr != null ) {
+			pfb.AddField ( "trigger", SerializeTrigger ( tr ) );
+		}
+
 		if ( obj.GetComponent(Prefab).materialPath != "" && obj.GetComponent(Prefab).canChangeMaterial ) {
 			pfb.AddField ( "materialPath", obj.GetComponent(Prefab).materialPath );
 		}
@@ -366,6 +372,17 @@ static function SerializeNavNodes ( nodes : OPNode[] ) : JSONObject {
 ////////////////////
 // Serialize components individually
 ////////////////////
+// Trigger
+static function SerializeTrigger ( tr : Trigger ) : JSONObject {
+	var trigger : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+	
+	trigger.AddField ( "activation", tr.activation.ToString() );
+	trigger.AddField ( "fireOnce", tr.fireOnce );
+	trigger.AddField ( "events", SerializeEvents ( tr.events ) );
+
+	return trigger;
+}
+
 // LiftPanel
 static function SerializeLiftPanel ( lp : LiftPanel ) : JSONObject {
 	var liftPanel : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
@@ -483,6 +500,12 @@ static function SerializeGameEvent ( event : GameEvent ) : JSONObject {
 			evt.AddField ( "nextPathName", event.nextPathName );
 			break;
 			
+		case GameEvent.eEventType.ToggleDoor:
+			evt.AddField ( "type", "ToggleDoor" );
+			evt.AddField ( "toggleDoorName", event.toggleDoorName );
+			evt.AddField ( "toggleDoorBool", event.toggleDoorBool );
+			break;
+		
 		case GameEvent.eEventType.SetFlag:
 			evt.AddField ( "type", "SetFlag" );
 			evt.AddField ( "flagName", event.flagName );
