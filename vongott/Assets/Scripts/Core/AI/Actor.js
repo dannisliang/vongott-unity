@@ -99,6 +99,8 @@ class Actor extends InteractiveObject {
 			waiting = pathType == ePathType.NavPoint;
 			
 		}
+
+		MakeRagdoll ( false );
 	}
 	
 	// Set affiliation
@@ -203,14 +205,6 @@ class Actor extends InteractiveObject {
 	
 	function Say ( msg : String ) {
 		UIHUD.ShowTimedNotification ( msg, 2.0 );
-	}
-	
-	function Die () {
-		vitalState = eVitalState.Dead;
-		
-		this.GetComponent(Animator).enabled = false;
-		
-		GameCore.Print ( "Actor | '" + displayName + "' died" );
 	}
 	
 	function TakeDamage ( damage : int ) {
@@ -457,7 +451,48 @@ class Actor extends InteractiveObject {
 		
 		Say ( "Bah! Whatever, man." );
 	}
-	
+
+
+	/////////////////////
+	// Death
+	/////////////////////
+	function Die () {
+		vitalState = eVitalState.Dead;
+		
+		this.GetComponent(Animator).enabled = false;
+		
+		MakeRagdoll ( true );
+
+		GameCore.Print ( "Actor | '" + displayName + "' died" );
+	}
+
+	public function GetLimbColliders () : Collider[] {
+		return this.GetComponentsInChildren.< Collider > ();
+	}
+
+	public function MakeRagdoll ( useRagdoll : boolean ) {
+		var mainCollider : CapsuleCollider = this.GetComponent ( CapsuleCollider );
+		var mainRigidbody : Rigidbody = this.GetComponent ( Rigidbody );
+		var allColliders : Collider[] = this.GetComponentsInChildren.< Collider > ();
+		var allRigidbodies : Rigidbody[] = this.GetComponentsInChildren.< Rigidbody > ();
+		var i : int = 0;
+
+		mainCollider.enabled = !useRagdoll;
+		mainRigidbody.isKinematic = useRagdoll;
+
+		for ( i = 0; i < allColliders.Length; i++ ) {
+			if ( allColliders[i] != mainCollider ) {	
+				allColliders[i].enabled = useRagdoll;
+			}
+		}	
+		
+		for ( i = 0; i < allRigidbodies.Length; i++ ) {
+			if ( allRigidbodies[i] != mainRigidbody ) {	
+				allRigidbodies[i].isKinematic = !useRagdoll;
+			}
+		}	
+	}
+
 	
 	/////////////////////
 	// Update

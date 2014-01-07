@@ -12,7 +12,7 @@ public class Mine extends Equipment {
 	}
 
 	public function Detonate () {
-		DamageManager.GetInstance().SpawnExplosion ( this.transform.position, 5, 5 );
+		DamageManager.GetInstance().SpawnExplosion ( this.transform.position, 5, 100 );
 		Destroy ( this.gameObject );
 	}
 
