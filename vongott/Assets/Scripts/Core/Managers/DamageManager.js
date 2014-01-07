@@ -68,6 +68,12 @@ class DamageManager extends MonoBehaviour {
 					}
 				}
 			}
+
+			// Is it a destructible object?
+			var destructible : DestructibleObject = hit.GetComponent ( DestructibleObject );
+			if ( destructible != null ) {
+				destructible.Explode ( target, damage * 10, radius );
+			}
 		}
 
 		StartCoroutine ( DestroyDelayed ( explosion, 10 ) );
