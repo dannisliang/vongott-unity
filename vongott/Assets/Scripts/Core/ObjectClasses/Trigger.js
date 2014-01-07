@@ -12,7 +12,7 @@ class Trigger extends MonoBehaviour {
 		
 	var activation : eTriggerActivation;
 	var fireOnce : boolean = true;
-	var events : List.< GameEvent > = new List.< GameEvent > ();
+	var events : List.< String > = new List.< String > ();
 	
 	var boundingBoxMaterial : Material;
 	
@@ -53,7 +53,7 @@ class Trigger extends MonoBehaviour {
 	
 	// Activate trigger
 	public function Activate () {
-		for ( var event : GameEvent in events ) {
+		for ( var event : String in events ) {
 			EventManager.Fire ( event );
 		}
 		

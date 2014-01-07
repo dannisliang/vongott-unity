@@ -287,9 +287,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		newTrg.transform.localScale = DeserializeVector3 ( trg.GetField("localScale") );
 		newTrg.layer = 9;
 		
-		newTrg.GetComponent(Trigger).SetActivationType ( trg.GetField ( "activation" ).str );
-		newTrg.GetComponent(Trigger).fireOnce = trg.GetField ( "fireOnce" ).b;
-		newTrg.GetComponent(Trigger).events = DeserializeEvents ( trg.GetField ( "events" ) );
+		DeserializeTrigger ( trg, newTrg.GetComponent(Trigger) );
 		
 		newTrg.name = obj.GetField("name").str;
 		
@@ -554,7 +552,12 @@ static function DeserializeNavNodes ( sNodes : JSONObject ) : OPNode[] {
 static function DeserializeTrigger ( o : JSONObject, tr : Trigger ) {
 	tr.SetActivationType ( o.GetField ( "activation" ).str );
 	tr.fireOnce = o.GetField ( "fireOnce" ).b;
-	tr.events = DeserializeEvents ( o.GetField ( "events" ) );
+
+	tr.events.Clear ();
+	var events : List.< JSONObject > = o.GetField ( "events" ).list;
+	for ( var i : int = 0; i < events.Count; i++ ) {
+		tr.events.Add ( events[i].str );
+	}
 }
 
 // LiftPanel

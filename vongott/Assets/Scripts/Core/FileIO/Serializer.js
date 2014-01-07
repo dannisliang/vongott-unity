@@ -229,15 +229,11 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		// guid
 		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
 		
-		var trg : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
+		var trg : JSONObject = SerializeTrigger ( obj.GetComponent(Trigger) );
 	
 		trg.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		trg.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
 		trg.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
-	
-		trg.AddField ( "activation", obj.GetComponent(Trigger).activation.ToString() );
-		trg.AddField ( "fireOnce", obj.GetComponent(Trigger).fireOnce );
-		trg.AddField ( "events", SerializeEvents ( obj.GetComponent(Trigger).events ) );
 	
 		o.AddField ( "Trigger", trg );
 	
@@ -375,10 +371,16 @@ static function SerializeNavNodes ( nodes : OPNode[] ) : JSONObject {
 // Trigger
 static function SerializeTrigger ( tr : Trigger ) : JSONObject {
 	var trigger : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-	
+	var events : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+
 	trigger.AddField ( "activation", tr.activation.ToString() );
 	trigger.AddField ( "fireOnce", tr.fireOnce );
-	trigger.AddField ( "events", SerializeEvents ( tr.events ) );
+
+	for ( var i : int = 0; i < tr.events.Count; i++ ) {
+		events.Add ( tr.events[i] );
+	}
+
+	trigger.AddField ( "events", events );
 
 	return trigger;
 }

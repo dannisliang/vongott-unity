@@ -13,8 +13,8 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		
 		eventContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - eventContainer.position.y;
 				
-		for ( var e : GameEvent in trg.events ) {
-			AddEvent ( e );
+		for ( var i : int = 0 ; i < trg.events.Count; i++ ) {
+			AddEvent ( trg.events[i] );
 		}
 		
 		RearrangeEvents ();
@@ -84,12 +84,12 @@ class EditorInspectorTrigger extends MonoBehaviour {
 	}
 	
 	function AddEvent () {
-		AddEvent ( null );
+		AddEvent ( "" );
 		
 		UpdateObject();
 	}
 	
-	function AddEvent ( e : GameEvent ) {
+	function AddEvent ( eventName : String ) {
 		var obj : GameObject = new GameObject ( "Event" );
 		obj.transform.parent = eventContainer;
 		obj.transform.localScale = Vector3.one;
@@ -126,8 +126,8 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		};
 		dlt.GetDefaultStyles();
 
-		if ( e ) {
-			btn.text = e.id;
+		if ( eventName != "" ) {
+			btn.text = eventName;
 		
 		} else {
 			btn.text = "(none)";
@@ -188,7 +188,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 					var btn : OGButton = c as OGButton;
 					
 					if ( btn && btn.text != "x" ) {				
-						trg.events.Add ( Loader.LoadEvent ( btn.text ) );
+						trg.events.Add ( btn.text );
 					}
 				}
 			}
