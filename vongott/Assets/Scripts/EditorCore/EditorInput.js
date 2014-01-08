@@ -137,7 +137,7 @@ function Update () {
 				x = 0;
 				y = 0;
 				z = translation * spd;
-			} else if ( EditorCore.scaleMode && EditorCore.grabRestrict == null ) {
+			} else if ( EditorCore.scaleMode && String.IsNullOrEmpty ( EditorCore.grabRestrict ) ) {
 				x = translation * ( spd / 2 );
 				y = translation * ( spd / 2 );
 				z = translation * ( spd / 2 );
@@ -161,10 +161,6 @@ function Update () {
 				o.transform.localScale.z + z
 			);
 			
-			if ( scale.x < 0.1 || scale.y < 0.1 || scale.z < 0.1 ) {
-				return;
-			}
-			
 			if ( EditorCore.snapEnabled ) {
 				if ( EditorCore.gridLineDistance > 0 ) {
 					rotate.x = Round ( rotate.x, EditorCore.gridLineDistance / 8 );
@@ -182,16 +178,17 @@ function Update () {
 				o.transform.localRotation = Quaternion.Euler ( rotate );
 				EditorCore.gizmo.transform.localEulerAngles = Vector3.zero;
 				EditorCore.FitSelectionBox ();
-	
+
 			} else if ( EditorCore.scaleMode ) {
-				o.transform.localScale = scale;
-				EditorCore.FitSelectionBox ();
-				
-				// Fit texture
-				if ( o.GetComponent(Prefab) ) {
-					o.GetComponent(Prefab).FitTexture();
+				if ( scale.x >= 0.1 || scale.y >= 0.1 || scale.z >= 0.1 ) {
+					o.transform.localScale = scale;
+					EditorCore.FitSelectionBox ();
+					
+					// Fit texture
+					if ( o.GetComponent(Prefab) ) {
+						o.GetComponent(Prefab).FitTexture();
+					}
 				}
-			
 			}
 		}
 	

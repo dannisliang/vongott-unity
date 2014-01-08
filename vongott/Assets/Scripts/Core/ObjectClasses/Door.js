@@ -121,18 +121,20 @@ class Door extends InteractiveObject {
 	}
 	
 	function UpdateObject () {
-		switch ( type ) {
-			case eDoorType.SingleSwing:
-				this.transform.localRotation = Quaternion.Slerp ( this.transform.localRotation, Quaternion.Euler ( 0, targetRot.y, 0 ), Time.deltaTime * 2 );
-				break;
-		
-			case eDoorType.DoubleSlide:
-				if ( leftDoor && rightDoor ) {
-					leftDoor.transform.localPosition = Vector3.Slerp ( leftDoor.transform.localPosition, targetPosLeft, Time.deltaTime * 2 );
-					rightDoor.transform.localPosition = Vector3.Slerp ( rightDoor.transform.localPosition, targetPosRight, Time.deltaTime * 2 );
-				}
+		if ( GameCore.running ) {
+			switch ( type ) {
+				case eDoorType.SingleSwing:
+					this.transform.localRotation = Quaternion.Slerp ( this.transform.localRotation, Quaternion.Euler ( 0, targetRot.y, 0 ), Time.deltaTime * 2 );
+					break;
+			
+				case eDoorType.DoubleSlide:
+					if ( leftDoor && rightDoor ) {
+						leftDoor.transform.localPosition = Vector3.Slerp ( leftDoor.transform.localPosition, targetPosLeft, Time.deltaTime * 2 );
+						rightDoor.transform.localPosition = Vector3.Slerp ( rightDoor.transform.localPosition, targetPosRight, Time.deltaTime * 2 );
+					}
+			}
 		}
-	
+
 		Debug.DrawLine ( this.transform.position, frontPos, Color.green );
 		Debug.DrawLine ( this.transform.position, backPos, Color.red );
 	}

@@ -10,7 +10,6 @@ public static var instance : EditorCamera;
 public var sensitivity : float = 2.5;
 public var speed : float = 10.0;
 public var renderMode : int = 0;
-public var gizmo : Transform;
 public var cursor : Transform;
 public var gizmoX : Material;
 public var gizmoY : Material;
@@ -31,6 +30,7 @@ private var clickThreshold : float = 0.25;
 private var fixPointX : Vector3;
 private var fixPointY : Vector3;
 private var fixPointZ : Vector3;
+private var gizmo : Transform;
 
 
 ////////////////////
@@ -61,22 +61,22 @@ function DrawLine ( from : Vector3, to : Vector3, material : Material ) {
 }
 
 function DrawXLine () {
-	var right : Vector3 = gizmo.position + gizmo.right * 9999;
-	var left : Vector3 = gizmo.position - gizmo.right * 9999;
+	var right : Vector3 = gizmo.position + Vector3.right * 10;
+	var left : Vector3 = gizmo.position - Vector3.right * 10;
 
 	DrawLine ( right, left, gizmoX );
 }
 
 function DrawYLine () {
-	var up : Vector3 = gizmo.position + gizmo.up * 9999;
-	var down : Vector3 = gizmo.position - gizmo.up * 9999;
+	var up : Vector3 = gizmo.position + Vector3.up * 10;
+	var down : Vector3 = gizmo.position - Vector3.up * 10;
 	
 	DrawLine ( up, down, gizmoY );
 }
 
 function DrawZLine () {	
-	var forward : Vector3 = gizmo.position + gizmo.forward * 9999;
-	var back : Vector3 = gizmo.position - gizmo.forward * 9999;
+	var forward : Vector3 = gizmo.position + Vector3.forward * 10;
+	var back : Vector3 = gizmo.position - Vector3.forward * 10;
 	
 	DrawLine ( forward, back, gizmoZ );
 }
@@ -282,14 +282,16 @@ function OnPostRender () {
 	}
 		
 	// gizmo
-    if ( EditorCore.grabRestrict == "x" ) {		
-	    DrawXLine();
-	} else if ( EditorCore.grabRestrict == "y" ) {
-		DrawYLine();
-	} else if ( EditorCore.grabRestrict == "z" ) {
-		DrawZLine();
+	if ( gizmo ) {
+		if ( EditorCore.grabRestrict == "x" ) {		
+			DrawXLine();
+		} else if ( EditorCore.grabRestrict == "y" ) {
+			DrawYLine();
+		} else if ( EditorCore.grabRestrict == "z" ) {
+			DrawZLine();
+		}
 	}
-	
+
 	// bounding boxes
 	DrawBoundingBoxes ();
 
@@ -416,6 +418,12 @@ function SetFixPointToSelected () {
 // Update
 function Update () {
 	if ( locked ) { return; }
+
+	// Gizmo
+	var go : GameObject = EditorCore.GetSelectedObject ();
+	if ( go ) {
+		gizmo = go.transform;
+	}
 
 	// First person mode
 	if ( EditorCore.firstPersonMode ) {

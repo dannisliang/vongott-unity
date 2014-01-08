@@ -236,17 +236,12 @@ class GameCore extends MonoBehaviour {
 	public static function GetObjectFromGUID ( id : String ) : GameObject {
 		if ( !running ) { return null; }
 		
-		Print ( "GameCore | Getting object of GUID " + id + "..." );
-
 		for ( var c : Component in levelContainer.GetComponentsInChildren(GUID) ) {
 			if ( (c as GUID).GUID == id ) {
-				Print ( "GameCore | ...found!" );
 				return c.gameObject;
 			}
 		}
 		
-		Print ( "GameCore | ...not found!" );
-
 		return null;
 	}
 	
