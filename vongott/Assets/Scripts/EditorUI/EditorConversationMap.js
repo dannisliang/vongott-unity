@@ -356,7 +356,8 @@ class EditorConversationMap extends OGPage {
 		node.SetRootNode ( -1 );
 		node.rootIndex = -1;
 		node.nodeIndex = -1;
-		
+		node.offset = 0;
+
 		UpdateRootNodes ();
 	}
 	
@@ -485,9 +486,12 @@ class EditorConversationMap extends OGPage {
 		
 		node.rootIndex = rootIndex;
 		node.nodeIndex = nodeIndexCounter;
-		
+		if ( node.offset < offset ) {
+			node.offset = offset;
+		}
+
 		var pos : Vector3;
-		pos.x = 200 + offset * cellDistance;
+		pos.x = 200 + node.offset * cellDistance;
 		pos.y = bottomLines[offset];
 		pos.z = scrollView.transform.position.z;
 		if ( pos.y < minHeight ) { pos.y = minHeight; }
@@ -515,9 +519,9 @@ class EditorConversationMap extends OGPage {
 				nodeIOPoints.Add ( new IOReference ( i, points ) );
 				
 				if ( node.GetRootNode() == node.connectedTo[i].GetRootNode() ) {
-					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, node.targetPos.y );
+					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], node.offset + 1, node.targetPos.y );
 				} else {
-					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], offset + 1, -1 );
+					UpdateNodePosition ( node.GetRootNode(), node.connectedTo[i], node.offset + 1, -1 );
 				}
 			}
 		}

@@ -53,7 +53,7 @@ class EventManager extends MonoBehaviour {
 		}
 	}
 	
-	public static function GiveItem ( path : String, credits : int ) {
+	public static function GiveItem ( path : String, credits : int ) : boolean {
 		if ( InventoryManager.GetInstance().credits + credits >= 0 ) {
 			var obj : GameObject = Resources.Load ( "Items/" + path ) as GameObject;
 			
@@ -67,10 +67,12 @@ class EventManager extends MonoBehaviour {
 			} else {
 				GameCore.Print ( "EventManager | " + credits + " credits added" );
 			}
-			
+			return true;
+
 		} else {
 			GameCore.Print ( "EventManager | Not enough credits to buy " + path );
-		
+			return false;
+
 		}
 	}
 	

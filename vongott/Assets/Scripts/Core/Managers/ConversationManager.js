@@ -42,6 +42,7 @@ public class ConversationNode {
 public class ConversationManager {
 	private static var currentConvo : ConversationTree;
 	private static var currentActor : Actor;
+	private static var currentSupportActor : Actor;
 	private static var currentNode : ConversationNode;
 	private static var endAction : String;
 	private static var currentOption: int = 0;
@@ -49,10 +50,14 @@ public class ConversationManager {
 	public static function SetSpeaker ( speaker : String, smoothCam : boolean ) {
 		var speakerName : String;
 				
-		if ( speaker == "NPC" ) {
+		if ( speaker == "NPC2" && currentSupportActor != null ) {
+			speakerName = currentSupportActor.displayName;
+ 			GameCamera.GetInstance().ConvoFocus ( currentSupportActor, smoothCam );
+
+		} else if ( speaker == "NPC" ) {
 			speakerName = currentActor.displayName;
- 			GameCamera.GetInstance().ConvoFocus ( GameCore.GetPlayer().talkingTo, smoothCam );
-			
+ 			GameCamera.GetInstance().ConvoFocus ( currentActor, smoothCam );
+		
 		} else if ( speaker == "Player" ) {
 			speakerName = GameCore.playerName;
 			GameCamera.GetInstance().ConvoFocus ( GameCore.GetPlayer(), smoothCam );
@@ -68,6 +73,9 @@ public class ConversationManager {
 		currentActor.StopTalking ( endAction );
 		GameCore.GetPlayer().StopTalking ();
 		
+		currentActor = null;
+		currentSupportActor = null;
+
 		GameCamera.GetInstance().RestorePosRot ( 1 );
 	}
 	
@@ -96,7 +104,15 @@ public class ConversationManager {
 	public static function StartConversation ( actor : Actor ) {
 		currentConvo = Loader.LoadConversationTree ( actor.conversationTree );
 		currentActor = actor;
-	
+		
+		var colliders : Collider[] = Physics.OverlapSphere ( currentActor.transform.position, 5 );
+
+		for ( var i : int = 0; i < colliders.Length; i++ ) {
+			if ( colliders[i].GetComponent(Actor) ) {
+				currentSupportActor = colliders[i].GetComponent(Actor);
+			}
+		}
+
 		GameCamera.GetInstance().StorePosRot();
 		GameCore.GetPlayer().TalkTo ( actor );
 		
@@ -143,7 +159,11 @@ public class ConversationManager {
 				break;
 				
 			case "Exchange":
-				EventManager.GiveItem ( currentNode.item, currentNode.credits );
+				var success : boolean = EventManager.GiveItem ( currentNode.item, currentNode.credits );
+				
+				if ( success ) {
+					nextNode = 1;
+				}
 				break;
 				
 			case "EndConvo":

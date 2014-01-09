@@ -1,7 +1,6 @@
 ﻿#pragma strict
 
 class EditorConversationNode extends MonoBehaviour {
-	
 	public class Speak {
 		public var addBtn : OGButton;
 		public var speakerPopUp : OGPopUp;
@@ -69,7 +68,8 @@ class EditorConversationNode extends MonoBehaviour {
 	
 	public var rootNodes : List.< int > = new List.< int >();
 	public var displayedRootNode : int = -1;
-	
+	public var offset : int = 0;
+
 	// Init
 	public function Start () {
 		targetPos = this.transform.position;
@@ -279,6 +279,15 @@ class EditorConversationNode extends MonoBehaviour {
 		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
+	// Events
+	public function PickEvent ( btn : OGButton ) {
+		EditorPicker.mode = "event";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "ConversationMap";
+				
+		OGRoot.GetInstance().GoToPage ( "Picker" );
+	}
+
 	// Speak	
 	public function ChangeSpeaker ( speaker : String ) {
 		speak.speakerPopUp.selectedOption = speaker;
