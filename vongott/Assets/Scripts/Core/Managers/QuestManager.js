@@ -76,18 +76,22 @@ static function GetSideQuests () : List.< Quest > {
 static function StartQuest ( id : String ) {
 	var quest = GetQuestByID ( id );
 
+	if ( quest == null ) { return; }
+
 	quest.SetActive ( true );	
 
 	UIHUD.ShowTimedNotification ( quest.title, 4.0 );
 
-	GameCore.Print ( "QuestManager |  quest started: " + id );
+	GameCore.Print ( "QuestManager |  Quest started: " + id );
 }
 
 // End
 static function EndQuest ( id : String ) {
 	var quest = GetQuestByID ( id );
 
+	if ( quest == null ) { return; }
+	
 	quest.SetActive ( false );
 	
-	GameCore.Print ( "QuestManager |  quest ended: " + id );
+	GameCore.Print ( "QuestManager |  Quest ended: " + id );
 }

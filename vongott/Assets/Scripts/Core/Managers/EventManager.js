@@ -30,15 +30,17 @@ class EventManager extends MonoBehaviour {
 				ToggleDoor ( event.toggleDoorName, event.toggleDoorBool );
 				break;
 		
-			case GameEvent.eEventType.SetFlag:
-				SetFlag ( event.flagName, event.flagBool );
-				break;
-		
-			case GameEvent.eEventType.Quest:
-				if ( event.questAction == "Start" ) {
-					StartQuest ( event.questID );
-				} else {
-					EndQuest ( event.questID );
+			case GameEvent.eEventType.Consequence:
+				if ( !String.IsNullOrEmpty ( event.questID ) && event.questID != "(none)" ) {
+					if ( event.questAction == "Start" ) {
+						StartQuest ( event.questID );
+					} else {
+						EndQuest ( event.questID );
+					}
+				}
+
+				if ( !String.IsNullOrEmpty ( event.flagName ) && event.flagName != "(none)" ) {
+					SetFlag ( event.flagName, event.flagBool );
 				}
 				break;
 			

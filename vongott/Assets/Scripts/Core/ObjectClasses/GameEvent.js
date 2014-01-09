@@ -8,7 +8,8 @@ class GameEvent {
 		NextPath,
 		SetFlag,
 		GiveItem,
-		ToggleDoor
+		ToggleDoor,
+		Consequence
 	}
 
 	var id : String = "";
@@ -23,15 +24,14 @@ class GameEvent {
 
 	var questID : String = "";
 	var questAction : String = "";
+	var flagName : String = "";
+	var flagBool : boolean = false;
 	
 	var nextPathName : String = "";
 	
 	var toggleDoorName : String = "";
 	var toggleDoorBool : boolean = false;
 
-	var flagName : String = "";
-	var flagBool : boolean = false;
-	
 	var travelMap : String = "";
 	var travelSpawnPoint : String = "";
 	

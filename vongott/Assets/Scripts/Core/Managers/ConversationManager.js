@@ -29,7 +29,9 @@ public class ConversationNode {
 	// Consequence
 	var consequence : String;
 	var consequenceBool : boolean;
-	
+	var questName : String;
+	var questAction : String;
+
 	// Endconvo
 	var action : String;
 	var nextRoot : int = 0;
@@ -37,6 +39,9 @@ public class ConversationNode {
 	// Exchange
 	var credits : int;
 	var item : String;
+
+	// Jump
+	var jumpTo : int;
 }
 
 public class ConversationManager {
@@ -54,7 +59,7 @@ public class ConversationManager {
 			speakerName = currentSupportActor.displayName;
  			GameCamera.GetInstance().ConvoFocus ( currentSupportActor, smoothCam );
 
-		} else if ( speaker == "NPC" ) {
+		} else if ( speaker == "NPC" || speaker == "NPC2" ) {
 			speakerName = currentActor.displayName;
  			GameCamera.GetInstance().ConvoFocus ( currentActor, smoothCam );
 		
@@ -78,7 +83,13 @@ public class ConversationManager {
 
 		GameCamera.GetInstance().RestorePosRot ( 1 );
 	}
-	
+
+	public static function NextRoot ( index : int ) {
+		currentActor.currentConvoRoot = index;
+		currentNode = currentConvo.rootNodes[currentActor.currentConvoRoot].connectedTo;
+		DisplayNode ( false );
+	}
+
 	public static function NextNode ( index : int ) {
 		if ( currentNode.connectedTo.Count > index ) {
 			currentNode = currentNode.connectedTo [ index ];
@@ -108,8 +119,10 @@ public class ConversationManager {
 		var colliders : Collider[] = Physics.OverlapSphere ( currentActor.transform.position, 5 );
 
 		for ( var i : int = 0; i < colliders.Length; i++ ) {
-			if ( colliders[i].GetComponent(Actor) ) {
-				currentSupportActor = colliders[i].GetComponent(Actor);
+			var foundActor : Actor = colliders[i].GetComponent(Actor);
+
+			if ( foundActor != null && foundActor != currentActor ) {
+				currentSupportActor = foundActor;
 			}
 		}
 
@@ -126,7 +139,8 @@ public class ConversationManager {
 	public static function DisplayNode ( smoothCam : boolean ) {
 		var waitForInput : boolean = false;
 		var nextNode : int = 0;
-		
+		var forceRoot : int = -1;
+
 		switch ( currentNode.type ) {
 			case "Speak":
 				waitForInput = true;
@@ -155,7 +169,18 @@ public class ConversationManager {
 				}
 			
 			case "Consequence":
-				FlagManager.SetFlag ( currentNode.consequence, currentNode.consequenceBool );
+				if ( !String.IsNullOrEmpty ( currentNode.consequence ) && currentNode.consequence != "(none)" ) {
+					FlagManager.SetFlag ( currentNode.consequence, currentNode.consequenceBool );
+				}
+			        
+				if ( !String.IsNullOrEmpty ( currentNode.questName ) && currentNode.questName != "(none)" ) {
+					if ( currentNode.questAction == "Start" ) {
+						QuestManager.StartQuest ( currentNode.questName );
+					} else {
+						QuestManager.EndQuest ( currentNode.questName );
+					}
+				}
+				
 				break;
 				
 			case "Exchange":
@@ -170,10 +195,18 @@ public class ConversationManager {
 				endAction = currentNode.action;
 				currentActor.currentConvoRoot = currentNode.nextRoot;
 				break;
+
+			case "Jump":
+				forceRoot = currentNode.jumpTo;
+				break;
 		}		
 						
 		if ( !waitForInput ) {
-			NextNode ( nextNode );
+			if ( forceRoot > -1 ) {
+				NextRoot ( forceRoot );
+			} else {
+				NextNode ( nextNode );
+			}
 		}
 	}
 }

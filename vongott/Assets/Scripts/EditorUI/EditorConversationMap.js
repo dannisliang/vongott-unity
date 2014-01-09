@@ -352,7 +352,7 @@ class EditorConversationMap extends OGPage {
 	
 	// Child nodes
 	public function SetOrphaned ( node : EditorConversationNode ) {
-		node.targetPos += new Vector3 ( -10, 10, 0 );
+		node.targetPos += new Vector3 ( -10, 10, 2 );
 		node.SetRootNode ( -1 );
 		node.rootIndex = -1;
 		node.nodeIndex = -1;

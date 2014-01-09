@@ -491,10 +491,12 @@ static function SerializeGameEvent ( event : GameEvent ) : JSONObject {
 			evt.AddField ( "animationVector", SerializeVector3 ( event.animationVector ) );
 			break;
 		
-		case GameEvent.eEventType.Quest:
-			evt.AddField ( "type", "Quest" );
+		case GameEvent.eEventType.Consequence:
+			evt.AddField ( "type", "Consequence" );
 			evt.AddField ( "questID", event.questID );
 			evt.AddField ( "questAction", event.questAction );
+			evt.AddField ( "flagName", event.flagName );
+			evt.AddField ( "flagBool", event.flagBool );
 			break;
 			
 		case GameEvent.eEventType.NextPath:
@@ -508,12 +510,6 @@ static function SerializeGameEvent ( event : GameEvent ) : JSONObject {
 			evt.AddField ( "toggleDoorBool", event.toggleDoorBool );
 			break;
 		
-		case GameEvent.eEventType.SetFlag:
-			evt.AddField ( "type", "SetFlag" );
-			evt.AddField ( "flagName", event.flagName );
-			evt.AddField ( "flagBool", event.flagBool );
-			break;
-			
 		case GameEvent.eEventType.Travel:
 			evt.AddField ( "type", "Travel" );
 			evt.AddField ( "travelMap", event.travelMap );
@@ -691,6 +687,8 @@ static function DeserializeConversationNode ( obj : EditorConversationNode ) : J
 		case "Consequence":
 			node.AddField ( "consequence", obj.consequence.flag.text );
 			node.AddField ( "consequenceBool", obj.consequence.bool.selectedOption == "True" );
+			node.AddField ( "questName", obj.consequence.quest.text );
+			node.AddField ( "questAction", obj.consequence.action.selectedOption );
 			break;
 			
 		case "EndConvo":
@@ -702,7 +700,10 @@ static function DeserializeConversationNode ( obj : EditorConversationNode ) : J
 			node.AddField ( "item", obj.exchange.item.text );
 			node.AddField ( "credits", int.Parse(obj.exchange.credits.text) );
 			break;
-	
+
+		case "Jump":
+			node.AddField ( "jumpTo", int.Parse(obj.jump.jumpTo.selectedOption) );
+			break;
 	}
 
 	for ( var i : int = 0; i < obj.connectedTo.Length; i++ ) {

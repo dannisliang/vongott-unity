@@ -645,10 +645,12 @@ static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
 				event.animationVector = DeserializeVector3 ( evt.GetField ( "animationVector" ) );
 				break;
 			
-			case "Quest":
-				event.type = GameEvent.eEventType.Quest;
+			case "Consequence":
+				event.type = GameEvent.eEventType.Consequence;
 				event.questID = evt.GetField ( "questID" ).str;
 				event.questAction = evt.GetField ( "questAction" ).str;
+				event.flagName = evt.GetField ( "flagName" ).str;
+				event.flagBool = evt.GetField ( "flagBool" ).b;
 				break;
 				
 			case "NextPath":
@@ -660,12 +662,6 @@ static function DeserializeGameEvent ( evt : JSONObject ) : GameEvent {
 				event.type = GameEvent.eEventType.ToggleDoor;
 				event.toggleDoorName = evt.GetField ( "toggleDoorName" ).str;
 				event.toggleDoorBool = evt.GetField ( "toggleDoorBool" ).b;
-				break;
-				
-			case "SetFlag":
-				event.type = GameEvent.eEventType.SetFlag;
-				event.flagName = evt.GetField ( "flagName" ).str;
-				event.flagBool = evt.GetField ( "flagBool" ).b;
 				break;
 				
 			case "Travel":
@@ -846,6 +842,8 @@ static function DeserializeConversationNode ( n : JSONObject ) : ConversationNod
 		case "Consequence":
 			node.consequence = n.GetField("consequence").str;
 			node.consequenceBool = n.GetField("consequenceBool").b;
+			if ( n.HasField ( "questName" ) ) { node.questName = n.GetField ( "questName" ).str; }
+			if ( n.HasField ( "questAction" ) ) { node.questAction = n.GetField ( "questAction" ).str; }
 			break;
 			
 		case "EndConvo":
@@ -856,6 +854,10 @@ static function DeserializeConversationNode ( n : JSONObject ) : ConversationNod
 		case "Exchange":
 			node.credits = n.GetField("credits").n;
 			node.item = n.GetField("item").str;
+			break;
+
+		case "Jump":
+			node.jumpTo = n.GetField("jumpTo").n;
 			break;
 	}
 

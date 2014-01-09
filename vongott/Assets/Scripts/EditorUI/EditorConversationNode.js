@@ -7,7 +7,7 @@ class EditorConversationNode extends MonoBehaviour {
 		public var lines : Transform;
 		public var linePrefab : EditorConversationNodeLine;
 	}
-	
+
 	public class Condition {
 		public var flag : OGButton;
 		public var outputTrue : OGButton;
@@ -17,6 +17,8 @@ class EditorConversationNode extends MonoBehaviour {
 	public class Consequence { 
 		public var flag : OGButton;
 		public var bool : OGPopUp;
+		public var quest : OGButton;
+		public var action : OGPopUp;
 		public var output : OGButton;
 	}
 	
@@ -36,7 +38,11 @@ class EditorConversationNode extends MonoBehaviour {
 		public var outputFailed : OGButton;
 		public var outputSuccess : OGButton;
 	}
-	
+
+	public class Jump {
+		public var jumpTo : OGPopUp;
+	}
+
 	public var initRootIndex : int = -1;
 	public var initNodeIndex : int = -1;
 	
@@ -60,7 +66,8 @@ class EditorConversationNode extends MonoBehaviour {
 	public var gameEvent : EventNode;
 	public var endConvo : EndConvo;
 	public var exchange : Exchange;
-	
+	public var jump : Jump;
+
 	public var connectedTo : EditorConversationNode[] = new EditorConversationNode[3];
 	public var activeOutputs : OGButton[] = new OGButton[3];
 	
@@ -110,6 +117,9 @@ class EditorConversationNode extends MonoBehaviour {
 				} else {
 					consequence.bool.selectedOption = "False";
 				}				
+				consequence.quest.text = reference.questName;
+				consequence.action.selectedOption = reference.questAction;
+				
 				break;
 			
 			case "EndConvo":
@@ -120,6 +130,10 @@ class EditorConversationNode extends MonoBehaviour {
 			case "Exchange":
 				exchange.item.text = reference.item;
 				exchange.credits.text = reference.credits.ToString ();
+				break;
+
+			case "Jump":
+				jump.jumpTo.selectedOption = reference.jumpTo.ToString();
 				break;
 		}
 		
@@ -161,7 +175,7 @@ class EditorConversationNode extends MonoBehaviour {
 				break;
 			
 			case "Consequence":
-				AdjustFrame ( 240, 50, 1 );
+				AdjustFrame ( 340, 80, 1 );
 				SetActive ( 0, consequence.output );
 				SetActive ( 1, null );
 				SetActive ( 2, null );
@@ -180,6 +194,14 @@ class EditorConversationNode extends MonoBehaviour {
 				SetActive ( 1, exchange.outputSuccess );
 				SetActive ( 2, null );
 				break;
+
+			case "Jump":
+				AdjustFrame ( 200, 50, 1 );
+				SetActive ( 0, null );
+				SetActive ( 1, null );
+				SetActive ( 2, null );
+				break;
+
 		}	
 	}
 	
@@ -264,6 +286,15 @@ class EditorConversationNode extends MonoBehaviour {
 	// Flags
 	public function PickFlag ( btn : OGButton ) {
 		EditorPicker.mode = "flag";
+		EditorPicker.button = btn;
+		EditorPicker.sender = "ConversationMap";
+				
+		OGRoot.GetInstance().GoToPage ( "Picker" );
+	}
+	
+	// Quests
+	public function PickQuest ( btn : OGButton ) {
+		EditorPicker.mode = "quest";
 		EditorPicker.button = btn;
 		EditorPicker.sender = "ConversationMap";
 				
@@ -384,8 +415,14 @@ class EditorConversationNode extends MonoBehaviour {
 		}
 	
 		// Display the correct number of root nodes
-		if ( selectedType == "EndConvo" && endConvo.nextRoot.options.Length != EditorConversationMap.GetInstance().GetRootStrings().Length ) {
-			endConvo.nextRoot.SetOptions ( EditorConversationMap.GetInstance().GetRootStrings() );
+		var rootStrings : String[] = EditorConversationMap.GetInstance().GetRootStrings();
+		
+		if ( selectedType == "EndConvo" && endConvo.nextRoot.options.Length != rootStrings.Length ) {
+			endConvo.nextRoot.SetOptions ( rootStrings );
+		}
+		
+		if ( selectedType == "Jump" && jump.jumpTo.options.Length != rootStrings.Length ) {
+			jump.jumpTo.SetOptions ( rootStrings );
 		}
 	
 		// Display the right id data

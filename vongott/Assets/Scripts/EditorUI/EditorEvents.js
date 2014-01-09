@@ -14,9 +14,11 @@ class EditorEvents extends OGPage {
 		public var textField : OGTextField;
 	}
 	
-	private class QuestType {
-		public var button : OGButton;
-		public var popUp : OGPopUp;
+	private class ConsequenceType {
+		public var questButton : OGButton;
+		public var questPopUp : OGPopUp;
+		public var flagButton : OGButton;
+		public var flagPopUp : OGPopUp;
 	}
 	
 	private class TravelType {
@@ -31,11 +33,6 @@ class EditorEvents extends OGPage {
 	private class ToggleDoorType {
 		public var button : OGButton;
 		public var popup : OGPopUp;
-	}
-	
-	private class SetFlagType {
-		public var button : OGButton;
-		public var tickBox : OGTickBox;
 	}
 	
 	private  var currentEvent : GameEvent;
@@ -54,11 +51,10 @@ class EditorEvents extends OGPage {
 	public var eventConditionBool : OGTickBox;
 	
 	public var anim : AnimationType;
-	public var quest : QuestType;
+	public var consequence : ConsequenceType;
 	public var travel : TravelType;
 	public var nextPath : NextPathType;
 	public var toggleDoor : ToggleDoorType;
-	public var setFlag : SetFlagType;
 	public var giveItem : GiveItemType;
 
 
@@ -198,14 +194,13 @@ class EditorEvents extends OGPage {
 		anim.y.text = "";
 		anim.z.text = "";
 		
-		quest.button.text = "(none)";
-		quest.popUp.selectedOption = "";
-		
+		consequence.questButton.text = "(none)";
+		consequence.questPopUp.selectedOption = "Start";
+		consequence.flagButton.text = "(none)";
+		consequence.flagPopUp.selectedOption = "True";
+				
 		nextPath.button.text = "(none)";
 		nextPath.button.hiddenString = "";
-		
-		setFlag.button.text = "(none)";
-		setFlag.tickBox.isTicked = false;
 		
 		travel.button.text = "(none)";
 		travel.textField.text = "";
@@ -242,10 +237,12 @@ class EditorEvents extends OGPage {
 					anim.z.text = e.animationVector.z.ToString();
 					break;
 				
-				case GameEvent.eEventType.Quest:
-					eventType.selectedOption = "Quest";
-					quest.button.text = e.questID;
-					quest.popUp.selectedOption = e.questAction;
+				case GameEvent.eEventType.Consequence:
+					eventType.selectedOption = "Consequence";
+					consequence.questButton.text = e.questID;
+					consequence.questPopUp.selectedOption = e.questAction;
+					consequence.flagButton.text = e.flagName;
+					consequence.flagPopUp.selectedOption = e.flagBool.ToString();
 					break;
 					
 				case GameEvent.eEventType.NextPath:
@@ -257,12 +254,6 @@ class EditorEvents extends OGPage {
 					eventType.selectedOption = "ToggleDoor";
 					toggleDoor.button.text = e.toggleDoorName;
 					toggleDoor.popup.selectedOption = e.toggleDoorBool ? "Open" : "Close";
-					break;
-					
-				case GameEvent.eEventType.SetFlag:
-					eventType.selectedOption = "SetFlag";
-					setFlag.button.text = e.flagName;
-					setFlag.tickBox.isTicked = e.flagBool;
 					break;
 					
 				case GameEvent.eEventType.Travel:
@@ -310,10 +301,12 @@ class EditorEvents extends OGPage {
 				currentEvent.animationVector = new Vector3 ( float.Parse(anim.x.text), float.Parse(anim.y.text), float.Parse(anim.z.text) );
 				break;
 			
-			case "Quest":
-				currentEvent.type = GameEvent.eEventType.Quest;
-				currentEvent.questID = quest.button.text;
-				currentEvent.questAction = quest.popUp.selectedOption;
+			case "Consequence":
+				currentEvent.type = GameEvent.eEventType.Consequence;
+				currentEvent.questID = consequence.questButton.text;
+				currentEvent.questAction = consequence.questPopUp.selectedOption;
+				currentEvent.flagName = consequence.flagButton.text;
+				currentEvent.flagBool = consequence.flagPopUp.selectedOption == "True";
 				break;
 				
 			case "NextPath":
@@ -325,12 +318,6 @@ class EditorEvents extends OGPage {
 				currentEvent.type = GameEvent.eEventType.ToggleDoor;
 				currentEvent.toggleDoorName = toggleDoor.button.text;
 				currentEvent.toggleDoorBool = toggleDoor.popup.selectedOption == "Open";
-				break;
-			
-			case "SetFlag":
-				currentEvent.type = GameEvent.eEventType.SetFlag;
-				currentEvent.flagName = setFlag.button.text;
-				currentEvent.flagBool = setFlag.tickBox.isTicked;
 				break;
 				
 			case "Travel":
