@@ -45,7 +45,7 @@ class EditorOpenFile extends OGPage {
 				
 				Loom.QueueOnMainThread ( function () {
 					tempImage.LoadImage ( bytes );
-					previewPane.image = tempImage;
+					previewPane.mainTexture = tempImage;
 					
 					previewLoading.SetActive ( false );
 				} );

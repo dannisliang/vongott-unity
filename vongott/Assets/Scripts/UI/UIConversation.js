@@ -42,26 +42,26 @@ class UIConversation extends OGPage {
 		HighlightOption ( 0 );
 		
 		if ( !highlight.activeSelf ) {
-			lines[0].content = "";
-			lines[1].content = "";
-			lines[2].content = "";
+			lines[0].text = "";
+			lines[1].text = "";
+			lines[2].text = "";
 			highlight.SetActive ( true );
 		}
 		
-		lines[index].content = line;
+		lines[index].text = line;
 	}
 	
 	// Set line
 	static function SetLine ( line : String ) {
-		lines[0].content = line;
-		lines[1].content = "";
-		lines[2].content = "";
+		lines[0].text = line;
+		lines[1].text = "";
+		lines[2].text = "";
 		highlight.SetActive ( false );
 	}
 
 	// Set name
 	static function SetName ( n : String ) {
-		actorName.content = n;
+		actorName.text = n;
 	}
 
 	

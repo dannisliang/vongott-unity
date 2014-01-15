@@ -282,10 +282,6 @@ class EditorMenuBase extends OGPage {
 				menuObj.GetComponent(EditorInspectorTrigger).Init(selectedObj);
 				break;
 		
-			case "Surface":
-				menuObj.GetComponent(EditorInspectorSurface).Init(selectedObj);
-				break;
-		
 			case "Prefab":
 				menuObj.GetComponent(EditorInspectorPrefab).Init(selectedObj);
 				break;

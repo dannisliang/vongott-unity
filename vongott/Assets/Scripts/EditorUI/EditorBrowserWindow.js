@@ -38,7 +38,7 @@ class EditorBrowserWindow extends OGPage {
 	////////////////////
 	// Page	
 	override function StartPage () {
-		preview2D.image = null;
+		preview2D.mainTexture = null;
 		
 		SetMode ( initMode );
 		
@@ -129,10 +129,6 @@ class EditorBrowserWindow extends OGPage {
 			var obj : GameObject = new GameObject ( strings[i] );
 			var btn : OGButton = obj.AddComponent ( OGButton );
 			
-			if ( i == strings.Length - 1 ) {
-				btn.styleName = "listitem";
-			}	
-			
 			btn.target = this.gameObject;
 			btn.message = "GoToDir";
 			btn.argument = strings[i];
@@ -156,7 +152,7 @@ class EditorBrowserWindow extends OGPage {
 	private function PopulateList ( folder : EditorFileSystem.Folder ) {
 		if ( !folder ) { return; }
 		
-		preview2D.image = null;
+		preview2D.mainTexture = null;
 		
 		currentFolder = folder;
 		ClearList ();

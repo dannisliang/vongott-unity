@@ -16,7 +16,6 @@ public var _navMeshMaterial : Material;
 // Static vars
 static var menusActive : boolean = false;
 static var selectedObject : GameObject;
-static var selectedPlane : SurfacePlane;
 static var selectedVertex : int;
 static var currentLevel : GameObject;
 static var navNodes : OPNode[];
@@ -358,20 +357,7 @@ static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumera
 	
 	ClearPreview ();
 	
-	image.image = tex;
-}
-
-////////////////////
-// Create
-////////////////////
-// Create surface
-static function CreateSurface () {   
-    var newObject : GameObject = new GameObject("Surface", MeshRenderer, MeshFilter, MeshCollider, Surface );
-        
-	newObject.transform.position = GetSpawnPosition();
-	newObject.transform.parent = currentLevel.transform;
-	
-	//SelectObject ( newObject );
+	image.mainTexture = tex;
 }
 
 
@@ -628,16 +614,6 @@ static function DeselectObject () {
 static function DeselectObject ( nextObject : GameObject ) {	
 	var selectNextObject : GameObject;
 	
-	if ( selectedObject.GetComponent(Actor) ) {
-	
-	} else if ( selectedObject.GetComponent(Surface) ) {
-		if ( !nextObject || !nextObject.GetComponent(EditorVertexButton) ) {	
-			selectedObject.GetComponent(Surface).ClearButtons();
-		
-		}
-	
-	}
-	
 	selectBox.gameObject.SetActive ( false );
 	
 	selectedObject = null;
@@ -717,7 +693,7 @@ static function SelectTriangle ( obj : GameObject, triangleIndex : int ) {
 static function SelectObject ( obj : GameObject ) {
 	transformEnd = null;
 		
-	if ( !obj || obj.GetComponent ( OGButton3D ) ) {
+	if ( !obj ) {
 		return;
 	
 	}
@@ -728,17 +704,6 @@ static function SelectObject ( obj : GameObject ) {
 	
 	selectedObject = obj;
 		
-	if ( obj.GetComponent ( EditorVertexButton ) ) {
-		SetGrabMode ( true );
-		
-		transformEnd = function () {
-			obj.GetComponent ( EditorVertexButton ).surface.CreateButtons();
-			obj.GetComponent ( EditorVertexButton ).Remodel();
-			SelectObject ( obj.GetComponent ( EditorVertexButton ).surface.gameObject );
-		};
-	
-	}
-	
 	// Mark object with selection box
 	FitSelectionBox ();
 	
@@ -781,11 +746,6 @@ static function SelectObject ( obj : GameObject ) {
 	// Item
 	if ( obj.GetComponent ( Item ) ) {
 		inspector.AddMenu ( "Item", obj );
-	}
-	
-	// Plane
-	if ( obj.GetComponent ( Surface ) ) {
-		inspector.AddMenu ( "Surface", obj );
 	}
 	
 	// Computer
@@ -919,7 +879,7 @@ static function SetGrabMode ( state : boolean ) {
 
 // Set rotate mode
 static function SetRotateMode ( state : boolean ) {
-	if ( !selectedObject || selectedObject.GetComponent ( EditorVertexButton ) || selectedObject.GetComponent ( CombinedMesh ) ) {
+	if ( !selectedObject || selectedObject.GetComponent ( CombinedMesh ) ) {
 		return;
 	}
 		
@@ -948,7 +908,7 @@ static function SetRotateMode ( state : boolean ) {
 
 // Set scale mode
 static function SetScaleMode ( state : boolean ) {
-	if ( !selectedObject || selectedObject.GetComponent ( EditorVertexButton ) || selectedObject.GetComponent ( CombinedMesh ) ) {
+	if ( !selectedObject || selectedObject.GetComponent ( CombinedMesh ) ) {
 		return;
 	}
 		

@@ -172,9 +172,9 @@ class EditorInspectorPrefab extends MonoBehaviour {
 			materialButton.text += "...";
 			
 			if ( obj.renderer.material.mainTexture ) {
-				previewImage.image = obj.renderer.material.mainTexture as Texture2D;
+				previewImage.mainTexture = obj.renderer.material.mainTexture as Texture2D;
 			} else {
-				previewImage.image = null;
+				previewImage.mainTexture = null;
 			}
 		}
 	}

@@ -15,7 +15,7 @@ class EditorEditAccount extends OGPage {
 	public var openFileName : OGTextField;
 	
 	override function StartPage () {		
-		wallpaper.image = Resources.Load ( "Textures/UI/Wallpapers/" + currentAccount.wallpaper ) as Texture2D;
+		wallpaper.mainTexture = Resources.Load ( "Textures/UI/Wallpapers/" + currentAccount.wallpaper ) as Texture2D;
 		
 		var wallpapers : Object[] = Resources.LoadAll ( "Textures/UI/Wallpapers" );
 		wallpaperSelect.options = new String[wallpapers.Length];
@@ -37,7 +37,7 @@ class EditorEditAccount extends OGPage {
 	}
 	
 	public function UpdateWallpaper ( n : String ) {
-		wallpaper.image = Resources.Load ( "Textures/UI/Wallpapers/" + n ) as Texture2D;
+		wallpaper.mainTexture = Resources.Load ( "Textures/UI/Wallpapers/" + n ) as Texture2D;
 	}
 	
 	function OK () {

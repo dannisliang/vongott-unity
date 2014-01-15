@@ -225,39 +225,6 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 	
 		return newAct;
 	
-	// check if surface
-	} else if ( obj.HasField("Surface") ) {
-		var srf : JSONObject = obj.GetField("Surface");
-		var newSrfObj : GameObject = new GameObject("Surface", MeshRenderer, MeshFilter, MeshCollider);
-		var newSrf : Surface = newSrfObj.AddComponent(Surface);
-		
-		for ( var p : Object in srf.GetField("planes").list ) {
-			newSrf.planes.Add ( DeserializeSurfacePlane ( p as JSONObject ) );
-		}
-		
-		newSrf.materialPath = srf.GetField("materialPath").str;
-		newSrf.materialSize = srf.GetField ( "materialSize" ).n;
-		if ( srf.HasField ( "foliagePath" ) ) { newSrf.foliagePath = srf.GetField("foliagePath").str; }
-		if ( srf.HasField ( "foliageDensity" ) ) { newSrf.foliageDensity = srf.GetField ( "foliageDensity" ).n; }
-		newSrfObj.transform.localScale = DeserializeVector3 ( srf.GetField ( "localScale" ) );
-		newSrfObj.transform.localPosition = DeserializeVector3 ( srf.GetField ( "localPosition" ) );
-		newSrfObj.transform.localEulerAngles = DeserializeVector3 ( srf.GetField ( "localEulerAngles" ) );
-		if ( newSrfObj.transform.localScale.y == 1 ) {
-			newSrfObj.tag = "walkable";
-		}
-	
-		newSrf.name = obj.GetField("name").str;
-	
-		newSrf.Init ();
-		newSrf.Apply ();
-	
-		// GUID
-		if ( obj.HasField ( "GUID" ) ) {
-			newSrfObj.GetComponent(GUID).GUID = obj.GetField ( "GUID" ).str;
-		}
-	
-		return newSrfObj;
-	
 	// check if spawnpoint
 	} else if ( obj.HasField("SpawnPoint") ) {
 		var spt : JSONObject = obj.GetField("SpawnPoint");
@@ -704,21 +671,6 @@ static function DeserializePathNode ( p : JSONObject ) : PathNode {
 	if ( p.HasField ( "running" ) ) { node.running = p.GetField ( "running" ).b; }
 	
 	return node;
-}
-
-// SurfacePlane
-static function DeserializeSurfacePlane ( p : JSONObject ) : SurfacePlane {
-	var vertices : Vector3[] = new Vector3[4];
-	
-	for ( var i = 0; i < p.GetField ("vertices").list.Count; i++ ) {
-		vertices[i] = DeserializeVector3 ( p.GetField ("vertices").list[i] as JSONObject );
-	}
-	
-	var plane : SurfacePlane = new SurfacePlane ( vertices );
-	plane.index = DeserializeVector2 ( p.GetField("index") );
-	plane.position = DeserializeVector3 ( p.GetField("position") );
-	
-	return plane;
 }
 
 // Transform

@@ -239,27 +239,17 @@ function Update () {
 						return;
 					
 					// Return material
-					} else if ( obj.GetComponent(Prefab) || obj.GetComponent(Surface) ) {
+					} else if ( obj.GetComponent(Prefab) ) {
 						var materialPath : String = "";
 						
 						if ( mouseGoal.GetComponent(Prefab) ) {
 							materialPath = mouseGoal.GetComponent(Prefab).materialPath;
-																			
-						} else if ( mouseGoal.GetComponent(Surface) ) {
-							materialPath = mouseGoal.GetComponent(Surface).materialPath;
-						
 						}
 						
 						if ( materialPath != "" ) {
 							if ( EditorCore.GetSelectedObject().GetComponent(Prefab) ) {
 								EditorCore.GetSelectedObject().GetComponent(Prefab).materialPath = materialPath;
 								EditorCore.GetSelectedObject().GetComponent(Prefab).ReloadMaterial();
-								EditorCore.SetPickMode ( false );
-								EditorCore.ReselectObject ();
-							
-							} else if ( EditorCore.GetSelectedObject().GetComponent(Surface) ) {
-								EditorCore.GetSelectedObject().GetComponent(Surface).materialPath = materialPath;
-								EditorCore.GetSelectedObject().GetComponent(Surface).ReloadMaterial();
 								EditorCore.SetPickMode ( false );
 								EditorCore.ReselectObject ();
 							
@@ -378,7 +368,7 @@ function Update () {
 				}
 			
 			// Scale mode	
-			} else if ( EditorCore.GetSelectedObject() && !EditorCore.GetSelectedObject().GetComponent(Surface) ) {
+			} else if ( EditorCore.GetSelectedObject() ) {
 				EditorCore.SetScaleMode( true );
 			
 			}

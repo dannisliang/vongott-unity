@@ -25,6 +25,8 @@ class EditorPicker extends OGPage {
 	////////////////////
 	// Accept
 	function Accept () {
+		if ( String.IsNullOrEmpty ( selectedItem ) ) { return; }
+		
 		button.text = selectedItem;
 		
 		OGRoot.GetInstance().GoToPage ( sender );
