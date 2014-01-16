@@ -120,9 +120,9 @@ class EditorPicker extends OGPage {
 			var btn : OGListItem = scrollView.transform.GetChild ( i ).gameObject.GetComponent ( OGListItem );
 			
 			if ( btn.text.Contains ( filter.text ) ) {
-				btn.disabled = false;
+				btn.isDisabled = false;
 			} else {
-				btn.disabled = true;
+				btn.isDisabled = true;
 			}
 		}
 	}

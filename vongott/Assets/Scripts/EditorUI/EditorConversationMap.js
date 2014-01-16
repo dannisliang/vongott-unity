@@ -493,7 +493,7 @@ class EditorConversationMap extends OGPage {
 		var pos : Vector3;
 		pos.x = 200 + node.offset * cellDistance;
 		pos.y = bottomLines[offset];
-		pos.z = scrollView.transform.position.z;
+		pos.z = scrollView.transform.position.z + 5;
 		if ( pos.y < minHeight ) { pos.y = minHeight; }
 		bottomLines[offset] = pos.y + node.frame.transform.localScale.y + 20;
 		

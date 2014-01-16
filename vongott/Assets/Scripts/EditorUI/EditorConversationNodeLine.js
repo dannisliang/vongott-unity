@@ -22,4 +22,14 @@ class EditorConversationNodeLine extends MonoBehaviour {
 	public function SetRemoveable ( state : boolean ) {
 		removeBtn.gameObject.SetActive ( state );
 	}
+
+	function Update () {
+		if ( line.listening ) {
+			line.transform.localScale = new Vector3 ( line.transform.localScale.x, 80, 1 );
+			line.transform.localPosition = new Vector3 ( line.transform.localPosition.x, line.transform.localPosition.y, -5 );
+		} else {
+			line.transform.localScale = new Vector3 ( line.transform.localScale.x, 20, 1 );
+			line.transform.localPosition = new Vector3 ( line.transform.localPosition.x, line.transform.localPosition.y, 0 );
+		}
+	}
 }

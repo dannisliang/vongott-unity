@@ -129,12 +129,16 @@ class OGDropDown extends OGWidget {
 	////////////////////
 	// Rects
 	////////////////////
+	private function GetMouseRect () : Rect {
+		return new Rect ( drawRct.x, drawRct.y, drawRct.width / 2, drawRct.height );
+	}
+	
 	private function GetRootBackgroundRect () {
 		return new Rect ( drawRct.x, drawRct.y - submenu.Length * drawRct.height, drawRct.width, drawRct.height * submenu.Length ); 
 	}
 
 	private function GetNestedBackgroundRect () {
-		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( 2 + activeNestedMenu ) * drawRct.height, drawRct.width, drawRct.height * submenu[activeNestedMenu].nestedMenu.Length );
+		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( activeNestedMenu + submenu[activeNestedMenu].nestedMenu.Length ) * drawRct.height, drawRct.width, drawRct.height * submenu[activeNestedMenu].nestedMenu.Length );
 	}
 
 	private function GetRootItemRect ( i : int ) {
@@ -142,7 +146,7 @@ class OGDropDown extends OGWidget {
 	}
 
 	private function GetNestedItemRect ( i : int ) {
-		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( 1 + activeNestedMenu ) * drawRct.height - ( i * drawRct.height ), drawRct.width, drawRct.height );
+		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( 1 + activeNestedMenu + i ) * drawRct.height, drawRct.width, drawRct.height );
 	}
 
 	private function GetTickRect ( i : int, isRoot : boolean ) : Rect {
@@ -182,6 +186,9 @@ class OGDropDown extends OGWidget {
 	// Update
 	////////////////////
 	override function UpdateWidget () {
+		// Persistent vars
+		isSelectable = true;
+
 		// Mouse
 		if ( isDown ) {
 			if ( activeNestedMenu != -1 ) {
@@ -190,7 +197,7 @@ class OGDropDown extends OGWidget {
 				mouseRct = GetRootBackgroundRect ();
 			}
 		} else {
-			mouseRct = drawRct;
+			mouseRct = GetMouseRect();
 		}
 	}
 	
@@ -200,23 +207,23 @@ class OGDropDown extends OGWidget {
 	////////////////////
 	override function DrawSkin () {
 		if ( isDown ) {
-			OGDrawHelper.DrawSlicedSprite ( GetRootBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth );
+			OGDrawHelper.DrawSlicedSprite ( GetRootBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth, clipTo );
 		
 			if ( activeNestedMenu != -1 ) {
-				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth );
+				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth, clipTo );
 			}
 		
 			// Draw tick boxes
 			for ( var s : int = 0; s < submenu.Length; s++ ) {
 				if ( submenu[s].isTicked ) {
-					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked.coordinates, drawDepth );
+					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked.coordinates, drawDepth, clipTo );
 				}
 			}
 
 			if ( activeNestedMenu != -1 ) {
 				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
 					if ( submenu[activeNestedMenu].nestedMenu[n].isTicked ) {
-						OGDrawHelper.DrawSprite ( GetTickRect ( n, false ), styles.ticked.coordinates, drawDepth );
+						OGDrawHelper.DrawSprite ( GetTickRect ( n, false ), styles.ticked.coordinates, drawDepth, clipTo );
 					}
 				}
 			}
@@ -228,12 +235,12 @@ class OGDropDown extends OGWidget {
 
 		if ( isDown ) {
 			for ( var s : int = 0; s < submenu.Length; s++ ) {
-				OGDrawHelper.DrawLabel ( GetRootItemRect ( s ), submenu[s].name, GetRootItemStyle ( s ).text, drawDepth );
+				OGDrawHelper.DrawLabel ( GetRootItemRect ( s ), submenu[s].name, GetRootItemStyle ( s ).text, drawDepth, clipTo );
 			}
 
 			if ( activeNestedMenu != -1 ) {
 				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
-					OGDrawHelper.DrawLabel ( GetNestedItemRect ( n ), submenu[activeNestedMenu].nestedMenu[n].name, GetNestedItemStyle ( n ).text, drawDepth );
+					OGDrawHelper.DrawLabel ( GetNestedItemRect ( n ), submenu[activeNestedMenu].nestedMenu[n].name, GetNestedItemStyle ( n ).text, drawDepth, clipTo );
 				}
 			}
 		}

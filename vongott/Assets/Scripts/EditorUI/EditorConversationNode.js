@@ -391,7 +391,7 @@ class EditorConversationNode extends MonoBehaviour {
 		frame.localScale = new Vector3 ( x, y, z );
 		type.localPosition = new Vector3 ( (x/2) - 85, 0, -2 );
 		extraButtonsContainer.localPosition = new Vector3 ( frame.localScale.x + 10, 0, 0 );
-		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x, 10, -4 );
+		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x - 10, 10, -2 );
 		
 		EditorConversationMap.GetInstance().UpdateRootNodes ();
 	}

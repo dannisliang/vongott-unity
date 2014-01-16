@@ -135,8 +135,10 @@ class OGRoot extends MonoBehaviour {
 				for ( o = 0; o < widgets.Length; o++ ) {
 					w = widgets[o];
 					
-					if ( w != null && w.styles.basic.text.fontIndex == i && w.isDrawn && w.gameObject.activeSelf ) {
-						w.DrawText ();
+					if ( w != null && w.isDrawn && w.gameObject.activeSelf ) {
+						if ( w.styles.basic != null && w.styles.basic.text.fontIndex == i ) {
+							w.DrawText ();
+						}
 					}
 				}
 				

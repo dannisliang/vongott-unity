@@ -16,11 +16,20 @@ public class OGTextField extends OGWidget {
 	public var regexPreset : RegExPreset;
 
 	@HideInInspector public var cursorStyle : OGStyle;
+	@HideInInspector public var listening : boolean = false;
 	
 	private var currentPreset : RegExPreset = RegExPreset.None;
-	private var listening : boolean = false;
 	private var cursorPosition : Vector2;
 	private var selectCursorPosition : Vector2;
+
+
+	//////////////////
+	// Rects
+	//////////////////
+	private function GetCursorRect () : Rect {
+		return new Rect ( cursorPosition.x, cursorPosition.y, 2, styles.basic.text.fontSize );
+	}
+	
 
 	//////////////////
 	// Interaction
@@ -40,7 +49,7 @@ public class OGTextField extends OGWidget {
 	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
 		if ( listening && isDrawn ) {
-			//GUI.color = new Color ( 0, 0, 0, 0 );
+			GUI.color = new Color ( 0, 0, 0, 0 );
 
 			var invertedRct : Rect = drawRct;
 			invertedRct.y = Screen.height - invertedRct.y - invertedRct.height;
@@ -55,7 +64,7 @@ public class OGTextField extends OGWidget {
 				text = Regex.Replace ( text, "[" + regex + "]", "" );
 			}
 
-			//GUI.color = new Color ( 1, 1, 1, 1 );
+			GUI.color = new Color ( 1, 1, 1, 1 );
 		}
 	}
 
@@ -64,6 +73,9 @@ public class OGTextField extends OGWidget {
 	// Update
 	////////////////////
 	override function UpdateWidget () {
+		// Persistent vars
+		isSelectable = true;
+
 		// Update data
 		mouseRct = drawRct;
 
@@ -96,9 +108,11 @@ public class OGTextField extends OGWidget {
 	/////////////////
 	override function DrawSkin () {
 		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic.coordinates, styles.basic.border, drawDepth );
+
+		OGDrawHelper.DrawSprite ( GetCursorRect(), styles.thumb.coordinates, drawDepth );
 	}
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth );
+		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth, this );
 	}
 }
