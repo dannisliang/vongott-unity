@@ -8,7 +8,7 @@ tagline: Welcome!
 <img src="{{ BASE_PATH }}/assets/themes/vongott/images/logo/300x400.png" id="frontpage-logo" />
 
 ## Latest builds
-[Linux (x86)](https://github.com/mrzapp/vongott/raw/master/build/vongott_linux_x86.zip)
+[Linux (x86)](https://github.com/mrzapp/vongott/raw/master/build/vongott_linux_x86.zip)  
 [Windows (x86)] (https://github.com/mrzapp/vongott/raw/master/build/vongott_win_x86.zip)
 
 ## What?
