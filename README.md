@@ -1,5 +1,5 @@
 ### Latest builds
-<a href="https://github.com/mrzapp/vongott/raw/master/build/vongott_linux_x86.zip">Linux (x86)</a>
+<a href="https://github.com/mrzapp/vongott/raw/master/build/vongott_linux_x86.zip">Linux (x86)</a>  
 <a href="https://github.com/mrzapp/vongott/raw/master/build/vongott_win_x86.zip">Windows (x86)</a>
 
 ### What?
