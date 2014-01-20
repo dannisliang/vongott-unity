@@ -1,4 +1,6 @@
-<a href="https://docs.google.com/file/d/0B9DnayqgbYmgSG1FUFVLYkZiMGM/edit?usp=sharing">latest build</a>
+### Latest builds
+<a href="https://github.com/mrzapp/vongott/raw/master/build/vongott_linux_x86.zip">Linux (x86)</a>  
+<a href="https://github.com/mrzapp/vongott/raw/master/build/vongott_win_x86.zip">Windows (x86)</a>
 
 ### What?
 This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. The point of this game is to explore a different viewpoint of the events in Deus Ex, and to expand the story in another direction entirely. You could basically call this game elaborate fan fiction. The intention is to release it in chapters. 
