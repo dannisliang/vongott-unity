@@ -11,8 +11,6 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		activation.selectedOption = trg.activation.ToString();
 		fireOnce.isTicked = trg.fireOnce;
 		
-		eventContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - eventContainer.position.y;
-				
 		for ( var i : int = 0 ; i < trg.events.Count; i++ ) {
 			AddEvent ( trg.events[i] );
 		}
@@ -158,7 +156,6 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		}
 			
 		addEvent.transform.localPosition = new Vector3 ( 0, bottomLine, 0 );
-		eventContainer.GetComponent ( OGScrollView ).scrollLength = bottomLine + 40;
 	}
 	
 	function RemoveEvent ( obj : GameObject ) {

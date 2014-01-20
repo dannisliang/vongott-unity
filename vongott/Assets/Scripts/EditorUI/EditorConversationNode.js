@@ -389,7 +389,7 @@ class EditorConversationNode extends MonoBehaviour {
 	// Frame
 	private function AdjustFrame ( x : float, y : float, z : float ) {
 		frame.localScale = new Vector3 ( x, y, z );
-		type.localPosition = new Vector3 ( (x/2) - 85, 0, -2 );
+		type.localPosition = new Vector3 ( (x/2) - 85, 0, -5 );
 		extraButtonsContainer.localPosition = new Vector3 ( frame.localScale.x + 10, 0, 0 );
 		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x - 10, 10, -2 );
 		

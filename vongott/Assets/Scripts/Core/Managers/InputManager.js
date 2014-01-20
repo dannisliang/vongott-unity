@@ -2,6 +2,7 @@
 
 class InputManager extends MonoBehaviour {
 	public static var escFunction : Function;
+	public static var jumpFunction : Function;
 	
 	private var player : Player;
 	

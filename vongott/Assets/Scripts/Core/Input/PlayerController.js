@@ -9,7 +9,8 @@ public enum ePlayerBodyState {
 	Idle,
 	Jumping,
 	Falling,
-	Crouching
+	Crouching,
+	Climbing
 }
 
 public enum ePlayerActionState {
@@ -29,9 +30,18 @@ class PlayerController {
 	
 	private static var capsule : CapsuleCollider;
 	private static var distGround : float = float.PositiveInfinity;
+	private static var isClimbing : boolean = false;
+	private static var inCrawlspace : boolean = false;
+	private static var isGrounded : boolean = true;
 
 	public static function SetControlMode ( mode : ePlayerControlMode ) {
 		controlMode = mode;
+	}
+
+	public static function SetClimbing ( state : boolean ) {
+		isClimbing = state;
+
+		GameCore.Print ( "PlayerController | " + ( isClimbing ? "Started climbing" : "Stopped climbing" ) );
 	}
 
 	public static function Update ( player : Player ) {
@@ -39,7 +49,6 @@ class PlayerController {
 			capsule = player.transform.collider as CapsuleCollider;
 		}
 	
-		var isGrounded : boolean = true;
 		var groundHit : RaycastHit;
 		
 		if ( Physics.Raycast ( player.transform.position + Vector3.up * 0.05, -player.transform.up, groundHit, distGround, 9 ) ) {
@@ -52,16 +61,31 @@ class PlayerController {
 		
 		isGrounded = distGround < 0.1;
 		
-		var inCrawlspace = Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
+		inCrawlspace = bodyState == ePlayerBodyState.Crouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
 		
+		// Climbing
+		if ( isClimbing ) {
+			bodyState = ePlayerBodyState.Climbing;
+			player.GetComponent.<Rigidbody>().useGravity = false;
+			
+		} else {
+			player.GetComponent.<Rigidbody>().useGravity = true;
+		
+		}
+
 		// Jumping
 		if ( Input.GetKeyDown ( KeyCode.Space ) ) {
 			if ( bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
 				bodyState = ePlayerBodyState.Jumping;
+
+				if ( InputManager.jumpFunction != null ) {
+					InputManager.jumpFunction ();
+					InputManager.jumpFunction = null;
+				}
 			}
 		
 		// Crouching
-		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) ) {
+		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) && !isClimbing ) {
 			if ( bodyState == ePlayerBodyState.Crouching && !inCrawlspace ) {
 				bodyState = ePlayerBodyState.Idle;
 			
@@ -104,6 +128,15 @@ class PlayerController {
 			
 			}
 			
+			// ^ TEMPORARY CONTROLS FOR CLIMBING ( waiting for animation )
+			if ( bodyState == ePlayerBodyState.Climbing ) {
+				if ( deltaVertical > 0.1 ) {
+					player.transform.localPosition += new Vector3 ( 0, Time.deltaTime, 0 );
+				} else if ( deltaVertical < -0.1 ) {
+					player.transform.localPosition -= new Vector3 ( 0, Time.deltaTime, 0 );
+				}
+			}
+
 			// Sprint
 			if ( Input.GetKey ( KeyCode.LeftShift ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
 			
@@ -153,6 +186,7 @@ class PlayerController {
 
 		player.GetComponent(Animator).SetBool ( "Jumping", bodyState == ePlayerBodyState.Jumping || bodyState == ePlayerBodyState.Falling );
 		player.GetComponent(Animator).SetBool ( "Crouching", bodyState == ePlayerBodyState.Crouching );
+		player.GetComponent(Animator).SetBool ( "Climbing", bodyState == ePlayerBodyState.Climbing );
 		player.GetComponent(Animator).SetBool ( "Shooting", actionState == ePlayerActionState.Shooting );
 		player.GetComponent(Animator).SetBool ( "Interacting", actionState == ePlayerActionState.Interacting );
 		player.GetComponent(Animator).SetBool ( "FirstPerson", controlMode == ePlayerControlMode.FirstPerson );

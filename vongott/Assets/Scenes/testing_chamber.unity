@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -165,6 +166,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -393,10 +395,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &19325945
 GameObject:
@@ -454,6 +454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -472,6 +473,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: ProgressBar
@@ -700,10 +702,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   value: .5
   padding: {x: 4, y: 4}
@@ -758,6 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -776,6 +777,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -1004,10 +1006,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: NETWORK NAME
   overrideFontSize: 1
@@ -1044,6 +1044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -1062,6 +1063,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -1290,10 +1292,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Health: '
   overrideFontSize: 0
@@ -1378,6 +1378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -1396,6 +1397,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TickBox
@@ -1624,10 +1626,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Locked:'
   isTicked: 0
@@ -1731,6 +1731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -1749,6 +1750,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -1977,10 +1979,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 9
@@ -2030,6 +2030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -2048,6 +2049,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -2276,10 +2278,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Text Edit
   overrideFontSize: 1
@@ -2407,6 +2407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -2425,6 +2426,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -2653,10 +2655,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Text text text
   overrideFontSize: 0
@@ -2730,6 +2730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -2748,6 +2749,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -2976,10 +2978,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Arms
@@ -3029,6 +3029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -3047,6 +3048,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -3275,10 +3277,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Item
   overrideFontSize: 1
@@ -3326,6 +3326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -3344,6 +3345,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -3572,10 +3574,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -40, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: X
@@ -3651,6 +3651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -3669,6 +3670,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: InventorySlot
@@ -3897,10 +3899,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   tile: {x: 10, y: 1}
 --- !u!1 &130959746
@@ -4159,6 +4159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -4177,6 +4178,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -4405,10 +4407,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &163277735
 GameObject:
@@ -4509,6 +4509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -4527,6 +4528,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -4755,10 +4757,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Upgrades
@@ -4808,6 +4808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -4826,6 +4827,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -5054,10 +5056,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &180055294
 GameObject:
@@ -5330,6 +5330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -5348,6 +5349,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -5576,10 +5578,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &269666342
 GameObject:
@@ -5647,6 +5647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -5665,6 +5666,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -5893,10 +5895,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &297224724
 GameObject:
@@ -5991,6 +5991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -6009,6 +6010,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -6237,10 +6239,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     Lorem Ipsum has been the industry's standard.
@@ -6672,7 +6672,7 @@ Transform:
   m_LocalPosition: {x: 3.30352783, y: .124542236, z: 20.38381}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1883685794}
 --- !u!1 &337217713
 GameObject:
   m_ObjectHideFlags: 0
@@ -6717,6 +6717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -6735,6 +6736,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -6963,10 +6965,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &345465030
 GameObject:
@@ -7008,6 +7008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -7026,6 +7027,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -7254,10 +7256,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Messages
   overrideFontSize: 1
@@ -7305,6 +7305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -7323,6 +7324,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -7551,10 +7553,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Toggle
@@ -7703,6 +7703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -7721,6 +7722,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -7949,10 +7951,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &399966752
 GameObject:
@@ -8021,6 +8021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -8039,6 +8040,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -8267,10 +8269,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 6
@@ -8320,6 +8320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -8338,6 +8339,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -8566,10 +8568,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'User:'
   overrideFontSize: 0
@@ -8617,6 +8617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -8635,6 +8636,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -8863,10 +8865,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Attack:'
   overrideFontSize: 0
@@ -8914,6 +8914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -8932,6 +8933,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: InventorySlot
@@ -9160,10 +9162,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   tile: {x: 10, y: 3}
 --- !u!1 &441115911
@@ -9242,6 +9242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -9260,6 +9261,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -9488,10 +9490,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Inventory
@@ -9541,6 +9541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -9559,6 +9560,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -9787,10 +9789,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Eyes
@@ -9840,6 +9840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -9858,6 +9859,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -10086,10 +10088,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Energy: '
   overrideFontSize: 0
@@ -10137,6 +10137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -10155,6 +10156,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -10383,10 +10385,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Line 3
   overrideFontSize: 0
@@ -10456,6 +10456,124 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!1 &481611759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+  m_PrefabInternal: {fileID: 1702940098}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 481611766}
+  - 33: {fileID: 481611765}
+  - 23: {fileID: 481611764}
+  - 114: {fileID: 481611763}
+  - 114: {fileID: 481611762}
+  - 65: {fileID: 481611761}
+  - 114: {fileID: 481611760}
+  m_Layer: 0
+  m_Name: stairs_ladder_metal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &481611760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 0645dd8f5ff65b546baa8000183e84db,
+    type: 2}
+  m_PrefabInternal: {fileID: 1702940098}
+  m_GameObject: {fileID: 481611759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb7006d5d542f340a82568e77fd22dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &481611761
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6500000, guid: 0645dd8f5ff65b546baa8000183e84db,
+    type: 2}
+  m_PrefabInternal: {fileID: 1702940098}
+  m_GameObject: {fileID: 481611759}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 3, z: .25}
+  m_Center: {x: 0, y: 1.5, z: -.100000001}
+--- !u!114 &481611762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 0645dd8f5ff65b546baa8000183e84db,
+    type: 2}
+  m_PrefabInternal: {fileID: 1702940098}
+  m_GameObject: {fileID: 481611759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000365db5143b3a4a87f5942957f1fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GUID: 
+--- !u!114 &481611763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 0645dd8f5ff65b546baa8000183e84db,
+    type: 2}
+  m_PrefabInternal: {fileID: 1702940098}
+  m_GameObject: {fileID: 481611759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: stairs_ladder_metal
+  description: 
+  path: Prefabs/Stairs
+  materialPath: 
+  tilingModifiers: []
+  canChangeMaterial: 0
+--- !u!23 &481611764
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 2300000, guid: 0645dd8f5ff65b546baa8000183e84db,
+    type: 2}
+  m_PrefabInternal: {fileID: 1702940098}
+  m_GameObject: {fileID: 481611759}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 0c064e31cfa5b1748a37453774fad39f, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!33 &481611765
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 3300000, guid: 0645dd8f5ff65b546baa8000183e84db,
+    type: 2}
+  m_PrefabInternal: {fileID: 1702940098}
+  m_GameObject: {fileID: 481611759}
+  m_Mesh: {fileID: 4300000, guid: 3f4406db0d8693746998a6ce2c21bd22, type: 3}
+--- !u!4 &481611766
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+  m_PrefabInternal: {fileID: 1702940098}
+  m_GameObject: {fileID: 481611759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.70700788, y: .0248029828, z: 20.9569817}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1883685794}
 --- !u!1 &486668190
 GameObject:
   m_ObjectHideFlags: 0
@@ -10498,6 +10616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -10516,6 +10635,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -10744,10 +10864,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &504148486
 GameObject:
@@ -10816,6 +10934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -10834,6 +10953,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -11062,10 +11182,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 6
@@ -11194,6 +11312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -11212,6 +11331,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -11440,10 +11560,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 8
@@ -11568,11 +11686,11 @@ Transform:
   m_PrefabInternal: {fileID: 1005937010}
   m_GameObject: {fileID: 557481605}
   m_LocalRotation: {x: -5.96046448e-08, y: -1.13446405e-16, z: 1.13446392e-16, w: 1}
-  m_LocalPosition: {x: -2.26963234, y: 2.25752592e-06, z: 18.9102573}
+  m_LocalPosition: {x: -2.26963234, y: 0, z: 18.9102573}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 622196907}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1883685794}
 --- !u!54 &557481612
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11642,6 +11760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -11660,6 +11779,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -11888,10 +12008,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 2
@@ -12186,6 +12304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -12204,6 +12323,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextField
@@ -12432,10 +12552,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   locked: 0
   text: 
@@ -12471,6 +12589,7 @@ MonoBehaviour:
         m_Bottom: 0
       lineHeight: 1.5
       spacing: 1
+  listening: 0
 --- !u!1 &622196906
 GameObject:
   m_ObjectHideFlags: 0
@@ -13819,6 +13938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -13837,6 +13957,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -14065,10 +14186,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Name
   overrideFontSize: 1
@@ -14118,6 +14237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -14136,6 +14256,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -14364,10 +14485,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &652383481
 GameObject:
@@ -14436,6 +14555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -14454,6 +14574,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -14682,10 +14803,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -35, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 
   overrideFontSize: 1
@@ -14787,6 +14906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -14805,6 +14925,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -15033,10 +15154,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   targetCamera: {fileID: 0}
 --- !u!1 &672367776
@@ -15106,6 +15225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -15124,6 +15244,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TickBox
@@ -15352,10 +15473,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Locked:'
   isTicked: 0
@@ -15528,6 +15647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -15546,6 +15666,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -15774,10 +15895,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -40, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: X
@@ -15869,6 +15988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -15887,6 +16007,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -16115,10 +16236,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 5
@@ -16168,6 +16287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -16186,6 +16306,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -16414,10 +16535,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &688594329
 GameObject:
@@ -16459,6 +16578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -16477,6 +16597,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -16705,10 +16826,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 
   overrideFontSize: 0
@@ -16761,6 +16880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -16779,6 +16899,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -17007,10 +17128,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &693886027
 GameObject:
@@ -17041,6 +17160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -17059,6 +17179,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -17287,10 +17408,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 4
@@ -17383,10 +17502,10 @@ Transform:
   m_PrefabInternal: {fileID: 732265297}
   m_GameObject: {fileID: 695335435}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.38418579e-07, z: 12.7828083}
+  m_LocalPosition: {x: 0, y: -0, z: 12.7828083}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1883685794}
 --- !u!114 &695335440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17620,6 +17739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -17638,6 +17758,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: New Style
@@ -17866,10 +17987,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   targetCamera: {fileID: 0}
 --- !u!1 &718841386
@@ -17996,6 +18115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -18014,6 +18134,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -18242,10 +18363,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -100, y: -7, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 
   overrideFontSize: 0
@@ -18258,7 +18377,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1883685794}
     m_Modifications:
     - target: {fileID: 400000, guid: 3a061509f8f7b894f932f9bb383c6bb1, type: 2}
       propertyPath: m_LocalPosition.x
@@ -18266,7 +18385,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3a061509f8f7b894f932f9bb383c6bb1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.38418579e-07
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3a061509f8f7b894f932f9bb383c6bb1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -18362,6 +18481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -18380,6 +18500,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -18608,10 +18729,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Toggle
@@ -18749,6 +18868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -18767,6 +18887,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -18995,10 +19116,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &783334142
 GameObject:
@@ -19040,6 +19159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -19058,6 +19178,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -19286,10 +19407,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   tile: {x: 1, y: 1}
 --- !u!1 &786412891
@@ -19332,6 +19451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -19350,6 +19470,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -19578,10 +19699,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 0
@@ -19631,6 +19750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -19649,6 +19769,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -19877,10 +19998,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Send
@@ -19930,6 +20049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -19948,6 +20068,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -20176,10 +20297,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Instructions right here in this box
   overrideFontSize: 0
@@ -20227,6 +20346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -20245,6 +20365,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -20473,10 +20594,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: NAME
   overrideFontSize: 0
@@ -20568,6 +20687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -20586,6 +20706,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -20814,10 +20935,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 1
@@ -20895,6 +21014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -20913,6 +21033,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -21141,10 +21262,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &846739628
 GameObject:
@@ -21389,6 +21508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -21407,6 +21527,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: PopUp
@@ -21635,10 +21756,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   title: <target>
   options:
@@ -21786,6 +21905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -21804,6 +21924,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -22032,10 +22153,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Abs
@@ -22196,6 +22315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -22214,6 +22334,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -22442,10 +22563,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &958286349
 GameObject:
@@ -22487,6 +22606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -22505,6 +22625,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -22733,10 +22854,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Toggle
@@ -22790,6 +22909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -22808,6 +22928,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -23036,10 +23157,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &982684268
 GameObject:
@@ -23081,6 +23200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -23099,6 +23219,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -23327,10 +23448,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 3
@@ -23509,7 +23628,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1883685794}
     m_Modifications:
     - target: {fileID: 400000, guid: 71be8c321b6226247b065132a711e199, type: 2}
       propertyPath: m_LocalPosition.x
@@ -23517,7 +23636,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 71be8c321b6226247b065132a711e199, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.25752592e-06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 71be8c321b6226247b065132a711e199, type: 2}
       propertyPath: m_LocalPosition.z
@@ -23610,6 +23729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -23628,6 +23748,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -23856,10 +23977,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Chest
@@ -24029,6 +24148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -24047,6 +24167,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -24275,10 +24396,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Line 2
   overrideFontSize: 0
@@ -24326,6 +24445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -24344,6 +24464,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -24572,10 +24693,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1043771860
 GameObject:
@@ -24753,6 +24872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -24771,6 +24891,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -24999,10 +25120,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: MESSAGE
   overrideFontSize: 0
@@ -25076,6 +25195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -25094,6 +25214,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -25322,10 +25443,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 7
@@ -25505,6 +25624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -25523,6 +25643,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -25751,10 +25872,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1095620188
 GameObject:
@@ -25866,6 +25985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -25884,6 +26004,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: ScrollView
@@ -26112,19 +26233,15 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   size: {x: 400, y: 370}
   position: {x: 0, y: 0}
   padding: {x: 10, y: 10}
   elasticity: 2
-  scrollLength: 565
-  scrollWidth: 512
-  viewHeight: 354
-  inset: 10
+  lockAxis: 0
+  infiniteScrolling: 0
 --- !u!1 &1117632612
 GameObject:
   m_ObjectHideFlags: 0
@@ -26165,6 +26282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -26183,6 +26301,7 @@ MonoBehaviour:
     height: 2
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -26411,10 +26530,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   mainTexture: {fileID: 2800000, guid: 3b2b1fc6bd002694fa0f75ce9b0be333, type: 3}
 --- !u!1 &1117943567
@@ -26457,6 +26574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -26475,6 +26593,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -26703,10 +26822,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 3
@@ -26818,6 +26935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -26836,6 +26954,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -27064,10 +27183,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: To-do
   overrideFontSize: 1
@@ -27107,7 +27224,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1883685794}
     m_Modifications:
     - target: {fileID: 400000, guid: 20bc41bbcefc7f54ab98633d1cd095b8, type: 2}
       propertyPath: m_LocalPosition.x
@@ -27236,6 +27353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -27254,6 +27372,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -27482,10 +27601,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Line 1
   overrideFontSize: 0
@@ -27644,6 +27761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -27662,6 +27780,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -27890,10 +28009,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1192310887
 GameObject:
@@ -27935,6 +28052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -27953,6 +28071,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -28181,10 +28300,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 
   overrideFontSize: 0
@@ -28259,6 +28376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -28277,6 +28395,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -28505,10 +28624,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Back
@@ -28558,6 +28675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -28576,6 +28694,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -28804,10 +28923,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 7
@@ -28857,6 +28974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -28875,6 +28993,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -29103,10 +29222,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Attack:'
   overrideFontSize: 0
@@ -29154,6 +29271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -29172,6 +29290,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TickBox
@@ -29400,10 +29519,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Locked:'
   isTicked: 0
@@ -29698,6 +29815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -29716,6 +29834,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -29944,10 +30063,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 5
@@ -29997,6 +30114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -30015,6 +30133,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -30243,10 +30362,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 10
@@ -30290,6 +30407,10 @@ Prefab:
     - target: {fileID: 400100, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6500000, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
@@ -30410,6 +30531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -30428,6 +30550,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextField
@@ -30656,10 +30779,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   locked: 0
   text: 
@@ -30695,6 +30816,7 @@ MonoBehaviour:
         m_Bottom: 0
       lineHeight: 1.5
       spacing: 1
+  listening: 0
 --- !u!1 &1267644458
 GameObject:
   m_ObjectHideFlags: 0
@@ -30911,6 +31033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -30929,6 +31052,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -31157,10 +31281,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Title
   overrideFontSize: 1
@@ -31372,6 +31494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -31390,6 +31513,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -31618,10 +31742,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Attack:'
   overrideFontSize: 0
@@ -31669,6 +31791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -31687,6 +31810,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -31915,10 +32039,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Action
@@ -31968,6 +32090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -31986,6 +32109,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -32214,10 +32338,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Legs
@@ -32443,6 +32565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -32461,6 +32584,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextField
@@ -32689,10 +32813,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   locked: 0
   text: 
@@ -32728,6 +32850,7 @@ MonoBehaviour:
         m_Bottom: 0
       lineHeight: 1.5
       spacing: 1
+  listening: 0
 --- !u!1 &1377329697
 GameObject:
   m_ObjectHideFlags: 0
@@ -32864,6 +32987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -32882,6 +33006,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -33110,10 +33235,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 2
@@ -33229,6 +33352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -33247,6 +33371,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -33475,10 +33600,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 8
@@ -33529,6 +33652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -33547,6 +33671,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -33775,10 +33900,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1001 &1435471428
 Prefab:
@@ -34022,6 +34145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -34040,6 +34164,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -34268,10 +34393,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 9
@@ -34349,6 +34472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -34367,6 +34491,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: ProgressBar
@@ -34595,10 +34720,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   value: .5
   padding: {x: 4, y: 4}
@@ -34819,6 +34942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -34837,6 +34961,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -35065,10 +35190,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -50, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Login
@@ -35201,6 +35324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -35219,6 +35343,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -35447,10 +35572,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -50, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: filename.txt
   overrideFontSize: 0
@@ -35638,6 +35761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -35656,6 +35780,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -35884,10 +36009,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Cancel
@@ -35993,6 +36116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -36011,6 +36135,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -36239,10 +36364,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1582164336
 GameObject:
@@ -36435,6 +36558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -36453,6 +36577,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -36681,10 +36806,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: OK
@@ -36734,6 +36857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -36752,6 +36876,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -36980,10 +37105,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: SIDE MISSIONS
   overrideFontSize: 1
@@ -37031,6 +37154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -37049,6 +37173,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -37277,10 +37402,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Credits: 1000'
   overrideFontSize: 0
@@ -37328,6 +37451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -37346,6 +37470,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -37574,10 +37699,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Discard
@@ -37627,6 +37750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -37645,6 +37769,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -37873,10 +37998,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1655249309
 GameObject:
@@ -37918,6 +38041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -37936,6 +38060,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -38164,10 +38289,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1661076656
 GameObject:
@@ -38285,6 +38408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -38303,6 +38427,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -38531,10 +38656,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Logout
@@ -38803,6 +38926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -38821,6 +38945,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -39049,12 +39174,50 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   targetCamera: {fileID: 0}
+--- !u!1001 &1702940098
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1883685794}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -5.70700788
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .0248029828
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 20.9569817
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0645dd8f5ff65b546baa8000183e84db, type: 2}
+  m_RootGameObject: {fileID: 481611759}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1718810004
 GameObject:
   m_ObjectHideFlags: 0
@@ -39095,6 +39258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -39113,6 +39277,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -39341,10 +39506,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1731466060
 GameObject:
@@ -39432,6 +39595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -39450,6 +39614,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -39678,10 +39843,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: sadsad
   overrideFontSize: 0
@@ -39740,6 +39903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -39758,6 +39922,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -39986,10 +40151,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: Text text text
   overrideFontSize: 0
@@ -40186,6 +40349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -40204,6 +40368,7 @@ MonoBehaviour:
     height: 2
     heightFactor: 1
     heightOffset: -70
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -40432,10 +40597,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1793018620
 GameObject:
@@ -40627,6 +40790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -40645,6 +40809,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -40873,10 +41038,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -40, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: X
@@ -40983,6 +41146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -41001,6 +41165,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -41229,10 +41394,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Quests
@@ -41508,6 +41671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -41526,6 +41690,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -41754,10 +41919,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1839746212
 GameObject:
@@ -41857,6 +42020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -41875,6 +42039,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -42103,10 +42268,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: username@domain
   overrideFontSize: 0
@@ -42155,6 +42318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -42173,6 +42337,7 @@ MonoBehaviour:
     height: 2
     heightFactor: 1
     heightOffset: -140
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: ScrollView
@@ -42401,19 +42566,15 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   size: {x: 400, y: 444}
   position: {x: 0, y: 308.361237}
   padding: {x: 10, y: 10}
   elasticity: 2
-  scrollLength: 565
-  scrollWidth: 512
-  viewHeight: 255
-  inset: 10
+  lockAxis: 0
+  infiniteScrolling: 0
 --- !u!1 &1853071440
 GameObject:
   m_ObjectHideFlags: 0
@@ -42485,6 +42646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -42503,6 +42665,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: PopUp
@@ -42731,10 +42894,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   title: <target>
   options:
@@ -42814,6 +42975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -42832,6 +42994,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: BoxFlat
@@ -43060,10 +43223,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &1874327334
 GameObject:
@@ -43105,6 +43266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -43123,6 +43285,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -43351,10 +43514,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 'Password:'
   overrideFontSize: 0
@@ -43387,12 +43548,16 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 330878087}
   - {fileID: 1255206098}
   - {fileID: 1416588696}
   - {fileID: 1229998267}
   - {fileID: 1793018622}
   - {fileID: 673911239}
+  - {fileID: 557481611}
+  - {fileID: 695335439}
   - {fileID: 1043771864}
+  - {fileID: 481611766}
   - {fileID: 1437758478}
   m_Father: {fileID: 0}
 --- !u!1 &1891477263
@@ -43435,6 +43600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -43453,6 +43619,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -43681,10 +43848,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 1
@@ -43764,6 +43929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -43782,6 +43948,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -44010,10 +44177,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: "20 m\t\r\n0.5 s\r\n5"
   overrideFontSize: 0
@@ -44061,6 +44226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -44079,6 +44245,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -44307,10 +44474,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: 
   overrideFontSize: 0
@@ -44385,6 +44550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -44403,6 +44569,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -44631,10 +44798,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -30, y: -30, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: 4
@@ -44809,6 +44974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -44827,6 +44993,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: PopUp
@@ -45055,10 +45222,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   title: <target>
   options:
@@ -45164,6 +45329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -45182,6 +45348,7 @@ MonoBehaviour:
     height: 2
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: ScrollView
@@ -45410,10 +45577,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &2013220341
 GameObject:
@@ -45514,6 +45679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -45532,6 +45698,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -45760,10 +45927,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1001 &2039651025
 Prefab:
@@ -45996,6 +46161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -46014,6 +46180,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextField
@@ -46242,10 +46409,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   locked: 0
   text: 
@@ -46281,6 +46446,7 @@ MonoBehaviour:
         m_Bottom: 0
       lineHeight: 1.5
       spacing: 1
+  listening: 0
 --- !u!1 &2079394980
 GameObject:
   m_ObjectHideFlags: 0
@@ -46350,6 +46516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -46368,6 +46535,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Box
@@ -46596,10 +46764,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
 --- !u!1 &2096269030
 GameObject:
@@ -46641,6 +46807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -46659,6 +46826,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -46887,10 +47055,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: MAIN MISSIONS
   overrideFontSize: 1
@@ -46982,6 +47148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -47000,6 +47167,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -47228,10 +47396,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   hiddenString: 
   text: Skull
@@ -47283,7 +47449,7 @@ BoxCollider:
   m_GameObject: {fileID: 2112477196}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.60000002, z: 1.5}
   m_Center: {x: 0, y: .800000012, z: .5}
@@ -47473,6 +47639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -47491,6 +47658,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TextBody
@@ -47719,10 +47887,8 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   text: "Fire range:\r\nReload speed:\r\nDamage:"
   overrideFontSize: 0
@@ -47770,6 +47936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -47788,6 +47955,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: IconCrosshair
@@ -48016,9 +48184,7 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: -20, y: -20, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
   root: {fileID: 1787744593}
   tile: {x: 1, y: 1}

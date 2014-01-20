@@ -87,8 +87,12 @@ class OGPopUp extends OGWidget {
 	// Update
 	////////////////////
 	override function UpdateWidget () {
+		// Persistent vars
 		isSelectable = true;
 		
+		// Update data
+		isAlwaysOnTop = isUp;
+
 		// Mouse
 		if ( isUp ) {
 			mouseRct = GetExpandedRect ();

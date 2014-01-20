@@ -30,7 +30,6 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 		nodes.Clear ();
 		pathBottomLine = 0;
-		pathContainer.GetComponent ( OGScrollView ).scrollLength = 0;
 	}
 	
 	// Remove path node
@@ -162,8 +161,6 @@ class EditorInspectorPath extends MonoBehaviour {
 		nodes.Add ( node );
 		
 		pathBottomLine += 80;
-		pathContainer.GetComponent ( OGScrollView ).scrollLength = pathBottomLine;
-		
 	}
 	
 	function AddNode () {
@@ -190,8 +187,6 @@ class EditorInspectorPath extends MonoBehaviour {
 		var a : Actor = obj.GetComponent ( Actor );
 		
 		ClearNodes();
-		
-		pathContainer.GetComponent ( OGScrollView ).viewHeight = Screen.height - pathContainer.position.y;
 		
 		pathType.selectedOption = a.pathType.ToString();
 		
