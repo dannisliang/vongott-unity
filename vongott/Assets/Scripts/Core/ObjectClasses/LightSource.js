@@ -8,7 +8,8 @@ class LightSource extends MonoBehaviour {
 	var intensity : float = 1.0;
 	var prefabPath : String = "";
 	var hideInGame : boolean = false;
-	
+	var type : LightType = LightType.Point;
+
 	function GetLightComponent () : Light {
 		if ( this.GetComponent(Light) ) {
 			return this.GetComponent(Light);
@@ -17,6 +18,24 @@ class LightSource extends MonoBehaviour {
 		}
 	}
 	
+	function SetType ( t : String ) {
+		switch ( t ) {
+			case "Directional":
+				type = LightType.Directional;
+				break;
+			
+			case "Point":
+				type = LightType.Point;
+				break;
+			
+			case "Spot":
+				type = LightType.Spot;
+				break;
+		}
+
+		GetLightComponent().type = type;
+	}
+
 	function SetColor ( c : Color ) {		
 		color = c;
 		color.a = 1;

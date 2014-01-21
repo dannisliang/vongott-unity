@@ -478,7 +478,9 @@ class Actor extends InteractiveObject {
 		var i : int = 0;
 
 		mainCollider.enabled = !useRagdoll;
-		mainRigidbody.isKinematic = useRagdoll;
+		if ( mainRigidbody != null ) {
+			mainRigidbody.isKinematic = useRagdoll;
+		}
 
 		for ( i = 0; i < allColliders.Length; i++ ) {
 			if ( allColliders[i] != mainCollider ) {	

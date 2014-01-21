@@ -16,8 +16,6 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var pfb : JSONObject = obj.GetField("Prefab");		
 		var path : String = pfb.GetField("path").str + "/" + pfb.GetField("id").str;
 		
-		Debug.Log ( "Deserializer | Instantiate " + path );
-		
 		var newPfb : GameObject = Instantiate ( Resources.Load ( path ) as GameObject );
 		var tm : TextMesh = newPfb.GetComponentInChildren ( TextMesh );
 		var bk : Book = newPfb.GetComponent(Book);
@@ -148,11 +146,10 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 			prefabPath = lgt.GetField ("prefabPath").str;
 		}
 		
-		Debug.Log ( "Deserializer | Instantaite " + prefabPath );
-		
 		newObj = Instantiate ( Resources.Load ( prefabPath ) as GameObject );
 
 		newObj.GetComponent(LightSource).SetRange ( lgt.GetField ("range").n );
+		if ( lgt.HasField ("type") ) { newObj.GetComponent(LightSource).SetType ( lgt.GetField ("type").str ); }
 		newObj.GetComponent(LightSource).SetColor ( DeserializeColor( lgt.GetField ("color") ) );
 		newObj.GetComponent(LightSource).SetIntensity ( lgt.GetField ("intensity").n );
 		newObj.GetComponent(LightSource).prefabPath = prefabPath;
@@ -200,8 +197,6 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 		var cnv : JSONObject = obj.GetField("Conversation");
 		var newAct : GameObject;
 		
-		Debug.Log ( "Deserializer | Instantaite " + act.GetField("model").str );	
-								
 		newAct = Instantiate ( Resources.Load ( "Actors/" + act.GetField("model").str ) as GameObject );
 		newAct.GetComponent(Actor).SetAffiliation ( act.GetField ( "affiliation" ).str );
 		newAct.GetComponent(Actor).SetMood ( act.GetField ( "mood" ).str );

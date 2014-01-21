@@ -15,6 +15,7 @@ class EditorInspectorLight extends MonoBehaviour {
 	var colorSliders : ColorSliders;
 	var range : ValueSlider;
 	var intensity : ValueSlider;
+	var type : OGPopUp;
 
 	function Init ( obj : GameObject ) {
 		if ( !obj ) { return; }
@@ -27,11 +28,12 @@ class EditorInspectorLight extends MonoBehaviour {
 		
 		range.slider.sliderValue = lgt.range / 100;
 		intensity.slider.sliderValue = lgt.intensity / 8;
+		type.selectedOption = lgt.type.ToString();
 	}
 
 	function Update () {
-		range.sliderValue.text = range.slider.sliderValue.ToString("f1");
-		intensity.sliderValue.text = intensity.slider.sliderValue.ToString("f1");
+		//range.sliderValue.text = range.slider.sliderValue.ToString("f1");
+		//intensity.sliderValue.text = intensity.slider.sliderValue.ToString("f1");
 	
 		var o : GameObject = EditorCore.GetSelectedObject();
 		
@@ -40,6 +42,7 @@ class EditorInspectorLight extends MonoBehaviour {
 			l.SetColor ( new Color ( colorSliders.r.sliderValue, colorSliders.g.sliderValue, colorSliders.b.sliderValue, 1.0 ) );
 			l.SetRange ( range.slider.sliderValue * 100 );
 			l.SetIntensity ( intensity.slider.sliderValue * 8.0 );
+			l.SetType ( type.selectedOption );
 		}
 	}
 }

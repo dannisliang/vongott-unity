@@ -130,11 +130,13 @@ static function SerializeGameObject ( obj : GameObject ) : JSONObject {
 		o.AddField ( "GUID", obj.GetComponent(GUID).GUID );
 		
 		var lgt : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-		
-		lgt.AddField ( "color", SerializeColor ( obj.GetComponent(LightSource).color ) );
-		lgt.AddField ( "range", obj.GetComponent(LightSource).range );
-		lgt.AddField ( "intensity", obj.GetComponent(LightSource).intensity );
-		lgt.AddField ( "prefabPath", obj.GetComponent(LightSource).prefabPath );
+		var lightSource : LightSource = obj.GetComponent(LightSource);
+
+		lgt.AddField ( "color", SerializeColor ( lightSource.color ) );
+		lgt.AddField ( "range", lightSource.range );
+		lgt.AddField ( "intensity", lightSource.intensity );
+		lgt.AddField ( "type", lightSource.type );
+		lgt.AddField ( "prefabPath", lightSource.prefabPath );
 		lgt.AddField ( "localScale", SerializeVector3 ( obj.transform.localScale ) );
 		lgt.AddField ( "localPosition", SerializeVector3 ( obj.transform.localPosition ) );
 		lgt.AddField ( "localEulerAngles", SerializeVector3 ( obj.transform.localEulerAngles ) );
