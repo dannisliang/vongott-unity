@@ -1679,6 +1679,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: "\u25CF"
@@ -1950,6 +1951,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: "\u25CB"
@@ -2287,6 +2289,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: (none)
@@ -2558,6 +2561,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   title: '...'
   options:
@@ -2830,6 +2834,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: 'Type:'
   overrideFontSize: 0
@@ -3099,6 +3104,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: +
@@ -3370,6 +3376,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   title: '...'
   options:
@@ -3644,6 +3651,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
 --- !u!114 &11400018
 MonoBehaviour:
@@ -3907,6 +3915,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: Jump to
   overrideFontSize: 0
@@ -4176,6 +4185,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: Success
   overrideFontSize: 0
@@ -4445,6 +4455,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: "\u25CF"
@@ -4716,6 +4727,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: False
   overrideFontSize: 0
@@ -4985,6 +4997,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: (none)
@@ -5256,6 +5269,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: (none)
@@ -5527,17 +5541,17 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   title: '...'
   options:
-  - Speak
-  - GameEvent
-  - Action
   - Condition
   - Consequence
   - EndConvo
   - Exchange
+  - GameEvent
   - Jump
+  - Speak
   selectedOption: Speak
   selectedIndex: 0
   target: {fileID: 100024}
@@ -5806,6 +5820,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: "\u25CF"
@@ -6077,6 +6092,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: x
@@ -6348,6 +6364,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: +
@@ -6619,6 +6636,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: +
@@ -6890,6 +6908,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: +
@@ -7161,6 +7180,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: Action
   overrideFontSize: 0
@@ -7430,6 +7450,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   title: '...'
   options:
@@ -7705,6 +7726,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: Failed
   overrideFontSize: 0
@@ -7974,6 +7996,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   title: '...'
   options:
@@ -8247,6 +8270,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: -1
   overrideFontSize: 0
@@ -8516,6 +8540,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   locked: 0
   text: 
@@ -8814,6 +8839,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: 'Credits:'
   overrideFontSize: 0
@@ -9083,6 +9109,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: 'Item:'
   overrideFontSize: 0
@@ -9352,6 +9379,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: "\u25CF"
@@ -9623,6 +9651,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: (none)
@@ -9894,6 +9923,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: True
   overrideFontSize: 0
@@ -10163,6 +10193,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: "\u25CF"
@@ -10434,6 +10465,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: "\u25CF"
@@ -10705,6 +10737,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
 --- !u!114 &11400216
 MonoBehaviour:
@@ -10968,6 +11001,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: Next Root
   overrideFontSize: 0
@@ -11237,6 +11271,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   title: '...'
   options:
@@ -11509,6 +11544,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: Flag
   overrideFontSize: 0
@@ -11778,6 +11814,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: Quest
   overrideFontSize: 0
@@ -12047,6 +12084,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   title: '...'
   options:
@@ -12320,6 +12358,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: (none)
