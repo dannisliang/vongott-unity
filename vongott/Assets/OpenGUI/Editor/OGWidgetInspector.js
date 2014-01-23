@@ -32,7 +32,7 @@ public class OGWidgetInspector extends Editor {
 		var widget : OGWidget = target as OGWidget;
 				
 		if ( !widget || !widget.GetRoot() ) { return; }
-		
+	
 		// Check for hidden widgets
 		if ( widget.hidden ) {
 			EditorGUILayout.LabelField ( "This widget is rubbish that somehow didn't get deleted." );

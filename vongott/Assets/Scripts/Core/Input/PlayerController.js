@@ -151,7 +151,7 @@ class PlayerController {
 			}
 			
 		} else {
-			if ( bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
+			if ( bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling && bodyState != ePlayerBodyState.Crouching ) {
 				bodyState = ePlayerBodyState.Idle;
 			}
 			
@@ -175,7 +175,7 @@ class PlayerController {
 		
 		}
 		
-		if ( isGrounded && ( bodyState == ePlayerBodyState.Falling || bodyState == ePlayerBodyState.Jumping ) ) {
+		if ( isGrounded && ( bodyState == ePlayerBodyState.Falling || bodyState == ePlayerBodyState.Jumping ) && bodyState != ePlayerBodyState.Crouching ) {
 			bodyState = ePlayerBodyState.Idle;
 			
 		}
