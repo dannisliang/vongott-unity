@@ -1,0 +1,1623 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ARRAY	.\Plugins\JSONObject.cs	/^	public enum Type { NULL, STRING, NUMBER, OBJECT, ARRAY, BOOL }$/;"	e	enum:JSONObject.Type	file:
+Absorb	.\Plugins\JSONObject.cs	/^	public void Absorb(JSONObject obj) {$/;"	m	class:JSONObject
+Accept	.\Scripts\EditorUI\EditorPicker.js	/^	function Accept () {$/;"	f
+AcquireComponents	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterTile.cs	/^	private void AcquireComponents() $/;"	m	class:WaterTile	file:
+Action	.\Scripts\EditorCore\EditorCore.js	/^	function Action ( o : GameObject ) {$/;"	f
+Add	.\Plugins\JSONObject.cs	/^	public void Add(AddJSONConents content) { Add(new JSONObject(content)); }$/;"	m	class:JSONObject
+Add	.\Plugins\JSONObject.cs	/^	public void Add(JSONObject obj) {$/;"	m	class:JSONObject
+Add	.\Plugins\JSONObject.cs	/^	public void Add(bool val) { Add(new JSONObject(val)); }$/;"	m	class:JSONObject
+Add	.\Plugins\JSONObject.cs	/^	public void Add(float val) { Add(new JSONObject(val)); }$/;"	m	class:JSONObject
+Add	.\Plugins\JSONObject.cs	/^	public void Add(int val) { Add(new JSONObject(val)); }$/;"	m	class:JSONObject
+Add	.\Plugins\JSONObject.cs	/^	public void Add(string str) { Add(StringObject(str)); }$/;"	m	class:JSONObject
+Add	.\Scripts\EditorUI\EditorActors.js	/^	function Add () {$/;"	f
+Add	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	function Add () {$/;"	f
+AddEvent	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function AddEvent () {$/;"	f
+AddField	.\Plugins\JSONObject.cs	/^	public void AddField(string name, AddJSONConents content) { AddField(name, new JSONObject(content)); }$/;"	m	class:JSONObject
+AddField	.\Plugins\JSONObject.cs	/^	public void AddField(string name, JSONObject obj) {$/;"	m	class:JSONObject
+AddField	.\Plugins\JSONObject.cs	/^	public void AddField(string name, bool val) { AddField(name, new JSONObject(val)); }$/;"	m	class:JSONObject
+AddField	.\Plugins\JSONObject.cs	/^	public void AddField(string name, float val) { AddField(name, new JSONObject(val)); }$/;"	m	class:JSONObject
+AddField	.\Plugins\JSONObject.cs	/^	public void AddField(string name, int val) { AddField(name, new JSONObject(val)); }$/;"	m	class:JSONObject
+AddField	.\Plugins\JSONObject.cs	/^	public void AddField(string name, string val) {	AddField(name, StringObject(val)); }$/;"	m	class:JSONObject
+AddFolder	.\Scripts\EditorCore\EditorFileSystem.js	/^		function AddFolder ( f : Folder, scan : boolean ) {$/;"	f
+AddJSONConents	.\Plugins\JSONObject.cs	/^	public delegate void AddJSONConents(JSONObject self);$/;"	m	class:JSONObject
+AddLight	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AddLight () {$/;"	f
+AddMenu	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AddMenu ( menu : String, selectedObj : GameObject ) {$/;"	f
+AddNavGrid	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AddNavGrid () {$/;"	f
+AddNavMesh	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AddNavMesh () {$/;"	f
+AddNavNode	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AddNavNode () {	$/;"	f
+AddNode	.\Scripts\EditorUI\EditorInspectorPath.js	/^	function AddNode () {$/;"	f
+AddNodeMenuItem	.\Scripts\EditorUI\EditorInspectorPath.js	/^	function AddNodeMenuItem ( actorNode : PathNode ) {		$/;"	f
+AddSpawnPoint	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AddSpawnPoint () {$/;"	f
+AddTrigger	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AddTrigger () {$/;"	f
+AdjustGrid	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AdjustGrid () {$/;"	f
+AdjustPosition	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AdjustPosition () {$/;"	f
+AdjustRotation	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AdjustRotation () {$/;"	f
+AdjustScale	.\Scripts\EditorUI\EditorMenuBase.js	/^	function AdjustScale () {$/;"	f
+ApplyAudioToTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyAudioToTargets(){$/;"	m	class:iTween	file:
+ApplyColorTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyColorTargets(){$/;"	m	class:iTween	file:
+ApplyColorToTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyColorToTargets(){$/;"	m	class:iTween	file:
+ApplyFilter	.\Scripts\EditorUI\EditorPicker.js	/^	function ApplyFilter () {$/;"	f
+ApplyFloatTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyFloatTargets(){$/;"	m	class:iTween	file:
+ApplyLookToTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyLookToTargets(){$/;"	m	class:iTween	file:
+ApplyMoveByTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyMoveByTargets(){	$/;"	m	class:iTween	file:
+ApplyMoveToTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyMoveToTargets(){$/;"	m	class:iTween	file:
+ApplyMoveTodestinationTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyMoveTodestinationTargets(){$/;"	m	class:iTween	file:
+ApplyPunchPositionTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyPunchPositionTargets(){$/;"	m	class:iTween	file:
+ApplyPunchRotationTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyPunchRotationTargets(){$/;"	m	class:iTween	file:
+ApplyPunchScaleTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyPunchScaleTargets(){$/;"	m	class:iTween	file:
+ApplyRectTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyRectTargets(){$/;"	m	class:iTween	file:
+ApplyRotateAddTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyRotateAddTargets(){$/;"	m	class:iTween	file:
+ApplyRotateToTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyRotateToTargets(){$/;"	m	class:iTween	file:
+ApplyScaleToTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyScaleToTargets(){$/;"	m	class:iTween	file:
+ApplyShakePositionTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyShakePositionTargets(){$/;"	m	class:iTween	file:
+ApplyShakeRotationTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyShakeRotationTargets(){$/;"	m	class:iTween	file:
+ApplyShakeScaleTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyShakeScaleTargets(){$/;"	m	class:iTween	file:
+ApplyStabTargets	.\Plugins\Tween\iTween.cs	/^	void ApplyStabTargets(){$/;"	m	class:iTween	file:
+ApplyTween	.\Plugins\Tween\iTween.cs	/^	private delegate void ApplyTween();$/;"	m	class:iTween	file:
+ApplyVector2Targets	.\Plugins\Tween\iTween.cs	/^	void ApplyVector2Targets(){$/;"	m	class:iTween	file:
+ApplyVector3Targets	.\Plugins\Tween\iTween.cs	/^	void ApplyVector3Targets(){$/;"	m	class:iTween	file:
+Approaching	.\Scripts\Core\AI\Actor.js	/^	function Approaching ( t : Transform ) {$/;"	f
+AudioFrom	.\Plugins\Tween\iTween.cs	/^	public static void AudioFrom(GameObject target, Hashtable args){$/;"	m	class:iTween
+AudioFrom	.\Plugins\Tween\iTween.cs	/^	public static void AudioFrom(GameObject target, float volume, float pitch, float time){$/;"	m	class:iTween
+AudioTo	.\Plugins\Tween\iTween.cs	/^	public static void AudioTo(GameObject target, Hashtable args){$/;"	m	class:iTween
+AudioTo	.\Plugins\Tween\iTween.cs	/^	public static void AudioTo(GameObject target, float volume, float pitch, float time){$/;"	m	class:iTween
+AudioUpdate	.\Plugins\Tween\iTween.cs	/^	public static void AudioUpdate(GameObject target, Hashtable args){$/;"	m	class:iTween
+AudioUpdate	.\Plugins\Tween\iTween.cs	/^	public static void AudioUpdate(GameObject target, float volume, float pitch, float time){$/;"	m	class:iTween
+Awake	.\Plugins\Loom.cs	/^	void Awake()$/;"	m	class:Loom	file:
+Awake	.\Plugins\Tween\iTween.cs	/^	void Awake(){$/;"	m	class:iTween	file:
+Awake	.\Scripts\Character\CharacterMotor.js	/^function Awake () {$/;"	f
+Awake	.\Scripts\Character\FPSInputController.js	/^function Awake () {$/;"	f
+Awake	.\Scripts\Character\PlatformInputController.js	/^function Awake () {$/;"	f
+Awake	.\Scripts\Core\AI\Actor.js	/^	function Awake () {$/;"	f
+Awake	.\Scripts\Core\GameCore.js	/^	function Awake () {$/;"	f
+Awake	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function Awake () {$/;"	c
+Awake	.\Scripts\Core\Physics\DontGoThroughThings.js	/^function Awake() { $/;"	f
+Awake	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\Displace.cs	/^	public void Awake() $/;"	m	class:Displace
+BOOL	.\Plugins\JSONObject.cs	/^	public enum Type { NULL, STRING, NUMBER, OBJECT, ARRAY, BOOL }$/;"	e	enum:JSONObject.Type	file:
+BakeNodes	.\Scripts\EditorUI\EditorMenuBase.js	/^	function BakeNodes () {$/;"	f
+BlurEffect	.\Plugins\Blur\BlurEffect.cs	/^public class BlurEffect : MonoBehaviour$/;"	c
+BtnAction	.\Scripts\UI\UIInventory.js	/^	function BtnAction () {$/;"	f
+BtnDiscard	.\Scripts\UI\UIInventory.js	/^	function BtnDiscard () {$/;"	f
+BuildEdges	.\Plugins\MeshExtrusion.cs	/^	public static Edge[] BuildEdges(int vertexCount, int[] triangleArray)$/;"	m	class:MeshExtrusion
+BuildManifoldEdges	.\Plugins\MeshExtrusion.cs	/^	public static Edge[] BuildManifoldEdges (Mesh mesh)$/;"	m	class:MeshExtrusion
+CRSpline	.\Plugins\Tween\iTween.cs	/^		public CRSpline(params Vector3[] pts) {$/;"	m	class:iTween.CRSpline
+CRSpline	.\Plugins\Tween\iTween.cs	/^	private class CRSpline {$/;"	c	class:iTween
+CalculateJumpVerticalSpeed	.\Scripts\Character\CharacterMotor.js	/^function CalculateJumpVerticalSpeed (targetJumpHeight : float) {$/;"	f
+CalculateObliqueMatrix	.\Plugins\MirrorReflection.cs	/^	private static void CalculateObliqueMatrix (ref Matrix4x4 projection, Vector4 clipPlane)$/;"	m	class:MirrorReflection	file:
+CalculateObliqueMatrix	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private static void CalculateObliqueMatrix (ref Matrix4x4 projection, Vector4 clipPlane)$/;"	m	class:SurfaceReflection	file:
+CalculateObliqueMatrix	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private static void CalculateObliqueMatrix (ref Matrix4x4 projection, Vector4 clipPlane)$/;"	m	class:Water	file:
+CalculateObliqueMatrix	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	static Matrix4x4 CalculateObliqueMatrix (Matrix4x4 projection, Vector4 clipPlane) $/;"	m	class:PlanarReflection	file:
+CalculateReflectionMatrix	.\Plugins\MirrorReflection.cs	/^	private static void CalculateReflectionMatrix (ref Matrix4x4 reflectionMat, Vector4 plane)$/;"	m	class:MirrorReflection	file:
+CalculateReflectionMatrix	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private static void CalculateReflectionMatrix (ref Matrix4x4 reflectionMat, Vector4 plane)$/;"	m	class:SurfaceReflection	file:
+CalculateReflectionMatrix	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private static void CalculateReflectionMatrix (ref Matrix4x4 reflectionMat, Vector4 plane)$/;"	m	class:Water	file:
+CalculateReflectionMatrix	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	static Matrix4x4 CalculateReflectionMatrix (Matrix4x4 reflectionMat, Vector4 plane) $/;"	m	class:PlanarReflection	file:
+CallBack	.\Plugins\Tween\iTween.cs	/^	void CallBack(string callbackType){$/;"	m	class:iTween	file:
+CameraFadeAdd	.\Plugins\Tween\iTween.cs	/^	public static GameObject CameraFadeAdd(){$/;"	m	class:iTween
+CameraFadeAdd	.\Plugins\Tween\iTween.cs	/^	public static GameObject CameraFadeAdd(Texture2D texture){$/;"	m	class:iTween
+CameraFadeAdd	.\Plugins\Tween\iTween.cs	/^	public static GameObject CameraFadeAdd(Texture2D texture, int depth){$/;"	m	class:iTween
+CameraFadeDepth	.\Plugins\Tween\iTween.cs	/^	public static void CameraFadeDepth(int depth){$/;"	m	class:iTween
+CameraFadeDestroy	.\Plugins\Tween\iTween.cs	/^	public static void CameraFadeDestroy(){$/;"	m	class:iTween
+CameraFadeFrom	.\Plugins\Tween\iTween.cs	/^	public static void CameraFadeFrom(Hashtable args){		$/;"	m	class:iTween
+CameraFadeFrom	.\Plugins\Tween\iTween.cs	/^	public static void CameraFadeFrom(float amount, float time){$/;"	m	class:iTween
+CameraFadeSwap	.\Plugins\Tween\iTween.cs	/^	public static void CameraFadeSwap(Texture2D texture){$/;"	m	class:iTween
+CameraFadeTo	.\Plugins\Tween\iTween.cs	/^	public static void CameraFadeTo(Hashtable args){$/;"	m	class:iTween
+CameraFadeTo	.\Plugins\Tween\iTween.cs	/^	public static void CameraFadeTo(float amount, float time){$/;"	m	class:iTween
+CameraSpacePlane	.\Plugins\MirrorReflection.cs	/^	private Vector4 CameraSpacePlane (Camera cam, Vector3 pos, Vector3 normal, float sideSign)$/;"	m	class:MirrorReflection	file:
+CameraSpacePlane	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private Vector4 CameraSpacePlane (Camera cam, Vector3 pos, Vector3 normal, float sideSign)$/;"	m	class:SurfaceReflection	file:
+CameraSpacePlane	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private Vector4 CameraSpacePlane (Camera cam, Vector3 pos, Vector3 normal, float sideSign)$/;"	m	class:Water	file:
+CameraSpacePlane	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private Vector4 CameraSpacePlane (Camera cam, Vector3 pos, Vector3 normal, float sideSign) $/;"	m	class:PlanarReflection	file:
+CameraTexture	.\Plugins\Tween\iTween.cs	/^	public static Texture2D CameraTexture(Color color){$/;"	m	class:iTween
+Cancel	.\Scripts\EditorUI\EditorAdjust.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorEditAccount.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorEditText.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorEvents.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorFlags.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorGrid.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorOpenFile.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorPicker.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorQuests.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\EditorUI\EditorSaveAs.js	/^	function Cancel () {$/;"	f
+Cancel	.\Scripts\UI\UIDialogBox.js	/^	function Cancel () {$/;"	f
+ChangeInventorySlot	.\Scripts\EditorUI\EditorInspectorActor.js	/^	function ChangeInventorySlot ( num : String ) {$/;"	f
+ChangeOrthographicSize	.\Scripts\EditorCore\EditorCamera.js	/^function ChangeOrthographicSize ( n : float ) {$/;"	f
+CleanArgs	.\Plugins\Tween\iTween.cs	/^	static Hashtable CleanArgs(Hashtable args){$/;"	m	class:iTween	file:
+Clear	.\Plugins\JSONObject.cs	/^	public void Clear() {$/;"	m	class:JSONObject
+Clear	.\Scripts\EditorUI\EditorConfirmDialog.js	/^	function Clear () {$/;"	f
+Clear	.\Scripts\EditorUI\EditorFlags.js	/^	function Clear () {$/;"	f
+ClearEvents	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function ClearEvents () {$/;"	f
+ClearGrid	.\Scripts\UI\UIInventory.js	/^	function ClearGrid () {$/;"	f
+ClearItems	.\Scripts\EditorUI\EditorPicker.js	/^	function ClearItems () {$/;"	f
+ClearList	.\Scripts\EditorUI\EditorOpenFile.js	/^	function ClearList () {$/;"	f
+ClearMenus	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ClearMenus () {		$/;"	f
+ClearNodes	.\OpenPath\OPPathFinder.js	/^	function ClearNodes () {$/;"	f
+ClearNodes	.\Scripts\EditorUI\EditorInspectorPath.js	/^	function ClearNodes () {$/;"	f
+ClearPath	.\Scripts\Core\AI\Actor.js	/^	function ClearPath () {$/;"	f
+Close	.\Scripts\EditorUI\EditorConfirmDialog.js	/^	function Close () {$/;"	f
+ColorFrom	.\Plugins\Tween\iTween.cs	/^	public static void ColorFrom(GameObject target, Color color, float time){$/;"	m	class:iTween
+ColorFrom	.\Plugins\Tween\iTween.cs	/^	public static void ColorFrom(GameObject target, Hashtable args){	$/;"	m	class:iTween
+ColorTo	.\Plugins\Tween\iTween.cs	/^	public static void ColorTo(GameObject target, Color color, float time){$/;"	m	class:iTween
+ColorTo	.\Plugins\Tween\iTween.cs	/^	public static void ColorTo(GameObject target, Hashtable args){	$/;"	m	class:iTween
+ColorUpdate	.\Plugins\Tween\iTween.cs	/^	public static void ColorUpdate(GameObject target, Color color, float time){$/;"	m	class:iTween
+ColorUpdate	.\Plugins\Tween\iTween.cs	/^	public static void ColorUpdate(GameObject target, Hashtable args){$/;"	m	class:iTween
+ConflictCheck	.\Plugins\Tween\iTween.cs	/^	void ConflictCheck(){\/\/if a new iTween is about to run and is of the same type as an in progress iTween this will destroy the previous if the new one is NOT identical in every way or it will destroy the new iTween if they are:	$/;"	m	class:iTween	file:
+ConstantSlerp	.\Scripts\Character\PlatformInputController.js	/^function ConstantSlerp (from : Vector3, to : Vector3, angle : float) {$/;"	f
+Consume	.\Scripts\Character\Player.js	/^	function Consume ( item : Item ) {$/;"	f
+ConversationEditor	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ConversationEditor () {$/;"	f
+ConvoFocus	.\Scripts\Core\Camera\GameCamera.js	/^	function ConvoFocus ( a : Actor, smooth : boolean ) {$/;"	f
+Copy	.\Plugins\JSONObject.cs	/^	public JSONObject Copy() {$/;"	m	class:JSONObject
+Count	.\Plugins\JSONObject.cs	/^	public int Count { $/;"	p	class:JSONObject
+Count	.\Plugins\Tween\iTween.cs	/^	public static int Count(){$/;"	m	class:iTween
+Count	.\Plugins\Tween\iTween.cs	/^	public static int Count(GameObject target){$/;"	m	class:iTween
+Count	.\Plugins\Tween\iTween.cs	/^	public static int Count(GameObject target, string type){$/;"	m	class:iTween
+Count	.\Plugins\Tween\iTween.cs	/^	public static int Count(string type){$/;"	m	class:iTween
+Create	.\Scripts\EditorUI\EditorConversationMap.js	/^	function Create () {$/;"	f
+CreateButton	.\Scripts\EditorUI\EditorPicker.js	/^	function CreateButton ( label : String ) {$/;"	f
+CreateEvent	.\Scripts\EditorUI\EditorEvents.js	/^	function CreateEvent () {	$/;"	f
+CreateLine	.\Scripts\EditorUI\EditorPicker.js	/^	function CreateLine ( label : String ) {$/;"	f
+CreateMirrorObjects	.\Plugins\MirrorReflection.cs	/^	private void CreateMirrorObjects( Camera currentCamera, out Camera reflectionCamera )$/;"	m	class:MirrorReflection	file:
+CreateMirrorObjects	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private void CreateMirrorObjects( Camera currentCamera, out Camera reflectionCamera )$/;"	m	class:SurfaceReflection	file:
+CreateObject	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\RubbleCreater.js	/^function CreateObject () {$/;"	f
+CreateQuest	.\Scripts\EditorUI\EditorQuests.js	/^	function CreateQuest () {	$/;"	f
+CreateReflectionCameraFor	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private Camera CreateReflectionCameraFor(Camera cam) $/;"	m	class:PlanarReflection	file:
+CreateTextureFor	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private RenderTexture CreateTextureFor(Camera cam) $/;"	m	class:PlanarReflection	file:
+CreateWaterObjects	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private void CreateWaterObjects( Camera currentCamera, out Camera reflectionCamera, out Camera refractionCamera )$/;"	m	class:Water	file:
+Current	.\Plugins\Loom.cs	/^	public static Loom Current$/;"	p	class:Loom
+CurveGui	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static void CurveGui (System.String name, SerializedObject serObj, Color color) $/;"	m	class:WaterEditorUtility
+Defaults	.\Plugins\Tween\iTween.cs	/^	public static class Defaults{$/;"	c	class:iTween
+DelayedQueueItem	.\Plugins\Loom.cs	/^	public struct DelayedQueueItem$/;"	s	class:Loom
+DeleteFlag	.\Scripts\EditorUI\EditorFlags.js	/^	function DeleteFlag ( index : String ) {$/;"	f
+DeleteNode	.\Scripts\EditorUI\EditorInspectorPath.js	/^	function DeleteNode ( number : String ) {		$/;"	f
+DestroyShield	.\Scripts\Character\Player.js	/^	function DestroyShield () {$/;"	f
+Die	.\Scripts\Character\Player.js	/^	function Die () {$/;"	f
+Die	.\Scripts\Core\AI\Actor.js	/^	function Die () {$/;"	c
+DisableKinematic	.\Plugins\Tween\iTween.cs	/^	void DisableKinematic(){$/;"	m	class:iTween	file:
+Displace	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\Displace.cs	/^public class Displace : MonoBehaviour $/;"	c
+Dispose	.\Plugins\Tween\iTween.cs	/^	void Dispose(){$/;"	m	class:iTween	file:
+DownSample4x	.\Plugins\Blur\BlurEffect.cs	/^	private void DownSample4x (RenderTexture source, RenderTexture dest)$/;"	m	class:BlurEffect	file:
+DrawBoundingBoxes	.\Scripts\EditorCore\EditorCamera.js	/^function DrawBoundingBoxes () {$/;"	f
+DrawCursor	.\Scripts\EditorCore\EditorCamera.js	/^function DrawCursor () {$/;"	f
+DrawGrid	.\Scripts\EditorCore\EditorCamera.js	/^function DrawGrid () {$/;"	f
+DrawLine	.\Plugins\Tween\iTween.cs	/^	public static void DrawLine(Transform[] line) {$/;"	m	class:iTween
+DrawLine	.\Plugins\Tween\iTween.cs	/^	public static void DrawLine(Transform[] line,Color color) {$/;"	m	class:iTween
+DrawLine	.\Plugins\Tween\iTween.cs	/^	public static void DrawLine(Vector3[] line) {$/;"	m	class:iTween
+DrawLine	.\Plugins\Tween\iTween.cs	/^	public static void DrawLine(Vector3[] line, Color color) {$/;"	m	class:iTween
+DrawLine	.\Scripts\EditorCore\EditorCamera.js	/^function DrawLine ( from : Vector3, to : Vector3 ) {$/;"	f
+DrawLineGizmos	.\Plugins\Tween\iTween.cs	/^	public static void DrawLineGizmos(Transform[] line) {$/;"	m	class:iTween
+DrawLineGizmos	.\Plugins\Tween\iTween.cs	/^	public static void DrawLineGizmos(Transform[] line,Color color) {$/;"	m	class:iTween
+DrawLineGizmos	.\Plugins\Tween\iTween.cs	/^	public static void DrawLineGizmos(Vector3[] line) {$/;"	m	class:iTween
+DrawLineGizmos	.\Plugins\Tween\iTween.cs	/^	public static void DrawLineGizmos(Vector3[] line, Color color) {$/;"	m	class:iTween
+DrawLineHandles	.\Plugins\Tween\iTween.cs	/^	public static void DrawLineHandles(Transform[] line) {$/;"	m	class:iTween
+DrawLineHandles	.\Plugins\Tween\iTween.cs	/^	public static void DrawLineHandles(Transform[] line,Color color) {$/;"	m	class:iTween
+DrawLineHandles	.\Plugins\Tween\iTween.cs	/^	public static void DrawLineHandles(Vector3[] line) {$/;"	m	class:iTween
+DrawLineHandles	.\Plugins\Tween\iTween.cs	/^	public static void DrawLineHandles(Vector3[] line, Color color) {$/;"	m	class:iTween
+DrawLineHelper	.\Plugins\Tween\iTween.cs	/^	private static void DrawLineHelper(Vector3[] line, Color color, string method){$/;"	m	class:iTween	file:
+DrawLines	.\Scripts\EditorUI\EditorConversationMap.js	/^	function DrawLines () {$/;"	f
+DrawNavNodes	.\Scripts\EditorCore\EditorCamera.js	/^function DrawNavNodes () {$/;"	f
+DrawPath	.\Scripts\EditorCore\EditorCamera.js	/^function DrawPath ( actor : Actor ) {$/;"	f
+DrawXLine	.\Scripts\EditorCore\EditorCamera.js	/^function DrawXLine () {$/;"	f
+DrawYLine	.\Scripts\EditorCore\EditorCamera.js	/^function DrawYLine () {$/;"	f
+DrawZLine	.\Scripts\EditorCore\EditorCamera.js	/^function DrawZLine () {	$/;"	f
+Drawdestination	.\Plugins\Tween\iTween.cs	/^	public static void Drawdestination(Transform[] destination) {$/;"	m	class:iTween
+Drawdestination	.\Plugins\Tween\iTween.cs	/^	public static void Drawdestination(Transform[] destination,Color color) {$/;"	m	class:iTween
+Drawdestination	.\Plugins\Tween\iTween.cs	/^	public static void Drawdestination(Vector3[] destination) {$/;"	m	class:iTween
+Drawdestination	.\Plugins\Tween\iTween.cs	/^	public static void Drawdestination(Vector3[] destination, Color color) {$/;"	m	class:iTween
+DrawdestinationGizmos	.\Plugins\Tween\iTween.cs	/^	public static void DrawdestinationGizmos(Transform[] destination) {$/;"	m	class:iTween
+DrawdestinationGizmos	.\Plugins\Tween\iTween.cs	/^	public static void DrawdestinationGizmos(Transform[] destination,Color color) {$/;"	m	class:iTween
+DrawdestinationGizmos	.\Plugins\Tween\iTween.cs	/^	public static void DrawdestinationGizmos(Vector3[] destination) {$/;"	m	class:iTween
+DrawdestinationGizmos	.\Plugins\Tween\iTween.cs	/^	public static void DrawdestinationGizmos(Vector3[] destination, Color color) {$/;"	m	class:iTween
+DrawdestinationHandles	.\Plugins\Tween\iTween.cs	/^	public static void DrawdestinationHandles(Transform[] destination) {$/;"	m	class:iTween
+DrawdestinationHandles	.\Plugins\Tween\iTween.cs	/^	public static void DrawdestinationHandles(Transform[] destination,Color color) {$/;"	m	class:iTween
+DrawdestinationHandles	.\Plugins\Tween\iTween.cs	/^	public static void DrawdestinationHandles(Vector3[] destination) {$/;"	m	class:iTween
+DrawdestinationHandles	.\Plugins\Tween\iTween.cs	/^	public static void DrawdestinationHandles(Vector3[] destination, Color color) {$/;"	m	class:iTween
+DrawdestinationHelper	.\Plugins\Tween\iTween.cs	/^	private static void DrawdestinationHelper(Vector3[] destination, Color color, string method){$/;"	m	class:iTween	file:
+DropObject	.\Scripts\Character\Player.js	/^	function DropObject () {$/;"	f
+DropOnSlot	.\Scripts\UI\UIInventory.js	/^	function DropOnSlot () {$/;"	f
+EaseType	.\Plugins\Tween\iTween.cs	/^	public enum EaseType{$/;"	g	class:iTween
+EasingFunction	.\Plugins\Tween\iTween.cs	/^	private delegate float EasingFunction(float start, float end, float value);$/;"	m	class:iTween	file:
+Edge	.\Plugins\MeshExtrusion.cs	/^	public class Edge$/;"	c	class:MeshExtrusion
+EditText	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	function EditText () {$/;"	f
+EditorBrowserWindow.callback	.\Scripts\EditorUI\EditorInspectorCombinedMesh.js	/^		EditorBrowserWindow.callback = function ( path : String ) {$/;"	f
+EditorBrowserWindow.callback	.\Scripts\EditorUI\EditorInspectorImportedMesh.js	/^		EditorBrowserWindow.callback = function ( path : String ) {$/;"	f
+EditorConfirmDialog.yesAction	.\Scripts\EditorUI\EditorMenuBase.js	/^		EditorConfirmDialog.yesAction = function () {$/;"	f
+EditorCore.pickerCallback	.\Scripts\EditorUI\EditorEvents.js	/^		EditorCore.pickerCallback = function ( hit : RaycastHit ) {$/;"	f
+EditorCore.pickerCallback	.\Scripts\EditorUI\EditorInspectorCombinedMesh.js	/^		EditorCore.pickerCallback = function ( triangleIndex : int ) {$/;"	f
+EditorCore.pickerCallback	.\Scripts\EditorUI\EditorInspectorKeypad.js	/^		EditorCore.pickerCallback = function ( name : String, id : String ) {$/;"	f
+EditorCore.pickerCallback	.\Scripts\EditorUI\EditorInspectorPath.js	/^		EditorCore.pickerCallback = function ( hit : RaycastHit ) {$/;"	f
+EditorCore.pickerCallback	.\Scripts\EditorUI\EditorInspectorSurveillanceCamera.js	/^		EditorCore.pickerCallback = function ( n : String, id : String ) {$/;"	f
+EditorCore.pickerCallback	.\Scripts\EditorUI\EditorInspectorTerminal.js	/^		EditorCore.pickerCallback = function ( name : String, id : String ) {$/;"	f
+EditorCore.pickerCallback	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^		EditorCore.pickerCallback = function ( hit : RaycastHit ) {$/;"	f
+EditorEditText.callback	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^		EditorEditText.callback = function ( content : String ) {$/;"	f
+EnableKinematic	.\Plugins\Tween\iTween.cs	/^	void EnableKinematic(){$/;"	m	class:iTween	file:
+Equip	.\Scripts\Character\Player.js	/^	function Equip ( item : Item, equip : boolean ) {$/;"	f
+Equip	.\Scripts\Core\AI\Actor.js	/^	function Equip ( entry : InventoryEntry ) {$/;"	f
+EventEditor	.\Scripts\EditorUI\EditorMenuBase.js	/^	function EventEditor () {$/;"	f
+Exit	.\Scripts\Core\ObjectClasses\Ladder.js	/^	function Exit () {$/;"	f
+Exit	.\Scripts\EditorUI\EditorConversationMap.js	/^	function Exit () {$/;"	f
+Exit	.\Scripts\UI\UIInventory.js	/^	function Exit () {$/;"	f
+Exit	.\Scripts\UI\UIModWheel.js	/^	function Exit () {$/;"	f
+ExitEditor	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ExitEditor () {$/;"	f
+ExtrudeMesh	.\Plugins\MeshExtrusion.cs	/^	public static void ExtrudeMesh (Mesh srcMesh, Mesh extrudedMesh, Matrix4x4[] extrusion, Edge[] edges, bool invertFaces)$/;"	m	class:MeshExtrusion
+ExtrudeMesh	.\Plugins\MeshExtrusion.cs	/^	public static void ExtrudeMesh (Mesh srcMesh, Mesh extrudedMesh, Matrix4x4[] extrusion, bool invertFaces)$/;"	m	class:MeshExtrusion
+FX	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\_DemoScene\GUIEffectPicker.js	/^var FX : Transform[];$/;"	v
+FadeFrom	.\Plugins\Tween\iTween.cs	/^	public static void FadeFrom(GameObject target, Hashtable args){	$/;"	m	class:iTween
+FadeFrom	.\Plugins\Tween\iTween.cs	/^	public static void FadeFrom(GameObject target, float alpha, float time){$/;"	m	class:iTween
+FadeTo	.\Plugins\Tween\iTween.cs	/^	public static void FadeTo(GameObject target, Hashtable args){$/;"	m	class:iTween
+FadeTo	.\Plugins\Tween\iTween.cs	/^	public static void FadeTo(GameObject target, float alpha, float time){$/;"	m	class:iTween
+FadeUpdate	.\Plugins\Tween\iTween.cs	/^	public static void FadeUpdate(GameObject target, Hashtable args){$/;"	m	class:iTween
+FadeUpdate	.\Plugins\Tween\iTween.cs	/^	public static void FadeUpdate(GameObject target, float alpha, float time){$/;"	m	class:iTween
+FieldNotFound	.\Plugins\JSONObject.cs	/^	public delegate void FieldNotFound(string name);$/;"	m	class:JSONObject
+FindAndFixBrokenScripts	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^public class FindAndFixBrokenScripts : EditorWindow$/;"	c
+FindHardwareWaterSupport	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private WaterMode FindHardwareWaterSupport()$/;"	m	class:Water	file:
+FindPath	.\Scripts\Core\AI\Actor.js	/^	function FindPath ( v : Vector3 ) {$/;"	f
+FindPlayer	.\Scripts\Core\GameCore.js	/^	function FindPlayer () {$/;"	f
+Fit	.\Scripts\EditorCore\EditorSelectionBox.js	/^	function Fit ( mesh : Mesh, wireframe : boolean ) {$/;"	c
+Fit	.\Scripts\EditorCore\EditorSelectionBox.js	/^	function Fit ( vertices : Vector3[], triangles : int[], wireframe : boolean ) {$/;"	f
+FitProperty	.\Scripts\Core\ObjectClasses\Prefab.js	/^	function FitProperty ( m : Material, p : String, x : float, y : float ) {$/;"	f
+FitTexture	.\Scripts\Core\ObjectClasses\Prefab.js	/^	function FitTexture () {$/;"	f
+FixMissingScripts	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^public class FixMissingScripts : Editor$/;"	c
+FixedUpdate	.\Plugins\Tween\iTween.cs	/^	void FixedUpdate(){$/;"	m	class:iTween	file:
+FixedUpdate	.\Scripts\Character\CharacterMotor.js	/^function FixedUpdate () {$/;"	f
+FixedUpdate	.\Scripts\Core\Physics\DontGoThroughThings.js	/^function FixedUpdate() { $/;"	f
+FixedUpdate	.\Scripts\EditorCore\EditorDragObject.js	/^function FixedUpdate () {$/;"	c
+Flag	.\Scripts\EditorUI\EditorFlags.js	/^		function Flag ( name : String ) {$/;"	f
+FlagEditor	.\Scripts\EditorUI\EditorMenuBase.js	/^	function FlagEditor () {$/;"	f
+FlipWall	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	function FlipWall () {				$/;"	f
+FloatUpdate	.\Plugins\Tween\iTween.cs	/^	public static float FloatUpdate(float currentValue, float targetValue, float speed){$/;"	m	class:iTween
+FocusOn	.\Scripts\Core\Camera\GameCamera.js	/^	function FocusOn ( pos : Vector3 ) {$/;"	f
+FocusOn	.\Scripts\EditorCore\EditorCamera.js	/^function FocusOn ( position : Vector3 ) {$/;"	f
+FocusOnBodyPart	.\Scripts\Core\Camera\GameCamera.js	/^	function FocusOnBodyPart ( n : String ) {$/;"	f
+Folder	.\Scripts\EditorCore\EditorFileSystem.js	/^		function Folder ( n : String ) {$/;"	f
+FourTapCone	.\Plugins\Blur\BlurEffect.cs	/^	public void FourTapCone (RenderTexture source, RenderTexture dest, int iteration)$/;"	m	class:BlurEffect
+GUITitle	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	void GUITitle(string title, Color color, int size = 25)$/;"	m	class:FindAndFixBrokenScripts	file:
+GenerateAudioToTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateAudioToTargets(){$/;"	m	class:iTween	file:
+GenerateColorTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateColorTargets(){$/;"	m	class:iTween	file:
+GenerateColorToTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateColorToTargets(){$/;"	m	class:iTween	file:
+GenerateFloatTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateFloatTargets(){$/;"	m	class:iTween	file:
+GenerateID	.\Plugins\Tween\iTween.cs	/^	static string GenerateID(){$/;"	m	class:iTween	file:
+GenerateLookToTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateLookToTargets(){$/;"	m	class:iTween	file:
+GenerateMoveByTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateMoveByTargets(){$/;"	m	class:iTween	file:
+GenerateMoveToTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateMoveToTargets(){$/;"	m	class:iTween	file:
+GenerateMoveTodestinationTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateMoveTodestinationTargets(){$/;"	m	class:iTween	file:
+GeneratePunchPositionTargets	.\Plugins\Tween\iTween.cs	/^	void GeneratePunchPositionTargets(){$/;"	m	class:iTween	file:
+GeneratePunchRotationTargets	.\Plugins\Tween\iTween.cs	/^	void GeneratePunchRotationTargets(){$/;"	m	class:iTween	file:
+GeneratePunchScaleTargets	.\Plugins\Tween\iTween.cs	/^	void GeneratePunchScaleTargets(){$/;"	m	class:iTween	file:
+GenerateRectTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateRectTargets(){$/;"	m	class:iTween	file:
+GenerateRotateAddTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateRotateAddTargets(){$/;"	m	class:iTween	file:
+GenerateRotateByTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateRotateByTargets(){$/;"	m	class:iTween	file:
+GenerateRotateToTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateRotateToTargets(){$/;"	m	class:iTween	file:
+GenerateScaleAddTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateScaleAddTargets(){$/;"	m	class:iTween	file:
+GenerateScaleByTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateScaleByTargets(){$/;"	m	class:iTween	file:
+GenerateScaleToTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateScaleToTargets(){$/;"	m	class:iTween	file:
+GenerateShakePositionTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateShakePositionTargets(){$/;"	m	class:iTween	file:
+GenerateShakeRotationTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateShakeRotationTargets(){$/;"	m	class:iTween	file:
+GenerateShakeScaleTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateShakeScaleTargets(){$/;"	m	class:iTween	file:
+GenerateStabTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateStabTargets(){$/;"	m	class:iTween	file:
+GenerateTargets	.\Plugins\Tween\iTween.cs	/^	void GenerateTargets(){$/;"	m	class:iTween	file:
+GenerateVector2Targets	.\Plugins\Tween\iTween.cs	/^	void GenerateVector2Targets(){$/;"	m	class:iTween	file:
+GenerateVector3Targets	.\Plugins\Tween\iTween.cs	/^	void GenerateVector3Targets(){$/;"	m	class:iTween	file:
+GerstnerDisplace	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\GerstnerDisplace.cs	/^public class GerstnerDisplace : Displace $/;"	c
+GerstnerDisplaceEditor	.\Editor\Water (Pro Only)\Water4\GerstnerDisplaceEditor.cs	/^public class GerstnerDisplaceEditor : Editor $/;"	c
+GetActiveQuests	.\Scripts\UI\UIQuests.js	/^	function GetActiveQuests () {$/;"	f
+GetBounds	.\OpenPath\OPScanner.js	/^	function GetBounds () {$/;"	f
+GetDirection	.\Scripts\Character\CharacterMotor.js	/^function GetDirection () {$/;"	f
+GetEasingFunction	.\Plugins\Tween\iTween.cs	/^	void GetEasingFunction(){$/;"	m	class:iTween	file:
+GetField	.\Plugins\JSONObject.cs	/^	public JSONObject GetField(string name) {$/;"	m	class:JSONObject
+GetField	.\Plugins\JSONObject.cs	/^	public void GetField(ref bool field, string name, FieldNotFound fail = null) {$/;"	m	class:JSONObject
+GetField	.\Plugins\JSONObject.cs	/^	public void GetField(ref float field, string name, FieldNotFound fail = null) {$/;"	m	class:JSONObject
+GetField	.\Plugins\JSONObject.cs	/^	public void GetField(ref int field, string name, FieldNotFound fail = null) {$/;"	m	class:JSONObject
+GetField	.\Plugins\JSONObject.cs	/^	public void GetField(ref string field, string name, FieldNotFound fail = null) {$/;"	m	class:JSONObject
+GetField	.\Plugins\JSONObject.cs	/^	public void GetField(ref uint field, string name, FieldNotFound fail = null) {$/;"	m	class:JSONObject
+GetField	.\Plugins\JSONObject.cs	/^	public void GetField(string name, GetFieldResponse response, FieldNotFound fail = null) {$/;"	m	class:JSONObject
+GetFieldResponse	.\Plugins\JSONObject.cs	/^	public delegate void GetFieldResponse(JSONObject obj);$/;"	m	class:JSONObject
+GetID	.\Scripts\Core\ObjectClasses\Quest.js	/^	function GetID () {$/;"	f
+GetMaterial	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	function GetMaterial ( matPath : String ) {$/;"	f
+GetMaterialColor	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static Color GetMaterialColor(System.String name, Material mat) {$/;"	m	class:WaterEditorUtility
+GetMaterialFloat	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static float GetMaterialFloat(System.String name, Material mat) {$/;"	m	class:WaterEditorUtility
+GetMaterialTexture	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static Texture GetMaterialTexture(System.String theName, Material mat) {$/;"	m	class:WaterEditorUtility
+GetMaterialVector	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static Vector4 GetMaterialVector(System.String name, Material mat) {$/;"	m	class:WaterEditorUtility
+GetWaterMode	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private WaterMode GetWaterMode()$/;"	m	class:Water	file:
+GiveUp	.\Scripts\Core\AI\Actor.js	/^	function GiveUp () {$/;"	f
+GoToBackOf	.\Scripts\EditorCore\EditorCamera.js	/^function GoToBackOf ( position : Vector3 ) {$/;"	f
+GoToBottomOf	.\Scripts\EditorCore\EditorCamera.js	/^function GoToBottomOf ( position : Vector3 ) {$/;"	f
+GoToDir	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	function GoToDir ( dir : String ) {$/;"	f
+GoToFrontOf	.\Scripts\EditorCore\EditorCamera.js	/^function GoToFrontOf ( position : Vector3 ) {$/;"	f
+GoToLeftOf	.\Scripts\EditorCore\EditorCamera.js	/^function GoToLeftOf ( position : Vector3 ) {$/;"	f
+GoToRightOf	.\Scripts\EditorCore\EditorCamera.js	/^function GoToRightOf ( position : Vector3 ) {$/;"	f
+GoToTopOf	.\Scripts\EditorCore\EditorCamera.js	/^function GoToTopOf ( position : Vector3 ) {$/;"	f
+HasField	.\Plugins\JSONObject.cs	/^	public bool HasField(string name) {$/;"	m	class:JSONObject
+HasFields	.\Plugins\JSONObject.cs	/^	public bool HasFields(string[] names) {$/;"	m	class:JSONObject
+Hash	.\Plugins\Tween\iTween.cs	/^	public static Hashtable Hash(params object[] args){$/;"	m	class:iTween
+Heal	.\Scripts\Character\Player.js	/^	function Heal ( amount : int ) {$/;"	f
+High	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^		High = 2,$/;"	e	enum:WaterQuality	file:
+INFINITY	.\Plugins\JSONObject.cs	/^	const string INFINITY = "\\"INFINITY\\"";$/;"	f	class:JSONObject	file:
+IOReference	.\Scripts\EditorUI\EditorConversationMap.js	/^		function IOReference ( rank : int, transforms : Transform[] ) {$/;"	c
+ImportFile	.\Plugins\OBJImporter.cs	/^	public Mesh ImportFile (string filePath) {$/;"	m	class:OBJImporter
+ImportOBJ	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ImportOBJ () {$/;"	f
+Init	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	static void Init()$/;"	m	class:FindAndFixBrokenScripts	file:
+Init	.\Plugins\Tween\iTween.cs	/^	public static void Init(GameObject target){$/;"	m	class:iTween
+Init	.\Scripts\EditorUI\EditorInspectorActor.js	/^	function Init ( obj : GameObject ) {			$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorComputer.js	/^	function Init ( obj : GameObject ) {$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	function Init () {$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorLiftPanel.js	/^	function Init ( obj : GameObject ) {$/;"	c
+Init	.\Scripts\EditorUI\EditorInspectorLight.js	/^	function Init ( obj : GameObject ) {$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorPath.js	/^	function Init ( obj : GameObject ) {			$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	function Init ( o : GameObject ) {$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorSpawnPoint.js	/^	function Init ( obj : GameObject ) {$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function Init ( obj : GameObject ) {$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorTween.js	/^	function Init ( obj : GameObject ) {$/;"	f
+Init	.\Scripts\EditorUI\EditorInspectorWallet.js	/^	function Init ( obj : GameObject ) {$/;"	f
+Initialize	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^    void Initialize()$/;"	m	class:FixMissingScripts	file:
+Initialize	.\Plugins\Loom.cs	/^	static void Initialize()$/;"	m	class:Loom	file:
+InputManager.escFunction	.\Scripts\Core\ObjectClasses\Book.js	/^			InputManager.escFunction = function () {$/;"	f
+InputManager.escFunction	.\Scripts\Core\ObjectClasses\Computer.js	/^			InputManager.escFunction = function () {$/;"	f
+InputManager.escFunction	.\Scripts\Core\ObjectClasses\Keypad.js	/^			InputManager.escFunction = function () {$/;"	f
+InputManager.escFunction	.\Scripts\Core\ObjectClasses\LiftPanel.js	/^			InputManager.escFunction = function () {$/;"	f
+InputManager.escFunction	.\Scripts\Core\ObjectClasses\Terminal.js	/^			InputManager.escFunction = function () {$/;"	f
+Install	.\Scripts\Character\Player.js	/^	function Install ( upg : Upgrade, install : boolean ) {$/;"	f
+Interact	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function Interact () {}$/;"	f
+Interp	.\Plugins\Tween\iTween.cs	/^		public Vector3 Interp(float t) {$/;"	m	class:iTween.CRSpline
+Interp	.\Plugins\Tween\iTween.cs	/^	private static Vector3 Interp(Vector3[] pts, float t){$/;"	m	class:iTween	file:
+InventoryEntry	.\Scripts\Core\ObjectClasses\InventoryEntry.js	/^	function InventoryEntry () {}$/;"	f
+InventoryEntryReference	.\Scripts\Core\ObjectClasses\InventoryEntry.js	/^	function InventoryEntryReference ( a : int, b : int ) {$/;"	f
+InvokePrompt	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function InvokePrompt () {}$/;"	f
+IsArray	.\Plugins\JSONObject.cs	/^	public bool IsArray { get { return type == Type.ARRAY; } }$/;"	p	class:JSONObject
+IsBool	.\Plugins\JSONObject.cs	/^	public bool IsBool { get { return type == Type.BOOL; } }$/;"	p	class:JSONObject
+IsGrounded	.\Scripts\Character\CharacterMotor.js	/^function IsGrounded () {$/;"	f
+IsJumping	.\Scripts\Character\CharacterMotor.js	/^function IsJumping () {$/;"	f
+IsNull	.\Plugins\JSONObject.cs	/^	public bool IsNull { get { return type == Type.NULL; } }$/;"	p	class:JSONObject
+IsNumber	.\Plugins\JSONObject.cs	/^	public bool IsNumber { get { return type == Type.NUMBER; } }$/;"	p	class:JSONObject
+IsObject	.\Plugins\JSONObject.cs	/^	public bool IsObject { get { return type == Type.OBJECT; } }$/;"	p	class:JSONObject
+IsSliding	.\Scripts\Character\CharacterMotor.js	/^function IsSliding () {$/;"	f
+IsString	.\Plugins\JSONObject.cs	/^	public bool IsString { get { return type == Type.STRING; } }$/;"	p	class:JSONObject
+IsTouchingCeiling	.\Scripts\Character\CharacterMotor.js	/^function IsTouchingCeiling () {$/;"	f
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject() { }$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject(AddJSONConents content) {$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject(Dictionary<string, JSONObject> dic) {$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject(Dictionary<string, string> dic) {$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject(JSONObject.Type t) {$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject(JSONObject[] objs) {$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject(bool b) {$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject(float f) {$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^	public JSONObject(string str, bool strict = false) {	\/\/create a new JSONObject from a string (this will also create any children, and parse the whole string)$/;"	m	class:JSONObject
+JSONObject	.\Plugins\JSONObject.cs	/^public class JSONObject {$/;"	c
+LateUpdate	.\Plugins\Tween\iTween.cs	/^	void LateUpdate(){$/;"	m	class:iTween	file:
+LateUpdate	.\Scripts\Core\Camera\GameCamera.js	/^	function LateUpdate () {$/;"	f
+LateUpdate	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public void LateUpdate () $/;"	m	class:PlanarReflection
+Launch	.\Plugins\Tween\iTween.cs	/^	static void Launch(GameObject target, Hashtable args){$/;"	m	class:iTween	file:
+Load	.\Scripts\EditorUI\EditorEvents.js	/^	function Load () {$/;"	f
+LoadConversation	.\Scripts\EditorUI\EditorConversationMap.js	/^	function LoadConversation () {$/;"	f
+LoadLevelAsync	.\Scripts\Core\Managers\LoadingManager.js	/^	function LoadLevelAsync () {$/;"	f
+LoadQuest	.\Scripts\EditorUI\EditorQuests.js	/^	function LoadQuest () {$/;"	f
+LocateValidWaterMaterial	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static Material LocateValidWaterMaterial(Transform parent) $/;"	m	class:WaterEditorUtility
+LookFrom	.\Plugins\Tween\iTween.cs	/^	public static void LookFrom(GameObject target, Hashtable args){$/;"	m	class:iTween
+LookFrom	.\Plugins\Tween\iTween.cs	/^	public static void LookFrom(GameObject target, Vector3 looktarget, float time){$/;"	m	class:iTween
+LookTo	.\Plugins\Tween\iTween.cs	/^	public static void LookTo(GameObject target, Hashtable args){		$/;"	m	class:iTween
+LookTo	.\Plugins\Tween\iTween.cs	/^	public static void LookTo(GameObject target, Vector3 looktarget, float time){$/;"	m	class:iTween
+LookUpdate	.\Plugins\Tween\iTween.cs	/^	public static void LookUpdate(GameObject target, Hashtable args){$/;"	m	class:iTween
+LookUpdate	.\Plugins\Tween\iTween.cs	/^	public static void LookUpdate(GameObject target, Vector3 looktarget, float time){$/;"	m	class:iTween
+Loom	.\Plugins\Loom.cs	/^public class Loom : MonoBehaviour$/;"	c
+LoopType	.\Plugins\Tween\iTween.cs	/^	public enum LoopType{$/;"	g	class:iTween
+Low	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^		Low = 0,$/;"	e	enum:WaterQuality	file:
+MAX_DEPTH	.\Plugins\JSONObject.cs	/^	const int MAX_DEPTH = 1000;$/;"	f	class:JSONObject	file:
+Medium	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^		Medium = 1,$/;"	e	enum:WaterQuality	file:
+Merge	.\Plugins\JSONObject.cs	/^	public void Merge(JSONObject obj) {$/;"	m	class:JSONObject
+MergeRecur	.\Plugins\JSONObject.cs	/^	static void MergeRecur(JSONObject left, JSONObject right) {$/;"	m	class:JSONObject	file:
+MeshContainer	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\MeshContainer.cs	/^  public MeshContainer(Mesh m) {$/;"	m	class:MeshContainer
+MeshContainer	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\MeshContainer.cs	/^public class MeshContainer $/;"	c
+MeshExtrusion	.\Plugins\MeshExtrusion.cs	/^public class MeshExtrusion$/;"	c
+MirrorReflection	.\Plugins\MirrorReflection.cs	/^public class MirrorReflection : MonoBehaviour$/;"	c
+MouseLook	.\Scripts\Character\MouseLook.cs	/^public class MouseLook : MonoBehaviour {$/;"	c
+MouseX	.\Scripts\Character\MouseLook.cs	/^	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }$/;"	e	enum:MouseLook.RotationAxes	file:
+MouseXAndY	.\Scripts\Character\MouseLook.cs	/^	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }$/;"	e	enum:MouseLook.RotationAxes	file:
+MouseY	.\Scripts\Character\MouseLook.cs	/^	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }$/;"	e	enum:MouseLook.RotationAxes	file:
+MoveAdd	.\Plugins\Tween\iTween.cs	/^	public static void MoveAdd(GameObject target, Hashtable args){$/;"	m	class:iTween
+MoveAdd	.\Plugins\Tween\iTween.cs	/^	public static void MoveAdd(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+MoveBy	.\Plugins\Tween\iTween.cs	/^	public static void MoveBy(GameObject target, Hashtable args){$/;"	m	class:iTween
+MoveBy	.\Plugins\Tween\iTween.cs	/^	public static void MoveBy(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+MoveFixPoint	.\Scripts\EditorCore\EditorCamera.js	/^function MoveFixPoint ( direction : Vector3 ) {$/;"	f
+MoveFrom	.\Plugins\Tween\iTween.cs	/^	public static void MoveFrom(GameObject target, Hashtable args){$/;"	m	class:iTween
+MoveFrom	.\Plugins\Tween\iTween.cs	/^	public static void MoveFrom(GameObject target, Vector3 position, float time){$/;"	m	class:iTween
+MoveTo	.\Plugins\Tween\iTween.cs	/^	public static void MoveTo(GameObject target, Hashtable args){$/;"	m	class:iTween
+MoveTo	.\Plugins\Tween\iTween.cs	/^	public static void MoveTo(GameObject target, Vector3 position, float time){$/;"	m	class:iTween
+MoveUpdate	.\Plugins\Tween\iTween.cs	/^	public static void MoveUpdate(GameObject target, Hashtable args){$/;"	m	class:iTween
+MoveUpdate	.\Plugins\Tween\iTween.cs	/^	public static void MoveUpdate(GameObject target, Vector3 position, float time){$/;"	m	class:iTween
+NEGINFINITY	.\Plugins\JSONObject.cs	/^	const string NEGINFINITY = "\\"NEGINFINITY\\"";$/;"	f	class:JSONObject	file:
+NPCCollide	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function NPCCollide ( a : Actor ) {}$/;"	f
+NULL	.\Plugins\JSONObject.cs	/^	public enum Type { NULL, STRING, NUMBER, OBJECT, ARRAY, BOOL }$/;"	e	enum:JSONObject.Type	file:
+NUMBER	.\Plugins\JSONObject.cs	/^	public enum Type { NULL, STRING, NUMBER, OBJECT, ARRAY, BOOL }$/;"	e	enum:JSONObject.Type	file:
+NaN	.\Plugins\JSONObject.cs	/^	const string NaN = "\\"NaN\\"";$/;"	f	class:JSONObject	file:
+NamedValueColor	.\Plugins\Tween\iTween.cs	/^	public enum NamedValueColor{$/;"	g	class:iTween
+NewFile	.\Scripts\EditorUI\EditorMenuBase.js	/^	function NewFile () {$/;"	f
+NewFlag	.\Scripts\EditorUI\EditorFlags.js	/^	function NewFlag ( name : String ) {		$/;"	f
+NextPath	.\Scripts\Core\AI\Actor.js	/^	function NextPath () {$/;"	f
+No	.\Scripts\EditorUI\EditorConfirmDialog.js	/^	function No () {$/;"	f
+Nullable	.\Plugins\Nullable.cs	/^public class Nullable {$/;"	c
+OBJECT	.\Plugins\JSONObject.cs	/^	public enum Type { NULL, STRING, NUMBER, OBJECT, ARRAY, BOOL }$/;"	e	enum:JSONObject.Type	file:
+OBJImporter	.\Plugins\OBJImporter.cs	/^public class OBJImporter {$/;"	c
+OGCallBack	.\OpenGUI\Scripts\OGTween.js	/^	function OGCallBack () {$/;"	f
+OGLine	.\OpenGUI\Scripts\OGRoot.js	/^	function OGLine ( start : Vector3, end : Vector3 ) {$/;"	c
+OGSlicedSpriteOffset	.\OpenGUI\Scripts\OGSkin.js	/^	function OGSlicedSpriteOffset ( l : float, r : float, t : float, b : float ) {$/;"	f
+OGStyleReference	.\OpenGUI\Scripts\OGSkin.js	/^	function OGStyleReference ( type : String, styles : OGWidgetStyles ) {$/;"	c
+OK	.\Scripts\EditorUI\EditorActors.js	/^	function OK () {$/;"	f
+OK	.\Scripts\EditorUI\EditorAdjust.js	/^	function OK () {$/;"	f
+OK	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	function OK () {$/;"	f
+OK	.\Scripts\EditorUI\EditorEditAccount.js	/^	function OK () {$/;"	f
+OK	.\Scripts\EditorUI\EditorEditText.js	/^	function OK () {$/;"	f
+OK	.\Scripts\EditorUI\EditorFlags.js	/^	function OK () {$/;"	f
+OK	.\Scripts\EditorUI\EditorGrid.js	/^	function OK () {$/;"	f
+OK	.\Scripts\EditorUI\EditorSaveAs.js	/^	function OK () {$/;"	f
+OK	.\Scripts\UI\UIDialogBox.js	/^	function OK () {$/;"	f
+OPGridMap	.\OpenPath\OPMap.js	/^	function OPGridMap ( start : Vector3, size : Vector3, gridSpacing : float, layerMask : LayerMask ) {$/;"	f
+OPNode	.\OpenPath\OPNode.js	/^	function OPNode () {$/;"	f
+OnCollisionEnter	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function OnCollisionEnter ( collision : Collision ) {$/;"	f
+OnCollisionEnter	.\Scripts\EditorCore\EditorDragObject.js	/^function OnCollisionEnter () {$/;"	f
+OnCollisionExit	.\Scripts\EditorCore\EditorDragObject.js	/^function OnCollisionExit () {$/;"	f
+OnControllerColliderHit	.\Scripts\Character\CharacterMotor.js	/^function OnControllerColliderHit (hit : ControllerColliderHit) {$/;"	f
+OnDisable	.\Plugins\Blur\BlurEffect.cs	/^	protected void OnDisable() {$/;"	m	class:BlurEffect
+OnDisable	.\Plugins\Loom.cs	/^	void OnDisable()$/;"	m	class:Loom	file:
+OnDisable	.\Plugins\MirrorReflection.cs	/^	void OnDisable()$/;"	m	class:MirrorReflection	file:
+OnDisable	.\Plugins\Tween\iTween.cs	/^	void OnDisable(){$/;"	m	class:iTween	file:
+OnDisable	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	void OnDisable()$/;"	m	class:SurfaceReflection	file:
+OnDisable	.\Scripts\Core\GameCore.js	/^	function OnDisable () {$/;"	f
+OnDisable	.\Scripts\Core\ObjectClasses\Trigger.js	/^	function OnDisable () {$/;"	f
+OnDisable	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	void OnDisable()$/;"	m	class:Water	file:
+OnDisable	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\Displace.cs	/^	public void OnDisable() $/;"	m	class:Displace
+OnDisable	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public void OnDisable() $/;"	m	class:PlanarReflection
+OnDisabled	.\Scripts\Core\ObjectClasses\MuzzleFlash.js	/^	function OnDisabled () {$/;"	f
+OnDrawGizmos	.\OpenPath\OPScanner.js	/^	function OnDrawGizmos () {$/;"	f
+OnDrawGizmos	.\Scripts\Core\ObjectClasses\Projectile.js	/^	function OnDrawGizmos () {$/;"	f
+OnEnable	.\Editor\Water (Pro Only)\Water4\GerstnerDisplaceEditor.cs	/^	public void OnEnable () $/;"	m	class:GerstnerDisplaceEditor
+OnEnable	.\Editor\Water (Pro Only)\Water4\PlanarReflectionEditor.cs	/^	public void OnEnable () {$/;"	m	class:PlanarReflectionEditor
+OnEnable	.\Editor\Water (Pro Only)\Water4\SpecularLightingEditor.cs	/^	public void OnEnable () {$/;"	m	class:SpecularLightingEditor
+OnEnable	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^	public void OnEnable () $/;"	m	class:WaterBaseEditor
+OnEnable	.\Plugins\Tween\iTween.cs	/^	void OnEnable(){$/;"	m	class:iTween	file:
+OnEnable	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\Displace.cs	/^	public void OnEnable() $/;"	m	class:Displace
+OnEnable	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public void OnEnable() $/;"	m	class:PlanarReflection
+OnGUI	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\_DemoScene\GUIEffectPicker.js	/^function OnGUI () {$/;"	f
+OnGUI	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	void OnGUI()$/;"	m	class:FindAndFixBrokenScripts	file:
+OnGUI	.\Scripts\Core\GameCore.js	/^	function OnGUI () {$/;"	f
+OnInspectorGUI	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Editor\ScaleEditor.cs	/^ public override void OnInspectorGUI()$/;"	m	class:ScaleEditor
+OnInspectorGUI	.\Editor\Water (Pro Only)\Water4\GerstnerDisplaceEditor.cs	/^    public override void OnInspectorGUI () $/;"	m	class:GerstnerDisplaceEditor
+OnInspectorGUI	.\Editor\Water (Pro Only)\Water4\PlanarReflectionEditor.cs	/^    public override void OnInspectorGUI () $/;"	m	class:PlanarReflectionEditor
+OnInspectorGUI	.\Editor\Water (Pro Only)\Water4\SpecularLightingEditor.cs	/^    public override void OnInspectorGUI () $/;"	m	class:SpecularLightingEditor
+OnInspectorGUI	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^    public override void OnInspectorGUI () $/;"	m	class:WaterBaseEditor
+OnInspectorGUI	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^	public override void OnInspectorGUI ()$/;"	m	class:FixMissingScripts
+OnMouseDown	.\Scripts\EditorCore\EditorDragObject.js	/^function OnMouseDown () {$/;"	f
+OnMouseUp	.\Scripts\EditorCore\EditorDragObject.js	/^function OnMouseUp () {$/;"	f
+OnPostRender	.\Scripts\Core\Camera\GameCamera.js	/^	function OnPostRender () {$/;"	f
+OnPostRender	.\Scripts\EditorCore\EditorCamera.js	/^function OnPostRender () {$/;"	f
+OnPreRender	.\Scripts\EditorCore\EditorCamera.js	/^function OnPreRender () {$/;"	f
+OnRenderImage	.\Plugins\Blur\BlurEffect.cs	/^	void OnRenderImage (RenderTexture source, RenderTexture destination) {		$/;"	m	class:BlurEffect	file:
+OnRenderObject	.\Scripts\EditorCore\EditorSelectionBox.js	/^	function OnRenderObject() {  $/;"	f
+OnTriggerEnter	.\Scripts\Character\Player.js	/^	function OnTriggerEnter ( other : Collider ) {				$/;"	f
+OnTriggerEnter	.\Scripts\Core\AI\Actor.js	/^	function OnTriggerEnter ( other : Collider ) {$/;"	f
+OnTriggerExit	.\Scripts\Character\Player.js	/^	function OnTriggerExit ( other : Collider ) {				$/;"	f
+OnWillRenderObject	.\Plugins\MirrorReflection.cs	/^	public void OnWillRenderObject()$/;"	m	class:MirrorReflection
+OnWillRenderObject	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	public void OnWillRenderObject()$/;"	m	class:SurfaceReflection
+OnWillRenderObject	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	public void OnWillRenderObject()$/;"	m	class:Water
+OnWillRenderObject	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterTile.cs	/^	public void OnWillRenderObject() $/;"	m	class:WaterTile
+OpenFile	.\Scripts\EditorUI\EditorMenuBase.js	/^	function OpenFile () {$/;"	f
+OpenFile	.\Scripts\EditorUI\EditorOpenFile.js	/^	function OpenFile () {$/;"	f
+PRETTY	.\Plugins\JSONObject.cs	1;"	d	file:
+Pause	.\Plugins\Tween\iTween.cs	/^	public static void Pause(){$/;"	m	class:iTween
+Pause	.\Plugins\Tween\iTween.cs	/^	public static void Pause(GameObject target){$/;"	m	class:iTween
+Pause	.\Plugins\Tween\iTween.cs	/^	public static void Pause(GameObject target, bool includechildren){$/;"	m	class:iTween
+Pause	.\Plugins\Tween\iTween.cs	/^	public static void Pause(GameObject target, string type){$/;"	m	class:iTween
+Pause	.\Plugins\Tween\iTween.cs	/^	public static void Pause(GameObject target, string type, bool includechildren){$/;"	m	class:iTween
+Pause	.\Plugins\Tween\iTween.cs	/^	public static void Pause(string type){$/;"	m	class:iTween
+Pick	.\Scripts\UI\UIModWheel.js	/^	function Pick ( b : OGButton ) {		$/;"	f
+PickActor	.\Scripts\EditorUI\EditorEvents.js	/^	function PickActor ( btn : OGButton ) {$/;"	f
+PickActor	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function PickActor ( btn : OGButton ) {$/;"	f
+PickConvo	.\Scripts\EditorUI\EditorConversationMap.js	/^	function PickConvo ( btn : OGButton ) {$/;"	f
+PickConvo	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	function PickConvo ( btn : OGButton ) {$/;"	f
+PickDoor	.\Scripts\EditorUI\EditorEvents.js	/^	function PickDoor ( btn : OGButton ) {$/;"	f
+PickEvent	.\Scripts\EditorUI\EditorEvents.js	/^	function PickEvent ( btn : OGButton ) {$/;"	f
+PickFlag	.\Scripts\EditorUI\EditorEvents.js	/^	function PickFlag ( btn : OGButton ) {$/;"	f
+PickFlag	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	function PickFlag ( btn : OGButton ) {$/;"	f
+PickFlag	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function PickFlag ( btn : OGButton ) {$/;"	f
+PickItem	.\Scripts\EditorUI\EditorEvents.js	/^	function PickItem ( btn : OGButton ) {$/;"	f
+PickMap	.\Scripts\EditorUI\EditorEvents.js	/^	function PickMap ( btn : OGButton ) {$/;"	f
+PickMap	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function PickMap ( btn : OGButton ) {$/;"	f
+PickMaterial	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	function PickMaterial () {$/;"	f
+PickNode	.\Scripts\EditorUI\EditorInspectorPath.js	/^	function PickNode ( number : String ) {$/;"	f
+PickPrefab	.\Scripts\EditorUI\EditorEvents.js	/^	function PickPrefab ( btn : OGButton ) {$/;"	f
+PickPrefab	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function PickPrefab ( btn : OGButton ) {$/;"	f
+PickQuest	.\Scripts\EditorUI\EditorEvents.js	/^	function PickQuest ( btn : OGButton ) {$/;"	f
+PickQuest	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	function PickQuest ( btn : OGButton ) {$/;"	f
+PickQuest	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function PickQuest ( btn : OGButton ) {$/;"	f
+PickQuest	.\Scripts\EditorUI\EditorQuests.js	/^	function PickQuest () {$/;"	f
+PickUpObject	.\Scripts\Character\Player.js	/^	function PickUpObject ( obj : LiftableItem ) {$/;"	f
+PlanarReflection	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^public class PlanarReflection : MonoBehaviour $/;"	c
+PlanarReflectionEditor	.\Editor\Water (Pro Only)\Water4\PlanarReflectionEditor.cs	/^public class PlanarReflectionEditor : Editor $/;"	c
+Play	.\OpenGUI\Scripts\OGTween.js	/^	function Play ( forward : boolean ) {$/;"	f
+PlayLevel	.\Scripts\EditorUI\EditorMenuBase.js	/^	function PlayLevel () {		$/;"	f
+Point	.\Scripts\UI\UIInventory.js	/^	function Point ( a : int, b : int ) {$/;"	f
+PointOndestination	.\Plugins\Tween\iTween.cs	/^	public static Vector3 PointOndestination(Transform[] destination, float percent){$/;"	m	class:iTween
+PointOndestination	.\Plugins\Tween\iTween.cs	/^	public static Vector3 PointOndestination(Vector3[] destination, float percent){$/;"	m	class:iTween
+PopulateEvents	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function PopulateEvents ( trg : Trigger ) {$/;"	f
+PopulateGrid	.\Scripts\UI\UIInventory.js	/^	function PopulateGrid () {$/;"	f
+ProjectOntoPlane	.\Scripts\Character\PlatformInputController.js	/^function ProjectOntoPlane (v : Vector3, normal : Vector3) {$/;"	f
+PunchPosition	.\Plugins\Tween\iTween.cs	/^	public static void PunchPosition(GameObject target, Hashtable args){$/;"	m	class:iTween
+PunchPosition	.\Plugins\Tween\iTween.cs	/^	public static void PunchPosition(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+PunchRotation	.\Plugins\Tween\iTween.cs	/^	public static void PunchRotation(GameObject target, Hashtable args){$/;"	m	class:iTween
+PunchRotation	.\Plugins\Tween\iTween.cs	/^	public static void PunchRotation(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+PunchScale	.\Plugins\Tween\iTween.cs	/^	public static void PunchScale(GameObject target, Hashtable args){$/;"	m	class:iTween
+PunchScale	.\Plugins\Tween\iTween.cs	/^	public static void PunchScale(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+PutOndestination	.\Plugins\Tween\iTween.cs	/^	public static void PutOndestination(GameObject target, Transform[] destination, float percent){$/;"	m	class:iTween
+PutOndestination	.\Plugins\Tween\iTween.cs	/^	public static void PutOndestination(GameObject target, Vector3[] destination, float percent){$/;"	m	class:iTween
+PutOndestination	.\Plugins\Tween\iTween.cs	/^	public static void PutOndestination(Transform target, Transform[] destination, float percent){$/;"	m	class:iTween
+PutOndestination	.\Plugins\Tween\iTween.cs	/^	public static void PutOndestination(Transform target, Vector3[] destination, float percent){$/;"	m	class:iTween
+QuestEditor	.\Scripts\EditorUI\EditorMenuBase.js	/^	function QuestEditor () {$/;"	f
+QueueOnMainThread	.\Plugins\Loom.cs	/^	public static void QueueOnMainThread(Action action)$/;"	m	class:Loom
+QueueOnMainThread	.\Plugins\Loom.cs	/^	public static void QueueOnMainThread(Action action, float time)$/;"	m	class:Loom
+ReadFlags	.\Scripts\EditorUI\EditorFlags.js	/^	function ReadFlags () {$/;"	f
+RearrangeEvents	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function RearrangeEvents () {$/;"	f
+RectUpdate	.\Plugins\Tween\iTween.cs	/^	public static Rect RectUpdate(Rect currentValue, Rect targetValue, float speed){$/;"	m	class:iTween
+Reflective	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^		Reflective = 1,$/;"	e	enum:Water.WaterMode	file:
+Refractive	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^		Refractive = 2,$/;"	e	enum:Water.WaterMode	file:
+RefreshFixPoint	.\Scripts\EditorCore\EditorCamera.js	/^function RefreshFixPoint ( useMouse : boolean ) {$/;"	f
+ReloadMaterial	.\Scripts\Core\ObjectClasses\Prefab.js	/^	function ReloadMaterial () {$/;"	c
+Remove	.\OpenPath\OPPriorityQueue.js	/^	function Remove ( node : OPNode ) {$/;"	f
+RemoveEvent	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function RemoveEvent ( obj : GameObject ) {$/;"	f
+RemoveField	.\Plugins\JSONObject.cs	/^	public void RemoveField(string name) {$/;"	m	class:JSONObject
+Rename	.\Scripts\EditorUI\EditorInspectorSpawnPoint.js	/^	function Rename () {$/;"	f
+RenderHelpCameras	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public void RenderHelpCameras (Camera currentCam) $/;"	m	class:PlanarReflection
+RenderReflectionFor	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private void RenderReflectionFor (Camera cam, Camera reflectCamera) $/;"	m	class:PlanarReflection	file:
+RenewGUID	.\Scripts\EditorUI\EditorMenuBase.js	/^	function RenewGUID () {$/;"	f
+Reset	.\OpenPath\OPMap.js	/^	function Reset () {$/;"	f
+ResetFire	.\Scripts\Character\Player.js	/^	function ResetFire () {$/;"	f
+ResetFire	.\Scripts\Core\AI\Actor.js	/^	function ResetFire () {$/;"	f
+RestorePosRot	.\Scripts\Core\Camera\GameCamera.js	/^	function RestorePosRot ( t : float ) {$/;"	f
+Resume	.\Plugins\Tween\iTween.cs	/^	public static void Resume(){$/;"	m	class:iTween
+Resume	.\Plugins\Tween\iTween.cs	/^	public static void Resume(GameObject target){$/;"	m	class:iTween
+Resume	.\Plugins\Tween\iTween.cs	/^	public static void Resume(GameObject target, bool includechildren){$/;"	m	class:iTween
+Resume	.\Plugins\Tween\iTween.cs	/^	public static void Resume(GameObject target, string type){$/;"	m	class:iTween
+Resume	.\Plugins\Tween\iTween.cs	/^	public static void Resume(GameObject target, string type, bool includechildren){$/;"	m	class:iTween
+Resume	.\Plugins\Tween\iTween.cs	/^	public static void Resume(string type){$/;"	m	class:iTween
+ResumeDelay	.\Plugins\Tween\iTween.cs	/^	void ResumeDelay(){$/;"	m	class:iTween	file:
+RetrieveArgs	.\Plugins\Tween\iTween.cs	/^	void RetrieveArgs(){$/;"	m	class:iTween	file:
+Roaming	.\Scripts\Core\AI\Actor.js	/^	function Roaming () {$/;"	f
+RotateAdd	.\Plugins\Tween\iTween.cs	/^	public static void RotateAdd(GameObject target, Hashtable args){$/;"	m	class:iTween
+RotateAdd	.\Plugins\Tween\iTween.cs	/^	public static void RotateAdd(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+RotateBy	.\Plugins\Tween\iTween.cs	/^	public static void RotateBy(GameObject target, Hashtable args){$/;"	m	class:iTween
+RotateBy	.\Plugins\Tween\iTween.cs	/^	public static void RotateBy(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+RotateFrom	.\Plugins\Tween\iTween.cs	/^	public static void RotateFrom(GameObject target, Hashtable args){$/;"	m	class:iTween
+RotateFrom	.\Plugins\Tween\iTween.cs	/^	public static void RotateFrom(GameObject target, Vector3 rotation, float time){$/;"	m	class:iTween
+RotateTo	.\Plugins\Tween\iTween.cs	/^	public static void RotateTo(GameObject target, Hashtable args){$/;"	m	class:iTween
+RotateTo	.\Plugins\Tween\iTween.cs	/^	public static void RotateTo(GameObject target, Vector3 rotation, float time){$/;"	m	class:iTween
+RotateUpdate	.\Plugins\Tween\iTween.cs	/^	public static void RotateUpdate(GameObject target, Hashtable args){$/;"	m	class:iTween
+RotateUpdate	.\Plugins\Tween\iTween.cs	/^	public static void RotateUpdate(GameObject target, Vector3 rotation, float time){$/;"	m	class:iTween
+RotationAxes	.\Scripts\Character\MouseLook.cs	/^	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }$/;"	g	class:MouseLook
+RunAction	.\Plugins\Loom.cs	/^	private static void RunAction(object action)$/;"	m	class:Loom	file:
+RunAsync	.\Plugins\Loom.cs	/^	public static Thread RunAsync(Action a)$/;"	m	class:Loom
+RunForward	.\Scripts\Core\AI\Actor.js	/^	function RunForward () {			$/;"	f
+STRING	.\Plugins\JSONObject.cs	/^	public enum Type { NULL, STRING, NUMBER, OBJECT, ARRAY, BOOL }$/;"	e	enum:JSONObject.Type	file:
+SaneCameraSettings	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private void SaneCameraSettings(Camera helperCam) $/;"	m	class:PlanarReflection	file:
+Save	.\Scripts\EditorUI\EditorConversationMap.js	/^	function Save () {	$/;"	f
+Save	.\Scripts\EditorUI\EditorEvents.js	/^	function Save () {$/;"	f
+SaveAs	.\Scripts\EditorUI\EditorMenuBase.js	/^	function SaveAs () {$/;"	f
+SaveFile	.\Scripts\EditorCore\EditorCore.js	/^function SaveFile ( path : String ) {$/;"	f
+SaveFile	.\Scripts\EditorUI\EditorMenuBase.js	/^	function SaveFile () {$/;"	f
+SaveFlags	.\Scripts\EditorUI\EditorFlags.js	/^	function SaveFlags () {$/;"	f
+SaveQuest	.\Scripts\EditorUI\EditorQuests.js	/^	function SaveQuest () {$/;"	f
+Say	.\Scripts\Core\AI\Actor.js	/^	function Say ( msg : String ) {$/;"	f
+ScaleAdd	.\Plugins\Tween\iTween.cs	/^	public static void ScaleAdd(GameObject target, Hashtable args){$/;"	m	class:iTween
+ScaleAdd	.\Plugins\Tween\iTween.cs	/^	public static void ScaleAdd(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+ScaleBy	.\Plugins\Tween\iTween.cs	/^	public static void ScaleBy(GameObject target, Hashtable args){$/;"	m	class:iTween
+ScaleBy	.\Plugins\Tween\iTween.cs	/^	public static void ScaleBy(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+ScaleEditor	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Editor\ScaleEditor.cs	/^public class ScaleEditor : Editor$/;"	c
+ScaleFrom	.\Plugins\Tween\iTween.cs	/^	public static void ScaleFrom(GameObject target, Hashtable args){$/;"	m	class:iTween
+ScaleFrom	.\Plugins\Tween\iTween.cs	/^	public static void ScaleFrom(GameObject target, Vector3 scale, float time){$/;"	m	class:iTween
+ScaleTo	.\Plugins\Tween\iTween.cs	/^	public static void ScaleTo(GameObject target, Hashtable args){$/;"	m	class:iTween
+ScaleTo	.\Plugins\Tween\iTween.cs	/^	public static void ScaleTo(GameObject target, Vector3 scale, float time){$/;"	m	class:iTween
+ScaleUpdate	.\Plugins\Tween\iTween.cs	/^	public static void ScaleUpdate(GameObject target, Hashtable args){$/;"	m	class:iTween
+ScaleUpdate	.\Plugins\Tween\iTween.cs	/^	public static void ScaleUpdate(GameObject target, Vector3 scale, float time){$/;"	m	class:iTween
+Scan	.\OpenPath\OPScanner.js	/^	function Scan () {$/;"	f
+ScanAll	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^	void ScanAll()$/;"	m	class:FixMissingScripts	file:
+ScannedScript	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^	class ScannedScript$/;"	c	class:FixMissingScripts
+SelectFile	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	function SelectFile ( btn : OGListItem ) {$/;"	f
+SelectFile	.\Scripts\EditorUI\EditorOpenFile.js	/^	function SelectFile ( btn : OGListItem ) {$/;"	f
+SelectFileMode	.\Scripts\EditorUI\EditorConversationMap.js	/^	function SelectFileMode ( mode : String ) {$/;"	f
+SelectFolder	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	function SelectFolder ( btn : OGListItem ) {$/;"	f
+SelectItem	.\Scripts\EditorUI\EditorActors.js	/^	function SelectItem ( n : String ) {$/;"	f
+SelectItem	.\Scripts\EditorUI\EditorPicker.js	/^	function SelectItem ( btn : OGListItem ) {$/;"	f
+SelectMode	.\Scripts\EditorUI\EditorEvents.js	/^	function SelectMode () {$/;"	f
+SelectMode	.\Scripts\EditorUI\EditorQuests.js	/^	function SelectMode () {$/;"	f
+SelectSlot	.\Scripts\UI\UIInventory.js	/^	function SelectSlot () {$/;"	f
+SetActive	.\Scripts\Core\ObjectClasses\Quest.js	/^	function SetActive ( state : boolean ) {$/;"	f
+SetColor	.\Scripts\Core\ObjectClasses\LightSource.js	/^	function SetColor ( c : Color ) {		$/;"	f
+SetControllable	.\Scripts\Character\CharacterMotor.js	/^function SetControllable (controllable : boolean) {$/;"	f
+SetField	.\Plugins\JSONObject.cs	/^	public void SetField(string name, JSONObject obj) {$/;"	m	class:JSONObject
+SetField	.\Plugins\JSONObject.cs	/^	public void SetField(string name, bool val) { SetField(name, new JSONObject(val)); }$/;"	m	class:JSONObject
+SetField	.\Plugins\JSONObject.cs	/^	public void SetField(string name, float val) { SetField(name, new JSONObject(val)); }$/;"	m	class:JSONObject
+SetField	.\Plugins\JSONObject.cs	/^	public void SetField(string name, int val) { SetField(name, new JSONObject(val)); }$/;"	m	class:JSONObject
+SetFixPoint	.\Scripts\EditorCore\EditorCamera.js	/^function SetFixPoint ( point : Vector3 ) {$/;"	f
+SetFixPointToSelected	.\Scripts\EditorCore\EditorCamera.js	/^function SetFixPointToSelected () {$/;"	f
+SetGoal	.\OpenPath\OPPathFinder.js	/^	function SetGoal ( t : Transform ) {$/;"	f
+SetIntensity	.\Scripts\Core\ObjectClasses\LightSource.js	/^	function SetIntensity ( i : float ) {		$/;"	f
+SetMap	.\OpenPath\OPScanner.js	/^	function SetMap ( nodes : OPNode[] ) {$/;"	f
+SetMaterialColor	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static void SetMaterialColor(System.String name, Color color, Material mat) {$/;"	m	class:WaterEditorUtility
+SetMaterialFloat	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static void SetMaterialFloat(System.String name, float f, Material mat) {$/;"	m	class:WaterEditorUtility
+SetMaterialTexture	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static void SetMaterialTexture(System.String theName, Texture parameter, Material mat) {$/;"	m	class:WaterEditorUtility
+SetMaterialVector	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^	public static void SetMaterialVector(System.String name, Vector4 vector, Material mat) {$/;"	m	class:WaterEditorUtility
+SetMode	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	function SetMode ( m : String ) {$/;"	f
+SetPause	.\Scripts\Core\GameCore.js	/^	function SetPause ( state : boolean ) {$/;"	f
+SetPreviousPosition	.\Scripts\Core\Physics\DontGoThroughThings.js	/^function SetPreviousPosition ( v : Vector3 ) {$/;"	f
+SetRange	.\Scripts\Core\ObjectClasses\LightSource.js	/^	function SetRange ( r : float ) {		$/;"	f
+SetStandardCameraParameter	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private void SetStandardCameraParameter(Camera cam, LayerMask mask)$/;"	m	class:PlanarReflection	file:
+SetTimeScale	.\Scripts\Core\GameCore.js	/^	function SetTimeScale ( time : float ) {$/;"	f
+SetTimeScaleGoal	.\Scripts\Core\GameCore.js	/^	function SetTimeScaleGoal ( goal : float ) {$/;"	f
+SetType	.\Scripts\Core\ObjectClasses\LightSource.js	/^	function SetType ( t : String ) {$/;"	f
+SetVelocity	.\Scripts\Character\CharacterMotor.js	/^function SetVelocity (velocity : Vector3) {$/;"	f
+ShakePosition	.\Plugins\Tween\iTween.cs	/^	public static void ShakePosition(GameObject target, Hashtable args){$/;"	m	class:iTween
+ShakePosition	.\Plugins\Tween\iTween.cs	/^	public static void ShakePosition(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+ShakeRotation	.\Plugins\Tween\iTween.cs	/^	public static void ShakeRotation(GameObject target, Hashtable args){$/;"	m	class:iTween
+ShakeRotation	.\Plugins\Tween\iTween.cs	/^	public static void ShakeRotation(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+ShakeScale	.\Plugins\Tween\iTween.cs	/^	public static void ShakeScale(GameObject target, Hashtable args){$/;"	m	class:iTween
+ShakeScale	.\Plugins\Tween\iTween.cs	/^	public static void ShakeScale(GameObject target, Vector3 amount, float time){$/;"	m	class:iTween
+Shoot	.\Scripts\Character\Player.js	/^	function Shoot () {$/;"	f
+Shooting	.\Scripts\Core\AI\Actor.js	/^	function Shooting () {						$/;"	f
+ShowHelp	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ShowHelp () {$/;"	f
+Simple	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^		Simple = 0,$/;"	e	enum:Water.WaterMode	file:
+SortFlags	.\Scripts\EditorUI\EditorFlags.js	/^	function SortFlags () {$/;"	f
+SpawnBullet	.\Scripts\Core\Managers\DamageManager.js	/^	function SpawnBullet ( origin : GameObject, target : Vector3, owner : GameObject ) {$/;"	f
+SpecularLighting	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\SpecularLighting.cs	/^public class SpecularLighting : MonoBehaviour $/;"	c
+SpecularLightingEditor	.\Editor\Water (Pro Only)\Water4\SpecularLightingEditor.cs	/^public class SpecularLightingEditor : Editor $/;"	c
+Stab	.\Plugins\Tween\iTween.cs	/^	public static void Stab(GameObject target, AudioClip audioclip, float delay){$/;"	m	class:iTween
+Stab	.\Plugins\Tween\iTween.cs	/^	public static void Stab(GameObject target, Hashtable args){$/;"	m	class:iTween
+Start	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\DestroyRubble.js	/^function Start () {$/;"	f
+Start	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\FireFade.js	/^function Start () {$/;"	f
+Start	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Move.js	/^function Start () {$/;"	f
+Start	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\RubbleCreater.js	/^function Start () {$/;"	f
+Start	.\OpenGUI\Scripts\OGTween.js	/^	function Start () {$/;"	f
+Start	.\OpenPath\OPPathFinder.js	/^	function Start () {$/;"	f
+Start	.\OpenPath\OPScanner.js	/^	function Start () {$/;"	f
+Start	.\Plugins\Blur\BlurEffect.cs	/^	protected void Start()$/;"	m	class:BlurEffect
+Start	.\Plugins\Loom.cs	/^	void Start()$/;"	m	class:Loom	file:
+Start	.\Plugins\Tween\iTween.cs	/^	IEnumerator Start(){$/;"	m	class:iTween	file:
+Start	.\Scripts\Character\MouseLook.cs	/^	void Start ()$/;"	m	class:MouseLook	file:
+Start	.\Scripts\Core\AI\Actor.js	/^	function Start () {				$/;"	f
+Start	.\Scripts\Core\Camera\GameCamera.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\GameCore.js	/^	function Start () {	$/;"	f
+Start	.\Scripts\Core\Managers\DamageManager.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\Managers\InventoryManager.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\Managers\LoadingManager.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Book.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Computer.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Door.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\GUID.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Item.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Keypad.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\LiftPanel.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\LightSource.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Prefab.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Shape.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\SurveillanceCamera.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Terminal.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Trigger.js	/^	function Start () {$/;"	f
+Start	.\Scripts\Core\ObjectClasses\Wallet.js	/^	function Start () {		$/;"	f
+Start	.\Scripts\EditorCore\EditorCamera.js	/^function Start () {$/;"	f
+Start	.\Scripts\EditorCore\EditorCore.js	/^function Start () {$/;"	f
+Start	.\Scripts\EditorCore\EditorDragObject.js	/^function Start () {$/;"	f
+Start	.\Scripts\EditorCore\EditorFileSystem.js	/^	function Start () {$/;"	f
+Start	.\Scripts\EditorUI\EditorBrowserPanel.js	/^	function Start () {$/;"	f
+Start	.\Scripts\EditorUI\EditorConversationMap.js	/^	function Start () {$/;"	f
+Start	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public void Start () $/;"	m	class:PlanarReflection
+Start	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\SpecularLighting.cs	/^	public void Start () $/;"	m	class:SpecularLighting
+Start	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterTile.cs	/^	public void Start () $/;"	m	class:WaterTile
+StartAutoHeal	.\Scripts\Character\Player.js	/^	function StartAutoHeal ( amount : int ) {$/;"	f
+StartChase	.\Scripts\Core\AI\Actor.js	/^	function StartChase ( t : Transform ) {$/;"	f
+StartShield	.\Scripts\Character\Player.js	/^	function StartShield ( level : int ) {$/;"	f
+Stop	.\Plugins\Tween\iTween.cs	/^	public static void Stop(){$/;"	m	class:iTween
+Stop	.\Plugins\Tween\iTween.cs	/^	public static void Stop(GameObject target){$/;"	m	class:iTween
+Stop	.\Plugins\Tween\iTween.cs	/^	public static void Stop(GameObject target, bool includechildren){$/;"	m	class:iTween
+Stop	.\Plugins\Tween\iTween.cs	/^	public static void Stop(GameObject target, string type){$/;"	m	class:iTween
+Stop	.\Plugins\Tween\iTween.cs	/^	public static void Stop(GameObject target, string type, bool includechildren){$/;"	m	class:iTween
+Stop	.\Plugins\Tween\iTween.cs	/^	public static void Stop(string type){$/;"	m	class:iTween
+StopAutoHeal	.\Scripts\Character\Player.js	/^	function StopAutoHeal () {$/;"	f
+StopByName	.\Plugins\Tween\iTween.cs	/^	public static void StopByName(GameObject target, string name){$/;"	m	class:iTween
+StopByName	.\Plugins\Tween\iTween.cs	/^	public static void StopByName(GameObject target, string name, bool includechildren){$/;"	m	class:iTween
+StopByName	.\Plugins\Tween\iTween.cs	/^	public static void StopByName(string name){$/;"	m	class:iTween
+StopShield	.\Scripts\Character\Player.js	/^	function StopShield () {$/;"	f
+StopTalking	.\Scripts\Character\Player.js	/^	function StopTalking () {$/;"	f
+StopTalking	.\Scripts\Core\AI\Actor.js	/^	function StopTalking ( endAction : String ) {$/;"	f
+StorePosRot	.\Scripts\Core\Camera\GameCamera.js	/^	function StorePosRot () {$/;"	f
+StringObject	.\Plugins\JSONObject.cs	/^	public static JSONObject StringObject(string val) { return new JSONObject { type = JSONObject.Type.STRING, str = val }; }$/;"	m	class:JSONObject
+SurfaceReflection	.\Scripts\Core\Camera\SurfaceReflection.cs	/^public class SurfaceReflection : MonoBehaviour$/;"	c
+TakeDamage	.\Scripts\Character\Player.js	/^	function TakeDamage ( amount : int ) {$/;"	f
+TakeDamage	.\Scripts\Core\AI\Actor.js	/^	function TakeDamage ( damage : int ) {$/;"	f
+TalkTo	.\Scripts\Character\Player.js	/^	function TalkTo ( a : Actor ) {$/;"	c
+ThreadData	.\Plugins\TextureScale.js	/^		function ThreadData (s : int, e : int) {$/;"	f
+Throw	.\Scripts\Character\Player.js	/^	function Throw () {$/;"	f
+ToDictionary	.\Plugins\JSONObject.cs	/^	public Dictionary<string, string> ToDictionary() {$/;"	m	class:JSONObject
+ToString	.\Plugins\JSONObject.cs	/^	public override string ToString() {$/;"	m	class:JSONObject
+ToString	.\Plugins\JSONObject.cs	/^	public string ToString(bool pretty) {$/;"	m	class:JSONObject
+ToggleFirstPerson	.\Scripts\Core\Camera\GameCamera.js	/^	function ToggleFirstPerson () {$/;"	f
+ToggleGizmos	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ToggleGizmos () {$/;"	f
+ToggleIsometric	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ToggleIsometric () {$/;"	f
+ToggleLock	.\Scripts\EditorCore\EditorCamera.js	/^function ToggleLock () {$/;"	f
+ToggleNavigation	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ToggleNavigation () {$/;"	f
+ToggleTextured	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ToggleTextured () {$/;"	f
+ToggleWireframe	.\Scripts\EditorUI\EditorMenuBase.js	/^	function ToggleWireframe () {$/;"	f
+TooSteep	.\Scripts\Character\CharacterMotor.js	/^function TooSteep () {$/;"	f
+Triangle	.\OpenPath\OPNavMesh.js	/^		function Triangle ( v0 : int, v1 : int, v2 : int ) {$/;"	f
+TurnTo	.\Scripts\Core\AI\Actor.js	/^	function TurnTo ( dir : Vector3 ) {$/;"	f
+TurnTowards	.\Scripts\Character\Player.js	/^	function TurnTowards ( v : Vector3 ) {$/;"	f
+TurnTowards	.\Scripts\Core\AI\Actor.js	/^	function TurnTowards ( pos : Vector3 ) {$/;"	f
+TweenComplete	.\Plugins\Tween\iTween.cs	/^	void TweenComplete(){$/;"	m	class:iTween	file:
+TweenDelay	.\Plugins\Tween\iTween.cs	/^	IEnumerator TweenDelay(){$/;"	m	class:iTween	file:
+TweenLook	.\Scripts\Core\Camera\GameCamera.js	/^	function TweenLook ( v : Vector3, t : float ) {$/;"	f
+TweenLoop	.\Plugins\Tween\iTween.cs	/^	void TweenLoop(){$/;"	m	class:iTween	file:
+TweenMoveTo	.\Scripts\EditorCore\EditorCamera.js	/^function TweenMoveTo ( position : Vector3 ) {$/;"	f
+TweenPosition	.\Scripts\Core\Camera\GameCamera.js	/^	function TweenPosition ( v : Vector3, t : float ) {$/;"	f
+TweenRestart	.\Plugins\Tween\iTween.cs	/^	IEnumerator TweenRestart(){$/;"	m	class:iTween	file:
+TweenRotation	.\Scripts\Core\Camera\GameCamera.js	/^	function TweenRotation ( v : Vector3, t : float ) {$/;"	f
+TweenStart	.\Plugins\Tween\iTween.cs	/^	void TweenStart(){		$/;"	m	class:iTween	file:
+TweenTimeScale	.\Scripts\Core\GameCore.js	/^	function TweenTimeScale ( start : float, goal : float, time : float ) {$/;"	f
+TweenTurnTo	.\Scripts\EditorCore\EditorCamera.js	/^function TweenTurnTo ( target : Vector3 ) {$/;"	f
+TweenUpdate	.\Plugins\Tween\iTween.cs	/^	void TweenUpdate(){$/;"	m	class:iTween	file:
+Type	.\Plugins\JSONObject.cs	/^	public enum Type { NULL, STRING, NUMBER, OBJECT, ARRAY, BOOL }$/;"	g	class:JSONObject
+USEFLOAT	.\Plugins\JSONObject.cs	2;"	d	file:
+UnEquip	.\Scripts\Core\AI\Actor.js	/^	function UnEquip () {$/;"	f
+UndoAction	.\Scripts\EditorUI\EditorMenuBase.js	/^	function UndoAction () {$/;"	f
+Unfocus	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function Unfocus () {				$/;"	f
+Update	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\FireFade.js	/^function Update () {$/;"	f
+Update	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Move.js	/^function Update () {$/;"	f
+Update	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\_DemoScene\ExplosionAtPoint.js	/^function Update () {$/;"	f
+Update	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	void Update()$/;"	m	class:FindAndFixBrokenScripts	file:
+Update	.\OpenGUI\Scripts\OGTween.js	/^	function Update () {$/;"	f
+Update	.\OpenGUI\Tools\OGArrangeInCircle.js	/^	function Update () {$/;"	f
+Update	.\OpenGUI\Tools\OGScaleToCamera.js	/^	function Update () {$/;"	f
+Update	.\OpenPath\OPPathFinder.js	/^	function Update () {$/;"	f
+Update	.\OpenPath\OPWayPoint.js	/^	function Update () {$/;"	f
+Update	.\Plugins\Loom.cs	/^	void Update()$/;"	m	class:Loom	file:
+Update	.\Plugins\Tween\iTween.cs	/^	void Update(){$/;"	m	class:iTween	file:
+Update	.\Scripts\Character\CharacterMotor.js	/^function Update () {$/;"	f
+Update	.\Scripts\Character\FPSInputController.js	/^function Update () {$/;"	f
+Update	.\Scripts\Character\MouseLook.cs	/^	void Update ()$/;"	m	class:MouseLook	file:
+Update	.\Scripts\Character\PlatformInputController.js	/^function Update () {$/;"	f
+Update	.\Scripts\Character\Player.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\AI\Actor.js	/^	function Update () {$/;"	c
+Update	.\Scripts\Core\AI\LocalAvoidance.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\Camera\GameCamera.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\Camera\MirrorCamera.js	/^	function Update () {$/;"	c
+Update	.\Scripts\Core\GameCore.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\Managers\InputManager.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function Update () {		$/;"	f
+Update	.\Scripts\Core\ObjectClasses\Lift.js	/^function Update () {$/;"	f
+Update	.\Scripts\Core\ObjectClasses\LightSource.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\ObjectClasses\Mine.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\ObjectClasses\MuzzleFlash.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\ObjectClasses\Projectile.js	/^	function Update () {$/;"	c
+Update	.\Scripts\Core\ObjectClasses\SurveillanceCamera.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\ObjectClasses\Tween.js	/^function Update () {$/;"	f
+Update	.\Scripts\Core\ObjectClasses\Wallet.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Core\Tools\SetGlobalRotation.js	/^	function Update () {$/;"	c
+Update	.\Scripts\EditorCore\EditorCamera.js	/^function Update () {$/;"	f
+Update	.\Scripts\EditorCore\EditorCore.js	/^function Update () {$/;"	f
+Update	.\Scripts\EditorCore\EditorInput.js	/^function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorBrowserPanel.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorConversationMap.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorConversationNode.js	/^	function Update () {$/;"	c
+Update	.\Scripts\EditorUI\EditorConversationNodeLine.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorConversationRootNode.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorCursorText.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorFlags.js	/^		function Update ( i : int ) {$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorActor.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	function Update () {		$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorKeypad.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorLight.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorPath.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorTerminal.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorTween.js	/^	function Update () {$/;"	f
+Update	.\Scripts\EditorUI\EditorInspectorWallet.js	/^	function Update () {$/;"	f
+Update	.\Scripts\Tools\PanUVs.js	/^	function Update () {$/;"	f
+Update	.\Scripts\UI\RotateObject.js	/^	function Update () {$/;"	c
+Update	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	void Update()$/;"	m	class:Water	file:
+Update	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\MeshContainer.cs	/^  public void Update() {$/;"	m	class:MeshContainer
+Update	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\SpecularLighting.cs	/^	public void Update () $/;"	m	class:SpecularLighting
+Update	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^	public void Update () $/;"	m	class:WaterBase
+Update	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterTile.cs	/^	public void Update () $/;"	m	class:WaterTile
+UpdateCameraModes	.\Plugins\MirrorReflection.cs	/^	private void UpdateCameraModes( Camera src, Camera dest )$/;"	m	class:MirrorReflection	file:
+UpdateCameraModes	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private void UpdateCameraModes( Camera src, Camera dest )$/;"	m	class:SurfaceReflection	file:
+UpdateCameraModes	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private void UpdateCameraModes( Camera src, Camera dest )$/;"	m	class:Water	file:
+UpdateObject	.\Scripts\Core\ObjectClasses\Door.js	/^	function UpdateObject () {$/;"	f
+UpdateObject	.\Scripts\Core\ObjectClasses\InteractiveObject.js	/^	function UpdateObject () {}$/;"	f
+UpdateObject	.\Scripts\EditorUI\EditorInspectorActor.js	/^	function UpdateObject () {$/;"	f
+UpdateObject	.\Scripts\EditorUI\EditorInspectorPath.js	/^	function UpdateObject () {$/;"	f
+UpdateObject	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	function UpdateObject () {$/;"	f
+UpdatePercentage	.\Plugins\Tween\iTween.cs	/^	void UpdatePercentage(){$/;"	m	class:iTween	file:
+UpdatePosition	.\OpenPath\OPPathFinder.js	/^	function UpdatePosition () {$/;"	f
+UpdateScale	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Scale.js	/^function UpdateScale () {   $/;"	f
+UpdateShader	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^	public void UpdateShader() $/;"	m	class:WaterBase
+UpdateText	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	function UpdateText () {$/;"	f
+UpdateText	.\Scripts\UI\UIInventory.js	/^	function UpdateText () {$/;"	f
+ValueTo	.\Plugins\Tween\iTween.cs	/^	public static void ValueTo(GameObject target, Hashtable args){$/;"	m	class:iTween
+Vector2Update	.\Plugins\Tween\iTween.cs	/^	public static Vector2 Vector2Update(Vector2 currentValue, Vector2 targetValue, float speed){$/;"	m	class:iTween
+Vector3Update	.\Plugins\Tween\iTween.cs	/^	public static Vector3 Vector3Update(Vector3 currentValue, Vector3 targetValue, float speed){$/;"	m	class:iTween
+WHITESPACE	.\Plugins\JSONObject.cs	/^	public static char[]  WHITESPACE = new char[] { ' ', '\\r', '\\n', '\\t' };$/;"	f	class:JSONObject
+WalkForward	.\Scripts\Core\AI\Actor.js	/^	function WalkForward () {			$/;"	f
+Water	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^public class Water : MonoBehaviour$/;"	c
+WaterBase	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^public class WaterBase : MonoBehaviour $/;"	c
+WaterBaseEditor	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^public class WaterBaseEditor : Editor $/;"	c
+WaterEditorUtility	.\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs	/^class WaterEditorUtility $/;"	c
+WaterMode	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	public enum WaterMode {$/;"	g	class:Water
+WaterQuality	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^public enum WaterQuality {$/;"	g
+WaterTile	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterTile.cs	/^public class WaterTile : MonoBehaviour $/;"	c
+WaterTileBeingRendered	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public void WaterTileBeingRendered (Transform tr, Camera currentCam) $/;"	m	class:PlanarReflection
+WaterTileBeingRendered	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^	public void WaterTileBeingRendered (Transform tr, Camera currentCam) $/;"	m	class:WaterBase
+Yes	.\Scripts\EditorUI\EditorConfirmDialog.js	/^	function Yes () {$/;"	f
+_Color	.\Plugins\Tween\iTween.cs	/^		_Color,$/;"	e	enum:iTween.NamedValueColor	file:
+_Emission	.\Plugins\Tween\iTween.cs	/^		_Emission,$/;"	e	enum:iTween.NamedValueColor	file:
+_ReflectColor	.\Plugins\Tween\iTween.cs	/^		_ReflectColor$/;"	e	enum:iTween.NamedValueColor	file:
+_SpecColor	.\Plugins\Tween\iTween.cs	/^		_SpecColor,$/;"	e	enum:iTween.NamedValueColor	file:
+_actions	.\Plugins\Loom.cs	/^	private List<Action> _actions = new List<Action>();$/;"	f	class:Loom	file:
+_background	.\Scripts\EditorUI\EditorModes.js	/^	var _background : OGSlicedSprite;$/;"	v
+_buttonCancel	.\Scripts\UI\UIDialogBox.js	/^	var _buttonCancel : GameObject;$/;"	v
+_buttonOK	.\Scripts\UI\UIDialogBox.js	/^	var _buttonOK : GameObject;$/;"	v
+_count	.\Plugins\Loom.cs	/^	private int _count;$/;"	f	class:Loom	file:
+_crosshair	.\Scripts\UI\UIHUD.js	/^	var _crosshair : GameObject;$/;"	v
+_current	.\Plugins\Loom.cs	/^	private static Loom _current;$/;"	f	class:Loom	file:
+_currentActions	.\Plugins\Loom.cs	/^	List<Action> _currentActions = new List<Action>();$/;"	f	class:Loom	file:
+_currentDelayed	.\Plugins\Loom.cs	/^	List<DelayedQueueItem> _currentDelayed = new List<DelayedQueueItem>();$/;"	f	class:Loom	file:
+_data	.\Scripts\EditorUI\EditorModes.js	/^	var _data : Transform;$/;"	v
+_debugText	.\Scripts\UI\UIHUD.js	/^	var _debugText : OGLabel;$/;"	v
+_delayed	.\Plugins\Loom.cs	/^	private List<DelayedQueueItem> _delayed = new  List<DelayedQueueItem>();$/;"	f	class:Loom	file:
+_highlight	.\Scripts\UI\UIConversation.js	/^	var _highlight : GameObject;$/;"	v
+_initialized	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^	static bool _initialized = false;$/;"	f	class:FixMissingScripts	file:
+_input	.\Scripts\UI\UIDialogBox.js	/^	var _input : OGTextField;$/;"	v
+_instructions	.\Scripts\UI\UIDialogBox.js	/^	var _instructions : OGLabel;$/;"	v
+_lines	.\Scripts\UI\UIConversation.js	/^	var _lines : OGLabel[];$/;"	v
+_localInit	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^	bool _localInit;$/;"	f	class:FixMissingScripts	file:
+_message	.\Scripts\EditorUI\EditorModes.js	/^	var _message : OGLabel;$/;"	v
+_name	.\Plugins\Tween\iTween.cs	/^	public string _name;$/;"	f	class:iTween
+_notificationBox	.\Scripts\UI\UIHUD.js	/^	var _notificationBox : NotificationBox;$/;"	v
+a	.\Scripts\Core\FileIO\Deserializer.js	/^	var a : JSONObject = c.list[3] as JSONObject;$/;"	v
+ability	.\Scripts\Core\ObjectClasses\Upgrade.js	/^	var ability : Ability;$/;"	v
+action	.\Plugins\Loom.cs	/^		public Action action;$/;"	f	struct:Loom.DelayedQueueItem
+action	.\Scripts\Core\Managers\ConversationManager.js	/^	var action : String;$/;"	v
+action	.\Scripts\UI\UIInventory.js	/^	var action : OGButton;$/;"	v
+activated	.\Scripts\Core\ObjectClasses\InventoryEntry.js	/^	var activated : boolean = false;$/;"	v
+activation	.\Scripts\Core\ObjectClasses\Trigger.js	/^	var activation : eTriggerActivation;$/;"	v
+active	.\OpenPath\OPNode.js	/^	var active : boolean = false;$/;"	v
+active	.\Scripts\Core\ObjectClasses\Quest.js	/^	var active = false;$/;"	v
+actorName	.\Scripts\EditorUI\EditorActors.js	/^	var actorName : OGLabel;$/;"	v
+actorPath	.\Scripts\Core\FileIO\Saver.js	/^		var actorPath = scenePath + "\/" + pathArray[2];$/;"	v
+actorSelector	.\Scripts\EditorUI\EditorActors.js	/^	var actorSelector : OGPopUp;$/;"	v
+addButton	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	var addButton : OGButton;$/;"	v
+addEvent	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	var addEvent : OGButton;$/;"	v
+addHeightWhenClicked	.\Scripts\EditorCore\EditorDragObject.js	/^var addHeightWhenClicked = 0.0;$/;"	v
+addNode	.\Scripts\EditorUI\EditorInspectorPath.js	/^	var addNode : OGButton;$/;"	v
+adjusting	.\Scripts\EditorUI\EditorInspectorTween.js	/^	var adjusting : int = 0;$/;"	v
+advance	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var advance : Vector2;$/;"	v
+affiliation	.\Scripts\Core\AI\Actor.js	/^	var affiliation : eAffiliation;$/;"	v
+affiliation	.\Scripts\EditorUI\EditorInspectorActor.js	/^	var affiliation : OGPopUp;$/;"	v
+aiming	.\Scripts\Core\AI\Actor.js	/^	var aiming : boolean = false;$/;"	v
+allConsumables	.\Scripts\EditorUI\EditorPicker.js	/^		var allConsumables : String[] = itemsFolder.FindFolder("Consumables").GetFileNames();$/;"	v
+allEquipment	.\Scripts\EditorUI\EditorPicker.js	/^		var allEquipment : String[] = itemsFolder.FindFolder("Equipment").GetFileNames();$/;"	v
+allEvents	.\Scripts\Core\FileIO\Saver.js	/^		var allEvents : JSONObject = Loader.LoadEvents();$/;"	v
+allMisc	.\Scripts\EditorUI\EditorPicker.js	/^		var allMisc : String[] = itemsFolder.FindFolder("Misc").GetFileNames();$/;"	v
+allQuests	.\Scripts\Core\FileIO\Saver.js	/^		var allQuests : JSONObject = Loader.LoadQuests();$/;"	v
+allUpgrades	.\Scripts\EditorUI\EditorPicker.js	/^		var allUpgrades : String[] = itemsFolder.FindFolder("Upgrades").GetFileNames();$/;"	v
+amount	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\RubbleCreater.js	/^var amount : int = 20;$/;"	v
+amount	.\OpenGUI\Scripts\OGScrollView.js	/^		var amount : Vector2;$/;"	v
+amountRandom	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\RubbleCreater.js	/^var amountRandom : int = 5;$/;"	v
+anchor	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var anchor : Vector2;$/;"	v
+angle	.\Scripts\Core\AI\Actor.js	/^		var angle : float = 22.5;$/;"	v
+animationObject	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var animationObject : String = "";$/;"	v
+animationType	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var animationType : String = "";$/;"	v
+animationVector	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var animationVector : Vector3 = Vector3.zero;$/;"	v
+apply	.\Plugins\Tween\iTween.cs	/^	private ApplyTween apply;$/;"	f	class:iTween	file:
+argument	.\OpenGUI\Scripts\OGTween.js	/^	var argument : String;$/;"	v
+arr	.\Plugins\JSONObject.cs	/^	public static JSONObject arr { get { return new JSONObject(JSONObject.Type.ARRAY); } }		\/\/an empty array$/;"	p	class:JSONObject
+array	.\Scripts\Core\FileIO\Deserializer.js	/^	var array : String[];$/;"	v
+array	.\Scripts\Core\FileIO\Serializer.js	/^	var array : String[] = str.Split ( "\\n"[0] );$/;"	v
+attentionSpan	.\Scripts\Core\AI\Actor.js	/^	var attentionSpan : float = 30.0;$/;"	v
+attrName	.\Scripts\UI\UIInventory.js	/^	var attrName : OGLabel;$/;"	v
+attrVal	.\Scripts\UI\UIInventory.js	/^	var attrVal : OGLabel;$/;"	v
+audioSource	.\Plugins\Tween\iTween.cs	/^	private AudioSource audioSource;$/;"	f	class:iTween	file:
+autoChase	.\OpenPath\OPPathFinder.js	/^	var autoChase : boolean = false;$/;"	v
+autoPlay	.\OpenGUI\Scripts\OGTween.js	/^	var autoPlay : boolean = false;$/;"	v
+autoRotate	.\Scripts\Character\PlatformInputController.js	/^var autoRotate : boolean = true;$/;"	v
+axes	.\Scripts\Character\MouseLook.cs	/^	public RotationAxes axes = RotationAxes.MouseXAndY;$/;"	f	class:MouseLook
+b	.\Plugins\JSONObject.cs	/^	public bool b;$/;"	f	class:JSONObject
+b	.\Scripts\Core\FileIO\Deserializer.js	/^	var b : JSONObject = c.list[2] as JSONObject;$/;"	v
+b	.\Scripts\EditorUI\EditorInspectorLight.js	/^		var b : OGSlider;$/;"	v
+background	.\Scripts\UI\UIHUD.js	/^	var background : GameObject;$/;"	v
+baseHeight	.\Scripts\Character\CharacterMotor.js	/^	var baseHeight : float = 1.0;$/;"	v
+bk	.\Scripts\Core\FileIO\Deserializer.js	/^		var bk : Book = newPfb.GetComponent(Book);$/;"	v
+blurShader	.\Plugins\Blur\BlurEffect.cs	/^	public Shader blurShader = null;	$/;"	f	class:BlurEffect
+blurSpread	.\Plugins\Blur\BlurEffect.cs	/^	public float blurSpread = 0.6f;$/;"	f	class:BlurEffect
+bool	.\Scripts\Core\Story\Flag.js	/^	var bool : boolean = false;$/;"	v
+bottom	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var bottom : float = rect.height - style.padding.bottom;$/;"	v
+bottom	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var bottom : float = rect.y;$/;"	v
+bottomLine	.\Scripts\EditorUI\EditorInspectorComputer.js	/^		var bottomLine : float = 0;$/;"	v
+boundingBoxMaterial	.\Scripts\Core\ObjectClasses\Trigger.js	/^	var boundingBoxMaterial : Material;$/;"	v
+bounds	.\OpenPath\OPScanner.js	/^	var bounds : Bounds;$/;"	v
+bounds	.\Scripts\EditorCore\EditorCore.js	/^	var bounds : Bounds;$/;"	v
+breadCrumbs	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	var breadCrumbs : Transform;$/;"	v
+brightLine	.\Scripts\EditorUI\EditorGrid.js	/^	var brightLine : OGTextField;$/;"	v
+brokenList	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	List<GameObject> brokenList = null;$/;"	f	class:FindAndFixBrokenScripts	file:
+btn	.\Scripts\EditorUI\EditorBrowserPanel.js	/^		var btn = obj.AddComponent ( OGListItem );$/;"	v
+btn	.\Scripts\EditorUI\EditorBrowserWindow.js	/^		var btn = obj.AddComponent ( OGListItem );$/;"	v
+btn	.\Scripts\EditorUI\EditorInspectorComputer.js	/^		var btn : OGButton = btnObj.AddComponent ( OGButton );$/;"	v
+btn	.\Scripts\EditorUI\EditorInspectorLiftPanel.js	/^		var btn : OGButton = obj.AddComponent ( OGButton );$/;"	v
+btn.func	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^		btn.func = function () {$/;"	f
+button	.\Scripts\EditorUI\EditorFlags.js	/^		var button : OGButton;$/;"	v
+bytes	.\Scripts\Core\FileIO\Deserializer.js	/^	var bytes : byte[] = Convert.FromBase64String ( map.GetField ( "screenshot" ).str );$/;"	v
+cam	.\Scripts\EditorCore\EditorDragObject.js	/^var cam : Camera;$/;"	v
+cameraFade	.\Plugins\Tween\iTween.cs	/^	private static GameObject cameraFade;$/;"	f	class:iTween	file:
+cameraFadeDepth	.\Plugins\Tween\iTween.cs	/^		public static int cameraFadeDepth = 999999;$/;"	f	class:iTween.Defaults
+canChangeMaterial	.\Scripts\Core\ObjectClasses\Prefab.js	/^	var canChangeMaterial : boolean = false;$/;"	v
+category	.\Scripts\EditorUI\EditorBrowserPanel.js	/^		var category : String;$/;"	v
+cc	.\Scripts\Core\ObjectClasses\Ragdoll.js	/^		var cc : CapsuleCollider = obj.GetComponent(CapsuleCollider);$/;"	v
+center	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var center : float = style.padding.left + right \/ 2;$/;"	v
+center	.\Scripts\EditorCore\EditorCore.js	/^	var center : Vector3 = bounds.center;$/;"	v
+chapterPath	.\Scripts\Core\FileIO\Saver.js	/^		var chapterPath = Application.dataPath + "\/Story\/Conversations\/" + pathArray[0];$/;"	v
+chl	.\Scripts\Core\FileIO\Serializer.js	/^	var chl : JSONObject;$/;"	v
+cj	.\Scripts\Core\ObjectClasses\Ragdoll.js	/^		var cj : CharacterJoint = obj.GetComponent(CharacterJoint);$/;"	v
+clearColor	.\Editor\Water (Pro Only)\Water4\PlanarReflectionEditor.cs	/^	private SerializedProperty clearColor;$/;"	f	class:PlanarReflectionEditor	file:
+clearColor	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public Color clearColor = Color.grey;$/;"	f	class:PlanarReflection
+clerp	.\Plugins\Tween\iTween.cs	/^	private float clerp(float start, float end, float value){$/;"	m	class:iTween	file:
+clipPlaneOffset	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public float clipPlaneOffset = 0.07F;$/;"	f	class:PlanarReflection
+col	.\Scripts\EditorUI\EditorActors.js	/^		var col = 0;$/;"	v
+colliders	.\Scripts\Core\Managers\ConversationManager.js	/^		var colliders : Collider[] = Physics.OverlapSphere ( currentActor.transform.position, 5 );$/;"	v
+colliders	.\Scripts\Core\Managers\DamageManager.js	/^		var colliders : Collider[] = Physics.OverlapSphere ( target, radius );$/;"	v
+collisionMoveFactor	.\Scripts\EditorCore\EditorDragObject.js	/^var collisionMoveFactor = .01;$/;"	v
+color	.\Plugins\Tween\iTween.cs	/^		public static Color color = Color.white;$/;"	f	class:iTween.Defaults
+colorSliders	.\Scripts\EditorUI\EditorInspectorLight.js	/^	var colorSliders : ColorSliders;$/;"	v
+colors	.\Plugins\Tween\iTween.cs	/^	private Color[,] colors;$/;"	f	class:iTween	file:
+com	.\Scripts\Core\FileIO\Serializer.js	/^	var com : JSONObject;$/;"	v
+combinedMesh	.\Scripts\EditorCore\EditorCore.js	/^	var combinedMesh : CombinedMesh = workspace.gameObject.FindObjectOfType ( CombinedMesh );$/;"	v
+condition	.\Scripts\Core\Managers\ConversationManager.js	/^	var condition : String;$/;"	v
+condition	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var condition : String = "";$/;"	v
+condition	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	var condition : OGButton;$/;"	v
+conditionBool	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var conditionBool : boolean = false;$/;"	v
+conditionBool	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	var conditionBool : OGTickBox;$/;"	v
+connectedTo	.\Scripts\Core\Managers\ConversationManager.js	/^	var connectedTo : ConversationNode;$/;"	v
+consequence	.\Scripts\Core\Managers\ConversationManager.js	/^	var consequence : String;$/;"	v
+consequenceBool	.\Scripts\Core\Managers\ConversationManager.js	/^	var consequenceBool : boolean;$/;"	v
+controlID	.\OpenGUI\Scripts\OGTextField.js	/^			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);$/;"	v
+conversation	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	var conversation : OGButton;$/;"	v
+conversationTree	.\Scripts\Core\AI\Actor.js	/^	var conversationTree : String;																																							$/;"	v
+convo	.\Scripts\Core\Managers\ConversationManager.js	/^		var convo : ConversationTree = Loader.LoadConversationTree ( actor.conversationTree );$/;"	v
+cores	.\Plugins\TextureScale.js	/^		var cores = Mathf.Min(SystemInfo.processorCount, newHeight);$/;"	v
+corners	.\Scripts\Core\Camera\GameCamera.js	/^		var corners : Vector3[] = [$/;"	v
+cost	.\Scripts\Core\ObjectClasses\Upgrade.js	/^	var cost : int = 0;$/;"	v
+costSoFar	.\OpenPath\OPNode.js	/^	var costSoFar : float;$/;"	v
+counter	.\OpenPath\OPAStar.js	/^		var counter : int = 0;$/;"	v
+createMeshStruct	.\Plugins\OBJImporter.cs	/^    private static meshStruct createMeshStruct(string filename)$/;"	m	class:OBJImporter	file:
+creator	.\Scripts\EditorUI\EditorQuests.js	/^	var creator : OGTextField;$/;"	v
+credits	.\Scripts\Core\Managers\ConversationManager.js	/^	var credits : int;$/;"	v
+creditsDisplay	.\Scripts\UI\UIInventory.js	/^	var creditsDisplay : OGLabel;$/;"	v
+current	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	static FindAndFixBrokenScripts current;$/;"	f	class:FindAndFixBrokenScripts	file:
+currentActor	.\Scripts\EditorUI\EditorActors.js	/^	var currentActor : String = "";$/;"	v
+currentConvoRoot	.\Scripts\Core\AI\Actor.js	/^	var currentConvoRoot : int = 0;$/;"	v
+currentDir	.\Scripts\EditorUI\EditorActors.js	/^	var currentDir : String = "";$/;"	v
+currentHit	.\OpenPath\OPMap.js	/^		var currentHit : RaycastHit;$/;"	v
+currentMovementOffset	.\Scripts\Character\CharacterMotor.js	/^	var currentMovementOffset : Vector3 = velocity * Time.deltaTime;$/;"	v
+currentNode	.\OpenPath\OPAStar.js	/^		var currentNode : OPNode = null;$/;"	v
+currentString	.\Scripts\EditorUI\EditorPicker.js	/^		var currentString : String = "";$/;"	v
+currentVector	.\Scripts\EditorUI\EditorAdjust.js	/^		var currentVector : Vector3;$/;"	v
+damage	.\Scripts\Core\ObjectClasses\Projectile.js	/^	var damage : int = 1;$/;"	v
+darkLine	.\Scripts\EditorUI\EditorGrid.js	/^	var darkLine : OGTextField;$/;"	v
+dataVector	.\Scripts\EditorUI\EditorModes.js	/^	var dataVector : Vector3;$/;"	v
+dataX	.\Scripts\EditorUI\EditorModes.js	/^	var dataX : OGLabel;$/;"	v
+dataY	.\Scripts\EditorUI\EditorModes.js	/^	var dataY : OGLabel;$/;"	v
+dataZ	.\Scripts\EditorUI\EditorModes.js	/^	var dataZ : OGLabel;$/;"	v
+delay	.\Plugins\Tween\iTween.cs	/^		public static float delay = 0f;	$/;"	f	class:iTween.Defaults
+delay	.\Plugins\Tween\iTween.cs	/^	public float time, delay;$/;"	f	class:iTween
+delay	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var delay : float = 0;$/;"	v
+delayStarted	.\Plugins\Tween\iTween.cs	/^	private float delayStarted; \/\/probably not neccesary that this be protected but it shuts Unity's compiler up about this being "never used"$/;"	f	class:iTween	file:
+desc	.\Scripts\Core\ObjectClasses\Quest.js	/^	var desc : String;$/;"	v
+description	.\Scripts\Core\ObjectClasses\Prefab.js	/^	var description : String;$/;"	v
+description	.\Scripts\EditorUI\EditorQuests.js	/^	var description : OGTextField;$/;"	v
+description	.\Scripts\UI\UIInventory.js	/^	var description : OGLabel;$/;"	v
+desiredVelocity	.\Scripts\Character\CharacterMotor.js	/^	var desiredVelocity : Vector3;$/;"	v
+destination	.\OpenGUI\Scripts\OGTween.js	/^		var destination : Vector3;$/;"	v
+destination	.\Plugins\Tween\iTween.cs	/^	private CRSpline destination;$/;"	f	class:iTween	file:
+destinationControlPointGenerator	.\Plugins\Tween\iTween.cs	/^	private static Vector3[] destinationControlPointGenerator(Vector3[] destination){$/;"	m	class:iTween	file:
+destinationLength	.\Plugins\Tween\iTween.cs	/^	public static float destinationLength(Transform[] destination){$/;"	m	class:iTween
+destinationLength	.\Plugins\Tween\iTween.cs	/^	public static float destinationLength(Vector3[] destination){$/;"	m	class:iTween
+destroySpeed	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\FireFade.js	/^var destroySpeed : float = .05;$/;"	v
+destroySpeed	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Move.js	/^var destroySpeed : float;$/;"	v
+destroySpeedStem	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Move.js	/^var destroySpeedStem : float;$/;"	v
+discard	.\Scripts\UI\UIInventory.js	/^	var discard : OGButton;$/;"	v
+displayName	.\Scripts\Core\AI\Actor.js	/^	var displayName : String = "ActorName";$/;"	v
+distance	.\OpenGUI\Tools\OGScaleToCamera.js	/^	var distance : float = 0.5;$/;"	v
+dl	.\Scripts\EditorUI\EditorInspectorComputer.js	/^		var dl : OGButton = dlObj.AddComponent ( OGButton );$/;"	v
+dlt.func	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^		dlt.func = function () {$/;"	f
+domain	.\Scripts\Core\ObjectClasses\Computer.js	/^	var domain : String = "domainname";$/;"	v
+doorClosed	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var doorClosed : OGTickBox;$/;"	v
+doorLockLevel	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var doorLockLevel : OGPopUp;$/;"	v
+doorLocked	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var doorLocked : OGTickBox;$/;"	v
+dr	.\Scripts\Core\FileIO\Deserializer.js	/^		var dr : Door = newPfb.GetComponent(Door);$/;"	v
+drag	.\OpenGUI\Scripts\OGScrollView.js	/^		var drag : Vector2;$/;"	v
+dragModifiers	.\Scripts\EditorCore\EditorDragObject.js	/^var dragModifiers : Vector3 = Vector3.one;$/;"	v
+drawPos	.\OpenGUI\Scripts\OGWidget.js	/^		var drawPos : Vector3 = RecalcPosition ();$/;"	v
+drawScl	.\OpenGUI\Scripts\OGWidget.js	/^		var drawScl : Vector3 = RecalcScale ();$/;"	v
+ease	.\Plugins\Tween\iTween.cs	/^	private EasingFunction ease;$/;"	f	class:iTween	file:
+easeInBack	.\Plugins\Tween\iTween.cs	/^		easeInBack,$/;"	e	enum:iTween.EaseType	file:
+easeInBack	.\Plugins\Tween\iTween.cs	/^	private float easeInBack(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInBounce	.\Plugins\Tween\iTween.cs	/^		easeInBounce,$/;"	e	enum:iTween.EaseType	file:
+easeInBounce	.\Plugins\Tween\iTween.cs	/^	private float easeInBounce(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInCirc	.\Plugins\Tween\iTween.cs	/^		easeInCirc,$/;"	e	enum:iTween.EaseType	file:
+easeInCirc	.\Plugins\Tween\iTween.cs	/^	private float easeInCirc(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInCubic	.\Plugins\Tween\iTween.cs	/^		easeInCubic,$/;"	e	enum:iTween.EaseType	file:
+easeInCubic	.\Plugins\Tween\iTween.cs	/^	private float easeInCubic(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInElastic	.\Plugins\Tween\iTween.cs	/^		easeInElastic,$/;"	e	enum:iTween.EaseType	file:
+easeInElastic	.\Plugins\Tween\iTween.cs	/^	private float easeInElastic(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInExpo	.\Plugins\Tween\iTween.cs	/^		easeInExpo,$/;"	e	enum:iTween.EaseType	file:
+easeInExpo	.\Plugins\Tween\iTween.cs	/^	private float easeInExpo(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutBack	.\Plugins\Tween\iTween.cs	/^		easeInOutBack,$/;"	e	enum:iTween.EaseType	file:
+easeInOutBack	.\Plugins\Tween\iTween.cs	/^	private float easeInOutBack(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutBounce	.\Plugins\Tween\iTween.cs	/^		easeInOutBounce,$/;"	e	enum:iTween.EaseType	file:
+easeInOutBounce	.\Plugins\Tween\iTween.cs	/^	private float easeInOutBounce(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutCirc	.\Plugins\Tween\iTween.cs	/^		easeInOutCirc,$/;"	e	enum:iTween.EaseType	file:
+easeInOutCirc	.\Plugins\Tween\iTween.cs	/^	private float easeInOutCirc(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutCubic	.\Plugins\Tween\iTween.cs	/^		easeInOutCubic,$/;"	e	enum:iTween.EaseType	file:
+easeInOutCubic	.\Plugins\Tween\iTween.cs	/^	private float easeInOutCubic(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutElastic	.\Plugins\Tween\iTween.cs	/^		easeInOutElastic,$/;"	e	enum:iTween.EaseType	file:
+easeInOutElastic	.\Plugins\Tween\iTween.cs	/^	private float easeInOutElastic(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutExpo	.\Plugins\Tween\iTween.cs	/^		easeInOutExpo,$/;"	e	enum:iTween.EaseType	file:
+easeInOutExpo	.\Plugins\Tween\iTween.cs	/^	private float easeInOutExpo(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutQuad	.\Plugins\Tween\iTween.cs	/^		easeInOutQuad,$/;"	e	enum:iTween.EaseType	file:
+easeInOutQuad	.\Plugins\Tween\iTween.cs	/^	private float easeInOutQuad(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutQuart	.\Plugins\Tween\iTween.cs	/^		easeInOutQuart,$/;"	e	enum:iTween.EaseType	file:
+easeInOutQuart	.\Plugins\Tween\iTween.cs	/^	private float easeInOutQuart(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutQuint	.\Plugins\Tween\iTween.cs	/^		easeInOutQuint,$/;"	e	enum:iTween.EaseType	file:
+easeInOutQuint	.\Plugins\Tween\iTween.cs	/^	private float easeInOutQuint(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInOutSine	.\Plugins\Tween\iTween.cs	/^		easeInOutSine,$/;"	e	enum:iTween.EaseType	file:
+easeInOutSine	.\Plugins\Tween\iTween.cs	/^	private float easeInOutSine(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInQuad	.\Plugins\Tween\iTween.cs	/^		easeInQuad,$/;"	e	enum:iTween.EaseType	file:
+easeInQuad	.\Plugins\Tween\iTween.cs	/^	private float easeInQuad(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInQuart	.\Plugins\Tween\iTween.cs	/^		easeInQuart,$/;"	e	enum:iTween.EaseType	file:
+easeInQuart	.\Plugins\Tween\iTween.cs	/^	private float easeInQuart(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInQuint	.\Plugins\Tween\iTween.cs	/^		easeInQuint,$/;"	e	enum:iTween.EaseType	file:
+easeInQuint	.\Plugins\Tween\iTween.cs	/^	private float easeInQuint(float start, float end, float value){$/;"	m	class:iTween	file:
+easeInSine	.\Plugins\Tween\iTween.cs	/^		easeInSine,$/;"	e	enum:iTween.EaseType	file:
+easeInSine	.\Plugins\Tween\iTween.cs	/^	private float easeInSine(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutBack	.\Plugins\Tween\iTween.cs	/^		easeOutBack,$/;"	e	enum:iTween.EaseType	file:
+easeOutBack	.\Plugins\Tween\iTween.cs	/^	private float easeOutBack(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutBounce	.\Plugins\Tween\iTween.cs	/^		easeOutBounce,$/;"	e	enum:iTween.EaseType	file:
+easeOutBounce	.\Plugins\Tween\iTween.cs	/^	private float easeOutBounce(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutCirc	.\Plugins\Tween\iTween.cs	/^		easeOutCirc,$/;"	e	enum:iTween.EaseType	file:
+easeOutCirc	.\Plugins\Tween\iTween.cs	/^	private float easeOutCirc(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutCubic	.\Plugins\Tween\iTween.cs	/^		easeOutCubic,$/;"	e	enum:iTween.EaseType	file:
+easeOutCubic	.\Plugins\Tween\iTween.cs	/^	private float easeOutCubic(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutElastic	.\Plugins\Tween\iTween.cs	/^		easeOutElastic,$/;"	e	enum:iTween.EaseType	file:
+easeOutElastic	.\Plugins\Tween\iTween.cs	/^	private float easeOutElastic(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutExpo	.\Plugins\Tween\iTween.cs	/^		easeOutExpo,$/;"	e	enum:iTween.EaseType	file:
+easeOutExpo	.\Plugins\Tween\iTween.cs	/^	private float easeOutExpo(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutQuad	.\Plugins\Tween\iTween.cs	/^		easeOutQuad,$/;"	e	enum:iTween.EaseType	file:
+easeOutQuad	.\Plugins\Tween\iTween.cs	/^	private float easeOutQuad(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutQuart	.\Plugins\Tween\iTween.cs	/^		easeOutQuart,$/;"	e	enum:iTween.EaseType	file:
+easeOutQuart	.\Plugins\Tween\iTween.cs	/^	private float easeOutQuart(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutQuint	.\Plugins\Tween\iTween.cs	/^		easeOutQuint,$/;"	e	enum:iTween.EaseType	file:
+easeOutQuint	.\Plugins\Tween\iTween.cs	/^	private float easeOutQuint(float start, float end, float value){$/;"	m	class:iTween	file:
+easeOutSine	.\Plugins\Tween\iTween.cs	/^		easeOutSine,$/;"	e	enum:iTween.EaseType	file:
+easeOutSine	.\Plugins\Tween\iTween.cs	/^	private float easeOutSine(float start, float end, float value){$/;"	m	class:iTween	file:
+easeType	.\Plugins\Tween\iTween.cs	/^		public static EaseType easeType = iTween.EaseType.easeOutExpo;$/;"	f	class:iTween.Defaults
+easeType	.\Plugins\Tween\iTween.cs	/^	public iTween.EaseType easeType;$/;"	f	class:iTween
+edgeBlend	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^	public SerializedProperty edgeBlend;	$/;"	f	class:WaterBaseEditor
+edgeBlend	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^	public bool edgeBlend = true;$/;"	f	class:WaterBase
+editTextButton	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var editTextButton : OGButton;$/;"	v
+editor	.\OpenGUI\Scripts\OGTextField.js	/^			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;$/;"	v
+emergencyBrake	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var emergencyBrake : int = 0;$/;"	v
+encoded	.\Scripts\Core\FileIO\Serializer.js	/^	var encoded = Convert.ToBase64String ( bytes );$/;"	v
+end	.\Plugins\TextureScale.js	/^		var end : int;$/;"	v
+endQuest	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	var endQuest : OGButton;$/;"	v
+energy	.\Scripts\UI\UIHUD.js	/^	var energy : OGProgressBar;$/;"	v
+equipped	.\Scripts\Core\ObjectClasses\InventoryEntry.js	/^	var equipped : boolean = false;$/;"	v
+estimatedTotalCost	.\OpenPath\OPNode.js	/^	var estimatedTotalCost : float;$/;"	v
+event	.\Scripts\Core\FileIO\Loader.js	/^		var event : GameEvent = Deserializer.DeserializeGameEvent ( object.GetField ( id ) );$/;"	v
+event	.\Scripts\Core\Managers\ConversationManager.js	/^	var event : String;$/;"	v
+eventContainer	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	var eventContainer : Transform;$/;"	v
+expirationTime	.\Scripts\Core\ObjectClasses\Projectile.js	/^	var expirationTime : float = 2.5;$/;"	v
+explosionPrefab	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\_DemoScene\ExplosionAtPoint.js	/^var explosionPrefab : Transform;$/;"	v
+extention	.\Scripts\EditorCore\EditorCore.js	/^	var extention = fileName.Split("."[0]);$/;"	v
+extention	.\Scripts\UI\MainMenuLoad.js	/^		var extention = fileName.Split("."[0]);$/;"	v
+extraHeight	.\Scripts\Character\CharacterMotor.js	/^	var extraHeight : float = 4.1;$/;"	v
+f	.\Plugins\JSONObject.cs	/^	public float f {$/;"	p	class:JSONObject
+faceData	.\Plugins\OBJImporter.cs	/^        public Vector3[] faceData;$/;"	f	struct:OBJImporter.meshStruct
+faceIndex	.\Plugins\MeshExtrusion.cs	/^		public int[]  faceIndex = new int[2];$/;"	f	class:MeshExtrusion.Edge
+faceUVs	.\Plugins\OBJImporter.cs	/^        public int[] faceUVs;$/;"	f	struct:OBJImporter.meshStruct
+faceVerts	.\Plugins\OBJImporter.cs	/^        public int[] faceVerts;$/;"	f	struct:OBJImporter.meshStruct
+fileAttr	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	var fileAttr : OGLabel;$/;"	v
+fileInfo	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	var fileInfo : OGLabel;$/;"	v
+fileModeCreate	.\Scripts\EditorUI\EditorQuests.js	/^	var fileModeCreate : GameObject;$/;"	v
+fileModeSelect	.\Scripts\EditorUI\EditorQuests.js	/^	var fileModeSelect : GameObject;$/;"	v
+fileName	.\Editor\SaveFontTexture.js	/^	var fileName = EditorUtility.SaveFilePanel("Save font texture", "", "font Texture", "png");$/;"	v
+fileName	.\Plugins\OBJImporter.cs	/^        public string fileName;$/;"	f	struct:OBJImporter.meshStruct
+fileName	.\Scripts\EditorCore\EditorCore.js	/^	var fileName = path[path.Length-1];$/;"	v
+fileName	.\Scripts\UI\MainMenuLoad.js	/^		var fileName = path[path.Length-1];$/;"	v
+filePath	.\Scripts\Core\FileIO\Saver.js	/^		var filePath = actorPath + ".vgconvo";$/;"	v
+filePath	.\Scripts\Core\FileIO\Saver.js	/^		var filePath = basePath + "\/events.vgdata";$/;"	v
+filePath	.\Scripts\Core\FileIO\Saver.js	/^		var filePath = basePath + "\/quests.vgdata";$/;"	v
+files	.\Scripts\EditorCore\EditorFileSystem.js	/^		var files : Object[];$/;"	v
+files	.\Scripts\EditorUI\EditorActors.js	/^		var files : Object[] = Resources.LoadAll ( "Actors\/" + currentDir, GameObject );$/;"	v
+filter	.\Scripts\EditorUI\EditorPicker.js	/^	var filter : OGTextField;$/;"	v
+fireOnce	.\Scripts\Core\ObjectClasses\Trigger.js	/^	var fireOnce : boolean = true;$/;"	v
+fireOnce	.\Scripts\EditorUI\EditorInspectorTrigger.js	/^	var fireOnce : OGTickBox;$/;"	v
+flagBool	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var flagBool : boolean = false;$/;"	v
+flagName	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var flagName : String = "";$/;"	v
+floats	.\Plugins\Tween\iTween.cs	/^	private float[] floats;$/;"	f	class:iTween	file:
+forceRoot	.\Scripts\Core\Managers\ConversationManager.js	/^		var forceRoot : int = -1;$/;"	v
+forced	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	var forced : OGTickBox;$/;"	v
+freezeRotationOnDrag	.\Scripts\EditorCore\EditorDragObject.js	/^var freezeRotationOnDrag = true;$/;"	v
+func	.\OpenGUI\Scripts\OGTween.js	/^	var func : Function;$/;"	v
+g	.\Scripts\Core\FileIO\Deserializer.js	/^	var g : JSONObject = c.list[1] as JSONObject;$/;"	v
+g	.\Scripts\EditorUI\EditorInspectorLight.js	/^		var g : OGSlider;$/;"	v
+gameObjects	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	public List<GameObject> gameObjects;$/;"	f	class:FindAndFixBrokenScripts
+giveCost	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var giveCost : int;$/;"	v
+giveItem	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var giveItem : String;$/;"	v
+goal	.\Scripts\Core\AI\Actor.js	/^	var goal : Vector3;$/;"	v
+gravity	.\Scripts\Character\CharacterMotor.js	/^	var gravity : float = 10.0;$/;"	v
+grid	.\Scripts\UI\UIInventory.js	/^	var grid : Transform;$/;"	v
+gridSize	.\OpenPath\OPScanner.js	/^	var gridSize : Vector3;$/;"	v
+groundHit	.\Scripts\Core\Input\PlayerController.js	/^		var groundHit : RaycastHit;$/;"	v
+hand	.\Scripts\Core\AI\Actor.js	/^	var hand : Transform;$/;"	v
+head	.\Scripts\Core\AI\Actor.js	/^	var head : Transform;$/;"	v
+health	.\Scripts\Core\AI\Actor.js	/^	var health : int = 100;$/;"	v
+hearing	.\Scripts\Core\AI\Actor.js	/^	var hearing : float = 10;$/;"	v
+height	.\OpenGUI\Editor\OGSkinInspector.js	/^		var height : float = skin.styles[currentStyle].coordinates.height * 2;$/;"	v
+height	.\OpenGUI\Editor\OGSkinInspector.js	/^		var height : float = style.coordinates.height;$/;"	v
+helperCameras	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private Dictionary<Camera, bool> helperCameras = null;$/;"	f	class:PlanarReflection	file:
+heuristic	.\OpenPath\OPScanner.js	/^	var heuristic : float = 10.0;$/;"	v
+hideInGame	.\Scripts\Core\ObjectClasses\LightSource.js	/^	var hideInGame : boolean = false;$/;"	v
+hit	.\Scripts\Core\AI\LocalAvoidance.js	/^	        var hit : RaycastHit;$/;"	v
+i	.\OpenGUI\Scripts\OGRoot.js	/^		var i : int = 0;$/;"	v
+i	.\OpenPath\OPNavMesh.js	/^		var i : int = 0;$/;"	v
+i	.\Scripts\Core\AI\Actor.js	/^		var i : int = 0;$/;"	v
+i	.\Scripts\Core\FileIO\Deserializer.js	/^	var i : int = 0;$/;"	v
+i	.\Scripts\EditorUI\EditorBrowserPanel.js	/^		var i : int = 0;$/;"	v
+i	.\Scripts\EditorUI\EditorBrowserWindow.js	/^		var i : int = 0;$/;"	v
+i	.\Scripts\EditorUI\EditorInspectorCombinedMesh.js	/^		var i : int = int.Parse ( n );$/;"	v
+iTween	.\Plugins\Tween\iTween.cs	/^public class iTween : MonoBehaviour{$/;"	c
+id	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^		public int id;$/;"	f	class:FixMissingScripts.ScannedScript
+id	.\Plugins\Tween\iTween.cs	/^	public string id, type, method;$/;"	f	class:iTween
+id	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var id : String = "";$/;"	v
+id	.\Scripts\Core\ObjectClasses\Prefab.js	/^	var id : String;$/;"	v
+ignoreTimeScale	.\OpenGUI\Scripts\OGTween.js	/^	var ignoreTimeScale : boolean = true;$/;"	v
+image	.\Scripts\EditorUI\EditorListItem.js	/^	var image : OGTexture;$/;"	v
+index	.\Scripts\EditorUI\EditorConversationMap.js	/^		var index : int = rootNodes.childCount;$/;"	v
+index	.\Scripts\UI\MainMenuLoad.js	/^		var index : int = levelList.childCount;$/;"	v
+info	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var info : CharacterInfo;$/;"	v
+infoLabel	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var infoLabel : OGLabel;$/;"	v
+initialized	.\Plugins\Loom.cs	/^	static bool initialized;$/;"	f	class:Loom	file:
+input	.\Scripts\Core\FileIO\Loader.js	/^		var input : String = "";$/;"	v
+input	.\Scripts\Core\FileIO\Loader.js	/^		var input : String = ReadFile ( path );	$/;"	v
+inspector	.\Scripts\UI\UIInventory.js	/^	var inspector : Inspector;$/;"	v
+installed	.\Scripts\Core\ObjectClasses\InventoryEntry.js	/^	var installed : boolean = false;$/;"	v
+intensity	.\Scripts\Core\ObjectClasses\LightSource.js	/^	var intensity : float = 1.0;$/;"	v
+intensity	.\Scripts\EditorUI\EditorInspectorLight.js	/^	var intensity : ValueSlider;$/;"	v
+inventoryBox	.\Scripts\EditorUI\EditorInspectorActor.js	/^	var inventoryBox : GameObject;$/;"	v
+inventorySlots	.\Scripts\EditorUI\EditorInspectorActor.js	/^	var inventorySlots : OGTexture[];$/;"	v
+invertedRct	.\OpenGUI\Scripts\OGTextField.js	/^			var invertedRct : Rect = drawRct;$/;"	v
+isContainer	.\Plugins\JSONObject.cs	/^	public bool isContainer { get { return (type == Type.ARRAY || type == Type.OBJECT); } }$/;"	p	class:JSONObject
+isLocal	.\Plugins\Tween\iTween.cs	/^		public static bool isLocal = false;$/;"	f	class:iTween.Defaults
+isLocal	.\Plugins\Tween\iTween.cs	/^	private bool kinematic, isLocal, loop, reverse, wasPaused, physics;$/;"	f	class:iTween	file:
+isMainQuest	.\Scripts\Core\ObjectClasses\Quest.js	/^	var isMainQuest = false;$/;"	v
+isPaused	.\Plugins\Tween\iTween.cs	/^	public bool isRunning,isPaused;$/;"	f	class:iTween
+isRunning	.\Plugins\Tween\iTween.cs	/^	public bool isRunning,isPaused;$/;"	f	class:iTween
+item	.\OpenGUI\Scripts\OGDropDown.js	/^		var item : DropDownItemNested = submenu[activeNestedMenu].nestedMenu[i];$/;"	v
+item	.\Scripts\Core\Managers\ConversationManager.js	/^	var item : String;$/;"	v
+item	.\Scripts\UI\UIInventory.js	/^		var item : Item = selectedEntry.GetItem();$/;"	v
+iterations	.\Plugins\Blur\BlurEffect.cs	/^	public int iterations = 3;$/;"	f	class:BlurEffect
+jumpTo	.\Scripts\Core\Managers\ConversationManager.js	/^	var jumpTo : int;$/;"	v
+jumping	.\Scripts\Character\CharacterMotor.js	/^var jumping : CharacterMotorJumping = CharacterMotorJumping();$/;"	v
+keepDistance	.\Scripts\Core\AI\Actor.js	/^	var keepDistance : float = 10.0;$/;"	v
+keys	.\Plugins\JSONObject.cs	/^	public List<string> keys;$/;"	f	class:JSONObject
+kinematic	.\Plugins\Tween\iTween.cs	/^	private bool kinematic, isLocal, loop, reverse, wasPaused, physics;$/;"	f	class:iTween	file:
+kp	.\Scripts\Core\FileIO\Deserializer.js	/^		var kp : Keypad = newPfb.GetComponent(Keypad);$/;"	v
+label	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	var label : OGLabel;$/;"	v
+lastPosition	.\Scripts\Character\CharacterMotor.js	/^	var lastPosition : Vector3 = tr.position;$/;"	v
+lastRealTime	.\Plugins\Tween\iTween.cs	/^    private float lastRealTime; \/\/ Added by PressPlay$/;"	f	class:iTween	file:
+lastSpace	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var lastSpace : int = 0;$/;"	v
+layerMask	.\OpenPath\OPScanner.js	/^	var layerMask : LayerMask;$/;"	v
+layerMask	.\Scripts\Core\AI\Actor.js	/^		var layerMask : LayerMask;$/;"	v
+lbl	.\Scripts\EditorUI\EditorInspectorComputer.js	/^		var lbl : OGLabel = lblObj.AddComponent ( OGLabel );$/;"	v
+left	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var left : float = rect.x;$/;"	v
+left	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var left : float = style.padding.left;$/;"	v
+line	.\Scripts\Core\FileIO\Loader.js	/^		var line : String = "";$/;"	v
+line	.\Scripts\EditorUI\EditorConversationNode.js	/^		var line : EditorConversationNodeLine = Instantiate ( speak.linePrefab ) as EditorConversationNodeLine;$/;"	v
+lineWidth	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var lineWidth : float = 0;$/;"	v
+linear	.\Plugins\Tween\iTween.cs	/^		linear,$/;"	e	enum:iTween.EaseType	file:
+linear	.\Plugins\Tween\iTween.cs	/^	private float linear(float start, float end, float value){$/;"	m	class:iTween	file:
+list	.\Plugins\JSONObject.cs	/^	public List<JSONObject> list;$/;"	f	class:JSONObject
+listItemPrefab	.\Scripts\EditorUI\EditorActors.js	/^	var listItemPrefab : EditorListItem;$/;"	v
+lookAhead	.\Plugins\Tween\iTween.cs	/^		public static float lookAhead = .05f;$/;"	f	class:iTween.Defaults
+lookSpeed	.\Plugins\Tween\iTween.cs	/^		public static float lookSpeed = 3f;$/;"	f	class:iTween.Defaults
+loop	.\Plugins\Tween\iTween.cs	/^		loop,$/;"	e	enum:iTween.LoopType	file:
+loop	.\Plugins\Tween\iTween.cs	/^	private bool kinematic, isLocal, loop, reverse, wasPaused, physics;$/;"	f	class:iTween	file:
+loopType	.\Plugins\Tween\iTween.cs	/^		public static LoopType loopType = LoopType.none;$/;"	f	class:iTween.Defaults
+loopType	.\Plugins\Tween\iTween.cs	/^	public LoopType loopType;$/;"	f	class:iTween
+lp	.\Scripts\Core\FileIO\Deserializer.js	/^		var lp : LiftPanel = newPfb.GetComponentInChildren(LiftPanel);$/;"	v
+m_ClipPlaneOffset	.\Plugins\MirrorReflection.cs	/^	public float m_ClipPlaneOffset = 0.07f;$/;"	f	class:MirrorReflection
+m_ClipPlaneOffset	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	public float m_ClipPlaneOffset = 0.07f;$/;"	f	class:SurfaceReflection
+m_ClipPlaneOffset	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	public float m_ClipPlaneOffset = 0.07f;$/;"	f	class:Water
+m_DisablePixelLights	.\Plugins\MirrorReflection.cs	/^	public bool m_DisablePixelLights = true;$/;"	f	class:MirrorReflection
+m_DisablePixelLights	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	public bool m_DisablePixelLights = true;$/;"	f	class:SurfaceReflection
+m_DisablePixelLights	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	public bool m_DisablePixelLights = true;$/;"	f	class:Water
+m_HardwareWaterSupport	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private WaterMode m_HardwareWaterSupport = WaterMode.Refractive;$/;"	f	class:Water	file:
+m_Material	.\Plugins\Blur\BlurEffect.cs	/^	static Material m_Material = null;$/;"	f	class:BlurEffect	file:
+m_OldReflectionTextureSize	.\Plugins\MirrorReflection.cs	/^	private int m_OldReflectionTextureSize = 0;$/;"	f	class:MirrorReflection	file:
+m_OldReflectionTextureSize	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private int m_OldReflectionTextureSize = 0;$/;"	f	class:SurfaceReflection	file:
+m_OldReflectionTextureSize	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private int m_OldReflectionTextureSize = 0;$/;"	f	class:Water	file:
+m_OldRefractionTextureSize	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private int m_OldRefractionTextureSize = 0;$/;"	f	class:Water	file:
+m_ReflectLayers	.\Plugins\MirrorReflection.cs	/^	public LayerMask m_ReflectLayers = -1;$/;"	f	class:MirrorReflection
+m_ReflectLayers	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	public LayerMask m_ReflectLayers = -1;$/;"	f	class:SurfaceReflection
+m_ReflectLayers	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	public LayerMask m_ReflectLayers = -1;$/;"	f	class:Water
+m_ReflectionCameras	.\Plugins\MirrorReflection.cs	/^	private Hashtable m_ReflectionCameras = new Hashtable(); \/\/ Camera -> Camera table$/;"	f	class:MirrorReflection	file:
+m_ReflectionCameras	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private Hashtable m_ReflectionCameras = new Hashtable(); \/\/ Camera -> Camera table$/;"	f	class:SurfaceReflection	file:
+m_ReflectionCameras	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private Dictionary<Camera, Camera> m_ReflectionCameras = new Dictionary<Camera, Camera>(); \/\/ Camera -> Camera table$/;"	f	class:Water	file:
+m_ReflectionTexture	.\Plugins\MirrorReflection.cs	/^	private RenderTexture m_ReflectionTexture = null;$/;"	f	class:MirrorReflection	file:
+m_ReflectionTexture	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private RenderTexture m_ReflectionTexture = null;$/;"	f	class:SurfaceReflection	file:
+m_ReflectionTexture	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private RenderTexture m_ReflectionTexture = null;$/;"	f	class:Water	file:
+m_RefractLayers	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	public LayerMask m_RefractLayers = -1;$/;"	f	class:Water
+m_RefractionCameras	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private Dictionary<Camera, Camera> m_RefractionCameras = new Dictionary<Camera, Camera>(); \/\/ Camera -> Camera table$/;"	f	class:Water	file:
+m_RefractionTexture	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private RenderTexture m_RefractionTexture = null;$/;"	f	class:Water	file:
+m_TextureSize	.\Plugins\MirrorReflection.cs	/^	public int m_TextureSize = 256;$/;"	f	class:MirrorReflection
+m_TextureSize	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	public int m_TextureSize = 1024;$/;"	f	class:SurfaceReflection
+m_TextureSize	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	public int m_TextureSize = 256;$/;"	f	class:Water
+m_WaterMode	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	public WaterMode m_WaterMode = WaterMode.Refractive;$/;"	f	class:Water
+mainQuest	.\Scripts\EditorUI\EditorQuests.js	/^	var mainQuest : OGTickBox;$/;"	v
+map	.\OpenPath\OPScanner.js	/^	var map : OPMap = null;$/;"	v
+mapType	.\OpenPath\OPScanner.js	/^	var mapType : OPMapType;$/;"	v
+material	.\Plugins\Blur\BlurEffect.cs	/^	protected Material material {$/;"	p	class:BlurEffect
+materialButton	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var materialButton : OGButton;$/;"	v
+materialButton.func	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^			materialButton.func = function () {$/;"	f
+materialPath	.\Scripts\Core\ObjectClasses\Prefab.js	/^	var materialPath : String;$/;"	v
+maxAirAcceleration	.\Scripts\Character\CharacterMotor.js	/^	var maxAirAcceleration : float = 20.0;$/;"	v
+maxBackwardsSpeed	.\Scripts\Character\CharacterMotor.js	/^	var maxBackwardsSpeed : float = 10.0;$/;"	v
+maxFallSpeed	.\Scripts\Character\CharacterMotor.js	/^	var maxFallSpeed : float = 20.0;$/;"	v
+maxGroundAcceleration	.\Scripts\Character\CharacterMotor.js	/^	var maxGroundAcceleration : float = 30.0;$/;"	v
+maxRotationSpeed	.\Scripts\Character\PlatformInputController.js	/^var maxRotationSpeed : float = 360;$/;"	v
+maxSidewaysSpeed	.\Scripts\Character\CharacterMotor.js	/^	var maxSidewaysSpeed : float = 10.0;$/;"	v
+maxSpeed	.\Scripts\Character\CharacterMotor.js	/^	var maxSpeed : float = MaxSpeedInDirection(desiredLocalDirection);$/;"	v
+maxThreads	.\Plugins\Loom.cs	/^	public static int maxThreads = 8;$/;"	f	class:Loom
+maxTime	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\DestroyRubble.js	/^var maxTime : float = 3;$/;"	v
+maxTime	.\Scripts\Core\ObjectClasses\MuzzleFlash.js	/^	var maxTime : float = 0.4;$/;"	v
+maximumX	.\Scripts\Character\MouseLook.cs	/^	public float maximumX = 360F;$/;"	f	class:MouseLook
+maximumY	.\Scripts\Character\MouseLook.cs	/^	public float maximumY = 60F;$/;"	f	class:MouseLook
+mesh	.\Scripts\EditorCore\EditorCore.js	/^	var mesh : Mesh = mf.mesh;$/;"	v
+mesh	.\Scripts\EditorCore\EditorCore.js	/^	var mesh : Mesh = mf.sharedMesh;$/;"	v
+mesh	.\Scripts\EditorCore\EditorCore.js	/^	var mesh : Mesh = mi.ImportFile ( Application.dataPath + "\/ImportOBJ\/" + objName + ".obj" );$/;"	v
+mesh	.\Scripts\EditorUI\EditorInspectorCombinedMesh.js	/^		var mesh : Mesh = combinedMesh.GetComponent(MeshFilter).sharedMesh;$/;"	v
+mesh	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\MeshContainer.cs	/^  public Mesh mesh;$/;"	f	class:MeshContainer
+meshStruct	.\Plugins\OBJImporter.cs	/^    private struct meshStruct$/;"	s	class:OBJImporter
+message	.\OpenGUI\Scripts\OGTween.js	/^	var message : String;$/;"	v
+messageContainer	.\Scripts\UI\UIComputerDisplay.js	/^	var messageContainer : OGScrollView;$/;"	v
+messageLabel	.\Scripts\UI\UILoginDisplay.js	/^	var messageLabel : OGLabel;$/;"	v
+messageString	.\Scripts\UI\UIComputerDisplay.js	/^	var messageString : OGLabel;$/;"	v
+messageTarget	.\OpenGUI\Scripts\OGTween.js	/^	var messageTarget : GameObject;$/;"	v
+messageTextField	.\Scripts\UI\UIComputerDisplay.js	/^	var messageTextField : OGTextField;$/;"	v
+messages	.\Scripts\Core\ObjectClasses\Computer.js	/^		var messages : String = "";$/;"	v
+method	.\Plugins\Tween\iTween.cs	/^	public string id, type, method;$/;"	f	class:iTween
+mf	.\Scripts\EditorCore\EditorCore.js	/^	var mf : MeshFilter = obj.GetComponent(MeshFilter);$/;"	v
+minimumX	.\Scripts\Character\MouseLook.cs	/^	public float minimumX = -360F;$/;"	f	class:MouseLook
+minimumY	.\Scripts\Character\MouseLook.cs	/^	public float minimumY = -60F;$/;"	f	class:MouseLook
+model	.\Scripts\Core\AI\Actor.js	/^	var model : String;$/;"	v
+mood	.\Scripts\Core\AI\Actor.js	/^	var mood : eMood;$/;"	v
+mood	.\Scripts\EditorUI\EditorInspectorActor.js	/^	var mood : OGPopUp;$/;"	v
+move	.\OpenGUI\Scripts\OGTween.js	/^	var move : TweenType;$/;"	v
+moveDistance	.\Scripts\Character\CharacterMotor.js	/^	var moveDistance : Vector3 = Vector3.zero;$/;"	v
+moveLimit	.\Scripts\EditorCore\EditorDragObject.js	/^var moveLimit = .5;$/;"	v
+movement	.\Scripts\Character\CharacterMotor.js	/^var movement : CharacterMotorMovement = CharacterMotorMovement();$/;"	v
+movementTransfer	.\Scripts\Character\CharacterMotor.js	/^	var movementTransfer : MovementTransferOnJump = MovementTransferOnJump.PermaTransfer;$/;"	v
+movingPlatform	.\Scripts\Character\CharacterMotor.js	/^var movingPlatform : CharacterMotorMovingPlatform = CharacterMotorMovingPlatform();$/;"	v
+n	.\Plugins\JSONObject.cs	/^	public double n;$/;"	f	class:JSONObject
+n	.\Plugins\JSONObject.cs	/^	public float n;$/;"	f	class:JSONObject
+name	.\Plugins\OBJImporter.cs	/^        public string name;$/;"	f	struct:OBJImporter.meshStruct
+name	.\Scripts\EditorCore\EditorCore.js	/^	var name = extention[0];$/;"	v
+name	.\Scripts\UI\MainMenuLoad.js	/^		var name = extention[0];$/;"	v
+namedColorValue	.\Plugins\Tween\iTween.cs	/^		public static NamedValueColor namedColorValue = NamedValueColor._Color;$/;"	f	class:iTween.Defaults
+namedcolorvalue	.\Plugins\Tween\iTween.cs	/^	private NamedValueColor namedcolorvalue;$/;"	f	class:iTween	file:
+nb	.\OpenPath\OPNavMesh.js	/^		var nb : int = 0;$/;"	v
+newNode	.\Scripts\EditorUI\EditorConversationMap.js	/^		var newNode : EditorConversationNode = Instantiate ( nodePrefab );$/;"	v
+newObj	.\Scripts\EditorCore\EditorCore.js	/^	var newObj : GameObject = Instantiate ( selectedObject );$/;"	v
+newPfb	.\Scripts\Core\FileIO\Deserializer.js	/^		var newPfb : GameObject = Instantiate ( Resources.Load ( path ) as GameObject );$/;"	v
+newRot	.\Scripts\Core\GameCore.js	/^		var newRot : Vector3 = currentSpawnPoint.transform.localEulerAngles;$/;"	v
+nextCopy	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\_DemoScene\ExplosionAtPoint.js	/^var nextCopy : float;$/;"	v
+nextLineStart	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var nextLineStart : int = 0;$/;"	v
+nextNode	.\Scripts\Core\Managers\ConversationManager.js	/^		var nextNode : int = 0;$/;"	v
+nextPathName	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var nextPathName : String = "";$/;"	v
+nextRoot	.\Scripts\Core\Managers\ConversationManager.js	/^	var nextRoot : int = 0;$/;"	v
+nextTime	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	int nextTime=-1;$/;"	f	class:FindAndFixBrokenScripts	file:
+nodeDistance	.\OpenPath\OPPathFinder.js	/^	var nodeDistance : float = 1.0;$/;"	v
+nodeIndex	.\Scripts\Core\Managers\ConversationManager.js	/^	var nodeIndex : int = -1;$/;"	v
+none	.\Plugins\Tween\iTween.cs	/^		none,$/;"	e	enum:iTween.LoopType	file:
+normals	.\Plugins\OBJImporter.cs	/^        public Vector3[] normals;$/;"	f	struct:OBJImporter.meshStruct
+normals	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\MeshContainer.cs	/^  public Vector3[] normals;$/;"	f	class:MeshContainer
+nullJO	.\Plugins\JSONObject.cs	/^	public static JSONObject nullJO { get { return new JSONObject(JSONObject.Type.NULL); } }	\/\/an empty, null object$/;"	p	class:JSONObject
+numThreads	.\Plugins\Loom.cs	/^	static int numThreads;$/;"	f	class:Loom	file:
+o	.\OpenGUI\Scripts\OGRoot.js	/^			var o : int = 0;$/;"	v
+o	.\Scripts\Core\FileIO\Deserializer.js	/^	var o : GameObject = DeserializeGameObjectFromJSON ( obj );$/;"	v
+obj	.\Plugins\JSONObject.cs	/^	public static JSONObject obj { get { return new JSONObject(JSONObject.Type.OBJECT); } }		\/\/an empty object$/;"	p	class:JSONObject
+obj	.\Scripts\EditorCore\EditorCore.js	/^	var obj : GameObject = selectedObject;$/;"	v
+objects	.\OpenGUI\Tools\OGArrangeInCircle.js	/^	var objects : Transform[];$/;"	v
+oceanBase	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^    public GameObject oceanBase;$/;"	f	class:WaterBaseEditor
+oceanMaterial	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^    private Material oceanMaterial = null;$/;"	f	class:WaterBaseEditor	file:
+offset	.\OpenGUI\Tools\OGArrangeInCircle.js	/^	var offset : float;$/;"	v
+oldpos	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private Vector3 oldpos = Vector3.zero;$/;"	f	class:PlanarReflection	file:
+openFile	.\Scripts\Core\ObjectClasses\Computer.js	/^		var openFile : String = "";$/;"	v
+openFile	.\Scripts\UI\UIComputerDisplay.js	/^	var openFile : OGLabel;$/;"	v
+openFileName	.\Scripts\Core\ObjectClasses\Computer.js	/^		var openFileName : String = "filename.txt";$/;"	v
+openFileName	.\Scripts\UI\UIComputerDisplay.js	/^	var openFileName : OGLabel;$/;"	v
+operator WWWForm	.\Plugins\JSONObject.cs	/^	public static implicit operator WWWForm(JSONObject obj){$/;"	m	class:JSONObject
+operator bool	.\Plugins\JSONObject.cs	/^	public static implicit operator bool(JSONObject o) {$/;"	m	class:JSONObject
+operator bool	.\Plugins\Nullable.cs	/^	public static implicit operator bool(Nullable o) {$/;"	m	class:Nullable
+orientTodestination	.\Plugins\Tween\iTween.cs	/^		public static bool orientTodestination = false;$/;"	f	class:iTween.Defaults
+outputBtn	.\Scripts\EditorUI\EditorConversationNodeLine.js	/^	var outputBtn : OGButton;$/;"	v
+owner	.\Scripts\Core\ObjectClasses\Projectile.js	/^	var owner : GameObject;$/;"	v
+parent	.\OpenPath\OPNode.js	/^	var parent : OPNode;$/;"	v
+parent	.\Plugins\JSONObject.cs	/^	public JSONObject parent;$/;"	f	class:JSONObject
+particleEmitters	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\DestroyRubble.js	/^var particleEmitters : ParticleEmitter[];$/;"	v
+particleEmitters	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Scale.js	/^var particleEmitters : ParticleEmitter[];$/;"	v
+password	.\Scripts\Core\ObjectClasses\Computer.js	/^		var password : String = "sweet";$/;"	v
+passwordInput	.\Scripts\UI\UILoginDisplay.js	/^	var passwordInput : OGTextField;$/;"	v
+path	.\Scripts\Core\FileIO\Deserializer.js	/^		var path : String = pfb.GetField("path").str + "\/" + pfb.GetField("id").str;$/;"	v
+path	.\Scripts\Core\FileIO\Loader.js	/^		var path = Application.dataPath + "\/Maps\/" + name + ".vgmap";$/;"	v
+path	.\Scripts\Core\ObjectClasses\Prefab.js	/^	var path : String;$/;"	v
+path	.\Scripts\EditorCore\EditorFileSystem.js	/^		var path : String;$/;"	v
+pathType	.\Scripts\Core\AI\Actor.js	/^	var pathType : ePathType;$/;"	v
+pathType	.\Scripts\EditorUI\EditorInspectorPath.js	/^	var pathType : OGPopUp;$/;"	v
+pc	.\Scripts\Core\FileIO\Deserializer.js	/^		var pc : Computer = newPfb.GetComponent(Computer);$/;"	v
+percentage	.\Plugins\Tween\iTween.cs	/^ 	private float runningTime, percentage;$/;"	f	class:iTween	file:
+perpAmount	.\Scripts\Character\CharacterMotor.js	/^	var perpAmount : float = 0.0;$/;"	v
+physics	.\Plugins\Tween\iTween.cs	/^	private bool kinematic, isLocal, loop, reverse, wasPaused, physics;$/;"	f	class:iTween	file:
+pingPong	.\Plugins\Tween\iTween.cs	/^		pingPong$/;"	e	enum:iTween.LoopType	file:
+populateMeshStruct	.\Plugins\OBJImporter.cs	/^    private static void populateMeshStruct(ref meshStruct mesh)$/;"	m	class:OBJImporter	file:
+pos	.\Scripts\EditorUI\EditorConversationMap.js	/^		var pos : Vector3;$/;"	v
+position	.\Scripts\Core\ObjectClasses\PathNode.js	/^	var position : Vector3;$/;"	v
+postUpdate	.\Plugins\Tween\iTween.cs	/^	private Vector3 postUpdate;$/;"	f	class:iTween	file:
+preUpdate	.\Plugins\Tween\iTween.cs	/^	private Vector3 preUpdate;$/;"	f	class:iTween	file:
+prefabPath	.\Scripts\Core\ObjectClasses\LightSource.js	/^	var prefabPath : String = "";$/;"	v
+preview2D	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	var preview2D : OGTexture;$/;"	v
+previewImage	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var previewImage : OGTexture;$/;"	v
+print	.\Plugins\JSONObject.cs	/^	public string print(bool pretty = false) {$/;"	m	class:JSONObject
+print	.\Plugins\JSONObject.cs	/^	public string print(int depth, bool pretty = false) {	\/\/Convert the JSONObject into a string$/;"	m	class:JSONObject
+processList	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	List<GameObject> processList = new List<GameObject>();$/;"	f	class:FindAndFixBrokenScripts	file:
+properties	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^		public Dictionary<string, FieldInfo> properties;$/;"	f	class:FixMissingScripts.ScannedScript
+pts	.\Plugins\Tween\iTween.cs	/^		public Vector3[] pts;$/;"	f	class:iTween.CRSpline
+punch	.\Plugins\Tween\iTween.cs	/^		punch$/;"	e	enum:iTween.EaseType	file:
+punch	.\Plugins\Tween\iTween.cs	/^	private float punch(float amplitude, float value){$/;"	m	class:iTween	file:
+pushDownOffset	.\Scripts\Character\CharacterMotor.js	/^	var pushDownOffset : float = Mathf.Max(controller.stepOffset, Vector3(currentMovementOffset.x, 0, currentMovementOffset.z).magnitude);$/;"	v
+quest	.\Scripts\Core\FileIO\Loader.js	/^		var quest : Quest = Deserializer.DeserializeQuest ( object.GetField ( id ) );$/;"	v
+questAction	.\Scripts\Core\Managers\ConversationManager.js	/^	var questAction : String;$/;"	v
+questAction	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var questAction : String = "";$/;"	v
+questID	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var questID : String = "";$/;"	v
+questName	.\Scripts\Core\Managers\ConversationManager.js	/^	var questName : String;$/;"	v
+radius	.\OpenGUI\Tools\OGArrangeInCircle.js	/^	var radius : float;$/;"	v
+range	.\Scripts\Core\ObjectClasses\LightSource.js	/^	var range : float = 10.0;$/;"	v
+range	.\Scripts\EditorUI\EditorInspectorLight.js	/^	var range : ValueSlider;$/;"	v
+rate	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\_DemoScene\ExplosionAtPoint.js	/^var rate : float;$/;"	v
+rb	.\Scripts\Core\ObjectClasses\Ragdoll.js	/^		var rb : Rigidbody = obj.GetComponent(Rigidbody);$/;"	v
+rearrangeNow	.\OpenGUI\Tools\OGArrangeInCircle.js	/^	var rearrangeNow : boolean;$/;"	v
+rects	.\Plugins\Tween\iTween.cs	/^	private Rect[] rects;$/;"	f	class:iTween	file:
+refY	.\Scripts\Core\ObjectClasses\InventoryEntry.js	/^	var refY : int = -1;$/;"	v
+reflectSkybox	.\Editor\Water (Pro Only)\Water4\PlanarReflectionEditor.cs	/^	private SerializedProperty reflectSkybox;$/;"	f	class:PlanarReflectionEditor	file:
+reflectSkybox	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public bool reflectSkybox = false;$/;"	f	class:PlanarReflection
+reflection	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterTile.cs	/^	public PlanarReflection reflection;$/;"	f	class:WaterTile
+reflectionCamera	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private Camera reflectionCamera;$/;"	f	class:PlanarReflection	file:
+reflectionMask	.\Editor\Water (Pro Only)\Water4\PlanarReflectionEditor.cs	/^	private SerializedProperty reflectionMask;$/;"	f	class:PlanarReflectionEditor	file:
+reflectionMask	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public LayerMask reflectionMask;$/;"	f	class:PlanarReflection
+reflectionSampler	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	public System.String reflectionSampler = "_ReflectionTex";$/;"	f	class:PlanarReflection
+removeBtn	.\Scripts\EditorUI\EditorConversationNodeLine.js	/^	var removeBtn : OGButton;$/;"	v
+reverse	.\Plugins\Tween\iTween.cs	/^	private bool kinematic, isLocal, loop, reverse, wasPaused, physics;$/;"	f	class:iTween	file:
+right	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var right : float = rect.width - style.padding.right - style.padding.left;$/;"	v
+right	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var right : float = rect.x + rect.width;$/;"	v
+rootNode	.\Scripts\Core\Managers\ConversationManager.js	/^		var rootNode : ConversationRootNode = convo.rootNodes[actor.currentConvoRoot];$/;"	v
+rotate	.\OpenGUI\Scripts\OGTween.js	/^	var rotate : TweenType;$/;"	v
+rotate	.\OpenGUI\Tools\OGArrangeInCircle.js	/^	var rotate : Vector3;$/;"	v
+rotationQuaternion	.\Scripts\Core\Input\ThirdPersonController.js	/^		var rotationQuaternion : Quaternion = Quaternion.Euler ( 0, targetRotation, 0 );$/;"	v
+rotationY	.\Scripts\Character\MouseLook.cs	/^	float rotationY = 0F;$/;"	f	class:MouseLook	file:
+row	.\Scripts\EditorUI\EditorActors.js	/^		var row = 0;$/;"	v
+running	.\Scripts\Core\ObjectClasses\PathNode.js	/^	var running : boolean;$/;"	v
+runningSpeed	.\Scripts\Core\AI\Actor.js	/^	var runningSpeed : float = 4.0;$/;"	v
+runningTime	.\Plugins\Tween\iTween.cs	/^ 	private float runningTime, percentage;$/;"	f	class:iTween	file:
+s	.\OpenGUI\Editor\OGSkinInspector.js	/^		var s : OGStyle = skin.styles[currentStyle];$/;"	v
+s_InsideRendering	.\Plugins\MirrorReflection.cs	/^	private static bool s_InsideRendering = false;$/;"	f	class:MirrorReflection	file:
+s_InsideRendering	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private static bool s_InsideRendering = false;$/;"	f	class:SurfaceReflection	file:
+s_InsideWater	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private static bool s_InsideWater = false;$/;"	f	class:Water	file:
+sc	.\Scripts\Core\FileIO\Deserializer.js	/^		var sc : SurveillanceCamera = newPfb.GetComponent(SurveillanceCamera);$/;"	v
+scale	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Scale.js	/^var scale : float= 1;$/;"	v
+scale	.\OpenGUI\Scripts\OGTween.js	/^	var scale : TweenType;$/;"	v
+scale	.\Scripts\Core\ObjectClasses\CombinedMesh.js	/^		var scale : Vector3 = obj.localScale;$/;"	v
+scanned	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	bool scanned = false;$/;"	f	class:FindAndFixBrokenScripts	file:
+scanner	.\OpenPath\OPPathFinder.js	/^	var scanner : OPScanner;$/;"	v
+scenePath	.\Scripts\Core\FileIO\Saver.js	/^		var scenePath = chapterPath + "\/" + pathArray[1];$/;"	v
+script	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^		public MonoScript script;$/;"	f	class:FixMissingScripts.ScannedScript
+scripts	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^	static List<ScannedScript> scripts;$/;"	f	class:FixMissingScripts	file:
+scroll	.\OpenGUI\Scripts\OGScrollView.js	/^		var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );$/;"	v
+scrollView	.\Scripts\EditorUI\EditorFlags.js	/^	var scrollView : OGScrollView;$/;"	v
+scrollView	.\Scripts\EditorUI\EditorPicker.js	/^	var scrollView : OGScrollView;$/;"	v
+selector	.\Scripts\EditorUI\EditorQuests.js	/^	var selector : OGButton;$/;"	v
+sendMessageOn	.\OpenGUI\Scripts\OGTween.js	/^	var sendMessageOn : TweenMessageSend = TweenMessageSend.Complete;$/;"	v
+sensitivityX	.\Scripts\Character\MouseLook.cs	/^	public float sensitivityX = 15F;$/;"	f	class:MouseLook
+sensitivityY	.\Scripts\Character\MouseLook.cs	/^	public float sensitivityY = 15F;$/;"	f	class:MouseLook
+serObj	.\Editor\Water (Pro Only)\Water4\GerstnerDisplaceEditor.cs	/^    private SerializedObject serObj;$/;"	f	class:GerstnerDisplaceEditor	file:
+serObj	.\Editor\Water (Pro Only)\Water4\PlanarReflectionEditor.cs	/^    private SerializedObject serObj;$/;"	f	class:PlanarReflectionEditor	file:
+serObj	.\Editor\Water (Pro Only)\Water4\SpecularLightingEditor.cs	/^    private SerializedObject serObj;$/;"	f	class:SpecularLightingEditor	file:
+serObj	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^    private SerializedObject serObj;$/;"	f	class:WaterBaseEditor	file:
+serialized	.\Scripts\Core\FileIO\Saver.js	/^		var serialized : JSONObject = Serializer.SerializeGameObject ( obj );$/;"	v
+sgn	.\Plugins\MirrorReflection.cs	/^	private static float sgn(float a)$/;"	m	class:MirrorReflection	file:
+sgn	.\Scripts\Core\Camera\SurfaceReflection.cs	/^	private static float sgn(float a)$/;"	m	class:SurfaceReflection	file:
+sgn	.\Standard Assets\Water (Pro Only)\Sources\Scripts\Water.cs	/^	private static float sgn(float a)$/;"	m	class:Water	file:
+sgn	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	static float sgn (float a) {$/;"	m	class:PlanarReflection	file:
+sharedMaterial	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^    private SerializedProperty sharedMaterial;$/;"	f	class:WaterBaseEditor	file:
+sharedMaterial	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\PlanarReflection.cs	/^	private Material sharedMaterial = null;$/;"	f	class:PlanarReflection	file:
+sharedMaterial	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^	public Material sharedMaterial;$/;"	f	class:WaterBase
+showItems	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	bool showItems;$/;"	f	class:FindAndFixBrokenScripts	file:
+showKidsWithReflectionHint	.\Editor\Water (Pro Only)\Water4\PlanarReflectionEditor.cs	/^	bool showKidsWithReflectionHint = false;$/;"	f	class:PlanarReflectionEditor	file:
+sideList	.\Scripts\UI\UIQuests.js	/^	var sideList : OGLabel;$/;"	v
+sidewaysControl	.\Scripts\Character\CharacterMotor.js	/^	var sidewaysControl : float = 1.0;$/;"	v
+size	.\OpenPath\OPNode.js	/^	var size : int;	$/;"	v
+size	.\Scripts\Core\Camera\GameCamera.js	/^		var size : Vector3;$/;"	v
+skillPoints	.\Scripts\Core\ObjectClasses\Quest.js	/^	var skillPoints = 0;$/;"	v
+skillPoints	.\Scripts\EditorUI\EditorQuests.js	/^	var skillPoints : OGTextField;$/;"	v
+skinWidth	.\Scripts\Core\Physics\DontGoThroughThings.js	/^var skinWidth : float = 0.1; \/\/probably doesn't need to be changed $/;"	v
+skyBoxParent	.\Scripts\EditorCore\EditorCore.js	/^	var skyBoxParent : Transform = GameObject.FindWithTag("SkyboxCamera").transform.parent;$/;"	v
+slice	.\Plugins\TextureScale.js	/^		var slice = newHeight\/cores;$/;"	v
+sliderValue	.\Scripts\EditorUI\EditorInspectorLight.js	/^		var sliderValue : OGLabel; $/;"	v
+sliding	.\Scripts\Character\CharacterMotor.js	/^var sliding : CharacterMotorSliding = CharacterMotorSliding();$/;"	v
+slidingSpeed	.\Scripts\Character\CharacterMotor.js	/^	var slidingSpeed : float = 15;$/;"	v
+slopeSpeedMultiplier	.\Scripts\Character\CharacterMotor.js	/^	var slopeSpeedMultiplier : AnimationCurve = AnimationCurve(Keyframe(-90, 1), Keyframe(0, 1), Keyframe(90, 0));$/;"	v
+smokeDestroyTime	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\FireFade.js	/^var smokeDestroyTime : float = 6;$/;"	v
+smokeDestroyTime	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Move.js	/^var smokeDestroyTime : float;$/;"	v
+smokeStem	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Move.js	/^var smokeStem : ParticleRenderer;$/;"	v
+smr	.\Scripts\Core\Camera\GameCamera.js	/^			var smr : SkinnedMeshRenderer = go.GetComponentInChildren ( SkinnedMeshRenderer );$/;"	v
+snap	.\Scripts\EditorUI\EditorGrid.js	/^	var snap : OGTickBox;$/;"	v
+space	.\Plugins\Tween\iTween.cs	/^		public static Space space = Space.Self;$/;"	f	class:iTween.Defaults
+space	.\Plugins\Tween\iTween.cs	/^	private Space space;$/;"	f	class:iTween	file:
+spacing	.\OpenPath\OPScanner.js	/^	var spacing : float = 1.0;$/;"	v
+speaker	.\Scripts\Core\Managers\ConversationManager.js	/^	var speaker : String;$/;"	v
+specularLight	.\Editor\Water (Pro Only)\Water4\SpecularLightingEditor.cs	/^    private SerializedProperty specularLight;$/;"	f	class:SpecularLightingEditor	file:
+specularLight	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\SpecularLighting.cs	/^	public Transform specularLight;$/;"	f	class:SpecularLighting
+speed	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Move.js	/^var speed : float;$/;"	v
+speed	.\OpenPath\OPPathFinder.js	/^	var speed : float = 4.0;$/;"	v
+speed	.\Scripts\Core\AI\Actor.js	/^	var speed : float = 0.0;$/;"	v
+speed	.\Scripts\Core\ObjectClasses\Projectile.js	/^	var speed : float = 1.0;$/;"	v
+speed	.\Scripts\EditorUI\EditorInspectorTween.js	/^	var speed : int;$/;"	v
+speedControl	.\Scripts\Character\CharacterMotor.js	/^	var speedControl : float = 0.4;$/;"	v
+spring	.\Plugins\Tween\iTween.cs	/^		spring,$/;"	e	enum:iTween.EaseType	file:
+spring	.\Plugins\Tween\iTween.cs	/^	private float spring(float start, float end, float value){$/;"	m	class:iTween	file:
+startQuest	.\Scripts\EditorUI\EditorInspectorConvo.js	/^	var startQuest : OGButton;$/;"	v
+stash	.\Scripts\UI\UIInventory.js	/^	var stash : Transform;$/;"	v
+stateBox	.\Scripts\EditorUI\EditorInspectorActor.js	/^	var stateBox : GameObject;$/;"	v
+steepPerpAmount	.\Scripts\Character\CharacterMotor.js	/^	var steepPerpAmount : float = 0.5;$/;"	v
+stoppingDistance	.\OpenPath\OPPathFinder.js	/^	var stoppingDistance : float = 0.1;$/;"	v
+storedObject	.\Scripts\EditorCore\EditorCore.js	/^	var storedObject : GameObject;$/;"	v
+storedPosition	.\Scripts\EditorCore\EditorCore.js	/^	var storedPosition : Vector3;$/;"	v
+storedRotation	.\Scripts\EditorCore\EditorCore.js	/^	var storedRotation : Vector3;$/;"	v
+storedScale	.\Scripts\EditorCore\EditorCore.js	/^	var storedScale : Vector3;$/;"	v
+str	.\Plugins\JSONObject.cs	/^	public string str;$/;"	f	class:JSONObject
+strings	.\Scripts\Core\FileIO\Loader.js	/^		var strings : String[] = ReadFileToArray ( path );$/;"	v
+strings	.\Scripts\EditorUI\EditorBrowserWindow.js	/^		var strings : String[] = currentFolder.path.Split ( "\/"[0] );$/;"	v
+subMesh	.\Scripts\EditorCore\EditorCore.js	/^	var subMesh : int = FindSubMesh ( mesh, triangleIndex );$/;"	v
+subMeshIndex	.\Scripts\EditorUI\EditorInspectorCombinedMesh.js	/^		var subMeshIndex : int = int.Parse ( n );$/;"	v
+sw	.\Scripts\Core\FileIO\Saver.js	/^		var sw : StreamWriter;$/;"	v
+talking	.\Scripts\Core\AI\Actor.js	/^	var talking : boolean = false;$/;"	v
+target	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\Move.js	/^var target : Transform;$/;"	v
+target	.\OpenPath\OPPathFinder.js	/^	var target : Transform;$/;"	v
+target	.\Scripts\Core\AI\Actor.js	/^	var target : Transform;$/;"	v
+targetRot	.\Scripts\Core\Camera\GameCamera.js	/^		var targetRot : Vector3 = Quaternion.LookRotation ( t.position - targetPos ).eulerAngles;$/;"	v
+tempObj	.\OpenGUI\Editor\OGSkinInspector.js	/^		var tempObj : Object;$/;"	v
+texBytes	.\Editor\SaveFontTexture.js	/^	var texBytes = tex2.EncodeToPNG();$/;"	v
+texPixels	.\Editor\SaveFontTexture.js	/^	var texPixels = tex.GetPixels();$/;"	v
+text	.\Scripts\UI\UIHUD.js	/^	var text : OGLabel;$/;"	v
+textField	.\Scripts\EditorUI\EditorFlags.js	/^		var textField : OGTextField;$/;"	v
+textField	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var textField : OGTextField;$/;"	v
+textPreview	.\Scripts\EditorUI\EditorInspectorPrefab.js	/^	var textPreview : OGLabel;$/;"	v
+thisLineStart	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var thisLineStart : int = 0;$/;"	v
+thumb	.\Scripts\EditorCore\EditorFileSystem.js	/^		var thumb : Texture2D;$/;"	v
+tilingModifiers	.\Scripts\Core\ObjectClasses\Prefab.js	/^	var tilingModifiers : TilingModifier[];$/;"	v
+time	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\DestroyRubble.js	/^var time : float;$/;"	v
+time	.\OpenGUI\Scripts\OGTween.js	/^		var time : float = 1.0;$/;"	v
+time	.\Plugins\Loom.cs	/^		public float time;$/;"	f	struct:Loom.DelayedQueueItem
+time	.\Plugins\Tween\iTween.cs	/^		public static float time = 1f;$/;"	f	class:iTween.Defaults
+time	.\Plugins\Tween\iTween.cs	/^	public float time, delay;$/;"	f	class:iTween
+time	.\Scripts\Core\ObjectClasses\Projectile.js	/^	var time : float = 0.0;$/;"	v
+timer	.\Scripts\UI\UILoading.js	/^	var timer : float = 1.0;$/;"	v
+title	.\Scripts\Core\ObjectClasses\Quest.js	/^	var title : String;$/;"	v
+title	.\Scripts\EditorUI\EditorActors.js	/^	var title : OGLabel;$/;"	v
+title	.\Scripts\EditorUI\EditorBrowserWindow.js	/^	var title : OGLabel;$/;"	v
+title	.\Scripts\EditorUI\EditorPicker.js	/^	var title : OGLabel;$/;"	v
+title	.\Scripts\EditorUI\EditorQuests.js	/^	var title : OGTextField;$/;"	v
+tl	.\Scripts\Core\FileIO\Deserializer.js	/^		var tl : Terminal = newPfb.GetComponent(Terminal);$/;"	v
+tm	.\Scripts\Core\FileIO\Deserializer.js	/^		var tm : TextMesh = newPfb.GetComponentInChildren ( TextMesh );$/;"	v
+tmpMtl	.\Scripts\Core\ObjectClasses\CombinedMesh.js	/^		var tmpMtl : Material = objAdded.renderer.material;$/;"	v
+tmpUVs	.\Scripts\Core\ObjectClasses\CombinedMesh.js	/^		var tmpUVs : Vector2[] = objAdded.GetComponent(MeshFilter).mesh.uv;$/;"	v
+todoList	.\Scripts\Core\ObjectClasses\Computer.js	/^		var todoList : String = "";$/;"	v
+todoList	.\Scripts\UI\UIComputerDisplay.js	/^	var todoList : OGLabel;$/;"	v
+toggleDoorBool	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var toggleDoorBool : boolean = false;$/;"	v
+toggleDoorName	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var toggleDoorName : String = "";$/;"	v
+top	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var top : float = rect.height - style.padding.top;$/;"	v
+top	.\OpenGUI\Scripts\OGDrawHelper.js	/^		var top : float = rect.y + rect.height;$/;"	v
+top	.\OpenGUI\Scripts\OGPopUp.js	/^		var top : float = drawRct.y + options.Length * drawRct.height;$/;"	v
+tr	.\Scripts\Core\FileIO\Deserializer.js	/^		var tr : Trigger = newPfb.GetComponent(Trigger);$/;"	v
+travelMap	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var travelMap : String = "";$/;"	v
+travelSpawnPoint	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var travelSpawnPoint : String = "";$/;"	v
+triangleArray	.\OpenPath\OPNavMesh.js	/^		var triangleArray : Triangle[] = triangleList.ToArray();$/;"	v
+triangles	.\Plugins\OBJImporter.cs	/^        public int[] triangles;$/;"	f	struct:OBJImporter.meshStruct
+triangles	.\Scripts\EditorCore\EditorCore.js	/^	var triangles : int[] = mesh.GetTriangles(subMesh);$/;"	v
+tried	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^	public static bool tried;$/;"	f	class:FixMissingScripts
+tryThisObject	.\Editor\unitygems.com\whydoidoit.com\FixMissingScripts.cs	/^	public static GameObject tryThisObject;$/;"	f	class:FixMissingScripts
+trying	.\Editor\unitygems.com\whydoidoit.com\FindAndFixBrokenScripts.cs	/^	bool trying;$/;"	f	class:FindAndFixBrokenScripts	file:
+tweenArguments	.\Plugins\Tween\iTween.cs	/^	private Hashtable tweenArguments;$/;"	f	class:iTween	file:
+tweens	.\Plugins\Tween\iTween.cs	/^	public static ArrayList tweens = new ArrayList();$/;"	f	class:iTween
+type	.\Plugins\JSONObject.cs	/^	public Type type = Type.NULL;$/;"	f	class:JSONObject
+type	.\Plugins\Tween\iTween.cs	/^	public string id, type, method;$/;"	f	class:iTween
+type	.\Scripts\Core\Managers\ConversationManager.js	/^	var type : String;$/;"	v
+type	.\Scripts\Core\ObjectClasses\GameEvent.js	/^	var type : eEventType;$/;"	v
+type	.\Scripts\Core\ObjectClasses\LightSource.js	/^	var type : LightType = LightType.Point;$/;"	v
+type	.\Scripts\EditorUI\EditorInspectorLight.js	/^	var type : OGPopUp;$/;"	v
+up	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\RubbleCreater.js	/^var up : float = 20;$/;"	v
+up	.\Plugins\Tween\iTween.cs	/^		public static Vector3 up = Vector3.up;$/;"	f	class:iTween.Defaults
+updateFrequency	.\Scripts\Core\AI\Actor.js	/^	var updateFrequency : float = 5.0;$/;"	v
+updateTime	.\Plugins\Tween\iTween.cs	/^		public static float updateTime = 1f*updateTimePercentage;$/;"	f	class:iTween.Defaults
+updateTimePercentage	.\Plugins\Tween\iTween.cs	/^		public static float updateTimePercentage = .05f;$/;"	f	class:iTween.Defaults
+upgName	.\Scripts\UI\UIModWheel.js	/^	var upgName : OGLabel;$/;"	v
+upgSlot	.\Scripts\Core\ObjectClasses\Upgrade.js	/^	var upgSlot : eSlotID;$/;"	v
+upgrade	.\Scripts\Core\Managers\UpgradeManager.js	/^		var upgrade : Upgrade = slots [ slot ].GetItem() as Upgrade;$/;"	v
+upgrade	.\Scripts\UI\UIInventory.js	/^		var upgrade : Upgrade = item as Upgrade;$/;"	v
+useFixedUpdate	.\Scripts\Character\CharacterMotor.js	/^var useFixedUpdate : boolean = true;$/;"	v
+useRealTime	.\Plugins\Tween\iTween.cs	/^        public static bool useRealTime = false; \/\/ Added by PressPlay$/;"	f	class:iTween.Defaults
+useRealTime	.\Plugins\Tween\iTween.cs	/^    private bool useRealTime; \/\/ Added by PressPlay$/;"	f	class:iTween	file:
+useUp	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\RubbleCreater.js	/^var useUp = false;$/;"	v
+usernameInput	.\Scripts\UI\UILoginDisplay.js	/^	var usernameInput : OGTextField;$/;"	v
+uv	.\Plugins\OBJImporter.cs	/^        public Vector2[] uv;$/;"	f	struct:OBJImporter.meshStruct
+uv1	.\Plugins\OBJImporter.cs	/^        public Vector2[] uv1;$/;"	f	struct:OBJImporter.meshStruct
+uv2	.\Plugins\OBJImporter.cs	/^        public Vector2[] uv2;$/;"	f	struct:OBJImporter.meshStruct
+uvs	.\Scripts\Core\ObjectClasses\CombinedMesh.js	/^		var uvs : Vector2[] = mesh.uv;$/;"	v
+val	.\Scripts\Core\ObjectClasses\Item.js	/^		var val = 0.0;$/;"	v
+value	.\Scripts\Core\ObjectClasses\Upgrade.js	/^		var value : float = 0;$/;"	v
+values	.\Scripts\EditorCore\EditorCore.js	/^	var values : String = "";$/;"	v
+vector2s	.\Plugins\Tween\iTween.cs	/^	private Vector2[] vector2s;$/;"	f	class:iTween	file:
+vector3s	.\Plugins\Tween\iTween.cs	/^	private Vector3[] vector3s;$/;"	f	class:iTween	file:
+vel	.\AssetServer\Plugins\Assets\Ian's Explosion Pack\Scripts\RubbleCreater.js	/^var vel : float = 20;$/;"	v
+vertexIndex	.\Plugins\MeshExtrusion.cs	/^		public int[]  vertexIndex = new int[2];$/;"	f	class:MeshExtrusion.Edge
+vertices	.\OpenPath\OPNavMesh.js	/^		var vertices : Vector3[] = mesh.vertices;$/;"	v
+vertices	.\Plugins\OBJImporter.cs	/^        public Vector3[] vertices;$/;"	f	struct:OBJImporter.meshStruct
+vertices	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\MeshContainer.cs	/^  public Vector3[] vertices;$/;"	f	class:MeshContainer
+vitalState	.\Scripts\Core\AI\Actor.js	/^	var vitalState : eVitalState;$/;"	v
+w	.\OpenGUI\Scripts\OGRoot.js	/^			var w : OGWidget;$/;"	v
+w	.\OpenGUI\Scripts\OGRoot.js	/^		var w : OGWidget;$/;"	v
+waiting	.\Scripts\Core\AI\Actor.js	/^	var waiting : boolean = false;$/;"	v
+walkingSpeed	.\Scripts\Core\AI\Actor.js	/^	var walkingSpeed : float = 1.0;$/;"	v
+wallpaper	.\Scripts\Core\ObjectClasses\Computer.js	/^		var wallpaper : String = "wallpaper_debian";$/;"	v
+wallpapers	.\Scripts\EditorUI\EditorEditAccount.js	/^		var wallpapers : Object[] = Resources.LoadAll ( "Textures\/UI\/Wallpapers" );$/;"	v
+warningMessage	.\Scripts\EditorUI\EditorFlags.js	/^	var warningMessage : OGLabel;$/;"	v
+wasPaused	.\Plugins\Tween\iTween.cs	/^	private bool kinematic, isLocal, loop, reverse, wasPaused, physics;$/;"	f	class:iTween	file:
+waterBase	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^    private WaterBase waterBase;$/;"	f	class:WaterBaseEditor	file:
+waterBase	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\SpecularLighting.cs	/^	private WaterBase waterBase = null;$/;"	f	class:SpecularLighting	file:
+waterBase	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterTile.cs	/^	public WaterBase waterBase;$/;"	f	class:WaterTile
+waterQuality	.\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs	/^	public SerializedProperty waterQuality;$/;"	f	class:WaterBaseEditor
+waterQuality	.\Standard Assets\Water (Pro Only)\Water4\Sources\Scripts\WaterBase.cs	/^	public WaterQuality waterQuality = WaterQuality.High;$/;"	f	class:WaterBase
+width	.\OpenGUI\Editor\OGSkinInspector.js	/^		var width : float = skin.styles[currentStyle].coordinates.width * 2;$/;"	v
+width	.\OpenGUI\Editor\OGSkinInspector.js	/^		var width : float = style.coordinates.width;$/;"	v
+x	.\OpenGUI\Editor\OGSkinInspector.js	/^		var x : float = controlRect.x + style.coordinates.x;$/;"	v
+x	.\Scripts\EditorUI\EditorAdjust.js	/^	var x : OGTextField;$/;"	v
+xInPlace	.\OpenGUI\Scripts\OGScrollView.js	/^		var xInPlace : boolean = false;$/;"	v
+y	.\OpenGUI\Editor\OGSkinInspector.js	/^		var y : float = controlRect.y + atlas.height - style.coordinates.y;$/;"	v
+y	.\OpenGUI\Scripts\OGWidget.js	/^		var y : float = Input.mousePosition.y;$/;"	v
+y	.\Scripts\Core\FileIO\Deserializer.js	/^	var y : JSONObject = v.list[1] as JSONObject;$/;"	v
+y	.\Scripts\Core\ObjectClasses\Prefab.js	/^		var y : eMaterialMapCoordinate;$/;"	v
+y	.\Scripts\EditorUI\EditorAdjust.js	/^	var y : OGTextField;$/;"	v
+y	.\Scripts\EditorUI\EditorCursorText.js	/^	var y : Transform;$/;"	v
+y	.\Scripts\UI\UIInventory.js	/^	var y : int;$/;"	v
+y1	.\Plugins\TextureScale.js	/^			var y1 = yFloor * w;$/;"	v
+yInPlace	.\OpenGUI\Scripts\OGScrollView.js	/^		var yInPlace : boolean = false;$/;"	v
+yw	.\Plugins\TextureScale.js	/^			var yw = y * w2;$/;"	v
+z	.\Scripts\Core\FileIO\Deserializer.js	/^	var z : JSONObject = v.list[2] as JSONObject;$/;"	v
+z	.\Scripts\Core\ObjectClasses\Prefab.js	/^		var z : eMaterialMapCoordinate;$/;"	v
+z	.\Scripts\EditorUI\EditorAdjust.js	/^	var z : OGTextField;$/;"	v
+z	.\Scripts\EditorUI\EditorCursorText.js	/^	var z : Transform;$/;"	v
