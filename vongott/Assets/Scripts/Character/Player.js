@@ -14,15 +14,16 @@ class Player extends MonoBehaviour {
 	public var automaticHeal : int = 0;
 	public var shieldPrefab : GameObject;
 	
-	public var equippedItem : GameObject;
 	public var talkingTo : Actor;
 
 	// Private vars	
 	private var shield : GameObject;
 	private var liftedObject : LiftableItem;
+	private var equippedObject : Item;
 	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
 	private var controller : PlayerController;
+	private var capsuleCollider : CapsuleCollider;
 
 					
 	////////////////////
@@ -93,15 +94,15 @@ class Player extends MonoBehaviour {
 
 	// Throw
 	function Throw () {
-		var obj : GameObject = Instantiate ( equippedItem );
+		var obj : Item = Instantiate ( equippedObject ) as Item;
 		obj.transform.parent = this.transform.parent;
 		
 		obj.GetComponent(BoxCollider).enabled = true;
 		obj.rigidbody.useGravity = true;
 		obj.rigidbody.isKinematic = false;
 		
-		obj.transform.position = equippedItem.transform.position;
-		obj.transform.eulerAngles = equippedItem.transform.eulerAngles;
+		obj.transform.position = equippedObject.transform.position;
+		obj.transform.eulerAngles = equippedObject.transform.eulerAngles;
 		obj.transform.localScale = Vector3.one;
 
 		obj.rigidbody.velocity = GameCamera.GetInstance().transform.forward * 10;
@@ -113,11 +114,13 @@ class Player extends MonoBehaviour {
 	}
 
 	// Equip
-	function Equip ( item : Item, equip : boolean ) {
-		if ( !item ) {
-			item = equippedItem.GetComponent ( Item );
+	public function DestroyEquipped () {
+		if ( equippedObject ) {
+			Destroy ( equippedObject.gameObject );
 		}
-		
+	}
+	
+	function Equip ( item : Item ) {
 		var slot : eEquipmentSlot = ( item as Equipment ).eqSlot;
 		var target : Transform;
 		var adjustPosition : Vector3;
@@ -134,61 +137,47 @@ class Player extends MonoBehaviour {
 		
 		} 
 		
-		if ( equip ) {					
-			equippedItem = item.gameObject;
-			
-			equippedItem.transform.parent = target;
-			equippedItem.transform.localPosition = adjustPosition;
-			equippedItem.transform.localEulerAngles = adjustRotation;
-			equippedItem.GetComponent(BoxCollider).enabled = false;
-			equippedItem.rigidbody.useGravity = false;
-			equippedItem.rigidbody.isKinematic = true;
-		
-			if ( IsEquippedWeapon() ) {
-				ResetFire();
-			}
-		
-			GameCore.Print ( "Player | item '" + item.title + "' equipped" );
-			
-		} else {
-			Destroy ( equippedItem );
-			
-			GameCore.Print ( "Player | item '" + item.title + "' unequipped" );
-		
-			if ( item ) {
-				Destroy ( item.gameObject );
-			}
-		}
-	}
+		equippedObject = Instantiate ( item ) as Item;
+		equippedObject.transform.parent = target;
+		equippedObject.transform.localPosition = adjustPosition;
+		equippedObject.transform.localEulerAngles = adjustRotation;
+		equippedObject.GetComponent(BoxCollider).enabled = false;
+		equippedObject.rigidbody.useGravity = false;
+		equippedObject.rigidbody.isKinematic = true;
 	
-	function GetEquippedItem () : GameObject {
-		return equippedItem;
+		if ( IsEquippedWeapon() ) {
+			ResetFire();
+		}
+	
+		GameCore.Print ( "Player | item '" + item.title + "' equipped" );
 	}
 	
 	function IsEquippedWeapon () : boolean {
-		if ( equippedItem ) {
-			return equippedItem.GetComponent(Item).type == eItemType.Weapon;
+		if ( InventoryManager.GetInstance().equippedItem ) {
+			return InventoryManager.GetInstance().equippedItem.GetComponent(Item).type == eItemType.Weapon;
 		} else {
 			return false;
 		}
 	}
 	
 	function IsEquippedLockpick () : boolean {
-		if ( equippedItem ) {
-			return equippedItem.GetComponent(Item).id == eItemID.Lockpick;
+		if ( InventoryManager.GetInstance().equippedItem ) {
+			return InventoryManager.GetInstance().equippedItem.GetComponent(Item).id == eItemID.Lockpick;
 		} else {
 			return false;
 		}
 	}
 	
 	function GetEquipmentAttribute ( a : eItemAttribute ) : float {
-		for ( var attr : Item.Attribute in equippedItem.GetComponent(Item).attr ) {
+		var item : Item = InventoryManager.GetInstance().equippedItem;
+
+		for ( var attr : Item.Attribute in item.attr ) {
 			if ( attr.type == a ) {
 				return attr.val;
 			} 
 		}
 		
-		GameCore.Error ( "Player | Found no attribute " + a + " for item " + equippedItem );
+		GameCore.Error ( "Player | Found no attribute " + a + " for item " + item );
 		
 		return 100;
 	}
@@ -219,9 +208,11 @@ class Player extends MonoBehaviour {
 	}
 
 	function Shoot ( target : Vector3 ) {
-		if ( equippedItem == null ) { return; }
+		var item : Item = InventoryManager.GetInstance().equippedItem;
 		
-		var eq : Equipment = equippedItem.GetComponent ( Equipment );
+		if ( item == null ) { return; }
+		
+		var eq : Equipment = item.GetComponent ( Equipment );
 		
 		if ( eq == null ) { return; }
 
@@ -247,11 +238,11 @@ class Player extends MonoBehaviour {
 						target += Vector3.one * accuracyDegree;
 					}
 				
-					DamageManager.GetInstance().SpawnBullet ( equippedItem, target, this.gameObject );
+					DamageManager.GetInstance().SpawnBullet ( item.gameObject, target, this.gameObject );
 				
 					// Muzzle flash
-					if ( equippedItem.transform.GetChild(0) ) {
-						equippedItem.transform.GetChild(0).gameObject.SetActive ( true );
+					if ( item.transform.GetChild(0) ) {
+						item.transform.GetChild(0).gameObject.SetActive ( true );
 					}
 				}
 				break;
@@ -321,25 +312,14 @@ class Player extends MonoBehaviour {
 	
 	
 	////////////////////
-	// Trigger
-	////////////////////
-	function OnTriggerEnter ( other : Collider ) {				
-		if ( other.GetComponent ( InteractiveObject ) ) {
-			other.GetComponent ( InteractiveObject ).Focus ();
-		}
-	}
-	
-	function OnTriggerExit ( other : Collider ) {				
-		if ( other.GetComponent ( InteractiveObject ) ) {
-			other.GetComponent ( InteractiveObject ).Unfocus ();
-		}
-	}
-	
-	
-	////////////////////
 	// Update
 	////////////////////	
 	function Update () {
+		// Collider reference
+		if ( !capsuleCollider ) {
+			capsuleCollider = this.GetComponent(CapsuleCollider);
+		}
+
 		// Lifting object
 		if ( liftedObject ) {
 			liftedObject.transform.rotation = this.transform.rotation;
@@ -352,7 +332,7 @@ class Player extends MonoBehaviour {
 		}
 		
 		// Equipped weapon
-		if ( equippedItem && IsEquippedWeapon() ) {	
+		if ( IsEquippedWeapon() ) {	
 			if ( shootTimer < GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
 				shootTimer += Time.deltaTime;
 			}
@@ -381,6 +361,15 @@ class Player extends MonoBehaviour {
 				break;
 		}
 
+		switch ( PlayerController.bodyState ) {
+			case ePlayerBodyState.Crouching:
+				capsuleCollider.height = 1;
+				break;
+			
+			default:
+				capsuleCollider.height = 1.8;
+				break;
+		}
 
 		// Calculate energy cost
 		energy -= UpgradeManager.CalculateEnergyCost() * Time.deltaTime;

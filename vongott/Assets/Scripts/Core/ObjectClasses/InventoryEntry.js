@@ -2,7 +2,6 @@
 
 class InventoryEntry {
 	var prefabPath : String;
-	var equipped : boolean = false;
 	var installed : boolean = false;
 	var activated : boolean = false;
 

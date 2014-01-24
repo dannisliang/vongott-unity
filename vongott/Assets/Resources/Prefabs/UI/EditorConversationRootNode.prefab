@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &100000
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400000}
-  m_Layer: 0
-  m_Name: Nodes
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,17 +96,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &400000
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400004}
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
@@ -145,7 +119,6 @@ Transform:
   m_Children:
   - {fileID: 400010}
   - {fileID: 400012}
-  - {fileID: 400000}
   - {fileID: 400006}
   - {fileID: 400008}
   - {fileID: 400002}
@@ -206,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -224,6 +198,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -255,7 +230,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: Button
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
         x: 0
@@ -271,10 +246,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 4
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -339,21 +314,21 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
-      name: Box
+      name: ButtonIOActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 48
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
@@ -371,18 +346,18 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ButtonIOActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 48
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
@@ -436,14 +411,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 10
-    y: 457
+    x: 30
+    y: 440
     width: 20
     height: 20
   mouseRct:
     serializedVersion: 2
-    x: 10
-    y: 457
+    x: 30
+    y: 440
     width: 20
     height: 20
   drawDepth: -10
@@ -452,10 +427,9 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: '-'
@@ -477,6 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -495,9 +470,10 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -540,7 +516,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -569,7 +545,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -598,7 +574,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -627,7 +603,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -642,24 +618,24 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -671,7 +647,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -707,14 +683,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 40
-    y: 460
+    x: 60
+    y: 443
     width: 20
     height: 14
   mouseRct:
     serializedVersion: 2
-    x: 40
-    y: 460
+    x: 60
+    y: 443
     width: 20
     height: 14
   drawDepth: -10
@@ -723,10 +699,9 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: 0
   overrideFontSize: 0
@@ -746,6 +721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -764,6 +740,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: ButtonIO
@@ -882,7 +859,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Box
+      name: Background
       coordinates:
         serializedVersion: 2
         x: 32
@@ -911,7 +888,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: Background
       coordinates:
         serializedVersion: 2
         x: 32
@@ -976,14 +953,14 @@ MonoBehaviour:
     height: 16
   drawRct:
     serializedVersion: 2
-    x: 120
-    y: 460
+    x: 140
+    y: 443
     width: 14
     height: 14
   mouseRct:
     serializedVersion: 2
-    x: 120
-    y: 460
+    x: 140
+    y: 443
     width: 14
     height: 14
   drawDepth: -10
@@ -992,10 +969,9 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: "\u25CF"
@@ -1017,6 +993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 0
   isDraggable: 0
   resetAfterDrag: 0
@@ -1035,6 +1012,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: TickBox
@@ -1109,7 +1087,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -1167,7 +1145,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -1182,26 +1160,26 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: TickBoxTicked
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 16
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 3
         wordWrap: 1
         padding:
           m_Left: 0
@@ -1247,14 +1225,14 @@ MonoBehaviour:
     height: 16
   drawRct:
     serializedVersion: 2
-    x: 60
-    y: 460
+    x: 80
+    y: 443
     width: 50
     height: 14
   mouseRct:
     serializedVersion: 2
-    x: 60
-    y: 460
+    x: 80
+    y: 443
     width: 50
     height: 14
   drawDepth: -10
@@ -1263,10 +1241,9 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   text: Auto
   isTicked: 0
@@ -1286,7 +1263,6 @@ MonoBehaviour:
   removeButton: {fileID: 11400000}
   connectedTo: {fileID: 0}
   indexLabel: {fileID: 11400002}
-  nodeContainer: {fileID: 400000}
   auto: {fileID: 11400006}
 --- !u!114 &11400010
 MonoBehaviour:
@@ -1300,6 +1276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDrawn: 1
+  isDisabled: 0
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
@@ -1318,6 +1295,7 @@ MonoBehaviour:
     height: 0
     heightFactor: 1
     heightOffset: 0
+  clipTo: {fileID: 0}
   styles:
     basic:
       name: Button
@@ -1349,7 +1327,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: Button
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
         x: 0
@@ -1365,10 +1343,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 4
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -1421,7 +1399,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -1436,18 +1414,18 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Box
+      name: ButtonIOActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 48
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
@@ -1465,18 +1443,18 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ButtonIOActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 48
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
@@ -1530,14 +1508,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 150
-    y: 460
+    x: 170
+    y: 443
     width: 14
     height: 14
   mouseRct:
     serializedVersion: 2
-    x: 150
-    y: 460
+    x: 170
+    y: 443
     width: 14
     height: 14
   drawDepth: -10
@@ -1546,10 +1524,9 @@ MonoBehaviour:
   dragOrigPos: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   hidden: 0
-  disabled: 0
   outOfBounds: 0
   isDirty: 0
-  inScrollView: 0
+  isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
   text: +

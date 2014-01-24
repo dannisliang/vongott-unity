@@ -6,7 +6,6 @@ class EditorConversationRootNode extends MonoBehaviour {
 	public var removeButton : OGButton;
 	public var connectedTo : EditorConversationNode;
 	public var indexLabel : OGLabel;
-	public var nodeContainer : Transform;
 	public var auto : OGTickBox;
 	
 	public function SetConnection ( node : EditorConversationNode ) {

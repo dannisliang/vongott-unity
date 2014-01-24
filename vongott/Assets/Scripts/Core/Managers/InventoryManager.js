@@ -4,6 +4,7 @@ class InventoryManager extends MonoBehaviour {
 	private var slots : InventoryEntry[,];
 	private var stash : InventoryEntryReference[];
 	public var credits : int = 0;
+	public var equippedItem : Item;
 
 	public static var instance : InventoryManager;
 
@@ -110,10 +111,23 @@ class InventoryManager extends MonoBehaviour {
 		credits += amount;
 	}
 
-	// Eqip entry
-	public function Equip ( i : Item, equip : boolean ) {
-		var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
-		player.Equip ( MonoBehaviour.Instantiate (i) as Item, equip );
+	// Equip item
+	public function UnEquip () {
+		if ( equippedItem != null ) {
+			var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
+			player.DestroyEquipped ();
+			
+			equippedItem = null;
+		}
+	}
+
+	public function Equip ( i : Item ) {
+		UnEquip ();
+		
+		var player : Player = GameCore.GetPlayer();
+		player.Equip ( i );
+		
+		equippedItem = i;
 	}
 
 	// Remove entry
@@ -126,8 +140,8 @@ class InventoryManager extends MonoBehaviour {
 			droppedItem.transform.localScale = Vector3.one;
 		}
 			
-		if ( slots[x,y].equipped ) {
-			GameCore.GetPlayerObject().GetComponent(Player).Equip ( null, false );
+		if ( slots[x,y].GetItem() == equippedItem ) {
+			UnEquip();
 		}
 					
 		GameCore.Print ( "InventoryManager | Removed entry: " + slots[x,y] );

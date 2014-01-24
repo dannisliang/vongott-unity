@@ -106,7 +106,7 @@ class UIInventory extends OGPage {
 					image.transform.localPosition = new Vector3 ( x * 90, y * 90, 5 );
 					allImages[x,y] = image;
 								
-					if ( entry.equipped ) {
+					if ( entry.GetItem() == InventoryManager.GetInstance().equippedItem ) {
 						// Show equipped
 					} else if ( entry.installed ) {
 						// Show installed
@@ -155,7 +155,7 @@ class UIInventory extends OGPage {
 		inspector.action.text = "";
 				
 		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
-			if ( selectedEntry.equipped ) {
+			if ( selectedEntry.GetItem() == InventoryManager.GetInstance().equippedItem ) {
 				inspector.action.text = "Unequip";
 			} else {
 				inspector.action.text = "Equip";
@@ -270,13 +270,14 @@ class UIInventory extends OGPage {
 	// Action buttons
 	////////////////////
 	// Equip entry
-	private function Equip ( equip : boolean ) {
-		selectedEntry.equipped = equip;
-		
-		var item : Item = selectedEntry.GetItem();
-		
-		InventoryManager.GetInstance().Equip ( item, equip );
-		
+	private function Equip ( shouldEquip : boolean ) {
+		if ( shouldEquip ) {
+			var item : Item = selectedEntry.GetItem();
+			InventoryManager.GetInstance().Equip ( item );
+		} else {
+			InventoryManager.GetInstance().UnEquip ();
+		}
+			
 		UpdateText ();
 	}
 	
@@ -337,7 +338,7 @@ class UIInventory extends OGPage {
 		var item : Item = selectedEntry.GetItem();
 		
 		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
-			if ( !selectedEntry.equipped ) {
+			if ( selectedEntry.GetItem() != InventoryManager.GetInstance().equippedItem ) {
 				Equip ( true );
 			} else {
 				Equip ( false );
