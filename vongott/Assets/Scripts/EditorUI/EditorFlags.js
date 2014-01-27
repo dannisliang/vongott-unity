@@ -65,8 +65,6 @@ class EditorFlags extends OGPage {
 		flag.button.target = this.gameObject;
 		
 		SortFlags ();
-		
-		scrollView.position.y = flag.instance.transform.position.y - 255;
 	}
 	
 	function Clear () {

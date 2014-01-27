@@ -7,6 +7,7 @@ class EditorConversationRootNode extends MonoBehaviour {
 	public var connectedTo : EditorConversationNode;
 	public var indexLabel : OGLabel;
 	public var auto : OGTickBox;
+	public var passive : OGTickBox;
 	
 	public function SetConnection ( node : EditorConversationNode ) {
 		if ( connectedTo && !node ) {

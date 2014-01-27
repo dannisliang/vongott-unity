@@ -169,7 +169,7 @@ class Player extends MonoBehaviour {
 	}
 	
 	function GetEquipmentAttribute ( a : eItemAttribute ) : float {
-		var item : Item = InventoryManager.GetInstance().equippedItem;
+		var item : Item = equippedObject;
 
 		for ( var attr : Item.Attribute in item.attr ) {
 			if ( attr.type == a ) {
@@ -204,15 +204,23 @@ class Player extends MonoBehaviour {
 	}
 	
 	function Shoot () {
-		Shoot ( this.transform.forward * 10 );
+		var cam : Camera = GameCamera.GetInstance().GetComponent(Camera);
+		var ray : Ray = cam.ScreenPointToRay ( new Vector3 ( Screen.width/2, Screen.height/2, 0 ) );
+		var hit : RaycastHit;
+		var range : float = 1000;
+		var target : Vector3 = cam.transform.position + ray.direction * range;
+
+		if ( Physics.Raycast ( ray, hit, range ) ) {
+			target = hit.point;
+		}
+
+		Shoot ( target );
 	}
 
 	function Shoot ( target : Vector3 ) {
-		var item : Item = InventoryManager.GetInstance().equippedItem;
+		if ( equippedObject == null ) { return; }
 		
-		if ( item == null ) { return; }
-		
-		var eq : Equipment = item.GetComponent ( Equipment );
+		var eq : Equipment = equippedObject as Equipment;
 		
 		if ( eq == null ) { return; }
 
@@ -238,11 +246,11 @@ class Player extends MonoBehaviour {
 						target += Vector3.one * accuracyDegree;
 					}
 				
-					DamageManager.GetInstance().SpawnBullet ( item.gameObject, target, this.gameObject );
+					DamageManager.GetInstance().SpawnBullet ( equippedObject.gameObject, target, this.gameObject );
 				
 					// Muzzle flash
-					if ( item.transform.GetChild(0) ) {
-						item.transform.GetChild(0).gameObject.SetActive ( true );
+					if ( equippedObject.transform.GetChild(0) ) {
+						equippedObject.transform.GetChild(0).gameObject.SetActive ( true );
 					}
 				}
 				break;

@@ -21,12 +21,12 @@ class InputManager extends MonoBehaviour {
 		} else {
 			if ( Input.GetKeyDown(KeyCode.I) ) {
 				OGRoot.GetInstance().GoToPage ( "Inventory" );
-				
+
 			} else if ( Input.GetKeyDown(KeyCode.Q) ) {
 				OGRoot.GetInstance().GoToPage ( "Quests" );
 			
 			} else if ( Input.GetKeyDown(KeyCode.U) ) {
-				OGRoot.GetInstance().GoToPage ( "ModWheel" );
+				OGRoot.GetInstance().GoToPage ( "Upgrades" );
 			
 			}
 		
@@ -46,18 +46,11 @@ class InputManager extends MonoBehaviour {
 		}
 		
 		// In-game controls
+		MenuControls ();
+		
 		if ( GameCore.controlsActive ) {
-			MenuControls ();
-			
-			if ( GameCore.controlsActive ) {
-				PlayerController.Update ( player );
-				GameCameraControls ();
-			}
-		
-		// Menus
-		} else {
-			MenuControls ();
-		
+			PlayerController.Update ( player );
+			GameCameraControls ();
 		}
 	}
 }

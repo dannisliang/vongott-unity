@@ -91,7 +91,7 @@ class GameCore extends MonoBehaviour {
 		GameCamera.GetInstance().enabled = state;
 		
 		controlsActive = state;
-		
+
 		if ( state ) {
 			Print ( "GameCore | Controls activated" );
 		} else {
@@ -153,6 +153,7 @@ class GameCore extends MonoBehaviour {
 			
 			iTween.StopByName ( "TimeScaleTween" );
 			SetTimeScale ( 0 );
+			controlsActive = false;
 	
 		} else {		
 			iTween.StopByName ( "TimeScaleTween" );
@@ -164,6 +165,7 @@ class GameCore extends MonoBehaviour {
 				SetTimeScale ( tempTimeScale );
 			
 			}
+			controlsActive = true;
 		}
 	}
 	

@@ -514,8 +514,8 @@ static function SerializePathNode ( p : PathNode ) : JSONObject {
 	// duration
 	node.AddField ( "duration", p.duration );
 	
-	// running
-	node.AddField ( "running", p.running );
+	// movement
+	node.AddField ( "movement", p.movement.ToString() );
 	
 	return node;
 }
@@ -682,6 +682,7 @@ static function SerializeConversationRootNode ( obj : EditorConversationRootNode
 	var rootNode : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	
 	rootNode.AddField ( "auto", obj.auto.isTicked );
+	rootNode.AddField ( "passive", obj.passive.isTicked );
 	
 	if ( obj.connectedTo ) {
 		rootNode.AddField ( "connectedTo", DeserializeConversationNode ( obj.connectedTo ) );

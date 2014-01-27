@@ -81,6 +81,8 @@ class UIHUD extends OGPage {
 	
 	// Show notification
 	static function ShowNotification ( msg : String ) {
+		Debug.Log ( msg );
+		
 		notificationIndefinite = true;
 				
 		if ( msg != notificationBox.text.text ) {

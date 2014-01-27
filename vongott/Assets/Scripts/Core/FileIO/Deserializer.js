@@ -662,8 +662,8 @@ static function DeserializePathNode ( p : JSONObject ) : PathNode {
 	// duration
 	node.duration = p.GetField ( "duration" ).n;
 	
-	// duration
-	if ( p.HasField ( "running" ) ) { node.running = p.GetField ( "running" ).b; }
+	// movement
+	if ( p.HasField ( "movement" ) ) { node.SetMovement ( p.GetField ( "movement" ).str ); }
 	
 	return node;
 }
@@ -825,6 +825,7 @@ static function DeserializeConversationTree ( str : String ) : ConversationTree 
 		var rootNode : ConversationRootNode = new ConversationRootNode ();
 		
 		rootNode.auto = rn.GetField("auto").b;
+		rootNode.passive = ( rn.HasField("passive") ) ? rn.GetField("passive").b : false;
 		
 		rootNode.connectedTo = DeserializeConversationNode (rn.GetField("connectedTo"));	
 		

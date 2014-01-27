@@ -73,7 +73,9 @@ class Actor extends InteractiveObject {
 	@HideInInspector var firstNodeTriggered : boolean = false;
 	
 	@HideInInspector var pathFinder : OPPathFinder;
-			
+
+	private var nextConvoForced : boolean = false;	
+
 
 	////////////////////
 	// Init
@@ -102,6 +104,8 @@ class Actor extends InteractiveObject {
 			
 			MakeRagdoll ( false );
 		}
+		
+		nextConvoForced = ConversationManager.CheckForcedConvo( this );
 	}
 	
 	// Set affiliation
@@ -185,6 +189,7 @@ class Actor extends InteractiveObject {
 	
 	function StopTalking ( endAction : String ) {
 		talking = false;
+		nextConvoForced = ConversationManager.CheckForcedConvo( this );
 		
 		switch ( endAction ) {
 			case "Attack":
@@ -411,8 +416,13 @@ class Actor extends InteractiveObject {
 				
 				}
 										
-				if ( path[currentNode].running ) {
+				if ( path[currentNode].movement == ePathMovement.Run ) {
 					RunForward ();
+				
+				} else if ( path[currentNode].movement == ePathMovement.Teleport ) {
+					this.transform.position = path[currentNode].position;
+					waiting = true;
+					ClearPath();
 				
 				} else {
 					WalkForward ();
@@ -511,7 +521,7 @@ class Actor extends InteractiveObject {
 		// check for interaction
 		if ( GameCore.controlsActive ) {
 			if ( affiliation == eAffiliation.Ally && !talking  ) {
-				if ( ConversationManager.CheckForcedConvo( this ) ) {
+				if ( nextConvoForced ) {
 					Interact();
 				}
 			}

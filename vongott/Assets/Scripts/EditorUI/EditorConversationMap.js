@@ -289,7 +289,7 @@ class EditorConversationMap extends OGPage {
 			rootNode.removeButton.gameObject.SetActive ( rootNodes.childCount > 1 );
 			
 			addRootNode.transform.position = rootNode.transform.position + new Vector3 ( 0, 30, 0 );
-			rootNodeBackground.localScale = new Vector3 ( 140, 75 + i * 30, 1 );
+			rootNodeBackground.localScale = new Vector3 ( 220, 75 + i * 30, 1 );
 		}
 		
 		yield WaitForEndOfFrame ();
@@ -301,6 +301,7 @@ class EditorConversationMap extends OGPage {
 		var newRootNode : EditorConversationRootNode = CreateRootNode ();
 		
 		newRootNode.auto.isTicked = reference.auto;
+		newRootNode.passive.isTicked = reference.passive;
 		if ( reference.connectedTo ) {
 			CreateNode ( newRootNode, reference.connectedTo );
 		}
@@ -491,7 +492,7 @@ class EditorConversationMap extends OGPage {
 		}
 
 		var pos : Vector3;
-		pos.x = 200 + node.offset * cellDistance;
+		pos.x = 280 + node.offset * cellDistance;
 		pos.y = bottomLines[offset];
 		pos.z = scrollView.transform.position.z + 5;
 		if ( pos.y < minHeight ) { pos.y = minHeight; }

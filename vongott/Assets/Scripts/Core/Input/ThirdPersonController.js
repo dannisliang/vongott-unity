@@ -38,4 +38,9 @@ class ThirdPersonController {
 			
 		player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, rotationQuaternion, 5 * Time.deltaTime );
 	}
+
+	// For locked rotation
+	public static function Update ( player : Player, deltaVertical : float, lockedRotation : Vector3 ) {
+		player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, Quaternion.Euler ( lockedRotation ), 5 * Time.deltaTime );
+	}
 }

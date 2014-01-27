@@ -6,6 +6,7 @@ public class ConversationTree {
 
 public class ConversationRootNode {
 	var auto : boolean = false;
+	var passive : boolean = false;
 	var connectedTo : ConversationNode;
 }
 
@@ -51,21 +52,24 @@ public class ConversationManager {
 	private static var currentNode : ConversationNode;
 	private static var endAction : String;
 	private static var currentOption: int = 0;
-	
-	public static function SetSpeaker ( speaker : String, smoothCam : boolean ) {
+	private static var useSmoothCam : boolean = true;
+	private static var passiveConvo : boolean = false;
+
+	public static function SetSpeaker ( speaker : String ) {
 		var speakerName : String;
 				
 		if ( speaker == "NPC2" && currentSupportActor != null ) {
 			speakerName = currentSupportActor.displayName;
- 			GameCamera.GetInstance().ConvoFocus ( currentSupportActor, smoothCam );
+			currentSupportActor.talking = true;
+ 			GameCamera.GetInstance().ConvoFocus ( currentSupportActor, useSmoothCam );
 
 		} else if ( speaker == "NPC" || speaker == "NPC2" ) {
 			speakerName = currentActor.displayName;
- 			GameCamera.GetInstance().ConvoFocus ( currentActor, smoothCam );
+ 			GameCamera.GetInstance().ConvoFocus ( currentActor, useSmoothCam );
 		
 		} else if ( speaker == "Player" ) {
 			speakerName = GameCore.playerName;
-			GameCamera.GetInstance().ConvoFocus ( GameCore.GetPlayer(), smoothCam );
+			GameCamera.GetInstance().ConvoFocus ( GameCore.GetPlayer(), useSmoothCam );
 
 		}
 					
@@ -73,11 +77,19 @@ public class ConversationManager {
 	}
 	
 	private static function Exit () {
-		OGRoot.GetInstance().GoToPage ( "HUD" );
-		
+		if ( !passiveConvo ) {
+			OGRoot.GetInstance().GoToPage ( "HUD" );
+		}
+
 		currentActor.StopTalking ( endAction );
+		
+		if ( currentSupportActor != null ) {
+			currentSupportActor.talking = false;
+		}
+
 		GameCore.GetPlayer().StopTalking ();
 		
+
 		currentActor = null;
 		currentSupportActor = null;
 
@@ -86,14 +98,23 @@ public class ConversationManager {
 
 	public static function NextRoot ( index : int ) {
 		currentActor.currentConvoRoot = index;
+
+		// Set passive
+		passiveConvo = currentConvo.rootNodes[currentActor.currentConvoRoot].passive;
+
+		if ( !passiveConvo ) {
+			OGRoot.GetInstance().GoToPage ( "Conversation" );
+		}
+
+		// Set current node
 		currentNode = currentConvo.rootNodes[currentActor.currentConvoRoot].connectedTo;
-		DisplayNode ( false );
+		DisplayNode ();
 	}
 
 	public static function NextNode ( index : int ) {
 		if ( currentNode.connectedTo.Count > index ) {
 			currentNode = currentNode.connectedTo [ index ];
-			DisplayNode ( false );
+			DisplayNode ();
 		} else {
 			Exit ();
 		}
@@ -113,11 +134,16 @@ public class ConversationManager {
 	}
 	
 	public static function StartConversation ( actor : Actor ) {
+		// Set current conversation
 		currentConvo = Loader.LoadConversationTree ( actor.conversationTree );
 		currentActor = actor;
 		
-		var colliders : Collider[] = Physics.OverlapSphere ( currentActor.transform.position, 5 );
+		// Prepare to use camera transition
+		useSmoothCam = true;
+		GameCamera.GetInstance().StorePosRot();
 
+		// Find support actor
+		var colliders : Collider[] = Physics.OverlapSphere ( currentActor.transform.position, 5 );
 		for ( var i : int = 0; i < colliders.Length; i++ ) {
 			var foundActor : Actor = colliders[i].GetComponent(Actor);
 
@@ -126,17 +152,13 @@ public class ConversationManager {
 			}
 		}
 
-		GameCamera.GetInstance().StorePosRot();
+		// Send signal to player object		
 		GameCore.GetPlayer().TalkTo ( actor );
-		
-		currentNode = currentConvo.rootNodes[actor.currentConvoRoot].connectedTo;
-		
-		OGRoot.GetInstance().GoToPage ( "Conversation" );
 	
-		DisplayNode ( true );
+		NextRoot ( currentActor.currentConvoRoot );	
 	}
 	
-	public static function DisplayNode ( smoothCam : boolean ) {
+	public static function DisplayNode () {
 		var waitForInput : boolean = false;
 		var nextNode : int = 0;
 		var forceRoot : int = -1;
@@ -144,10 +166,15 @@ public class ConversationManager {
 		switch ( currentNode.type ) {
 			case "Speak":
 				waitForInput = true;
-				SetSpeaker ( currentNode.speaker, smoothCam );
+				SetSpeaker ( currentNode.speaker );
 				if ( currentNode.lines.Count <= 1 ) {
-					UIConversation.SetLine ( currentNode.lines[0] );
-				} else {
+					if ( passiveConvo ) {
+						UIHUD.ShowTimedNotification ( currentNode.lines[0], 5 );
+					} else {	
+						UIConversation.SetLine ( currentNode.lines[0] );
+					}
+				
+				} else if ( !passiveConvo ) {
 					for ( var i : int = 0; i < currentNode.lines.Count; i++ ) {
 						if ( !String.IsNullOrEmpty(currentNode.lines[i]) ) {
 							UIConversation.SetOption ( i, currentNode.lines[i] );
@@ -155,6 +182,9 @@ public class ConversationManager {
 					}
 				}
 				
+				// Camera transition has been done
+				useSmoothCam = false;
+
 				break;
 				
 			case "GameEvent":
@@ -200,8 +230,23 @@ public class ConversationManager {
 				forceRoot = currentNode.jumpTo;
 				break;
 		}		
-						
-		if ( !waitForInput ) {
+		
+		if ( passiveConvo ) {
+			var timeOut : float = 5;
+			
+			while ( timeOut > 0 ) {
+				timeOut -= Time.deltaTime;
+
+				if ( timeOut <= 0 ) {
+					if ( forceRoot > -1 ) {
+						NextRoot ( forceRoot );
+					} else {
+						NextNode ( nextNode );
+					}
+				}
+			}
+
+		} else if ( !waitForInput ) {
 			if ( forceRoot > -1 ) {
 				NextRoot ( forceRoot );
 			} else {

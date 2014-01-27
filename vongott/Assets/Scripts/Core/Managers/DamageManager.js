@@ -21,6 +21,7 @@ class DamageManager extends MonoBehaviour {
 		Destroy ( obj );
 	}
 
+
 	//////////////////
 	// Spawn
 	//////////////////

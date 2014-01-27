@@ -293,7 +293,7 @@ class GameCamera extends MonoBehaviour {
 	// Render
 	////////////////////
 	function OnPostRender () {
-		if ( GameCore.GetInteractiveObject() ) {
+		if ( GameCore.GetInteractiveObject() && !GameCore.interactiveObjectLocked ) {
 			DrawBoundingBox ( GameCore.GetInteractiveObject().gameObject );
 		}
 	}	
@@ -304,29 +304,30 @@ class GameCamera extends MonoBehaviour {
 	////////////////////
 	function Update () {
 		// Check for interaction
-		var hit : RaycastHit;
-		Debug.DrawRay ( transform.position, transform.forward * 4, Color.yellow );
-		if ( Physics.Raycast ( transform.position, transform.forward, hit, 4 ) ) {
-			if ( hit.collider.GetComponent ( InteractiveObject ) && GameCore.GetInteractiveObject() != hit.collider.GetComponent(InteractiveObject) ) {
-				hit.collider.GetComponent ( InteractiveObject ).Focus ();
-			}
-				
-		} else if ( GameCore.GetInteractiveObject() && !GameCore.interactiveObjectLocked ) {
-				GameCore.GetInteractiveObject().Unfocus ();
-		
-		}
-		
-		// Bounding box modifier
-		if ( boundingBoxModifier < 1 ) {
-			boundingBoxDelta = 0.1;
-		
-		} else {
-			boundingBoxDelta -= 0.3 * Time.deltaTime;
-		 
-	  	} 
-		
-		boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
+		if ( !GameCore.interactiveObjectLocked ) {
+			var hit : RaycastHit;
+			Debug.DrawRay ( transform.position, transform.forward * 4, Color.yellow );
+			if ( Physics.Raycast ( transform.position, transform.forward, hit, 4 ) ) {
+				if ( hit.collider.GetComponent ( InteractiveObject ) && GameCore.GetInteractiveObject() != hit.collider.GetComponent(InteractiveObject) ) {
+					hit.collider.GetComponent ( InteractiveObject ).Focus ();
+				}
+					
+			} else if ( GameCore.GetInteractiveObject() ) {
+					GameCore.GetInteractiveObject().Unfocus ();
 			
+			}
+			
+			// Bounding box modifier
+			if ( boundingBoxModifier < 1 ) {
+				boundingBoxDelta = 0.1;
+			
+			} else {
+				boundingBoxDelta -= 0.3 * Time.deltaTime;
+			 
+			} 
+			
+			boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
+		}
 	}
 	
 	private function GetOffset () : Vector3 {

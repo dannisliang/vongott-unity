@@ -48,7 +48,8 @@ public class OGWidgetInspector extends Editor {
 			// Default inspector
 			DrawDefaultInspector ();
 			
-			if ( target.GetType() != OGTexture ) {
+			// OGCameraWindow and OGTexture don't need styles
+			if ( target.GetType() != OGTexture && target.GetType() != OGCameraWindow ) {
 				EditorGUILayout.Space();
 		
 				EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel );

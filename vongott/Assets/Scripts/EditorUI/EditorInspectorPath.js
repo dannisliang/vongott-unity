@@ -126,16 +126,17 @@ class EditorInspectorPath extends MonoBehaviour {
 		il.text = "Idle (s)";
 		il.GetDefaultStyles();
 
-		// running
-		var running : GameObject = new GameObject ( "Running" );
+		// movement
+		var running : GameObject = new GameObject ( "Movement" );
 		running.transform.parent = node.transform;
 		running.transform.localPosition = new Vector3 ( 190, 20, 0 );
-		running.transform.localScale = new Vector3 ( 70, 16, 1 );
+		running.transform.localScale = new Vector3 ( 70, 20, 1 );
 		
-		var rtb : OGTickBox = running.AddComponent ( OGTickBox );
-		rtb.text = "Run";
-		rtb.isTicked = actorNode.running;
-		rtb.GetDefaultStyles();
+		var rpu : OGPopUp = running.AddComponent ( OGPopUp );
+		rpu.title = "<movement>";
+		rpu.options = [ "Walk", "Run", "Teleport" ];
+		rpu.selectedOption = actorNode.movement.ToString();
+		rpu.GetDefaultStyles();
 
 		// position
 		var posLabel : GameObject = new GameObject ( "Label" );
@@ -213,9 +214,9 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 			for ( var i = 0; i < a.path.Count; i++ ) {
 				var duration : String = nodes[i].GetComponentInChildren(OGTextField).text;
-				var running : boolean = nodes[i].GetComponentInChildren(OGTickBox).isTicked;
+				var movement : String = nodes[i].GetComponentInChildren(OGPopUp).selectedOption;
 				
-				a.path[i].running = running;
+				a.path[i].SetMovement ( movement );
 				
 				if ( duration != "" ) {
 					a.path[i].duration = float.Parse ( duration );
