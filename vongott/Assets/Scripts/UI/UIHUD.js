@@ -90,10 +90,5 @@ class UIHUD extends OGPage {
 		}
 		
 		notificationBox.instance.SetActive ( !(msg == "") );
-		
-		var length : float = ( msg.Length * 4 ) + 80;
-		notificationBox.background.transform.localScale = new Vector3 ( length, notificationBox.background.transform.localScale.y, 1.0 );
-		notificationBox.text.transform.localScale = notificationBox.background.transform.localScale;
-		notificationBox.instance.GetComponent(OGWidget).anchor.xOffset = -(length/2);
 	}
 }
