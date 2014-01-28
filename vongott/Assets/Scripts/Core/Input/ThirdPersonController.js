@@ -2,7 +2,7 @@
 
 class ThirdPersonController {
 	public static function Update ( player : Player, deltaVertical : float, deltaHorizontal : float ) {
-		var targetRotation : float = GameCamera.GetInstance().transform.eulerAngles.y;
+		var targetRotation : float = Camera.main.transform.eulerAngles.y;
 
 		// Right forward
 		if ( deltaHorizontal == 1 && deltaVertical == 1 ) {

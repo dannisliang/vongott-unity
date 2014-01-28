@@ -13,6 +13,7 @@ GameObject:
   - 92: {fileID: 9200000}
   - 81: {fileID: 8100000}
   - 114: {fileID: 11400002}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: MainCamera
@@ -26,8 +27,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -55,7 +56,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294958847
+    m_Bits: 4294954751
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -74,6 +75,38 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b9e9e4f9511ca4ba9a38345cc64ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  distance: 1.39999998
+  standingOffset: {x: .400000006, y: 1.60000002}
+  crouchedOffset: {x: .400000006, y: .800000012}
+  crawlspaceOffset: {x: .400000006, y: .699999988}
+  offsetFromWall: .100000001
+  maxDistance: 2
+  minDistance: .600000024
+  xSpeed: 200
+  ySpeed: 200
+  yMinLimit: -80
+  yMaxLimit: 80
+  zoomRate: 40
+  rotationDampening: 3
+  zoomDampening: 5
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  lockToRearOfTarget: 0
+  allowMouseInputX: 1
+  allowMouseInputY: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -91,12 +124,6 @@ MonoBehaviour:
   thirdPersonLayerMask:
     serializedVersion: 2
     m_Bits: 4294958847
-  sensitivity: 2.5
-  distance: 2
-  returnSpeed: 20
-  turnSpeed: 100
-  translateSpeed: 5
-  offset: {x: .5, y: 1.5, z: 0}
   xRayShader: {fileID: 4800000, guid: 986531510bea29541a6e13bca1e2446c, type: 3}
   regularShader: {fileID: 4800000, guid: 42e1a9633be9e1a45904a5565e18f9b4, type: 3}
   boundingBoxMaterial: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}

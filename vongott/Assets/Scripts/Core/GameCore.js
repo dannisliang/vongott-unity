@@ -87,6 +87,10 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Controls
 	////////////////////
+	public function ToggleControls ( state : boolean, delay : float ) {
+		StartCoroutine ( ExecuteWithDelay ( function () { ToggleControls ( state ); }, delay ) );
+	}
+
 	static function ToggleControls ( state : boolean ) {		
 		GameCamera.GetInstance().enabled = state;
 		
@@ -153,7 +157,6 @@ class GameCore extends MonoBehaviour {
 			
 			iTween.StopByName ( "TimeScaleTween" );
 			SetTimeScale ( 0 );
-			controlsActive = false;
 	
 		} else {		
 			iTween.StopByName ( "TimeScaleTween" );
@@ -165,7 +168,6 @@ class GameCore extends MonoBehaviour {
 				SetTimeScale ( tempTimeScale );
 			
 			}
-			controlsActive = true;
 		}
 	}
 	

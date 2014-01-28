@@ -11,13 +11,6 @@ class GameCamera extends MonoBehaviour {
 	
 	public var firstPersonLayerMask : LayerMask;
 	public var thirdPersonLayerMask : LayerMask;
-	public var sensitivity : float = 2.5;
-	public var distance : float = 3;
-    	public var returnSpeed : float = 1.0;
-	public var turnSpeed : float = 2;
-	public var translateSpeed : float = 5;
-	public var standingOffset : Vector3 = new Vector3 ( 0.5, 1.5, 0 );
-	public var crouchingOffset : Vector3 = new Vector3 ( 0.5, 1.1, 0 );
 	public var xRayShader : Shader;
 	public var regularShader : Shader;
 	public var boundingBoxMaterial : Material;
@@ -327,67 +320,6 @@ class GameCamera extends MonoBehaviour {
 			} 
 			
 			boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
-		}
-	}
-	
-	private function GetOffset () : Vector3 {
-		if ( PlayerController.bodyState == ePlayerBodyState.Crouching ) {
-			return crouchingOffset;
-		} else {
-			return standingOffset;
-		}
-	}
-
-	function LateUpdate () {
-		if ( player == null ) {
-			player = GameCore.GetPlayer();
-			return;
-		}
-
-		var target : Vector3 = player.transform.position;
-		target.y += GetOffset().y;
-		target += transform.right * GetOffset().x;
-		
-		transform.Translate ( -Vector3.forward * returnSpeed * Time.deltaTime );
-	       
-		var xDeg : float = Input.GetAxis("Mouse X") * turnSpeed; 
-		var yDeg : float = Input.GetAxis("Mouse Y") * turnSpeed;
-		transform.RotateAround(target, Vector3.up, xDeg * Time.deltaTime);
-		transform.RotateAround(target, transform.right, -yDeg * Time.deltaTime);
-	       
-		var dist : float = distance + 1.0f;
-		var ray : Ray = new Ray ( target, transform.position - target );
-		var hit : RaycastHit;
-		
-		if( Physics.Raycast ( ray, hit, dist ) ) {
-		    if ( hit.collider.gameObject.tag == "wall" ) {
-			    dist = hit.distance - 1.0;
-			    
-			    Debug.DrawLine ( this.transform.position, hit.point, Color.red );
-			}
-		}
-
-		if ( dist > distance ) { dist = distance; }
-		if ( dist < 0.0 ) { dist = 0.0; }
-			
-		if ( !firstPerson ) {
-			transform.position = ray.GetPoint(dist);
-		} else {
-			transform.position = GameCore.GetPlayerObject().transform.position + new Vector3 ( 0, 1.65, 0 );
-			
-			var playerRot : Vector3 = this.transform.localEulerAngles;
-			playerRot.x = 0;
-			playerRot.z = 0;
-			
-			GameCore.GetPlayerObject().transform.rotation = Quaternion.Euler ( playerRot );
-		
-		}
-		
-		if ( skyboxCamera ) {
-			skyboxCamera.transform.rotation = transform.rotation;
-			skyboxCamera.transform.localPosition = player.transform.position / 40;
-		} else {
-			skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
 		}
 	}
 }

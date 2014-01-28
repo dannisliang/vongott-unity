@@ -16,6 +16,23 @@ class InventoryManager extends MonoBehaviour {
 		return instance;
 	}
 
+	// Is equipped item a gun?
+	public function HasEquippedGun() : boolean {
+		if ( equippedItem ) {
+			var eq : Equipment = equippedItem as Equipment;
+
+			if ( eq ) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} else {
+			return false;
+
+		}
+	}
+
 	// Get slots
 	public function GetSlots () : InventoryEntry[,] { return slots; }
 	

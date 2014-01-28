@@ -55,7 +55,6 @@ class Player extends MonoBehaviour {
 		
 		talkingTo = null;
 	
-		StartCoroutine ( GameCore.GetInstance().ExecuteWithDelay ( function () { GameCore.ToggleControls ( true ); }, 1 ) );
 	}
 	
 	
@@ -204,7 +203,7 @@ class Player extends MonoBehaviour {
 	}
 	
 	function Shoot () {
-		var cam : Camera = GameCamera.GetInstance().GetComponent(Camera);
+		var cam : Camera = Camera.main;
 		var ray : Ray = cam.ScreenPointToRay ( new Vector3 ( Screen.width/2, Screen.height/2, 0 ) );
 		var hit : RaycastHit;
 		var range : float = 1000;

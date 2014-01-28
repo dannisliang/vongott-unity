@@ -28,16 +28,17 @@ class PlayerController {
 	public static var deltaHorizontal : float;
 	public static var deltaCombined : float;
 
+	public static var isClimbing : boolean = false;
+	public static var inCrawlspace : boolean = false;
+	public static var isGrounded : boolean = true;
+	public static var isRotationLocked : boolean = false;
+	public static var useForcedPoint : boolean = false;
+	
 	private static var distGround : float = float.PositiveInfinity;
 	private static var forcedPointVector : Vector3;
 	private static var lockedRotationVector : Vector3;
 	private static var ladderTopY : float;
 	private static var ladderBottomY : float;
-	private static var isClimbing : boolean = false;
-	private static var inCrawlspace : boolean = false;
-	private static var isGrounded : boolean = true;
-	private static var isRotationLocked : boolean = false;
-	private static var useForcedPoint : boolean = false;
 	private static var jumpTriggerTimeout : int = 0;
 
 	public static function SetControlMode ( mode : ePlayerControlMode ) {
@@ -117,7 +118,7 @@ class PlayerController {
 		}
 				
 		// Shoot
-		if ( Input.GetMouseButton ( 0 ) ) {
+		if ( Input.GetMouseButton ( 0 ) && InventoryManager.GetInstance().HasEquippedGun() ) {
 			actionState = ePlayerActionState.Shooting;
 		
 		// Interact
