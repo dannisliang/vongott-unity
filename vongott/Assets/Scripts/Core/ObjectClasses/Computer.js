@@ -60,7 +60,7 @@ class Computer extends InteractiveObject {
 		inSession = true;
 		UIHUD.ToggleCrosshair ();
 		
-		GameCore.ToggleControls ( false );
+		GameCore.GetInstance().SetControlsActive ( false );
 		UIHUD.ShowNotification ( "" );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.4 );
@@ -78,7 +78,7 @@ class Computer extends InteractiveObject {
 	
 		UIHUD.ToggleCrosshair ();
 	
-		GameCore.ToggleControls ( true );
+		GameCore.GetInstance().SetControlsActive ( true );
 	}
 	
 	override function Interact () {

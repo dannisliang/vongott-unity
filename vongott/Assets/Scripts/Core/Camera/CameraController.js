@@ -57,7 +57,7 @@ public class CameraController extends MonoBehaviour {
 		}
 
 		// Only run if controls are enabled
-		if ( !GameCore.controlsActive ) {
+		if ( !GameCore.GetInstance().GetControlsActive() ) {
 			return;
 		}
 

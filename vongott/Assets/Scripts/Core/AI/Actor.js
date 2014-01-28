@@ -519,7 +519,7 @@ class Actor extends InteractiveObject {
 	// Interact
 	override function InvokePrompt () {
 		// check for interaction
-		if ( GameCore.controlsActive ) {
+		if ( GameCore.GetInstance().GetControlsActive() ) {
 			if ( affiliation == eAffiliation.Ally && !talking  ) {
 				if ( nextConvoForced ) {
 					Interact();
@@ -529,7 +529,7 @@ class Actor extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		if ( GameCore.controlsActive && !talking ) {
+		if ( GameCore.GetInstance().GetControlsActive() && !talking ) {
 			StartCoroutine ( Talk() );
 			UIHUD.ShowNotification ( "" );
 		}

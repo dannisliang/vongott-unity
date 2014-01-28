@@ -321,5 +321,13 @@ class GameCamera extends MonoBehaviour {
 			
 			boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
 		}
+
+		// Move skybox camera with camera
+		if ( skyboxCamera ) {
+			skyboxCamera.transform.rotation = transform.rotation;
+			skyboxCamera.transform.localPosition = GameCore.GetPlayer().transform.position / 40;
+		} else {
+			skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
+		}
 	}
 }

@@ -57,7 +57,7 @@ class UIQuests extends OGPage {
 	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q) ) {
 			OGRoot.GetInstance().GoToPage ( "HUD" );
-			GameCore.ToggleControls ( true );
+			GameCore.GetInstance().SetControlsActive ( true );
 		}
 	}
 }

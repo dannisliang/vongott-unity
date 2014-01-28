@@ -31,7 +31,6 @@ class GameCore extends MonoBehaviour {
 	static var scanner:OPScanner;
 	
 	static var running = false;
-	static var controlsActive = true;
 	
 	static var currentLevel : GameObject;
 	static var nextLevel : String = "";
@@ -50,21 +49,22 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Player
 	////////////////////
-	static function GetPlayerObject () : GameObject {
+	public static function GetPlayerObject () : GameObject {
 		return playerObject;
 	}
 	
-	static function GetPlayer () : Player {
+	public static function GetPlayer () : Player {
 		return playerObject.GetComponent(Player);
 	}
-	
-	
+
+
 	////////////////////
 	// Actors
 	////////////////////
 	public static function GetActors () : Actor[] { 
 		return levelContainer.GetComponentsInChildren.<Actor>();
 	}
+
 
 	////////////////////
 	// Interactions
@@ -87,15 +87,13 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Controls
 	////////////////////
-	public function ToggleControls ( state : boolean, delay : float ) {
-		StartCoroutine ( ExecuteWithDelay ( function () { ToggleControls ( state ); }, delay ) );
+	public function GetControlsActive () : boolean {
+		return !InputManager.isLocked && state != eGameState.Menu;
 	}
 
-	static function ToggleControls ( state : boolean ) {		
-		GameCamera.GetInstance().enabled = state;
+	public function SetControlsActive ( state : boolean ) {
+		InputManager.isLocked = !state;
 		
-		controlsActive = state;
-
 		if ( state ) {
 			Print ( "GameCore | Controls activated" );
 		} else {
@@ -103,6 +101,10 @@ class GameCore extends MonoBehaviour {
 		}
 	}
 	
+	public function SetControlsActive ( state : boolean, delay : float ) {
+		StartCoroutine ( ExecuteWithDelay ( function () { SetControlsActive ( state ); }, delay ) );
+	}
+
 	
 	////////////////////
 	// Load level

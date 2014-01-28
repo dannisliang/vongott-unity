@@ -26,7 +26,7 @@ class Terminal extends InteractiveObject {
 		
 		GameCamera.GetInstance().StorePosRot ();
 		
-		GameCore.ToggleControls ( false );
+		GameCore.GetInstance().SetControlsActive ( false );
 		UIHUD.ShowNotification ( "" );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
@@ -43,7 +43,7 @@ class Terminal extends InteractiveObject {
 	
 		UIHUD.ToggleCrosshair ();
 	
-		GameCore.ToggleControls ( true );
+		GameCore.GetInstance().SetControlsActive ( true );
 	}
 	
 	override function Interact () {

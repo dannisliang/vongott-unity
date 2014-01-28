@@ -94,7 +94,7 @@ public class ConversationManager {
 		currentSupportActor = null;
 
 		GameCamera.GetInstance().RestorePosRot ( 1 );
-		GameCore.GetInstance().ToggleControls ( true, 1 );
+		GameCore.GetInstance().SetControlsActive ( true, 1 );
 	}
 
 	public static function NextRoot ( index : int ) {

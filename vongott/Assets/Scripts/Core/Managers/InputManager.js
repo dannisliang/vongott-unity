@@ -3,7 +3,8 @@
 class InputManager extends MonoBehaviour {
 	public static var escFunction : Function;
 	public static var jumpFunction : Function;
-	
+	public static var isLocked : boolean = false;
+
 	private var player : Player;
 	
 	private function GameCameraControls () {
@@ -48,7 +49,7 @@ class InputManager extends MonoBehaviour {
 		// In-game controls
 		MenuControls ();
 		
-		if ( GameCore.controlsActive ) {
+		if ( GameCore.GetInstance().GetControlsActive() ) {
 			PlayerController.Update ( player );
 			GameCameraControls ();
 		}

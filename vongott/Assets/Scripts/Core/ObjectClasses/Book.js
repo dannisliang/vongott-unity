@@ -15,7 +15,7 @@ class Book extends InteractiveObject {
 		
 		GameCamera.GetInstance().StorePosRot ();
 		
-		GameCore.ToggleControls ( false );
+		GameCore.GetInstance().SetControlsActive ( false );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
 		
@@ -31,7 +31,7 @@ class Book extends InteractiveObject {
 	
 		UIHUD.ToggleCrosshair ();
 	
-		GameCore.ToggleControls ( true );
+		GameCore.GetInstance().SetControlsActive ( true );
 	}
 	
 	override function Interact () {

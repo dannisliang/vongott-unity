@@ -34,7 +34,7 @@ class LiftPanel extends InteractiveObject {
 		
 		GameCamera.GetInstance().StorePosRot ();
 		
-		GameCore.ToggleControls ( false );
+		GameCore.GetInstance().SetControlsActive ( false );
 		UIHUD.ShowNotification ( "" );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
@@ -74,7 +74,7 @@ class LiftPanel extends InteractiveObject {
 		UIHUD.ToggleCrosshair ();
 	
 		GameCore.interactiveObjectLocked = false;
-		GameCore.ToggleControls ( true );
+		GameCore.GetInstance().SetControlsActive ( true );
 	
 		if ( i < 9 && i > -1 ) {
 			currentDestination = i;

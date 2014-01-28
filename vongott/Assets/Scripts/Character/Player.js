@@ -39,7 +39,7 @@ class Player extends MonoBehaviour {
 	
 	// Talking
 	function TalkTo ( a : Actor ) {
-		GameCore.ToggleControls ( false );
+		GameCore.GetInstance().SetControlsActive ( false );
 		
 		talkingTo = a;
 		
