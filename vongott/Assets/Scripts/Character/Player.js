@@ -22,7 +22,6 @@ class Player extends MonoBehaviour {
 	private var equippedObject : Item;
 	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
-	private var controller : PlayerController;
 	private var capsuleCollider : CapsuleCollider;
 
 					
@@ -118,19 +117,28 @@ class Player extends MonoBehaviour {
 			Destroy ( equippedObject.gameObject );
 		}
 	}
-	
+
+	public function CheckWeaponPosition () {
+		if ( equippedObject ) {
+			if ( GameCamera.controller.state == eCameraState.FirstPerson ) {
+				equippedObject.transform.parent = Camera.main.transform;
+				equippedObject.transform.localPosition = new Vector3 ( 0.27, -0.17, 1 );
+				equippedObject.transform.localEulerAngles = Camera.main.transform.forward;
+			} else {
+				equippedObject.transform.parent = hand;
+				equippedObject.transform.localPosition = Vector3.zero;;
+				equippedObject.transform.localEulerAngles = hand.forward;;
+			}
+		}
+	}
+
 	function Equip ( item : Item ) {
 		var slot : eEquipmentSlot = ( item as Equipment ).eqSlot;
 		var target : Transform;
-		var adjustPosition : Vector3;
-		var adjustRotation : Vector3;
 		
 		if ( slot == eEquipmentSlot.Hands ) {
 			target = hand;
 		
-			adjustPosition = new Vector3 ( 0.222, -0.006, -0.060 );
-			adjustRotation = new Vector3 ( 16, 182, 8.5 );
-	
 		} else if ( slot == eEquipmentSlot.Head ) {
 			target = head;
 		
@@ -138,8 +146,8 @@ class Player extends MonoBehaviour {
 		
 		equippedObject = Instantiate ( item ) as Item;
 		equippedObject.transform.parent = target;
-		equippedObject.transform.localPosition = adjustPosition;
-		equippedObject.transform.localEulerAngles = adjustRotation;
+		equippedObject.transform.localPosition = Vector3.zero;
+		equippedObject.transform.localEulerAngles = target.forward;
 		equippedObject.GetComponent(BoxCollider).enabled = false;
 		equippedObject.rigidbody.useGravity = false;
 		equippedObject.rigidbody.isKinematic = true;

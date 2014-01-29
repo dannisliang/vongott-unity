@@ -1,6 +1,13 @@
-﻿    //Camera Controller in JS v2.1
+﻿#pragma strict
+
+enum eCameraState {
+	ThirdPerson,
+	FirstPerson,
+	CutScene
+}
 
 public class CameraController extends MonoBehaviour {
+	public var state : eCameraState;
 	public var target : GameObject;                   // Target to follow
 	public var distance : float = 5;                 // Default Distance
 	public var standingOffset : Vector2 = new Vector2 ( 0.4, 1.6 );
@@ -31,36 +38,67 @@ public class CameraController extends MonoBehaviour {
 	private var pbuffer : float = 0;                  // Cooldown buffer for SideButtons
 	private var coolDown : float = 0.5;               // Cooldowntime for SideButtons
      
-	function Start () {      
-		var angles : Vector3 = transform.eulerAngles;
-		xDeg = angles.x;
-		yDeg = angles.y;
-		currentDistance = distance;
-		desiredDistance = distance;
-		correctedDistance = distance;
+	private function RotateBehindTarget () {
+		var targetRotationAngle : float = target.transform.eulerAngles.y;
+		var currentRotationAngle : float = transform.eulerAngles.y;
+		xDeg = Mathf.LerpAngle ( currentRotationAngle, targetRotationAngle, rotationDampening * Time.deltaTime );
 
-		// Make the rigid body not change rotation
-		if ( rigidbody ) {
-			rigidbody.freezeRotation = true;
-		}
-		   
-		if ( lockToRearOfTarget ) {
+		// Stop rotating behind if not completed
+		if ( targetRotationAngle == currentRotationAngle ) {
+			if ( !lockToRearOfTarget ) {
+				rotateBehind = false;
+			}
+		
+		} else {
 			rotateBehind = true;
+		
 		}
 	}
 
-	function LateUpdate () {
-		// Don't do anything if target is not defined
-		if ( target == null ) {
-			target = GameCore.GetPlayerObject();
-			return;
+	private function ClampAngle ( angle : float, min : float, max : float ) {
+		if ( angle < -360 ) {
+			angle += 360;
+		
+		} else if ( angle > 360 ) {
+			angle -= 360;
+		
 		}
 
-		// Only run if controls are enabled
-		if ( !GameCore.GetInstance().GetControlsActive() ) {
-			return;
+		return Mathf.Clamp ( angle, min, max );
+	}
+
+	private function UpdateFirstPerson () {
+		// Check to see if mouse input is allowed on the axis
+		if ( allowMouseInputX ) {
+			xDeg += Input.GetAxis ("Mouse X") * xSpeed * 0.02;
+		}
+		
+		if ( allowMouseInputY ) {
+			yDeg -= Input.GetAxis ("Mouse Y") * ySpeed * 0.02;
 		}
 
+		yDeg = ClampAngle ( yDeg, yMinLimit, yMaxLimit );
+		
+		// Exit first person mode
+		if ( Input.GetAxis ("Mouse ScrollWheel") < 0 ) {
+			desiredDistance = 0.63;
+			currentDistance = 0.63;
+			state = eCameraState.ThirdPerson;
+			GameCore.GetPlayer().CheckWeaponPosition();
+		}
+
+		// Set camera rotation
+		var rotation : Quaternion = Quaternion.Euler ( yDeg, xDeg, 0 );
+		
+		// Set camera position
+		var position : Vector3 = target.transform.position + new Vector3 ( 0, targetOffset.y, 0 );
+		
+		// Finally set rotation and position of camera
+		transform.rotation = Quaternion.Slerp ( transform.rotation, rotation, Time.deltaTime * 80 );
+		transform.position = position;
+	}
+
+	private function UpdateThirdPerson () {
 		// Push buffer
 		if ( pbuffer > 0 ) {
 			pbuffer -=Time.deltaTime;
@@ -72,17 +110,6 @@ public class CameraController extends MonoBehaviour {
 		   
 		// Get correct offset
 		var vTargetOffset : Vector3;
-
-		if ( PlayerController.bodyState == ePlayerBodyState.Crouching ) {
-			targetOffset = crouchedOffset;
-
-		} else if ( PlayerController.inCrawlspace ) {
-			targetOffset = crawlspaceOffset;
-
-		} else {
-			targetOffset = standingOffset;
-
-		}
 
 		// Check to see if mouse input is allowed on the axis
 		if ( allowMouseInputX ) {
@@ -150,34 +177,79 @@ public class CameraController extends MonoBehaviour {
 		// Finally set rotation and position of camera
 		transform.rotation = rotation;
 		transform.position = position;
+
+		// Go to first person mode
+		if ( desiredDistance <= 0.6 ) {
+			state = eCameraState.FirstPerson;
+			GameCore.GetPlayer().CheckWeaponPosition();
+		}
 	}
 
-	function RotateBehindTarget () {
-		var targetRotationAngle : float = target.transform.eulerAngles.y;
-		var currentRotationAngle : float = transform.eulerAngles.y;
-		xDeg = Mathf.LerpAngle ( currentRotationAngle, targetRotationAngle, rotationDampening * Time.deltaTime );
+	function Start () {      
+		var angles : Vector3 = transform.eulerAngles;
+		xDeg = angles.x;
+		yDeg = angles.y;
+		currentDistance = distance;
+		desiredDistance = distance;
+		correctedDistance = distance;
 
-		// Stop rotating behind if not completed
-		if ( targetRotationAngle == currentRotationAngle ) {
-			if ( !lockToRearOfTarget ) {
-				rotateBehind = false;
-			}
-		
-		} else {
+		// Make the rigid body not change rotation
+		if ( rigidbody ) {
+			rigidbody.freezeRotation = true;
+		}
+		   
+		if ( lockToRearOfTarget ) {
 			rotateBehind = true;
-		
 		}
 	}
 
-	function ClampAngle ( angle : float, min : float, max : float ) {
-		if ( angle < -360 ) {
-			angle += 360;
-		
-		} else if ( angle > 360 ) {
-			angle -= 360;
-		
+	function LateUpdate () {
+		// Don't do anything if target is not defined
+		if ( target == null ) {
+			target = GameCore.GetPlayerObject();
+			return;
 		}
 
-		return Mathf.Clamp ( angle, min, max );
+		// Only run if not in cutscene mode and controsl are enabled
+		if ( state == eCameraState.CutScene || !GameCore.GetInstance().GetControlsActive() ) {
+			return;
+		}
+
+		// Get correct offset
+		if ( PlayerController.bodyState == ePlayerBodyState.Crouching ) {
+			targetOffset = Vector3.Slerp ( targetOffset, crouchedOffset, Time.deltaTime * 10 );
+
+		} else if ( PlayerController.inCrawlspace ) {
+			targetOffset = Vector3.Slerp ( targetOffset, crawlspaceOffset, Time.deltaTime * 10 );
+
+		} else {
+			targetOffset = Vector3.Slerp ( targetOffset, standingOffset, Time.deltaTime * 10 );
+
+		}
+
+		// Update correct mode
+		if ( state == eCameraState.ThirdPerson ) {
+			UpdateThirdPerson ();
+		} else {
+			UpdateFirstPerson ();
+		}
+		
+		// Instant switch
+		if ( Input.GetMouseButtonDown ( 2 ) ) {
+			if ( state == eCameraState.ThirdPerson ) {
+				state = eCameraState.FirstPerson;
+
+			} else {
+				state = eCameraState.ThirdPerson;
+			
+				if ( currentDistance < 0.63 || desiredDistance < 0.63 ) {
+					desiredDistance = 0.63;
+					currentDistance = 0.63;
+				}
+			}
+			
+			GameCore.GetPlayer().CheckWeaponPosition();
+		}
 	}
+
 }

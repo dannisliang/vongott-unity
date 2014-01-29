@@ -7,12 +7,6 @@ class InputManager extends MonoBehaviour {
 
 	private var player : Player;
 	
-	private function GameCameraControls () {
-		if ( Input.GetMouseButtonDown ( 2 ) ) {
-			GameCamera.GetInstance().ToggleFirstPerson ();
-		}
-	}
-	
 	private function MenuControls () {
 		// Menu navigation
 		if ( GameCore.state == eGameState.Menu ) {
@@ -51,7 +45,6 @@ class InputManager extends MonoBehaviour {
 		
 		if ( GameCore.GetInstance().GetControlsActive() ) {
 			PlayerController.Update ( player );
-			GameCameraControls ();
 		}
 	}
 }

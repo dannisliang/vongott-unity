@@ -54,6 +54,12 @@ class PlayerController {
 		isRotationLocked = state;
 		useForcedPoint = state;
 		
+		if ( state ) {
+			InventoryManager.GetInstance().PocketItem();
+		} else {
+			InventoryManager.GetInstance().UnpocketItem();
+		}
+
 		if ( ladder ) {
 			lockedRotationVector = -ladder.transform.forward;
 			forcedPointVector = ladder.transform.position + lockedRotationVector * 0.05;
@@ -145,20 +151,20 @@ class PlayerController {
 			useForcedPoint = false;
 		}
 
-		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
-			// Direction
-			if ( controlMode == ePlayerControlMode.ThirdPerson ) {
-				if ( isRotationLocked ) {
-					ThirdPersonController.Update ( player, deltaVertical, lockedRotationVector );
+		// Direction
+		if ( controlMode == ePlayerControlMode.ThirdPerson ) {
+			if ( isRotationLocked ) {
+				ThirdPersonController.Update ( player, deltaVertical, lockedRotationVector );
 
-				} else {
-					ThirdPersonController.Update ( player, deltaVertical, deltaHorizontal );
-				}
-			
 			} else {
-				FirstPersonController.Update ( player, deltaVertical, deltaHorizontal );
+				ThirdPersonController.Update ( player, deltaVertical, deltaHorizontal );
 			}
+		
+		} else {
+			FirstPersonController.Update ( player, deltaVertical, deltaHorizontal );
+		}
 			
+		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
 			// Climbing
 			if ( isClimbing ) {
 				if ( player.transform.position.y <= ladderBottomY ) {

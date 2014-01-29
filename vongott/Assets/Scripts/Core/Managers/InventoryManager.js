@@ -5,6 +5,7 @@ class InventoryManager extends MonoBehaviour {
 	private var stash : InventoryEntryReference[];
 	public var credits : int = 0;
 	public var equippedItem : Item;
+	public var pocketedItem : Item;
 
 	public static var instance : InventoryManager;
 
@@ -61,6 +62,21 @@ class InventoryManager extends MonoBehaviour {
 
 	// Get credits
 	public function GetCredits() : int { return credits; }
+
+	// Put items away and retrieve them
+	public function PocketItem () {
+		pocketedItem = equippedItem;
+
+		UnEquip ();
+	}
+
+	public function UnpocketItem () {
+		if ( pocketedItem ) {
+			Equip ( pocketedItem );
+		}
+
+		pocketedItem = null;
+	}
 
 	// Clear stash slot
 	public function ClearStashSlot ( i : int ) {
@@ -134,6 +150,8 @@ class InventoryManager extends MonoBehaviour {
 			var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
 			player.DestroyEquipped ();
 			
+			GameCore.Print ( "InventoryManager | Unequipped " + equippedItem.title );
+			
 			equippedItem = null;
 		}
 	}
@@ -145,6 +163,8 @@ class InventoryManager extends MonoBehaviour {
 		player.Equip ( i );
 		
 		equippedItem = i;
+		
+		GameCore.Print ( "InventoryManager | Equipped " + equippedItem.title );
 	}
 
 	// Remove entry

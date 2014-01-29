@@ -279,6 +279,7 @@ class UIInventory extends OGPage {
 		}
 			
 		UpdateText ();
+		GameCore.GetPlayer().CheckWeaponPosition();
 	}
 	
 	// Destroy entry

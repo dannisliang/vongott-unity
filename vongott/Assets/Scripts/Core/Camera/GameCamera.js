@@ -17,13 +17,15 @@ class GameCamera extends MonoBehaviour {
 	public var firstPerson : boolean = false;	
 	
 	public static var instance : GameCamera;
-	
+	public static var controller : CameraController;
+
 	
 	////////////////////
 	// Init
 	////////////////////																	
 	function Start () {
 		instance = this;
+		controller = this.GetComponent(CameraController);
 	}
 	
 	public static function GetInstance () : GameCamera {
@@ -34,23 +36,6 @@ class GameCamera extends MonoBehaviour {
 	////////////////////
 	// Positioning and rotation
 	////////////////////
-	function ToggleFirstPerson () {
-		firstPerson = !firstPerson;
-	
-		//GameCore.GetPlayerObject().GetComponentInChildren(SkinnedMeshRenderer).enabled = !firstPerson;
-	
-		// Camera control
-		if ( firstPerson ) {
-			PlayerController.controlMode = ePlayerControlMode.FirstPerson;
-			this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
-			
-		} else {
-			PlayerController.controlMode = ePlayerControlMode.ThirdPerson;
-			this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
-		
-		}
-	}
-	
 	function StorePosRot () {
 		storedPos = this.transform.position;
 		storedRot = this.transform.eulerAngles;
@@ -328,6 +313,19 @@ class GameCamera extends MonoBehaviour {
 			skyboxCamera.transform.localPosition = GameCore.GetPlayer().transform.position / 40;
 		} else {
 			skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
+		}
+		
+		// Camera controller state
+		switch ( controller.state ) {
+			case eCameraState.ThirdPerson:
+				PlayerController.controlMode = ePlayerControlMode.ThirdPerson;
+				this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
+				break;
+
+			case eCameraState.FirstPerson:
+				PlayerController.controlMode = ePlayerControlMode.FirstPerson;
+				this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
+				break;
 		}
 	}
 }

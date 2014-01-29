@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: itm_eq_pistol
-  m_Shader: {fileID: 4800000, guid: c8f2ad099b1e70743b63fa1dd8ec9794, type: 3}
+  m_Shader: {fileID: 2, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,14 +17,21 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: d2b0469818f3a7e4ab2b0a3dd9547356, type: 3}
+          m_Texture: {fileID: 2800000, guid: d40906af44d7e3a4fb1e9f9f746a44d9, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: 4e8a6f072fd65c043b205014ae505283, type: 3}
+          m_Texture: {fileID: 2800000, guid: 56c509bc63244e045a584a9b4545e319, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Cube
+        second:
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -46,13 +53,6 @@ Material:
           name: _BumpTex
         second:
           m_Texture: {fileID: 2800000, guid: 5a8fa0fbd7d8c7740b147f1745d84238, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Cube
-        second:
-          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:

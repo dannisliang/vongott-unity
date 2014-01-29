@@ -688,7 +688,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1177
-    y: 517
+    y: 515
     width: 100
     height: 20
   mouseRct:
@@ -1280,13 +1280,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1117
-    y: 547
+    y: 545
     width: 100
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 1117
-    y: 547
+    y: 545
     width: 100
     height: 20
   drawDepth: -0
@@ -9977,13 +9977,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1117
-    y: 517
+    y: 515
     width: 100
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 1117
-    y: 517
+    y: 515
     width: 100
     height: 20
   drawDepth: -0
@@ -19217,7 +19217,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1117
-    y: 566
+    y: 564
     width: 1
     height: 1
   mouseRct:
@@ -27447,6 +27447,18 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 287
+      objectReference: {fileID: 0}
+    - target: {fileID: 400244, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1117
+      objectReference: {fileID: 0}
+    - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 643
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
   m_RootGameObject: {fileID: 1787744592}
@@ -34224,7 +34236,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 4a7ed68d9cb4e944fb1dd5f1aafd173a, type: 2}
+  - {fileID: 2100000, guid: 46f04592ff81e184580a61fab5cf7598, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -34881,7 +34893,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1177
-    y: 547
+    y: 545
     width: 100
     height: 20
   mouseRct:
@@ -35063,6 +35075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   credits: 0
   equippedItem: {fileID: 0}
+  pocketedItem: {fileID: 0}
 --- !u!114 &1468727257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35958,6 +35971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b9e9e4f9511ca4ba9a38345cc64ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   target: {fileID: 2112477196}
   distance: 1.39999998
   standingOffset: {x: .400000006, y: 1.60000002}
@@ -48411,7 +48425,7 @@ Transform:
   m_PrefabInternal: {fileID: 1150224046}
   m_GameObject: {fileID: 2144684299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 643, y: 288, z: 0}
+  m_LocalPosition: {x: 643, y: 287, z: 0}
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 1969740613}
@@ -48661,13 +48675,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 623
-    y: 269
+    y: 268
     width: 40
     height: 40
   mouseRct:
     serializedVersion: 2
     x: 623
-    y: 269
+    y: 268
     width: 40
     height: 40
   drawDepth: -0
