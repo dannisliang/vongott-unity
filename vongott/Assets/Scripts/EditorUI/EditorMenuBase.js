@@ -251,8 +251,9 @@ class EditorMenuBase extends OGPage {
 	}
 	
 	// Display the object's relevant menus
-	private function DisplayMenu ( menu : String, menuObj : GameObject, selectedObj : GameObject ) {
-		
+	private function DisplayMenu ( menu : String, menuObj : GameObject, selectedObj : GameObject ) : IEnumerator {
+		yield WaitForEndOfFrame();
+
 		switch ( menu ) {
 			case "Shape":
 				menuObj.GetComponent(EditorInspectorShape).Init(selectedObj);
@@ -337,9 +338,7 @@ class EditorMenuBase extends OGPage {
 		
 		tabs.AddTab ( menu, menuObj, hasPriority );	
 		
-		DisplayMenu ( menu, menuObj, selectedObj );
-		
-		OGRoot.GetInstance().SetDirty( 10 );
+		StartCoroutine ( DisplayMenu ( menu, menuObj, selectedObj ) );
 	}
 	
 			

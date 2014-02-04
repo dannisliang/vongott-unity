@@ -26,15 +26,16 @@ class EditorInspectorLiftPanel extends MonoBehaviour {
 		btn.text = v.x + "," + v.y + "," + v.z;
 		btn.target = this.gameObject;
 		btn.message = "PickDestination";
-	
-		StartCoroutine ( UpdateObject() );
+		btn.GetDefaultStyles();
+
+		UpdateObject();
 	}	
 		
 	public function RemoveDestination () {
 		if ( nodeContainer.childCount > 1 ) {
 			Destroy ( nodeContainer.GetChild(nodeContainer.childCount-1).gameObject );
 		
-			StartCoroutine ( UpdateObject() );
+			UpdateObject();
 		}
 	}
 	
@@ -42,19 +43,21 @@ class EditorInspectorLiftPanel extends MonoBehaviour {
 		var v : Vector3 = liftPanel.liftObject.position;
 		btn.text = v.x + "," + v.y + "," + v.z;
 	
-		StartCoroutine ( UpdateObject () );
+		UpdateObject ();
 	}
 	
 	private function AddNodesFromPanel () {		
 		for ( var i : int = 0; i < liftPanel.allDestinations.Count; i++ ) {
+			if ( nodeContainer.childCount >= i + 1 ) {
+				DestroyImmediate ( nodeContainer.GetChild(i).gameObject );
+			}
+			
 			AddDestination ( liftPanel.allDestinations[i], i );
 		}
-	}
-	
-	private function ClearList () {
-		for ( var i : int = 0; i < nodeContainer.childCount; i++ ) {
-			Destroy ( nodeContainer.GetChild(i).gameObject );
-		}
+
+		for ( i = liftPanel.allDestinations.Count; i < nodeContainer.childCount; i++ ) {
+			DestroyImmediate ( nodeContainer.GetChild(i).gameObject );
+		}	
 	}
 	
 	private function GetDestinationVectors () : List.<Vector3> {
@@ -79,8 +82,6 @@ class EditorInspectorLiftPanel extends MonoBehaviour {
 	
 		liftPanel = obj.GetComponentInChildren ( LiftPanel );
 		
-		ClearList ();
-		
 		AddNodesFromPanel ();
 	}
 	
@@ -88,9 +89,7 @@ class EditorInspectorLiftPanel extends MonoBehaviour {
 	//////////////////////
 	// Update
 	//////////////////////
-	function UpdateObject () : IEnumerator {	
-		yield WaitForEndOfFrame ();
-		
+	function UpdateObject () {	
 		liftPanel.allDestinations = GetDestinationVectors();
 	}
 }
