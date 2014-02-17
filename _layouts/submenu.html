@@ -65,7 +65,7 @@
 			<li class="sitetitle">{{ site.name }}</li>
 			
 			{% for p in site.pages %}
-			<li {% if p.url == page.url %}class="active"{% endif %}><a href=".{{ p.url }}">{{ p.title }}</a></li>
+			<li {% if p.url == page.url %}class="active"{% endif %}><a href="{{ site.url }}{{ p.url }}">{{ p.title }}</a></li>
 			{% endfor %}
 		</ul>
 
