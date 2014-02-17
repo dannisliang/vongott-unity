@@ -9,7 +9,7 @@
 
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{{ site.baseurl }}/css/zapp.css" >
-		<link rel="stylesheet" href="{{ site.baseurl }}/css/gallery.css" />
+		<link rel="stylesheet" href="{{ site.baseurl }}/css/flexslider.css" >
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -61,19 +61,26 @@
 		      	</div>
 		</div>
 
-		<script src="../js/gallery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="{{ site.url }}/js/flexslider.min.js"></script>
+		<script src="{{ site.url }}/js/app.js"></script>
+		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 		
 		<div class="container" id="content">
 			{{ content }}
-		</div>
 
-		<div id="showcase">
-			<div id="showcase_inside">
+			{% if page.carousel %}
+			<div class="flexslider">
+				<ul class="slides">
+					{% for slides in page.carousel %}
+					<li>
+						<img src="{{ slides.image }}">
+				      	</li>
+				      	{% endfor %}
+				</ul>
 			</div>
+			{% endif %}
 		</div>
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	</body>
 </html>
 
