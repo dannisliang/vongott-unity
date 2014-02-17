@@ -1,13 +1,9 @@
 ---
-layout: post
+layout: default
 title: "UI paradigm and upgrades"
-description: ""
-category: 
 tags: [updates]
 ---
-{% include JB/setup %}
-
-{% capture img_path %}{{ BASE_PATH }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
+{% capture img_path %}{{ site.url }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
 
 Updates from the second development phase.
 

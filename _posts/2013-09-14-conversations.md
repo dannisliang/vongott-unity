@@ -1,13 +1,9 @@
 ---
-layout: post
+layout: default
 title: "Conversations"
-description: ""
-category: 
 tags: [updates]
 ---
-{% include JB/setup %}
-
-{% capture img_path %}{{ BASE_PATH }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
+{% capture img_path %}{{ site.url }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
 
 Conversations logic has seen some major improvements
 

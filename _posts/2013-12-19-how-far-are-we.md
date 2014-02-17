@@ -4,7 +4,7 @@ title: "How far are we?"
 tags: [updates]
 ---
 
-{% capture img_path %}../images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
+{% capture img_path %}{{ site.url }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
 
 This is a quick overview of what is currently working in the game.
 
