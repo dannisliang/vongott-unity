@@ -1,6 +1,6 @@
 ---
 layout: submenu
-title: Welcome
+title: News
 ---
 <ul class="posts">
   {% for post in site.posts %}
