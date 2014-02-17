@@ -3,7 +3,7 @@ layout: submenu
 title: "Development Goals"
 ---
 
-##### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )
+#### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )
 
 - Game Core
 
