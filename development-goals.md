@@ -3,7 +3,7 @@ layout: submenu
 title: "Development Goals"
 ---
 
-### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )
+#### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )
 
 - Game Core
 
@@ -33,7 +33,7 @@ title: "Development Goals"
 	
 	- New UI plugin for Unity &#x2713;
 
-### Phase 2: Proof of concept ( 2013.07.01 - ? )
+#### Phase 2: Proof of concept ( 2013.07.01 - ? )
 
 - Concept art
 	
@@ -189,7 +189,7 @@ title: "Development Goals"
 	
 	- Scene 1 + initial level build
 
-### Phase 3: Essential artistic content
+#### Phase 3: Essential artistic content
 
 - Game core
 
@@ -231,7 +231,7 @@ title: "Development Goals"
 	
 	- Player & NPC initial models
 
-### Phase 4: Playable state
+#### Phase 4: Playable state
 
 - Game core
 	
@@ -272,7 +272,7 @@ title: "Development Goals"
 	- Transitions between all animations 
 	
 
-### Phase 5: Finetuning and more artistic content
+#### Phase 5: Finetuning and more artistic content
 
 - Game core
 	
