@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: submenu
 title: "UI paradigm and upgrades"
 tags: [updates]
 ---

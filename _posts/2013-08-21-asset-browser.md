@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: submenu
 title: "Asset browser"
 tags: [updates]
 ---

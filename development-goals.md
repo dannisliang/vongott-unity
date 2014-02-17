@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: submenu
 title: "Development Goals"
 ---
 

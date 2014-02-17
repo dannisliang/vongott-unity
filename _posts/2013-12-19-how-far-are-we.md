@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: submenu
 title: "How far are we?"
 tags: [updates]
 ---

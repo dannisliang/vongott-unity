@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: submenu
 title: "Interfaces, game events and upgrade effects"
 tags: [updates]
 ---
