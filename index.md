@@ -1,11 +1,7 @@
 ---
-layout: page
-title: Welcome!
-tagline: Welcome!
+layout: default
+title: Welcome
 ---
-{% include JB/setup %}
-
-<img src="{{ BASE_PATH }}/assets/themes/vongott/images/logo/300x400.png" id="frontpage-logo" />
 
 ## Latest builds
 [Linux (x86)](https://github.com/mrzapp/vongott/raw/master/build/vongott_linux_x86.zip)  
@@ -28,7 +24,7 @@ This game is set in the Deus Ex universe, so a cyberpunk not-so-distant future. 
 ## What's new?
 <ul class="posts">
   {% for post in site.posts %}
-    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
+    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href=".{{ post.url }}">{{ post.title }}</a></li>
   {% endfor %}
 </ul>
 

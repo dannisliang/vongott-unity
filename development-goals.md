@@ -1,10 +1,7 @@
 ---
-layout: page
+layout: default
 title: "Development Goals"
-tagline: "These are the goals we wish to achieve during different development phases"
-group: navigation
 ---
-{% include JB/setup %}
 
 ### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )
 

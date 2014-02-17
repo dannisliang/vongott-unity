@@ -1,13 +1,10 @@
 ---
-layout: post
+layout: default
 title: "How far are we?"
-description: ""
-category: 
 tags: [updates]
 ---
-{% include JB/setup %}
 
-{% capture img_path %}{{ BASE_PATH }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
+{% capture img_path %}../images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
 
 This is a quick overview of what is currently working in the game.
 
