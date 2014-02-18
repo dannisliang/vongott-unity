@@ -107,13 +107,13 @@
 				<ul class="slides">
 					{% for slides in page.carousel %}
 					<li>
-						<img src="{{ site.url }}/{{ slides.image }}">
+						<img src="{{ slides.image }}">
 						{% if slides.caption %}
 						<div class="flex-caption">
 							<p>{{ slides.caption }}</p>
 						</div>
 						{% endif %}	
-					</li>
+				      	</li>
 				      	{% endfor %}
 				</ul>
 			</div>
