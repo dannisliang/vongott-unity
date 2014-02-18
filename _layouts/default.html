@@ -91,7 +91,7 @@
 				<ul class="slides">
 					{% for slides in page.carousel %}
 					<li>
-						<img src="{{ slides.image }}">
+						<img src="{{ site.url }}/{{ slides.image }}">
 						{% if slides.caption %}
 						<div class="flex-caption">
 							<p>{{ slides.caption }}</p>
@@ -110,7 +110,7 @@
 			{% endif %}
 
 			{% if page.background %}
-			<img src="{{ page.background }}" class="bg" alt="">
+			<img src="{{ site.url }}/{{ page.background }}" class="bg" alt="">
 			{% endif %}
 		</div>
 
