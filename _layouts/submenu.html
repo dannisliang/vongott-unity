@@ -126,14 +126,14 @@
 			{% endif %}
 		</div>
 
-		{% if page.background %}
-		{% if page.background.cover %}
-		<div class="coverbg" style="background-image:url('{{ site.url }}/{{ page.background.cover }}');"> </div>
-		{% elsif page.background.tile %}
-		<div class="tilebg" style="background-image:url('{{ site.url }}/{{ page.background.tile }}');"> </div>
-		{% elsif page.background.color %}
-		<div class="colorbg" style="background-color: {{ page.background.color }};"> </div>
+		{% if page.cover %}
+		<div class="coverbg" style="background-image:url('{{ site.url }}/{{ page.cover }}');"> </div>
 		{% endif %}
+		{% if page.tile %}
+		<div class="tilebg" style="background-image:url('{{ site.url }}/{{ page.tile }}');"> </div>
+		{% endif %}
+		{% if page.color %}
+		<div class="colorbg" style="background-color: {{ page.color }};"> </div>
 		{% endif %}
 
 	</body>
