@@ -11,6 +11,9 @@
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{{ site.baseurl }}/css/zapp.css" >
 		<link rel="stylesheet" href="{{ site.baseurl }}/css/flexslider.css" >
+		{% if site.style %}
+		<link rel="stylesheet" href="{{ site.baseurl }}/css/{{ site.style }}.css" >
+		{% endif %}
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -69,10 +72,10 @@
 		      	</div>
 		</div>
 
-		<div class="submenu">	
+		<div class="breadcrumbs">	
 			<div class="container">
 				<ul class="nav nav-pills">
-					<li class="sitetitle">{{ site.name }}</li>
+					<li class="root">{{ site.name }}</li>
 					
 					{% for p in site.pages %}
 					<li {% if p.url == page.url %}class="active"{% endif %}><a href="{{ site.url }}{{ p.url }}">{{ p.title }}</a></li>
@@ -98,6 +101,10 @@
 		<script src="{{ site.url }}/js/flexslider.min.js"></script>
 		<script src="{{ site.url }}/js/fitvids.js"></script>
 		<script src="{{ site.url }}/js/app.js"></script>
+
+		{% if site.header %}
+		{% include header.html %}
+		{% endif %}
 
 		<div class="container">
 			{{ content }}

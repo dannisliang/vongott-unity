@@ -6,11 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="{{ site.description }}">
 		
-		<title>{{ page.title }}</title>
+		<title>{{ site.title }}: {{ page.title }}</title>
 		
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{{ site.baseurl }}/css/zapp.css" >
 		<link rel="stylesheet" href="{{ site.baseurl }}/css/flexslider.css" >
+		{% if site.style %}
+		<link rel="stylesheet" href="{{ site.baseurl }}/css/{{ site.style }}.css" >
+		{% endif %}
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -69,11 +72,9 @@
 		      	</div>
 		</div>
 
-		<div class="submenu">	
+		<div class="breadcrumbs">	
 			<div class="container">
-				<ul class="nav nav-pills">
-					<li class="sitetitle">{{ page.title }}</li>
-				</ul>
+				<span class="root">{{ site.title }}</span> &raquo; {{ page.title }}
 			</div>
 		</div>
 
@@ -83,9 +84,25 @@
 		<script src="{{ site.url }}/js/fitvids.js"></script>
 		<script src="{{ site.url }}/js/app.js"></script>
 
-		<div class="container">
-			{{ content }}
+		{% if site.header %}
+		{% include header.html %}
+		{% endif %}
 			
+		<div class="container">
+			{% if site.postlist %}
+			<div class="postlist">
+				<h4>News</h4>
+				{% for post in site.posts %}
+				<h6>{{ post.date | date_to_string }}</h6>
+				<p><a href="{{ site.url }}/{{ post.url }}">{{ post.title }}</a></p>
+				{% endfor %}
+			</div>
+			{% endif %}
+
+			<div class="content">
+				{{ content }}
+			</div>
+
 			{% if page.carousel %}
 			<div class="flexslider">
 				<ul class="slides">
