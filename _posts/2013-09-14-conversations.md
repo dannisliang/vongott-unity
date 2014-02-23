@@ -1,5 +1,5 @@
 ---
-layout: submenu
+layout: default
 title: "Conversations"
 tags: [updates]
 ---
