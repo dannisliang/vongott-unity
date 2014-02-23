@@ -44,12 +44,7 @@ body > .container {
 	background: transparent;
 }
 
-.nav-pills > li.active > a {
-	background: transparent;
-	color: #FAA200;
-}
-
-.nav-pills > li > a:hover {
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
 	background: transparent;
 	color: #FAA200;
 }
