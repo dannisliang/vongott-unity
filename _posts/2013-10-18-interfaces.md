@@ -5,10 +5,6 @@ tags: [updates]
 ---
 {% capture img_path %}{{ site.url }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
 
-More essential gameplay additions
-
-<!--more-->
-
 Aside from the usual incremental improvements to the game logic and the editor, there are a few noteworthy additions in the latest build.
 
 ### Biological upgrades

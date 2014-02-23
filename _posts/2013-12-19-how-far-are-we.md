@@ -6,10 +6,6 @@ tags: [updates]
 
 {% capture img_path %}{{ site.url }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
 
-This is a quick overview of what is currently working in the game.
-
-<!--more-->
-
 ### Editor
 The editor is shaping up to be an all-round capable tool for stringing together level geometry, prefabs, events, actors and items. An important thing to mention is that I have completely dropped trying to weave mesh and do boolean operations within the editor itself, as it is simply too big a mouthful for now. There are a few proprietary plugins available for Unity to accomplish this, I invested in the popular [GameDraw](http://u3d.as/content/mixed-dimensions/game-draw/2Ey), and while it does perform admirably, it's just not at all good enough. I've written an .obj importer instead, so static level geometry can be created in third party 3d software, which typically is much more capable of such things.
 <a href="{{ img_path }}overview.jpg"><img src="{{ img_path }}overview.jpg" /></a>
