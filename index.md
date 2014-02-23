@@ -20,6 +20,7 @@ This is an open source parody game based on the original Deus Ex, in a similarly
 * The rest of chapter 1, story outline and script
 * Sound effects
 * Music
+* Polishing
 
 #### Which tools are being used currently?
 * Unity3D
