@@ -1,4 +1,4 @@
-<div class="tabs">
+<div class="navigation">
 	<ul class="nav nav-pills">
 		{% for p in site.pages %}
 		<li {% if p.url == page.url %}class="active"{% endif %}><a href="{{ site.url }}{{ p.url }}">{{ p.title }}</a></li>
