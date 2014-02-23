@@ -91,11 +91,10 @@
 		{% if site.postlist %}
 		<div class="postlist">
 			<h4>News</h4>
-			<ul>
-				{% for post in site.posts %}
-				<li>{{ post.date | date_to_string }}<a href="{{ site.url }}/{{ post.url }}">{{ post.title }}</a></li>
-				{% endfor %}
-			</ul>
+			{% for post in site.posts %}
+			<h6>{{ post.date | date_to_string }}</h6>
+			<p><a href="{{ site.url }}/{{ post.url }}">{{ post.title }}</a></p>
+			{% endfor %}
 		</div>
 		{% endif %}
 
