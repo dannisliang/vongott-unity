@@ -37,4 +37,15 @@ body > .container {
 	height: 30px;
 	font-size: 14px;
 	font-family: "Titillium Web", Helvetica, Arial, sans-serif;
+	background: transparent;
+}
+
+.nav-pills > li > a.active {
+	background: transparent;
+	color: #FAA200;
+}
+
+.nav-pills > li > a:hover {
+	background: transparent;
+	color: #FAA200;
 }
