@@ -45,14 +45,15 @@ body > .container {
 	border: 1px solid #888;
 	border-radius: 4px;
 	margin: 0px 5px;
-	width: 80px;
+	width: 100%;
 	text-transform: uppercase;
 	font-weight: bold;
 	color: #CCC;
 }
 
-.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
-	border-color: #246;
-	color: #CCC;
+@media (min-width: 768px) {
+	.nav-pills > li > a {
+		width: 80px;
+	}
 }
 
