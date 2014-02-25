@@ -40,13 +40,21 @@ body > .container {
 }
 
 .nav-pills > li > a {
-	height: 30px;
 	font-size: 14px;
 	font-family: "Titillium Web", Helvetica, Arial, sans-serif;
 	background: transparent;
+	border: 1px solid #888;
+	border-radius: 4px;
+	margin: 0px 5px;
+	width: 80px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #CCC;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
 	background: transparent;
-	color: #FAA200;
+	border-color: #46A;
+	color: #CCC;
 }
+
