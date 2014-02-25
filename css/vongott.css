@@ -42,7 +42,6 @@ body > .container {
 .nav-pills > li > a {
 	font-size: 14px;
 	font-family: "Titillium Web", Helvetica, Arial, sans-serif;
-	background: transparent;
 	border: 1px solid #888;
 	border-radius: 4px;
 	margin: 0px 5px;
@@ -53,8 +52,7 @@ body > .container {
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
-	background: transparent;
-	border-color: #46A;
+	border-color: #246;
 	color: #CCC;
 }
 
