@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Development Goals"
+title: "Goals"
 ---
 
 #### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )
