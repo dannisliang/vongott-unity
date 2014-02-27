@@ -45,15 +45,8 @@ body > .container {
 	border: 1px solid #888;
 	border-radius: 4px;
 	margin: 5px;
-	width: 100%;
+	width: 80px;
 	text-transform: uppercase;
 	font-weight: bold;
 	color: #CCC;
 }
-
-@media (min-width: 768px) {
-	.nav-pills > li > a {
-		width: 80px;
-	}
-}
-
