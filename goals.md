@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "Goals"
+index: 1
 ---
 
 #### Phase 1: Initial core build ( 2013.03.12 - 2013.06.27 )

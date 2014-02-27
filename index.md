@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Home
+index: 0
 ---
 
 #### Welcome to The Vongott Chronicles project site
