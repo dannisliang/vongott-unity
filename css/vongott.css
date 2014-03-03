@@ -40,13 +40,25 @@ body > .container {
 }
 
 .nav-pills > li > a {
-	font-size: 14px;
-	font-family: "Titillium Web", Helvetica, Arial, sans-serif;
-	border: 1px solid #888;
-	border-radius: 4px;
+	font-size: 10px;
+	font-family: "Deus Ex Console", Helvetica, Arial, sans-serif;
+	border-top: 1px solid #888;
 	margin: 5px;
 	width: 80px;
 	text-transform: uppercase;
 	font-weight: bold;
 	color: #CCC;
+	text-shadow: 2px 2px 0px #000;
+}
+
+.nav-pills > li > a:hover, .nav-pills > li.active > a:hover {
+	border-color: #FFFFFF;
+	background: none;
+	color: #FFFFFF;
+}
+
+.nav-pills > li.active > a {
+    color: #00FFFF;
+    border-color: #00FFFF;
+    background: none;
 }
