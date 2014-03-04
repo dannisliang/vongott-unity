@@ -115,7 +115,7 @@
 				{% for image in gallery.images %}
 				<div>
 					{% if image.url %}
-					<img {% if image.text %}alt="{{ image.text }}"{% endif %} src="{{ image.url }}">
+					<a href="{{ image.url }}" data-lightbox="{{ image.text }}" {% if image.text %}title="{{ image.text }}"{% endif %}><img src="{{ image.url }}"></a>
 					{% endif %}
 				</div>
 				{% endfor %}
