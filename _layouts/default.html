@@ -103,10 +103,10 @@
 
 			<div class="content" {% if page.date or page.postlist %}style="width:80%;padding-left:30px;"{% endif %}>
 				{% if page.author %}
-				{% if page.author.url %}
-				<p>Author: <a href="{{ page.author.url }}">{{ page.author.name }}</a></p>
+				{% if page.author_url %}
+				<p>Author: <a href="{{ author_url }}">{{ page.author }}</a></p>
 				{% else %}
-				<p>Author: {{ page.author.name }}</p>
+				<p>Author: {{ page.author }}</p>
 				{% endif %}
 				{% endif %}
 				
