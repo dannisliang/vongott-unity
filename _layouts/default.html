@@ -103,6 +103,28 @@
 				{{ content }}
 			</div>
 
+			{% if page.galleries.size > 0 %}
+			{% for gallery in page.galleries %}
+			<div class="gallery">
+				{% if gallery.title %}
+				<h4>{{ gallery.title }}</h4>
+				{% endif %}
+
+				{% for image in gallery.images %}
+				<div>
+					{% if image.text %}
+					<p>{{ image.text }}</p>
+					{% endif %}
+
+					{% if image.url %}
+					<img src="{{ image.url }}">
+					{% endif %}
+				</div>
+				{% endfor %}
+			</div>
+			{% endfor %}
+			{% endif %}
+
 			{% if page.carousel %}
 			<div class="flexslider">
 				<ul class="slides">
