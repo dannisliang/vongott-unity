@@ -112,12 +112,8 @@
 
 				{% for image in gallery.images %}
 				<div>
-					{% if image.text %}
-					<p>{{ image.text }}</p>
-					{% endif %}
-
 					{% if image.url %}
-					<img src="{{ image.url }}">
+					<img {% if image.text %}alt="{{ image.text }}"{% endif %} src="{{ image.url }}">
 					{% endif %}
 				</div>
 				{% endfor %}
