@@ -90,7 +90,7 @@
 		{% endif %}
 			
 		<div class="container">
-			{% if site.postlist %}
+			{% if page.postlist %}
 			<div class="postlist">
 				{% for post in site.posts %}
 				<h6>{{ post.date | date_to_string }}</h6>
