@@ -99,7 +99,7 @@
 			</div>
 			{% endif %}
 
-			<div class="content" {% if page.postlist %}style="width:80%;padding-left:30px;"{% endif %}>
+			<div class="content" {% if page.date or page.postlist %}style="width:80%;padding-left:30px;"{% endif %}>
 				{{ content }}
 			</div>
 
