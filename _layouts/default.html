@@ -119,11 +119,11 @@
 				<h4>{{ gallery.title }}</h4>
 
 				{% for image in gallery.images %}
-				<div>
-					{% if image.url %}
-					<a href="{{ image.url }}" data-lightbox="{{ gallery.title }}" {% if image.text %}title="{{ image.text }}"{% endif %}><img src="{{ image.url }}"></a>
-					{% endif %}
-				</div>
+				{% if image.url %}
+				<a href="{{ image.url }}" data-lightbox="{{ gallery.title }}" {% if image.text %}title="{{ image.text }}"{% endif %}>
+					<div style="background-image:url('{{ image.url }}');"></div>
+				</a>
+				{% endif %}
 				{% endfor %}
 			</div>
 			{% endfor %}
