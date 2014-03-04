@@ -108,14 +108,12 @@
 			{% if page.galleries.size > 0 %}
 			{% for gallery in page.galleries %}
 			<div class="gallery">
-				{% if gallery.title %}
 				<h4>{{ gallery.title }}</h4>
-				{% endif %}
 
 				{% for image in gallery.images %}
 				<div>
 					{% if image.url %}
-					<a href="{{ image.url }}" data-lightbox="{{ image.text }}" {% if image.text %}title="{{ image.text }}"{% endif %}><img src="{{ image.url }}"></a>
+					<a href="{{ image.url }}" data-lightbox="{{ gallery.title }}" {% if image.text %}title="{{ image.text }}"{% endif %}><img src="{{ image.url }}"></a>
 					{% endif %}
 				</div>
 				{% endfor %}
