@@ -42,10 +42,16 @@ body > .container {
 	font-size: 16px;
 	font-family: "Titillium Web", Helvetica, Arial, sans-serif;
 	margin: 5px;
-	width: 80px;
+	width: auto;
 	text-transform: uppercase;
 	color: #CCC;
 	text-shadow: 2px 2px 0px #000;
+}
+
+@media (min-width: 768px) {
+  .nav-pills > li > a {
+    width: 80px;
+  }
 }
 
 .nav-pills > li > a:hover, .nav-pills > li.active > a:hover {
