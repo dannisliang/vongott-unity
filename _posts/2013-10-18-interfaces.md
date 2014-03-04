@@ -1,7 +1,8 @@
 ---
 layout: default
 title: "Interfaces, game events and upgrade effects"
-tags: [updates]
+author: "mrzapp"
+author_url: "http://jeppezapp.com"
 ---
 {% capture img_path %}{{ site.url }}/images/posts/{{ page.date | date: "%Y-%m-%d" }}_{% endcapture %}
 
