@@ -949,7 +949,7 @@ static function TrimFileNames ( paths : String[] ) : String[] {
 	var newArray : String[] = new String[paths.Length];
 	
 	for ( var i = 0; i < paths.Length; i++ ) {
-		var path = paths[i].Split("\\"[0]);
+		var path = paths[i].Split("/"[0]);
 		var fileName = path[path.Length-1];
 		var extention = fileName.Split("."[0]);
 		var name = extention[0];

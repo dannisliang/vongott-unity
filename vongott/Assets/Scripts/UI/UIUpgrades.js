@@ -1,8 +1,6 @@
 #pragma strict
 
 class UIUpgrades extends OGPage {
-	var animations : OGTween[];
-	
 	var upgName : OGLabel;
 	
 	override function StartPage () {
@@ -13,14 +11,6 @@ class UIUpgrades extends OGPage {
 	
 	function Transition ( forward : boolean, callback : Function ) : IEnumerator {
 		var time : float;
-		
-		for ( var t : OGTween in animations ) {
-			t.Play ( forward );
-		
-			if ( t.move.enabled && t.move.time > time ) { time = t.move.time; }
-			if ( t.rotate.enabled && t.rotate.time > time ) { time = t.rotate.time; }
-			if ( t.scale.enabled && t.scale.time > time ) { time = t.scale.time; }
-		}	
 		
 		if ( callback ) {
 			var targetTime = System.DateTime.Now.AddSeconds ( time );

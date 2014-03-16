@@ -26,7 +26,6 @@ class UIInventory extends OGPage {
 	// Prerequisites
 	////////////////////
 	// Public vars
-	var animations : OGTween[];
 	var grid : Transform;
 	var stash : Transform;
 	var inspector : Inspector;
