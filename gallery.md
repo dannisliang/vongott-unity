@@ -13,6 +13,8 @@ galleries:
       text: "NSF quartermaster: side"
     - url: "images/gallery/concept/generic_underclass.jpg"
       text: "Underclass woman with augmentations"
+    - url: "images/gallery/concept/nsf_soldier.jpg"
+      text: "Nsf soldier"
  - title: "Screenshots"
    images:
     - url: "images/gallery/screenshots/convos.jpg"
