@@ -18,6 +18,12 @@ public class OGLabel extends OGWidget {
 	// Update
 	/////////////////
 	override function UpdateWidget () {
+		// Mouse
+		mouseRct = drawRct;
+		
+		// Styles
+		currentStyle = isDisabled ? styles.disabled : styles.basic;
+		
 		// Update data
 		if ( !overrideFontSize ) {
 			fontSize = currentStyle.text.fontSize;
@@ -26,12 +32,6 @@ public class OGLabel extends OGWidget {
 		if ( !overrideAlignment ) {
 			alignment = currentStyle.text.alignment;
 		}
-
-		// Mouse
-		mouseRct = drawRct;
-		
-		// Styles
-		currentStyle = isDisabled ? styles.disabled : styles.basic;
 	}
 
 

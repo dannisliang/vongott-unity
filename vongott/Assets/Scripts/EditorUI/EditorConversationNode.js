@@ -370,16 +370,16 @@ class EditorConversationNode extends MonoBehaviour {
 		yield WaitForEndOfFrame();
 	
 		for ( var i : int = 0; i < speak.lines.childCount; i++ ) {
-			speak.lines.GetChild(i).localPosition = new Vector3 ( 0, i * 30, 0 );
+			speak.lines.GetChild(i).localPosition = new Vector3 ( i * 210, 0, 0 );
 			speak.lines.GetChild(i).GetComponent(EditorConversationNodeLine).SetRemoveable(i>0);
-			speak.addBtn.transform.localPosition = new Vector3 ( 80, 30 + i * 30, 0 );
+			speak.addBtn.transform.localPosition = new Vector3 ( ( i + 1 ) * 210, 30, 0 );
 			
 			if ( speak.lines.childCount < 3 && speak.speakerPopUp.selectedOption == "Player" ) {
 				speak.addBtn.gameObject.SetActive ( true );
-				AdjustFrame ( 420, 30 + (i*30) + 50, 1 );
+				AdjustFrame ( 200 + (i*200), 80, 1 );
 			} else {
 				speak.addBtn.gameObject.SetActive ( false );
-				AdjustFrame ( 420, (i*30) + 50, 1 );
+				AdjustFrame ( (i*200), 80, 1 );
 			}
 		
 			SetActive ( i, speak.lines.GetChild(i).GetComponent(EditorConversationNodeLine).outputBtn );
@@ -390,7 +390,7 @@ class EditorConversationNode extends MonoBehaviour {
 	private function AdjustFrame ( x : float, y : float, z : float ) {
 		frame.localScale = new Vector3 ( x, y, z );
 		type.localPosition = new Vector3 ( (x/2) - 85, 0, -5 );
-		extraButtonsContainer.localPosition = new Vector3 ( frame.localScale.x + 10, 0, 0 );
+		extraButtonsContainer.localPosition = new Vector3 ( 0, frame.localScale.y + 10, 0 );
 		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x - 10, 10, -2 );
 		
 		EditorConversationMap.GetInstance().UpdateRootNodes ();
@@ -441,7 +441,7 @@ class EditorConversationNode extends MonoBehaviour {
 					extraButtonsContainer.GetChild(i).gameObject.SetActive ( true );
 				}
 
-				extraButtonsContainer.GetChild(i).position = new Vector3 ( activeOutputs[i].transform.position.x + 30, activeOutputs[i].transform.position.y, this.transform.position.z );
+				extraButtonsContainer.GetChild(i).position = new Vector3 ( activeOutputs[i].transform.position.x, activeOutputs[i].transform.position.y + 20, this.transform.position.z );
 			
 			} else if ( extraButtonsContainer.GetChild(i).gameObject.activeSelf ) {
 				extraButtonsContainer.GetChild(i).gameObject.SetActive ( false );

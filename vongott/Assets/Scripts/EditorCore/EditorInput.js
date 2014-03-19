@@ -214,22 +214,8 @@ function Update () {
 				var obj : GameObject = EditorCore.GetSelectedObject();
 				
 				if ( obj != null ) {
-					// Return triangles
-					if ( obj.GetComponent ( CombinedMesh ) ) {
-						//EditorCore.SelectTriangle ( obj, mouseHit.triangleIndex );
-						EditorCore.pickerCallback ( mouseHit.triangleIndex );
-						
-						if ( !Input.GetKey ( KeyCode.LeftShift ) ) {
-							EditorCore.pickerCallback = null;
-							
-							EditorCore.SetPickMode ( false );
-							EditorCore.ReselectObject ();
-						}
-					
-						return;				
-				
 					// Return name and GUID
-					} else if ( obj.GetComponent(Keypad) || obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
+					if ( obj.GetComponent(Keypad) || obj.GetComponent(SurveillanceCamera) || obj.GetComponent(Terminal) && EditorCore.pickerCallback != null ) {
 						EditorCore.pickerCallback ( mouseGoal.name, mouseGoal.GetComponent(GUID).GUID );
 						EditorCore.pickerCallback = null;
 						

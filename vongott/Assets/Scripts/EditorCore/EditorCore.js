@@ -221,19 +221,6 @@ static function AddObject ( obj : GameObject ) {
 		newObject.transform.localEulerAngles = Vector3.zero;
 		newObject.transform.localPosition = Vector3.zero;
 	
-	} else {
-		// Check for shapes
-		if ( newObject.GetComponent ( Shape ) ) {
-			for ( var s : Component in workspace.GetComponentsInChildren(Shape) ) {
-				Destroy ( (s as Shape).gameObject );
-			}
-		}
-		
-		newObject.transform.parent = currentLevel.transform;
-		newObject.transform.position = GetSpawnPosition();
-		
-		SelectObject ( newObject );
-	
 	}
 }
 
@@ -358,31 +345,6 @@ static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumera
 	ClearPreview ();
 	
 	image.mainTexture = tex;
-}
-
-
-////////////////////
-// Shape
-////////////////////
-// Solidify
-public function AddShape ( shape : Shape, method : BooleanRTLib.BooleanType ) {
-	Debug.Log ( "EditorCore | Adding shape " + shape );
-	
-	var combinedMesh : CombinedMesh = workspace.gameObject.FindObjectOfType ( CombinedMesh );
-	
-	if ( !combinedMesh ) {
-		combinedMesh = Instantiate ( Resources.Load ( "Prefabs/Editor/CombinedMesh" ) as GameObject ).GetComponent ( CombinedMesh );
-		combinedMesh.gameObject.name = "CombinedMesh";
-		combinedMesh.transform.parent = currentLevel.transform;
-		combinedMesh.transform.localPosition = Vector3.zero;
-		combinedMesh.transform.localEulerAngles = Vector3.zero;
-		combinedMesh.transform.localScale = Vector3.one;
-	}
-	
-	AddAction ( combinedMesh.gameObject );
-	
-	combinedMesh.Add ( shape.gameObject, defaultMaterial, method );
-	
 }
 
 
@@ -576,8 +538,6 @@ static function GetSelectedObject () : GameObject {
 
 // Delete selected objects
 static function DeleteSelected () {
-	if ( selectedObject.GetComponent(Shape) ) { return; }
-	
 	var obj : GameObject = selectedObject;
 	AddAction ( obj );
 	DeselectObject ();
@@ -591,8 +551,6 @@ static function IsObjectSelected ( obj : GameObject ) : boolean {
 
 // Duplicate object
 static function DuplicateObject () {
-	if ( selectedObject.GetComponent(Shape) ) { return; }
-	
 	var newObj : GameObject = Instantiate ( selectedObject );
 	newObj.transform.parent = currentLevel.transform;
 	newObj.name = newObj.name.Replace("(Clone)","");
@@ -709,18 +667,6 @@ static function SelectObject ( obj : GameObject ) {
 	
 	// Check what to display in the inspector
 	inspector.ClearMenus ();
-	
-	inspector.transformDisplay.SetActive ( obj.GetComponent ( CombinedMesh ) == null );
-	
-	// Shape
-	if ( obj.GetComponent ( Shape ) ) {
-		inspector.AddMenu ( "Shape", obj );
-	}
-	
-	// CombinedMesh
-	if ( obj.GetComponent ( CombinedMesh ) ) {
-		inspector.AddMenu ( "CombinedMesh", obj );
-	}
 	
 	// ImportedMesh
 	if ( obj.GetComponent ( ImportedMesh ) ) {
@@ -845,7 +791,7 @@ static function SetFirstPersonMode ( state : boolean ) {
 
 // Set grab mode
 static function SetGrabMode ( state : boolean ) {
-	if ( !selectedObject || selectedObject.GetComponent ( CombinedMesh ) ) {
+	if ( !selectedObject ) {
 		return;
 	}
 		
@@ -879,7 +825,7 @@ static function SetGrabMode ( state : boolean ) {
 
 // Set rotate mode
 static function SetRotateMode ( state : boolean ) {
-	if ( !selectedObject || selectedObject.GetComponent ( CombinedMesh ) ) {
+	if ( !selectedObject ) {
 		return;
 	}
 		
@@ -908,10 +854,6 @@ static function SetRotateMode ( state : boolean ) {
 
 // Set scale mode
 static function SetScaleMode ( state : boolean ) {
-	if ( !selectedObject || selectedObject.GetComponent ( CombinedMesh ) ) {
-		return;
-	}
-		
 	scaleMode = state;
 	
 	if ( scaleMode ) {

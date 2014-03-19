@@ -40,6 +40,10 @@ class EditorConversationMap extends OGPage {
 	public var connectMode : boolean = false;
 	public var rootNodes : Transform;
 	public var rootNodeBackground : Transform;
+	public var rootNodeSwitcher : OGPopUp;
+	public var rootNodeOutput : OGButton;
+	public var rootNodePassive : OGTickBox;
+	public var rootNodeAuto : OGTickBox;
 	public var addRootNode : OGButton;
 	public var scrollView : OGScrollView;
 	public var nodeContainer : Transform;
@@ -48,10 +52,12 @@ class EditorConversationMap extends OGPage {
 	private var bottomLines : float[] = new float[999];
 	private var rootBottomLines : float[] = new float[999];
 	private var currentConvo : ConversationTree;
+	private var currentRootNode : int = 0;
+	private var currentFirstNode : EditorConversationNode;
 	private var nodeIndexCounter : int = 0;
 	private var root : OGRoot;
-
 	
+
 	////////////////////
 	// File I/O
 	////////////////////
@@ -110,16 +116,22 @@ class EditorConversationMap extends OGPage {
 		currentConvo = Loader.LoadConversationTree ( selector.text );
 		
 		var i : int = 0;
-		
+		var stringList : List.<String> = new List.<String>();
+
 		for ( var rootNode : ConversationRootNode in currentConvo.rootNodes ) {
-			CreateRootNode ( rootNode );
+			stringList.Add ( i.ToString() );
+			i++;
 		}
+		
+		rootNodeSwitcher.SetOptions ( stringList.ToArray() );
+
+		LoadRootNode ( 0 );
 		
 		yield WaitForEndOfFrame ();
 		
 		UpdateRootNodes ();
 	}
-	
+
 	function LoadConversation () {
 		ClearNodes ();
 		
@@ -150,16 +162,16 @@ class EditorConversationMap extends OGPage {
 	////////////////////
 	function Start () {
 		instance = this;
-	
-		if ( rootNodes.childCount < 1 ) {
-			CreateRootNode ();
-		}
 	}
 	
 	public static function GetInstance() : EditorConversationMap {
 		return instance;
 	}
 	
+	public function ClearChildren () {
+		RemoveNodeRecursively ( currentFirstNode );
+	}
+
 	public function ClearNodes () {
 		currentConvo = null;
 				
@@ -297,13 +309,20 @@ class EditorConversationMap extends OGPage {
 		UpdateRootNodes ();
 	}
 	
-	public function CreateRootNode ( reference : ConversationRootNode ) {
-		var newRootNode : EditorConversationRootNode = CreateRootNode ();
+	public function LoadRootNode ( str : String ) {
+		LoadRootNode ( int.Parse ( str ) );
+	}
+
+	public function LoadRootNode ( i : int ) {
+		if ( currentFirstNode ) {
+			ClearChildren ();
+		}
 		
-		newRootNode.auto.isTicked = reference.auto;
-		newRootNode.passive.isTicked = reference.passive;
+		var reference : ConversationRootNode = currentConvo.rootNodes[i];
+		rootNodeAuto.isTicked = reference.auto;
+		rootNodePassive.isTicked = reference.passive;
 		if ( reference.connectedTo ) {
-			CreateNode ( newRootNode, reference.connectedTo );
+			currentFirstNode = CreateNode ( reference.connectedTo );
 		}
 		
 		UpdateRootNodes ();
@@ -401,25 +420,39 @@ class EditorConversationMap extends OGPage {
 		UpdateRootNodes ();
 	}
 	
-	public function CreateNode ( rootSender : EditorConversationRootNode, reference : ConversationNode ) {
+	public function CreateNode ( reference : ConversationNode ) : EditorConversationNode {
 		var newNode : EditorConversationNode = Instantiate ( nodePrefab );
 		
 		newNode.SetData ( reference );
 		
 		newNode.transform.parent = nodeContainer;
 		newNode.transform.localScale = Vector3.one;
-		newNode.transform.position = new Vector3 ( rootSender.transform.position.x, rootSender.transform.position.y, 0 );
-		
-		rootSender.SetConnection ( newNode );
+		newNode.transform.position = new Vector3 ( rootNodeOutput.transform.position.x + 30, rootNodeOutput.transform.position.y, 0 );
 		
 		for ( var i : int = 0; i < reference.connectedTo.Count; i++ ) {
 			CreateNode ( newNode, reference.connectedTo[i], i );
 		}
 		
 		UpdateRootNodes ();
+
+		return newNode;
 	}
 	
 	// ^ From scratch
+	public function CreateFirstNode () {
+		var newNode : EditorConversationNode = Instantiate ( nodePrefab );
+		
+		newNode.SetType ( "Speak" );
+		
+		newNode.transform.parent = nodeContainer;
+		newNode.transform.localScale = Vector3.one;
+		newNode.transform.position = new Vector3 ( rootNodeOutput.transform.position.x + 30, rootNodeOutput.transform.position.y, 0 );
+		
+		UpdateRootNodes ();
+		
+		return newNode;
+	}
+	
 	public function CreateNode ( fromRootNode : EditorConversationRootNode ) : EditorConversationNode {
 		var newNode : EditorConversationNode = Instantiate ( nodePrefab );
 		
@@ -528,19 +561,19 @@ class EditorConversationMap extends OGPage {
 		}
 	}
 	
-	private function UpdateRootNodePosition ( rootNode : EditorConversationRootNode, index : int ) {
-		if ( rootNode.connectedTo ) {				
+	private function UpdateRootNodePosition ( ) {
+		if ( currentFirstNode ) {				
 			var rootPoints : Transform[] = new Transform[2];
-			rootPoints[0] = rootNode.output.transform;
-			rootPoints[1] = rootNode.connectedTo.input.transform;
+			rootPoints[0] = rootNodeOutput.transform;
+			rootPoints[1] = currentFirstNode.input.transform;
 			
-			nodeIOPoints.Add ( new IOReference ( index, rootPoints ) );
+			nodeIOPoints.Add ( new IOReference ( currentRootNode, rootPoints ) );
 
-			UpdateNodePosition ( index, rootNode.connectedTo, 0, rootBottomLines[index] + 30 );
+			UpdateNodePosition ( currentRootNode, currentFirstNode, 0, rootBottomLines[currentRootNode] + 30 );
 		}
 	}
 	
-	private function UpdateAllRootNodes () {
+	public function UpdateRootNodes () {
 		nodeIOPoints = null;
 		bottomLines = new float[999];
 		rootBottomLines = new float[999];
@@ -555,24 +588,7 @@ class EditorConversationMap extends OGPage {
 
 		rootBottomLines[0] = scrollView.transform.position.y + 30;
 								
-		for ( var i : int = 0; i < rootNodes.childCount; i++ ) {
-			nodeIndexCounter = 0;
-			UpdateRootNodePosition ( rootNodes.GetChild(i).GetComponent(EditorConversationRootNode), i );
-		}
-	}
-	
-	private function UpdateRootNodesTimed () : IEnumerator {
-		yield WaitForEndOfFrame();
-		
-		UpdateAllRootNodes ();
-		
-		yield WaitForEndOfFrame();
-		
-		UpdateAllRootNodes ();
-	}
-	
-	public function UpdateRootNodes () {
-		StartCoroutine ( UpdateRootNodesTimed() );
+		UpdateRootNodePosition ();
 	}
 	
 	
@@ -591,6 +607,6 @@ class EditorConversationMap extends OGPage {
 		}
 		
 		// Keep the root nodes visible
-		rootNodes.transform.parent.localPosition = Vector3.Lerp ( rootNodes.transform.parent.localPosition, new Vector3 ( 0, 40 - scrollView.position.y, 0 ), Time.deltaTime * 10 );
+		//rootNodes.transform.parent.localPosition = Vector3.Lerp ( rootNodes.transform.parent.localPosition, new Vector3 ( 0, 40 - scrollView.position.y, 0 ), Time.deltaTime * 10 );
 	}
 }

@@ -255,14 +255,6 @@ class EditorMenuBase extends OGPage {
 		yield WaitForEndOfFrame();
 
 		switch ( menu ) {
-			case "Shape":
-				menuObj.GetComponent(EditorInspectorShape).Init(selectedObj);
-				break;
-			
-			case "CombinedMesh":
-				menuObj.GetComponent(EditorInspectorCombinedMesh).Init(selectedObj);
-				break;
-				
 			case "ImportedMesh":
 				menuObj.GetComponent(EditorInspectorImportedMesh).Init(selectedObj);
 				break;
