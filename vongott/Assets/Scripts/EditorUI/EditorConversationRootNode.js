@@ -34,7 +34,7 @@ class EditorConversationRootNode extends MonoBehaviour {
 	}
 	
 	public function CreateNode ( btn : OGButton ) {
-		EditorConversationMap.GetInstance().CreateNode ( this );
+	//	EditorConversationMap.GetInstance().CreateNode ( this );
 	}
 	
 	function Update () {

@@ -124,7 +124,7 @@ class Saver {
 		sw.Close();
 	}
 
-	static function SaveConversationTree ( path : String, rootNodes : Transform ) {
+	static function SaveConversationTree ( path : String, root : int, nodes : EditorConversationNode[] ) {
 		var pathArray : String[] = path.Split ( "/"[0] );
 		var chapterPath = Application.dataPath + "/Story/Conversations/" + pathArray[0];
 		var scenePath = chapterPath + "/" + pathArray[1];
@@ -155,7 +155,7 @@ class Saver {
 		
 		}
 				
-		sw.WriteLine ( Serializer.SerializeConversationTree ( rootNodes ) );
+		sw.WriteLine ( Serializer.SerializeConversationTree ( root, nodes ) );
 		sw.Flush();
 		sw.Close();
 	}

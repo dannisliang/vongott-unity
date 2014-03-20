@@ -53,12 +53,10 @@ class EditorConversationNode extends MonoBehaviour {
 	public var extraButtonsContainer : Transform;
 	public var removeBtn : OGButton;
 	public var frame : Transform;
-	public var type : Transform;
 	public var typeSelector : OGPopUp;
 	public var selectedType : String;
 	public var allTypes : GameObject[];
 	public var input : OGButton;
-	public var rootNodeLabel : OGLabel;
 	
 	public var speak : Speak;
 	public var condition : Condition;
@@ -161,42 +159,42 @@ class EditorConversationNode extends MonoBehaviour {
 				break;
 			
 			case "GameEvent":
-				AdjustFrame ( 340, 50, 1 );
+				AdjustFrame ( 320, 70, 1 );
 				SetActive ( 0, gameEvent.output );
 				SetActive ( 1, null );
 				SetActive ( 2, null );
 				break;
 				
 			case "Condition":
-				AdjustFrame ( 240, 50, 1 );
+				AdjustFrame ( 220, 70, 1 );
 				SetActive ( 0, condition.outputFalse );
 				SetActive ( 1, condition.outputTrue );
 				SetActive ( 2, null );
 				break;
 			
 			case "Consequence":
-				AdjustFrame ( 340, 80, 1 );
+				AdjustFrame ( 320, 100, 1 );
 				SetActive ( 0, consequence.output );
 				SetActive ( 1, null );
 				SetActive ( 2, null );
 				break;
 			
 			case "EndConvo":
-				AdjustFrame ( 200, 80, 1 );
+				AdjustFrame ( 200, 90, 1 );
 				SetActive ( 0, null );
 				SetActive ( 1, null );
 				SetActive ( 2, null );
 				break;
 				
 			case "Exchange":
-				AdjustFrame ( 300, 80, 1 );
+				AdjustFrame ( 240, 100, 1 );
 				SetActive ( 0, exchange.outputFailed );
 				SetActive ( 1, exchange.outputSuccess );
 				SetActive ( 2, null );
 				break;
 
 			case "Jump":
-				AdjustFrame ( 200, 50, 1 );
+				AdjustFrame ( 200, 60, 1 );
 				SetActive ( 0, null );
 				SetActive ( 1, null );
 				SetActive ( 2, null );
@@ -370,16 +368,16 @@ class EditorConversationNode extends MonoBehaviour {
 		yield WaitForEndOfFrame();
 	
 		for ( var i : int = 0; i < speak.lines.childCount; i++ ) {
-			speak.lines.GetChild(i).localPosition = new Vector3 ( i * 210, 0, 0 );
+			speak.lines.GetChild(i).localPosition = new Vector3 ( i * 220, 0, 0 );
 			speak.lines.GetChild(i).GetComponent(EditorConversationNodeLine).SetRemoveable(i>0);
-			speak.addBtn.transform.localPosition = new Vector3 ( ( i + 1 ) * 210, 30, 0 );
+			speak.addBtn.transform.localPosition = new Vector3 ( 10 + ( i + 1 ) * 220, 34, 0 );
 			
 			if ( speak.lines.childCount < 3 && speak.speakerPopUp.selectedOption == "Player" ) {
 				speak.addBtn.gameObject.SetActive ( true );
-				AdjustFrame ( 200 + (i*200), 80, 1 );
+				AdjustFrame ( 10 + 250 + (i*220), 176, 1 );
 			} else {
 				speak.addBtn.gameObject.SetActive ( false );
-				AdjustFrame ( (i*200), 80, 1 );
+				AdjustFrame ( 10 + 210 + (i*220), 176, 1 );
 			}
 		
 			SetActive ( i, speak.lines.GetChild(i).GetComponent(EditorConversationNodeLine).outputBtn );
@@ -389,9 +387,8 @@ class EditorConversationNode extends MonoBehaviour {
 	// Frame
 	private function AdjustFrame ( x : float, y : float, z : float ) {
 		frame.localScale = new Vector3 ( x, y, z );
-		type.localPosition = new Vector3 ( (x/2) - 85, 0, -5 );
-		extraButtonsContainer.localPosition = new Vector3 ( 0, frame.localScale.y + 10, 0 );
-		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x - 10, 10, -2 );
+		frame.localPosition = new Vector3 ( 0, 0, 3 );
+		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x - 10, 0, 0 );
 		
 		EditorConversationMap.GetInstance().UpdateRootNodes ();
 	}
@@ -425,12 +422,9 @@ class EditorConversationNode extends MonoBehaviour {
 			jump.jumpTo.SetOptions ( rootStrings );
 		}
 	
-		// Display the right id data
-		rootNodeLabel.text = rootIndex.ToString();
-	
 		// Check for invalid values
 		var integer : int = 0;
-		if ( !int.TryParse ( exchange.credits.text, integer ) ) {
+		if ( selectedType == "Exchange" && !int.TryParse ( exchange.credits.text, integer ) ) {
 			exchange.credits.text = "0";
 		}
 	

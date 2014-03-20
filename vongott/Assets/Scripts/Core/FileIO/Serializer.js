@@ -677,12 +677,12 @@ static function SerializeConversationRootNode ( obj : EditorConversationRootNode
 	return rootNode;
 }
 
-static function SerializeConversationTree ( obj : Transform ) : JSONObject {
+static function SerializeConversationTree ( root : int, nodes : EditorConversationNode [] ) : JSONObject {
 	var conversationTree : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	var rootNodes : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 	
-	for ( var i : int = 0; i < obj.childCount; i++ ) {
-		rootNodes.Add ( SerializeConversationRootNode ( obj.GetChild(i).GetComponent ( EditorConversationRootNode ) ) );
+	for ( var i : int = 0; i < nodes.Length; i++ ) {
+		rootNodes.Add ( SerializeConversationRootNode ( nodes[i] ) );
 	}
 	
 	conversationTree.AddField ( "rootNodes", rootNodes ); 

@@ -109,16 +109,16 @@ MonoBehaviour:
       width: 32
       height: 32
     border:
-      top: 4
-      bottom: 4
-      left: 4
-      right: 4
+      top: 5
+      bottom: 5
+      left: 5
+      right: 5
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
       font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
-      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+      fontColor: {r: .647058845, g: .823529422, b: .862745106, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
       alignment: 4
@@ -234,7 +234,7 @@ MonoBehaviour:
       fontIndex: 0
       font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
+      fontColor: {r: 0, g: .784313738, b: 1, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
       alignment: 4
@@ -718,16 +718,16 @@ MonoBehaviour:
       width: 32
       height: 16
     border:
-      top: 3
-      bottom: 3
-      left: 3
+      top: 5
+      bottom: 5
+      left: 5
       right: 12
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
       font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
-      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+      fontColor: {r: .647058845, g: .823529422, b: .862745106, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
       alignment: 3
@@ -747,10 +747,10 @@ MonoBehaviour:
       width: 32
       height: 16
     border:
-      top: 3
-      bottom: 3
-      left: 3
-      right: 3
+      top: 5
+      bottom: 5
+      left: 5
+      right: 5
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
@@ -771,16 +771,16 @@ MonoBehaviour:
   - name: PopUpHover
     coordinates:
       serializedVersion: 2
-      x: 0
-      y: 0
+      x: 64
+      y: 48
       width: 32
-      height: 32
+      height: 16
     border:
-      top: 3
-      bottom: 3
-      left: 3
-      right: 3
-    color: {r: 1, g: 1, b: 1, a: 1}
+      top: 5
+      bottom: 5
+      left: 5
+      right: 5
+    color: {r: 0, g: .784313738, b: 1, a: 1}
     text:
       fontIndex: 0
       font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
