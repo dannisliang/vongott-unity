@@ -218,7 +218,7 @@ class EditorConversationNode extends MonoBehaviour {
 		connectedTo = new EditorConversationNode[3];
 		activeOutputs = new OGButton[3];
 		
-		EditorConversationMap.GetInstance().UpdateRootNodes ();
+		EditorConversationMap.GetInstance().UpdateRootNode ();
 	}
 	
 	public function SetConnection ( i : int, input : EditorConversationNode ) {
@@ -228,7 +228,7 @@ class EditorConversationNode extends MonoBehaviour {
 		
 		connectedTo[i] = input;
 		
-		EditorConversationMap.GetInstance().UpdateRootNodes ();
+		EditorConversationMap.GetInstance().UpdateRootNode ();
 	}
 	
 	public function SetActive ( i : int, output : OGButton ) {
@@ -278,7 +278,7 @@ class EditorConversationNode extends MonoBehaviour {
 			EditorConversationMap.GetInstance().connectMode = false;
 		}
 		
-		EditorConversationMap.GetInstance().UpdateRootNodes ();
+		EditorConversationMap.GetInstance().UpdateRootNode ();
 	}
 	
 	// Flags
@@ -390,7 +390,7 @@ class EditorConversationNode extends MonoBehaviour {
 		frame.localPosition = new Vector3 ( 0, 0, 3 );
 		removeBtn.transform.localPosition = new Vector3 ( frame.localScale.x - 10, 0, 0 );
 		
-		EditorConversationMap.GetInstance().UpdateRootNodes ();
+		EditorConversationMap.GetInstance().UpdateRootNode ();
 	}
 	
 	// Set root node

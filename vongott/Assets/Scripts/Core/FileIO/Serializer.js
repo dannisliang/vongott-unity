@@ -677,16 +677,28 @@ static function SerializeConversationRootNode ( obj : EditorConversationRootNode
 	return rootNode;
 }
 
-static function SerializeConversationTree ( root : int, nodes : EditorConversationNode [] ) : JSONObject {
-	var conversationTree : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
-	var rootNodes : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
+static function SerializeConversationTree ( rootIndex : int, rootNode : EditorConversationRootNode, encodedString : String  ) : JSONObject {
+	var conversationTree : JSONObject = new JSONObject ( encodedString, false );
+	var rootNodes : JSONObject;
+       
+	if ( conversationTree.HasField ( "rootNodes" ) ) {
+		rootNodes = conversationTree.GetField ( "rootNodes" );
+
+	} else {
+		rootNodes = new JSONObject (JSONObject.Type.ARRAY);
 	
-	for ( var i : int = 0; i < nodes.Length; i++ ) {
-		rootNodes.Add ( SerializeConversationRootNode ( nodes[i] ) );
 	}
+
+	rootNodes.list.Insert ( rootIndex, SerializeConversationRootNode ( rootNode ) );
 	
-	conversationTree.AddField ( "rootNodes", rootNodes ); 
+	if ( conversationTree.HasField ( "rootNodes" ) ) {
+		conversationTree.SetField ( "rootNodes", rootNodes ); 
 	
+	} else {
+		conversationTree.AddField ( "rootNodes", rootNodes ); 
+
+	}
+
 	return conversationTree;
 }
 

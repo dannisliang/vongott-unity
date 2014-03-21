@@ -124,12 +124,13 @@ class Saver {
 		sw.Close();
 	}
 
-	static function SaveConversationTree ( path : String, root : int, nodes : EditorConversationNode[] ) {
+	static function SaveConversationTree ( path : String, root : int, rootNode : EditorConversationRootNode ) {
 		var pathArray : String[] = path.Split ( "/"[0] );
 		var chapterPath = Application.dataPath + "/Story/Conversations/" + pathArray[0];
 		var scenePath = chapterPath + "/" + pathArray[1];
 		var actorPath = scenePath + "/" + pathArray[2];
 		var filePath = actorPath + ".vgconvo";
+		var encodedString : String;
 		
 		CheckBackups ( filePath );
 		
@@ -145,17 +146,19 @@ class Saver {
 		
 		if ( !File.Exists ( filePath ) ) {
 			sw = File.CreateText ( filePath );
+			encodedString = "";
 			
 			Debug.Log ( "Saver | Created file '" + filePath + "': " + sw );
 		
 		} else {
 			sw = new StreamWriter ( filePath );
+			encodedString = Loader.ReadFile ( path );	
 		
 			Debug.Log ( "Saver | Saved file '" + filePath + "': " + sw );	
 		
 		}
 				
-		sw.WriteLine ( Serializer.SerializeConversationTree ( root, nodes ) );
+		sw.WriteLine ( Serializer.SerializeConversationTree ( root, rootNode, encodedString ) );
 		sw.Flush();
 		sw.Close();
 	}
