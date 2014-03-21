@@ -891,14 +891,18 @@ static function TrimFileNames ( paths : String[] ) : String[] {
 	var newArray : String[] = new String[paths.Length];
 	
 	for ( var i = 0; i < paths.Length; i++ ) {
-		var path = paths[i].Split("/"[0]);
-		var fileName = path[path.Length-1];
-		var extention = fileName.Split("."[0]);
-		var name = extention[0];
+		var path : String[] = p.Split("/"[0]);
+		
+		# if UNITY_STANDALONE_WIN
+			path = p.Split("\\"[0]);
+		# endif
+		
+		var fileName : String = path[path.Length-1];
+		var extention : String = fileName.Split("."[0]);
+		var name : String = extention[0];
+		
 		newArray[i] = name;
 	}
-	
-	return newArray;
 }
 
 // Save file

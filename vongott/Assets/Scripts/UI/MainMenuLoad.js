@@ -6,10 +6,15 @@ class MainMenuLoad extends OGPage {
 	public var levelList : Transform;
 
 	private function TrimFileName ( p : String ) : String {
-		var path = p.Split("\\"[0]);
-		var fileName = path[path.Length-1];
-		var extention = fileName.Split("."[0]);
-		var name = extention[0];
+		var path : String[] = p.Split("/"[0]);
+		
+		# if UNITY_STANDALONE_WIN
+			path = p.Split("\\"[0]);
+		# endif
+		
+		var fileName : String = path[path.Length-1];
+		var extention : String = fileName.Split("."[0]);
+		var name : String = extention[0];
 		
 		return name;
 	}

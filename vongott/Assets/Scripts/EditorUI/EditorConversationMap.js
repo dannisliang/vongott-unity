@@ -65,21 +65,6 @@ class EditorConversationMap extends OGPage {
 		}
 	}
 	
-	// Trim filename
-	function TrimFileNames ( paths : String[] ) : String[] {
-		var newArray : String[] = new String[paths.Length];
-		
-		for ( var i = 0; i < paths.Length; i++ ) {
-			var path = paths[i].Split("\\"[0]);
-			var fileName = path[path.Length-1];
-			var extention = fileName.Split("."[0]);
-			var name = extention[0];
-			newArray[i] = name;
-		}
-		
-		return newArray;
-	}
-	
 	// Create convo
 	function Create () {
 		if ( creator.chapter.text == "" || creator.scene.text == "" || creator.name.text == "" ) { return; }

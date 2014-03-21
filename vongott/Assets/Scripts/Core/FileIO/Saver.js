@@ -151,8 +151,9 @@ class Saver {
 			Debug.Log ( "Saver | Created file '" + filePath + "': " + sw );
 		
 		} else {
+			encodedString = Loader.ReadFile ( filePath );	
+			
 			sw = new StreamWriter ( filePath );
-			encodedString = Loader.ReadFile ( path );	
 		
 			Debug.Log ( "Saver | Saved file '" + filePath + "': " + sw );	
 		
