@@ -100,6 +100,12 @@ class EditorMenuBase extends OGPage {
 		EditorCore.ToggleGizmos ();
 	}
 	
+	// Toggle first person
+	public function ToggleFirstPersonMode () {
+		EditorCore.GetInstance().ToggleFirstPersonMode();
+	}
+
+
 	// Toggle navigation
 	function ToggleNavigation () {
 		EditorCore.ToggleNavigation ();

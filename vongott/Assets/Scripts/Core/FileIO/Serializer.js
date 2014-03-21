@@ -603,7 +603,7 @@ static function SerializeMesh ( m : Mesh ) : JSONObject {
 ////////////////////
 // Serialize conversation
 ////////////////////
-static function DeserializeConversationNode ( obj : EditorConversationNode ) : JSONObject {
+static function SerializeConversationNode ( obj : EditorConversationNode ) : JSONObject {
 	var node : JSONObject = new JSONObject (JSONObject.Type.OBJECT);
 	var connectedTo : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 
@@ -655,7 +655,7 @@ static function DeserializeConversationNode ( obj : EditorConversationNode ) : J
 
 	for ( var i : int = 0; i < obj.connectedTo.Length; i++ ) {
 		if ( obj.activeOutputs[i] && obj.connectedTo[i] ) {
-			connectedTo.Add ( DeserializeConversationNode ( obj.connectedTo[i] ) );
+			connectedTo.Add ( SerializeConversationNode ( obj.connectedTo[i] ) );
 		}
 	}
 
@@ -671,7 +671,7 @@ static function SerializeConversationRootNode ( obj : EditorConversationRootNode
 	rootNode.AddField ( "passive", obj.passive.isTicked );
 	
 	if ( obj.connectedTo ) {
-		rootNode.AddField ( "connectedTo", DeserializeConversationNode ( obj.connectedTo ) );
+		rootNode.AddField ( "connectedTo", SerializeConversationNode ( obj.connectedTo ) );
 	}
 	
 	return rootNode;
@@ -683,13 +683,14 @@ static function SerializeConversationTree ( rootIndex : int, rootNode : EditorCo
        
 	if ( conversationTree.HasField ( "rootNodes" ) ) {
 		rootNodes = conversationTree.GetField ( "rootNodes" );
+		rootNodes.list[rootIndex] = SerializeConversationRootNode ( rootNode );
 
 	} else {
 		rootNodes = new JSONObject (JSONObject.Type.ARRAY);
+		rootNodes.list.Insert ( rootIndex, SerializeConversationRootNode ( rootNode ) );
 	
 	}
 
-	rootNodes.list.Insert ( rootIndex, SerializeConversationRootNode ( rootNode ) );
 	
 	if ( conversationTree.HasField ( "rootNodes" ) ) {
 		conversationTree.SetField ( "rootNodes", rootNodes ); 

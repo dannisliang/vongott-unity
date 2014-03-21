@@ -44,6 +44,7 @@ public class OGTextField extends OGWidget {
 			//GUI.color = new Color ( 0, 0, 0, 0 );
 
 			var style : GUIStyle = new GUIStyle();
+			style.font = styles.basic.text.font;
 			style.normal.textColor = styles.basic.text.fontColor;
 			style.wordWrap = true;
 

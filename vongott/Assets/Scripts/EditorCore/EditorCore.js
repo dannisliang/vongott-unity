@@ -207,7 +207,7 @@ static function AddObject ( obj : GameObject ) {
 	var newObject : GameObject = Instantiate ( obj );
 	
 	newObject.name = newObject.name.Replace( "(Clone)", "" );
-	
+
 	// Check if skybox
 	if ( newObject.GetComponent ( SkyBox ) ) {
 		var parent : Transform = GameObject.FindWithTag("SkyboxCamera").transform.parent;
@@ -221,6 +221,12 @@ static function AddObject ( obj : GameObject ) {
 		newObject.transform.localEulerAngles = Vector3.zero;
 		newObject.transform.localPosition = Vector3.zero;
 	
+	} else {
+		newObject.transform.parent = currentLevel.transform;
+		newObject.transform.localScale = Vector3.one;
+		newObject.transform.localEulerAngles = Vector3.zero;
+		newObject.transform.position = EditorCamera.GetInstance().cursor.position;
+
 	}
 }
 
@@ -759,21 +765,25 @@ static function SetPickMode ( state : boolean ) {
 }
 
 // Set first person mode
-static function ToggleFirstPersonGhost ( state : boolean ) {
+public function ToggleFirstPersonGhost ( state : boolean ) {
 	EditorCamera.GetInstance().cursor.GetComponent(Rigidbody).useGravity = !state;
 	EditorCamera.GetInstance().cursor.GetComponent(CapsuleCollider).enabled = !state;
 	EditorCamera.GetInstance().cursor.GetComponent(Rigidbody).velocity = Vector3.zero;
 }
 
-static function ToggleFirstPersonGhost () {
+public function ToggleFirstPersonGhost () {
 	ToggleFirstPersonGhost ( EditorCamera.GetInstance().cursor.GetComponent(Rigidbody).useGravity );
 }
 
-static function GetFirstPersonGhost () : boolean {
+public function GetFirstPersonGhost () : boolean {
 	return !EditorCamera.GetInstance().cursor.GetComponent(Rigidbody).useGravity;
 }
 
-static function SetFirstPersonMode ( state : boolean ) {
+public function ToggleFirstPersonMode () {
+	SetFirstPersonMode ( !firstPersonMode );
+}
+
+public function SetFirstPersonMode ( state : boolean ) {
 	firstPersonMode = state;
 	ToggleFirstPersonGhost ( !firstPersonMode );
 	
@@ -891,18 +901,20 @@ static function TrimFileNames ( paths : String[] ) : String[] {
 	var newArray : String[] = new String[paths.Length];
 	
 	for ( var i = 0; i < paths.Length; i++ ) {
-		var path : String[] = p.Split("/"[0]);
+		var path : String[] = paths[i].Split("/"[0]);
 		
-		# if UNITY_STANDALONE_WIN
-			path = p.Split("\\"[0]);
-		# endif
+		if ( Application.platform == RuntimePlatform.WindowsEditor ) {
+			path = paths[i].Split("\\"[0]);
+		}
 		
 		var fileName : String = path[path.Length-1];
-		var extention : String = fileName.Split("."[0]);
+		var extention : String [] = fileName.Split("."[0]);
 		var name : String = extention[0];
 		
 		newArray[i] = name;
 	}
+
+	return newArray;
 }
 
 // Save file

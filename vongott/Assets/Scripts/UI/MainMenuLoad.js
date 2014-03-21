@@ -8,12 +8,12 @@ class MainMenuLoad extends OGPage {
 	private function TrimFileName ( p : String ) : String {
 		var path : String[] = p.Split("/"[0]);
 		
-		# if UNITY_STANDALONE_WIN
+		if ( Application.platform == RuntimePlatform.WindowsEditor ) {
 			path = p.Split("\\"[0]);
-		# endif
+		}
 		
 		var fileName : String = path[path.Length-1];
-		var extention : String = fileName.Split("."[0]);
+		var extention : String [] = fileName.Split("."[0]);
 		var name : String = extention[0];
 		
 		return name;

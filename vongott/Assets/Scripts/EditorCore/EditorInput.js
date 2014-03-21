@@ -270,7 +270,7 @@ function Update () {
 	} else if ( EditorCore.firstPersonMode ) {
 		// Escape key: first person mode off
 		if ( Input.GetKeyDown ( KeyCode.P ) || Input.GetKeyDown ( KeyCode.Escape ) ) {
-			EditorCore.SetFirstPersonMode( false );
+			EditorCore.GetInstance().SetFirstPersonMode( false );
 		}
 	
 		var speed : float = 3;
@@ -296,10 +296,10 @@ function Update () {
 		}
 		
 		if ( Input.GetKeyDown ( KeyCode.F ) ) {
-			EditorCore.ToggleFirstPersonGhost();
+			EditorCore.GetInstance().ToggleFirstPersonGhost();
 		}
 		
-		if ( EditorCore.GetFirstPersonGhost() ) {
+		if ( EditorCore.GetInstance().GetFirstPersonGhost() ) {
 			if ( Input.GetKey ( KeyCode.Space ) ) {
 				Camera.main.GetComponent(EditorCamera).MoveFixPoint ( Vector3.up * speed );
 			}
@@ -340,7 +340,7 @@ function Update () {
 
 		// P key: first person mode
 		} else if ( Input.GetKeyDown ( KeyCode.P ) ) {
-			EditorCore.SetFirstPersonMode( true );
+			EditorCore.GetInstance().SetFirstPersonMode( true );
 
 		// S key
 		} else if ( Input.GetKeyDown ( KeyCode.S ) ) {

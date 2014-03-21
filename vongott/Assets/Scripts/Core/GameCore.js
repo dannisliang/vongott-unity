@@ -109,7 +109,9 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Load level
 	////////////////////
-	static function LoadLevel ( path : String, spawnPoint : String ) {
+	public function LoadLevel ( path : String, spawnPoint : String ) : IEnumerator {
+		Time.timeScale = 0;
+
 		// Check if a level is already loaded
 		if ( currentLevel != null ) {
 			Destroy ( currentLevel );
@@ -132,6 +134,10 @@ class GameCore extends MonoBehaviour {
 		//MergeMeshes ();
 	
 		GoToSpawnPoint ( spawnPoint );
+
+		yield WaitForEndOfFrame ();
+
+		Time.timeScale = 1;
 	}
 	
 	
@@ -277,7 +283,7 @@ class GameCore extends MonoBehaviour {
 			
 		// Load level
 		if ( nextLevel != "" ) {
-			LoadLevel ( nextLevel, nextSpawnPoint );
+			StartCoroutine ( LoadLevel ( nextLevel, nextSpawnPoint ) );
 		}
 		
 		nextLevel = "";

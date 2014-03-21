@@ -43,10 +43,9 @@ class EditorConversationMap extends OGPage {
 	public var nodeContainer : Transform;
 	
 	private var nodeIOPoints : List.< IOReference > = new List.< IOReference >();
-	private var bottomLines : float[] = new float[1000];
-	private var rootBottomLines : float[] = new float[1000];
 	private var currentConvo : ConversationTree;
 	private var currentRootIndex : int = 0;
+	private var nodeIndexCounter : int = 0;
 	private var root : OGRoot;
 	private var matrix : EditorConversationNode[,] = new EditorConversationNode[999,999];
 
@@ -63,14 +62,14 @@ class EditorConversationMap extends OGPage {
 			selector.gameObject.SetActive ( false );
 			creator.instance.SetActive ( true );
 		}
+
+		fileModeSwitch.selectedOption = mode;
 	}
 	
 	// Create convo
 	function Create () {
 		if ( creator.chapter.text == "" || creator.scene.text == "" || creator.name.text == "" ) { return; }
 		
-		ClearNodes ();
-								
 		SelectFileMode ( "Load" );
 		selector.text = creator.chapter.text + "/" + creator.scene.text + "/" + creator.name.text;
 		
@@ -118,7 +117,9 @@ class EditorConversationMap extends OGPage {
 	
 	// Save
 	function Save () {	
-		Saver.SaveConversationTree ( selector.text, currentRootIndex, currentRootNode );
+		if ( selector.text != "(none)" ) {
+			Saver.SaveConversationTree ( selector.text, currentRootIndex, currentRootNode );
+		}
 	}
 	
 	// Exit
@@ -273,6 +274,8 @@ class EditorConversationMap extends OGPage {
 			}
 
 			UpdateRootNode ();
+		
+			currentRootIndex = i;
 		}	
 	}
 	
@@ -283,7 +286,7 @@ class EditorConversationMap extends OGPage {
 	public function CreateRootNode () {
 	}
 	
-	public function RemoveRootNode ( index : int ) {
+	public function RemoveRootNode () {
 		InvokePrompt (
 			function () {
 				// Remove it!!
@@ -452,7 +455,7 @@ class EditorConversationMap extends OGPage {
 		if ( !node.dirty ) { return; }
 		
 		node.dirty = false;
-		
+
 		var pos : Vector3;
 		pos.x = 10 + GetRightMostOffset ( yIndex );
 		pos.y = 200 + yIndex * cellDistance;
@@ -461,8 +464,12 @@ class EditorConversationMap extends OGPage {
 		var xIndex : int = GetRightMostIndex(yIndex);
 		matrix[xIndex,yIndex] = node;
 		
+		node.nodeIndex = nodeIndexCounter;
+		node.rootIndex = currentRootIndex;
 		node.targetPos = pos;
 
+		nodeIndexCounter++;
+		
 		for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
 			if ( node.activeOutputs[i] && node.connectedTo[i] ) {
 				var points : Transform[] = new Transform[2];
@@ -491,6 +498,7 @@ class EditorConversationMap extends OGPage {
 	public function UpdateRootNode () {
 		nodeIOPoints = null;
 		matrix = new EditorConversationNode[1000,1000];
+		nodeIndexCounter = 0;
 
 		SetDirty ();
 		
