@@ -35,6 +35,7 @@ ModelImporter:
     2300014: mainmenu_plane
     2300016: mainmenu_rim
     2300018: single_bar
+    2300020: //RootNode
     3300000: btn_community
     3300002: btn_load
     3300004: btn_newgame
@@ -45,6 +46,7 @@ ModelImporter:
     3300014: mainmenu_plane
     3300016: mainmenu_rim
     3300018: single_bar
+    3300020: //RootNode
     4300000: mainmenu_plane
     4300002: logo
     4300004: five_options
@@ -55,10 +57,11 @@ ModelImporter:
     4300014: btn_community
     4300016: btn_load
     4300018: btn_newgame
+    4300020: menu_clamps
     7400000: Default Take
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -93,7 +96,7 @@ ModelImporter:
     splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 1
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []

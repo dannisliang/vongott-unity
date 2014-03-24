@@ -5,7 +5,11 @@ class MainMenuBase extends OGPage {
 		OGRoot.GetInstance().GoToPage ( pageName );
 	}
 	
+	public function GoToEditor () {
+		Application.LoadLevel ( "editor" );
+	}
+
 	public function ExitGame () {
-	
+		Application.Quit ();	
 	}
 }

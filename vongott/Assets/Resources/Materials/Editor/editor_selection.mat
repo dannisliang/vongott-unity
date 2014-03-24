@@ -45,17 +45,17 @@ Material:
         second: 1.70777202
       data:
         first:
-          name: _Outline
-        second: .00999999978
-      data:
-        first:
           name: _Glossiness
         second: .430051804
+      data:
+        first:
+          name: _Outline
+        second: .00999999978
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .533333361, g: .815686285, b: 1, a: .419607848}
+        second: {r: .533333361, g: .815686285, b: 1, a: .368627459}
       data:
         first:
           name: _LineColor
@@ -64,10 +64,6 @@ Material:
         first:
           name: _GridColor
         second: {r: 1, g: 1, b: 1, a: 0}
-      data:
-        first:
-          name: _OutlineColor
-        second: {r: 0, g: 1, b: 0, a: 1}
       data:
         first:
           name: _DiffuseColor
@@ -80,3 +76,7 @@ Material:
         first:
           name: _SpecularColor
         second: {r: .300699413, g: 1, b: 0, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 0, g: 1, b: 0, a: 1}

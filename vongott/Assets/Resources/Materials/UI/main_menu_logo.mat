@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: main_menu_logo
-  m_Shader: {fileID: 4800000, guid: eef5cd4593a16b64bac33a7bc1acfcf7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4401a8719d76edd478a0dbd2de3b3970, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -76,25 +76,25 @@ Material:
         second: 15.4955225
       data:
         first:
-          name: _Outline
-        second: .00456876215
-      data:
-        first:
           name: _Glossiness
         second: .75820893
       data:
         first:
+          name: _Outline
+        second: .00456876215
+      data:
+        first:
           name: _Glow
         second: .529556572
+      data:
+        first:
+          name: _LinesSize
+        second: 2.92857146
     m_Colors:
       data:
         first:
           name: _Color
         second: {r: 0, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _OutlineColor
-        second: {r: .00994810741, g: .139975637, b: .338235319, a: 1}
       data:
         first:
           name: _DiffuseColor
@@ -109,9 +109,17 @@ Material:
         second: {r: 0, g: .400000006, b: .627451003, a: 1}
       data:
         first:
+          name: _OutlineColor
+        second: {r: .00994810741, g: .139975637, b: .338235319, a: 1}
+      data:
+        first:
           name: _MainColor
         second: {r: 0, g: 0, b: 0, a: 0}
       data:
         first:
           name: _EmissionColor
         second: {r: 0, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _LinesColor
+        second: {r: 0, g: .586206913, b: 1, a: .172549024}
