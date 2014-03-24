@@ -4,6 +4,7 @@ import System.IO;
 
 class MainMenuLoad extends OGPage {
 	public var levelList : Transform;
+	public var background : Transform;
 
 	private function TrimFileName ( p : String ) : String {
 		var path : String[] = p.Split("/"[0]);
@@ -30,7 +31,7 @@ class MainMenuLoad extends OGPage {
 		btn.GetDefaultStyles();
 
 		btn.transform.parent = levelList;
-		btn.transform.localScale = new Vector3 ( 200, 30, 1 );
+		btn.transform.localScale = new Vector3 ( 280, 30, 1 );
 		btn.transform.localPosition = new Vector3 ( 0, index * 40, 0 );
 	}
 	
@@ -53,6 +54,7 @@ class MainMenuLoad extends OGPage {
 	}
 	
 	override function StartPage () {
+		background.localScale = new Vector3 ( 2.5, 0.96, 1 );
 		PopulateMaps ();
 	}
 }
