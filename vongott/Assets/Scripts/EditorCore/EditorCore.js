@@ -942,7 +942,10 @@ function SaveFile ( path : String ) {
 
 // Trim filename
 static function TrimFileName ( p : String ) : String {
-	var path = p.Split("\\"[0]);
+	var path = p.Split("/"[0]);
+	if ( Application.platform == RuntimePlatform.WindowsEditor ) {
+		path = p.Split("\\"[0]);
+	}
 	var fileName = path[path.Length-1];
 	var extention = fileName.Split("."[0]);
 	var name = extention[0];
