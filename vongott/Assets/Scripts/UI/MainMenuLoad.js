@@ -3,7 +3,7 @@
 import System.IO;
 
 class MainMenuLoad extends OGPage {
-	public var levelList : Transform;
+	public var slots : OGListItem[];
 	public var background : Transform;
 
 	private function TrimFileName ( p : String ) : String {
@@ -20,27 +20,29 @@ class MainMenuLoad extends OGPage {
 		return name;
 	}
 
-	private function CreateButton ( mapName : String ) {
-		var btn : OGListItem = new GameObject ( mapName, OGListItem ).GetComponent ( OGListItem );
-		var index : int = levelList.childCount;
-		
-		btn.text = mapName;
-		btn.target = this.gameObject;
-		btn.message = "LoadFile";
-		btn.argument = mapName;
-		btn.GetDefaultStyles();
-
-		btn.transform.parent = levelList;
-		btn.transform.localScale = new Vector3 ( 280, 30, 1 );
-		btn.transform.localPosition = new Vector3 ( 0, index * 40, 0 );
-	}
-	
 	private function PopulateMaps () {
 		var files : String[] = Directory.GetFiles ( Application.dataPath + "/Maps", "*.vgmap" );
-	
-		for ( var s : String in files ) {
-			CreateButton ( TrimFileName ( s ) );
+
+		for ( var i : int = 0; i < slots.Length; i++ ) {
+			if ( i < files.Length ) {
+				var mapName : String = TrimFileName ( files[i] );
+				slots[i].text = mapName;
+				slots[i].argument = mapName;
+				slots[i].isDisabled = false;
+			} else {
+				slots[i].isDisabled = true;
+			}		
 		}
+	}
+
+	public function HideContent () {
+		this.transform.GetChild(0).gameObject.SetActive ( false );
+	}
+	
+	public function ShowContent () {
+		this.transform.GetChild(0).gameObject.SetActive ( true );
+
+		PopulateMaps ();
 	}
 	
 	public function LoadFile ( mapName : String ) {		
@@ -50,11 +52,28 @@ class MainMenuLoad extends OGPage {
 	}
 
 	public function GoBack () {
+		HideContent ();
+		
+		iTween.ScaleTo ( background.gameObject, iTween.Hash (
+			"y", 0.0001,
+			"time", 0.25,
+			"oncompletetarget", this.gameObject,
+			"oncomplete", "GoToBase"
+		) );
+	}
+
+	public function GoToBase () {
 		OGRoot.GetInstance().GoToPage ( "MenuBase" );
 	}
 	
 	override function StartPage () {
-		background.localScale = new Vector3 ( 2.5, 0.96, 1 );
-		PopulateMaps ();
+		HideContent ();
+
+		iTween.ScaleTo ( background.gameObject, iTween.Hash (
+			"y", 0.96,
+			"time", 0.25,
+			"oncompletetarget", this.gameObject,
+			"oncomplete", "ShowContent"
+		) );
 	}
 }
