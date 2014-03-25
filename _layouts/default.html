@@ -109,8 +109,10 @@
 			{% endif %}
 
 			<div class="content" {% if page.date or page.postlist %}style="width:80%;padding-left:30px;"{% endif %}>
+				{% if page.date %}
 				{% if page.title %}
 				<h2>{{ page.title }}</h2>
+				{% endif %}
 				{% endif %}
 
 				{% if page.author %}
