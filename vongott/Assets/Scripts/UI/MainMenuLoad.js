@@ -36,6 +36,35 @@ class MainMenuLoad extends OGPage {
 		}
 	}
 	
+	override function UpdatePage () {
+		UpdateBackgroundBrightness ( Random.Range ( 1, 1.2 ) );
+	}
+	
+	private function Transition ( by : float, bf : float, bt : float, ef : float, et : float, func : String ) {
+		HideContent ();
+		
+		iTween.ScaleTo ( background.gameObject, iTween.Hash (
+			"y", by,
+			"time", 0.25,
+			"oncompletetarget", this.gameObject,
+			"oncomplete", func
+		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", bf,
+			"to", bt,
+			"time", 0.25,
+			"onupdate", "UpdateBackgroundBrightness"
+		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", ef,
+			"to", et,
+			"time", 0.15,
+			"onupdate", "UpdateEdgeTiling"
+		) );
+	}	
+	
 	public function UpdateEdgeTiling ( val : float ) {
 		clampEdge.materials[1].mainTextureOffset.y = -val;
 	}
@@ -61,29 +90,7 @@ class MainMenuLoad extends OGPage {
 	}
 
 	public function GoBack () {
-		HideContent ();
-		
-		iTween.ScaleTo ( background.gameObject, iTween.Hash (
-			"y", 0.0001,
-			"time", 0.25,
-			"oncompletetarget", this.gameObject,
-			"oncomplete", "GoToBase"
-		) );
-		
-		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"from", 1,
-			"to", 10,
-			"delay", 0.05,
-			"time", 0.2,
-			"onupdate", "UpdateBackgroundBrightness"
-		) );
-		
-		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"from", 0.27,
-			"to", 0,
-			"time", 0.15,
-			"onupdate", "UpdateEdgeTiling"
-		) );
+		Transition ( 0.0001, 1, 10, 0.27, 0, "GoToBase" );
 	}
 
 	public function GoToBase () {
@@ -91,27 +98,6 @@ class MainMenuLoad extends OGPage {
 	}
 	
 	override function StartPage () {
-		HideContent ();
-
-		iTween.ScaleTo ( background.gameObject, iTween.Hash (
-			"y", 0.96,
-			"time", 0.25,
-			"oncompletetarget", this.gameObject,
-			"oncomplete", "ShowContent"
-		) );
-		
-		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"from", 5,
-			"to", 1,
-			"time", 0.2,
-			"onupdate", "UpdateBackgroundBrightness"
-		) );
-		
-		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"from", 0,
-			"to", 0.27,
-			"time", 0.15,
-			"onupdate", "UpdateEdgeTiling"
-		) );
+		Transition ( 0.96, 5, 1, 0, 0.27, "ShowContent" );
 	}
 }

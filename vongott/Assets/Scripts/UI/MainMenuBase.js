@@ -2,39 +2,22 @@
 
 class MainMenuBase extends OGPage {
 	public var background : Transform;
-	public var clampEdge : MeshRenderer; 
+	public var clampEdge : GameObject; 
 	
 	override function StartPage () {
 		var v : Vector3 = background.localScale;
 		v.y = 0.0001;
 		background.localScale = v;
 		
-		HideContent ();
+		Transition ( 0.7, 5, 1, 0, 0.2, "ShowContent", false );
+	}
 
-		iTween.ScaleTo ( background.gameObject, iTween.Hash (
-			"y", 0.7,
-			"time", 0.25,
-			"oncompletetarget", this.gameObject,
-			"oncomplete", "ShowContent"
-		) );
-		
-		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"from", 5,
-			"to", 1,
-			"time", 0.2,
-			"onupdate", "UpdateBackgroundBrightness"
-		) );
-		
-		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"from", 0,
-			"to", 0.2,
-			"time", 0.15,
-			"onupdate", "UpdateEdgeTiling"
-		) );
+	override function UpdatePage () {
+		UpdateBackgroundBrightness ( Random.Range ( 1, 1.2 ) );
 	}
 
 	public function UpdateEdgeTiling ( val : float ) {
-		clampEdge.materials[1].mainTextureOffset.y = -val;
+		clampEdge.renderer.materials[1].mainTextureOffset.y = -val;
 	}
 
 	public function UpdateBackgroundBrightness ( val : float ) {
@@ -53,34 +36,59 @@ class MainMenuBase extends OGPage {
 		this.transform.GetChild(0).gameObject.SetActive ( true );
 	}
 
-	public function GoToPage ( pageName : String ) {
+	private function Transition ( by : float, bf : float, bt : float, ef : float, et : float, func : String, spinOut : boolean ) {
 		HideContent ();
 		
 		iTween.ScaleTo ( background.gameObject, iTween.Hash (
-			"y", 0.0001,
+			"y", by,
 			"time", 0.25,
 			"oncompletetarget", this.gameObject,
-			"oncomplete", "GoTo" + pageName
+			"oncomplete", spinOut ? "" : func
 		) );
 		
 		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"from", 1,
-			"to", 10,
-			"delay", 0.05,
-			"time", 0.2,
+			"from", bf,
+			"to", bt,
+			"time", 0.25,
 			"onupdate", "UpdateBackgroundBrightness"
 		) );
 		
 		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"from", 0.2,
-			"to", 0,
+			"from", ef,
+			"to", et,
 			"time", 0.15,
 			"onupdate", "UpdateEdgeTiling"
 		) );
+
+		if ( spinOut ) {
+			iTween.RotateTo ( clampEdge, iTween.Hash (
+				"z", 180,
+				"delay", 0.25,
+				"time", 0.5,
+				"easetype", iTween.EaseType.easeInQuad,
+				"oncompletetarget", this.gameObject,
+				"oncomplete", func
+			) );
+			
+			iTween.MoveTo ( clampEdge, iTween.Hash (
+				"z", -4,
+				"delay", 0.25,
+				"time", 0.5,
+				"easetype", iTween.EaseType.easeInQuad
+			) );
+		}
+	}	
+
+	public function GoToPage ( pageName : String ) {
+		Transition ( 0.0001, 1, 10, 0.2, 0, "GoTo" + pageName, false );
 	}
 	
-	public function GoToEditor () {
+	public function LoadEditor () {
 		Application.LoadLevel ( "editor" );
+	}
+
+	public function GoToEditor () {
+		Transition ( 0.0001, 1, 10, 0.2, 0, "LoadEditor", true );
 	}
 
 	public function ExitGame () {
