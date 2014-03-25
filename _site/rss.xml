@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+        <title>The Vongott Chronicles</title>
+        <description>The Vongott Chronicles - mrzapp</description>
+        <link>http://mrzapp.github.io/vongott</link>
+        <link>http://mrzapp.github.io/vongott</link>
+        <lastBuildDate>2013-09-14T01:24:07+08:00</lastBuildDate>
+        <pubDate>2013-09-14T01:24:07+08:00</pubDate>
+        <ttl>1800</ttl>
+
+
+        <item>
+                <title>Conversations</title>
+                <description>&lt;p&gt;Conversations logic has seen some major improvements&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;h3 id='conversations_and_conditional_behaviour'&gt;Conversations and conditional behaviour&lt;/h3&gt;
+
+&lt;p&gt;I&amp;#8217;ve added more conditional functionality to the conversations editor and added an action after every line. This allows you to make an actor run away, attack or follow a path created in the level editor. &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-09-14_conversations_editor.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-09-14_conversations_editor.jpg' /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;ve added some generic characters to talk to in the La Guardia map. So far they string together a fairly coherent scenario. &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-09-14_conversations_ingame.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-09-14_conversations_ingame.jpg' /&gt;&lt;/a&gt;&lt;/p&gt;</description>
+                <link>http://mrzapp.github.io/vongott/2013/09/14/conversations</link>
+                <guid>http://mrzapp.github.io/vongott/2013/09/14/conversations</guid>
+                <pubDate>2013-09-14T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>Skyboxes</title>
+                <description>&lt;p&gt;Support for skyboxes&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;h3 id='emulating_the_masters'&gt;Emulating the masters&lt;/h3&gt;
+
+&lt;p&gt;While Unity does provide some built-in skybox functionality, it&amp;#8217;s only cubemap based, and not quite enough for what we want to do. I decided to emulate the Unreal Engine&amp;#8217;s camera-based skybox paradigm, and it is now working beautifully. &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-09-05_skybox.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-09-05_skybox.jpg' /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The skybox also displays in the editor, here with the La Guardia Terminal map &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-09-05_editor.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-09-05_editor.jpg' /&gt;&lt;/a&gt;&lt;/p&gt;</description>
+                <link>http://mrzapp.github.io/vongott/2013/09/05/skyboxes</link>
+                <guid>http://mrzapp.github.io/vongott/2013/09/05/skyboxes</guid>
+                <pubDate>2013-09-05T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>First map and assets</title>
+                <description>&lt;p&gt;The first map has been decided upon&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;h3 id='abandoned_la_guardia_flight_terminal'&gt;Abandoned La Guardia Flight Terminal&lt;/h3&gt;
+
+&lt;p&gt;It has been decided that the first map should be an abandoned flight terminal at La Guardia Airport. It will be adjacent to Lebedev&amp;#8217;s airfield.&lt;/p&gt;
+
+&lt;p&gt;Below is a lighting test with some new wall types featuring placeholder textures from the &lt;a href='http://www.moddb.com/mods/new-vision'&gt;New Vision&lt;/a&gt; mod. I like it so much, I think I&amp;#8217;ll ask them if we can use their work in Vongott. It would be rather relevant after all. &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-08-29_lighting.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-08-29_lighting.jpg' /&gt;&lt;/a&gt; &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-08-29_lighting2.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-08-29_lighting2.jpg' /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;There is also a preliminary blueprint design of the terminal &lt;a href='https://github.com/mrzapp/vongott/raw/master/vongott/Concept/Maps/1-1_la_guardia_terminal.svg'&gt;here&lt;/a&gt; (right-click and save to see svg)&lt;/p&gt;</description>
+                <link>http://mrzapp.github.io/vongott/2013/08/29/first-map</link>
+                <guid>http://mrzapp.github.io/vongott/2013/08/29/first-map</guid>
+                <pubDate>2013-08-29T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>Asset browser</title>
+                <description>&lt;p&gt;New asset browser&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;h3 id='panel_loviness'&gt;Panel loviness&lt;/h3&gt;
+
+&lt;p&gt;This is a minor update from a technical standpoint, but in terms of usability, it&amp;#8217;s pretty major. All assets can now be accessed from a panel on the left, making it a lot faster and easier to instantiate and place prefabs, actors and items.&lt;/p&gt;
+&lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-08-21_browser.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-08-21_browser.jpg' /&gt;&lt;/a&gt;</description>
+                <link>http://mrzapp.github.io/vongott/2013/08/21/asset-browser</link>
+                <guid>http://mrzapp.github.io/vongott/2013/08/21/asset-browser</guid>
+                <pubDate>2013-08-21T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>UI paradigm and upgrades</title>
+                <description>&lt;p&gt;Updates from the second development phase.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;h3 id='ui'&gt;UI&lt;/h3&gt;
+
+&lt;p&gt;I&amp;#8217;ve decided on a circular UI, as that has always been something I&amp;#8217;d like to do. Some of you might think &amp;#8220;Oh no, make it stop!&amp;#8221;, but to that I say &amp;#8220;poppycock!&amp;#8221;. It can work. Seriously. Come on, seriously. I am essentially aiming to accomplish what they failed to do in DX:IW. These are rough prototypes, but they get the point across.&lt;/p&gt;
+&lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-08-19_main.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-08-19_main.jpg' /&gt;&lt;/a&gt;&lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-08-19_inventory.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-08-19_inventory.jpg' /&gt;&lt;/a&gt;&lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-08-19_upgrades.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-08-19_upgrades.jpg' /&gt;&lt;/a&gt;
+&lt;h3 id='upgrades'&gt;Upgrades&lt;/h3&gt;
+
+&lt;p&gt;The upgrade types are starting to take shape, for instance the &amp;#8220;Reflexes&amp;#8221; upgrade which essentially slows down time for everything but the player&amp;#8217;s view controls. I am imagining this as a sort of temporary steroid boost for your brain, allowing it to work up to 10 times as fast. The robot in question here is Robot Kyle from the Unity Asset store, which I am using as a stand-in until we get the character models going. The JC Denton with his arms spread out will probably continue to be a placeholder for everything, because it just looks hilarious.&lt;/p&gt;
+&lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-08-19_reflexes.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-08-19_reflexes.jpg' /&gt;&lt;/a&gt;
+&lt;h3 id='surface_editor'&gt;Surface editor&lt;/h3&gt;
+
+&lt;p&gt;Lastly, I have made some significant changes to the surface editor, I&amp;#8217;m getting closer to my vision of totally free mesh weaving within the editor.&lt;/p&gt;
+&lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-08-19_surface.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-08-19_surface.jpg' /&gt;&lt;/a&gt;</description>
+                <link>http://mrzapp.github.io/vongott/2013/08/19/ui-paradigm-and-upgrades</link>
+                <guid>http://mrzapp.github.io/vongott/2013/08/19/ui-paradigm-and-upgrades</guid>
+                <pubDate>2013-08-19T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>Updates</title>
+                <description>&lt;p&gt;These are the updates from the first development phase.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;I have spent my time doing my own GUI framework for Unity called OpenGUI, and I have managed to build a pretty capable level editor with an inspector, save/load features, adding prefabs, editing conversations, quests and flags, editing surface vectors, and probably a few more things. The editor is at this point capable of building a coherent, if very rudimentary, action RPG :) &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-06-24_gui.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-06-24_gui.jpg' /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The level shown below was made exclusively with this editor, without using Unity. &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-06-24_level.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-06-24_level.jpg' /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The conversation editor and logic is fully functional, apart from playing audio clips. &lt;a href='http://mrzapp.github.io/vongott/images/posts/2013-06-24_convo.jpg'&gt;&lt;img src='http://mrzapp.github.io/vongott/images/posts/2013-06-24_convo.jpg' /&gt;&lt;/a&gt;&lt;/p&gt;</description>
+                <link>http://mrzapp.github.io/vongott/2013/06/24/updates</link>
+                <guid>http://mrzapp.github.io/vongott/2013/06/24/updates</guid>
+                <pubDate>2013-06-24T00:00:00+08:00</pubDate>
+        </item>
+
+
+</channel>
+</rss>

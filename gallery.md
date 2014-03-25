@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Gallery"
-index: 2
+index: 3
 galleries:
  - title: "Concept art"
    images:

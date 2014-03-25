@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      
+        Tutorials - 
+      
+      The Vongott Chronicles
+    </title>
+    
+    <meta name="author" content="mrzapp">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+	<script src="http://mrzapp.github.io/vongott/assets/themes/vongott/plugins/lightbox/js/jquery-1.10.2.min.js"></script>
+	<script src="http://mrzapp.github.io/vongott/assets/themes/vongott/plugins/lightbox/js/lightbox-2.6.min.js"></script>
+	<link href="http://mrzapp.github.io/vongott/assets/themes/vongott/plugins/lightbox/css/lightbox.css" rel="stylesheet" />
+	
+    <link href="http://mrzapp.github.io/vongott/assets/themes/vongott/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://mrzapp.github.io/vongott/assets/themes/vongott/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="http://mrzapp.github.io/vongott/assets/themes/vongott/css-social-buttons/css/zocial.stripped.css">
+    <link href="http://mrzapp.github.io/vongott/assets/themes/vongott/css/pygments.css" rel="stylesheet" type="text/css" media="all">
+    <link href="http://mrzapp.github.io/vongott/assets/themes/vongott/css/darkstrap.css" rel="stylesheet" type="text/css" media="all">    
+    <link href="http://mrzapp.github.io/vongott/assets/themes/vongott/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    
+    <!-- fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>      
+
+
+          <a class="brand" href="http://mrzapp.github.io/vongott"><img src="http://mrzapp.github.io/vongott/assets/themes/vongott/images/logo/24x40.png" /></a>
+
+
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+              
+              
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="http://mrzapp.github.io/vongott/development-goals.html">Development Goals</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="http://mrzapp.github.io/vongott/gallery.html">Gallery</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="http://mrzapp.github.io/vongott/news.html">News</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li class="active"><a href="http://mrzapp.github.io/vongott/tutorials.html" class="active">Tutorials</a></li>
+      	
+      
+    
+  
+
+
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        
+
+<div class="page-header-wrapper">
+	<div class="page-header">
+  		<h1> <small>These are all the tutorials on The Vongott Chronicles</small></h1>
+  	</div>
+</div>
+
+<div class="row">
+  <div class="span12">
+    <h2 id='tutorial_1_creating_a_map'>Tutorial 1: Creating a map</h2>
+
+<p>In this brief tutorial, we will be looking at how to set up a very simple map. We will be placing and manipulating prefabs (pre-fabricated objects) and surfaces and assign materials to them.</p>
+
+<p><strong>SOMETHING TO NOTE:</strong> There is almost no undo/redo functionality yet, and no group selection of objects. This is something we can work around in most cases by making it easy to correct our mistakes, but sooner or later, I will have to tackle that feature.</p>
+
+<h3 id='overview'>Overview</h3>
+
+<p>Below is the screen that starts off any session in the Vongott editor. At the top, you have your basic file/edit/view operations, an &#8220;add&#8221; menu and a selection of editors for conversations, quests and so on. You&#8217;ll also find a help button for a quick overview of the keybindings necessary to use the editor. Off to the left is the <strong>ASSET BROWSER</strong>, from which we can look through all prefabs, items and actors.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/0.jpg' />
+<h3 id='building_the_level'>Building the level</h3>
+
+<p>Let&#8217;s start off by making a surface. Go to <em>Add &gt; Surface</em>. This will be our floor.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/1.jpg' />
+<p>When selected, a surface has four corner handles, a remove button and four add buttons. The <strong>INSPECTOR</strong> on the right lets you modify the surface by flipping it, changing the tiling size and changing the material.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/2.jpg' />
+<p>Let&#8217;s get a better view of things. Press <code>NUMPAD 7</code> to get a <strong>TOP VIEW</strong>. You can go to the opposite side of the object by holding down <code>CONTROL</code> when you change view like this. Note that this will only work if an object is selected. Use the corner handles to change the shape of the surface to your liking. You&#8217;ll notice that when you click the corners, you go into <strong>GRAB MODE</strong>. There is a mode for grabbing objects, one for scaling and one for rotating. In all of these modes, you can press <code>X</code>, <code>Y</code> or <code>Z</code> at any time to lock the object you&#8217;re dragging to an axis.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/3.jpg' />
+<p>Let&#8217;s turn the camera back again by clicking and dragging with the <code>RIGHT MOUSE</code> button. If sometimes you find that you&#8217;re stuck or disoriented, use <code>NUMPAD 3</code> for <strong>RIGHT VIEW</strong>, <code>NUMPAD 1</code> for <strong>FRONT VIEW</strong>, and if all goes wrong, press <code>NUMPAD .</code> to return the camera to the center of the map. When you rotate the camera with <code>RIGHT MOUSE</code>, you automatically pivot around the point under your mouse cursor. At any time, hold down <code>ALT</code> to look around freely instead. You can also click and drag with <code>MIDDLE MOUSE</code> button to pan the view and <code>SCROLL WHEEL</code> to zoom. Now we&#8217;ll change the material of our floor to something more floor-like. In the <strong>INSPECTOR</strong>, click the button with the title <em>Source</em> in the <em>Material</em> section and pick the <em>wood_boathouse</em> material.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/4.jpg' />
+<p>What you&#8217;ll get might be disappointing at first, as there is still no light in our map, but we&#8217;ll get there, I promise.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/5.jpg' />
+<p>Now, click the P on the left to open the <strong>PREFABS</strong> drawer. Select a prefab to place, for instance a corner. Note that there are 2 corners, one for inside and one for outside. As you might notice, I chose the wrong one for the screenshot below (oops), so pick the <em>wall_basic_corner_270</em> instead.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/6.jpg' />
+<p>Press <code>G</code> to enter grab mode, and then <code>X</code> to lock the movement to the X axis. Use the mouse to position the object and then press <code>LEFT MOUSE</code> button to place it.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/7.jpg' />
+<p>If your object doesn&#8217;t face the right way, press <code>R</code> to rotate it, lock the axis to <code>Y</code> and rotate with the <code>SCROLL WHEEL</code>. You can hold down <code>SHIFT</code> to make it rotate slower and <code>CONTROL</code> to make it rotate faster.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/8.jpg' />
+<p>You can go back to <strong>TOP VIEW</strong> with <code>NUMPAD 7</code> and adjust the object if necessary.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/9.jpg' />
+<p>Now we just duplicate the corner object by pressing <code>D</code> and moving and rotating the duplicates.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/10.jpg' />
+<p>Let&#8217;s add a center wall piece now. You could place a new one from the <strong>ASSET BROWSER</strong>, but that would mean rotating and placing it again. This time, let&#8217;s make a duplicate of the lower-left corner, place it to the right of the original, select the <em>wall_basic_center</em> object and click <em>Replace</em> instead.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/11.jpg' />
+<p>Press <code>S</code> to enter <strong>SCALE MDOE</strong> and scale the wall to fit with the scroll wheel. Remember that you can adjust the scaling increments with <code>SHIFT</code> and <code>CONTROL</code> here as well.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/12.jpg' />
+<p>Now make 3 duplicates and rotate them appropriately.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/13.jpg' />
+<p>Rotating the camera back down, you&#8217;ll see that the walls are not too festive to look at. Let&#8217;s change that.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/14.jpg' />
+<p>Again, click the <em>Source</em> button under <em>Material</em> in the <strong>INSPECTOR</strong> and this time select the <em>brick_grey_smooth</em>. I know these names aren&#8217;t exactly accurate at this point, but we&#8217;re in early alpha, OK?</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/15.jpg' />
+<p>And voila! That is one handsome wall. Maybe not, but we&#8217;ll get there.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/16.jpg' />
+<p>Select the corner next to it. To assign the material this time, instead of clicking the <em>Source</em> button, click the one labeled <em>Picker</em></p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/17.jpg' />
+<p>Click the wall that we already assigned a material to and BAM! We just copied that wall&#8217;s material onto our selected object. Let&#8217;s do that for the other walls too.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/18.jpg' />
+<p>Now let&#8217;s make a door opening in this room. Select a wall and press <code>S</code> to enter <strong>SCALE MODE</strong> and scale it down a bit.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/19.jpg' />
+<p>Duplicate-replace or place the <em>wall_basic_door_single</em> into the map.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/20.jpg' />
+<p>Now, from the <strong>ASSET BROWSER</strong> select the <em>Decor</em> category from the pop-up menu and place the <em>decor_light_bulkhead</em> prefab into the map.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/21.jpg' />
+<p>Adjust the light to fit onto the wall, and make a duplicate of it. As you might notice, something&#8217;s off about the lighting. That&#8217;s because we&#8217;re currently in <strong>ORTHOGRAPHIC VIEW</strong>, which means that our camera doesn&#8217;t show perspective. Press <code>NUMPAD 5</code> to go into <strong>PERSPECTIVE VIEW</strong>.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/22.jpg' />
+<p>There we go.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/23.jpg' />
+<p>Now go to <em>Add &gt; SpawnPoint</em> to place the player&#8217;s start location in the map.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/24.jpg' />
+<p>Let&#8217;s adjust the floor material a bit before we wrap up. Select the floor and adjust the <em>Tiling</em> to your liking.</p>
+<img class='tutorial_image' src='http://mrzapp.github.io/vongott/images/tutorials/1/25.jpg' />
+<p>And that&#8217;s it for this introduction to the Vongott editor! Go to <em>File &gt; Save</em>, give your map a filename and save it. In the game, we will be using the format <em>chapter-scene_name_of_map</em>. Once saved, go to <em>File &gt; Exit</em>, click <em>Load</em> and select your map to see the fruits of your labour.</p>
+
+<p>I should probably add a <em>Play</em> button in the editor, but there were a few issues with that the last time I tried it. I&#8217;ll get it done, though.</p>
+
+<p>The next tutorial will be about placing actors and using flags to create conversations.</p>
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; 2013 The Vongott Chronicles</p>
+      </footer>
+    </div> <!-- /container -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="http://mrzapp.github.io/vongott/assets/themes/vongott/js/jquery.min.js"><\/script>')</script>
+    <script src="http://mrzapp.github.io/vongott/assets/themes/vongott/bootstrap/js/bootstrap.min.js"></script>
+
+    
+  </body>
+</html>
+
