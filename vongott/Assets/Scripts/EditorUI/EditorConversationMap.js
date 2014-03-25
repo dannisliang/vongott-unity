@@ -124,6 +124,7 @@ class EditorConversationMap extends OGPage {
 	
 	// Exit
 	function Exit () {
+		root.lines = new OGLine [0];
 		ClearNodes ();
 	
 		creator.chapter.text = "";

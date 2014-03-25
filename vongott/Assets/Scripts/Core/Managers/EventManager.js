@@ -133,8 +133,7 @@ class EventManager extends MonoBehaviour {
 	
 	public static function GoToLocation ( map : String, spawnPoint : String ) {
 		iTween.Stop ();
-		LoadingManager.nextScene = map;
-		LoadingManager.nextSpawnPoint = spawnPoint;
-		Application.LoadLevel ( "loading" );
+		
+		GameCore.GetInstance().StartCoroutine ( GameCore.GetInstance().LoadLevel ( map, spawnPoint ) );
 	}
 }

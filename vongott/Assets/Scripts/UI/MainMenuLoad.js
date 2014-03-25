@@ -10,7 +10,7 @@ class MainMenuLoad extends OGPage {
 	private function TrimFileName ( p : String ) : String {
 		var path : String[] = p.Split("/"[0]);
 		
-		if ( Application.platform == RuntimePlatform.WindowsEditor ) {
+		if ( Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer ) {
 			path = p.Split("\\"[0]);
 		}
 		

@@ -151,19 +151,6 @@ class PlayerController {
 			useForcedPoint = false;
 		}
 
-		// Direction
-		if ( controlMode == ePlayerControlMode.ThirdPerson ) {
-			if ( isRotationLocked ) {
-				ThirdPersonController.Update ( player, deltaVertical, lockedRotationVector );
-
-			} else {
-				ThirdPersonController.Update ( player, deltaVertical, deltaHorizontal );
-			}
-		
-		} else {
-			FirstPersonController.Update ( player, deltaVertical, deltaHorizontal );
-		}
-			
 		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
 			// Climbing
 			if ( isClimbing ) {
@@ -178,8 +165,8 @@ class PlayerController {
 			
 			// Walk
 			} else {				
-				deltaVertical = Mathf.Clamp ( deltaVertical, -0.5, 0.5 );
-				deltaHorizontal = Mathf.Clamp ( deltaHorizontal, -0.5, 0.5 );
+				deltaVertical = Mathf.Clamp ( deltaVertical, -0.3, 0.3 );
+				deltaHorizontal = Mathf.Clamp ( deltaHorizontal, -0.3, 0.3 );
 			
 			}
 			
@@ -189,6 +176,20 @@ class PlayerController {
 			}
 			
 		}
+		
+		// Direction
+		if ( controlMode == ePlayerControlMode.ThirdPerson ) {
+			if ( isRotationLocked ) {
+				ThirdPersonController.Update ( player, deltaVertical, lockedRotationVector );
+
+			} else {
+				ThirdPersonController.Update ( player, deltaVertical, deltaHorizontal );
+			}
+		
+		} else {
+			FirstPersonController.Update ( player, deltaVertical, deltaHorizontal );
+		}
+			
 		
 		// ^ Combined delta
 		if ( Mathf.Abs ( deltaVertical ) > Mathf.Abs ( deltaHorizontal ) ) {

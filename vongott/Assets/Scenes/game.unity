@@ -665,14 +665,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 827
-    y: 608
+    x: 1072
+    y: 639
     width: 100
     height: 20
   mouseRct:
     serializedVersion: 2
-    x: 827
-    y: 608
+    x: 1072
+    y: 639
     width: 100
     height: 20
   drawDepth: -0
@@ -3674,27 +3674,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -3702,7 +3702,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -3764,22 +3764,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -3794,22 +3794,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -3861,14 +3861,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 398
-    y: 354
+    x: 521
+    y: 370
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 398
-    y: 354
+    x: 521
+    y: 370
     width: 60
     height: 60
   drawDepth: -0
@@ -4030,27 +4030,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -4058,7 +4058,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -4120,22 +4120,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -4150,22 +4150,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -4217,14 +4217,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 538
-    y: 354
+    x: 661
+    y: 370
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 538
-    y: 354
+    x: 661
+    y: 370
     width: 60
     height: 60
   drawDepth: -0
@@ -6583,27 +6583,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -6611,7 +6611,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -6673,22 +6673,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6703,22 +6703,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6770,14 +6770,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 468
-    y: 284
+    x: 591
+    y: 300
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 468
-    y: 284
+    x: 591
+    y: 300
     width: 60
     height: 60
   drawDepth: -0
@@ -7420,7 +7420,7 @@ MonoBehaviour:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-  m_PrefabInternal: {fileID: 956720513}
+  m_PrefabInternal: {fileID: 1637078320}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 459494426}
@@ -7430,6 +7430,7 @@ GameObject:
   - 81: {fileID: 459494428}
   - 114: {fileID: 459494427}
   - 114: {fileID: 459494432}
+  - 82: {fileID: 459494433}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: MainCamera
@@ -7441,7 +7442,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-  m_PrefabInternal: {fileID: 956720513}
+  m_PrefabInternal: {fileID: 1637078320}
   m_GameObject: {fileID: 459494425}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
   m_LocalPosition: {x: 0, y: 0, z: 20}
@@ -7453,7 +7454,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400002, guid: 100f22971a4bfab42a343b897d339f6e,
     type: 2}
-  m_PrefabInternal: {fileID: 956720513}
+  m_PrefabInternal: {fileID: 1637078320}
   m_GameObject: {fileID: 459494425}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -7475,7 +7476,7 @@ AudioListener:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 8100000, guid: 100f22971a4bfab42a343b897d339f6e,
     type: 2}
-  m_PrefabInternal: {fileID: 956720513}
+  m_PrefabInternal: {fileID: 1637078320}
   m_GameObject: {fileID: 459494425}
   m_Enabled: 1
 --- !u!92 &459494429
@@ -7483,7 +7484,7 @@ Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 9200000, guid: 100f22971a4bfab42a343b897d339f6e,
     type: 2}
-  m_PrefabInternal: {fileID: 956720513}
+  m_PrefabInternal: {fileID: 1637078320}
   m_GameObject: {fileID: 459494425}
   m_Enabled: 1
 --- !u!124 &459494430
@@ -7491,7 +7492,7 @@ Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 12400000, guid: 100f22971a4bfab42a343b897d339f6e,
     type: 2}
-  m_PrefabInternal: {fileID: 956720513}
+  m_PrefabInternal: {fileID: 1637078320}
   m_GameObject: {fileID: 459494425}
   m_Enabled: 1
 --- !u!20 &459494431
@@ -7499,7 +7500,7 @@ Camera:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 2000000, guid: 100f22971a4bfab42a343b897d339f6e,
     type: 2}
-  m_PrefabInternal: {fileID: 956720513}
+  m_PrefabInternal: {fileID: 1637078320}
   m_GameObject: {fileID: 459494425}
   m_Enabled: 1
   serializedVersion: 2
@@ -7529,7 +7530,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: 100f22971a4bfab42a343b897d339f6e,
     type: 2}
-  m_PrefabInternal: {fileID: 956720513}
+  m_PrefabInternal: {fileID: 1637078320}
   m_GameObject: {fileID: 459494425}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -7558,6 +7559,65 @@ MonoBehaviour:
   lockToRearOfTarget: 0
   allowMouseInputX: 1
   allowMouseInputY: 1
+--- !u!82 &459494433
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 8200000, guid: 100f22971a4bfab42a343b897d339f6e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1637078320}
+  m_GameObject: {fileID: 459494425}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &460672221
 GameObject:
   m_ObjectHideFlags: 0
@@ -8187,7 +8247,7 @@ Transform:
   m_PrefabInternal: {fileID: 1769616767}
   m_GameObject: {fileID: 470562417}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 498, y: 588, z: 0}
+  m_LocalPosition: {x: 621, y: 619, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 710518749}
@@ -8446,7 +8506,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 498
+    x: 621
     y: 79
     width: 1
     height: 1
@@ -11008,13 +11068,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 278
+    x: 401
     y: 30
     width: 440
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 278
+    x: 401
     y: 30
     width: 440
     height: 50
@@ -13920,7 +13980,7 @@ Transform:
   m_PrefabInternal: {fileID: 1769616767}
   m_GameObject: {fileID: 835131270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 827, y: 10.0000029, z: 0}
+  m_LocalPosition: {x: 1072, y: 10.0000029, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1364386570}
@@ -14181,8 +14241,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 827
-    y: 657
+    x: 1072
+    y: 688
     width: 1
     height: 1
   mouseRct:
@@ -15814,27 +15874,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -15842,7 +15902,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -15904,22 +15964,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -15934,22 +15994,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -16001,14 +16061,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 468
-    y: 354
+    x: 591
+    y: 370
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 468
-    y: 354
+    x: 591
+    y: 370
     width: 60
     height: 60
   drawDepth: -0
@@ -16332,46 +16392,6 @@ Transform:
   - {fileID: 748672034}
   - {fileID: 1675281565}
   m_Father: {fileID: 1364168012}
---- !u!1001 &956720513
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: .707106829
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: .707106829
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
-  m_RootGameObject: {fileID: 459494425}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1 &973034919
 GameObject:
   m_ObjectHideFlags: 0
@@ -21574,8 +21594,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 887
-    y: 638
+    x: 1132
+    y: 669
     width: 100
     height: 20
   mouseRct:
@@ -22641,27 +22661,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -22669,7 +22689,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -22731,22 +22751,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -22761,22 +22781,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -22828,14 +22848,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 468
-    y: 144
+    x: 591
+    y: 160
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 468
-    y: 144
+    x: 591
+    y: 160
     width: 60
     height: 60
   drawDepth: -0
@@ -23890,25 +23910,25 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: Background
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        fontSize: 16
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -24040,25 +24060,25 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        fontSize: 16
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -24070,25 +24090,25 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: Background
+    name: Label
     coordinates:
       serializedVersion: 2
-      x: 32
-      y: 64
+      x: 0
+      y: 0
       width: 32
       height: 32
     border:
-      top: 4
-      bottom: 4
-      left: 4
-      right: 4
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-      fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
-      shadowSize: 0
+      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      fontSize: 16
+      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+      shadowSize: 2
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
       alignment: 0
       wordWrap: 1
@@ -24101,20 +24121,20 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 32
-    y: 64
+    x: 0
+    y: 0
     width: 32
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 348
-    y: 434
+    x: 471
+    y: 450
     width: 300
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 348
-    y: 434
+    x: 471
+    y: 450
     width: 300
     height: 40
   drawDepth: -0
@@ -24462,7 +24482,7 @@ Transform:
   m_PrefabInternal: {fileID: 1769616767}
   m_GameObject: {fileID: 1310760666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 498, y: 334, z: 0}
+  m_LocalPosition: {x: 621, y: 349, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1010304907}
@@ -24721,8 +24741,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 498
-    y: 333
+    x: 621
+    y: 349
     width: 1
     height: 1
   mouseRct:
@@ -26024,14 +26044,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 827
-    y: 638
+    x: 1072
+    y: 669
     width: 100
     height: 20
   mouseRct:
     serializedVersion: 2
-    x: 827
-    y: 638
+    x: 1072
+    y: 669
     width: 100
     height: 20
   drawDepth: -0
@@ -27108,27 +27128,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -27136,7 +27156,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -27198,22 +27218,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -27228,22 +27248,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -27295,14 +27315,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 398
-    y: 284
+    x: 521
+    y: 300
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 398
-    y: 284
+    x: 521
+    y: 300
     width: 60
     height: 60
   drawDepth: -0
@@ -27348,7 +27368,7 @@ Transform:
   m_PrefabInternal: {fileID: 1769616767}
   m_GameObject: {fileID: 1448615667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 498, y: 334, z: 0}
+  m_LocalPosition: {x: 621, y: 349, z: 0}
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 338398393}
@@ -27605,14 +27625,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 478
-    y: 314
+    x: 601
+    y: 330
     width: 40
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 478
-    y: 314
+    x: 601
+    y: 330
     width: 40
     height: 40
   drawDepth: -0
@@ -30126,6 +30146,46 @@ MonoBehaviour:
   message: 
   passSelectedOption: 0
   isUp: 0
+--- !u!1001 &1637078320
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: .707106829
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: .707106829
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
+  m_RootGameObject: {fileID: 459494425}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1637430901
 GameObject:
   m_ObjectHideFlags: 0
@@ -31717,8 +31777,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 887
-    y: 608
+    x: 1132
+    y: 639
     width: 100
     height: 20
   mouseRct:
@@ -32133,23 +32193,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 498
+      value: 621
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 588
+      value: 619
       objectReference: {fileID: 0}
     - target: {fileID: 400244, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 827
+      value: 1072
       objectReference: {fileID: 0}
     - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 498
+      value: 621
       objectReference: {fileID: 0}
     - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 334
+      value: 349
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
@@ -32249,27 +32309,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -32277,7 +32337,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -32339,22 +32399,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -32369,22 +32429,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -32436,14 +32496,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 538
-    y: 284
+    x: 661
+    y: 300
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 538
-    y: 284
+    x: 661
+    y: 300
     width: 60
     height: 60
   drawDepth: -0
@@ -32897,27 +32957,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -32925,7 +32985,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -32987,22 +33047,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -33017,22 +33077,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -33084,14 +33144,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 538
-    y: 214
+    x: 661
+    y: 230
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 538
-    y: 214
+    x: 661
+    y: 230
     width: 60
     height: 60
   drawDepth: -0
@@ -36810,13 +36870,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 298
+    x: 421
     y: 30
     width: 400
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 298
+    x: 421
     y: 30
     width: 400
     height: 50
@@ -36929,27 +36989,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -36957,7 +37017,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -37019,22 +37079,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -37049,22 +37109,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -37116,14 +37176,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 468
-    y: 214
+    x: 591
+    y: 230
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 468
-    y: 214
+    x: 591
+    y: 230
     width: 60
     height: 60
   drawDepth: -0
@@ -40450,27 +40510,27 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.45000005
     hover:
-      name: Background
+      name: ButtonHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
+        top: 10
+        bottom: 10
+        left: 20
+        right: 20
+      color: {r: .507352948, g: .734016895, b: 1, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontSize: 18
+        fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -40478,7 +40538,7 @@ MonoBehaviour:
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
-        spacing: 1.25
+        spacing: 1.45000005
     active:
       name: ButtonActive
       coordinates:
@@ -40540,22 +40600,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -40570,22 +40630,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Background
+      name: ButtonIO
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
-        width: 32
-        height: 32
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -40637,14 +40697,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 398
-    y: 214
+    x: 521
+    y: 230
     width: 60
     height: 60
   mouseRct:
     serializedVersion: 2
-    x: 398
-    y: 214
+    x: 521
+    y: 230
     width: 60
     height: 60
   drawDepth: -0

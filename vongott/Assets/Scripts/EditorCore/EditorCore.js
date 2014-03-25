@@ -903,7 +903,7 @@ static function TrimFileNames ( paths : String[] ) : String[] {
 	for ( var i = 0; i < paths.Length; i++ ) {
 		var path : String[] = paths[i].Split("/"[0]);
 		
-		if ( Application.platform == RuntimePlatform.WindowsEditor ) {
+		if ( Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer ) {
 			path = paths[i].Split("\\"[0]);
 		}
 		
@@ -943,7 +943,7 @@ function SaveFile ( path : String ) {
 // Trim filename
 static function TrimFileName ( p : String ) : String {
 	var path = p.Split("/"[0]);
-	if ( Application.platform == RuntimePlatform.WindowsEditor ) {
+	if ( Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer ) {
 		path = p.Split("\\"[0]);
 	}
 	var fileName = path[path.Length-1];

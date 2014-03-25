@@ -6408,6 +6408,8 @@ public class iTween : MonoBehaviour{
 	/// Stop and destroy all iTweens on a GameObject.
 	/// </summary>
 	public static void Stop(GameObject target){
+		if ( !target ) { return; }
+		
 		Component[] tweens = target.GetComponents(typeof(iTween));
 		foreach (iTween item in tweens){
 			item.Dispose();

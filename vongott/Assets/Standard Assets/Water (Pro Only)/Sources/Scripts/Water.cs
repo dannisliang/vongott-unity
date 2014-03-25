@@ -160,10 +160,10 @@ public class Water : MonoBehaviour
 			m_RefractionTexture = null;
 		}
 		foreach (KeyValuePair<Camera, Camera> kvp in m_ReflectionCameras)
-        	DestroyImmediate( (kvp.Value).gameObject );
+        	Destroy( (kvp.Value).gameObject );
         m_ReflectionCameras.Clear();
 		foreach (KeyValuePair<Camera, Camera> kvp in m_RefractionCameras)
-        	DestroyImmediate( (kvp.Value).gameObject );
+        	Destroy( (kvp.Value).gameObject );
         m_RefractionCameras.Clear();
 	}
 	

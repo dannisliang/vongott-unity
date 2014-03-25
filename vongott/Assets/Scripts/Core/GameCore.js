@@ -114,6 +114,13 @@ class GameCore extends MonoBehaviour {
 
 		// Check if a level is already loaded
 		if ( currentLevel != null ) {
+			var skybox : SkyBox = GameObject.FindObjectOfType.<SkyBox>();
+
+			if ( skybox != null ) {
+				Destroy ( skybox.gameObject );
+			}
+
+			playerObject.transform.parent = currentLevel.transform.parent;
 			Destroy ( currentLevel );
 			currentLevel = null;
 		}
@@ -126,13 +133,14 @@ class GameCore extends MonoBehaviour {
 		currentLevel.transform.localPosition = Vector3.zero;
 		
 		// Instantiate and position player
-		playerObject = Instantiate ( Resources.Load ( "Actors/Player/Player" ) ) as GameObject;
+		if ( !playerObject ) {
+			playerObject = Instantiate ( Resources.Load ( "Actors/Player/Player" ) ) as GameObject;
+			
+			playerObject.layer = 9;	
+		}
+		
 		playerObject.transform.parent = currentLevel.transform;
-		
-		playerObject.layer = 9;	
-		
-		//MergeMeshes ();
-	
+
 		GoToSpawnPoint ( spawnPoint );
 
 		yield WaitForEndOfFrame ();
