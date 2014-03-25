@@ -35,7 +35,7 @@ galleries:
       text: "Terminal with surveillance camera controls"
  - title: "Videos"
    images:
-   - url: "images/gallery/videos/showcase1.jpg"
-     text: "Vongott showcase 1"
-     youtube: "oHg5SJYRHA0"
+   - url: "https://i1.ytimg.com/vi/y__lPcWgjCA/2.jpg"
+     text: "Vongott Editor sneak peek"
+     youtube: "y__lPcWgjCA"
 ---
