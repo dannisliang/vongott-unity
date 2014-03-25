@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{{ site.baseurl }}/css/zapp.css">
 		<link rel="stylesheet" href="{{ site.baseurl }}/css/flexslider.css">
-		<link rel="stylesheet" href="{{ site.baseurl }}/css/lightbox.css">
+		<link rel="stylesheet" href="{{ site.baseurl }}/css/jquery.fancybox.css" type="text/css" media="screen">	
 		{% if site.style %}
 		<link rel="stylesheet" href="{{ site.url }}/css/{{ site.style }}.css">
 		{% endif %}
@@ -89,7 +89,7 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-		<script src="{{ site.baseurl }}/js/lightbox-2.6.min.js"></script>
+		<script src="{{ site.baseurl }}/js/fancybox/jquery.fancybox.pack.js"></script>
 		<script src="{{ site.baseurl }}/js/flexslider.min.js"></script>
 		<script src="{{ site.baseurl }}/js/fitvids.js"></script>
 		<script src="{{ site.baseurl }}/js/app.js"></script>
@@ -133,7 +133,7 @@
 
 				{% for image in gallery.images %}
 				{% if image.url %}
-				<a href="{{ image.url }}" data-lightbox="{{ gallery.title }}" {% if image.text %}title="{{ image.text }}"{% endif %}>
+				<a href="{{ image.url }}" id="single_image" {% if image.text %}title="{{ image.text }}"{% endif %}>
 					<div style="background-image:url('{{ image.url }}');"></div>
 				</a>
 				{% endif %}
