@@ -2,6 +2,7 @@
 
 class MainMenuBase extends OGPage {
 	public var background : Transform;
+	public var clampEdge : MeshRenderer; 
 	
 	override function StartPage () {
 		var v : Vector3 = background.localScale;
@@ -16,6 +17,28 @@ class MainMenuBase extends OGPage {
 			"oncompletetarget", this.gameObject,
 			"oncomplete", "ShowContent"
 		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", 5,
+			"to", 1,
+			"time", 0.2,
+			"onupdate", "UpdateBackgroundBrightness"
+		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", 0,
+			"to", 0.2,
+			"time", 0.15,
+			"onupdate", "UpdateEdgeTiling"
+		) );
+	}
+
+	public function UpdateEdgeTiling ( val : float ) {
+		clampEdge.materials[1].mainTextureOffset.y = -val;
+	}
+
+	public function UpdateBackgroundBrightness ( val : float ) {
+		background.renderer.material.SetFloat ( "_Brightness", val );
 	}
 
 	public function GoToLoadGame () {
@@ -40,6 +63,20 @@ class MainMenuBase extends OGPage {
 			"oncomplete", "GoTo" + pageName
 		) );
 		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", 1,
+			"to", 10,
+			"delay", 0.05,
+			"time", 0.2,
+			"onupdate", "UpdateBackgroundBrightness"
+		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", 0.2,
+			"to", 0,
+			"time", 0.15,
+			"onupdate", "UpdateEdgeTiling"
+		) );
 	}
 	
 	public function GoToEditor () {

@@ -5,6 +5,7 @@ import System.IO;
 class MainMenuLoad extends OGPage {
 	public var slots : OGListItem[];
 	public var background : Transform;
+	public var clampEdge : MeshRenderer; 
 
 	private function TrimFileName ( p : String ) : String {
 		var path : String[] = p.Split("/"[0]);
@@ -34,6 +35,14 @@ class MainMenuLoad extends OGPage {
 			}		
 		}
 	}
+	
+	public function UpdateEdgeTiling ( val : float ) {
+		clampEdge.materials[1].mainTextureOffset.y = -val;
+	}
+	
+	public function UpdateBackgroundBrightness ( val : float ) {
+		background.renderer.material.SetFloat ( "_Brightness", val );
+	}
 
 	public function HideContent () {
 		this.transform.GetChild(0).gameObject.SetActive ( false );
@@ -60,6 +69,21 @@ class MainMenuLoad extends OGPage {
 			"oncompletetarget", this.gameObject,
 			"oncomplete", "GoToBase"
 		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", 1,
+			"to", 10,
+			"delay", 0.05,
+			"time", 0.2,
+			"onupdate", "UpdateBackgroundBrightness"
+		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", 0.27,
+			"to", 0,
+			"time", 0.15,
+			"onupdate", "UpdateEdgeTiling"
+		) );
 	}
 
 	public function GoToBase () {
@@ -74,6 +98,20 @@ class MainMenuLoad extends OGPage {
 			"time", 0.25,
 			"oncompletetarget", this.gameObject,
 			"oncomplete", "ShowContent"
+		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", 5,
+			"to", 1,
+			"time", 0.2,
+			"onupdate", "UpdateBackgroundBrightness"
+		) );
+		
+		iTween.ValueTo ( this.gameObject, iTween.Hash (
+			"from", 0,
+			"to", 0.27,
+			"time", 0.15,
+			"onupdate", "UpdateEdgeTiling"
 		) );
 	}
 }
