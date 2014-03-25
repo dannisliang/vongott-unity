@@ -3,7 +3,7 @@ layout: default
 title: "Editor Sneak Peek"
 author: "mrzapp"
 author_url: "http://jeppezapp.com"
-youtube: http://www.youtube.com/embed/RHE7JEYBqA4
+youtube: "http://www.youtube.com/embed/y__lPcWgjCA"
 ---
 I did a video capture of the Vongott Editor. This is not a feature walkthough by any means, it's just a quick and dirty presentation.  
   
