@@ -33,4 +33,9 @@ galleries:
       text: "Unreal style skybox"
     - url: "images/gallery/screenshots/terminal.jpg"
       text: "Terminal with surveillance camera controls"
+ - title: "Videos"
+   images:
+   - url: "images/gallery/videos/showcase1.jpg"
+     text: "Vongott showcase 1"
+     iframe: "www.youtube.com/embed/oHg5SJYRHA0"
 ---

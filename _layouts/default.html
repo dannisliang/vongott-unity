@@ -133,7 +133,7 @@
 
 				{% for image in gallery.images %}
 				{% if image.url %}
-				<a href="{{ image.url }}" id="single_image" {% if image.text %}title="{{ image.text }}"{% endif %}>
+				<a href="{% if image.iframe %}{{ image.iframe }}" class="iframe"{% else %}{{ image.url }}"{% endif %} id="single_image" {% if image.text %}title="{{ image.text }}"{% endif %}>
 					<div style="background-image:url('{{ image.url }}');"></div>
 				</a>
 				{% endif %}
