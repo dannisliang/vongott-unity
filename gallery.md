@@ -37,5 +37,5 @@ galleries:
    images:
    - url: "images/gallery/videos/showcase1.jpg"
      text: "Vongott showcase 1"
-     iframe: "www.youtube.com/embed/oHg5SJYRHA0"
+     youtube: "oHg5SJYRHA0"
 ---
