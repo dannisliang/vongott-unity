@@ -18,6 +18,7 @@ static var menusActive : boolean = false;
 static var selectedObject : GameObject;
 static var selectedVertex : int;
 static var currentLevel : GameObject;
+static var currentLevelData : MapData;
 static var navNodes : OPNode[];
 
 // Load on init
@@ -72,8 +73,8 @@ static var undoContainer : Transform;
 
 // Public classes
 public class ObjectAttributes {
-	var keys : String = "";
-	var values : String = "";
+	public var keys : String = "";
+	public var values : String = "";
 }
 
 public class Action {
@@ -1053,6 +1054,7 @@ public static function GetInstance () : EditorCore {
 function Start () {
 	running = true;
 	
+	currentLevelData = new MapData ();
 	workspace = _workspace;
 	gizmo = _gizmo;
 	previewCamera = _previewCamera;

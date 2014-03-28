@@ -10,6 +10,7 @@ class EditorOpenFile extends OGPage {
 	public static var baseDir : String = "Maps";
 	public static var fileType : String = "vgmap";
 	public static var asNavMesh : boolean;
+	public static var callback : Function;
 		
 	// Public vars
 	public var mapList : OGScrollView;
@@ -70,6 +71,8 @@ class EditorOpenFile extends OGPage {
 			loadingText = "Loading " + selectedFile + "...";
 		} else if ( fileType == "obj" ) {
 			loadingText = "Importing " + selectedFile + "...";
+		} else {
+			loadingText = "Opening " + selectedFile + "...";
 		}
 		
 		EditorLoading.message = loadingText;
@@ -80,13 +83,17 @@ class EditorOpenFile extends OGPage {
 
 		if ( fileType == "vgmap" ) {
 			EditorCore.LoadFile ( selectedFile );
+			yield WaitForEndOfFrame();
+			OGRoot.GetInstance().GoToPage ( "MenuBase" );
 		} else if ( fileType == "obj" ) {
 			EditorCore.LoadOBJ ( selectedFile, asNavMesh );
+			yield WaitForEndOfFrame();
+			OGRoot.GetInstance().GoToPage ( "MenuBase" );
+		} else {
+			callback ( selectedFile );
 		}
 		
-		yield WaitForEndOfFrame();
-		
-		OGRoot.GetInstance().GoToPage ( "MenuBase" );
+		callback = null;
 	}
 	
 	function OpenFile () {

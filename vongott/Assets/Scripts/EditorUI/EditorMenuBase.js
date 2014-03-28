@@ -13,6 +13,7 @@ class EditorMenuBase extends OGPage {
 	public var objectGUID : OGLabel;
 	public var objectName : OGTextField;
 	public var levelName : OGLabel;
+	public var editLevelData : OGButton;
 	public var menuBackground : OGSlicedSprite;
 	
 	public var inspector : GameObject;
@@ -28,14 +29,21 @@ class EditorMenuBase extends OGPage {
 	
 	public var transformDisplay : GameObject;
 
-	
+	////////////////////
+	// Data menu
+	////////////////////
+	public function EditMapData () {
+		EditorEditMapData.loadSettings = true;
+		OGRoot.GetInstance().GoToPage ( "EditMapData" );
+	}
+
 	////////////////////
 	// File menu
 	////////////////////
 	// New file
 	function NewFile () {
 		Debug.Log ( "Created new file" );
-	};
+	}
 
 	// Open file
 	function OpenFile () {
@@ -375,8 +383,12 @@ class EditorMenuBase extends OGPage {
 	////////////////////	
 	override function UpdatePage () {
 		if ( EditorCore.currentLevel ) {
-			levelName.text = EditorCore.currentLevel.name;
-			
+			if ( EditorCore.currentLevelData ) {
+				levelName.text = EditorCore.currentLevelData.name;
+			} else {
+				EditorCore.currentLevelData = new MapData ();
+			}
+
 			if ( EditorCore.GetSelectedObject() ) {
 				if ( !inspector.activeSelf ) {
 					inspector.SetActive ( true );
@@ -385,7 +397,8 @@ class EditorMenuBase extends OGPage {
 					scl.x.transform.parent.gameObject.SetActive ( true );
 				
 					menuBackground.stretch.widthOffset = -340;
-					levelName.anchor.xOffset = -340;
+					levelName.anchor.xOffset = -390;
+					editLevelData.anchor.xOffset = -340;
 				}
 				
 				if ( EditorCore.GetSelectedObject().GetComponent(GUID) ) {
@@ -417,7 +430,8 @@ class EditorMenuBase extends OGPage {
 			} else if ( inspector.activeSelf && EditorCore.running ) {
 				inspector.SetActive ( false );
 				menuBackground.stretch.widthOffset = -20;
-				levelName.anchor.xOffset = -20;
+				levelName.anchor.xOffset = -70;
+				editLevelData.anchor.xOffset = -20;
 
 			}
 		}

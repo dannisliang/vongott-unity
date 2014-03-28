@@ -9,17 +9,27 @@ public enum eGameState {
 	Menu
 }
 
+public class MapData {
+	public var name : String = "MapName";
+	public var musicCalm : String = "";
+	public var musicAggressive : String = "";
+	public var ambientLight : Color;
+	public var fogEnabled : boolean = false;
+	public var fogColor : Color;
+	public var fogDensity : float = 0.01;
+}
+
 class GameCore extends MonoBehaviour {
 	// Public vars
 	var _levelContainer : Transform;
 	
 	public var selectedOutlineColor : Color;
 	public var deselectedOutlineColor : Color;
-	
+
 	// Private vars
 	private var tempCamPos : Vector3;
 	private var tempCamRot : Vector3;
-	
+
 	// Static vars
 	static var debuggingEnabled = true;
 	static var playerName = "Nameless";
@@ -33,6 +43,7 @@ class GameCore extends MonoBehaviour {
 	static var running = false;
 	
 	static var currentLevel : GameObject;
+	static var currentLevelData : MapData;
 	static var nextLevel : String = "";
 	static var nextSpawnPoint : String = "";
 	
@@ -397,5 +408,6 @@ class GameCore extends MonoBehaviour {
 			frameCounter = 0;
 			timeCounter = 0.0f;
 		}
+
 	}
 }

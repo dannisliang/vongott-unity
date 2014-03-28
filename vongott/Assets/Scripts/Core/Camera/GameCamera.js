@@ -327,5 +327,13 @@ class GameCamera extends MonoBehaviour {
 				this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
 				break;
 		}
+		
+		// Music
+		if ( audio.clip ) {
+			Debug.Log ( audio.clip.isReadyToPlay );
+			if ( !audio.isPlaying && audio.clip.isReadyToPlay ) {
+				audio.Play ();
+			}
+		}
 	}
 }

@@ -730,3 +730,20 @@ static function SerializeScreenshot ( tex : Texture2D ) : String {
 	
 	return encoded;
 }
+
+////////////////////
+// Serialize map data
+////////////////////
+static function SerializeMapData ( data : MapData ) : JSONObject {
+	var json : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+
+	json.AddField ( "name", data.name );
+	json.AddField ( "musicCalm", data.musicCalm );
+	json.AddField ( "musicAggressive", data.musicAggressive );
+	json.AddField ( "ambientLight", SerializeColor ( data.ambientLight ) );
+	json.AddField ( "fogEnabled", data.fogEnabled );
+	json.AddField ( "fogColor", SerializeColor ( data.fogColor ) );
+	json.AddField ( "fogDensity", data.fogDensity );
+
+	return json;
+}

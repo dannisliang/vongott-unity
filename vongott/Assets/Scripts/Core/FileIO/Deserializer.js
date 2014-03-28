@@ -862,3 +862,27 @@ static function DeserializeScreenshot ( input : String ) : byte[] {
 	
 	return bytes;
 }
+
+////////////////////
+// Deserialize map data
+////////////////////
+static function DeserializeMapData ( input : String ) : MapData {
+	var parsed : JSONObject = new JSONObject ( input, false );
+	var json : JSONObject = parsed.GetField ( "mapData" );
+	
+	if ( !json ) {
+		return null;
+	}
+
+	var data = new MapData ();
+
+	data.name = json.GetField ( "name" ).str;
+	data.musicCalm = json.GetField ( "musicCalm" ).str;
+	data.musicAggressive = json.GetField ( "musicAggressive" ).str;
+	data.ambientLight = DeserializeColor ( json.GetField ( "ambientLight" ) );
+	data.fogEnabled = json.GetField ( "fogEnabled" ).b;
+	data.fogColor = DeserializeColor ( json.GetField ( "fogColor" ) );
+	data.fogDensity = json.GetField ( "fogDensity" ).n;
+
+	return data;
+}

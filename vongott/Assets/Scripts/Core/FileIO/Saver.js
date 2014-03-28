@@ -43,6 +43,8 @@ class Saver {
 		if ( GameObject.FindObjectOfType(SkyBox) ) {
 			serialized.AddField ( "Skybox", GameObject.FindObjectOfType(SkyBox).name.Replace( "(Clone)", "" ) );
 		}
+
+		serialized.AddField ( "mapData", Serializer.SerializeMapData ( EditorCore.currentLevelData ) );
 		
 		sw.WriteLine ( serialized );
 		sw.Flush();

@@ -192,7 +192,16 @@ class Loader {
 		sr.Close();
 		
 		map = Deserializer.DeserializeGameObject ( input );
+
+		GameCore.currentLevelData = Deserializer.DeserializeMapData ( input );
+		EditorCore.currentLevelData = Deserializer.DeserializeMapData ( input );
 	
+		if ( !String.IsNullOrEmpty ( GameCore.currentLevelData.musicCalm ) ) {
+			var www = new WWW ( Application.dataPath + "/Music/" + GameCore.currentLevelData.musicCalm + ".ogg" );
+
+			GameCamera.GetInstance().gameObject.audio.clip = www.GetAudioClip ( false, false, AudioType.OGGVORBIS );	
+		}
+
 		return map;
 	}
 }
