@@ -157,6 +157,11 @@ class GameCore extends MonoBehaviour {
 		yield WaitForEndOfFrame ();
 
 		Time.timeScale = 1;
+		
+		if ( !String.IsNullOrEmpty ( currentLevelData.musicCalm ) ) {
+			MusicManager.GetInstance().Play ( currentLevelData.musicCalm );
+		}
+
 	}
 	
 	
