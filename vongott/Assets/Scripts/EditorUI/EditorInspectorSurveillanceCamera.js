@@ -14,8 +14,18 @@ class EditorInspectorSurveillanceCamera extends MonoBehaviour {
 			door.hiddenString = cam.door.GetComponent(GUID).GUID;
 		
 		} else if ( cam.doorGUID != "" ) {
-			door.text = "Door";
-			door.hiddenString = cam.doorGUID;
+			var doorObject : GameObject = EditorCore.GetObjectFromGUID ( cam.doorGUID );
+			
+			if ( doorObject ) {
+				door.text = doorObject.name;
+				door.hiddenString = cam.doorGUID;
+			} else {
+				door.hiddenString = "";
+				door.text = "(none)";
+			}
+		} else {
+			door.hiddenString = "";
+			door.text = "(none)";
 		}
 		
 		attack.selectedOption = cam.target.ToString();
@@ -26,10 +36,8 @@ class EditorInspectorSurveillanceCamera extends MonoBehaviour {
 			cam = EditorCore.GetSelectedObject().GetComponent ( SurveillanceCamera );
 		}
 		
-		if ( door.hiddenString != "" ) {
-			cam.door = null;
-			cam.doorGUID = door.hiddenString;
-		}
+		cam.door = null;
+		cam.doorGUID = door.hiddenString;
 		
 		cam.SetTarget ( attack.selectedOption );
 	}
@@ -44,5 +52,12 @@ class EditorInspectorSurveillanceCamera extends MonoBehaviour {
 		};
 		
 		EditorCore.SetPickMode ( true );
+	}
+
+	public function PickNone () {
+		door.hiddenString = "";
+		door.text = "(none)";
+	
+		UpdateObject ();
 	}
 }

@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
 class GUID extends MonoBehaviour {
-	var GUID : String = "";
-	
+	public var GUID : String = "";
+
 	public function NewGUID () {
 		GUID = System.Guid.NewGuid().ToString();
 	}	

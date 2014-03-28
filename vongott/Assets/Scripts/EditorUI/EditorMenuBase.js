@@ -10,7 +10,8 @@ class EditorMenuBase extends OGPage {
 	////////////////////
 	// Public vars
 	////////////////////
-	public var objectName : OGLabel;
+	public var objectGUID : OGLabel;
+	public var objectName : OGTextField;
 	public var levelName : OGLabel;
 	public var menuBackground : OGSlicedSprite;
 	
@@ -388,11 +389,17 @@ class EditorMenuBase extends OGPage {
 				}
 				
 				if ( EditorCore.GetSelectedObject().GetComponent(GUID) ) {
-					objectName.text = EditorCore.GetSelectedObject().GetComponent(GUID).GUID;
+					objectGUID.text = EditorCore.GetSelectedObject().GetComponent(GUID).GUID;
 				} else {
-					objectName.text = "N/A";
+					objectGUID.text = "N/A";
 				}
-				
+
+				if ( objectName.listening ) {
+					EditorCore.GetSelectedObject().name = objectName.text;
+				} else {
+					objectName.text = EditorCore.GetSelectedObject().name;
+				}
+
 				var t = EditorCore.GetSelectedObject().transform;
 				
 				pos.x.text = "X: " + t.localPosition.x.ToString("f2");

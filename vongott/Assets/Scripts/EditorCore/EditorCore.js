@@ -421,7 +421,7 @@ public function BakeNavNodes () {
 ////////////////////
 // Actor
 ////////////////////
-// Get actor form GUID
+// Get actor from GUID
 static function GetActor ( guid : String ) : Actor {
 	for ( var a : Component in workspace.GetComponentsInChildren(Actor) ) {
 		if ( a.GetComponent(GUID).GUID == guid ) {
@@ -432,7 +432,7 @@ static function GetActor ( guid : String ) : Actor {
 	return null;
 }
 
-// Get prefab form GUID
+// Get prefab from GUID
 static function GetPrefab ( guid : String ) : Prefab {
 	for ( var p : Component in workspace.GetComponentsInChildren(Prefab) ) {
 		if ( p.GetComponent(GUID).GUID == guid ) {

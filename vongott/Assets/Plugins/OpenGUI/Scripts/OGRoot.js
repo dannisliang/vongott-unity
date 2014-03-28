@@ -566,17 +566,6 @@ class OGRoot extends MonoBehaviour {
 		
 		// Update widget lists	
 		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
-		/*for ( var e : int = 0; e < widgets.Length - 1; e++ ) {
-			var d1 : float = widgets[e + 0].transform.position.z;
-			var d2 : float = widgets[e + 1].transform.position.z;
- 			
-			if ( d2 > d1 ) {
-				var tempStore : OGWidget = widgets[e];
-				widgets[e] = widgets[e + 1];
-				widgets[e + 1] = tempStore;
-				e = 0;
-			}
-		}*/
 
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];
