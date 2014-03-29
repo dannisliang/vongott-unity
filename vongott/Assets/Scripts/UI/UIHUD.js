@@ -57,6 +57,8 @@ class UIHUD extends OGPage {
 	
 	// Update
 	override function UpdatePage () {
+		lblConsoleOutput.text = GameCore.debugString;
+		
 		if ( notificationTimer > 0.0 ) {
 			notificationTimer -= Time.deltaTime;
 		} else if ( !notificationIndefinite ) {
@@ -81,7 +83,7 @@ class UIHUD extends OGPage {
 	}
 
 	public function ParseCommand () {
-		lblConsoleOutput.text = console.GetComponent(Console).Parse ( fldConsoleInput.text );
+		GameCore.Print ( console.GetComponent(Console).Parse ( fldConsoleInput.text ) );
 		fldConsoleInput.text = "";
 	}
 

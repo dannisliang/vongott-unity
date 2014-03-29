@@ -354,23 +354,17 @@ class GameCore extends MonoBehaviour {
 	private var refreshTime : float = 0.5f;
 	
 	static function Print ( msg : String ) {
-		if ( debuggingEnabled ) {
-			debugString = msg + "\n" + debugString;
-			Debug.Log ( msg );
-		}
+		debugString += System.DateTime.Now.ToString("HH:mm:ss") + "\n" + msg + "\n\n";
+		Debug.Log ( msg );
 	}
 	
 	static function Error ( msg : String ) {
-		if ( debuggingEnabled ) {
-			debugString = msg + "\n" + debugString;
-			Debug.LogError ( msg );
-		}
+		debugString += System.DateTime.Now.ToString("HH:mm:ss") + "\n[ERROR] " + msg + "\n\n";
+		Debug.LogError ( msg );
 	}
 	
 	function OnGUI () {
 		if ( debuggingEnabled ) {
-			GUI.Label ( Rect ( 10, 10, Screen.width, Screen.height / 4 ), debugString );
-			
 			if ( lastFramerate > 50 ) { GUI.color = Color.green; }
 			else if ( lastFramerate > 30 ) { GUI.color = Color.yellow; }
 			else { GUI.color = Color.red; }
