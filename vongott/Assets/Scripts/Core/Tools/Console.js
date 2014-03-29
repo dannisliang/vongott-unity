@@ -38,7 +38,7 @@ public class Console extends MonoBehaviour {
 					switch ( args[1] ) {
 						case "immortal":
 							// TODO: god mode on
-							output =  "Player is immortal";
+							output = "Player is immortal";
 							break;
 
 						case "mortal":
