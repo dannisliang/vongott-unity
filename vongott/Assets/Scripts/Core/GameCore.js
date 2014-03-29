@@ -158,9 +158,10 @@ class GameCore extends MonoBehaviour {
 
 		Time.timeScale = 1;
 		
-		if ( !String.IsNullOrEmpty ( currentLevelData.musicCalm ) ) {
-			MusicManager.GetInstance().Play ( currentLevelData.musicCalm );
-		}
+		MusicManager.GetInstance().LoadCalm ( currentLevelData.musicCalm );	
+		MusicManager.GetInstance().LoadAggressive ( currentLevelData.musicAggressive );	
+
+		MusicManager.GetInstance().PlayCalm ();
 
 	}
 	

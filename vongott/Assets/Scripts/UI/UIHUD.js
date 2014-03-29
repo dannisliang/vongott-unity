@@ -20,20 +20,29 @@ class UIHUD extends OGPage {
 	var _notificationBox : NotificationBox;
 	var _crosshair : GameObject;
 	var _debugText : OGLabel;
+	public var console : GameObject;
+	public var fldConsoleInput : OGTextField;
+	public var lblConsoleOutput : OGLabel;
 	
-	// Static vars
 	static var statusBar : StatusBar;
 	static var notificationBox : NotificationBox;
 	static var crosshair : GameObject;
-	
+
 	static var notificationTimer : float = 0.0;
 	static var notificationIndefinite : boolean = true;
 	
 	
-	////////////////////
+	// Instance
+	public static var instance : UIHUD;
+	public static function GetInstance () : UIHUD {
+		return instance;
+	}
+	
+
 	// Init
-	////////////////////
 	override function StartPage () {
+		instance = this;
+
 		GameCore.state = eGameState.Game;
 		
 		statusBar = _statusBar;
@@ -46,9 +55,7 @@ class UIHUD extends OGPage {
 	}
 	
 	
-	////////////////////
 	// Update
-	////////////////////
 	override function UpdatePage () {
 		if ( notificationTimer > 0.0 ) {
 			notificationTimer -= Time.deltaTime;
@@ -60,26 +67,37 @@ class UIHUD extends OGPage {
 		statusBar.energy.SetValue ( GameCore.GetPlayer().energy / 100 );
 	}
 	
-	
-	////////////////////
+	// Console
+	public function ToggleConsole () {
+		console.SetActive ( !console.activeSelf );
+
+		if ( console.activeSelf ) {	
+			GameCore.state = eGameState.Menu;
+			InputManager.escFunction = ToggleConsole;
+			fldConsoleInput.listening = true;
+		} else {
+			GameCore.state = eGameState.Game;
+		}
+	}
+
+	public function ParseCommand () {
+		lblConsoleOutput.text = console.GetComponent(Console).Parse ( fldConsoleInput.text );
+		fldConsoleInput.text = "";
+	}
+
 	// Aiming
-	////////////////////
 	static function ToggleCrosshair () {
 		crosshair.SetActive ( !crosshair.activeSelf );
 	}
 	
 	
-	////////////////////
 	// Notifications
-	////////////////////
-	// Show timed notification
 	static function ShowTimedNotification ( msg : String, seconds : float ) {
 		notificationTimer = seconds;
 		ShowNotification ( msg );
 		notificationIndefinite = false;
 	}
 	
-	// Show notification
 	static function ShowNotification ( msg : String ) {
 		notificationIndefinite = true;
 				

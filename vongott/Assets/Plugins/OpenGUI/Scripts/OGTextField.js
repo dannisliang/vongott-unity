@@ -41,6 +41,8 @@ public class OGTextField extends OGWidget {
 	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
 		if ( listening && isDrawn ) {
+			GUI.SetNextControlName ( "ActiveTextField" );
+			
 			GUI.color = new Color ( 0, 0, 0, 0 );
 
 			var style : GUIStyle = new GUIStyle();
@@ -67,6 +69,7 @@ public class OGTextField extends OGWidget {
 
 			GUI.color = new Color ( 1, 1, 1, 1 );
 
+			GUI.FocusControl ( "ActiveTextField" );
 		}
 	}
 

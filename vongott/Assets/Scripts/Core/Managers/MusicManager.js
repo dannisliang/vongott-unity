@@ -3,6 +3,10 @@
 public class MusicManager extends MonoBehaviour {
 	public var channel1 : AudioSource;
 	public var channel2 : AudioSource;
+	public var fadeDelta : float = 0.25;
+
+	private var shouldPlay : AudioSource;
+	private var shouldNotPlay : AudioSource;
 
 	private static var instance : MusicManager;
 
@@ -17,18 +21,12 @@ public class MusicManager extends MonoBehaviour {
 		channel2.volume = 0;
 	}
 
-	public function UnloadChannel1 () {
+	public function StopChannel1 () {
 		channel1.Stop ();
-		channel1.clip = null;
 	}
 	
-	public function UnloadChannel2 () {
-		channel1.Stop ();
-		channel2.clip = null;
-	}
-
-	private function FadeTo ( channel : AudioSource, time : float, target : float, callback : String ) {
-		iTween.AudioTo ( this.gameObject, iTween.Hash ( "time", time, "audiosource", channel, "volume", target, "oncompletetarget", this.gameObject, "oncomplete", callback ) ); 
+	public function StopChannel2 () {
+		channel2.Stop ();
 	}
 
 	private function LoadFile ( channel : AudioSource, name : String ) {
@@ -38,27 +36,42 @@ public class MusicManager extends MonoBehaviour {
 		channel.clip.name = name;
 	}
 
-	public function Play ( name : String ) {
-		var channel : AudioSource = channel1;
+	public function LoadCalm ( name : String ) {
+		LoadFile ( channel1, name );
+	}
 
-		if ( channel1.clip && channel1.isPlaying ) {
-			FadeTo ( channel1, 4, 0, "UnloadCannel1" );
-			channel = channel2;	
+	public function LoadAggressive ( name : String ) {
+		LoadFile ( channel2, name );
+	}
 
-		} else if ( channel2.clip && channel2.isPlaying ) {
-			FadeTo ( channel2, 4, 0, "UnloadChannel2" );
-			channel = channel1;
-		}
-		
-		LoadFile ( channel, name ); 
-		FadeTo ( channel, 4, 1, "" );
+	public function PlayCalm () {
+		shouldNotPlay = channel2;
+		shouldPlay = channel1;
+	}
+	
+	public function PlayAggressive () {
+		shouldNotPlay = channel1;
+		shouldPlay = channel2;
 	}
 
 	public function Update () {
-		if ( channel1.clip && !channel1.isPlaying && channel1.clip.isReadyToPlay ) {
-			channel1.Play ();
-		} else if ( channel2.clip && !channel2.isPlaying && channel2.clip.isReadyToPlay ) {
-			channel2.Play ();
+		if ( shouldPlay && shouldPlay.clip && shouldPlay.clip.isReadyToPlay ) {
+			if ( !shouldPlay.isPlaying ) {
+				shouldPlay.Play ();
+			
+			} else if ( shouldPlay.volume < 1 ) {
+				shouldPlay.volume = shouldPlay.volume + fadeDelta * Time.deltaTime;
+			
+			}
+		}
+
+		if ( shouldNotPlay && shouldNotPlay.clip && shouldNotPlay.isPlaying ) {
+			if ( shouldNotPlay.volume > 0 ) {
+				shouldNotPlay.volume = shouldNotPlay.volume - fadeDelta * Time.deltaTime;
+
+			} else {
+				shouldNotPlay.Stop ();
+			}
 		}
 	}
 }

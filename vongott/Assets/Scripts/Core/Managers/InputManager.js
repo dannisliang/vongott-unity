@@ -23,6 +23,15 @@ class InputManager extends MonoBehaviour {
 			} else if ( Input.GetKeyDown(KeyCode.U) ) {
 				OGRoot.GetInstance().GoToPage ( "Upgrades" );
 			
+			} else if ( Input.GetKeyDown(KeyCode.Tab) ) {
+				UIHUD.GetInstance().ToggleConsole();
+
+			}
+
+			if ( UIHUD.GetInstance().console.activeSelf ) {
+				if ( Input.GetKeyDown(KeyCode.Return) ) {
+					UIHUD.GetInstance().ParseCommand ();
+				}
 			}
 		
 		}
