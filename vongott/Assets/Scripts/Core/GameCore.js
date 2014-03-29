@@ -352,7 +352,7 @@ class GameCore extends MonoBehaviour {
 	private var timeCounter : float = 0.0f;
 	private var lastFramerate : float = 0.0f;
 	private var refreshTime : float = 0.5f;
-	
+
 	static function Print ( msg : String ) {
 		debugString += System.DateTime.Now.ToString("HH:mm:ss") + "\n" + msg + "\n\n";
 		Debug.Log ( msg );

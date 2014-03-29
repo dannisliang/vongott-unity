@@ -10,6 +10,7 @@ public class OGTextField extends OGWidget {
 	}
 	
 	public var locked : boolean = false;
+	public var stealReturnKey : boolean = true;
 	public var text : String = "";
 	public var maxLength : int = 30;
 	public var regex : String;
@@ -41,6 +42,12 @@ public class OGTextField extends OGWidget {
 	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
 		if ( listening && isDrawn ) {
+			if ( !stealReturnKey ) {
+				if ( Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return ) {
+					return;
+				}
+			}
+			
 			GUI.SetNextControlName ( "ActiveTextField" );
 			
 			GUI.color = new Color ( 0, 0, 0, 0 );

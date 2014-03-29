@@ -278,8 +278,8 @@ public class OGDrawHelper {
 			advance.x = 0;
 
 			// Emergency
-			if ( emergencyBrake > 10 ) {
-				Debug.Log ( "SCREECH!" );
+			if ( emergencyBrake > 1000 ) {
+				Debug.Log ( "OGDrawHelper | Label exceeded 1000 lines!" );
 				return;
 			} else {
 				emergencyBrake++;
