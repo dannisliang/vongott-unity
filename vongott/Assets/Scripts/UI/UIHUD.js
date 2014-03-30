@@ -21,8 +21,6 @@ class UIHUD extends OGPage {
 	var _crosshair : GameObject;
 	var _debugText : OGLabel;
 	public var console : GameObject;
-	public var fldConsoleInput : OGTextField;
-	public var lblConsoleOutput : OGLabel;
 	
 	static var statusBar : StatusBar;
 	static var notificationBox : NotificationBox;
@@ -57,8 +55,6 @@ class UIHUD extends OGPage {
 	
 	// Update
 	override function UpdatePage () {
-		lblConsoleOutput.text = GameCore.debugString;
-		
 		if ( notificationTimer > 0.0 ) {
 			notificationTimer -= Time.deltaTime;
 		} else if ( !notificationIndefinite ) {
@@ -76,15 +72,9 @@ class UIHUD extends OGPage {
 		if ( console.activeSelf ) {	
 			GameCore.state = eGameState.Menu;
 			InputManager.escFunction = ToggleConsole;
-			fldConsoleInput.listening = true;
 		} else {
 			GameCore.state = eGameState.Game;
 		}
-	}
-
-	public function ParseCommand () {
-		GameCore.Print ( console.GetComponent(Console).Parse ( fldConsoleInput.text ) );
-		fldConsoleInput.text = "";
 	}
 
 	// Aiming

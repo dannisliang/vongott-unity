@@ -10,11 +10,14 @@ public class OGTextField extends OGWidget {
 	}
 	
 	public var locked : boolean = false;
-	public var stealReturnKey : boolean = true;
 	public var text : String = "";
 	public var maxLength : int = 30;
 	public var regex : String;
 	public var regexPreset : RegExPreset;
+	public var target : GameObject;
+	public var message : String;
+	public var messageKey : KeyCode;
+	public var clearOnSend : boolean = true;
 
 	@HideInInspector public var listening : boolean = false;
 	
@@ -42,9 +45,13 @@ public class OGTextField extends OGWidget {
 	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
 		if ( listening && isDrawn ) {
-			if ( !stealReturnKey ) {
-				if ( Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return ) {
-					return;
+			if ( Event.current.type == EventType.KeyDown && Event.current.keyCode == messageKey ) {
+				if ( target && !String.IsNullOrEmpty ( message ) ) {
+					target.SendMessage ( message, text );
+				
+					if ( clearOnSend ) {
+						text = "";
+					}
 				}
 			}
 			

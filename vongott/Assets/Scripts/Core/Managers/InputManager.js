@@ -28,12 +28,6 @@ class InputManager extends MonoBehaviour {
 
 			}
 
-			if ( UIHUD.GetInstance().console.activeSelf ) {
-				if ( Input.GetKeyDown(KeyCode.Return) ) {
-					UIHUD.GetInstance().ParseCommand ();
-				}
-			}
-		
 		}
 	}
 	

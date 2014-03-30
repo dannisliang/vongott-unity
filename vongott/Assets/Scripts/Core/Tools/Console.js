@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 public class Console extends MonoBehaviour {
+	private var inputString : String = "";
 
 	function Start () {
 
@@ -8,6 +9,31 @@ public class Console extends MonoBehaviour {
 
 	function Update () {
 
+	}
+
+	function OnGUI () {
+		var labelStyle : GUIStyle = new GUIStyle ();
+		labelStyle.alignment = TextAnchor.LowerLeft;
+		labelStyle.normal.textColor = Color.white;
+		
+		GUI.Label ( new Rect ( 10, 10, Screen.width, Screen.height / 2 ), GameCore.debugString, labelStyle );
+
+		if ( Event.current.type == EventType.KeyDown ) {
+			if ( Event.current.keyCode == KeyCode.Return ) {
+				GameCore.Print ( Parse ( inputString ) );
+				inputString = "";
+			} else if ( Event.current.keyCode == KeyCode.Escape || Event.current.keyCode == KeyCode.Tab ) {
+				UIHUD.GetInstance().ToggleConsole ();
+			}
+		}
+		
+		GUI.SetNextControlName ( "ActiveTextField" );
+		
+		inputString = GUI.TextArea ( new Rect ( 10, Screen.height / 2 + 20, Screen.width - 20, 20 ), inputString, labelStyle );
+
+		inputString = Regex.Replace ( inputString, "[^a-zA-Z0-9-_. ]", "" );
+		
+		GUI.FocusControl ( "ActiveTextField" );
 	}
 
 	private function Set ( input : String ) : String {
@@ -91,7 +117,7 @@ public class Console extends MonoBehaviour {
 							
 			}
 		} else {
-			output = "[ERROR] give: Not enough arguments provided. Input was '" + input + "'";
+			output = "[ERROR] give: Not enough arguments provided.";
 
 		}
 		
@@ -99,17 +125,43 @@ public class Console extends MonoBehaviour {
 		return output;
 	}
 
-	public function Parse ( input : String ) : String {
-		// Shorcuts
-		if ( input == "god" ) {
-			// TODO: check for toggle
-			return Set ( "player immortal" );	
-		} else if ( input == "allweapons" ) {
-			return Give ( "weapon all" );
-		}
-		
-		var strings : String [] = input.Split ( " "[0], 2 );
+	private function Kill ( input : String ) : String {
+		var args : String [] = input.Split ( " "[0] );
 		var output : String = "";
+
+		switch ( args[0] ) {
+			case "target":
+				var ray : Ray = Camera.main.ScreenPointToRay ( new Vector3 ( Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0 ) );
+				var hit : RaycastHit;
+				
+				if ( Physics.Raycast ( Camera.main.transform.position, ray.direction, hit, Mathf.Infinity ) ) {
+					if ( hit.collider.gameObject.GetComponent(Actor) ) {
+						hit.collider.gameObject.GetComponent(Actor).Die ();
+					
+					} else if ( hit.collider.gameObject.GetComponent(DestructibleObject) ) {
+						hit.collider.gameObject.GetComponent(DestructibleObject).Explode ( 50, 10 );
+
+					}
+				}
+				output = "Pew pew!";
+				break;
+
+			case "player":
+				GameCore.GetPlayer().Die();
+				output = "Player committed suicide";
+				break;
+
+			default:
+				output = "[ERROR] kill: Invalid target '" + input + "'";
+				break;
+		}
+
+		return output;
+	}
+
+	public function Parse ( input : String ) : String {
+		var strings : String [] = input.Split ( " "[0], 2 );
+		var output : String = "> " + input + "\n";
 
 		var args : String = "";
 
@@ -121,23 +173,52 @@ public class Console extends MonoBehaviour {
 			switch ( strings[0] ) {
 				// Set
 				case "set":
-					output = Set ( args );
+					output += Set ( args );
 					break;
 			
 				// Give
 				case "give":
-					output = Give ( args );
+					output += Give ( args );
+					break;
+
+				case "kill":
+					output += Kill ( args );
 					break;
 
 				// Unknown
 				default:
-					output = "ERROR: Invalid function '" + strings[0] + "'";
+					output += "[ERROR] Invalid function '" + strings[0] + "'";
 					break;
 			}
 		
 		} else {
-			output = "ERROR: No arguments provided";
+			// Shorcuts
+			switch ( input ) {
+				case "god":
+					// TODO: check for toggle
+					output += Set ( "player immortal" );
+					break;
+				
+				case "allweapons":
+					output += Give ( "weapon all" );
+					break;
+				
+				case "tantalus":
+					output += Kill ( "target" );
+					break;
 
+				case "killpawns":
+					output += Kill ( "all" );
+					break;
+				
+				case "suicide":
+					output += Kill ( "player" );
+					break;
+
+				default:
+					output += "[ERROR] Invalid command";
+					break;
+			}
 		}	
 
 		return output;

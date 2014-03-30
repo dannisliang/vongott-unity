@@ -354,12 +354,12 @@ class GameCore extends MonoBehaviour {
 	private var refreshTime : float = 0.5f;
 
 	static function Print ( msg : String ) {
-		debugString += System.DateTime.Now.ToString("HH:mm:ss") + "\n" + msg + "\n\n";
+		debugString += "\n\n" + System.DateTime.Now.ToString("HH:mm:ss") + "\n" + msg;
 		Debug.Log ( msg );
 	}
 	
 	static function Error ( msg : String ) {
-		debugString += System.DateTime.Now.ToString("HH:mm:ss") + "\n[ERROR] " + msg + "\n\n";
+		debugString += "\n\n" + System.DateTime.Now.ToString("HH:mm:ss") + "\n[ERROR] " + msg;
 		Debug.LogError ( msg );
 	}
 	
