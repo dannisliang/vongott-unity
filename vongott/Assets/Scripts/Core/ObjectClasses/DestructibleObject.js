@@ -10,9 +10,13 @@ public class DestructibleObject extends MonoBehaviour {
 			var newObj : GameObject = Instantiate ( o );
 			var col : BoxCollider = newObj.GetComponent ( BoxCollider );
 			var randScale : float = Random.Range ( 0.25, 1 );
+			var bounds : Bounds = this.collider.bounds;
 
 			newObj.transform.parent = this.transform;
-			newObj.transform.localPosition = new Vector3 ( Random.Range ( -0.1, 0.1 ), Random.Range ( 0.05, 0.1 ), Random.Range ( -0.1, 0.1 ) );
+			newObj.transform.position = new Vector3 (
+					Random.Range ( bounds.min.x, bounds.max.x ),
+					Random.Range ( bounds.min.y, bounds.max.y ),
+					Random.Range ( bounds.min.z, bounds.max.z ) );
 			newObj.transform.localScale = new Vector3 ( randScale, randScale, randScale );
 
 			list.Add ( col );
@@ -57,10 +61,6 @@ public class DestructibleObject extends MonoBehaviour {
 		if ( trigger != null ) {
 			trigger.OnDeath ();
 		}
-	}
-
-	public function Collapse () {
-
 	}
 
 	public function Explode ( position : Vector3, force : float, radius : float ) {

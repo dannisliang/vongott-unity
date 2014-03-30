@@ -133,17 +133,27 @@ public class Console extends MonoBehaviour {
 			case "target":
 				var ray : Ray = Camera.main.ScreenPointToRay ( new Vector3 ( Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0 ) );
 				var hit : RaycastHit;
-				
+				var str : String = "";
+
 				if ( Physics.Raycast ( Camera.main.transform.position, ray.direction, hit, Mathf.Infinity ) ) {
+					str = hit.collider.gameObject.name + " destroyed";
+					
+					if ( hit.collider.gameObject.GetComponent(Trigger) ) {
+						hit.collider.gameObject.GetComponent(Trigger).OnDeath();
+					}
+					
 					if ( hit.collider.gameObject.GetComponent(Actor) ) {
 						hit.collider.gameObject.GetComponent(Actor).Die ();
-					
+						str = hit.collider.gameObject.GetComponent(Actor).displayName + " killed";
+
 					} else if ( hit.collider.gameObject.GetComponent(DestructibleObject) ) {
-						hit.collider.gameObject.GetComponent(DestructibleObject).Explode ( 50, 10 );
+						hit.collider.gameObject.GetComponent(DestructibleObject).Explode ( 20, 50 );
 
 					}
+					
 				}
-				output = "Pew pew!";
+
+				output = str + " by player";
 				break;
 
 			case "player":
