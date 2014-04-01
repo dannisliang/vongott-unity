@@ -89,14 +89,14 @@ class OGButton extends OGWidget {
 	override function DrawSkin () {
 		if ( currentStyle == null ) { return; }
 		
-		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, alpha, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, tint, clipTo );
 
 		if ( enableImage ) {
-			OGDrawHelper.DrawSprite ( GetImageRect(), styles.thumb, drawDepth, alpha, clipTo );
+			OGDrawHelper.DrawSprite ( GetImageRect(), styles.thumb, drawDepth, tint, clipTo );
 		}
 	}
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, alpha, clipTo );
+		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, clipTo );
 	}
 }

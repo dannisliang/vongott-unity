@@ -40,7 +40,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atlas: {fileID: 2100000, guid: d9572a12669d0214e84bb5614d317110, type: 2}
   fonts:
-  - {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+  - {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
   fontShader: {fileID: 4800000, guid: a449386ab48a3f4428e96cd322b89e84, type: 3}
   styles:
   - name: Background
@@ -58,7 +58,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: BackgroundFlat
     coordinates:
       serializedVersion: 2
@@ -87,7 +87,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: Button
     coordinates:
       serializedVersion: 2
@@ -116,7 +116,7 @@ MonoBehaviour:
     color: {r: .107861184, g: .379624069, b: .698529422, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 18
       fontColor: {r: .507352948, g: .734016895, b: 1, a: 1}
       shadowSize: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.45000005
+      spacing: 1
   - name: ButtonActive
     coordinates:
       serializedVersion: 2
@@ -145,7 +145,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 18
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.45000005
+      spacing: 1
   - name: ButtonClose
     coordinates:
       serializedVersion: 2
@@ -174,7 +174,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ButtonCloseActive
     coordinates:
       serializedVersion: 2
@@ -203,7 +203,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ButtonHover
     coordinates:
       serializedVersion: 2
@@ -232,7 +232,7 @@ MonoBehaviour:
     color: {r: .507352948, g: .734016895, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 18
       fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
       shadowSize: 0
@@ -245,152 +245,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.45000005
-  - name: ButtonIO
-    coordinates:
-      serializedVersion: 2
-      x: 32
-      y: 128
-      width: 16
-      height: 16
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
-    text:
-      fontIndex: 0
-      font: {fileID: 0}
-      fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 0
-      wordWrap: 1
-      padding:
-        m_Left: 0
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1.25
-  - name: DropDown
-    coordinates:
-      serializedVersion: 2
-      x: 96
-      y: 32
-      width: 32
-      height: 32
-    border:
-      top: 4
-      bottom: 4
-      left: 4
-      right: 4
-    color: {r: 1, g: 1, b: 1, a: 1}
-    text:
-      fontIndex: 0
-      font: {fileID: 0}
-      fontSize: 12
-      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 3
-      wordWrap: 0
-      padding:
-        m_Left: 4
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1.25
-  - name: DropDownActive
-    coordinates:
-      serializedVersion: 2
-      x: 128
-      y: 32
-      width: 32
-      height: 32
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
-    text:
-      fontIndex: 0
-      font: {fileID: 0}
-      fontSize: 12
-      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 3
-      wordWrap: 1
-      padding:
-        m_Left: 4
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1.25
-  - name: DropDownHover
-    coordinates:
-      serializedVersion: 2
-      x: 128
-      y: 96
-      width: 32
-      height: 32
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
-    text:
-      fontIndex: 0
-      font: {fileID: 0}
-      fontSize: 12
-      fontColor: {r: .392156869, g: .392156869, b: .392156869, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 3
-      wordWrap: 1
-      padding:
-        m_Left: 4
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1.25
-  - name: DropDownTicked
-    coordinates:
-      serializedVersion: 2
-      x: 40
-      y: 70
-      width: 20
-      height: 20
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
-    text:
-      fontIndex: 0
-      font: {fileID: 0}
-      fontSize: 12
-      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 3
-      wordWrap: 1
-      padding:
-        m_Left: 4
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: Header
     coordinates:
       serializedVersion: 2
@@ -406,7 +261,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 24
       fontColor: {r: .507352948, g: .734016895, b: 1, a: 1}
       shadowSize: 0
@@ -419,7 +274,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: IconCrosshair
     coordinates:
       serializedVersion: 2
@@ -435,7 +290,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -493,7 +348,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 16
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 2
@@ -506,7 +361,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ListItem
     coordinates:
       serializedVersion: 2
@@ -522,7 +377,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 16
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -535,7 +390,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ListItemDisabled
     coordinates:
       serializedVersion: 2
@@ -551,7 +406,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: .435294122}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 16
       fontColor: {r: 1, g: 1, b: 1, a: .43921569}
       shadowSize: 0
@@ -564,7 +419,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ListItemHover
     coordinates:
       serializedVersion: 2
@@ -580,7 +435,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 16
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -593,7 +448,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ListItemTicked
     coordinates:
       serializedVersion: 2
@@ -609,7 +464,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .196078435, g: .196078435, b: .196078435, a: 1}
       shadowSize: 0
@@ -622,7 +477,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: PopUp
     coordinates:
       serializedVersion: 2
@@ -638,7 +493,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -651,7 +506,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: PopUpActive
     coordinates:
       serializedVersion: 2
@@ -667,7 +522,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .588235319, g: .588235319, b: .588235319, a: 1}
       shadowSize: 0
@@ -680,7 +535,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ProgressBar
     coordinates:
       serializedVersion: 2
@@ -696,7 +551,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -709,7 +564,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ProgressBarThumb
     coordinates:
       serializedVersion: 2
@@ -725,7 +580,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -738,36 +593,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
-  - name: Ruler
-    coordinates:
-      serializedVersion: 2
-      x: 8
-      y: 32
-      width: 1
-      height: 1
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
-    text:
-      fontIndex: 0
-      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-      fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 0
-      wordWrap: 1
-      padding:
-        m_Left: 0
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: ScrollView
     coordinates:
       serializedVersion: 2
@@ -783,7 +609,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -812,7 +638,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -870,7 +696,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -883,7 +709,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: TabsActive
     coordinates:
       serializedVersion: 2
@@ -899,7 +725,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -912,7 +738,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: TextField
     coordinates:
       serializedVersion: 2
@@ -928,7 +754,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 14
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -941,7 +767,7 @@ MonoBehaviour:
         m_Top: 4
         m_Bottom: 4
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: TickBox
     coordinates:
       serializedVersion: 2
@@ -957,7 +783,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -970,7 +796,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: TickBoxHover
     coordinates:
       serializedVersion: 2
@@ -986,7 +812,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -999,7 +825,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   - name: TickBoxTicked
     coordinates:
       serializedVersion: 2
@@ -1015,7 +841,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+      font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -1028,7 +854,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25
+      spacing: 1
   defaults:
   - widgetType: 1
     styleSet:
@@ -1048,7 +874,7 @@ MonoBehaviour:
         color: {r: .107861184, g: .379624069, b: .698529422, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 18
           fontColor: {r: .507352948, g: .734016895, b: 1, a: 1}
           shadowSize: 0
@@ -1078,7 +904,7 @@ MonoBehaviour:
         color: {r: .507352948, g: .734016895, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 18
           fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
           shadowSize: 0
@@ -1108,7 +934,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 18
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1412,7 +1238,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 2
@@ -1562,7 +1388,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 2
@@ -1594,7 +1420,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 16
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1624,7 +1450,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 16
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1684,7 +1510,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .196078435, g: .196078435, b: .196078435, a: 1}
           shadowSize: 0
@@ -1744,7 +1570,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: .435294122}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: d8c1ca37ea33e9f4ca77ea1354ca0df4, type: 3}
+          font: {fileID: 0}
           fontSize: 16
           fontColor: {r: 1, g: 1, b: 1, a: .43921569}
           shadowSize: 0
@@ -1776,7 +1602,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -1806,7 +1632,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .588235319, g: .588235319, b: .588235319, a: 1}
           shadowSize: 0
@@ -1836,7 +1662,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .588235319, g: .588235319, b: .588235319, a: 1}
           shadowSize: 0
@@ -1896,7 +1722,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1926,7 +1752,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .588235319, g: .588235319, b: .588235319, a: 1}
           shadowSize: 0
@@ -2140,7 +1966,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2260,7 +2086,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2504,7 +2330,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -2564,7 +2390,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -2654,7 +2480,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -2868,7 +2694,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -2958,7 +2784,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -3018,7 +2844,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+          font: {fileID: 0}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0

@@ -10,21 +10,15 @@ public class OGTextField extends OGWidget {
 	}
 	
 	public var locked : boolean = false;
+	public var stealReturnKey : boolean = true;
 	public var text : String = "";
 	public var maxLength : int = 30;
 	public var regex : String;
 	public var regexPreset : RegExPreset;
-	public var target : GameObject;
-	public var message : String;
-	public var messageKey : KeyCode;
-	public var clearOnSend : boolean = true;
 
 	@HideInInspector public var listening : boolean = false;
 	
 	private var currentPreset : RegExPreset = RegExPreset.None;
-	private var cursorRect : Rect = new Rect();
-	private var cursorPos : Vector2 = new Vector2 ();
-	private var cursorIndex : int = 0;
 
 
 	//////////////////
@@ -45,23 +39,18 @@ public class OGTextField extends OGWidget {
 	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
 		if ( listening && isDrawn ) {
-			if ( Event.current.type == EventType.KeyDown && Event.current.keyCode == messageKey ) {
-				if ( target && !String.IsNullOrEmpty ( message ) ) {
-					target.SendMessage ( message, text );
-				
-					if ( clearOnSend ) {
-						text = "";
-					}
-				}
-			}
-			
 			GUI.SetNextControlName ( "ActiveTextField" );
 			
-			GUI.color = new Color ( 0, 0, 0, 0 );
-
 			var style : GUIStyle = new GUIStyle();
-			style.normal.textColor = styles.basic.text.fontColor;
-			style.wordWrap = true;
+			style.normal.textColor = new Color ( 1, 1, 1, 0 );
+			style.font = currentStyle.text.font.dynamicFont;
+			style.fontSize = currentStyle.text.fontSize;
+			style.alignment = currentStyle.text.alignment;
+			style.wordWrap = currentStyle.text.wordWrap;
+			style.padding = currentStyle.text.padding;
+
+			var c : Color = currentStyle.text.fontColor;
+			GUI.skin.settings.selectionColor = new Color ( 1.0 - c.r, 1.0 - c.g, 1.0 - c.b, 0.2 );
 
 			var invertedRct : Rect = drawRct;
 			invertedRct.y = Screen.height - invertedRct.y - invertedRct.height;
@@ -70,18 +59,9 @@ public class OGTextField extends OGWidget {
 			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);
 			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;
 	
-			cursorIndex = editor.pos;
-
-			cursorRect.x = cursorPos.x;
-			cursorRect.y = cursorPos.y;
-			cursorRect.width = styles.basic.text.fontSize / 6;
-			cursorRect.height = styles.basic.text.fontSize;
-		
 			if ( !String.IsNullOrEmpty ( regex ) && regex != "\\" && regexPreset != RegExPreset.None ) {
 				text = Regex.Replace ( text, "[" + regex + "]", "" );
 			}
-
-			GUI.color = new Color ( 1, 1, 1, 1 );
 
 			GUI.FocusControl ( "ActiveTextField" );
 		}
@@ -102,6 +82,8 @@ public class OGTextField extends OGWidget {
 		// Styles
 		if ( isDisabled ) {
 			currentStyle = styles.disabled;
+		} else if ( listening ) {
+			currentStyle = styles.active;
 		} else {
 			currentStyle = styles.basic;
 		}
@@ -134,14 +116,10 @@ public class OGTextField extends OGWidget {
 	// Draw
 	/////////////////
 	override function DrawSkin () {
-		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, alpha, clipTo );
-
-		if ( listening ) {
-			OGDrawHelper.DrawSprite ( cursorRect, styles.thumb, drawDepth, alpha, clipTo );
-		}
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, tint, clipTo );
 	}
 
 	override function DrawText () {
-		cursorPos = OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, alpha, this, cursorIndex );
+		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this );
 	}
 }

@@ -55,7 +55,7 @@ public class OGWidget extends MonoBehaviour {
 	public var isSelectable : boolean = false;
 	public var isDraggable : boolean = false;
 	public var resetAfterDrag : boolean = false;
-	public var alpha : float = 1;
+	public var tint : Color = Color.white;
 	public var pivot : Pivot = new Pivot();
 	public var anchor : Anchor = new Anchor();	
 	public var stretch : Stretch = new Stretch();
@@ -121,7 +121,11 @@ public class OGWidget extends MonoBehaviour {
 	public function CheckMouseOver ( rect : Rect ) : boolean {
 		var x : float = Input.mousePosition.x;
 		var y : float = Input.mousePosition.y;
-		
+	
+		if ( SystemInfo.deviceType == DeviceType.Handheld && Input.touchCount == 0 ) {
+			return false;
+		}
+
 		return x > rect.x && y > rect.y && y < rect.y + rect.height && x < rect.x + rect.width;
 	}
 	

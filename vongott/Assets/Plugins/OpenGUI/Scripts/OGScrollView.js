@@ -61,7 +61,7 @@ public class OGScrollView extends OGWidget {
 				w.anchor.x = RelativeX.None;
 				w.anchor.y = RelativeY.None;
 				w.clipTo = this;
-				w.alpha = this.alpha;
+				w.tint = this.tint;
 
 				var bottom : float = w.transform.position.y - this.transform.position.y + w.transform.localScale.y - size.y + padding.y * 2;
 				var right : float = w.transform.position.x - this.transform.position.x + w.transform.localScale.x - size.x + padding.x * 2;
@@ -312,10 +312,10 @@ public class OGScrollView extends OGWidget {
 	}
 	
 	override function DrawSkin () {
-		OGDrawHelper.DrawSprite ( drawRct, styles.basic, drawDepth - 10, alpha );
+		OGDrawHelper.DrawSprite ( drawRct, styles.basic, drawDepth - 10, tint );
 	
 		if ( scrollbarVisibility == ScrollbarVisibility.Always ) {
-			OGDrawHelper.DrawSprite ( GetScrollbarYRect(), styles.thumb, drawDepth - 9, alpha );
+			OGDrawHelper.DrawSprite ( GetScrollbarYRect(), styles.thumb, drawDepth - 9, tint );
 		}
 	}
 }

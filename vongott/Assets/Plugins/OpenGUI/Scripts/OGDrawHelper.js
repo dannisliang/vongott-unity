@@ -20,29 +20,22 @@ public class OGDrawHelper {
 	// Label
 	//////////////////
 	// Draw
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, alpha : float ) {
-		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, alpha, null );
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color ) {
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, null );
 	}
 		
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, alpha : float, clipping : OGWidget ) {
-		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, alpha, clipping );
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color, clipping : OGWidget ) {
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, clipping );
 	}
 	
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, alpha : float, clipping : OGWidget, cursorIndex : int ) : Vector2 {
-		return DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, alpha, clipping, cursorIndex );
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color ) {
+		DrawLabel ( rect, string, style, intSize, alignment, depth, tint, null );
 	}
 	
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, alpha : float ) {
-		DrawLabel ( rect, string, style, intSize, alignment, depth, alpha, null );
-	}
-	
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, alpha : float, clipping : OGWidget ) {	
-		DrawLabel ( rect, string, style, intSize, alignment, depth, alpha, clipping, 0 );
-	}
-
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, alpha : float, clipping : OGWidget, cursorIndex : int ) : Vector2 {
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color, clipping : OGWidget ) {
 		// Check font
 		if ( style.font == null ) {
+			style.font = OGRoot.GetInstance().skin.fonts [ style.fontIndex ];
 			return;
 		}
 
@@ -63,25 +56,36 @@ public class OGDrawHelper {
 			}
 		}
 		
+		// Scale
 		var size : float = ( intSize * 1.0 ) / 72;
-		var atlasSize : Vector2 = new Vector2 ( style.font.material.mainTexture.width, style.font.material.mainTexture.height );
-		var advance : Vector2;
+		var atlasSize : Vector2 = style.font.atlasSize;
+		
+		// Bounds
 		var left : float = style.padding.left;
-		var right : float = rect.width - style.padding.right - style.padding.left;
+		var right : float = rect.width - style.padding.right;
 		var top : float = rect.height - style.padding.top;
-		var middle : float = ( rect.height / 2 ) + ( intSize / 2 );
-		var center : float = style.padding.left + right / 2;
+		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.ascent * size ) / 2 );
+		var center : float = left + right / 2;
 		var bottom : float = rect.height - style.padding.bottom;
+		
+		// Positioning
 		var anchor : Vector2;
-		var space : float = ( intSize / 4 ) * style.spacing;
+		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size ) * style.spacing;
+		
+		// Line and progression management
+		var advance : Vector2;
 		var nextLineStart : int = 0;
 		var thisLineStart : int = 0;
 		var lastSpace : int = 0;
 		var lineWidth : float = 0;
-		var info : CharacterInfo;
+		var lineHeight : float = style.font.info.lineSpacing * size;
 		var emergencyBrake : int = 0;
+		
+		// Temp vars
+		var info : OGCharacterInfo;
 		var cursorPos : Vector2;
 
+		// Set anchor
 		switch ( alignment ) {
 			case TextAnchor.UpperLeft:
 				anchor.x = left;
@@ -129,12 +133,16 @@ public class OGDrawHelper {
 				break;
 		}
 
-		// Draw all glyphs
+		// Color
 		var color : Color = style.fontColor;
-		color.a *= alpha;
+		color.r *= tint.r;
+		color.g *= tint.g;
+		color.b *= tint.b;
+		color.a *= tint.a;
 		GL.Color ( color );
 		
-		while ( nextLineStart != string.Length && advance.y > -bottom ) {
+		// Draw loop
+		while ( nextLineStart < string.Length && advance.y > -bottom ) {
 			// Get next line
 			lastSpace = 0;
 			lineWidth = 0;
@@ -142,27 +150,24 @@ public class OGDrawHelper {
 
 			// ^ Parse remaining string, set start and end integers
 			for ( var c : int = thisLineStart; c < string.Length; c++ ) {
+				info = style.font.GetCharacterInfo ( string[c] );
+				
 				// This character is a space
 				if ( string[c] == " "[0] ) {
-					if ( lineWidth < right ) {
-						lineWidth += space;
-					}
-
+					lineWidth += space;
 					lastSpace = c;
-					
-				// This character is a regular glyph
-				} else if ( style.font.GetCharacterInfo ( string[c], info ) ) {
-					if ( lineWidth < right ) {
-						lineWidth += ( info.vert.width * size ) * style.spacing;
-					}
-
-				// This character is a carriage return	
-				} else if ( string[c] == "\n"[0] ) {
-					nextLineStart = c + 1;
-					break;
-
-				}
 				
+				// This character is a regular glyph
+				} else if ( info ) {
+					// This character is a carriage return	
+					if ( string[c] == "\n"[0] ) {
+						nextLineStart = c + 1;
+						break;
+					} else {
+						lineWidth += ( info.width * size ) * style.spacing;
+					}
+				}
+
 				// The line width has exceeded the border
 				if ( lineWidth >= right ) {
 					nextLineStart = lastSpace + 1;
@@ -181,27 +186,23 @@ public class OGDrawHelper {
 			} else if ( anchor.x == right ) {
 				advance.x -= lineWidth;
 			}
-
+		
 			// Draw glyphs
 			for ( var g : int = thisLineStart; g < nextLineStart; g++ ) {
-				// Draw glyph
-				if ( !style.font.GetCharacterInfo ( string[g], info ) ) {
-					continue;
-				}
-				
-				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
-				var uv : Vector2[] = new Vector2[4];
-
-				// Set cursor position
-				if ( g == cursorIndex ) {
-					cursorPos = new Vector2 ( anchor.x + vert.x + rect.x + advance.x, anchor.y + vert.height + vert.y + rect.y + advance.y );
-				}
+				info = style.font.GetCharacterInfo ( string[g] );
 				
 				if ( string[g] == " "[0] ) {
 					advance.x += space;
 					continue;
 				}
-					
+				
+				if ( !info ) {
+					continue;
+				}
+
+				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
+				var uv : Vector2[] = new Vector2[4];
+
 				if ( info.flipped ) {
 					uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
 					uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
@@ -221,7 +222,7 @@ public class OGDrawHelper {
 				var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
 			
 				// Advance regardless if the glyph is drawn or not	
-				advance.x += vert.width * style.spacing;
+				advance.x += ( info.width * size ) * style.spacing;
 		
 				// Clipping
 				if ( clipping != null ) {
@@ -274,7 +275,7 @@ public class OGDrawHelper {
 			}
 
 			// Next line
-			advance.y -= intSize * style.lineHeight;
+			advance.y -= lineHeight;
 			advance.x = 0;
 
 			// Emergency
@@ -287,8 +288,6 @@ public class OGDrawHelper {
 		}
 		
 		GL.Color ( Color.white );
-
-		return cursorPos;
 	}
 
 
@@ -296,22 +295,25 @@ public class OGDrawHelper {
 	// Sprites
 	//////////////////
 	// Regular
-	public static function DrawSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float ) {
-		DrawSprite ( rect, style, depth, alpha, null );
+	public static function DrawSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color ) {
+		DrawSprite ( rect, style, depth, tint, null );
 	}
 	
-	public static function DrawSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float, clipping : OGWidget ) {
-		DrawSprite ( rect, style.coordinates, depth, style.color, alpha, clipping );
+	public static function DrawSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, clipping : OGWidget ) {
+		DrawSprite ( rect, style.coordinates, depth, style.color, tint, clipping );
 	}	
 
-	public static function DrawSprite ( rect : Rect, uvRect : Rect, depth : float, color : Color, alpha : float, clipping : OGWidget ) {
+	public static function DrawSprite ( rect : Rect, uvRect : Rect, depth : float, color : Color, tint : Color, clipping : OGWidget ) {
 		// Check screen
 		if ( rect.xMin > Screen.width || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > Screen.height ) {
 			return;
 		}
 
 		// Color
-		color.a *= alpha;
+		color.r *= tint.r;
+		color.g *= tint.g;
+		color.b *= tint.b;
+		color.a *= tint.a;
 		GL.Color ( color );
 
 		// Quad corners
@@ -358,45 +360,45 @@ public class OGDrawHelper {
 	}
 
 	// Tiled
-	public static function DrawTiledSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float, tileX : float, tileY : float ) {
-		DrawTiledSprite ( rect, style, depth, alpha, tileX, tileY, null );
+	public static function DrawTiledSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, tileX : float, tileY : float ) {
+		DrawTiledSprite ( rect, style, depth, tint, tileX, tileY, null );
 	}
 		
-	public static function DrawTiledSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float, tileX : float, tileY : float, clipping : OGWidget ) {
+	public static function DrawTiledSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, tileX : float, tileY : float, clipping : OGWidget ) {
 		for ( var x : int = 0; x < tileX; x++ ) {
 			for ( var y : int = 0; y < tileY; y++ ) {
 				var newScale : Vector2 = new Vector2 ( rect.width / tileX, rect.height / tileY );
 				var newPosition : Vector2 = new Vector2 ( rect.x + x * newScale.x, rect.y + y * newScale.y );
 
-				DrawSprite ( new Rect ( newPosition.x, newPosition.y, newScale.x, newScale.y ), style, depth, alpha, clipping );
+				DrawSprite ( new Rect ( newPosition.x, newPosition.y, newScale.x, newScale.y ), style, depth, tint, clipping );
 			}
 		}
 	}
 	
-	public static function DrawTiledSprite ( rect : Rect, uvRect : Rect, depth : float, color : Color, alpha : float, tileX : float, tileY : float, clipping : OGWidget ) {
+	public static function DrawTiledSprite ( rect : Rect, uvRect : Rect, depth : float, color : Color, tint : Color, tileX : float, tileY : float, clipping : OGWidget ) {
 		for ( var x : int = 0; x < tileX; x++ ) {
 			for ( var y : int = 0; y < tileY; y++ ) {
 				var newScale : Vector2 = new Vector2 ( rect.width / tileX, rect.height / tileY );
 				var newPosition : Vector2 = new Vector2 ( rect.x + x * newScale.x, rect.y + y * newScale.y );
 
-				DrawSprite ( new Rect ( newPosition.x, newPosition.y, newScale.x, newScale.y ), uvRect, depth, color, alpha, clipping );
+				DrawSprite ( new Rect ( newPosition.x, newPosition.y, newScale.x, newScale.y ), uvRect, depth, color, tint, clipping );
 			}
 		}
 	}
 
 	// Sliced
-	public static function DrawSlicedSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float ) {
-		DrawSlicedSprite ( rect, style, depth, alpha, null );
+	public static function DrawSlicedSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color ) {
+		DrawSlicedSprite ( rect, style, depth, tint, null );
 	}
 
-	public static function DrawSlicedSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float, clipping : OGWidget ) {
+	public static function DrawSlicedSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, clipping : OGWidget ) {
 		var uvRect : Rect = style.coordinates;
 		var border : OGSlicedSpriteOffset = style.border;
 		var color : Color = style.color;
 
 		// If no border is defined, draw a regular sprite
 		if ( border.left == 0 && border.right == 0 && border.top == 0 && border.bottom == 0 ) {
-			DrawSprite ( rect, style, depth, alpha, clipping );
+			DrawSprite ( rect, style, depth, tint, clipping );
 
 		// Draw all corners, panels and the center	
 		} else {
@@ -406,7 +408,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x, uvRect.y, border.left, border.bottom ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 		
@@ -416,7 +418,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x, uvRect.y + border.bottom, border.left, uvRect.height - border.top - border.bottom ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 
@@ -426,7 +428,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x, uvRect.y + uvRect.height - border.top, border.left, border.top ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 
@@ -436,7 +438,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + border.left, uvRect.y + uvRect.height - border.top, uvRect.width - border.horizontal, border.top ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 			
@@ -446,7 +448,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + uvRect.height - border.top, border.right, border.top ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 			
@@ -456,7 +458,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + border.bottom, border.right, uvRect.height - border.vertical ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 
@@ -466,7 +468,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y, border.right, border.bottom ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 			
@@ -476,7 +478,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + border.left, uvRect.y, uvRect.width - border.horizontal, border.bottom ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 			
@@ -486,25 +488,25 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + border.left, uvRect.y + border.bottom, uvRect.width - border.right - border.left, uvRect.height - border.bottom - border.top ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 		}
 	}
 
 	// Tiled sliced
-	public static function DrawTiledSlicedSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float, tileX : float, tileY : float ) {
-		DrawSlicedSprite ( rect, style, depth, alpha, null );
+	public static function DrawTiledSlicedSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, tileX : float, tileY : float ) {
+		DrawSlicedSprite ( rect, style, depth, tint, null );
 	}
 
-	public static function DrawTiledSlicedSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float, tileX : float, tileY : float, clipping : OGWidget ) {
+	public static function DrawTiledSlicedSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, tileX : float, tileY : float, clipping : OGWidget ) {
 		var uvRect : Rect = style.coordinates;
 		var border : OGSlicedSpriteOffset = style.border;
 		var color : Color = style.color;
 
 		// If no border is defined, draw a regular sprite
 		if ( border.left == 0 && border.right == 0 && border.top == 0 && border.bottom == 0 ) {
-			DrawSprite ( rect, style, depth, alpha, clipping );
+			DrawSprite ( rect, style, depth, tint, clipping );
 
 		// Draw all corners, panels and the center	
 		} else {
@@ -514,7 +516,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x, uvRect.y, border.left, border.bottom ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 		
@@ -524,7 +526,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x, uvRect.y + border.bottom, border.left, uvRect.height - border.top - border.bottom ),
 				depth,
 				color,
-				alpha,
+				tint,
 				1.0,
 				tileY,
 				clipping
@@ -536,7 +538,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x, uvRect.y + uvRect.height - border.top, border.left, border.top ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 
@@ -546,7 +548,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + border.left, uvRect.y + uvRect.height - border.top, uvRect.width - border.horizontal, border.top ),
 				depth,
 				color,
-				alpha,
+				tint,
 				tileX,
 				1.0,
 				clipping
@@ -558,7 +560,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + uvRect.height - border.top, border.right, border.top ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 			
@@ -568,7 +570,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + border.bottom, border.right, uvRect.height - border.vertical ),
 				depth,
 				color,
-				alpha,
+				tint,
 				1.0,
 				tileY,
 				clipping
@@ -580,7 +582,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y, border.right, border.bottom ),
 				depth,
 				color,
-				alpha,
+				tint,
 				clipping
 			);
 			
@@ -590,7 +592,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + border.left, uvRect.y, uvRect.width - border.horizontal, border.bottom ),
 				depth,
 				color,
-				alpha,
+				tint,
 				tileX,
 				1.0,
 				clipping
@@ -602,7 +604,7 @@ public class OGDrawHelper {
 				new Rect ( uvRect.x + border.left, uvRect.y + border.bottom, uvRect.width - border.right - border.left, uvRect.height - border.bottom - border.top ),
 				depth,
 				color,
-				alpha,
+				tint,
 				tileX,
 				tileY,
 				clipping

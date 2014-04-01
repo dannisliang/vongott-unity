@@ -22,7 +22,6 @@ class OGRoot extends MonoBehaviour {
 	public var lines : OGLine[];
 	public var lineClip : Rect;
 
-	@HideInInspector public var unicode : Dictionary.< int, int >[];
 	@HideInInspector public var isMouseOver : boolean = false;
 	@HideInInspector public var texWidth : int = 256;
 	@HideInInspector public var texHeight : int = 256;
@@ -46,31 +45,11 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	// Font helpers
 	//////////////////
-	public function GetUnicode ( index : int ) : Dictionary.< int, int > {
-		if ( unicode == null ) {
-			ReloadFonts ();
-		}
-
-		return unicode[index];
-	}
-
 	public function ReloadFonts () {
 		if ( !skin ) { return; }
 
-		unicode = new Dictionary.< int, int > [ skin.fonts.Length ];
-		
 		for ( var i : int = 0; i < skin.fonts.Length; i++ ) {
-			if ( unicode[i] == null ) {
-				unicode[i] = new Dictionary.< int, int >();
-				
-				for ( var c : int = 0; c < skin.fonts[i].characterInfo.Length; c++ ) {
-					if ( unicode[i].ContainsKey ( skin.fonts[i].characterInfo[c].index ) ) {
-						unicode[i][skin.fonts[i].characterInfo[c].index] = c;
-					} else {
-						unicode[i].Add ( skin.fonts[i].characterInfo[c].index, c );
-					}
-				}
-			}
+			skin.fonts[i].UpdateData();	
 		}
 					
 	}
@@ -144,11 +123,13 @@ class OGRoot extends MonoBehaviour {
 				
 				GL.Begin(GL.QUADS);
 				
-				if ( skin.fontShader != null ) {
-					skin.fonts[i].material.shader = skin.fontShader;
+				if ( skin.fontShader != null && skin.fonts[i].bitmapFont != null ) {
+					skin.fonts[i].bitmapFont.material.shader = skin.fontShader;
 				}
 				
-				OGDrawHelper.SetPass ( skin.fonts[i].material );
+				if ( skin.fonts[i].bitmapFont != null ) {
+					OGDrawHelper.SetPass ( skin.fonts[i].bitmapFont.material );
+				}
 
 				for ( o = 0; o < widgets.Length; o++ ) {
 					w = widgets[o];
@@ -159,7 +140,11 @@ class OGRoot extends MonoBehaviour {
 						skin.GetDefaultStyles ( w );
 
 					} else if ( w.isDrawn && w.gameObject.activeSelf ) {
-						if ( w.styles.basic != null && w.styles.basic.text.fontIndex == i ) {
+						if ( w.currentStyle != null && w.currentStyle.text.fontIndex == i ) {
+							if ( w.currentStyle.text.font == null ) {
+								w.currentStyle.text.font = skin.fonts[i];
+							}
+							
 							w.DrawText ();
 						}
 					}
@@ -398,23 +383,21 @@ class OGRoot extends MonoBehaviour {
 		var e : Event = Event.current;
 		var revRect : Rect;
 		var pivotRect : Rect;
-		var scaleXRect : Rect;
-		var scaleYRect : Rect;
 
 		if ( !Application.isPlaying ) {
-			if ( editWidget != null ) {
+			if ( Selection.activeObject as GameObject && ( Selection.activeObject as GameObject ).GetComponent(OGWidget) ) {
+				editWidget = ( Selection.activeObject as GameObject ).GetComponent(OGWidget);
 				revRect = editWidget.drawRct;
 				revRect.y = Screen.height - revRect.y - revRect.height;
-
 				pivotRect = new Rect ( editWidget.transform.position.x - 2, editWidget.transform.position.y - 2, 4, 4 );
-				scaleXRect = new Rect ( revRect.xMax, revRect.center.y - 6, 6, 12 );
-				scaleYRect = new Rect ( revRect.center.x - 6, revRect.yMax, 12, 6 );
 
+			} else {
+				editWidget = null;
+			}	
+				
+			if ( editWidget != null ) {
 				var color : Color = Color.white;//new Color ( 0.19, 0.3, 0.47, 1 );
 				
-				if ( editWidget.pivot.x == RelativeX.Right ) { scaleXRect.center.x = revRect.xMax + 3; }
-				if ( editWidget.pivot.y == RelativeY.Bottom ) { scaleYRect.center.y = revRect.yMin - 3; }
-
 				var tex : Texture2D = new Texture2D ( 1, 1 );
 				tex.SetPixel ( 0, 0, color );
 				tex.Apply ();
@@ -442,10 +425,6 @@ class OGRoot extends MonoBehaviour {
 
 				// Draw pivot
 				GUI.Box ( pivotRect, "", style );
-
-				// Draw scale
-				GUI.Box ( scaleXRect, "", style );
-				GUI.Box ( scaleYRect, "", style );
 			}
 
 			switch ( e.type ) { 
@@ -454,25 +433,11 @@ class OGRoot extends MonoBehaviour {
 
 					if ( editWidget != w && w != null ) {
 						EditorSelectWidget ( w );
-						editWidget = w;
-						revRect = editWidget.drawRct;
-						revRect.y = Screen.height - revRect.y - revRect.height;
-						scaleXRect = new Rect ( revRect.xMax, revRect.center.y - 6, 6, 12 );
-						scaleYRect = new Rect ( revRect.center.x - 6, revRect.yMax, 12, 6 );
 					}	
 					
 					if ( revRect.Contains ( e.mousePosition ) ) {
 						draggingWidget = true;
 					
-					} else if ( scaleXRect.Contains ( e.mousePosition ) ) {
-						scalingWidgetX = true;
-					
-					} else if ( scaleYRect.Contains ( e.mousePosition ) ) {
-						scalingWidgetY = true;
-					
-					} else if ( w == null ) {
-						editWidget = null;
-				
 					}
 
 					break;
@@ -559,11 +524,6 @@ class OGRoot extends MonoBehaviour {
 		
 		mouseOver.Clear ();
 		
-		// Index font unicode
-		if ( unicode == null || unicode.Length != skin.fonts.Length ) {
-			ReloadFonts ();
-		}
-		
 		// Update widget lists	
 		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
 
@@ -578,6 +538,12 @@ class OGRoot extends MonoBehaviour {
 				mouseOver.Add ( w );
 			}
 			
+			// Check scroll offset
+			if ( !w.clipTo ) {
+				w.scrollOffset.x = 0;
+				w.scrollOffset.y = 0;
+			}
+
 			w.root = this;			
 			w.UpdateWidget ();
 			w.Recalculate ();

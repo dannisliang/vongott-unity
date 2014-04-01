@@ -49,7 +49,7 @@ public class OGSlicedSpriteOffset {
 
 public class OGTextStyle {
 	public var fontIndex : int = 0;
-	public var font : Font;
+	public var font : OGFont;
 	public var fontSize : int = 12;
 	public var fontColor : Color = Color.white;
 	public var shadowSize : int = 0;
@@ -58,7 +58,7 @@ public class OGTextStyle {
 	public var wordWrap : boolean = true;
 	public var padding : RectOffset;
 	public var lineHeight : float = 1.25;
-	public var spacing : float = 1.25;
+	public var spacing : float = 1;
 }
 
 public class OGStyle {
@@ -150,7 +150,7 @@ public class OGDefault {
 
 public class OGSkin extends MonoBehaviour {
 	public var atlas : Material;
-	public var fonts : Font[] = new Font[0];
+	public var fonts : OGFont[] = new OGFont[0];
 	public var fontShader : Shader;
 	public var styles : OGStyle[] = new OGStyle[0];	
 	public var defaults : OGDefault[] = new OGDefault[0];
@@ -202,7 +202,7 @@ public class OGSkin extends MonoBehaviour {
 				case OGWidgetType.Slider: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
 				case OGWidgetType.ScrollView: s = [ OGStyleType.Thumb ]; break;
 				case OGWidgetType.Tabs: s = [ OGStyleType.Disabled, OGStyleType.Active ]; break;
-				case OGWidgetType.TextField: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
+				case OGWidgetType.TextField: s = [ OGStyleType.Active, OGStyleType.Disabled ]; break;
 				case OGWidgetType.TickBox: s = [ OGStyleType.Disabled, OGStyleType.Hover, OGStyleType.Ticked ]; break;
 				default: return false;
 			}

@@ -18,10 +18,10 @@ public class OGSlicedSprite extends OGWidget {
 		if ( drawRct == null ) { return; }
 
 		if ( tile.x == 1 && tile.y == 1 ) {
-			OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic, drawDepth, alpha, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic, drawDepth, tint, clipTo );
 		
 		} else {
-			OGDrawHelper.DrawTiledSlicedSprite ( drawRct, styles.basic, drawDepth, alpha, tile.x, tile.y, clipTo );
+			OGDrawHelper.DrawTiledSlicedSprite ( drawRct, styles.basic, drawDepth, tint, tile.x, tile.y, clipTo );
 		
 		}
 	}

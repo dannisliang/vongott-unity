@@ -67,13 +67,13 @@ public class OGSlider extends OGWidget {
 	////////////////	
 	override function DrawSkin () {
 		// Background
-		OGDrawHelper.DrawSprite ( GetBackgroundRect(), styles.basic, drawDepth, alpha, clipTo );
+		OGDrawHelper.DrawSprite ( GetBackgroundRect(), styles.basic, drawDepth, tint, clipTo );
 	
 		// Thumb
 		if ( isDisabled ) {
-			OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.disabled, drawDepth, alpha, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.disabled, drawDepth, tint, clipTo );
 		} else {
-			OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.thumb, drawDepth, alpha, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.thumb, drawDepth, tint, clipTo );
 		}
 	}		
 }

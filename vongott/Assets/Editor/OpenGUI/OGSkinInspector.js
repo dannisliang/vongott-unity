@@ -177,7 +177,7 @@ public class OGSkinInspector extends Editor {
 		var tempList : List.< String > = new List.< String >();
 		
 		if ( skin != null ) {
-			for ( var font : Font in skin.fonts ) {
+			for ( var font : OGFont in skin.fonts ) {
 				if ( font != null ) {
 					tempList.Add ( font.name );
 				}
@@ -235,7 +235,7 @@ public class OGSkinInspector extends Editor {
 		var skin : OGSkin = target as OGSkin;
 				
 		if ( !skin ) { 
-			EditorGUILayout.LabelField ( "Skin is null fr some reason" );
+			EditorGUILayout.LabelField ( "Skin is null for some reason" );
 			return;
 		}
 		
@@ -497,17 +497,6 @@ public class OGSkinInspector extends Editor {
 					s.text.fontColor = EditorGUILayout.ColorField ( s.text.fontColor );
 					EditorGUILayout.EndHorizontal();
 					
-					// ^^ Shadow
-					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField ( "Shadow offset", GUILayout.Width ( 100 ) );
-					s.text.shadowSize = EditorGUILayout.IntField ( s.text.shadowSize );
-					EditorGUILayout.EndHorizontal();
-
-					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField ( "Shadow colour", GUILayout.Width ( 100 ) );
-					s.text.shadowColor = EditorGUILayout.ColorField ( s.text.shadowColor );
-					EditorGUILayout.EndHorizontal();
-
 					// ^^ Alignment
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.LabelField ( "Alignment", GUILayout.Width ( 100 ) );
@@ -562,10 +551,10 @@ public class OGSkinInspector extends Editor {
 
 			// Fonts
 			EditorGUILayout.LabelField ( "Fonts", EditorStyles.boldLabel );
-			var tmpList : List.< Font >;
+			var tmpList : List.< OGFont >;
 			
 			if ( skin.fonts.Length < 1 ) {
-				skin.fonts = new Font[1];
+				skin.fonts = new OGFont[1];
 			}
 			
 			for ( var i : int = 0; i < skin.fonts.Length; i++ ) {
@@ -574,12 +563,12 @@ public class OGSkinInspector extends Editor {
 				EditorGUILayout.LabelField ( i.ToString(), GUILayout.Width ( 30 ) );
 			
 				tempObj = skin.fonts[i] as Object;
-				tempObj = EditorGUILayout.ObjectField ( tempObj, Font, false );
-				skin.fonts[i] = tempObj as Font;
+				tempObj = EditorGUILayout.ObjectField ( tempObj, OGFont, false );
+				skin.fonts[i] = tempObj as OGFont;
 			
 				GUI.backgroundColor = Color.red;
 				if ( GUILayout.Button ( "x", GUILayout.Width ( 30 ), GUILayout.Height ( 14 ) ) ) {
-					tmpList = new List.< Font > ( skin.fonts );
+					tmpList = new List.< OGFont > ( skin.fonts );
 					
 					tmpList.RemoveAt ( i );
 					
@@ -594,7 +583,7 @@ public class OGSkinInspector extends Editor {
 			
 			GUI.backgroundColor = Color.green;
 			if ( GUILayout.Button ( "+", GUILayout.Width ( 30 ), GUILayout.Height ( 14 ) ) ) {
-				tmpList = new List.< Font > ( skin.fonts );
+				tmpList = new List.< OGFont > ( skin.fonts );
 				
 				tmpList.Add ( null );
 				
