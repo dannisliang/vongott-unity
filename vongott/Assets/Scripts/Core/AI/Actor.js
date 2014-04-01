@@ -210,7 +210,7 @@ class Actor extends InteractiveObject {
 	}
 	
 	function Say ( msg : String ) {
-		UIHUD.ShowTimedNotification ( msg, 2.0 );
+		UIHUD.GetInstance().GetInstance().ShowTimedNotification ( msg, 2.0 );
 	}
 	
 	function TakeDamage ( damage : int ) {
@@ -521,6 +521,8 @@ class Actor extends InteractiveObject {
 		// check for interaction
 		if ( GameCore.GetInstance().GetControlsActive() ) {
 			if ( affiliation == eAffiliation.Ally && !talking  ) {
+				UIHUD.GetInstance().GetInstance().ShowNotification ( "Talk" );
+				
 				if ( nextConvoForced ) {
 					Interact();
 				}
@@ -531,7 +533,7 @@ class Actor extends InteractiveObject {
 	override function Interact () {
 		if ( GameCore.GetInstance().GetControlsActive() && !talking ) {
 			StartCoroutine ( Talk() );
-			UIHUD.ShowNotification ( "" );
+			UIHUD.GetInstance().GetInstance().ShowNotification ( "" );
 		}
 	}
 	

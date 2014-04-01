@@ -8,13 +8,14 @@ class InteractiveObject extends MonoBehaviour {
 		if ( intObj == this || ( intObj && intObj.GetComponent ( LiftableItem ) && intObj.GetComponent ( LiftableItem ).isPickedUp ) ) { return; }
 
 		GameCore.SetInteractiveObject ( this );
-		InvokePrompt ();		
+		
+		InvokePrompt ();
 	}
 	
 	function Unfocus () {				
 		if ( GameCore.GetInteractiveObject() == this ) {
 			GameCore.SetInteractiveObject ( null );
-			UIHUD.ShowNotification ( "" );
+			UIHUD.GetInstance().ShowNotification ( "" );
 		}
 	}
 	

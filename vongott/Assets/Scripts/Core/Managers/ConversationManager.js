@@ -170,7 +170,7 @@ public class ConversationManager {
 				SetSpeaker ( currentNode.speaker );
 				if ( currentNode.lines.Count <= 1 ) {
 					if ( passiveConvo ) {
-						UIHUD.ShowTimedNotification ( currentNode.lines[0], 5 );
+						UIHUD.GetInstance().ShowTimedNotification ( currentNode.lines[0], 5 );
 					} else {	
 						UIConversation.SetLine ( currentNode.lines[0] );
 					}

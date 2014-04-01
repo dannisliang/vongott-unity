@@ -22,12 +22,12 @@ class Terminal extends InteractiveObject {
 	
 	public function Enter () : IEnumerator {
 		inSession = true;
-		UIHUD.ToggleCrosshair ();
+		UIHUD.GetInstance().ToggleCrosshair ();
 		
 		GameCamera.GetInstance().StorePosRot ();
 		
 		GameCore.GetInstance().SetControlsActive ( false );
-		UIHUD.ShowNotification ( "" );
+		UIHUD.GetInstance().ShowNotification ( "" );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
 		
@@ -41,7 +41,7 @@ class Terminal extends InteractiveObject {
 			
 		yield WaitForSeconds ( 1 );
 	
-		UIHUD.ToggleCrosshair ();
+		UIHUD.GetInstance().ToggleCrosshair ();
 	
 		GameCore.GetInstance().SetControlsActive ( true );
 	}

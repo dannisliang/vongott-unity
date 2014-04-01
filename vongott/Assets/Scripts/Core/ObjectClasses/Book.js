@@ -9,8 +9,8 @@ class Book extends InteractiveObject {
 	public function Enter () : IEnumerator {
 		inSession = true;		
 		
-		UIHUD.ToggleCrosshair ();
-		UIHUD.ShowNotification ( "" );
+		UIHUD.GetInstance().ToggleCrosshair ();
+		UIHUD.GetInstance().ShowNotification ( "" );
 		UITextDisplay.displayText = content;
 		
 		GameCamera.GetInstance().StorePosRot ();
@@ -29,7 +29,7 @@ class Book extends InteractiveObject {
 			
 		yield WaitForSeconds ( 1 );
 	
-		UIHUD.ToggleCrosshair ();
+		UIHUD.GetInstance().ToggleCrosshair ();
 	
 		GameCore.GetInstance().SetControlsActive ( true );
 	}

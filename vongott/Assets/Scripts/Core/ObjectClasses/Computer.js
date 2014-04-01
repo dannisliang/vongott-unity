@@ -58,10 +58,10 @@ class Computer extends InteractiveObject {
 	
 	public function Enter () : IEnumerator {
 		inSession = true;
-		UIHUD.ToggleCrosshair ();
+		UIHUD.GetInstance().ToggleCrosshair ();
 		
 		GameCore.GetInstance().SetControlsActive ( false );
-		UIHUD.ShowNotification ( "" );
+		UIHUD.GetInstance().ShowNotification ( "" );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.4 );
 		
@@ -76,7 +76,7 @@ class Computer extends InteractiveObject {
 	
 		yield WaitForSeconds ( 1 );
 	
-		UIHUD.ToggleCrosshair ();
+		UIHUD.GetInstance().ToggleCrosshair ();
 	
 		GameCore.GetInstance().SetControlsActive ( true );
 	}

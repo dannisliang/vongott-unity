@@ -74,11 +74,15 @@ class Item extends InteractiveObject {
 		}
 	}
 
+	override function InvokePrompt () {
+		UIHUD.GetInstance().ShowNotification ( "Pick up" );
+	}
+
 	// Handle pick-up	
 	override function Interact () {
 		InventoryManager.GetInstance().AddItem(this);
 		Destroy ( this.gameObject );
 		GameCore.SetInteractiveObject ( null );
-		UIHUD.ShowNotification ( "" );
+		UIHUD.GetInstance().ShowNotification ( "" );
 	}
 }

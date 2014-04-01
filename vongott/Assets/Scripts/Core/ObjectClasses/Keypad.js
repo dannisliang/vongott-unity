@@ -25,7 +25,7 @@ class Keypad extends InteractiveObject {
 	public function ShowLogin ( ){
 		UIKeypadDisplay.passCode = passCode;
 		UIKeypadDisplay.successCallback = LoginSuccess;
-		UIHUD.ShowNotification ( "" );
+		UIHUD.GetInstance().ShowNotification ( "" );
 		OGRoot.GetInstance().GoToPage ( "KeypadDisplay" );
 	}
 	

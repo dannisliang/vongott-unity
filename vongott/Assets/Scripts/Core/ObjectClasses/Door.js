@@ -29,10 +29,10 @@ class Door extends InteractiveObject {
 	private function PickLock ( p : Player ) {
 	 	if ( UpgradeManager.GetAbility(eAbilityID.Lockpicking) >= lockLevel ) {
 	  		Unlock ();
-	  		UIHUD.ShowNotification ( "Door unlocked" ); 	
+	  		UIHUD.GetInstance().ShowNotification ( "Door unlocked" ); 	
 		
 		} else {
-			UIHUD.ShowNotification ( "Skill not high enough" );    
+			UIHUD.GetInstance().ShowNotification ( "Skill not high enough" );    
 		
 		}		
 	}
@@ -163,7 +163,7 @@ class Door extends InteractiveObject {
 				PickLock ( GameCore.GetPlayer() );				
 			
 			} else {
-				UIHUD.ShowNotification ( "This door is locked" );
+				UIHUD.GetInstance().ShowNotification ( "This door is locked" );
 			
 			}
 		

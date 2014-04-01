@@ -6,48 +6,32 @@ private class StatusBar {
 }
 
 private class NotificationBox {
-	var instance : GameObject;
-	var background : GameObject;
+	var parent : OGWidget;
+	var background : OGSlicedSprite;
 	var text : OGLabel;
 }
 
 class UIHUD extends OGPage {
-	////////////////////
-	// Prerequisites
-	////////////////////
-	// Public vars
-	var _statusBar : StatusBar;
-	var _notificationBox : NotificationBox;
-	var _crosshair : GameObject;
-	var _debugText : OGLabel;
+	public var statusBar : StatusBar;
+	public var notificationBox : NotificationBox;
+	public var crosshair : GameObject;
 	public var console : GameObject;
 	
-	static var statusBar : StatusBar;
-	static var notificationBox : NotificationBox;
-	static var crosshair : GameObject;
+	private var notificationTimer : float = 0.0;
+	private var notificationIndefinite : boolean = true;
+	private var showingNotification : boolean = false;
 
-	static var notificationTimer : float = 0.0;
-	static var notificationIndefinite : boolean = true;
-	
-	
 	// Instance
 	public static var instance : UIHUD;
 	public static function GetInstance () : UIHUD {
 		return instance;
 	}
 	
-
 	// Init
 	override function StartPage () {
 		instance = this;
 
 		GameCore.state = eGameState.Game;
-		
-		statusBar = _statusBar;
-		notificationBox = _notificationBox;
-		crosshair = _crosshair;
-		
-		ShowNotification ( "" );
 		
 		GameCore.GetInstance().SetPause ( false );
 	}
@@ -63,6 +47,38 @@ class UIHUD extends OGPage {
 		
 		statusBar.health.SetValue ( ( GameCore.GetPlayer().health * 1.0 / UpgradeManager.GetAbility ( eAbilityID.MaxHealth ) * 1.0 ) );
 		statusBar.energy.SetValue ( GameCore.GetPlayer().energy / 100 );
+
+		var delta : float = Time.deltaTime * 4;
+
+		if ( showingNotification ) {
+			if ( notificationBox.parent.anchor.yOffset > -180 ) {
+				notificationBox.parent.anchor.yOffset -= delta * 40;
+			}
+
+			if ( notificationBox.text.tint.a < 1.0 ) {
+				notificationBox.text.tint.a += delta;
+			}
+			
+			if ( notificationBox.background.tint.a < 1.0 ) {
+				notificationBox.background.tint.a += delta;
+			}
+		
+		} else {
+			if ( notificationBox.parent.anchor.yOffset < -160 ) {
+				notificationBox.parent.anchor.yOffset += delta * 20;
+			}
+
+			if ( notificationBox.text.tint.a > 0.0 ) {
+				notificationBox.text.tint.a -= delta;
+			} else {
+				notificationBox.text.text = "";
+			}
+
+			if ( notificationBox.background.tint.a > 0.0 ) {
+				notificationBox.background.tint.a -= delta;
+			}
+
+		}
 	}
 	
 	// Console
@@ -78,25 +94,28 @@ class UIHUD extends OGPage {
 	}
 
 	// Aiming
-	static function ToggleCrosshair () {
+	public function ToggleCrosshair () {
 		crosshair.SetActive ( !crosshair.activeSelf );
 	}
 	
 	
 	// Notifications
-	static function ShowTimedNotification ( msg : String, seconds : float ) {
+	public function ShowTimedNotification ( msg : String, seconds : float ) {
 		notificationTimer = seconds;
 		ShowNotification ( msg );
 		notificationIndefinite = false;
 	}
 	
-	static function ShowNotification ( msg : String ) {
-		notificationIndefinite = true;
-				
+	public function ShowNotification ( msg : String ) {
 		if ( msg != notificationBox.text.text ) {
-			notificationBox.text.text = msg;
+			notificationIndefinite = true;
+			
+			if ( msg != "" ) {
+				showingNotification = true;
+				notificationBox.text.text = msg;
+			} else {
+				showingNotification = false;
+			}
 		}
-		
-		notificationBox.instance.SetActive ( !(msg == "") );
-	}
+	}		
 }

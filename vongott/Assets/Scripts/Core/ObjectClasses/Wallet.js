@@ -19,6 +19,6 @@ class Wallet extends InteractiveObject {
 		InventoryManager.GetInstance().ChangeCredits ( creditAmount );
 		Destroy ( this.gameObject );
 		GameCore.SetInteractiveObject ( null );
-		UIHUD.ShowTimedNotification ( "Picked up " + creditAmount + " credits", 2 );
+		UIHUD.GetInstance().ShowTimedNotification ( "Picked up " + creditAmount + " credits", 2 );
 	}
 }

@@ -28,14 +28,14 @@ class LiftPanel extends InteractiveObject {
 	
 	public function Enter () : IEnumerator {
 		inSession = true;
-		UIHUD.ToggleCrosshair ();
+		UIHUD.GetInstance().ToggleCrosshair ();
 		
 		GameCore.interactiveObjectLocked = true;
 		
 		GameCamera.GetInstance().StorePosRot ();
 		
 		GameCore.GetInstance().SetControlsActive ( false );
-		UIHUD.ShowNotification ( "" );
+		UIHUD.GetInstance().ShowNotification ( "" );
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
 		
@@ -71,7 +71,7 @@ class LiftPanel extends InteractiveObject {
 			
 		yield WaitForSeconds ( 1 );
 	
-		UIHUD.ToggleCrosshair ();
+		UIHUD.GetInstance().ToggleCrosshair ();
 	
 		GameCore.interactiveObjectLocked = false;
 		GameCore.GetInstance().SetControlsActive ( true );
