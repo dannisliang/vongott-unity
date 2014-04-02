@@ -64,13 +64,13 @@ public class OGDrawHelper {
 		var left : float = style.padding.left;
 		var right : float = rect.width - style.padding.right;
 		var top : float = rect.height - style.padding.top;
-		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.ascent * size ) / 2 );
+		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.lineSpacing * size ) / 2 );
 		var center : float = left + right / 2;
 		var bottom : float = rect.height - style.padding.bottom;
 		
 		// Positioning
 		var anchor : Vector2;
-		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size ) * style.spacing;
+		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size );
 		
 		// Line and progression management
 		var advance : Vector2;
@@ -152,20 +152,20 @@ public class OGDrawHelper {
 			for ( var c : int = thisLineStart; c < string.Length; c++ ) {
 				info = style.font.GetCharacterInfo ( string[c] );
 				
+				// This character is a carriage return	
+				if ( string[c] == "\n"[0] ) {
+					nextLineStart = c + 1;
+					break;
+				
 				// This character is a space
-				if ( string[c] == " "[0] ) {
+				} else if ( string[c] == " "[0] ) {
 					lineWidth += space;
 					lastSpace = c;
 				
 				// This character is a regular glyph
 				} else if ( info ) {
-					// This character is a carriage return	
-					if ( string[c] == "\n"[0] ) {
-						nextLineStart = c + 1;
-						break;
-					} else {
-						lineWidth += ( info.width * size ) * style.spacing;
-					}
+					lineWidth += info.width * size;
+				
 				}
 
 				// The line width has exceeded the border
@@ -191,15 +191,15 @@ public class OGDrawHelper {
 			for ( var g : int = thisLineStart; g < nextLineStart; g++ ) {
 				info = style.font.GetCharacterInfo ( string[g] );
 				
+				if ( info == null ) {
+					continue;
+				}
+
 				if ( string[g] == " "[0] ) {
 					advance.x += space;
 					continue;
 				}
 				
-				if ( !info ) {
-					continue;
-				}
-
 				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
 				var uv : Vector2[] = new Vector2[4];
 
@@ -222,7 +222,7 @@ public class OGDrawHelper {
 				var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
 			
 				// Advance regardless if the glyph is drawn or not	
-				advance.x += ( info.width * size ) * style.spacing;
+				advance.x += info.width * size;
 		
 				// Clipping
 				if ( clipping != null ) {
@@ -392,10 +392,6 @@ public class OGDrawHelper {
 	}
 
 	public static function DrawSlicedSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, clipping : OGWidget ) {
-		if ( style == null ) {
-			return;
-		}
-		
 		var uvRect : Rect = style.coordinates;
 		var border : OGSlicedSpriteOffset = style.border;
 		var color : Color = style.color;

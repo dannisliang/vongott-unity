@@ -14,14 +14,14 @@ class OPPriorityQueue implements IComparer {
 	}
 	
 	function Compare ( nodeA : OPNode, nodeB : OPNode ) : int { 
-        if ( nodeA.estimatedTotalCost < nodeB.estimatedTotalCost) {
+		if ( nodeA.estimatedTotalCost < nodeB.estimatedTotalCost) {
 			return -1;
 		} else if ( nodeA.estimatedTotalCost > nodeB.estimatedTotalCost ) {
 			return 1;
 		} else {
 			return 0;
-    	}
-    }
+		}
+	}
 	
 	function Push ( node : OPNode ) : int {
 		nodes.Add ( node );
