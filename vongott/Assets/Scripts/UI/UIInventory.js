@@ -22,20 +22,15 @@ private class Point {
 }
 
 class UIInventory extends OGPage {
-	////////////////////
-	// Prerequisites
-	////////////////////
-	// Public vars
-	var grid : Transform;
-	var stash : Transform;
-	var inspector : Inspector;
-	var creditsDisplay : OGLabel;
+	public var grid : Transform;
+	public var stash : Transform;
+	public var inspector : Inspector;
+	public var creditsDisplay : OGLabel;
+	public var hoverColorGrid : Color;
+	public var normalColorGrid : Color;
 	
-	// Private vars
 	private var selectedEntry : InventoryEntry;
 	private var draggingEntry : Point;
-	private var listenForDrag : Point;
-	private var mouseClickTimer : float = 0.0;
 	private var allImages : OGTexture[,] = new OGTexture[10,3];
 	
 	
@@ -50,13 +45,17 @@ class UIInventory extends OGPage {
 	// Clear grid
 	function ClearGrid () {
 		allImages = new OGTexture[10,3];
-		
-		for ( var i = 0; i < grid.childCount; i++ ) {
-			Destroy ( grid.GetChild ( i ).gameObject );
+	
+		var gridIcons : OGTexture [] = grid.GetComponentsInChildren.<OGTexture>();
+
+		for ( var i : int = 0; i < gridIcons.Length; i++ ) {
+			Destroy ( gridIcons[i].gameObject );
 		}
 		
-		for ( i = 0; i < stash.childCount; i++ ) {
-			Destroy ( stash.GetChild ( i ).gameObject );
+		var stashIcons : OGTexture [] = stash.GetComponentsInChildren.<OGTexture>();
+
+		for ( i = 0; i < stashIcons.Length; i++ ) {
+			Destroy ( stashIcons[i].gameObject );
 		}
 	}
 	
@@ -212,8 +211,6 @@ class UIInventory extends OGPage {
 				selectedEntry = allSlots[x,y];
 				
 				UpdateText ();
-			
-				listenForDrag = new Point ( x, y );
 			
 			} else {
 				selectedEntry = null;
@@ -377,8 +374,6 @@ class UIInventory extends OGPage {
 	
 	override function ExitPage () {
 		draggingEntry = null;
-		mouseClickTimer = 0.0;
-		listenForDrag = null;
 		selectedEntry = null;
 		ClearGrid ();
 	}
@@ -386,28 +381,22 @@ class UIInventory extends OGPage {
 	override function UpdatePage () {
 		if ( Input.GetMouseButtonDown ( 0 ) ) {
 			SelectSlot ();
-			mouseClickTimer = Time.time;
-
+		
 		} else if ( Input.GetMouseButtonUp ( 0 ) && draggingEntry ) {
 			DropOnSlot ();
 		
 		}
 		
-		if ( Input.GetMouseButton ( 0 ) ) {
-			if ( listenForDrag && Time.time - mouseClickTimer > 0.25 ) {
-				draggingEntry = listenForDrag;
-			}
-			
-		} else {
-			mouseClickTimer = 0.0;
-			listenForDrag = null;
+		var stashChildren : OGSprite [] = stash.GetComponentsInChildren.<OGSprite>();
 		
+		for ( var i : int = 0; i < stashChildren.Length; i++ ) {
+			stashChildren[i].tint = stashChildren[i].CheckMouseOver() ? hoverColorGrid : normalColorGrid;
 		}
 		
-		if ( draggingEntry != null ) {
-			var mousePos : Vector3 = Input.mousePosition;
-			mousePos.y = Screen.height - mousePos.y;
-			mousePos.z = 0;
+		var gridChildren : OGSprite [] = grid.GetComponentsInChildren.<OGSprite>();
+		
+		for ( i = 0; i < gridChildren.Length; i++ ) {
+			gridChildren[i].tint = gridChildren[i].CheckMouseOver() ? hoverColorGrid : normalColorGrid;
 		}
 	}
 	

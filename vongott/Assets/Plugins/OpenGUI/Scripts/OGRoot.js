@@ -26,11 +26,11 @@ class OGRoot extends MonoBehaviour {
 	@HideInInspector public var isMouseOver : boolean = false;
 	@HideInInspector public var texWidth : int = 256;
 	@HideInInspector public var texHeight : int = 256;
+	@HideInInspector public var downWidget : OGWidget;
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
-	private var downWidget : OGWidget;
 	private var screenRect : Rect;
 	private var textureMaterials : Material[];
 

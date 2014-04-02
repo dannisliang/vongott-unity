@@ -300,6 +300,8 @@ public class OGDrawHelper {
 	}
 	
 	public static function DrawSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, clipping : OGWidget ) {
+		if ( style == null ) { return; }
+		
 		DrawSprite ( rect, style.coordinates, depth, style.color, tint, clipping );
 	}	
 
