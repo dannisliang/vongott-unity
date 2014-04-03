@@ -704,7 +704,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 854
+    y: 614
     width: 170
     height: 14
   mouseRct:
@@ -4421,46 +4421,6 @@ CapsuleCollider:
   m_Height: .371734023
   m_Direction: 0
   m_Center: {x: -.185867012, y: 0, z: 0}
---- !u!1001 &148140233
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 2.18339729
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: .0500000119
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 16.7394409
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-  m_RootGameObject: {fileID: 797163096}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1001 &149928219
 Prefab:
   m_ObjectHideFlags: 0
@@ -7469,6 +7429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: stairs_ladder_metal
+  title: 
   description: 
   path: Prefabs/Stairs
   materialPath: 
@@ -7882,7 +7843,7 @@ Transform:
   m_PrefabInternal: {fileID: 941680640}
   m_GameObject: {fileID: 286172624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -130, y: 380, z: 0}
+  m_LocalPosition: {x: 48, y: 568, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2020323745}
@@ -8141,7 +8102,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 185
+    x: 48
     y: 99
     width: 1
     height: 1
@@ -9107,6 +9068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: awesome_healing_upgrade
+  title: 
   description: 
   path: Items/Upgrades
   materialPath: 
@@ -9127,10 +9089,8 @@ MonoBehaviour:
   canDrop: 1
   isStackable: 1
   type: 3
-  id: 1500
+  subType: 0
   image: {fileID: 2800000, guid: e4c0310640d502d418c6dea4a8131947, type: 3}
-  title: Awesome Healing Upgrade
-  desc: Restores health
   attr: []
   upgSlot: 2
   ability:
@@ -13297,6 +13257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: stairs_ladder_metal
+  title: 
   description: 
   path: Prefabs/Stairs
   materialPath: 
@@ -13366,7 +13327,7 @@ Transform:
   m_PrefabInternal: {fileID: 941680640}
   m_GameObject: {fileID: 486668190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 320, y: 300, z: 0}
+  m_LocalPosition: {x: 498, y: 488, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1638337527}
@@ -13625,7 +13586,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 635
+    x: 498
     y: 179
     width: 1
     height: 1
@@ -14992,6 +14953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: mine
+  title: 
   description: 
   path: Items/Equipment
   materialPath: 
@@ -15012,10 +14974,8 @@ MonoBehaviour:
   canDrop: 1
   isStackable: 1
   type: 0
-  id: 2000
+  subType: 0
   image: {fileID: 2800000, guid: ea2b562d9c518db4a97efbe4838d9df7, type: 3}
-  title: Mine
-  desc: This thing blows other things up
   attr:
   - type: 2
     val: 1
@@ -15513,7 +15473,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .24062039, y: .00514374813, z: -.0121176746}
+  m_ConnectedAnchor: {x: .24062036, y: .00514376024, z: -.012117669}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -90
@@ -19047,7 +19007,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400034, guid: 82e802124ed639a4ba2e99d3f0888aa8, type: 2}
   m_PrefabInternal: {fileID: 1435471428}
   m_GameObject: {fileID: 665988290}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: -.0383335873, y: -2.4980017e-18, z: 4.41263923e-18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -19911,6 +19871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: interface_terminal
+  title: 
   description: 
   path: Prefabs/Interfaces
   materialPath: 
@@ -21646,6 +21607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: obstruction_rubble_cubes
+  title: 
   description: A bunch of cubes
   path: Prefabs/Obstructions
   materialPath: 
@@ -23417,13 +23379,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 185
+    x: 48
     y: 10
     width: 900
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 185
+    x: 48
     y: 10
     width: 900
     height: 90
@@ -24470,7 +24432,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 897
+    y: 657
     width: 1
     height: 1
   mouseRct:
@@ -26012,164 +25974,6 @@ MonoBehaviour:
   enableImage: 0
   imageScale: 1
   imageOffset: {x: 1, y: 1}
---- !u!1 &797163096
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 797163105}
-  - 33: {fileID: 797163104}
-  - 23: {fileID: 797163103}
-  - 114: {fileID: 797163102}
-  - 114: {fileID: 797163101}
-  - 65: {fileID: 797163100}
-  - 54: {fileID: 797163099}
-  - 64: {fileID: 797163098}
-  - 114: {fileID: 797163097}
-  m_Layer: 0
-  m_Name: food_chinese_bun
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &797163097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: 8bccbed6ab9e3404b9b3992ae357d05a,
-    type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055180aa2810db346ad20a929de613b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canDrop: 1
-  isStackable: 1
-  type: 2
-  id: 0
-  image: {fileID: 0}
-  title: 
-  desc: 
-  attr: []
---- !u!64 &797163098
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a,
-    type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 4300018, guid: 6fe0bf14e0ec9d14aacb5662c698bd64, type: 3}
---- !u!54 &797163099
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a,
-    type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!65 &797163100
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6500000, guid: 8bccbed6ab9e3404b9b3992ae357d05a,
-    type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .119999997, y: .0790710002, z: .119999997}
-  m_Center: {x: 0, y: .0395355001, z: 0}
---- !u!114 &797163101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400002, guid: 8bccbed6ab9e3404b9b3992ae357d05a,
-    type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000365db5143b3a4a87f5942957f1fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GUID: 
---- !u!114 &797163102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a,
-    type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: food_chinese_bun
-  description: Bun bun bun bun bun
-  path: Prefabs/Food/Chinese
-  materialPath: 
-  tilingModifiers: []
-  canChangeMaterial: 0
---- !u!23 &797163103
-Renderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 2300000, guid: 8bccbed6ab9e3404b9b3992ae357d05a,
-    type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: a7bf3faab1890f14e85c50d64a3cea78, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortingLayerID: 0
---- !u!33 &797163104
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 3300000, guid: 8bccbed6ab9e3404b9b3992ae357d05a,
-    type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  m_Mesh: {fileID: 4300000, guid: 0236c7a3cd0394043ab39e1dc602852f, type: 3}
---- !u!4 &797163105
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400000, guid: 8bccbed6ab9e3404b9b3992ae357d05a, type: 2}
-  m_PrefabInternal: {fileID: 148140233}
-  m_GameObject: {fileID: 797163096}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.18339729, y: .0500000119, z: 16.7394409}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
 --- !u!1 &801054050
 GameObject:
   m_ObjectHideFlags: 0
@@ -28701,7 +28505,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.371734023, y: -.00199639238, z: .0730359927}
+  m_ConnectedAnchor: {x: -.371734053, y: -.00199639052, z: .0730360076}
   m_SwingAxis: {x: 0, y: -1, z: 0}
   m_LowTwistLimit:
     limit: -80
@@ -29813,27 +29617,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -130
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 380
+      value: 568
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 320
+      value: 498
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 300
+      value: 488
       objectReference: {fileID: 0}
     - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 320
+      value: 498
       objectReference: {fileID: 0}
     - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 240
+      value: 334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
@@ -40339,6 +40143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: decor_mirror_small
+  title: 
   description: A small, bathroom-size mirror
   path: Prefabs/Decor
   materialPath: 
@@ -41175,7 +40980,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .371734321, y: -.00199652789, z: .0730364546}
+  m_ConnectedAnchor: {x: .371734321, y: -.00199652463, z: .0730364695}
   m_SwingAxis: {x: 0, y: -1, z: 0}
   m_LowTwistLimit:
     limit: -80
@@ -43951,7 +43756,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: stupid_pistol
-  description: 
+  title: Stupid Pistol
+  description: This tool supposedly embed bullets into faces, but is more useful as
+    a paperweight.
   path: Items/Equipment
   materialPath: 
   tilingModifiers: []
@@ -43969,13 +43776,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDrop: 1
-  isStackable: 1
+  isStackable: 0
   type: 0
-  id: 0
+  subType: 0
   image: {fileID: 2800000, guid: 0e474a15c383efb428028d80e19742ca, type: 3}
-  title: Stupid Pistol
-  desc: This tool is supposedly designed to embed bullets into faces, but does a very
-    poor job of it.
   attr:
   - type: 0
     val: 5
@@ -44646,7 +44450,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 874
+    y: 634
     width: 170
     height: 14
   mouseRct:
@@ -44776,7 +44580,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400068, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
   m_PrefabInternal: {fileID: 1133389155}
   m_GameObject: {fileID: 1462218830}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: .0383345708, y: -1.48944338e-07, z: 2.93836546e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -50378,13 +50182,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 415
+    x: 278
     y: 130
     width: 440
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 415
+    x: 278
     y: 130
     width: 440
     height: 50
@@ -52119,7 +51923,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.238371462, y: .0353248641, z: -.00126082206}
+  m_ConnectedAnchor: {x: -.238371432, y: .0353248641, z: -.00126081984}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -90
@@ -53872,13 +53676,13 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 435
+    x: 298
     y: 130
     width: 400
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 435
+    x: 298
     y: 130
     width: 400
     height: 50
@@ -54784,6 +54588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: interface_camera
+  title: 
   description: 
   path: Prefabs/Interfaces
   materialPath: 
@@ -59191,6 +58996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: awesome_reflexes_upgrade
+  title: 
   description: 
   path: Items/Upgrades
   materialPath: 
@@ -59211,10 +59017,8 @@ MonoBehaviour:
   canDrop: 1
   isStackable: 1
   type: 3
-  id: 1500
+  subType: 0
   image: {fileID: 2800000, guid: 7b3ee50827860bf478706043e16e9a19, type: 3}
-  title: Awesome Reflexes Upgrade
-  desc: This upgrade makes you very brain in the smart
   attr: []
   upgSlot: 0
   ability:
@@ -59597,7 +59401,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400032, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
   m_PrefabInternal: {fileID: 1133389155}
   m_GameObject: {fileID: 1920451550}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: -.0383335873, y: -2.4980017e-18, z: 4.41263923e-18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -61879,7 +61683,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400026, guid: 82e802124ed639a4ba2e99d3f0888aa8, type: 2}
   m_PrefabInternal: {fileID: 1435471428}
   m_GameObject: {fileID: 2026752426}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: .0383345708, y: -1.48944338e-07, z: 2.93836546e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -62467,13 +62271,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 844
+    y: 604
     width: 206
     height: 54
   mouseRct:
     serializedVersion: 2
     x: 10
-    y: 844
+    y: 604
     width: 206
     height: 54
   drawDepth: -20
@@ -65360,7 +65164,7 @@ Transform:
   m_PrefabInternal: {fileID: 941680640}
   m_GameObject: {fileID: 2144684299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 320, y: 240, z: 0}
+  m_LocalPosition: {x: 498, y: 334, z: 0}
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 1969740613}
@@ -65617,14 +65421,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 615
-    y: 434
+    x: 478
+    y: 314
     width: 40
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 615
-    y: 434
+    x: 478
+    y: 314
     width: 40
     height: 40
   drawDepth: -0

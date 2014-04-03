@@ -103,10 +103,8 @@ MonoBehaviour:
   canDrop: 0
   isStackable: 1
   type: 1
-  id: 500
-  image: {fileID: 2800000, guid: ea2b562d9c518db4a97efbe4838d9df7, type: 3}
-  title: Lockpick
-  desc: This tool picks locks
+  subType: 500
+  image: {fileID: 0}
   attr: []
   eqSlot: 0
 --- !u!114 &11400002
@@ -121,6 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: lockpick
+  title: 
   description: 
   path: Items/Equipment
   materialPath: 

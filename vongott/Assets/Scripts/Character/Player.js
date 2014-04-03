@@ -73,7 +73,7 @@ class Player extends MonoBehaviour {
 	
 	// Consume
 	function Consume ( item : Item ) {
-		if ( item.id == eItemID.BiologicalUpgrade ) {
+		if ( item.subType == eItemSubType.Biological ) {
 			var upg : Upgrade = item as Upgrade;
 			
 			UpgradeManager.IncrementAbility ( upg.ability.id, upg.ability.value );
@@ -169,7 +169,7 @@ class Player extends MonoBehaviour {
 	
 	function IsEquippedLockpick () : boolean {
 		if ( InventoryManager.GetInstance().equippedItem ) {
-			return InventoryManager.GetInstance().equippedItem.GetComponent(Item).id == eItemID.Lockpick;
+			return InventoryManager.GetInstance().equippedItem.GetComponent(Item).subType == eItemSubType.Lockpick;
 		} else {
 			return false;
 		}
@@ -231,9 +231,9 @@ class Player extends MonoBehaviour {
 		
 		if ( eq == null ) { return; }
 
-		switch ( eq.id ) {
+		switch ( eq.subType ) {
 			// Mines
-			case eItemID.Mine:
+			case eItemSubType.Mine:
 				if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
 					shootTimer = 0;
 				

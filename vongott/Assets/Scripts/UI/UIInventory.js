@@ -146,8 +146,8 @@ class UIInventory extends OGPage {
 		
 		var item = selectedEntry.GetItem();
 		
-		inspector.entryName.text = item.title;
-		inspector.description.text = item.desc;
+		inspector.entryName.text = item.GetComponent(Prefab).title;
+		inspector.description.text = item.GetComponent(Prefab).description;
 		inspector.attrName.text = "";
 		inspector.attrVal.text = "";
 		inspector.action.text = "";
@@ -310,7 +310,7 @@ class UIInventory extends OGPage {
 			UpgradeManager.Install ( upgrade );
 							
 			// Destroy object if biological upgrade
-			if ( item.id == eItemID.BiologicalUpgrade ) {
+			if ( item.subType == eItemSubType.Biological ) {
 				DestroyEntry ();
 			}
 			

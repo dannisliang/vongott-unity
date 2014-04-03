@@ -43,7 +43,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 0be12f74cf4a2f84f8416549f8968cea, type: 2}
+  - {fileID: 2100000, guid: ad6b4bf6417a52548a88a787fabaa658, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -58,7 +58,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 4300002, guid: ad3374fcb7cbc8f4a851857bea0b9177, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 909543d2dfd24084ba99f63f4580afcd, type: 3}
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: traffic_cone
+  title: 
   description: 
   path: Exterior/City
   materialPath: 

@@ -481,19 +481,18 @@ class Actor extends InteractiveObject {
 	}
 
 	public function MakeRagdoll ( useRagdoll : boolean ) {
-		var mainCollider : CapsuleCollider = this.GetComponent ( CapsuleCollider );
 		var mainRigidbody : Rigidbody = this.GetComponent ( Rigidbody );
 		var allColliders : Collider[] = this.GetComponentsInChildren.< Collider > ();
 		var allRigidbodies : Rigidbody[] = this.GetComponentsInChildren.< Rigidbody > ();
 		var i : int = 0;
 
-		mainCollider.enabled = !useRagdoll;
+		this.collider.enabled = !useRagdoll;
 		if ( mainRigidbody != null ) {
 			mainRigidbody.isKinematic = useRagdoll;
 		}
 
 		for ( i = 0; i < allColliders.Length; i++ ) {
-			if ( allColliders[i] != mainCollider ) {	
+			if ( allColliders[i] != this.collider ) {	
 				allColliders[i].enabled = useRagdoll;
 			}
 		}	

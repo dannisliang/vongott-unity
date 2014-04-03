@@ -158,13 +158,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDrop: 1
-  isStackable: 1
+  isStackable: 0
   type: 0
-  id: 0
+  subType: 0
   image: {fileID: 2800000, guid: 0e474a15c383efb428028d80e19742ca, type: 3}
-  title: Stupid Pistol
-  desc: This tool is supposedly designed to embed bullets into faces, but does a very
-    poor job of it.
   attr:
   - type: 0
     val: 5
@@ -187,7 +184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: stupid_pistol
-  description: 
+  title: Stupid Pistol
+  description: This tool supposedly embeds bullets into faces, but is more useful
+    as a paperweight.
   path: Items/Equipment
   materialPath: 
   tilingModifiers: []

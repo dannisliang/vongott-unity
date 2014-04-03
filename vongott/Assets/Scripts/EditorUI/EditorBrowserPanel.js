@@ -1,14 +1,12 @@
 ﻿#pragma strict
 
 class EditorBrowserPanel extends MonoBehaviour {
-	// Serialized vars
 	public var fileList : Transform;
 	public var popupMenu : OGPopUp;
 	public var title : OGLabel;	
 	public var inspectorName : OGLabel;
 	public var replaceButton : GameObject;
 					
-	// Private vars
 	private var resourcesFolder : EditorFileSystem.Folder;
 	private var selectedFile : Object;
 	private var currentTab : String = "";
@@ -16,7 +14,9 @@ class EditorBrowserPanel extends MonoBehaviour {
 	private var currentActorsCategory : String = "";
 	private var currentItemsCategory : String = "";
 	private var currentPrefabsCategory : String = "";
-	
+	private var col : int = 0;
+	private var row : int = 0;
+
 	// Start
 	function Start () {
 		transform.localPosition = new Vector3 ( -200, 0, 5 );
@@ -25,8 +25,6 @@ class EditorBrowserPanel extends MonoBehaviour {
 	
 	// Init
 	public function Init ( tab : String, category : String ) {
-		Debug.Log ( "EditorBrowserPanel | Finding " + tab + " > " + category );
-		
 		resourcesFolder = EditorFileSystem.GetResources();
 			
 		currentTab = tab;
@@ -110,34 +108,58 @@ class EditorBrowserPanel extends MonoBehaviour {
 	}
 
 	// Select file
-	public function SelectFile ( btn : OGListItem ) {
-		selectedFile = currentFolder.FindFile ( btn.text );
+	public function SelectFile ( name : String ) {
+		selectedFile = currentFolder.FindFile ( name );
 								
-		inspectorName.text = btn.text;
+		inspectorName.text = name;
+	}
+
+	public function SelectFile ( id : String, name : String ) {
+		selectedFile = currentFolder.FindFile ( id );
 		
-		for ( var i : int = 0; i < fileList.transform.childCount; i++ ) {
-			var b : OGListItem = fileList.transform.GetChild(i).GetComponent(OGListItem);
-			if ( b ) {
-				b.isTicked = b == btn;
-			}
-		}
+		inspectorName.text = name;						
 	}
 
 	// Create list item
 	private function CreateButton ( objName : String, index : int, type : String ) {
 		var obj : GameObject = new GameObject ( objName );
-		var btn = obj.AddComponent ( OGListItem );
-		
-		btn.text = objName;	
-		btn.target = this.gameObject;
-		btn.message = "Select" + type;
+		var btn : OGListItem = obj.AddComponent ( OGListItem );
+		var img : OGTexture = new GameObject ( "tex", OGTexture ).GetComponent ( OGTexture );
+		var pos : Vector2 = new Vector2 ();
+		var size : float = 90;
+		var go : GameObject = currentFolder.FindFile ( obj.gameObject.name ) as GameObject;
 
-		//StartCoroutine ( EditorCore.GetObjectIcon ( currentFolder.FindFile ( btn.gameObject.name ) as GameObject, img ) );
+		pos.x = col * size;
+		pos.y = row * size;
+		
+		if ( col > 0 ) {
+			col = 0;
+			row++;
+		} else {
+			col++;
+		}
+
+		btn.text = "";	
+		btn.hoverFunc = function () {
+			if ( go.GetComponent(Prefab) && !String.IsNullOrEmpty ( go.GetComponent(Prefab).title ) ) {
+				SelectFile ( objName, go.GetComponent(Prefab).title );
+			} else if ( go.GetComponent(Actor) && !String.IsNullOrEmpty ( go.GetComponent(Actor).displayName ) ) {
+				SelectFile ( objName, go.GetComponent(Actor).displayName );
+			} else {
+				SelectFile ( objName );
+			}
+		};
+		
+		StartCoroutine ( EditorCore.GetObjectIcon ( go, img ) );
 		
 		obj.transform.parent = fileList;
-		obj.transform.localScale = new Vector3 ( 180, 30, 1 );
-		obj.transform.localPosition = new Vector3 ( 0, index * 30, 0 );
-	
+		obj.transform.localPosition = pos;
+		btn.transform.localScale = new Vector3 ( size, size, 1 );
+
+		img.transform.parent = obj.transform;
+		img.transform.localPosition = new Vector3 ( 0, 0, -1 );
+		img.transform.localScale = Vector3.one;
+
 		btn.GetDefaultStyles();
 	}
 
@@ -154,6 +176,9 @@ class EditorBrowserPanel extends MonoBehaviour {
 
 	// Populate list
 	private function PopulateList ( folder : EditorFileSystem.Folder ) {
+		col = 0;
+		row = 0;
+		
 		currentFolder = folder;
 		
 		ClearList ();

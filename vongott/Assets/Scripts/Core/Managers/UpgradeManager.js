@@ -227,7 +227,7 @@ class UpgradeManager {
 	
 	// Install
 	static function Install ( upgrade : Upgrade ) {
-		if ( ( upgrade as Item ).id == eItemID.BiologicalUpgrade ) {
+		if ( ( upgrade as Item ).subType == eItemSubType.Biological ) {
 			IncrementAbility ( upgrade.ability.id, upgrade.ability.value );
 		
 		} else {

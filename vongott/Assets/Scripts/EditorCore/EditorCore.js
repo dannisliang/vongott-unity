@@ -309,8 +309,7 @@ static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumera
 	previewObject = Instantiate ( obj );
 
 	previewObject.transform.position = Vector3.zero;
-	previewObject.transform.localScale = Vector3.one;
-	previewObject.transform.localEulerAngles = new Vector3 ( 0, 135, 0 );
+	previewObject.transform.localEulerAngles = new Vector3 ( 14, 225, 0 );
 	
 	var bounds : Bounds;
 	
@@ -320,17 +319,30 @@ static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumera
 		bounds = previewObject.GetComponentInChildren(SkinnedMeshRenderer).bounds;
 	}
 	
+	var size : float = previewCamera.orthographicSize * 2;
+	if ( bounds.size.x > bounds.size.y ) {
+		size /= bounds.size.x;
+	} else {
+		size /= bounds.size.y;
+	}
+
+	previewObject.transform.localScale = Vector3 ( size, size, size );
+	
+	if ( previewObject.GetComponentInChildren(MeshRenderer) ) {
+		bounds = previewObject.GetComponentInChildren(MeshRenderer).bounds;
+	} else {
+		bounds = previewObject.GetComponentInChildren(SkinnedMeshRenderer).bounds;
+	}
 	var center : Vector3 = bounds.center;
 	
-	previewCamera.transform.parent.position = new Vector3 ( center.x, 0, -5 );
-	previewCamera.transform.LookAt ( center );
-	
+	previewCamera.transform.parent.position = new Vector3 ( center.x, center.y, -5 );
+
 	/*var scal : float = previewCamera.WorldToScreenPoint ( previewObject.transform.position ).z;
 	previewObject.transform.localScale = new Vector3 ( scal, scal, scal );*/
 	
 	SetLayerRecursively ( previewObject, 8 );
 
-	var tex : Texture2D = new Texture2D ( 128, 128 );
+	var tex : Texture2D = new Texture2D ( 128, 128, TextureFormat.ARGB32, false );
 	tex.name = "thumb_" + obj.name;
 	
 	var rt : RenderTexture = new RenderTexture ( 128, 128, 24 );
@@ -350,7 +362,7 @@ static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumera
 	DestroyImmediate(rt);
 	
 	ClearPreview ();
-	
+
 	image.mainTexture = tex;
 }
 

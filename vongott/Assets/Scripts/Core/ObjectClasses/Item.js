@@ -24,50 +24,44 @@ public enum eItemAttribute {
 }
 
 // IDs
-public enum eItemID {
+public enum eItemSubType {
 	// Weapons
-	Pistol = 0,
-	Baton,
-	Tazer,
-	AssaultRifle,
-	DartGun,
-	
+	OneHanded = 0,
+	TwoHanded,
+	Melee,
+
 	// Tools
 	Lockpick = 500,
 	
 	// Consumables
-	RiceCake = 1000,
-	SoyMilk,
-	Sandwich,
-	HealthKit,
+	Food = 1000,
+	Medicine,
 	Battery,
-	
+
 	// Upgrades
-	MechanicalUpgrade = 1500,
-	BiologicalUpgrade,
+	Mechanical = 1500,
+	Biological,
 
 	// Explosives
 	Mine = 2000
 }
 
 class Item extends InteractiveObject {
-	// Subclasses
 	public class Attribute {
 		var type = eItemAttribute.Damage;
 		var val = 0.0;
 	}
 		
-	// Public vars
 	public var canDrop : boolean = true;
 	public var isStackable : boolean = true;
 	public var type : eItemType;
-	public var id : eItemID;
+	public var subType : eItemSubType;
 	public var image : Texture2D;
-	public var title : String;
-	public var desc : String;
 	public var attr : Attribute[];
 
-	// Init
+	public function get title () : String { return this.GetComponent ( Prefab ).title; }
+	public function get desc () : String { return this.GetComponent ( Prefab ).description; }
+
 	function Start () {
 		if ( EditorCore.running ) {
 			Destroy ( this.rigidbody );			
