@@ -11,16 +11,6 @@ private class Inspector {
 	var discard : OGButton;
 }
 
-private class Point {
-	var x : int;
-	var y : int;
-	
-	function Point ( a : int, b : int ) {
-		x = a;
-		y = b;
-	}
-}
-
 class UIInventory extends OGPage {
 	public var grid : Transform;
 	public var stash : Transform;
@@ -28,15 +18,21 @@ class UIInventory extends OGPage {
 	public var creditsDisplay : OGLabel;
 	public var hoverColorGrid : Color;
 	public var normalColorGrid : Color;
-	
+
 	private var selectedEntry : InventoryEntry;
-	private var draggingEntry : Point;
-	private var allImages : OGTexture[,] = new OGTexture[10,3];
-	
-	
+	private var clickStart : float = 0;
+
+
 	////////////////////
 	// Inventory display
 	////////////////////
+	private function GetClickDuration () : float {
+		var result : float = Time.realtimeSinceStartup - clickStart;
+
+		clickStart = -1;
+		return result;
+	}
+	
 	// Round
 	function Round ( val : float, factor : float ) : float {
 		return Mathf.Round ( val / factor ) * factor;
@@ -44,8 +40,6 @@ class UIInventory extends OGPage {
 	
 	// Clear grid
 	function ClearGrid () {
-		allImages = new OGTexture[10,3];
-	
 		var gridIcons : OGTexture [] = grid.GetComponentsInChildren.<OGTexture>();
 
 		for ( var i : int = 0; i < gridIcons.Length; i++ ) {
@@ -57,6 +51,12 @@ class UIInventory extends OGPage {
 		for ( i = 0; i < stashIcons.Length; i++ ) {
 			Destroy ( stashIcons[i].gameObject );
 		}
+		
+		var stashButtons : OGButton [] = stash.GetComponentsInChildren.<OGButton>();
+		
+		for ( i = 0; i < stashButtons.Length; i++ ) {
+			Destroy ( stashButtons[i].gameObject );
+		}
 	}
 	
 	// Create image
@@ -64,12 +64,16 @@ class UIInventory extends OGPage {
 		var image : OGTexture = new GameObject ( item.name, OGTexture ).GetComponent(OGTexture);
 		image.mainTexture = item.image;
 		image.isSelectable = true;
-		image.isDraggable = true;
-		image.resetAfterDrag = true;
+		
+		if ( parent.parent == grid ) {
+			image.isDraggable = true;
+			image.resetAfterDrag = true;
+		}
+
 		image.transform.parent = parent;
-		//image.transform.localScale = new Vector3 ( Round ( item.image.width, 90 ), Round ( item.image.height, 90 ), 1 );
 		image.transform.localScale = new Vector3 ( 90, 90, 1 );
 		image.transform.localEulerAngles = Vector3.zero;
+		image.transform.localPosition = Vector3.zero;
 
 		return image;
 	}
@@ -85,7 +89,7 @@ class UIInventory extends OGPage {
 
 		button.transform.parent = stash;
 		button.transform.localScale = new Vector3 ( 24, 24, 1 );
-		button.transform.localPosition = new Vector3 ( 66 + slot * 90, 0, 0 );
+		button.transform.localPosition = new Vector3 ( 66 + slot * 90, 0, -2 );
 		button.transform.localEulerAngles = Vector3.zero;
 		
 		return button;
@@ -100,10 +104,8 @@ class UIInventory extends OGPage {
 				if ( InventoryManager.GetInstance().GetEntry(x,y) != null ) {
 					var entry : InventoryEntry = InventoryManager.GetInstance().GetEntry(x,y);
 					var item : Item = entry.GetItem();
-					var image : OGTexture = CreateImage ( item, grid );
-					image.transform.localPosition = new Vector3 ( x * 90, y * 90, 5 );
-					allImages[x,y] = image;
-								
+					var image : OGTexture = CreateImage ( item, grid.gameObject.Find ( y + "-" + x ).transform );
+					
 					if ( entry.GetItem() == InventoryManager.GetInstance().equippedItem ) {
 						// Show equipped
 					} else if ( entry.installed ) {
@@ -122,8 +124,7 @@ class UIInventory extends OGPage {
 				if ( reference.refX != -1 && reference.refY != -1 ) {
 					var slotEntry : InventoryEntry = InventoryManager.GetInstance().GetEntry ( reference.refX, reference.refY );
 					var slotItem : Item = slotEntry.GetItem();
-					var slotImage : OGTexture = CreateImage( slotItem, stash );
-					slotImage.transform.localPosition = new Vector3 ( i * 90, 0, 5 );
+					var slotImage : OGTexture = CreateImage( slotItem, stash.gameObject.Find ( i.ToString() ).transform );
 				
 					var button : OGButton = CreateRemoveButton ( i );
 				}
@@ -196,27 +197,16 @@ class UIInventory extends OGPage {
 	}
 	
 	// Select slot
-	function SelectSlot () {
+	function SelectGridSlot ( index : String ) {
+		var split : String[] = index.Split ( "-"[0] );
+		var y : int = int.Parse ( split[0] );
+		var x : int = int.Parse ( split[1] );
 		var allSlots : InventoryEntry[,] = InventoryManager.GetInstance().GetSlots();
 		
-		var mousePos : Vector3 = Input.mousePosition;
-		mousePos.y = Screen.height - mousePos.y;
-		mousePos = mousePos - grid.transform.position;
+		clickStart = Time.realtimeSinceStartup;
 		
-		var x : int = Mathf.Floor ( mousePos.x / 90 );
-		var y : int = Mathf.Floor ( mousePos.y / 90 );
-			
-		if ( mousePos.x > 0 && mousePos.y > 0 && x < allSlots.GetLength(0) && y < allSlots.GetLength(1) ) {
-			if ( allSlots[x,y] != null ) {
-				selectedEntry = allSlots[x,y];
-				
-				UpdateText ();
-			
-			} else {
-				selectedEntry = null;
-		
-			}
-		}
+		selectedEntry = allSlots[x,y];
+		UpdateText ();
 	}
 	
 	// Remove stash entry
@@ -228,37 +218,24 @@ class UIInventory extends OGPage {
 	}
 	
 	// Drop on slot
-	function DropOnSlot () {
-		var allSlots : InventoryEntry[,] = InventoryManager.GetInstance().GetSlots();
+	private function DropOnStashSlot ( index : String ) {
+		var i : int = int.Parse ( index ); 
 		
-		var mousePos : Vector3 = Input.mousePosition;
-		mousePos.y = Screen.height - mousePos.y;
-		
-		var mousePosGrid = mousePos - grid.transform.position;
-		var mousePosStash = mousePos - stash.transform.position;
-		
-		var gridX : int = Mathf.Floor ( mousePosGrid.x / 90 );
-		var gridY : int = Mathf.Floor ( mousePosGrid.y / 90 );
-		var stashX : int = Mathf.Floor ( mousePosStash.x / 90 );
-		
-		// Dropped somewhere on grid
-		if ( mousePosGrid.x > 0 && mousePosGrid.y > 0 && gridX < allSlots.GetLength(0) && gridY < allSlots.GetLength(1) ) {
-			InventoryManager.GetInstance().MoveEntry ( draggingEntry.x, draggingEntry.y, gridX, gridY );
-			draggingEntry = null;
-			PopulateGrid ();			
-		
-		// Dropped somewhere in stash
-		} else if ( mousePosStash.x > 0 && mousePosStash.y > 0 && mousePosStash.y < 90 && stashX < 10 ) {
-			InventoryManager.GetInstance().SetStash ( draggingEntry.x, draggingEntry.y, stashX );
-			draggingEntry = null;
+		if ( selectedEntry ) {
+			InventoryManager.GetInstance().SetStash ( selectedEntry.x, selectedEntry.y, i );
 			PopulateGrid ();
-		
-		// Dropped somewhere else
-		} else {
-			draggingEntry = null;
-			PopulateGrid ();
-		
 		}
+	}
+
+	private function DropOnGridSlot ( index : String ) {
+		var split : String[] = index.Split ( "-"[0] );
+		var y : int = int.Parse ( split[0] );
+		var x : int = int.Parse ( split[1] );
+		
+		if ( selectedEntry ) {
+			InventoryManager.GetInstance().MoveEntry ( selectedEntry.x, selectedEntry.y, x, y );
+			PopulateGrid ();
+		}	
 	}
 	
 	
@@ -362,7 +339,7 @@ class UIInventory extends OGPage {
 	////////////////////
 	override function StartPage () {
 		GameCore.state = eGameState.Menu;
-		
+	
 		creditsDisplay.text = "CREDITS: " + InventoryManager.GetInstance().GetCredits();
 		ClearGrid ();
 		GameCore.GetInstance().SetPause ( true );
@@ -373,30 +350,50 @@ class UIInventory extends OGPage {
 	}
 	
 	override function ExitPage () {
-		draggingEntry = null;
 		selectedEntry = null;
 		ClearGrid ();
 	}
 	
 	override function UpdatePage () {
 		if ( Input.GetMouseButtonDown ( 0 ) ) {
-			SelectSlot ();
-		
-		} else if ( Input.GetMouseButtonUp ( 0 ) && draggingEntry ) {
-			DropOnSlot ();
-		
 		}
 		
 		var stashChildren : OGSprite [] = stash.GetComponentsInChildren.<OGSprite>();
 		
 		for ( var i : int = 0; i < stashChildren.Length; i++ ) {
-			stashChildren[i].tint = stashChildren[i].CheckMouseOver() ? hoverColorGrid : normalColorGrid;
+			if ( stashChildren[i].CheckMouseOver() ) {
+				stashChildren[i].tint = hoverColorGrid;
+				
+				if ( Input.GetMouseButtonUp ( 0 ) ) {
+				       	if ( GetClickDuration() > 0.4 ) {
+						DropOnStashSlot ( stashChildren[i].transform.parent.gameObject.name );
+					}
+
+				}
+			} else {
+				stashChildren[i].tint = normalColorGrid;
+			}
 		}
 		
 		var gridChildren : OGSprite [] = grid.GetComponentsInChildren.<OGSprite>();
 		
 		for ( i = 0; i < gridChildren.Length; i++ ) {
-			gridChildren[i].tint = gridChildren[i].CheckMouseOver() ? hoverColorGrid : normalColorGrid;
+			if ( gridChildren[i].CheckMouseOver() ) {
+				gridChildren[i].tint = hoverColorGrid;
+				
+				if ( Input.GetMouseButtonUp ( 0 ) ) {
+				       	if ( GetClickDuration() > 0.4 ) {
+						DropOnGridSlot ( gridChildren[i].transform.parent.gameObject.name );
+					}
+
+				} else if ( Input.GetMouseButtonDown ( 0 ) ) {
+					SelectGridSlot ( gridChildren[i].transform.parent.gameObject.name );
+				
+				}
+
+			} else {
+				gridChildren[i].tint = normalColorGrid;
+			}
 		}
 	}
 	

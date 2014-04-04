@@ -2,6 +2,8 @@
 
 @script ExecuteInEditMode()
 
+import Linq;
+
 public class ArrangeWidgetsInGrid extends MonoBehaviour {
 	public var rows : int = 0;
 	public var spacing : float = 10;
@@ -12,8 +14,16 @@ public class ArrangeWidgetsInGrid extends MonoBehaviour {
 			var x : int = 0;
 			var y : int = 0;
 			
+			var unsorted : List.< Transform > = new List.<Transform> ();
+			
 			for ( var i : int = 0; i < transform.childCount; i++ ) {
-				transform.GetChild(i).localPosition = new Vector3 ( x * spacing, y * spacing, transform.GetChild(i).localPosition.z );
+				unsorted.Add ( transform.GetChild(i) );
+			}
+
+			var sorted : List.<Transform> = unsorted.OrderBy ( function ( t : Transform ) t.gameObject.name ).ToList ();
+
+			for ( i = 0; i < sorted.Count; i++ ) {
+				sorted[i].localPosition = new Vector3 ( x * spacing, y * spacing, transform.GetChild(i).localPosition.z );
 				
 				if ( x < rows - 1 ) {
 					x++;

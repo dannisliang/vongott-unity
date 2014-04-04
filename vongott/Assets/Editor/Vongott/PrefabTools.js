@@ -5,11 +5,12 @@ import System.IO;
 public class PrefabTools extends MonoBehaviour {
 	@MenuItem ("Vongott/Prefabs/DumpTexture")
 	public static function DumpTexture () {
-		var target : GameObject = Selection.activeObject as GameObject;
-		var texture = AssetPreview.GetAssetPreview ( target );
-		var png : byte[] = texture.EncodeToPNG ();
-		
-		File.WriteAllBytes ( Application.dataPath + "/Dump/" + target.name + ".png", png );
+		if ( EditorCore.running ) {
+			for ( var i : int = 0; i < Selection.gameObjects.Length; i++ ) {
+				var target : GameObject = Selection.gameObjects[i];
+				EditorCore.GetInstance().StartCoroutine ( EditorCore.GetObjectIcon ( target, null ) );
+			}
+		}
 	}
 
 	@MenuItem ( "Vongott/Prefabs/Update Path" )

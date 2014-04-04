@@ -92,7 +92,11 @@ class OGRoot extends MonoBehaviour {
 			// Draw skin
 			GL.Begin(GL.QUADS);
 			OGDrawHelper.SetPass(skin.atlas);
-			
+		
+			if ( currentPage ) {
+				currentPage.DrawSkin ();
+			}
+
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
 				
@@ -117,6 +121,10 @@ class OGRoot extends MonoBehaviour {
 				
 				if ( skin.fonts[i].bitmapFont != null ) {
 					OGDrawHelper.SetPass ( skin.fonts[i].bitmapFont.material );
+				}
+				
+				if ( currentPage ) {
+					currentPage.DrawText ();
 				}
 
 				for ( o = 0; o < widgets.Length; o++ ) {
@@ -170,6 +178,10 @@ class OGRoot extends MonoBehaviour {
 			// Draw textures
 			for ( i = 0; i < widgets.Length; i++ ) {	
 				w = widgets[i];
+				
+				if ( currentPage ) {
+					currentPage.DrawGL ();
+				}
 				
 				if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
 					w.DrawGL();

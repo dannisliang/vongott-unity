@@ -15,7 +15,9 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 	if ( obj.HasField("Prefab") ) {
 		var pfb : JSONObject = obj.GetField("Prefab");		
 		var path : String = pfb.GetField("path").str + "/" + pfb.GetField("id").str;
-		
+
+		Debug.Log ( "Instantiate " + path );
+
 		var newPfb : GameObject = Instantiate ( Resources.Load ( path ) as GameObject );
 		var tm : TextMesh = newPfb.GetComponentInChildren ( TextMesh );
 		var bk : Book = newPfb.GetComponent(Book);

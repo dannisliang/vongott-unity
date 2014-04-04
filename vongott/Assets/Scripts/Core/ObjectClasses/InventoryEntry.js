@@ -1,14 +1,23 @@
 #pragma strict
 
 class InventoryEntry {
-	var prefabPath : String;
-	var installed : boolean = false;
-	var activated : boolean = false;
+	public var prefabPath : String;
+	public var installed : boolean = false;
+	public var activated : boolean = false;
+	public var x : int;
+	public var y : int;
 
 	function InventoryEntry () {}
-
+	
 	function InventoryEntry ( item : Item ) {
 		prefabPath = item.GetComponent(Prefab).path + "/" + item.GetComponent(Prefab).id;
+	}
+
+	function InventoryEntry ( item : Item, x : int, y : int ) {
+		prefabPath = item.GetComponent(Prefab).path + "/" + item.GetComponent(Prefab).id;
+
+		this.x = x;
+		this.y = y;
 	}
 
 	function InventoryEntry ( path : String ) {
@@ -25,6 +34,10 @@ class InventoryEntry {
 			return null;
 		
 		}
+	}
+
+	function get item () : Item {
+		return GetItem ();
 	}
 	
 	function GetUpgrade () : Upgrade {
@@ -48,4 +61,14 @@ class InventoryEntryReference extends InventoryEntry {
 		refX = a;
 		refY = b;
 	}
+
+	override function get item () : Item {
+		var entry : InventoryEntry = InventoryManager.GetInstance().GetEntry ( refX, refY );
+
+		if ( entry ) {
+			return entry.GetItem ();
+		} else {
+			return null;
+		}
+	}	
 }

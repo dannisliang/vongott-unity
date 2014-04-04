@@ -55,9 +55,9 @@ class PlayerController {
 		useForcedPoint = state;
 		
 		if ( state ) {
-			InventoryManager.GetInstance().PocketItem();
+			InventoryManager.GetInstance().HolsterItem();
 		} else {
-			InventoryManager.GetInstance().UnpocketItem();
+			InventoryManager.GetInstance().UnholsterItem();
 		}
 
 		if ( ladder ) {

@@ -308,6 +308,8 @@ static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumera
 	
 	previewObject = Instantiate ( obj );
 
+	var objName : String = obj.name;
+
 	previewObject.transform.position = Vector3.zero;
 	previewObject.transform.localEulerAngles = new Vector3 ( 14, 225, 0 );
 	
@@ -363,7 +365,13 @@ static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumera
 	
 	ClearPreview ();
 
-	image.mainTexture = tex;
+	if ( image ) {
+		image.mainTexture = tex;
+	} else {
+		var png : byte[] = tex.EncodeToPNG ();
+		
+		File.WriteAllBytes ( Application.dataPath + "/Dump/" + objName + ".png", png );
+	}
 }
 
 

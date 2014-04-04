@@ -6,14 +6,24 @@ public class Mine extends Equipment {
 	public var timer : float = 0;
 
 	private var armed : boolean = false;
+	private var destroyed : boolean = false;
 
 	public function Arm () {
 		armed = true;
 	}
 
+	private function StartExplosion () : IEnumerator {
+		if ( !destroyed ) {
+			yield WaitForEndOfFrame ();
+		
+			DamageManager.GetInstance().SpawnExplosion ( this.transform.position, 5, 100 );
+			Destroy ( this.gameObject );
+			destroyed = true;
+		}
+	}
+
 	public function Detonate () {
-		DamageManager.GetInstance().SpawnExplosion ( this.transform.position, 5, 100 );
-		Destroy ( this.gameObject );
+		StartCoroutine ( StartExplosion() );
 	}
 
 	function Update () {

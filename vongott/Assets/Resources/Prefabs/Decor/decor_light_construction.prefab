@@ -71,8 +71,8 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 11bf5229e43d3e74fb1290090c17f66f, type: 2}
-  - {fileID: 2100000, guid: 2a1d083216867ac4fb1e6ecb4626fa70, type: 2}
+  - {fileID: 2100000, guid: 6b52a16b2749aac40a5ad079e617fc9d, type: 2}
+  - {fileID: 2100000, guid: fa60df90c29d92144b59c6171c26d4d1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -163,6 +163,7 @@ MonoBehaviour:
   intensity: 3
   prefabPath: Prefabs/Decor/decor_light_construction
   hideInGame: 0
+  type: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

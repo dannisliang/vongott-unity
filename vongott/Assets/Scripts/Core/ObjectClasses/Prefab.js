@@ -15,10 +15,10 @@ class Prefab extends MonoBehaviour {
 		var z : eMaterialMapCoordinate;
 	}
 	
-	public var id : String;
 	public var title : String;
 	public var description : String;
 	public var path : String;
+	public var id : String;
 	public var materialPath : String;
 
 	public var tilingModifiers : TilingModifier[];

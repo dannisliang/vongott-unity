@@ -3,9 +3,10 @@
 class InventoryManager extends MonoBehaviour {
 	private var slots : InventoryEntry[,];
 	private var stash : InventoryEntryReference[];
+
 	public var credits : int = 0;
 	public var equippedItem : Item;
-	public var pocketedItem : Item;
+	public var holsteredItem : Item;
 
 	public static var instance : InventoryManager;
 
@@ -15,6 +16,33 @@ class InventoryManager extends MonoBehaviour {
 	////////////////////
 	static function GetInstance () : InventoryManager {
 		return instance;
+	}
+
+	// Equip/uneqip stash
+	public function ToggleStash ( index : int ) {
+		if ( GetActiveStash () == index ) {
+			UnEquip ();
+
+		} else if ( stash[index] != null ) {
+			Equip ( stash[index].item );
+
+		}
+	}
+
+	// Which is the active stash slot?
+	public function GetActiveStash () : int {
+		var result : int = -1;
+		
+		if ( stash ) {
+			for ( var i : int = 0; i < stash.Length; i++ ) {
+				if ( stash[i] && equippedItem == stash[i].item ) {
+					result = i;
+					break;
+				}
+			}
+		}
+
+		return result;
 	}
 
 	// Is equipped item a gun?
@@ -41,11 +69,20 @@ class InventoryManager extends MonoBehaviour {
 	public function GetStash () : InventoryEntryReference[] { return stash; }
 
 	// Get entry
+	public function GetEntry ( i : int  ) : InventoryEntry {
+		if ( stash [i] ) {
+			return slots [ stash[i].refX, stash[i].refY ];
+
+		} else {
+			return null;
+		}
+	}
+	
 	public function GetEntry ( x : int, y : int ) : InventoryEntry {
 		if ( slots[x,y] != null ) {
 			var slot : InventoryEntry = slots[x,y];
 		
-			if ( slots.GetType() == InventoryEntryReference ) {
+			if ( slot.GetType() == InventoryEntryReference ) {
 				var ref : InventoryEntryReference = slot as InventoryEntryReference;
 				return slots [ ref.refX, ref.refY ];
 			
@@ -64,18 +101,18 @@ class InventoryManager extends MonoBehaviour {
 	public function GetCredits() : int { return credits; }
 
 	// Put items away and retrieve them
-	public function PocketItem () {
-		pocketedItem = equippedItem;
+	public function HolsterItem () {
+		holsteredItem = equippedItem;
 
 		UnEquip ();
 	}
 
-	public function UnpocketItem () {
-		if ( pocketedItem ) {
-			Equip ( pocketedItem );
+	public function UnholsterItem () {
+		if ( holsteredItem ) {
+			Equip ( holsteredItem );
 		}
 
-		pocketedItem = null;
+		holsteredItem = null;
 	}
 
 	// Clear stash slot
@@ -98,7 +135,7 @@ class InventoryManager extends MonoBehaviour {
 	
 		stash[slot] = new InventoryEntryReference ( refX, refY );
 	
-		GameCore.Print ( "InventoryManager | Item '" + GetEntry ( refX, refY ).GetItem().title + "' put in stash slot " + slot );
+		GameCore.Print ( "InventoryManager | Item '" + GetEntry ( refX, refY ).item.title + "' put in stash slot " + slot );
 	}
 
 	// Add item
@@ -106,7 +143,7 @@ class InventoryManager extends MonoBehaviour {
 		for ( var x : int = 0; x < slots.GetLength(0); x++ ) {
 			for ( var y : int = 0; y < slots.GetLength(1); y++ ) {
 				if ( slots[x,y] == null ) {
-					slots[x,y] = new InventoryEntry ( item );
+					slots[x,y] = new InventoryEntry ( item, x, y );
 					FlagManager.SetItemFlag ( item, true );
 					
 					GameCore.Print ( "InventoryManager | Added item " + item.title + " to inventory" );
@@ -131,12 +168,19 @@ class InventoryManager extends MonoBehaviour {
 	public function MoveEntry ( fromX : int, fromY : int, toX : int, toY : int ) {
 		var entry : InventoryEntry = slots[fromX, fromY];
 	
+		if ( toX >= slots.GetLength(0) || toY >= slots.GetLength(1) ) {
+			GameCore.Print ( "InventoryManager | Out of range: " + toX + "," + toY + ", max: " + slots.GetLength(0) + "," + slots.GetLength(1) );
+			return;
+		}
+
 		UpdateStashReference ( fromX, fromY, toX, toY );
 
+		GameCore.Print ( "InventoryManager | Moved item '" + entry.item.title + "' from (" + fromX + "," + fromY + ") to (" + toX + "," + toY + ")" );
+		
 		slots[fromX,fromY] = null;
 		slots[toX,toY] = entry;
-		
-		GameCore.Print ( "InventoryManager | Moved item '" + entry.GetItem().title + "' from (" + fromX + "," + fromY + ") to (" + toX + "," + toY + ")" );
+		entry.x = toX;
+		entry.y = toY;
 	}
 
 	// Change credits amount
@@ -170,14 +214,14 @@ class InventoryManager extends MonoBehaviour {
 	// Remove entry
 	public function RemoveEntry ( x : int, y : int, delete : boolean ) {
 		if ( !delete ) {
-			var droppedItem : Item = MonoBehaviour.Instantiate ( slots[x,y].GetItem() );
+			var droppedItem : Item = MonoBehaviour.Instantiate ( slots[x,y].item );
 			droppedItem.transform.parent = GameCore.GetPlayerObject().transform.parent;
 			droppedItem.transform.position = GameCore.GetPlayerObject().GetComponent(Player).hand.transform.position + ( GameCore.GetPlayerObject().transform.forward * 0.5 );
 			droppedItem.transform.localEulerAngles = Vector3.zero;
 			droppedItem.transform.localScale = Vector3.one;
 		}
 			
-		if ( slots[x,y].GetItem() == equippedItem ) {
+		if ( slots[x,y].item == equippedItem ) {
 			UnEquip();
 		}
 					
@@ -190,7 +234,7 @@ class InventoryManager extends MonoBehaviour {
 			for ( var y : int = 0; y < slots.GetLength(1); y++ ) {
 				if ( slots[x,y] == e ) {
 					RemoveEntry ( x, y, delete );
-					FlagManager.SetItemFlag ( e.GetItem(), false );
+					FlagManager.SetItemFlag ( e.item, false );
 					
 					return;
 				}

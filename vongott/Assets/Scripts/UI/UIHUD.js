@@ -11,15 +11,24 @@ private class NotificationBox {
 	var text : OGLabel;
 }
 
+private class StashSlot {
+	var background : OGSprite;
+	var icon : OGTexture;
+}
+
 class UIHUD extends OGPage {
 	public var statusBar : StatusBar;
 	public var notificationBox : NotificationBox;
 	public var crosshair : GameObject;
 	public var console : GameObject;
-	
+	public var stash : Transform;
+	public var stashActiveColor : Color;
+	public var stashInactiveColor : Color;
+
 	private var notificationTimer : float = 0.0;
 	private var notificationIndefinite : boolean = true;
 	private var showingNotification : boolean = false;
+	private var stashSlots : StashSlot[];
 
 	// Instance
 	public static var instance : UIHUD;
@@ -78,6 +87,34 @@ class UIHUD extends OGPage {
 				notificationBox.background.tint.a -= delta;
 			}
 
+		}
+
+		// Update stash
+		if ( stashSlots == null ) {
+			stashSlots = new StashSlot[stash.childCount];
+			
+			for ( var i : int = 0; i < stash.childCount; i++ ) {
+				stashSlots[i] = new StashSlot();
+				stashSlots[i].background = stash.GetChild(i).gameObject.GetComponentInChildren.<OGSprite>();
+				stashSlots[i].icon = stash.GetChild(i).gameObject.GetComponentInChildren.<OGTexture>();
+			}	
+		
+		} else {
+			var activeSlot : int = InventoryManager.GetInstance().GetActiveStash();
+
+			for ( i = 0; i < stashSlots.Length; i++ ) {
+				stashSlots[i].background.tint = ( i == activeSlot ) ? stashActiveColor : stashInactiveColor;
+				stashSlots[i].icon.tint.a = stashSlots[i].background.tint.a;
+			       	
+				var entry : InventoryEntry = InventoryManager.GetInstance().GetEntry ( i );
+			
+				if ( entry ) {
+					stashSlots[i].icon.mainTexture = entry.item.image;
+				} else {
+					stashSlots[i].icon.mainTexture = null;
+				}
+			}
+		
 		}
 	}
 	

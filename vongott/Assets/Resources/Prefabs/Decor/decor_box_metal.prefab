@@ -45,7 +45,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 277435678d1990a41adfda5b29034957, type: 2}
+  - {fileID: 2100000, guid: 0c064e31cfa5b1748a37453774fad39f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: decor_box_metal
+  title: 
   description: 
   path: Prefabs/Decor
   materialPath: 

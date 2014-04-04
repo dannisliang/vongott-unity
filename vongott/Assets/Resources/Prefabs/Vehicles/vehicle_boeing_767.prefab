@@ -43,12 +43,14 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c457e6a6a989bd34ca900c6f020e6021, type: 2}
-  - {fileID: 2100000, guid: 5b33d75fe62f31e4f91f3eefb10056e4, type: 2}
-  - {fileID: 2100000, guid: 0ca700b4b26385c4f91c8a740d611222, type: 2}
-  - {fileID: 2100000, guid: 1fe07f3c2a0017448bc4c7dbe61f5ffc, type: 2}
-  - {fileID: 2100000, guid: e96dc7cba7e2b734a994fd42195d7d5a, type: 2}
-  - {fileID: 2100000, guid: c59a0de0a6748694db947e4af97a142d, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -63,7 +65,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 4300002, guid: 6d6ed000a0ff96640be520f38dfb03fd, type: 3}
+  m_Mesh: {fileID: 4300002, guid: d6aba1033a4227b4baac5d4600784b8f, type: 3}
 --- !u!64 &6400000
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -89,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: vehicle_boeing_767
+  title: 
   description: 
   path: Prefabs/Vehicles
   materialPath: 

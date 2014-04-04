@@ -68,6 +68,13 @@ class DamageManager extends MonoBehaviour {
 						}
 					}
 				}
+
+				// Is it a mine?
+				var m : Mine = hit.GetComponent(Mine);
+
+				if ( m != null ) {
+					m.Detonate ();
+				}
 			}
 
 			// Is it a destructible object?
