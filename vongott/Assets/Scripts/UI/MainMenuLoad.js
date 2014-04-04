@@ -6,6 +6,8 @@ class MainMenuLoad extends OGPage {
 	public var slots : OGListItem[];
 	public var background : Transform;
 	public var clampEdge : MeshRenderer; 
+	public var clampLight1 : Light;
+	public var clampLight2 : Light;
 
 	private function TrimFileName ( p : String ) : String {
 		var path : String[] = p.Split("/"[0]);
@@ -71,6 +73,9 @@ class MainMenuLoad extends OGPage {
 	
 	public function UpdateBackgroundBrightness ( val : float ) {
 		background.renderer.material.SetFloat ( "_Brightness", val );
+		
+		clampLight1.intensity = 2.5 - val;
+		clampLight2.intensity = 2.5 - val;
 	}
 
 	public function HideContent () {

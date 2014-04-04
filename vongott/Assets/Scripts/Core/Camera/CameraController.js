@@ -27,6 +27,7 @@ public class CameraController extends MonoBehaviour {
 	public var lockToRearOfTarget : boolean = false;  // Lock camera to rear of target
 	public var allowMouseInputX : boolean = true;     // Allow player to control camera angle on the X axis (Left/Right)
 	public var allowMouseInputY : boolean = true;     // Allow player to control camera angle on the Y axis (Up/Down)
+	public var shakeOffset : Vector3;
 
 	private var targetOffset : Vector2;	          // Vertical offset adjustment
 	private var xDeg : float = 0;                     // Temp var
@@ -37,7 +38,7 @@ public class CameraController extends MonoBehaviour {
 	private var rotateBehind : boolean = false;       // Temp var
 	private var pbuffer : float = 0;                  // Cooldown buffer for SideButtons
 	private var coolDown : float = 0.5;               // Cooldowntime for SideButtons
-     
+
 	private function RotateBehindTarget () {
 		var targetRotationAngle : float = target.transform.eulerAngles.y;
 		var currentRotationAngle : float = transform.eulerAngles.y;
@@ -92,6 +93,9 @@ public class CameraController extends MonoBehaviour {
 		
 		// Set camera position
 		var position : Vector3 = target.transform.position + new Vector3 ( 0, targetOffset.y, 0 );
+		
+		// Apply shake
+		position += shakeOffset;
 		
 		// Finally set rotation and position of camera
 		transform.rotation = Quaternion.Slerp ( transform.rotation, rotation, Time.deltaTime * 80 );
@@ -173,6 +177,9 @@ public class CameraController extends MonoBehaviour {
 
 		// Apply horizontal offset
 		position += transform.right * targetOffset.x;
+
+		// Apply shake
+		position += shakeOffset;
 
 		// Finally set rotation and position of camera
 		transform.rotation = rotation;

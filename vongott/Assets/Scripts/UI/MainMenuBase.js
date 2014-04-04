@@ -3,6 +3,8 @@
 class MainMenuBase extends OGPage {
 	public var background : Transform;
 	public var clampEdge : GameObject; 
+	public var clampLight1 : Light;
+	public var clampLight2 : Light;
 	
 	override function StartPage () {
 		var v : Vector3 = background.localScale;
@@ -22,6 +24,9 @@ class MainMenuBase extends OGPage {
 
 	public function UpdateBackgroundBrightness ( val : float ) {
 		background.renderer.material.SetFloat ( "_Brightness", val );
+
+		clampLight1.intensity = 2.5 - val;
+		clampLight2.intensity = 2.5 - val;
 	}
 
 	public function GoToLoadGame () {

@@ -84,6 +84,8 @@ class DamageManager extends MonoBehaviour {
 			}
 		}
 
+		GameCamera.GetInstance().Shake ( 0.6, 0.03 );
+
 		StartCoroutine ( DestroyDelayed ( explosion, 10 ) );
 
 		GameCore.Print ( "DamageManager | Explosion!" );

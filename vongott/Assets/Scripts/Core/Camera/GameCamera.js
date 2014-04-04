@@ -19,7 +19,10 @@ class GameCamera extends MonoBehaviour {
 	public static var instance : GameCamera;
 	public static var controller : CameraController;
 
-	
+	private var shakeAmount : float;
+	private var shakeFadeOut : float;
+
+
 	////////////////////
 	// Init
 	////////////////////																	
@@ -36,6 +39,11 @@ class GameCamera extends MonoBehaviour {
 	////////////////////
 	// Positioning and rotation
 	////////////////////
+	public function Shake ( amount : float, fadeOut : float ) {
+		shakeAmount = amount;
+		shakeFadeOut = fadeOut;
+	}
+	
 	function StorePosRot () {
 		storedPos = this.transform.position;
 		storedRot = this.transform.eulerAngles;
@@ -131,7 +139,7 @@ class GameCamera extends MonoBehaviour {
 	 	transform.position = position;//= Vector3.Slerp(transform.position, position, time * Time.fixedDeltaTime );
 		transform.eulerAngles = rotation;// ( point );//= Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( point - transform.position ), time * Time.fixedDeltaTime );
 	}
-	
+
 	function FocusOn ( target : Transform, moveCam : boolean ) {
 		if ( moveCam ) {
 			iTween.MoveTo ( this.gameObject, iTween.Hash ( "easetype", iTween.EaseType.easeInOutQuad, "position", target.position + target.forward * 2, "time", 0.5, "ignoretimescale", true ) );
@@ -315,6 +323,18 @@ class GameCamera extends MonoBehaviour {
 			skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
 		}
 		
+		// Shake
+		if ( shakeAmount > 0 ) {
+			shakeAmount -= shakeFadeOut;
+
+			controller.shakeOffset.x = Random.Range ( -shakeAmount, shakeAmount );
+			controller.shakeOffset.y = Random.Range ( -shakeAmount, shakeAmount );
+		
+		} else {
+			controller.shakeOffset = Vector2.zero;
+		
+		}
+
 		// Camera controller state
 		switch ( controller.state ) {
 			case eCameraState.ThirdPerson:

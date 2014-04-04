@@ -132,9 +132,14 @@ public class ConversationManager {
 			actor.conversationTreeInstance = Loader.LoadConversationTree ( actor.conversationTree );
 		}
 
-		var rootNode : ConversationRootNode = actor.conversationTreeInstance.rootNodes[actor.currentConvoRoot];
-		
-		return rootNode.auto;
+		if ( actor.currentConvoRoot >= actor.conversationTreeInstance.rootNodes.Count ) {
+			return false;
+
+		} else {
+			var rootNode : ConversationRootNode = actor.conversationTreeInstance.rootNodes[actor.currentConvoRoot];
+			
+			return rootNode.auto;
+		}
 	}
 	
 	public static function StartConversation ( actor : Actor ) {
