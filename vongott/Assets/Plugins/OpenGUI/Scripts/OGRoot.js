@@ -26,11 +26,11 @@ class OGRoot extends MonoBehaviour {
 	@HideInInspector public var isMouseOver : boolean = false;
 	@HideInInspector public var texWidth : int = 256;
 	@HideInInspector public var texHeight : int = 256;
-	@HideInInspector public var downWidget : OGWidget;
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
+	private var downWidget : OGWidget;
 	private var screenRect : Rect;
 	private var textureMaterials : Material[];
 
@@ -71,6 +71,7 @@ class OGRoot extends MonoBehaviour {
 			currentPage.gameObject.SetActive ( true );
 		
 			currentPage.StartPage ();
+			currentPage.UpdateStyles ();
 		}
 
 		SetDirty ();
@@ -92,11 +93,7 @@ class OGRoot extends MonoBehaviour {
 			// Draw skin
 			GL.Begin(GL.QUADS);
 			OGDrawHelper.SetPass(skin.atlas);
-		
-			if ( currentPage ) {
-				currentPage.DrawSkin ();
-			}
-
+			
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
 				
@@ -121,10 +118,6 @@ class OGRoot extends MonoBehaviour {
 				
 				if ( skin.fonts[i].bitmapFont != null ) {
 					OGDrawHelper.SetPass ( skin.fonts[i].bitmapFont.material );
-				}
-				
-				if ( currentPage ) {
-					currentPage.DrawText ();
 				}
 
 				for ( o = 0; o < widgets.Length; o++ ) {
@@ -178,10 +171,6 @@ class OGRoot extends MonoBehaviour {
 			// Draw textures
 			for ( i = 0; i < widgets.Length; i++ ) {	
 				w = widgets[i];
-				
-				if ( currentPage ) {
-					currentPage.DrawGL ();
-				}
 				
 				if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
 					w.DrawGL();

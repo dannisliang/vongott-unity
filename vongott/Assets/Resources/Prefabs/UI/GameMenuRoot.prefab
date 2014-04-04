@@ -4387,7 +4387,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -130, y: 380, z: 0}
+  m_LocalPosition: {x: 48, y: 568, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400226}
@@ -4931,7 +4931,7 @@ Transform:
   m_GameObject: {fileID: 100100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 25, z: 0}
-  m_LocalScale: {x: 937, y: 20, z: 1}
+  m_LocalScale: {x: 917, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 400116}
 --- !u!4 &400102
@@ -5060,7 +5060,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: 60, z: 0}
+  m_LocalPosition: {x: 40, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400570}
@@ -5164,7 +5164,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100134}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 320, y: 300, z: 0}
+  m_LocalPosition: {x: 498, y: 488, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400194}
@@ -5262,7 +5262,7 @@ Transform:
   m_GameObject: {fileID: 100150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 50, z: 0}
-  m_LocalScale: {x: 937, y: 20, z: 1}
+  m_LocalScale: {x: 917, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 400116}
 --- !u!4 &400152
@@ -6771,7 +6771,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 320, y: 240, z: 0}
+  m_LocalPosition: {x: 498, y: 334, z: 0}
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 400102}
@@ -7160,8 +7160,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
-  m_LocalScale: {x: 997, y: 150, z: 1}
+  m_LocalPosition: {x: 10, y: 0, z: 20}
+  m_LocalScale: {x: 977, y: 130, z: 1}
   m_Children: []
   m_Father: {fileID: 400062}
 --- !u!4 &400498
@@ -7342,7 +7342,7 @@ Transform:
   m_GameObject: {fileID: 100532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -20, y: -7.5, z: 2}
-  m_LocalScale: {x: 977, y: 28, z: 1}
+  m_LocalScale: {x: 957, y: 28, z: 1}
   m_Children: []
   m_Father: {fileID: 400116}
 --- !u!4 &400540
@@ -7352,7 +7352,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 10, z: 0}
+  m_LocalPosition: {x: 20, y: 10, z: 0}
   m_LocalScale: {x: 400, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 400062}
@@ -7456,7 +7456,7 @@ Transform:
   m_GameObject: {fileID: 100570}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 937, y: 20, z: 1}
+  m_LocalScale: {x: 917, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 400116}
 --- !u!4 &400572
@@ -9338,7 +9338,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: Notification
+      name: Button
       coordinates:
         serializedVersion: 2
         x: 0
@@ -9350,16 +9350,16 @@ MonoBehaviour:
         bottom: 10
         left: 20
         right: 20
-      color: {r: .137759507, g: .416603237, b: .720588207, a: 1}
+      color: {r: .107861184, g: .379624069, b: .698529422, a: 1}
       text:
         fontIndex: 0
         font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
-        fontSize: 16
-        fontColor: {r: .470588237, g: .784313738, b: .882352948, a: 1}
+        fontSize: 18
+        fontColor: {r: .507352948, g: .734016895, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
+        alignment: 4
+        wordWrap: 0
         padding:
           m_Left: 0
           m_Right: 0
@@ -9556,7 +9556,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 416
+    y: 604
     width: 206
     height: 54
   mouseRct:
@@ -10666,7 +10666,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: -130
+    x: 48
     y: 99
     width: 1
     height: 1
@@ -17246,7 +17246,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 858
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -19785,7 +19785,7 @@ MonoBehaviour:
   stretch:
     width: 1
     widthFactor: 1
-    widthOffset: -60
+    widthOffset: -80
     height: 0
     heightFactor: 1
     heightOffset: 0
@@ -20009,15 +20009,15 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 30
-    y: 45
-    width: 937
+    x: 40
+    y: 55
+    width: 917
     height: 20
   mouseRct:
     serializedVersion: 2
-    x: 30
-    y: 45
-    width: 937
+    x: 40
+    y: 55
+    width: 917
     height: 20
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -23646,7 +23646,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 320
+    x: 498
     y: 179
     width: 1
     height: 1
@@ -25020,7 +25020,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 768
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -25340,7 +25340,7 @@ MonoBehaviour:
   stretch:
     width: 1
     widthFactor: 1
-    widthOffset: -60
+    widthOffset: -80
     height: 0
     heightFactor: 1
     heightOffset: 0
@@ -25564,15 +25564,15 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 30
-    y: 20
-    width: 937
+    x: 40
+    y: 30
+    width: 917
     height: 20
   mouseRct:
     serializedVersion: 2
-    x: 30
-    y: 20
-    width: 937
+    x: 40
+    y: 30
+    width: 917
     height: 20
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -26125,7 +26125,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 768
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -26398,7 +26398,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 678
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -26671,7 +26671,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 678
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -26944,7 +26944,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 588
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -27217,7 +27217,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 588
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -27490,7 +27490,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 498
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -27763,7 +27763,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 498
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -28036,7 +28036,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 858
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -28582,7 +28582,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 408
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -29137,7 +29137,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 408
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -29410,7 +29410,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 318
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -29683,7 +29683,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 318
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -29980,7 +29980,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 228
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -30253,7 +30253,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 228
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -30526,7 +30526,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 138
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -30584,21 +30584,21 @@ MonoBehaviour:
       name: Notification
       coordinates:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       border:
-        top: 10
-        bottom: 10
-        left: 20
-        right: 20
-      color: {r: 0, g: .478431374, b: 1, a: 1}
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: .784313738}
       text:
         fontIndex: 0
         font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
         fontSize: 16
-        fontColor: {r: .484104693, g: .799042106, b: .889705896, a: 1}
+        fontColor: {r: .862745106, g: .862745106, b: .862745106, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
@@ -30799,7 +30799,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 278
-    y: -58
+    y: 130
     width: 440
     height: 50
   mouseRct:
@@ -31354,7 +31354,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 138
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -32747,7 +32747,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 48
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -33584,7 +33584,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 48
-    y: -178
+    y: 10
     width: 90
     height: 90
   mouseRct:
@@ -44916,7 +44916,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 446
+    y: 634
     width: 170
     height: 14
   mouseRct:
@@ -49965,8 +49965,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 300
-    y: 220
+    x: 478
+    y: 314
     width: 40
     height: 40
   mouseRct:
@@ -53594,7 +53594,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 426
+    y: 614
     width: 170
     height: 14
   mouseRct:
@@ -53643,7 +53643,7 @@ MonoBehaviour:
   stretch:
     width: 1
     widthFactor: 1
-    widthOffset: 0
+    widthOffset: -20
     height: 0
     heightFactor: 1
     heightOffset: 0
@@ -53653,21 +53653,21 @@ MonoBehaviour:
       name: Notification
       coordinates:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       border:
-        top: 10
-        bottom: 10
-        left: 20
-        right: 20
-      color: {r: .137759507, g: .416603237, b: .720588207, a: 1}
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: .784313738}
       text:
         fontIndex: 0
         font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
         fontSize: 16
-        fontColor: {r: 1, g: .764705896, b: 0, a: 1}
+        fontColor: {r: .862745106, g: .862745106, b: .862745106, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
@@ -53867,16 +53867,16 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 997
-    height: 150
+    x: 10
+    y: 20
+    width: 977
+    height: 130
   mouseRct:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 997
-    height: 150
+    x: 10
+    y: 20
+    width: 977
+    height: 130
   drawDepth: -20
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -56446,7 +56446,7 @@ MonoBehaviour:
   stretch:
     width: 1
     widthFactor: 1
-    widthOffset: -20
+    widthOffset: -40
     height: 0
     heightFactor: 1
     heightOffset: 0
@@ -56670,15 +56670,15 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 10
-    y: 69.5
-    width: 977
+    x: 20
+    y: 79.5
+    width: 957
     height: 28
   mouseRct:
     serializedVersion: 2
-    x: 10
-    y: 69.5
-    width: 977
+    x: 20
+    y: 79.5
+    width: 957
     height: 28
   drawDepth: -2
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -57225,13 +57225,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 10
+    x: 20
     y: 120
     width: 400
     height: 20
   mouseRct:
     serializedVersion: 2
-    x: 10
+    x: 20
     y: 120
     width: 400
     height: 20
@@ -57289,21 +57289,21 @@ MonoBehaviour:
       name: Notification
       coordinates:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       border:
-        top: 10
-        bottom: 10
-        left: 20
-        right: 20
-      color: {r: .137759507, g: .416603237, b: .720588207, a: 1}
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: .784313738}
       text:
         fontIndex: 0
         font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
         fontSize: 16
-        fontColor: {r: 1, g: .764705896, b: 0, a: 1}
+        fontColor: {r: .862745106, g: .862745106, b: .862745106, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
@@ -57469,21 +57469,21 @@ MonoBehaviour:
     name: Notification
     coordinates:
       serializedVersion: 2
-      x: 0
-      y: 0
-      width: 64
-      height: 64
+      x: 32
+      y: 64
+      width: 32
+      height: 32
     border:
-      top: 10
-      bottom: 10
-      left: 20
-      right: 20
-    color: {r: .137759507, g: .416603237, b: .720588207, a: 1}
+      top: 4
+      bottom: 4
+      left: 4
+      right: 4
+    color: {r: 1, g: 1, b: 1, a: .784313738}
     text:
       fontIndex: 0
       font: {fileID: 11400000, guid: 2dd226f73e723497eb944ecfcc2b1bcc, type: 2}
       fontSize: 16
-      fontColor: {r: 1, g: .764705896, b: 0, a: 1}
+      fontColor: {r: .862745106, g: .862745106, b: .862745106, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
       alignment: 0
@@ -57497,13 +57497,13 @@ MonoBehaviour:
       spacing: 1
   drawCrd:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 64
-    height: 64
+    x: 32
+    y: 64
+    width: 32
+    height: 32
   drawRct:
     serializedVersion: 2
-    x: 120
+    x: 298
     y: 130
     width: 400
     height: 50
@@ -59242,7 +59242,7 @@ MonoBehaviour:
   stretch:
     width: 1
     widthFactor: 1
-    widthOffset: -60
+    widthOffset: -80
     height: 0
     heightFactor: 1
     heightOffset: 0
@@ -59466,15 +59466,15 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 30
-    y: 70
-    width: 937
+    x: 40
+    y: 80
+    width: 917
     height: 20
   mouseRct:
     serializedVersion: 2
-    x: 30
-    y: 70
-    width: 937
+    x: 40
+    y: 80
+    width: 917
     height: 20
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -60927,7 +60927,6 @@ MonoBehaviour:
   isMouseOver: 0
   texWidth: 512
   texHeight: 512
-  downWidget: {fileID: 0}
 --- !u!114 &11400552
 MonoBehaviour:
   m_ObjectHideFlags: 1

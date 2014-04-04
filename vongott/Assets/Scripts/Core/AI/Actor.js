@@ -52,7 +52,8 @@ class Actor extends InteractiveObject {
 	var inventory : InventoryEntry[] = new InventoryEntry [4];
 	
 	var currentConvoRoot : int = 0;
-	var conversationTree : String;																																							
+	var conversationTree : String;
+	var conversationTreeInstance : ConversationTree;
 	
 	var target : Transform;
 	var goal : Vector3;
@@ -98,11 +99,15 @@ class Actor extends InteractiveObject {
 		
 		initPosition = this.transform.position;
 		
-		if ( !EditorCore.running ) {
+		if ( GameCore.running && !EditorCore.running ) {
 			this.GetComponent ( OPPathFinder ).scanner = GameCore.scanner;
 			waiting = pathType == ePathType.NavPoint;
 			
 			MakeRagdoll ( false );
+		
+			if ( !String.IsNullOrEmpty ( conversationTree ) && conversationTree != "(none)" ) {
+				conversationTreeInstance = Loader.LoadConversationTree ( conversationTree );
+			}
 		}
 		
 		nextConvoForced = ConversationManager.CheckForcedConvo( this );

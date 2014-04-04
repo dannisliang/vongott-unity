@@ -21,7 +21,7 @@ class UIConversation extends OGPage {
 	////////////////////
 	// Highlight line
 	static function HighlightOption ( index : int ) {
-		highlight.transform.localPosition = new Vector3 ( lines[index].transform.localPosition.x - 10, lines[index].transform.localPosition.y - 7.5, 0 );
+		highlight.transform.localPosition = new Vector3 ( -20, lines[index].transform.localPosition.y - 7.5, 0 );
 		currentHighlight = index;
 	}
 	

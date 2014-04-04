@@ -15,6 +15,8 @@ public class OGPageInspector extends Editor {
 	
 		EditorGUILayout.Space ();
 
+		GUI.backgroundColor = Color.red;
+
 		if ( GUILayout.Button ( "Reset styles" ) ) {
 			page.ResetStyles (); 
 		}
@@ -25,12 +27,14 @@ public class OGPageInspector extends Editor {
 		if ( root.currentPage == page ) {
 			if ( GUILayout.Button ( "Update", GUILayout.Height(30) ) ) {
 				OGRoot.GetInstance().SetDirty();
+				page.UpdateStyles (); 
 			}
 
 		} else {
 			if ( GUILayout.Button ( "Set current page", GUILayout.Height(30) ) ) {
 				OGRoot.GetInstance().SetCurrentPage ( page );
 				page.gameObject.SetActive ( true );	
+				page.UpdateStyles (); 
 				OGRoot.GetInstance().SetDirty();
 			}
 		}	

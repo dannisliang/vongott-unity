@@ -126,17 +126,25 @@ public class ConversationManager {
 	}
 	
 	public static function CheckForcedConvo ( actor : Actor ) : boolean {
-		if ( String.IsNullOrEmpty ( actor.conversationTree ) ) { return false; }
-		
-		var convo : ConversationTree = Loader.LoadConversationTree ( actor.conversationTree );
-		var rootNode : ConversationRootNode = convo.rootNodes[actor.currentConvoRoot];
+		if ( String.IsNullOrEmpty ( actor.conversationTree ) || actor.conversationTree == "(none)" ) { return false; }
+
+		if ( actor.conversationTreeInstance == null ) {
+			actor.conversationTreeInstance = Loader.LoadConversationTree ( actor.conversationTree );
+		}
+
+		var rootNode : ConversationRootNode = actor.conversationTreeInstance.rootNodes[actor.currentConvoRoot];
 		
 		return rootNode.auto;
 	}
 	
 	public static function StartConversation ( actor : Actor ) {
 		// Set current conversation
-		currentConvo = Loader.LoadConversationTree ( actor.conversationTree );
+		if ( actor.conversationTreeInstance == null ) {
+			currentConvo = Loader.LoadConversationTree ( actor.conversationTree );
+		} else {
+			currentConvo = actor.conversationTreeInstance;
+		}
+
 		currentActor = actor;
 		
 		// Prepare to use camera transition
@@ -148,7 +156,7 @@ public class ConversationManager {
 		for ( var i : int = 0; i < colliders.Length; i++ ) {
 			var foundActor : Actor = colliders[i].GetComponent(Actor);
 
-			if ( foundActor != null && foundActor != currentActor ) {
+			if ( foundActor != null && foundActor != currentActor && currentActor.pathType != Actor.ePathType.Patrolling ) {
 				currentSupportActor = foundActor;
 			}
 		}
