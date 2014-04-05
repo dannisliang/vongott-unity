@@ -102,7 +102,7 @@ MonoBehaviour:
   canDrop: 1
   isStackable: 1
   type: 3
-  subType: 0
+  subType: 1500
   image: {fileID: 2800000, guid: 1f075608d96554922983a274effa12a7, type: 3}
   attr: []
   upgSlot: 4
@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  description: 
+  title: Awesome Speed Upgrade
+  description: You will be a pair of red tights away from being a super hero!
   path: Items/Upgrades
   id: upgrade_speed_awesome
   materialPath: 

@@ -102,7 +102,7 @@ MonoBehaviour:
   canDrop: 1
   isStackable: 1
   type: 3
-  subType: 0
+  subType: 1500
   image: {fileID: 2800000, guid: 6966afb0832e64a399366b140b26bdf1, type: 3}
   attr: []
   upgSlot: 1
@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  description: 
+  title: Awesome X-Ray Upgrade
+  description: This puts the peeping Tom tendencies of JC to shame
   path: Items/Upgrades
   id: upgrade_xray_awesome
   materialPath: 

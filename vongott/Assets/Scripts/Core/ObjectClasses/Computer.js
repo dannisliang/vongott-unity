@@ -104,6 +104,10 @@ class Computer extends InteractiveObject {
 		
 	}
 	
+	override function InvokePrompt () {
+		UIHUD.GetInstance().ShowNotification ( "Use" );
+	}
+	
 	function Start () {
 	}
 }

@@ -80,7 +80,7 @@ static function StartQuest ( id : String ) {
 
 	quest.SetActive ( true );	
 
-	UIHUD.GetInstance().ShowTimedNotification ( quest.title, 4.0 );
+	UIHUD.GetInstance().ShowTimedNotification ( "Quest: " + quest.title, 4.0 );
 
 	GameCore.Print ( "QuestManager |  Quest started: " + id );
 }

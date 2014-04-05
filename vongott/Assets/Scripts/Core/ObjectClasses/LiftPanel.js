@@ -95,6 +95,10 @@ class LiftPanel extends InteractiveObject {
 		}
 	}
 	
+	override function InvokePrompt () {
+		UIHUD.GetInstance().ShowNotification ( "Use" );
+	}
+	
 	override function UpdateObject () {
 		if ( EditorCore.running ) { return; }
 		

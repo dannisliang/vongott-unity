@@ -112,12 +112,6 @@ class Player extends MonoBehaviour {
 	}
 
 	// Equip
-	public function DestroyEquipped () {
-		if ( equippedObject ) {
-			Destroy ( equippedObject.gameObject );
-		}
-	}
-
 	public function CheckWeaponPosition () {
 		if ( equippedObject ) {
 			if ( GameCamera.controller.state == eCameraState.FirstPerson ) {
@@ -129,6 +123,14 @@ class Player extends MonoBehaviour {
 				equippedObject.transform.localPosition = Vector3.zero;;
 				equippedObject.transform.localEulerAngles = hand.forward;;
 			}
+		}
+	}
+
+	function UnEquip () {
+		GameCamera.GetInstance().controller.Unlock ();
+		
+		if ( equippedObject ) {
+			Destroy ( equippedObject.gameObject );
 		}
 	}
 
@@ -152,11 +154,15 @@ class Player extends MonoBehaviour {
 		equippedObject.rigidbody.useGravity = false;
 		equippedObject.rigidbody.isKinematic = true;
 	
-		if ( IsEquippedWeapon() ) {
+		if ( item.type == eItemType.Weapon && ( item.subType == eItemSubType.OneHanded || item.subType == eItemSubType.TwoHanded ) ) {
 			ResetFire();
+		
+			GameCamera.GetInstance().controller.LockFirstPerson ();
+		
+		} else {
+
+			GameCamera.GetInstance().controller.Unlock ();
 		}
-	
-		GameCore.Print ( "Player | item '" + item.title + "' equipped" );
 	}
 	
 	function IsEquippedWeapon () : boolean {

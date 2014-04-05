@@ -192,7 +192,7 @@ class InventoryManager extends MonoBehaviour {
 	public function UnEquip () {
 		if ( equippedItem != null ) {
 			var player : Player = GameCore.GetPlayerObject().GetComponent(Player);
-			player.DestroyEquipped ();
+			player.UnEquip ();
 			
 			GameCore.Print ( "InventoryManager | Unequipped " + equippedItem.title );
 			

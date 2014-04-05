@@ -8,6 +8,7 @@ enum eCameraState {
 
 public class CameraController extends MonoBehaviour {
 	public var state : eCameraState;
+	public var storedPreference : eCameraState;
 	public var target : GameObject;                   // Target to follow
 	public var distance : float = 5;                 // Default Distance
 	public var standingOffset : Vector2 = new Vector2 ( 0.4, 1.6 );
@@ -38,6 +39,7 @@ public class CameraController extends MonoBehaviour {
 	private var rotateBehind : boolean = false;       // Temp var
 	private var pbuffer : float = 0;                  // Cooldown buffer for SideButtons
 	private var coolDown : float = 0.5;               // Cooldowntime for SideButtons
+	private var locked : boolean = false;
 
 	private function RotateBehindTarget () {
 		var targetRotationAngle : float = target.transform.eulerAngles.y;
@@ -81,7 +83,7 @@ public class CameraController extends MonoBehaviour {
 		yDeg = ClampAngle ( yDeg, yMinLimit, yMaxLimit );
 		
 		// Exit first person mode
-		if ( Input.GetAxis ("Mouse ScrollWheel") < 0 ) {
+		if ( !locked && Input.GetAxis ("Mouse ScrollWheel") < 0 ) {
 			desiredDistance = 0.63;
 			currentDistance = 0.63;
 			state = eCameraState.ThirdPerson;
@@ -192,6 +194,25 @@ public class CameraController extends MonoBehaviour {
 		}
 	}
 
+	function LockFirstPerson () {
+		storedPreference = state;
+		
+		state = eCameraState.FirstPerson;
+		GameCore.GetPlayer().CheckWeaponPosition();
+		locked = true;
+	
+		GameCore.Print ( "CameraController | Locked to first person" );
+	}
+
+	function Unlock () {
+		locked = false;
+	
+		state = storedPreference;
+		GameCore.GetPlayer().CheckWeaponPosition();
+
+		GameCore.Print ( "CameraController | Unlocked" );
+	}
+
 	function Start () {      
 		var angles : Vector3 = transform.eulerAngles;
 		xDeg = angles.x;
@@ -235,14 +256,14 @@ public class CameraController extends MonoBehaviour {
 		}
 
 		// Update correct mode
-		if ( state == eCameraState.ThirdPerson ) {
+		if ( state == eCameraState.ThirdPerson && !locked ) {
 			UpdateThirdPerson ();
 		} else {
 			UpdateFirstPerson ();
 		}
 		
 		// Instant switch
-		if ( Input.GetMouseButtonDown ( 2 ) ) {
+		if ( Input.GetMouseButtonDown ( 2 ) && !locked ) {
 			if ( state == eCameraState.ThirdPerson ) {
 				state = eCameraState.FirstPerson;
 

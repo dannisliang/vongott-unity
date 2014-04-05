@@ -103,8 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDrop: 1
   isStackable: 1
-  type: 2
-  subType: 0
+  type: 3
+  subType: 1501
   image: {fileID: 2800000, guid: f4ade3aef963f433997c1fb80254d197, type: 3}
   attr: []
   upgSlot: 6
@@ -123,8 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  description: 
+  title: Lockpicking upgrade
+  description: Increases lockpicking skill
   path: Items/Upgrades
   id: upgrade_lockpicking
   materialPath: 

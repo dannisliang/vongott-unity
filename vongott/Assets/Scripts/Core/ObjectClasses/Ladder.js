@@ -39,6 +39,10 @@ public class Ladder extends InteractiveObject {
 
 		adjacentLadders = tempList.ToArray();
 	}
+	
+	override function InvokePrompt () {
+		UIHUD.GetInstance().ShowNotification ( "Climb" );
+	}
 
 	override function Interact () {
 		GameCore.interactiveObjectLocked = true;
