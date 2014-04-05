@@ -47,13 +47,13 @@ public class Ladder extends InteractiveObject {
 	override function Interact () {
 		GameCore.interactiveObjectLocked = true;
 		
-		PlayerController.SetClimbing ( true, this );
+		GameCore.GetPlayer().controller.SetClimbing ( true, this );
 
 		InputManager.jumpFunction = Exit;
 	}
 
 	public function Exit () {
-		PlayerController.SetClimbing ( false );
+		GameCore.GetPlayer().controller.SetClimbing ( false );
 
 		GameCore.interactiveObjectLocked = false;
 	}

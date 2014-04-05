@@ -289,6 +289,11 @@ class GameCamera extends MonoBehaviour {
 	// Update and collision
 	////////////////////
 	function Update () {
+		// Find player
+		if ( !player ) {
+			player = GameCore.GetPlayer ();
+		}
+		
 		// Check for interaction
 		if ( !GameCore.interactiveObjectLocked ) {
 			var hit : RaycastHit;
@@ -338,12 +343,12 @@ class GameCamera extends MonoBehaviour {
 		// Camera controller state
 		switch ( controller.state ) {
 			case eCameraState.ThirdPerson:
-				PlayerController.controlMode = ePlayerControlMode.ThirdPerson;
+				player.controller.controlMode = ePlayerControlMode.ThirdPerson;
 				this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
 				break;
 
 			case eCameraState.FirstPerson:
-				PlayerController.controlMode = ePlayerControlMode.FirstPerson;
+				player.controller.controlMode = ePlayerControlMode.FirstPerson;
 				this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
 				break;
 		}

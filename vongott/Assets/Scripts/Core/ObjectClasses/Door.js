@@ -141,11 +141,9 @@ class Door extends InteractiveObject {
 		
 	// Interaction
 	override function NPCCollide ( a : Actor ) {
-		if ( closed ) {
-			ToggleDoor ( a.transform );
-		}
+		ToggleDoor ( a.transform );
 	}
-	
+
 	override function Interact () {
 		if ( locked ) {
 			// TODO: Check if player has the right key in inventory

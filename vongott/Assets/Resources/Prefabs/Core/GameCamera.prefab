@@ -30,8 +30,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -205,7 +205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b9e9e4f9511ca4ba9a38345cc64ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
+  state: 1
+  storedPreference: 0
   target: {fileID: 0}
   distance: 1.39999998
   standingOffset: {x: .400000006, y: 1.60000002}
@@ -227,6 +228,7 @@ MonoBehaviour:
   lockToRearOfTarget: 0
   allowMouseInputX: 1
   allowMouseInputY: 1
+  shakeOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -246,7 +248,7 @@ MonoBehaviour:
     m_Bits: 4294958847
   xRayShader: {fileID: 4800000, guid: 986531510bea29541a6e13bca1e2446c, type: 3}
   regularShader: {fileID: 4800000, guid: 42e1a9633be9e1a45904a5565e18f9b4, type: 3}
-  boundingBoxMaterial: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}
+  boundingBoxMaterial: {fileID: 2100000, guid: e87a0288c17474374be5ed1dbbe62525, type: 2}
   firstPerson: 0
 --- !u!114 &11400004
 MonoBehaviour:
@@ -259,10 +261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e8a39445c66e4bf2af929518705ebd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentClip: {fileID: 0}
-  previousClip: {fileID: 0}
   channel1: {fileID: 8200000}
   channel2: {fileID: 8200002}
+  fadeDelta: .25
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

@@ -19,37 +19,37 @@ public enum ePlayerActionState {
 	Interacting
 }
 
-class PlayerController {
-	public static var bodyState : ePlayerBodyState = ePlayerBodyState.Idle;
-	public static var actionState : ePlayerActionState = ePlayerActionState.Idle;
-	public static var controlMode : ePlayerControlMode = ePlayerControlMode.ThirdPerson;
+public class PlayerController extends MonoBehaviour {
+	public var bodyState : ePlayerBodyState = ePlayerBodyState.Idle;
+	public var actionState : ePlayerActionState = ePlayerActionState.Idle;
+	public var controlMode : ePlayerControlMode = ePlayerControlMode.ThirdPerson;
 	
-	public static var deltaVertical : float;
-	public static var deltaHorizontal : float;
-	public static var deltaCombined : float;
+	public var deltaVertical : float;
+	public var deltaHorizontal : float;
+	public var deltaCombined : float;
 
-	public static var isClimbing : boolean = false;
-	public static var inCrawlspace : boolean = false;
-	public static var isGrounded : boolean = true;
-	public static var isRotationLocked : boolean = false;
-	public static var useForcedPoint : boolean = false;
+	public var isClimbing : boolean = false;
+	public var inCrawlspace : boolean = false;
+	public var isGrounded : boolean = true;
+	public var isRotationLocked : boolean = false;
+	public var useForcedPoint : boolean = false;
 	
-	private static var distGround : float = float.PositiveInfinity;
-	private static var forcedPointVector : Vector3;
-	private static var lockedRotationVector : Vector3;
-	private static var ladderTopY : float;
-	private static var ladderBottomY : float;
-	private static var jumpTriggerTimeout : int = 0;
+	private var distToGround : float = float.PositiveInfinity;
+	private var forcedPointVector : Vector3;
+	private var lockedRotationVector : Vector3;
+	private var ladderTopY : float;
+	private var ladderBottomY : float;
+	private var player : Player;
 
-	public static function SetControlMode ( mode : ePlayerControlMode ) {
+	public function SetControlMode ( mode : ePlayerControlMode ) {
 		controlMode = mode;
 	}
 
-	public static function SetClimbing ( state : boolean ) {
+	public function SetClimbing ( state : boolean ) {
 		SetClimbing ( state, null );
 	}
 
-	public static function SetClimbing ( state : boolean, ladder : Ladder ) {
+	public function SetClimbing ( state : boolean, ladder : Ladder ) {
 		isClimbing = state;
 		isRotationLocked = state;
 		useForcedPoint = state;
@@ -70,20 +70,59 @@ class PlayerController {
 		GameCore.Print ( "PlayerController | " + ( isClimbing ? "Started climbing" : "Stopped climbing" ) );
 	}
 
-	public static function Update ( player : Player ) {
-		var capsule : CapsuleCollider = player.transform.collider as CapsuleCollider;
-		var groundHit : RaycastHit;
-		
-		if ( Physics.Raycast ( player.transform.position + Vector3.up * 0.05, -player.transform.up, groundHit, distGround, 9 ) ) {
-			distGround = ( player.transform.position - groundHit.point ).sqrMagnitude;
-		
+	public function Start () {
+		distToGround = collider.bounds.extents.y;
+	}
+	
+	public function UpdateThirdPerson () {
+		if ( deltaVertical != 0 || deltaHorizontal != 0 ) {
+			var targetRotation : float = Camera.main.transform.eulerAngles.y;
+			var angle = Mathf.Atan2 ( deltaVertical, -deltaHorizontal ) * Mathf.Rad2Deg;
+			targetRotation += angle - 90;
+
+			var rotationQuaternion : Quaternion = Quaternion.Euler ( 0, targetRotation, 0 );
+				
+			player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, rotationQuaternion, 5 * Time.deltaTime );
+		}
+	}
+
+	// For locked rotation
+	public function UpdateThirdPerson ( lockedRotation : Vector3 ) {
+		player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, Quaternion.Euler ( lockedRotation ), 5 * Time.deltaTime );
+	}
+
+	private function UpdateFirstPerson () {
+		player.transform.rotation = Quaternion.Euler ( 0, Camera.main.transform.eulerAngles.y, 0 );
+
+		var velocity : Vector3 = player.GetComponent.<Rigidbody>().velocity;
+
+		if ( bodyState == ePlayerBodyState.Climbing ) {
+			velocity.x = 0;
+			velocity.y = Mathf.Clamp ( deltaVertical, -0.5, 0.5 ) * 2;
+			velocity.z = 0;
+
 		} else {
-			distGround = float.PositiveInfinity;
-		
+			velocity.x = 0;
+			velocity.x = 0;
+			velocity += player.transform.right * ( deltaHorizontal * 6 );
+			velocity += player.transform.forward * ( deltaVertical * 6 );
+		}
+			
+		player.GetComponent.<Rigidbody>().velocity = velocity;
+	}
+
+	public function Update () {
+		if ( !GameCore.GetInstance().GetControlsActive() ) {
+			return;
 		}
 		
-		isGrounded = distGround < 0.1;
+		if ( !player ) {
+			player = this.GetComponent(Player);
+		}
 		
+		var capsule : CapsuleCollider = player.transform.collider as CapsuleCollider;
+		
+		isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1); 
 		inCrawlspace = bodyState == ePlayerBodyState.Crouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
 		
 		// Climbing
@@ -98,19 +137,19 @@ class PlayerController {
 
 		// Jumping
 		if ( Input.GetKeyDown ( KeyCode.Space ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
-			jumpTriggerTimeout = 10;
-		}
+			if ( isGrounded ) {
+				if ( controlMode == ePlayerControlMode.FirstPerson  ) {
+					player.GetComponent.<Rigidbody>().velocity.y = 4;
+				}
+				
+				bodyState = ePlayerBodyState.Jumping;
+			}
 
-		if ( jumpTriggerTimeout > 0 ) {		
-			jumpTriggerTimeout--;
-
-			bodyState = ePlayerBodyState.Jumping;
-
-			if ( InputManager.jumpFunction != null ) {
+			if ( InputManager.jumpFunction ) {
 				InputManager.jumpFunction ();
 				InputManager.jumpFunction = null;
 			}
-		
+
 		// Crouching
 		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) && !isClimbing ) {
 			if ( bodyState == ePlayerBodyState.Crouching && !inCrawlspace ) {
@@ -180,14 +219,14 @@ class PlayerController {
 		// Direction
 		if ( controlMode == ePlayerControlMode.ThirdPerson ) {
 			if ( isRotationLocked ) {
-				ThirdPersonController.Update ( player, deltaVertical, lockedRotationVector );
+				UpdateThirdPerson ();
 
 			} else {
-				ThirdPersonController.Update ( player, deltaVertical, deltaHorizontal );
+				UpdateThirdPerson ( lockedRotationVector );
 			}
 		
 		} else {
-			FirstPersonController.Update ( player, deltaVertical, deltaHorizontal );
+			UpdateFirstPerson ();
 		}
 			
 		

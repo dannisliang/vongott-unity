@@ -77,9 +77,5 @@ class InputManager extends MonoBehaviour {
 		
 		// In-game controls
 		MenuControls ();
-		
-		if ( GameCore.GetInstance().GetControlsActive() ) {
-			PlayerController.Update ( player );
-		}
 	}
 }

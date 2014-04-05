@@ -1,13 +1,14 @@
 ﻿#pragma strict
 
 enum eCameraState {
+	None,
 	ThirdPerson,
 	FirstPerson,
 	CutScene
 }
 
 public class CameraController extends MonoBehaviour {
-	public var state : eCameraState;
+	public var state : eCameraState = eCameraState.ThirdPerson;
 	public var storedPreference : eCameraState;
 	public var target : GameObject;                   // Target to follow
 	public var distance : float = 5;                 // Default Distance
@@ -40,6 +41,8 @@ public class CameraController extends MonoBehaviour {
 	private var pbuffer : float = 0;                  // Cooldown buffer for SideButtons
 	private var coolDown : float = 0.5;               // Cooldowntime for SideButtons
 	private var locked : boolean = false;
+	private var player : Player;
+	private var initCorrection : float = 2;
 
 	private function RotateBehindTarget () {
 		var targetRotationAngle : float = target.transform.eulerAngles.y;
@@ -135,7 +138,7 @@ public class CameraController extends MonoBehaviour {
 			rotateBehind = false;
 
 		// Otherwise, ease behind the target if any of the directional keys are pressed
-		} else if ( PlayerController.deltaCombined > 0 || rotateBehind ) {
+		} else if ( initCorrection > 0 || player.controller.deltaCombined > 0 || rotateBehind ) {
 			RotateBehindTarget ();
 		}
 		
@@ -192,6 +195,10 @@ public class CameraController extends MonoBehaviour {
 			state = eCameraState.FirstPerson;
 			GameCore.GetPlayer().CheckWeaponPosition();
 		}
+
+		if ( initCorrection > 0 ) {
+			initCorrection -= Time.deltaTime;
+		}
 	}
 
 	function LockFirstPerson () {
@@ -206,11 +213,16 @@ public class CameraController extends MonoBehaviour {
 
 	function Unlock () {
 		locked = false;
-	
-		state = storedPreference;
+
+		if ( storedPreference != eCameraState.None ) {	
+			state = storedPreference;
+		}
+		
 		GameCore.GetPlayer().CheckWeaponPosition();
 
 		GameCore.Print ( "CameraController | Unlocked" );
+
+		storedPreference = eCameraState.None;	
 	}
 
 	function Start () {      
@@ -234,20 +246,23 @@ public class CameraController extends MonoBehaviour {
 	function LateUpdate () {
 		// Don't do anything if target is not defined
 		if ( target == null ) {
-			target = GameCore.GetPlayerObject();
-			return;
+			target = GameCore.GetPlayerObject ();
+		
+		} else if ( !player ) {
+			player = target.GetComponent.<Player>();
+
 		}
 
-		// Only run if not in cutscene mode and controsl are enabled
+		// Only run if not in cutscene mode and controls are enabled
 		if ( state == eCameraState.CutScene || !GameCore.GetInstance().GetControlsActive() ) {
 			return;
 		}
 
 		// Get correct offset
-		if ( PlayerController.bodyState == ePlayerBodyState.Crouching ) {
+		if ( player.controller.bodyState == ePlayerBodyState.Crouching ) {
 			targetOffset = Vector3.Slerp ( targetOffset, crouchedOffset, Time.deltaTime * 10 );
 
-		} else if ( PlayerController.inCrawlspace ) {
+		} else if ( player.controller.inCrawlspace ) {
 			targetOffset = Vector3.Slerp ( targetOffset, crawlspaceOffset, Time.deltaTime * 10 );
 
 		} else {
@@ -256,9 +271,9 @@ public class CameraController extends MonoBehaviour {
 		}
 
 		// Update correct mode
-		if ( state == eCameraState.ThirdPerson && !locked ) {
+		if ( state == eCameraState.ThirdPerson ) {
 			UpdateThirdPerson ();
-		} else {
+		} else if ( state == eCameraState.FirstPerson ) {
 			UpdateFirstPerson ();
 		}
 		

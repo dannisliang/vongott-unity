@@ -717,6 +717,9 @@ GameObject:
   - 54: {fileID: 5400000}
   - 136: {fileID: 13600000}
   - 95: {fileID: 9500000}
+  - 114: {fileID: 11400002}
+  - 143: {fileID: 14300000}
+  - 114: {fileID: 11400004}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -1423,11 +1426,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 400008}
   hand: {fileID: 400052}
+  controller: {fileID: 11400002}
   energy: 50
   health: 50
   automaticHeal: 0
   shieldPrefab: {fileID: 0}
   talkingTo: {fileID: 0}
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc692df3d0d3f944b2f086b7ff7d6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyState: 0
+  actionState: 0
+  controlMode: 0
+  deltaVertical: 0
+  deltaHorizontal: 0
+  deltaCombined: 0
+  isClimbing: 0
+  inCrawlspace: 0
+  isGrounded: 1
+  isRotationLocked: 1
+  useForcedPoint: 0
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100094}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fe0f4ae25e6fc419922f1c7ea689e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 6
+  runSpeed: 11
+  limitDiagonalSpeed: 1
+  toggleRun: 0
+  jumpSpeed: 8
+  gravity: 20
+  fallingDamageThreshold: 10
+  slideWhenOverSlopeLimit: 0
+  slideOnTaggedObjects: 0
+  slideSpeed: 12
+  airControl: 0
+  antiBumpFactor: .75
+  antiBunnyHopFactor: 1
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1436,7 +1486,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 100094}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: .300000012
   m_Height: 1.79999995
   m_Direction: 1
@@ -1521,6 +1571,20 @@ SkinnedMeshRenderer:
     m_Center: {x: .270246029, y: -.0418999046, z: 0}
     m_Extent: {x: .952545166, y: .231277123, z: .651418328}
   m_DirtyAABB: 0
+--- !u!143 &14300000
+CharacterController:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100094}
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: .5
+  m_SlopeLimit: 45
+  m_StepOffset: .300000012
+  m_SkinWidth: .0799999982
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

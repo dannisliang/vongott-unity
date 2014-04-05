@@ -1669,23 +1669,29 @@ MonoBehaviour:
   path: []
   inventory:
   - prefabPath: Items/Equipment/stupid_smg
-    equipped: 0
     installed: 0
     activated: 0
+    x: 0
+    y: 0
   - prefabPath: 
-    equipped: 0
     installed: 0
     activated: 0
+    x: 0
+    y: 0
   - prefabPath: 
-    equipped: 0
     installed: 0
     activated: 0
+    x: 0
+    y: 0
   - prefabPath: 
-    equipped: 0
     installed: 0
     activated: 0
+    x: 0
+    y: 0
   currentConvoRoot: 0
   conversationTree: 
+  conversationTreeInstance:
+    rootNodes: []
   target: {fileID: 0}
   goal: {x: 0, y: 0, z: 0}
   speed: 0

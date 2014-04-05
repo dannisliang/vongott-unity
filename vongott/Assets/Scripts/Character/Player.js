@@ -8,6 +8,8 @@ class Player extends MonoBehaviour {
 	public var head : Transform;
 	public var hand : Transform;
 	
+	public var controller : PlayerController;
+
 	public var energy : float = 100;
 	public var health : int = 100;
 	
@@ -22,8 +24,6 @@ class Player extends MonoBehaviour {
 	private var equippedObject : Item;
 	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
-	private var capsuleCollider : CapsuleCollider;
-
 					
 	////////////////////
 	// Actor interaction
@@ -336,11 +336,6 @@ class Player extends MonoBehaviour {
 	// Update
 	////////////////////	
 	function Update () {
-		// Collider reference
-		if ( !capsuleCollider ) {
-			capsuleCollider = this.GetComponent(CapsuleCollider);
-		}
-
 		// Lifting object
 		if ( liftedObject ) {
 			liftedObject.transform.rotation = this.transform.rotation;
@@ -376,19 +371,23 @@ class Player extends MonoBehaviour {
 		}
 		
 		// Player state
-		switch ( PlayerController.actionState ) {
+		if ( !controller ) {
+			controller = this.GetComponent(PlayerController);
+		}
+		
+		switch ( controller.actionState ) {
 			case ePlayerActionState.Shooting:
 				Shoot ();
 				break;
 		}
 
-		switch ( PlayerController.bodyState ) {
+		switch ( controller.bodyState ) {
 			case ePlayerBodyState.Crouching:
-				capsuleCollider.height = 1;
+			//	collider.height = 1;
 				break;
 			
 			default:
-				capsuleCollider.height = 1.8;
+			//	collider.height = 1.8;
 				break;
 		}
 
