@@ -8,6 +8,7 @@ public enum eEquipmentSlot {
 }
 
 class Equipment extends Item {
-	// Public vars
-	var eqSlot : eEquipmentSlot;
+	public var eqSlot : eEquipmentSlot;
+	public var equipSound : AudioClip;
+	public var fireSounds : AudioClip [] = new AudioClip[0];
 }

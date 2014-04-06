@@ -59,6 +59,8 @@ function Start () {
 }
  
 function UpdateFirstPerson ( inputX : float, inputY : float ) {
+	transform.rotation = Quaternion.Euler ( 0, Camera.main.transform.eulerAngles.y, 0 );
+	
 	// If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
 	var inputModifyFactor = (inputX != 0.0 && inputY != 0.0 && limitDiagonalSpeed)? .7071 : 1.0;
  
@@ -87,7 +89,7 @@ function UpdateFirstPerson ( inputX : float, inputY : float ) {
  
 		// If running isn't on a toggle, then use the appropriate speed depending on whether the run button is down
 		if (!toggleRun) 
-			speed = Input.GetButton("Run")? runSpeed : walkSpeed;
+			speed = Input.GetKeyDown(KeyCode.LeftShift)? runSpeed : walkSpeed;
  
 		// If sliding (and it's allowed), or if we're on an object tagged "Slide", get a vector pointing down the slope we're on
 		if ( (sliding && slideWhenOverSlopeLimit) || (slideOnTaggedObjects && hit.collider.tag == "Slide") ) {
@@ -105,7 +107,7 @@ function UpdateFirstPerson ( inputX : float, inputY : float ) {
 		}
  
 		// Jump! But only if the jump button has been released and player has been grounded for a given number of frames
-		if (!Input.GetButton("Jump"))
+		if (!Input.GetKeyDown(KeyCode.Space))
 			jumpTimer++;
 		else if (jumpTimer >= antiBunnyHopFactor) {
 			moveDirection.y = jumpSpeed;
@@ -144,5 +146,3 @@ function OnControllerColliderHit (hit : ControllerColliderHit) {
 function FallingDamageAlert (fallDistance : float) {
 	Debug.Log ("Ouch! Fell " + fallDistance + " units!");	
 }
- 
-@script RequireComponent(CharacterController)

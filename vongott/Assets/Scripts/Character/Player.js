@@ -135,7 +135,8 @@ class Player extends MonoBehaviour {
 	}
 
 	function Equip ( item : Item ) {
-		var slot : eEquipmentSlot = ( item as Equipment ).eqSlot;
+		var eq : Equipment = item as Equipment;
+		var slot : eEquipmentSlot = eq.eqSlot;
 		var target : Transform;
 		
 		if ( slot == eEquipmentSlot.Hands ) {
@@ -153,6 +154,13 @@ class Player extends MonoBehaviour {
 		equippedObject.GetComponent(BoxCollider).enabled = false;
 		equippedObject.rigidbody.useGravity = false;
 		equippedObject.rigidbody.isKinematic = true;
+		
+		eq = equippedObject as Equipment;
+		
+		if ( eq.equipSound ) {
+			SFXManager.GetInstance().Play ( eq.equipSound.name, eq.audio );
+		}
+
 	
 		if ( item.type == eItemType.Weapon && ( item.subType == eItemSubType.OneHanded || item.subType == eItemSubType.TwoHanded ) ) {
 			ResetFire();
@@ -260,7 +268,9 @@ class Player extends MonoBehaviour {
 					}
 				
 					DamageManager.GetInstance().SpawnBullet ( equippedObject.gameObject, target, this.gameObject );
-				
+					
+					SFXManager.GetInstance().Play ( eq.fireSounds [ Random.Range ( 0, eq.fireSounds.Length-1 ) ].name, equippedObject.audio );
+
 					// Muzzle flash
 					if ( equippedObject.transform.GetChild(0) ) {
 						equippedObject.transform.GetChild(0).gameObject.SetActive ( true );

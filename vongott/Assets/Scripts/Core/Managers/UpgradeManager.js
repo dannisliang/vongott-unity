@@ -173,6 +173,8 @@ class UpgradeManager {
 			
 		}
 		
+		SFXManager.GetInstance().Play ( "sfx_actor_aug_off", GameCore.GetPlayer().audio );
+		
 		slots [ slot ].activated = false;
 		
 		var upgrade : Upgrade = slots [ slot ].GetItem() as Upgrade;
@@ -248,13 +250,13 @@ class UpgradeManager {
 		if ( !slots.ContainsKey ( slot ) ) {
 			return;
 			
-		} else if ( IsActive ( slot ) ) {
-			Deactivate ( slot );
-			return;
-		
-		} else if ( slots [ slot ] == null ) {
-			return;
-			
+		} else {
+			SFXManager.GetInstance().Play ( "sfx_actor_aug_on", GameCore.GetPlayer().audio );
+
+			if ( IsActive ( slot ) ) {
+				Deactivate ( slot );
+				return;
+			}
 		}
 		
 		var upgrade : Upgrade = slots [ slot ].GetItem() as Upgrade;

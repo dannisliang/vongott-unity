@@ -40,6 +40,7 @@ public class PlayerController extends MonoBehaviour {
 	private var ladderTopY : float;
 	private var ladderBottomY : float;
 	private var player : Player;
+	private var character : CharacterController;
 
 	public function SetControlMode ( mode : ePlayerControlMode ) {
 		controlMode = mode;
@@ -72,6 +73,7 @@ public class PlayerController extends MonoBehaviour {
 
 	public function Start () {
 		distToGround = collider.bounds.extents.y;
+		character = this.GetComponent.<CharacterController>();
 	}
 	
 	public function UpdateThirdPerson () {
@@ -91,26 +93,6 @@ public class PlayerController extends MonoBehaviour {
 		player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, Quaternion.Euler ( lockedRotation ), 5 * Time.deltaTime );
 	}
 
-	private function UpdateFirstPerson () {
-		player.transform.rotation = Quaternion.Euler ( 0, Camera.main.transform.eulerAngles.y, 0 );
-
-		var velocity : Vector3 = player.GetComponent.<Rigidbody>().velocity;
-
-		if ( bodyState == ePlayerBodyState.Climbing ) {
-			velocity.x = 0;
-			velocity.y = Mathf.Clamp ( deltaVertical, -0.5, 0.5 ) * 2;
-			velocity.z = 0;
-
-		} else {
-			velocity.x = 0;
-			velocity.x = 0;
-			velocity += player.transform.right * ( deltaHorizontal * 6 );
-			velocity += player.transform.forward * ( deltaVertical * 6 );
-		}
-			
-		player.GetComponent.<Rigidbody>().velocity = velocity;
-	}
-
 	public function Update () {
 		if ( !GameCore.GetInstance().GetControlsActive() ) {
 			return;
@@ -120,29 +102,20 @@ public class PlayerController extends MonoBehaviour {
 			player = this.GetComponent(Player);
 		}
 		
-		var capsule : CapsuleCollider = player.transform.collider as CapsuleCollider;
-		
 		isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1); 
 		inCrawlspace = bodyState == ePlayerBodyState.Crouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
 		
 		// Climbing
 		if ( isClimbing ) {
 			bodyState = ePlayerBodyState.Climbing;
-			player.GetComponent.<Rigidbody>().useGravity = false;
-			
-		} else {
-			player.GetComponent.<Rigidbody>().useGravity = true;
-		
 		}
 
 		// Jumping
 		if ( Input.GetKeyDown ( KeyCode.Space ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
 			if ( isGrounded ) {
-				if ( controlMode == ePlayerControlMode.FirstPerson  ) {
-					player.GetComponent.<Rigidbody>().velocity.y = 4;
-				}
-				
 				bodyState = ePlayerBodyState.Jumping;
+
+				SFXManager.GetInstance().Play ( "sfx_actor_jump_" + Random.Range ( 1, 3 ), this.audio );
 			}
 
 			if ( InputManager.jumpFunction ) {
@@ -154,9 +127,13 @@ public class PlayerController extends MonoBehaviour {
 		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) && !isClimbing ) {
 			if ( bodyState == ePlayerBodyState.Crouching && !inCrawlspace ) {
 				bodyState = ePlayerBodyState.Idle;
+
+				SFXManager.GetInstance().Play ( "sfx_actor_crouch_up_1", this.audio );
 			
 			} else {
 				bodyState = ePlayerBodyState.Crouching;
+				
+				SFXManager.GetInstance().Play ( "sfx_actor_crouch_down_1", this.audio );
 			
 			}
 	
@@ -226,7 +203,7 @@ public class PlayerController extends MonoBehaviour {
 			}
 		
 		} else {
-			UpdateFirstPerson ();
+			this.GetComponent.<FirstPersonController>().UpdateFirstPerson ( deltaHorizontal, deltaVertical );
 		}
 			
 		
@@ -239,18 +216,35 @@ public class PlayerController extends MonoBehaviour {
 		
 		// Set capsule size
 		if ( bodyState == ePlayerBodyState.Crouching ) {
-			capsule.height = 0.9;
-			capsule.center = new Vector3 ( 0, 0.45, 0 );
+			character.height = 0.9;
+			character.center = new Vector3 ( 0, 0.45, 0 );
 		
 		} else {
-			capsule.height = 1.7;
-			capsule.center = new Vector3 ( 0, 0.85, 0 );
+			character.height = 1.7;
+			character.center = new Vector3 ( 0, 0.85, 0 );
 		
 		}
 		
 		if ( isGrounded && ( bodyState == ePlayerBodyState.Falling || bodyState == ePlayerBodyState.Jumping ) && bodyState != ePlayerBodyState.Crouching ) {
 			bodyState = ePlayerBodyState.Idle;
 			
+		}
+	
+		if ( isGrounded ) {
+			if ( deltaCombined > 0.5 ) {
+				SFXManager.GetInstance().Play ( "sfx_actor_footsteps_run_1", this.audio, true );
+
+			} else if ( deltaCombined > 0.1 && bodyState != ePlayerBodyState.Crouching ) {
+				SFXManager.GetInstance().Play ( "sfx_actor_footsteps_walk_1", this.audio, true );
+
+			} else {
+				SFXManager.GetInstance().Stop ( [ "sfx_actor_footsteps_walk_1", "sfx_actor_footsteps_run_1" ], this.audio );
+			
+			}
+
+		} else {
+			SFXManager.GetInstance().Stop ( [ "sfx_actor_footsteps_walk_1", "sfx_actor_footsteps_run_1" ], this.audio );
+
 		}
 		
 		player.GetComponent(Animator).SetFloat ( "DeltaVertical", deltaVertical );
