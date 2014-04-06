@@ -37,11 +37,9 @@ static function GetFlag ( flag : String, state : boolean ) {
 		return true;
 		
 	} else if ( flagTable.GetField ( flag ) ) {
-		GameCore.Print ( "FlagManager | flag '" + flag + "' is " + flagTable.GetField ( flag ).b );
 		return flagTable.GetField ( flag ).b == state;
 	
 	} else {
-		GameCore.Print ( "FlagManager | flag '" + flag + "' doesn't exist" );
 		return false;
 	
 	}

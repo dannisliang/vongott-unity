@@ -173,22 +173,22 @@ class GameCamera extends MonoBehaviour {
 	private function DrawBoundingBox ( obj : GameObject ) {
 		var center : Vector3;
 		var size : Vector3;
-		
-		if ( obj.GetComponent(BoxCollider) ) {
-			center = obj.GetComponent(BoxCollider).center;
-			size = obj.GetComponent(BoxCollider).size * boundingBoxModifier;
-		
-		} else if ( obj.GetComponent(CapsuleCollider) ) {
-			center = obj.GetComponent(CapsuleCollider).center;
-			size = new Vector3 ( obj.GetComponent(CapsuleCollider).radius*2, obj.GetComponent(CapsuleCollider).height, obj.GetComponent(CapsuleCollider).radius*2 ) * boundingBoxModifier;
-		
-		} else if ( obj.GetComponent(SphereCollider) ) {
-			center = obj.GetComponent(SphereCollider).center;
-			size = new Vector3 ( obj.GetComponent(SphereCollider).radius, obj.GetComponent(SphereCollider).radius, obj.GetComponent(SphereCollider).radius ) * boundingBoxModifier;
 	
-		} else if ( obj.GetComponentInChildren(CharacterController) ) {
-			center = obj.GetComponent(CharacterController).center;
-			size = new Vector3 ( obj.GetComponent(CharacterController).radius*2, obj.GetComponent(CharacterController).height, obj.GetComponent(CharacterController).radius*2 ) * boundingBoxModifier;
+		var bc : BoxCollider = obj.GetComponent ( BoxCollider );
+		var cc : CharacterController = obj.GetComponent ( CharacterController );
+		var sc : SphereCollider = obj.GetComponent ( SphereCollider );
+
+		if ( bc ) {
+			center = bc.center;
+			size = bc.size * boundingBoxModifier;
+		
+		} else if ( sc ) {
+			center = sc.center;
+			size = new Vector3 ( sc.radius, sc.radius, sc.radius ) * boundingBoxModifier;
+	
+		} else if ( cc ) {
+			center = cc.center;
+			size = new Vector3 ( cc.radius*2, cc.height, cc.radius*2 ) * boundingBoxModifier;
 
 		} else {
 			return;

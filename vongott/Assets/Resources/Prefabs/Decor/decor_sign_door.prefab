@@ -93,7 +93,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: dd7228362db7b4f548dfa8db460ca151, type: 3}
+  - {fileID: 2100000, guid: e39889b448eb64d95b5ef1ea700b6a94, type: 3}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -139,7 +139,7 @@ TextMesh:
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: dd7228362db7b4f548dfa8db460ca151, type: 3}
+  m_Font: {fileID: 12800000, guid: e39889b448eb64d95b5ef1ea700b6a94, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -154,9 +154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: decor_sign_door
+  title: 
   description: 
   path: Prefabs/Decor
+  id: decor_sign_door
   materialPath: 
   tilingModifiers: []
   canChangeMaterial: 0
