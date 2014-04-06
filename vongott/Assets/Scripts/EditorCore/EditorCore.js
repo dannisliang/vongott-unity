@@ -13,13 +13,15 @@ public var _undoContainer : Transform;
 public var _defaultMaterial : Material;
 public var _navMeshMaterial : Material;
 
+// Private vars
+private var navNodes : OPNode[];
+
 // Static vars
 static var menusActive : boolean = false;
 static var selectedObject : GameObject;
 static var selectedVertex : int;
 static var currentLevel : GameObject;
 static var currentLevelData : MapData;
-static var navNodes : OPNode[];
 
 // Load on init
 static var initMap : String;
@@ -380,7 +382,7 @@ static function GetObjectIcon ( obj : GameObject, image : OGTexture ) : IEnumera
 ////////////////////
 // Get all
 public static function GetWayPoints () : OPWayPoint[] {
-	return GameObject.FindObjectsOfType(OPWayPoint);
+	return GameObject.FindObjectsOfType.<OPWayPoint>();
 }
 
 // Update all
@@ -408,6 +410,16 @@ static function AddNavMesh () {
 	EditorOpenFile.fileType = "obj";
 	EditorOpenFile.asNavMesh = true;
 	OGRoot.GetInstance().GoToPage ( "OpenFile" );
+}
+
+// Set nodes
+public function SetNavNodes ( nodes : OPNode[] ) {
+	navNodes = nodes;
+}
+
+// Get nodes
+public function GetNavNodes () : OPNode[] {
+	return navNodes;
 }
 
 // Bake
@@ -510,10 +522,10 @@ static function ToggleGizmos () {
 
 // Toggle navigation
 static function ToggleNavigation () {
-	var navMesh : OPNavMesh = GameObject.FindObjectOfType ( OPNavMesh );
-	if ( navMesh != null ) {
-		navMesh.GetComponent ( MeshRenderer ).enabled = !navMesh.GetComponent ( MeshRenderer ).enabled;
-	}
+	//var navMesh : OPNavMesh = GameObject.FindObjectOfType ( OPNavMesh );
+	//if ( navMesh != null ) {
+	//	navMesh.GetComponent ( MeshRenderer ).enabled = !navMesh.GetComponent ( MeshRenderer ).enabled;
+	//}
 }
 
 

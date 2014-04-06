@@ -309,7 +309,7 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 	// nav nodes
 	if ( obj.HasField ( "NavNodes" ) ) {
 		if ( EditorCore.running ) {
-			EditorCore.navNodes = DeserializeNavNodes ( obj.GetField ( "NavNodes" ) );
+			EditorCore.GetInstance().SetNavNodes ( DeserializeNavNodes ( obj.GetField ( "NavNodes" ) ) );
 		} else {
 			GameCore.GetInstance().GetComponent(OPScanner).SetMap ( DeserializeNavNodes ( obj.GetField ( "NavNodes" ) ) );
 		}

@@ -25,10 +25,11 @@ class OGListItem extends OGWidget {
 			}
 		}
 
-		if ( hoverFunc != null ) {
+		if ( hoverFunc ) {
 			hoverFunc ();
+		}
 
-		} else if ( target != null ) {
+		if ( target != null ) {
 			if ( !String.IsNullOrEmpty ( hoverMessage ) ) {
 				if ( !String.IsNullOrEmpty ( argument ) ) {
 					target.SendMessage ( hoverMessage, argument );
@@ -45,10 +46,11 @@ class OGListItem extends OGWidget {
 	}
 
 	private function Action () {
-		if ( func != null ) {
+		if ( func ) {
 			func ();
-
-		} else if ( target != null ) {
+		}
+		
+		if ( target != null ) {
 			if ( !String.IsNullOrEmpty ( message ) ) {
 				if ( !String.IsNullOrEmpty ( argument ) ) {
 					target.SendMessage ( message, argument );

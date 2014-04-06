@@ -34,7 +34,6 @@ public class OGPageInspector extends Editor {
 			if ( GUILayout.Button ( "Set current page", GUILayout.Height(30) ) ) {
 				OGRoot.GetInstance().SetCurrentPage ( page );
 				page.gameObject.SetActive ( true );	
-				page.UpdateStyles (); 
 				OGRoot.GetInstance().SetDirty();
 			}
 		}	

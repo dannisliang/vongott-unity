@@ -70,12 +70,23 @@ public class OGStyle {
 }
 
 public class OGStyleSet {
-	public var basic : OGStyle;
-	public var hover : OGStyle;
-	public var active : OGStyle;
-	public var ticked : OGStyle;
-	public var thumb : OGStyle;
-	public var disabled : OGStyle;
+	public var basic : OGStyle = new OGStyle ();
+	public var hover : OGStyle = new OGStyle ();
+	public var active : OGStyle = new OGStyle ();
+	public var ticked : OGStyle = new OGStyle ();
+	public var thumb : OGStyle = new OGStyle ();
+	public var disabled : OGStyle = new OGStyle ();
+
+	public function Refresh ( skin : OGSkin ) {
+		if ( !skin ) { return; }
+		
+		if ( basic ) { basic = skin.GetStyle ( basic.name ); }
+		if ( hover ) { hover = skin.GetStyle ( hover.name ); }
+		if ( active ) { active = skin.GetStyle ( active.name ); }
+		if ( ticked ) { ticked = skin.GetStyle ( ticked.name ); }
+		if ( thumb ) { thumb = skin.GetStyle ( thumb.name ); }
+		if ( disabled ) { disabled = skin.GetStyle ( disabled.name ); }
+	}
 
 	public function GetStyle ( typ : OGStyleType ) {
 		var result : OGStyle;

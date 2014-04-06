@@ -36,8 +36,8 @@ class Saver {
 		serialized.AddField ( "Camera", Serializer.SerializeTransform ( Camera.main.transform ) );
 		serialized.AddField ( "screenshot", Serializer.SerializeScreenshot ( screenshot ) );
 		
-		if ( EditorCore.navNodes != null && EditorCore.navNodes.Length > 0 ) {
-			serialized.AddField ( "NavNodes", Serializer.SerializeNavNodes ( EditorCore.navNodes ) );
+		if ( EditorCore.GetInstance().GetNavNodes() != null && EditorCore.GetInstance().GetNavNodes().Length > 0 ) {
+			serialized.AddField ( "NavNodes", Serializer.SerializeNavNodes ( EditorCore.GetInstance().GetNavNodes() ) );
 		}
 		
 		if ( GameObject.FindObjectOfType(SkyBox) ) {

@@ -46,12 +46,8 @@ public static function GetInstance() : EditorCamera {
 ////////////////////
 // Gizmo
 function DrawLine ( from : Vector3, to : Vector3 ) {
-	GL.Begin( GL.LINES );
-	
 	GL.Vertex3( from.x, from.y, from.z );
  	GL.Vertex3( to.x, to.y, to.z );
-
-	GL.End();
 }
 
 function DrawLine ( from : Vector3, to : Vector3, material : Material ) {
