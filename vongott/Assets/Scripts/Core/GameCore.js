@@ -82,12 +82,6 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	static function SetInteractiveObject ( obj : InteractiveObject ) {
 		interactiveObject = obj;
-		
-		if ( obj ) {
-			Print ( "GameCore | Interactive object set to: " + obj.name );
-		} else {
-			Print ( "GameCore | Interactive object released" );
-		}
 	}
 	
 	static function GetInteractiveObject () : InteractiveObject {

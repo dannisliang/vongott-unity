@@ -157,13 +157,24 @@ public class ConversationManager {
 		GameCamera.GetInstance().StorePosRot();
 
 		// Find support actor
-		var colliders : Collider[] = Physics.OverlapSphere ( currentActor.transform.position, 5 );
-		for ( var i : int = 0; i < colliders.Length; i++ ) {
-			var foundActor : Actor = colliders[i].GetComponent(Actor);
+		var actors : Actor [] = GameObject.FindObjectsOfType.<Actor>();
+		var foundActor : Actor;
+		
+		for ( var i : int = 0; i < actors.Length; i++ ) {
+			var sameActor : boolean = actors[i] == currentActor;
+			var sameFloor : boolean = true;//Mathf.Abs ( actors[i].transform.position.y - currentActor.transform.position.y ) < 0.5;
+			var nearest : boolean = foundActor == null || ( actors[i].transform.position - currentActor.transform.position ).sqrMagnitude < ( foundActor.transform.position - currentActor.transform.position ).sqrMagnitude;
+			var patrolling : boolean = actors[i].pathType == Actor.ePathType.Patrolling && actors[i].path.Count > 0;
 
-			if ( foundActor != null && foundActor != currentActor && currentActor.pathType != Actor.ePathType.Patrolling ) {
-				currentSupportActor = foundActor;
+			if ( sameFloor && nearest && !patrolling && !sameActor ) {
+				foundActor = actors[i];
 			}
+		}
+
+		currentSupportActor = foundActor;
+		
+		if ( currentSupportActor ) {
+			GameCore.Print ( "ConversationManager | Support actor: " + currentSupportActor.displayName );
 		}
 
 		// Send signal to player object		
