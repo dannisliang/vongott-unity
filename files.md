@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Downloads"
+title: "Files"
 index: 2
 ---
 
