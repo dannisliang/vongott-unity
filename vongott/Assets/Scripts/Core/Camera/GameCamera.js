@@ -185,7 +185,11 @@ class GameCamera extends MonoBehaviour {
 		} else if ( obj.GetComponent(SphereCollider) ) {
 			center = obj.GetComponent(SphereCollider).center;
 			size = new Vector3 ( obj.GetComponent(SphereCollider).radius, obj.GetComponent(SphereCollider).radius, obj.GetComponent(SphereCollider).radius ) * boundingBoxModifier;
-		
+	
+		} else if ( obj.GetComponentInChildren(CharacterController) ) {
+			center = obj.GetComponent(CharacterController).center;
+			size = new Vector3 ( obj.GetComponent(CharacterController).radius*2, obj.GetComponent(CharacterController).height, obj.GetComponent(CharacterController).radius*2 ) * boundingBoxModifier;
+
 		} else {
 			return;
 		
