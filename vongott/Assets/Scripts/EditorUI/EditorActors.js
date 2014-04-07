@@ -1,5 +1,11 @@
 #pragma strict
 
+public class EditorActors extends OGPage {
+
+}
+
+/*#pragma strict
+
 class EditorActors extends OGPage {
 	var actorList : Transform;
 	var actorSelector : OGPopUp;
@@ -72,4 +78,4 @@ class EditorActors extends OGPage {
 			PopulateList();
 		}
 	}
-}
+}*/
