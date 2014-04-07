@@ -23,7 +23,7 @@ galleries:
       text: "Conversation editor"
     - url: "images/gallery/screenshots/editor.jpg"
       text: "Vongott Editor"
-    - url: "images/gallery/screenshots/properties_actor.jpg"
+    - url: "images/gallery/screenshots/main_menu.jpg"
       text: "Actor properties"
     - url: "images/gallery/screenshots/properties_interfaces.jpg"
       text: "Interface properties"
