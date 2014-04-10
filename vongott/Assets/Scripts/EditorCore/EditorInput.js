@@ -371,14 +371,16 @@ function Update () {
 		} else if ( Input.GetKeyDown ( KeyCode.D ) ) {
 			EditorCore.DuplicateObject();
 			
-		// numpad period: center object
-		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) ) {
+		// Period: center object
+		} else if ( Input.GetKeyDown ( KeyCode.KeypadPeriod) || Input.GetKeyDown ( KeyCode.Period ) ) {
 			if ( EditorCore.GetSelectedObject() ) {
-				Camera.main.GetComponent ( EditorCamera ).cursor.position = EditorCore.GetSelectedObject().transform.renderer.bounds.center;
-				Camera.main.GetComponent ( EditorCamera ).FocusOn ( EditorCore.GetSelectedObject().transform.renderer.bounds.center );
+				var collider : Collider = EditorCore.GetSelectedObject().GetComponentInChildren.< Collider >();
+				var pos : Vector3 = collider.bounds.center;
+
+				Camera.main.GetComponent ( EditorCamera ).cursor.position = pos;
+				Camera.main.GetComponent ( EditorCamera ).FocusOn ( pos );
 			} else {
-				Camera.main.GetComponent ( EditorCamera ).cursor.position = Vector3.zero;
-				Camera.main.GetComponent ( EditorCamera ).FocusOn ( Vector3.zero );
+				Camera.main.GetComponent ( EditorCamera ).FocusOn ( Camera.main.GetComponent ( EditorCamera ).cursor.position );
 			}
 		
 		// numpad 5: orthographic view

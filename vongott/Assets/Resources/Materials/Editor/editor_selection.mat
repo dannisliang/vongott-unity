@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: editor_selection
-  m_Shader: {fileID: 4800000, guid: 4401a8719d76edd478a0dbd2de3b3970, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5d6d3c52c7fb24104b02fafbafabf026, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -38,7 +38,7 @@ Material:
       data:
         first:
           name: _Outline
-        second: .00999999978
+        second: .00999999791
       data:
         first:
           name: _RimPower
@@ -63,11 +63,11 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .533333361, g: .815686285, b: 1, a: .368627459}
+        second: {r: .533333361, g: .815686285, b: 1, a: 0}
       data:
         first:
           name: _OutlineColor
-        second: {r: 0, g: 1, b: 0, a: 1}
+        second: {r: 0, g: .478431374, b: 1, a: 1}
       data:
         first:
           name: _RimColor

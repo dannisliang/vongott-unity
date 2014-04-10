@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: inventory_button
-  m_Shader: {fileID: 4800000, guid: 2208b913cbf864d469caae98800f8c88, type: 3}
+  m_Shader: {fileID: 2, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -24,7 +24,7 @@ Material:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: d8bee84aed4c50f48b63cd3ce20c33b9, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -48,7 +48,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .676470578, g: .0845588222, b: .0845588222, a: 1}
+        second: {r: .942494988, g: 1, b: .404411793, a: 1}
       data:
         first:
           name: _OutlineColor
