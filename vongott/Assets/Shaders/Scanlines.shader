@@ -8,8 +8,9 @@
 	SubShader {
 		Pass {
 			Lighting Off
-			ZWrite Off
 			Cull Off
+			ZWrite Off
+		
 			Blend SrcAlpha OneMinusSrcAlpha
 			Tags {"Queue"="Transparent"}
 

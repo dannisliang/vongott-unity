@@ -700,7 +700,7 @@ static function SelectObject ( obj : GameObject ) {
 	}
 	
 	selectedObject = obj;
-		
+
 	// Mark object with selection box
 	FitSelectionBox ();
 	
