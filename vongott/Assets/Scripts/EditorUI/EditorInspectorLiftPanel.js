@@ -26,7 +26,7 @@ class EditorInspectorLiftPanel extends MonoBehaviour {
 		btn.text = v.x + "," + v.y + "," + v.z;
 		btn.target = this.gameObject;
 		btn.message = "PickDestination";
-		btn.GetDefaultStyles();
+		btn.ApplyDefaultStyles();
 
 		UpdateObject();
 	}	

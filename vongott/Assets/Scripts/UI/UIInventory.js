@@ -85,7 +85,7 @@ class UIInventory extends OGPage {
 		button.target = this.gameObject;
 		button.message = "RemoveStashEntry";
 		button.argument = slot.ToString();
-		button.GetDefaultStyles();
+		button.ApplyDefaultStyles();
 
 		button.transform.parent = stash;
 		button.transform.localScale = new Vector3 ( 24, 24, 1 );

@@ -4,7 +4,8 @@ import System.Collections.Generic;
 
 public class OGDrawHelper {
 	private static var texSize : Vector2;
-	
+
+
 	//////////////////
 	// Core
 	//////////////////
@@ -392,6 +393,8 @@ public class OGDrawHelper {
 	}
 
 	public static function DrawSlicedSprite ( rect : Rect, style : OGStyle, depth : float, tint : Color, clipping : OGWidget ) {
+		if ( !style ) { return; }
+		
 		var uvRect : Rect = style.coordinates;
 		var border : OGSlicedSpriteOffset = style.border;
 		var color : Color = style.color;

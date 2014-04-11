@@ -70,7 +70,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 		var l : OGLabel = label.AddComponent ( OGLabel );
 		l.text = "PathNode" + nodes.Count.ToString();
-		l.GetDefaultStyles();
+		l.ApplyDefaultStyles();
 
 		// pick node
 		var buttonPick : GameObject = new GameObject ( "ButtonPick" );
@@ -83,7 +83,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		bp.target = this.gameObject;
 		bp.message = "PickNode";
 		bp.argument = nodes.Count.ToString();
-		bp.GetDefaultStyles();
+		bp.ApplyDefaultStyles();
 
 		// delete node
 		var buttonDelete : GameObject = new GameObject ( "ButtonDelete" );
@@ -96,7 +96,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		bd.target = this.gameObject;
 		bd.message = "DeleteNode";
 		bd.argument = nodes.Count.ToString();
-		bd.GetDefaultStyles();
+		bd.ApplyDefaultStyles();
 
 		// idle time
 		var idleTime : GameObject = new GameObject ( "IdleTime" );
@@ -114,7 +114,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		tf.text = actorNode.duration.ToString();
 		tf.maxLength = 4;
 		tf.regex = "^0-9";
-		tf.GetDefaultStyles();		
+		tf.ApplyDefaultStyles();		
 
 		// ^ label
 		var itLabel : GameObject = new GameObject ( "Label" );
@@ -124,7 +124,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 		var il : OGLabel = itLabel.AddComponent ( OGLabel );
 		il.text = "Idle (s)";
-		il.GetDefaultStyles();
+		il.ApplyDefaultStyles();
 
 		// movement
 		var running : GameObject = new GameObject ( "Movement" );
@@ -136,7 +136,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		rpu.title = "<movement>";
 		rpu.options = [ "Walk", "Run", "Teleport" ];
 		rpu.selectedOption = actorNode.movement.ToString();
-		rpu.GetDefaultStyles();
+		rpu.ApplyDefaultStyles();
 
 		// position
 		var posLabel : GameObject = new GameObject ( "Label" );
@@ -146,7 +146,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 		var pl : OGLabel = posLabel.AddComponent ( OGLabel );
 		pl.text = "Position:";
-		pl.GetDefaultStyles();
+		pl.ApplyDefaultStyles();
 
 		// ^ numbers
 		var numLabel : GameObject = new GameObject ( "Position" );
@@ -156,7 +156,7 @@ class EditorInspectorPath extends MonoBehaviour {
 		
 		var nl : OGLabel = numLabel.AddComponent ( OGLabel );
 		nl.text = actorNode.position.x.ToString("f2") + ", " + actorNode.position.y.ToString("f2") + ", " + actorNode.position.z.ToString("f2");
-		nl.GetDefaultStyles();
+		nl.ApplyDefaultStyles();
 
 		// add node
 		nodes.Add ( node );

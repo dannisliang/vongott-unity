@@ -30,7 +30,7 @@ class EditorFlags extends OGPage {
 			textField.regex = "^a-zA-Z0-9_-";
 			textField.text = name;
 						
-			textField.GetDefaultStyles();
+			textField.ApplyDefaultStyles();
 
 			// Delete button
 			var btnPick : GameObject = new GameObject ( "btn" );
@@ -44,7 +44,7 @@ class EditorFlags extends OGPage {
 			button.argument = "0";
 			button.text = "X";
 
-			button.GetDefaultStyles();
+			button.ApplyDefaultStyles();
 		}
 	}
 	

@@ -135,7 +135,7 @@ class EditorOpenFile extends OGPage {
 			obj.transform.localScale = new Vector3 ( 480, 30, 1 );
 			obj.transform.localPosition = new Vector3 ( 0, i * 32, 0 );
 	
-			btn.GetDefaultStyles ();	
+			btn.ApplyDefaultStyles ();	
 			
 		}
 	}

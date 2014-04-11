@@ -70,7 +70,7 @@ class EditorPicker extends OGPage {
 		obj.transform.localPosition = new Vector3 ( inset, 0, 0 );
 		obj.transform.localScale = new Vector3 ( 570 - inset, 20, 1 );
 	
-		btn.GetDefaultStyles ();
+		btn.ApplyDefaultStyles ();
 	}
 	
 	// Create line
@@ -89,7 +89,7 @@ class EditorPicker extends OGPage {
 		obj.transform.localScale = new Vector3 ( 570 - inset, 20, 1 );
 		obj.transform.localPosition = new Vector3 ( inset, 0, 0 );
 
-		lbl.GetDefaultStyles ();
+		lbl.ApplyDefaultStyles ();
 	}
 	
 	

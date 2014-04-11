@@ -160,7 +160,7 @@ class EditorBrowserPanel extends MonoBehaviour {
 		img.transform.localPosition = new Vector3 ( 0, 0, -1 );
 		img.transform.localScale = Vector3.one;
 
-		btn.GetDefaultStyles();
+		btn.ApplyDefaultStyles();
 	}
 
 	function Update () {

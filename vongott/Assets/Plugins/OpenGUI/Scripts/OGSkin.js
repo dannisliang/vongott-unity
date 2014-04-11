@@ -70,12 +70,12 @@ public class OGStyle {
 }
 
 public class OGStyleSet {
-	public var basic : OGStyle = new OGStyle ();
-	public var hover : OGStyle = new OGStyle ();
-	public var active : OGStyle = new OGStyle ();
-	public var ticked : OGStyle = new OGStyle ();
-	public var thumb : OGStyle = new OGStyle ();
-	public var disabled : OGStyle = new OGStyle ();
+	public var basic : OGStyle;
+	public var hover : OGStyle;
+	public var active : OGStyle;
+	public var ticked : OGStyle;
+	public var thumb : OGStyle;
+	public var disabled : OGStyle;
 
 	public function Refresh ( skin : OGSkin ) {
 		if ( !skin ) { return; }
@@ -252,21 +252,25 @@ public class OGSkin extends MonoBehaviour {
 		];
 	}
 
-
-	public function GetDefaultStyles ( w : OGWidget ) {
+	public function ApplyDefaultStyles ( w : OGWidget ) {
 		for ( var d : OGDefault in GetAllDefaults() ) {
 			if ( d.widgetType == w.ToEnum() ) {
-				w.styles = new OGStyleSet();
+				if ( w.styles == null ) {
+					w.styles = new OGStyleSet ();
+				}
+				
 				w.styles.basic = d.styleSet.basic;
 				w.styles.active = d.styleSet.active;
 				w.styles.hover = d.styleSet.hover;
 				w.styles.thumb = d.styleSet.thumb;
 				w.styles.disabled = d.styleSet.disabled;
 				w.styles.ticked = d.styleSet.ticked;
+			
+				return;
 			}
 		}	
 	}
-
+	
 	public function GetStyle ( n : String ) : OGStyle {
 		for ( var s : OGStyle in styles ) {
 			if ( s.name == n ) {

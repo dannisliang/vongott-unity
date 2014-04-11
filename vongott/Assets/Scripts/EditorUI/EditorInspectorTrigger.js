@@ -109,7 +109,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 			
 			OGRoot.GetInstance().GoToPage ( "Picker" );
 		};
-		btn.GetDefaultStyles();
+		btn.ApplyDefaultStyles();
 		
 		var dltObj : GameObject = new GameObject ( "Delete" );
 		dltObj.transform.parent = obj.transform;
@@ -122,7 +122,7 @@ class EditorInspectorTrigger extends MonoBehaviour {
 		dlt.func = function () {
 			RemoveEvent ( obj );
 		};
-		dlt.GetDefaultStyles();
+		dlt.ApplyDefaultStyles();
 
 		if ( eventName != "" ) {
 			btn.text = eventName;

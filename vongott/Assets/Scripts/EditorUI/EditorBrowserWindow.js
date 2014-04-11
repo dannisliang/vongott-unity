@@ -107,7 +107,7 @@ class EditorBrowserWindow extends OGPage {
 		obj.transform.localScale = new Vector3 ( 468, 30, 1 );
 		obj.transform.localPosition = new Vector3 ( 0, index * 32, 0 );
 	
-		btn.GetDefaultStyles();
+		btn.ApplyDefaultStyles();
 
 		navList.Add ( btn );
 	}
