@@ -113,6 +113,7 @@ public class OSItemInspector extends Editor {
 			if ( item.ammunition.enabled ) {
 				item.ammunition.index = EditorGUILayout.Popup ( "Type", item.ammunition.index, item.definitions.GetAmmunitionStrings() );
 				item.ammunition.value = EditorGUILayout.IntField ( "Amount", item.ammunition.value );
+				item.ammunition.item = item;
 			}
 
 			// Textures

@@ -19,6 +19,11 @@ public class OSAmmunitionAmount {
 	}
 }
 
+public class OSSoundReference {
+	public var id : String = "newSound";
+	public var clip : AudioClip;
+}
+
 public class OSAttribute {
 	public var index : int = 0;
 	public var value : float = 0;
@@ -50,11 +55,12 @@ public class OSItem extends MonoBehaviour {
 	public var subcatIndex : int;
 	public var slotSize : OSPoint = new OSPoint ( 1, 1 );
 	public var attributes : OSAttribute[] = new OSAttribute[0];
-	public var ammunition : OSAmmunitionAmount; 
+	public var ammunition : OSAmmunitionAmount = new OSAmmunitionAmount ( this ); 
 	public var thumbnail : Texture2D;
 	public var preview : Texture2D;
 	public var prefabPath : String;
 	public var definitions : OSDefinitions;
+	public var sounds : OSSoundReference[] = new OSSoundReference [0];
 
 	public function get category () : String {
 		return definitions.categories [ catIndex ].id;
@@ -62,6 +68,24 @@ public class OSItem extends MonoBehaviour {
 	
 	public function get subcategory () : String {
 		return definitions.categories [ catIndex ].subcategories [ subcatIndex ];
+	}
+
+	public function GetSound ( id : String ) : AudioClip {
+		for ( var i : int = 0; i < sounds.Length; i++ ) {
+			if ( sounds[i].id == id ) {
+				return sounds[i].clip;
+			}
+		}
+
+		return null;
+	}
+
+	public function PlaySound ( id : String ) {
+		if ( !audio ) {
+			this.gameObject.AddComponent.< AudioSource > ();
+		}
+
+		audio.clip = GetSound ( id );
 	}
 
 	public function ChangeAmmunition ( value : int ) {

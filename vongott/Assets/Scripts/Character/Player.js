@@ -23,7 +23,7 @@ class Player extends MonoBehaviour {
 	// Private vars	
 	private var shield : GameObject;
 	private var liftedObject : LiftableItem;
-	private var equippedObject : Item;
+	private var equippedObject : OSItem;
 	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
 					
@@ -72,6 +72,21 @@ class Player extends MonoBehaviour {
 		liftedObject.OnDrop ();
 		liftedObject = null;
 	}
+	
+	// Checks
+	public function CheckWeaponPosition () {
+		if ( equippedObject ) {
+			if ( GameCamera.controller.state == eCameraState.FirstPerson ) {
+				equippedObject.transform.parent = Camera.main.transform;
+				equippedObject.transform.localPosition = new Vector3 ( 0.27, -0.17, 1 );
+				equippedObject.transform.localEulerAngles = Camera.main.transform.forward;
+			} else {
+				equippedObject.transform.parent = hand;
+				equippedObject.transform.localPosition = Vector3.zero;;
+				equippedObject.transform.localEulerAngles = hand.forward;;
+			}
+		}
+	}
 
 	// Holster/unholster
 	public function HolsterItem () {
@@ -80,25 +95,6 @@ class Player extends MonoBehaviour {
 
 	public function UnholsterItem () {
 
-	}
-
-	// Consume
-	function Consume ( item : Item ) {
-		if ( item.subType == eItemSubType.Biological ) {
-			var upg : Upgrade = item as Upgrade;
-			
-			UpgradeManager.IncrementAbility ( upg.ability.id, upg.ability.value );
-					
-		} else {
-			for ( var i = 0; i < item.attr.Length; i++ ) {
-				switch ( item.attr[i].type ) {
-					case eItemAttribute.Energy:
-						energy += Mathf.RoundToInt(item.attr[i].val);
-						if ( energy > 100 ) { energy = 100; }
-						break;
-				}
-			}
-		}
 	}
 
 	// Throw
@@ -122,22 +118,11 @@ class Player extends MonoBehaviour {
 		}
 	}
 
-	// Equip
-	public function CheckWeaponPosition () {
-		if ( equippedObject ) {
-			if ( GameCamera.controller.state == eCameraState.FirstPerson ) {
-				equippedObject.transform.parent = Camera.main.transform;
-				equippedObject.transform.localPosition = new Vector3 ( 0.27, -0.17, 1 );
-				equippedObject.transform.localEulerAngles = Camera.main.transform.forward;
-			} else {
-				equippedObject.transform.parent = hand;
-				equippedObject.transform.localPosition = Vector3.zero;;
-				equippedObject.transform.localEulerAngles = hand.forward;;
-			}
-		}
-	}
 
-	function UnEquip () {
+	////////////////////
+	// Inventory interfacing
+	////////////////////
+	public function OnUnequipAll () {
 		GameCamera.GetInstance().controller.Unlock ();
 		
 		if ( equippedObject ) {
@@ -145,35 +130,18 @@ class Player extends MonoBehaviour {
 		}
 	}
 
-	function Equip ( item : Item ) {
-		var eq : Equipment = item as Equipment;
-		var slot : eEquipmentSlot = eq.eqSlot;
-		var target : Transform;
-		
-		if ( slot == eEquipmentSlot.Hands ) {
-			target = hand;
-		
-		} else if ( slot == eEquipmentSlot.Head ) {
-			target = head;
-		
-		} 
-		
-		equippedObject = Instantiate ( item ) as Item;
-		equippedObject.transform.parent = target;
+	function OnEquipItem ( item : OSItem ) {
+		equippedObject = Instantiate ( item ) as OSItem;
+		equippedObject.transform.parent = hand;
 		equippedObject.transform.localPosition = Vector3.zero;
-		equippedObject.transform.localEulerAngles = target.forward;
+		equippedObject.transform.localEulerAngles = hand.forward;
 		equippedObject.GetComponent(BoxCollider).enabled = false;
 		equippedObject.rigidbody.useGravity = false;
 		equippedObject.rigidbody.isKinematic = true;
 		
-		eq = equippedObject as Equipment;
-		
-		if ( eq.equipSound ) {
-			SFXManager.GetInstance().Play ( eq.equipSound.name, eq.audio );
-		}
+		item.PlaySound ( "equip" );
 
-	
-		if ( item.type == eItemType.Weapon && ( item.subType == eItemSubType.OneHanded || item.subType == eItemSubType.TwoHanded ) ) {
+		if ( item.category == "Weapon" && ( item.subcategory == "OneHanded" || item.subcategory == "TwoHanded" ) ) {
 			ResetFire();
 		
 			GameCamera.GetInstance().controller.LockFirstPerson ();
@@ -201,16 +169,6 @@ class Player extends MonoBehaviour {
 	}
 	
 	function GetEquipmentAttribute ( a : eItemAttribute ) : float {
-		var item : Item = equippedObject;
-
-		for ( var attr : Item.Attribute in item.attr ) {
-			if ( attr.type == a ) {
-				return attr.val;
-			} 
-		}
-		
-		GameCore.Error ( "Player | Found no attribute " + a + " for item " + item );
-		
 		return 100;
 	}
 	
@@ -352,7 +310,13 @@ class Player extends MonoBehaviour {
 		}
 	}
 	
-	
+	////////////////////
+	// Init
+	////////////////////	
+	public function Start () {
+		GameCore.GetInventory().eventHandler = this.gameObject;
+	}
+
 	////////////////////
 	// Update
 	////////////////////	

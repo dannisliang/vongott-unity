@@ -7,6 +7,9 @@ private class Inspector {
 	public var description : OGLabel;
 	public var attrName : OGLabel;
 	public var attrVal : OGLabel;
+	public var ammoName : OGLabel;
+	public var ammoVal : OGLabel;
+	public var ammoTex : OGTexture;
 	public var action : OGButton;
 	public var discard : OGButton;
 
@@ -15,6 +18,8 @@ private class Inspector {
 		description.text = "";
 		attrName.text = "";
 		attrVal.text = "";
+		ammoName.text = "";
+		ammoVal.text = "";
 		action.gameObject.SetActive ( false );
 		discard.gameObject.SetActive ( false );
 	}
@@ -34,9 +39,30 @@ class UIInventory extends OGPage {
 			texture = gameObject.GetComponentInChildren.< OGTexture >();
 		}
 	}
+
+	private class QuickSlot {
+		public var btnRemove : OGButton;
+		public var btnPut : OGButton;
+		public var gameObject : GameObject;
+		public var texture : OGTexture;
+
+		function QuickSlot ( t : Transform ) {
+			gameObject = t.gameObject;
+			
+			for ( var b : OGButton in gameObject.GetComponentsInChildren.< OGButton > () ) {
+				if ( b.gameObject.name == "btn_Remove" ) {
+					btnRemove = b;
+				} else {
+					btnPut = b;
+				}
+			}
+			
+			texture = gameObject.GetComponentInChildren.< OGTexture >();
+		}
+	}
 	
 	public var grid : Transform;
-	public var stash : Transform;
+	public var quick : Transform;
 	public var inspector : Inspector;
 	public var creditsDisplay : OGLabel;
 	public var hoverColorGrid : Color;
@@ -46,10 +72,17 @@ class UIInventory extends OGPage {
 	private var dragging : boolean = false;
 	private var selectedSlot : OSSlot;
 	private var cells : Cell[,];
+	private var quickSlots : QuickSlot[];
 	private var inventory : OSInventory;
+	private var slotSize : float = 90;
+		
 
 	// Method for defining the selected OSSlot
 	public function SelectSlot ( n : String ) {
+		inspector.Clear ();
+		
+		if ( dragging ) { return; }
+		
 		var i : int = int.Parse ( n );
 
 		if ( inventory.slots[i] == selectedSlot ) {
@@ -63,8 +96,8 @@ class UIInventory extends OGPage {
 			inspector.description.text = selectedSlot.item.description;
 			
 			if ( selectedSlot.item.ammunition.enabled ) {
-				inspector.attrName.text = selectedSlot.item.ammunition.name + "\n\n";
-				inspector.attrVal.text = selectedSlot.item.ammunition.value + "\n\n";
+				inspector.ammoName.text = selectedSlot.item.ammunition.name;
+				inspector.ammoVal.text = selectedSlot.item.ammunition.value.ToString();
 			}
 
 			for ( var attr : OSAttribute in selectedSlot.item.attributes ) {
@@ -73,6 +106,7 @@ class UIInventory extends OGPage {
 			}
 		}
 
+		UpdateCells ();
 	}
 
 	// Cancel the currently dragged item
@@ -101,12 +135,37 @@ class UIInventory extends OGPage {
 
 	// Try to move the OSSlot to another location
 	public function PutItem ( btn : OGButton ) {
-		var p : OSPoint = new OSPoint ( btn.gameObject.name, "-"[0], true );
-
+		var strings : String[] = btn.transform.parent.gameObject.name.Split ( "-"[0] );
+		var x : int = int.Parse ( strings[0] );
+		var y : int = int.Parse ( strings[1] );
+		
 		if ( selectedSlot ) {
-			inventory.grid.Move ( selectedSlot, p.x, p.y );
+			inventory.grid.Move ( selectedSlot, x, y );
 			CancelDrag ();
 		}
+
+		UpdateCells ();
+	}
+
+	public function PutInQuickSlot ( n : String ) {
+		if ( !dragging ) { return; }
+		
+		var i : int = int.Parse ( n );
+		
+		if ( selectedSlot ) {
+			inventory.SetQuickItem ( selectedSlot.item, i );
+			CancelDrag ();
+		}
+
+		UpdateCells ();
+	}
+
+	public function RemoveFromQuickSlot ( n : String ) {
+		var i : int = int.Parse ( n );
+
+		inventory.ClearQuickItem ( i );
+		
+		UpdateCells ();
 	}
 
 	// Consume item
@@ -114,6 +173,8 @@ class UIInventory extends OGPage {
 		if ( !dragging && selectedSlot && selectedSlot.item ) {
 			inventory.DecreaseSlot ( selectedSlot );
 		}
+		
+		UpdateCells ();
 	}
 
 	// Equip/unequip item
@@ -123,52 +184,50 @@ class UIInventory extends OGPage {
 			
 			inventory.SetEquipped ( selectedSlot.item );
 		}
+		
+		UpdateCells ();
 	}
 
 	public function Unequip () {
 		inventory.UnequipAll ();
+		
+		UpdateCells ();
 	}
 
 	// Update cell content
 	private function UpdateCells () {
-		var slotSize : float = 90;
-		
-		// Keep the drag texture underneath the mouse...
-		dragTexture.transform.position = new Vector3 ( Input.mousePosition.x - slotSize / 2, Screen.height - Input.mousePosition.y - slotSize / 2, 0 );
-
-		// ...and make sure it has the right texture
-		if ( dragging && selectedSlot && selectedSlot.item ) {
-			dragTexture.mainTexture = selectedSlot.item.preview;
-			dragTexture.transform.localScale = new Vector3 ( selectedSlot.scale.x * slotSize, selectedSlot.scale.y * slotSize, 1 );	
-		
-		} else {
-			dragTexture.mainTexture = null;
-		
-		}
-
 		// Set button properties
 		if ( selectedSlot && selectedSlot.item ) {
-			if ( selectedSlot.item.category == "Consumable" ) {
-				inspector.action.gameObject.SetActive ( true );
-				inspector.action.text = "Consume";
-				inspector.action.target = this.gameObject;
-				inspector.action.message = "Consume";
-			
-			} else if ( selectedSlot.item.category == "Equipment" ) {
-				inspector.action.gameObject.SetActive ( true );
-				inspector.action.target = this.gameObject;
-				
-				if ( inventory.IsEquipped ( selectedSlot.item ) ) {
-					inspector.action.text = "Unequip";
-					inspector.action.message = "Unequip";
-				} else {
-					inspector.action.text = "Equip";
-					inspector.action.message = "Equip";
-				}
-			
-			} else {
-				inspector.action.gameObject.SetActive ( false );
+			switch ( selectedSlot.item.category ) {
+				case "Consumable":
+					inspector.action.gameObject.SetActive ( true );
+					inspector.action.text = "Consume";
+					inspector.action.target = this.gameObject;
+					inspector.action.message = "Consume";
+					break;
 
+				case "Upgrade":
+					inspector.action.gameObject.SetActive ( true );
+					inspector.action.text = "Install";
+					inspector.action.target = this.gameObject;
+					inspector.action.message = "Install";
+					break;
+
+				case "Weapon": case "Tool":
+					inspector.action.gameObject.SetActive ( true );
+					inspector.action.target = this.gameObject;
+					if ( inventory.IsEquipped ( selectedSlot.item ) ) {
+						inspector.action.text = "Unequip";
+						inspector.action.message = "Unequip";
+					} else {
+						inspector.action.text = "Equip";
+						inspector.action.message = "Equip";
+					}
+					break;
+
+				default:
+					inspector.action.gameObject.SetActive ( false );
+					break;
 			}
 
 			inspector.discard.gameObject.SetActive ( selectedSlot.item.canDrop );
@@ -187,6 +246,8 @@ class UIInventory extends OGPage {
 				var cell : Cell = cells[x,y];
 				
 				if ( cell ) {
+					cell.gameObject.name = x + "-" + y;
+					
 					// Force its position
 					cell.gameObject.transform.localPosition = new Vector3 ( x * slotSize, y * slotSize, 0 );
 					
@@ -221,6 +282,8 @@ class UIInventory extends OGPage {
 					// If not, draw an empty cell and cancel any functions bound to it
 					} else {
 						cell.texture.transform.localScale = new Vector3 ( slotSize, slotSize, 1 );
+						cell.button.transform.localScale = cell.texture.transform.localScale;
+						cell.label.transform.localScale = cell.texture.transform.localScale;
 						cell.texture.mainTexture = null;
 						cell.button.target = this.gameObject;
 						cell.label.text = "";
@@ -233,6 +296,22 @@ class UIInventory extends OGPage {
 				}
 			}
 		}
+
+		// Loop through the quick slots
+		for ( var i : int = 0; i < 10; i++ ) {
+			var goSlot : QuickSlot = quickSlots[i];
+			var item : OSItem = inventory.GetQuickItem ( i );
+
+			if ( item ) {
+				goSlot.texture.mainTexture = item.thumbnail;
+				goSlot.btnRemove.gameObject.SetActive ( true );
+
+			} else {
+				goSlot.texture.mainTexture = null;
+				goSlot.btnRemove.gameObject.SetActive ( false );
+
+			}
+		}	
 	}
 
 	private function InitCells () {
@@ -245,21 +324,62 @@ class UIInventory extends OGPage {
 				var newCell : Cell = new Cell ( grid.GetChild(counter) );
 			
 				newCell.gameObject.name = y + "-" + x;	
-				newCell.gameObject.transform.localPosition = new Vector3 ( x * newCell.button.transform.localScale.x, y * newCell.button.transform.localScale.y );
 				
 				cells[x,y] = newCell;
 
 				counter++;
 			}
 		}
+		
+		quickSlots = new QuickSlot [ 10 ];
+
+		for ( var i : int = 0; i < 10; i++ ) {
+			var newSlot : QuickSlot = new QuickSlot ( quick.GetChild(i) );
+
+			newSlot.btnPut.target = this.gameObject;
+			newSlot.btnPut.message = "PutInQuickSlot";
+			newSlot.btnPut.argument = i.ToString ();
+			
+			newSlot.btnRemove.target = this.gameObject;
+			newSlot.btnRemove.message = "RemoveFromQuickSlot";
+			newSlot.btnRemove.argument = i.ToString ();
+
+			newSlot.gameObject.name = i.ToString();
+			newSlot.gameObject.transform.localPosition = new Vector3 ( i * 90, 0, 0 );
+
+			quickSlots[i] = newSlot;
+		}
 	}
 
-	public function StartPage () {
+	override function StartPage () {
 		inventory = GameCore.GetInstance().GetComponent.<OSInventory>();
-		
-		InitCells ();
 	
+		inspector.Clear ();
+		
+		GameCore.GetInstance().SetControlsActive ( false );
+
+		InitCells ();
 		UpdateCells ();
+	}
+
+	override function UpdatePage () {
+		// Keep the drag texture underneath the mouse...
+		dragTexture.transform.position = new Vector3 ( Input.mousePosition.x - slotSize / 2, Screen.height - Input.mousePosition.y - slotSize / 2, 0 );
+
+		// ...and make sure it has the right texture
+		if ( dragging && selectedSlot && selectedSlot.item ) {
+			dragTexture.mainTexture = selectedSlot.item.preview;
+			dragTexture.transform.localScale = new Vector3 ( selectedSlot.scale.x * slotSize, selectedSlot.scale.y * slotSize, 1 );	
+		
+		} else {
+			dragTexture.mainTexture = null;
+		
+		}
+
+		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
+			OGRoot.GetInstance().GoToPage ( "HUD" );
+			GameCore.GetInstance().SetControlsActive ( true );
+		}
 	}
 
 	public function Exit () {
