@@ -109,7 +109,7 @@ MonoBehaviour:
   subcatIndex: 1
   slotSize:
     x: 1
-    y: 2
+    y: 1
   attributes: []
   ammunition:
     enabled: 0
@@ -118,8 +118,9 @@ MonoBehaviour:
     item: {fileID: 0}
   thumbnail: {fileID: 2800000, guid: f4ade3aef963f433997c1fb80254d197, type: 3}
   preview: {fileID: 2800000, guid: f4ade3aef963f433997c1fb80254d197, type: 3}
-  prefabPath: Items/Upgrades/upgrade_lockpicking
+  prefabPath: Items/Upgrades/Biological/upgrade_lockpicking
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds: []
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

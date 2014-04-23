@@ -235,7 +235,7 @@ public class OSInventory extends MonoBehaviour {
 	public function UnequipAll () {
 		for ( var i : int = 0; i < slots.Count; i++ ) {
 			if ( slots[i] ) {
-				slots[i].equipped = true;
+				slots[i].equipped = false;
 				
 				if ( eventHandler ) {
 					eventHandler.SendMessage ( "OnUnequipAll", SendMessageOptions.DontRequireReceiver );

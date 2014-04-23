@@ -177,6 +177,15 @@ class UIInventory extends OGPage {
 		UpdateCells ();
 	}
 
+	// Install items
+	public function Install () {
+		if ( !dragging && selectedSlot && selectedSlot.item ) {
+			inventory.DecreaseSlot ( selectedSlot );
+		}
+		
+		UpdateCells ();
+	}
+
 	// Equip/unequip item
 	public function Equip () {
 		if ( !dragging && selectedSlot && selectedSlot.item ) {
@@ -216,7 +225,7 @@ class UIInventory extends OGPage {
 				case "Weapon": case "Tool":
 					inspector.action.gameObject.SetActive ( true );
 					inspector.action.target = this.gameObject;
-					if ( inventory.IsEquipped ( selectedSlot.item ) ) {
+					if ( selectedSlot.equipped ) {
 						inspector.action.text = "Unequip";
 						inspector.action.message = "Unequip";
 					} else {
@@ -315,39 +324,43 @@ class UIInventory extends OGPage {
 	}
 
 	private function InitCells () {
-		cells = new Cell [ inventory.grid.width, inventory.grid.height ];
+		if ( !cells ) {
+			cells = new Cell [ inventory.grid.width, inventory.grid.height ];
 
-		var counter : int = 0;
+			var counter : int = 0;
 
-		for ( var x : int = 0; x < inventory.grid.width; x++ ) {
-			for ( var y : int = 0; y < inventory.grid.height; y++ ) {
-				var newCell : Cell = new Cell ( grid.GetChild(counter) );
-			
-				newCell.gameObject.name = y + "-" + x;	
+			for ( var x : int = 0; x < inventory.grid.width; x++ ) {
+				for ( var y : int = 0; y < inventory.grid.height; y++ ) {
+					var newCell : Cell = new Cell ( grid.GetChild(counter) );
 				
-				cells[x,y] = newCell;
+					newCell.gameObject.name = y + "-" + x;	
+					
+					cells[x,y] = newCell;
 
-				counter++;
+					counter++;
+				}
 			}
-		}
-		
-		quickSlots = new QuickSlot [ 10 ];
+		}	
 
-		for ( var i : int = 0; i < 10; i++ ) {
-			var newSlot : QuickSlot = new QuickSlot ( quick.GetChild(i) );
+		if ( !quickSlots ) {
+			quickSlots = new QuickSlot [ 10 ];
 
-			newSlot.btnPut.target = this.gameObject;
-			newSlot.btnPut.message = "PutInQuickSlot";
-			newSlot.btnPut.argument = i.ToString ();
-			
-			newSlot.btnRemove.target = this.gameObject;
-			newSlot.btnRemove.message = "RemoveFromQuickSlot";
-			newSlot.btnRemove.argument = i.ToString ();
+			for ( var i : int = 0; i < 10; i++ ) {
+				var newSlot : QuickSlot = new QuickSlot ( quick.GetChild(i) );
 
-			newSlot.gameObject.name = i.ToString();
-			newSlot.gameObject.transform.localPosition = new Vector3 ( i * 90, 0, 0 );
+				newSlot.btnPut.target = this.gameObject;
+				newSlot.btnPut.message = "PutInQuickSlot";
+				newSlot.btnPut.argument = i.ToString ();
+				
+				newSlot.btnRemove.target = this.gameObject;
+				newSlot.btnRemove.message = "RemoveFromQuickSlot";
+				newSlot.btnRemove.argument = i.ToString ();
 
-			quickSlots[i] = newSlot;
+				newSlot.gameObject.name = i.ToString();
+				newSlot.gameObject.transform.localPosition = new Vector3 ( i * 90, 0, 0 );
+
+				quickSlots[i] = newSlot;
+			}
 		}
 	}
 
@@ -380,6 +393,10 @@ class UIInventory extends OGPage {
 			OGRoot.GetInstance().GoToPage ( "HUD" );
 			GameCore.GetInstance().SetControlsActive ( true );
 		}
+	}
+
+	override function ExitPage () {
+		selectedSlot = null;
 	}
 
 	public function Exit () {
