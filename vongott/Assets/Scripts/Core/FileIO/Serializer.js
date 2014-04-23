@@ -278,15 +278,15 @@ static function SerializePath ( nodes : List.< PathNode > ) : JSONObject {
 }
 
 // inventory
-static function SerializeInventory ( entries : InventoryEntry[] ) : JSONObject {
+static function SerializeInventory ( entries : OSSlot[] ) : JSONObject {
 	if ( entries == null ) { return null; }
 	
 	var inv : JSONObject = new JSONObject (JSONObject.Type.ARRAY);
 	
-	for ( var e : InventoryEntry in entries ) {
+	for ( var e : OSSlot in entries ) {
 		if ( e ) {
 			var entry : JSONObject = JSONObject (JSONObject.Type.OBJECT );
-			entry.AddField ( "prefabPath", e.prefabPath );
+			entry.AddField ( "prefabPath", e.item.prefabPath );
 			inv.Add ( entry );
 		}
 	}
@@ -678,7 +678,7 @@ static function SerializeConversationRootNode ( obj : EditorConversationRootNode
 }
 
 static function SerializeConversationTree ( rootIndex : int, rootNode : EditorConversationRootNode, encodedString : String  ) : JSONObject {
-	var conversationTree : JSONObject = new JSONObject ( encodedString, false );
+	var conversationTree : JSONObject = new JSONObject ( encodedString, -2, false, false );
 	var rootNodes : JSONObject;
        
 	if ( conversationTree.HasField ( "rootNodes" ) ) {

@@ -126,15 +126,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055180aa2810db346ad20a929de613b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 94e2f180d32c6fc45a8b08fa6abfa821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: Sweet Pork Bun
+  description: This is delicious!
+  stackable: 1
   canDrop: 1
-  isStackable: 1
-  type: 2
-  subType: 1000
-  image: {fileID: 2800000, guid: e6dd2f5d9c15b4cca8c0b8edbcafb815, type: 3}
-  attr: []
+  catIndex: 0
+  subcatIndex: 0
+  slotSize:
+    x: 1
+    y: 1
+  attributes:
+  - index: 1
+    value: 5
+    item: {fileID: 11400004}
+  ammunition:
+    enabled: 0
+    index: 0
+    value: 0
+    item: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: e6dd2f5d9c15b4cca8c0b8edbcafb815, type: 3}
+  preview: {fileID: 2800000, guid: e6dd2f5d9c15b4cca8c0b8edbcafb815, type: 3}
+  prefabPath: Items/Consumable/Food/Chinese/food_chinese_bun
+  definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

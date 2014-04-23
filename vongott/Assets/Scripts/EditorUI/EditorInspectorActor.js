@@ -59,9 +59,9 @@ class EditorInspectorActor extends MonoBehaviour {
 				
 		// inventory
 		for ( var s = 0; s < inventorySlots.Length; s++ ) {
-			if ( a.inventory[s] && a.inventory[s].GetItem() ) {
-				var item : Item = a.inventory[s].GetItem();
-				inventorySlots[s].mainTexture = item.image;
+			if ( a.inventory[s] && a.inventory[s].item ) {
+				var item : OSItem = a.inventory[s].item;
+				inventorySlots[s].mainTexture = item.thumbnail;
 			} else {
 				inventorySlots[s].mainTexture = null;
 			}

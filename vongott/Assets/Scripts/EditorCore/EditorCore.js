@@ -431,7 +431,7 @@ private function ScanForNodes () : IEnumerator {
 	
 	yield WaitForEndOfFrame();
 	
-	yield scanner.Init ();
+	scanner.Scan ();
 	
 	yield WaitForEndOfFrame();
 	
@@ -479,9 +479,9 @@ static function GetPrefab ( guid : String ) : Prefab {
 // Equip item
 static function EquipItem ( obj : GameObject, slot : int ) {
 	if ( selectedObject.GetComponent(Actor) ) {
-		var item : Item = obj.GetComponent(Item);
+		var item : OSItem = obj.GetComponent(OSItem);
 		
-		selectedObject.GetComponent(Actor).inventory[slot] = new InventoryEntry ( item );
+		selectedObject.GetComponent(Actor).inventory[slot] = new OSSlot ( slot, 0, item );
 	}
 }
 

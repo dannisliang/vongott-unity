@@ -16,34 +16,34 @@ class InputManager extends MonoBehaviour {
 		} else {
 			// Stash
 			if ( Input.GetKeyDown ( KeyCode.Alpha1 ) ) {
-				InventoryManager.GetInstance().ToggleStash ( 0 );
+			//	InventoryManager.GetInstance().ToggleStash ( 0 );
 
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha2 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 1 );
+			//	InventoryManager.GetInstance().ToggleStash ( 1 );
 
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha3 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 2 );
+			//	InventoryManager.GetInstance().ToggleStash ( 2 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha4 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 3 );
+			//	InventoryManager.GetInstance().ToggleStash ( 3 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha5 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 4 );
+			//	InventoryManager.GetInstance().ToggleStash ( 4 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha6 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 5 );
+			//	InventoryManager.GetInstance().ToggleStash ( 5 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha7 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 6 );
+			//	InventoryManager.GetInstance().ToggleStash ( 6 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha8 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 7 );
+			///	InventoryManager.GetInstance().ToggleStash ( 7 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha9 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 8 );
+			//	InventoryManager.GetInstance().ToggleStash ( 8 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha0 ) ) { 
-				InventoryManager.GetInstance().ToggleStash ( 9 );
+			//	InventoryManager.GetInstance().ToggleStash ( 9 );
 
 			// Menu shortcuts
 			} else if ( Input.GetKeyDown(KeyCode.I) ) {

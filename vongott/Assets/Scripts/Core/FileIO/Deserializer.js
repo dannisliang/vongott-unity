@@ -294,7 +294,7 @@ static function DeserializeGameObjectFromJSON ( obj : JSONObject ) : GameObject 
 }
 
 static function DeserializeGameObject ( s : String ) : GameObject {
-	var obj : JSONObject = new JSONObject ( s, false );
+	var obj : JSONObject = new JSONObject ( s, -2, false, false );
 	var o : GameObject = DeserializeGameObjectFromJSON ( obj );
 	
 	// camera
@@ -332,7 +332,7 @@ static function DeserializeGameObject ( s : String ) : GameObject {
 }
 
 static function DeserializeSpawnPoints ( s : String ) : String[] {
-	var obj : JSONObject = new JSONObject ( s, false );
+	var obj : JSONObject = new JSONObject ( s, -2, false, false );
 	var list : List.< String > = new List.< String > ();	
 	var array : String[];
 	
@@ -411,17 +411,17 @@ static function DeserializePath ( pth : JSONObject ) : List.< PathNode > {
 }
 
 // inventory
-static function DeserializeInventory ( ety : JSONObject ) : InventoryEntry[] {
+static function DeserializeInventory ( ety : JSONObject ) : OSSlot[] {
 	if ( !ety.list ) { return null; }
 	
-	var inv : InventoryEntry[] = new InventoryEntry[4];
+	var inv : OSSlot[] = new OSSlot[4];
 	
 	for ( var i = 0; i < ety.list.Count; i++ ) {
 		var slot : JSONObject = ety.list[i] as JSONObject;
 		var path = slot.GetField("prefabPath").str;
 		
 		if ( path != "" ) {
-			inv[i] = new InventoryEntry ( path );
+			inv[i] = new OSSlot ( i, 0, path );
 		}
 	}
 	
@@ -819,7 +819,7 @@ static function DeserializeConversationNode ( n : JSONObject ) : ConversationNod
 
 // Tree
 static function DeserializeConversationTree ( str : String ) : ConversationTree {
-	var obj : JSONObject = new JSONObject ( str, false );	
+	var obj : JSONObject = new JSONObject ( str, -2, false, false );	
 	var tree : ConversationTree = new ConversationTree();
 	
 	for ( var rno : Object in obj.GetField("rootNodes").list ) {
@@ -859,7 +859,7 @@ static function DeserializeQuest ( obj : JSONObject ) : Quest {
 // Deserialize screenshot
 ////////////////////
 static function DeserializeScreenshot ( input : String ) : byte[] {
-	var map : JSONObject =  new JSONObject ( input, false );
+	var map : JSONObject =  new JSONObject ( input, -2, false, false );
 	var bytes : byte[] = Convert.FromBase64String ( map.GetField ( "screenshot" ).str );
 	
 	return bytes;
@@ -869,7 +869,7 @@ static function DeserializeScreenshot ( input : String ) : byte[] {
 // Deserialize map data
 ////////////////////
 static function DeserializeMapData ( input : String ) : MapData {
-	var parsed : JSONObject = new JSONObject ( input, false );
+	var parsed : JSONObject = new JSONObject ( input, -2, false, false );
 	var json : JSONObject = parsed.GetField ( "mapData" );
 	
 	if ( !json ) {

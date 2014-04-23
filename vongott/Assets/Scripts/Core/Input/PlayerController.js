@@ -56,9 +56,9 @@ public class PlayerController extends MonoBehaviour {
 		useForcedPoint = state;
 		
 		if ( state ) {
-			InventoryManager.GetInstance().HolsterItem();
+			GameCore.GetPlayer().HolsterItem();
 		} else {
-			InventoryManager.GetInstance().UnholsterItem();
+			GameCore.GetPlayer().UnholsterItem();
 		}
 
 		if ( ladder ) {
@@ -140,7 +140,7 @@ public class PlayerController extends MonoBehaviour {
 		}
 				
 		// Shoot
-		if ( Input.GetMouseButton ( 0 ) && InventoryManager.GetInstance().HasEquippedGun() ) {
+		if ( Input.GetMouseButton ( 0 ) && GameCore.GetInventory().IsEquippedCategory ( "OneHanded" ) || GameCore.GetInventory().IsEquippedCategory ( "TwoHanded" ) ) {
 			actionState = ePlayerActionState.Shooting;
 		
 		// Interact

@@ -40,7 +40,7 @@ class UpgradeManager {
 	////////////////////
 	// Prerequisites
 	////////////////////
-	static var slots : Dictionary.< eSlotID, InventoryEntry > = new Dictionary.< eSlotID, InventoryEntry > ();
+	static var slots : Dictionary.< eSlotID, OSSlot > = new Dictionary.< eSlotID, OSSlot > ();
 	static var abilities : Dictionary.< eAbilityID, int > = new Dictionary.< eAbilityID, int > ();
 		
 	////////////////////
@@ -108,25 +108,25 @@ class UpgradeManager {
 	// Is active?
 	static function IsActive ( slot : eSlotID ) : boolean {
 		if ( slots [ slot ] ) {
-			return slots [ slot ].activated;
+			return slots [ slot ].equipped;
 		} else {
 			return false;
 		}
 	}
 	
 	// Get upgrade
-	static function GetUpgrade ( slot : eSlotID ) : InventoryEntry {
+	static function GetUpgrade ( slot : eSlotID ) : OSSlot {
 		return slots [ slot ];
 	}
 	
-	static function GetUpgrade ( slot : String ) : InventoryEntry {
+	static function GetUpgrade ( slot : String ) : OSSlot {
 		var s : eSlotID = GetEnum ( slot );
 		return slots [ s ];
 	}
 	
 	static function GetUpgradeName ( slot : eSlotID ) : String {
 		if ( slots[slot] ) {
-			return slots[slot].GetItem().title;
+			return slots[slot].item.id;
 		} else {
 			return "";
 		}
@@ -136,14 +136,14 @@ class UpgradeManager {
 		var s : eSlotID = GetEnum ( slot );
 				
 		if ( slots[s] ) {
-			return slots [ s ].GetItem().title;
+			return slots [ s ].item.id;
 		} else {
 			return "";
 		}
 	}
 	
 	// Get slots
-	static function GetSlots () : Dictionary.< eSlotID, InventoryEntry > {
+	static function GetSlots () : Dictionary.< eSlotID, OSSlot > {
 		return slots;
 	}
 	
@@ -151,9 +151,9 @@ class UpgradeManager {
 	static function CalculateEnergyCost () : int {
 		var totalCost : int = 0;
 		
-		for ( var s : InventoryEntry in slots.Values ) {
-			if ( s && s.activated ) {
-				totalCost += s.GetUpgrade().cost;
+		for ( var s : OSSlot in slots.Values ) {
+			if ( s && s.equipped ) {
+				totalCost += s.item.GetAttribute ( "drain" );
 			}
 		}
 		
@@ -175,9 +175,9 @@ class UpgradeManager {
 		
 		SFXManager.GetInstance().Play ( "sfx_actor_aug_off", GameCore.GetPlayer().audio );
 		
-		slots [ slot ].activated = false;
+		slots [ slot ].equipped = false;
 		
-		var upgrade : Upgrade = slots [ slot ].GetItem() as Upgrade;
+		var upgrade : Upgrade = slots [ slot ].item as Upgrade;
 				
 		switch ( upgrade.ability.id ) {
 			case eAbilityID.Reflexes:
@@ -201,7 +201,7 @@ class UpgradeManager {
 				break;
 		}
 		
-		GameCore.Print ( "UpgradeManager | Deactivated " + upgrade.title );
+		GameCore.Print ( "UpgradeManager | D.equipped " + upgrade.title );
 	}
 	
 	// Remove
@@ -238,7 +238,7 @@ class UpgradeManager {
 				Remove ( upgrade.upgSlot );
 			}
 			
-			slots [ upgrade.upgSlot ] = new InventoryEntry ( upgrade );
+//			slots [ upgrade.upgSlot ] = new OSSlot ( upgrade );
 						
 			GameCore.Print ( "UpgradeManager | installed upgrade " + upgrade.title + " in " + upgrade.upgSlot );
 		
@@ -259,9 +259,9 @@ class UpgradeManager {
 			}
 		}
 		
-		var upgrade : Upgrade = slots [ slot ].GetItem() as Upgrade;
+		var upgrade : Upgrade = slots [ slot ].item as Upgrade;
 		
-		slots[slot].activated = true;
+		slots[slot].equipped = true;
 		
 		switch ( upgrade.ability.id ) {
 			case eAbilityID.Reflexes:
@@ -285,7 +285,7 @@ class UpgradeManager {
 				break;
 		}
 		
-		GameCore.Print ( "UpgradeManager | Activated " + upgrade.title );
+		GameCore.Print ( "UpgradeManager |.equipped " + upgrade.title );
 	}
 	
 	static function Activate ( slot : String ) {

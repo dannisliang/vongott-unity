@@ -49,7 +49,7 @@ class Actor extends InteractiveObject {
 
 	var pathType : ePathType;
 	var path : List.< PathNode > = new List.< PathNode >();
-	var inventory : InventoryEntry[] = new InventoryEntry [4];
+	var inventory : OSSlot[] = new OSSlot [4];
 	
 	var currentConvoRoot : int = 0;
 	var conversationTree : String;
@@ -244,8 +244,8 @@ class Actor extends InteractiveObject {
 		return 100;
 	}
 	
-	function Equip ( entry : InventoryEntry ) {
-		var item : Item = Instantiate ( entry.GetItem() ) as Item;
+	function Equip ( slot : OSSlot ) {
+		var item : Item = Instantiate ( slot.item ) as Item;
 		equippedItem = item.gameObject;
 		
 		equippedItem.transform.parent = hand;
@@ -314,9 +314,7 @@ class Actor extends InteractiveObject {
 	}
 		
 	function ClearPath () {
-		if ( this.GetComponent ( OPPathFinder ).nodes.Count > 0 ) {
-			this.GetComponent ( OPPathFinder ).ClearNodes ();
-		}
+		this.GetComponent ( OPPathFinder ).ClearNodes ();
 	}	
 	
 	function StartChase ( t : Transform ) {
@@ -550,7 +548,7 @@ class Actor extends InteractiveObject {
 			return;
 		}
 		
-		if ( !inventory ) { inventory = new InventoryEntry [4]; }
+		if ( !inventory ) { inventory = new OSSlot [4]; }
 		
 		if ( !GameCore.running ) { return; }
 				

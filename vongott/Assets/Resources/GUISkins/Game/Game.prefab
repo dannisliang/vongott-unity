@@ -312,24 +312,24 @@ MonoBehaviour:
       width: 96
       height: 96
     border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
+      top: 20
+      bottom: 20
+      left: 20
+      right: 20
+    color: {r: 0, g: .478431374, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
       fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
+      fontColor: {r: 1, g: .862745106, b: .431372553, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 0
+      alignment: 2
       wordWrap: 1
       padding:
         m_Left: 0
-        m_Right: 0
-        m_Top: 0
+        m_Right: 10
+        m_Top: 10
         m_Bottom: 0
       lineHeight: 1.25
       spacing: 1.25
@@ -903,7 +903,7 @@ MonoBehaviour:
         color: {r: .107861184, g: .379624069, b: .698529422, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
           fontSize: 18
           fontColor: {r: .507352948, g: .734016895, b: 1, a: 1}
           shadowSize: 0

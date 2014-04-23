@@ -18,6 +18,8 @@ class Player extends MonoBehaviour {
 	
 	public var talkingTo : Actor;
 
+	public var inventory : OSInventory;
+
 	// Private vars	
 	private var shield : GameObject;
 	private var liftedObject : LiftableItem;
@@ -70,7 +72,16 @@ class Player extends MonoBehaviour {
 		liftedObject.OnDrop ();
 		liftedObject = null;
 	}
-	
+
+	// Holster/unholster
+	public function HolsterItem () {
+
+	}
+
+	public function UnholsterItem () {
+
+	}
+
 	// Consume
 	function Consume ( item : Item ) {
 		if ( item.subType == eItemSubType.Biological ) {
@@ -174,19 +185,19 @@ class Player extends MonoBehaviour {
 	}
 	
 	function IsEquippedWeapon () : boolean {
-		if ( InventoryManager.GetInstance().equippedItem ) {
-			return InventoryManager.GetInstance().equippedItem.GetComponent(Item).type == eItemType.Weapon;
-		} else {
+		//if ( InventoryManager.GetInstance().equippedItem ) {
+	//		return InventoryManager.GetInstance().equippedItem.GetComponent(Item).type == eItemType.Weapon;
+	//	} else {
 			return false;
-		}
+	//	}
 	}
 	
 	function IsEquippedLockpick () : boolean {
-		if ( InventoryManager.GetInstance().equippedItem ) {
-			return InventoryManager.GetInstance().equippedItem.GetComponent(Item).subType == eItemSubType.Lockpick;
-		} else {
+		//if ( InventoryManager.GetInstance().equippedItem ) {
+	//		return InventoryManager.GetInstance().equippedItem.GetComponent(Item).subType == eItemSubType.Lockpick;
+	//	} else {
 			return false;
-		}
+	//	}
 	}
 	
 	function GetEquipmentAttribute ( a : eItemAttribute ) : float {

@@ -11,11 +11,11 @@ GameObject:
   - 33: {fileID: 3300000}
   - 65: {fileID: 6500000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   - 54: {fileID: 5400000}
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: upgrade_lockpicking
   m_TagString: Untagged
@@ -98,20 +98,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b43c61a03b5debc40a6daf6ce2efe651, type: 3}
+  m_Script: {fileID: 11500000, guid: 94e2f180d32c6fc45a8b08fa6abfa821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: Lockpicking Upgrade
+  description: Upgrades your lock picking skill
+  stackable: 0
   canDrop: 1
-  isStackable: 1
-  type: 3
-  subType: 1501
-  image: {fileID: 2800000, guid: f4ade3aef963f433997c1fb80254d197, type: 3}
-  attr: []
-  upgSlot: 6
-  ability:
-    id: 100
-    value: 1
-  cost: 0
+  catIndex: 3
+  subcatIndex: 1
+  slotSize:
+    x: 1
+    y: 2
+  attributes: []
+  ammunition:
+    enabled: 0
+    index: 0
+    value: 0
+    item: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: f4ade3aef963f433997c1fb80254d197, type: 3}
+  preview: {fileID: 2800000, guid: f4ade3aef963f433997c1fb80254d197, type: 3}
+  prefabPath: Items/Upgrades/upgrade_lockpicking
+  definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

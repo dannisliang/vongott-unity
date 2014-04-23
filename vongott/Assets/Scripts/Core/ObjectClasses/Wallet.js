@@ -16,7 +16,7 @@ class Wallet extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		InventoryManager.GetInstance().ChangeCredits ( creditAmount );
+		EditorCore.GetInstance().GetComponent.<OSInventory>().ChangeCurrencyAmount ( "Credits", creditAmount );
 		Destroy ( this.gameObject );
 		GameCore.SetInteractiveObject ( null );
 		UIHUD.GetInstance().ShowTimedNotification ( "Picked up " + creditAmount + " credits", 2 );

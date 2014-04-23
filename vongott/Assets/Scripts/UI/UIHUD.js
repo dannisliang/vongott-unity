@@ -90,7 +90,7 @@ class UIHUD extends OGPage {
 		}
 
 		// Update stash
-		if ( stashSlots == null ) {
+		/*if ( stashSlots == null ) {
 			stashSlots = new StashSlot[stash.childCount];
 			
 			for ( var i : int = 0; i < stash.childCount; i++ ) {
@@ -115,7 +115,7 @@ class UIHUD extends OGPage {
 				}
 			}
 		
-		}
+		}*/
 	}
 	
 	// Console

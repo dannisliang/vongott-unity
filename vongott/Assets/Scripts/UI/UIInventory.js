@@ -3,401 +3,266 @@
 import System.Text.RegularExpressions;
 
 private class Inspector {
-	var entryName : OGLabel;
-	var description : OGLabel;
-	var attrName : OGLabel;
-	var attrVal : OGLabel;
-	var action : OGButton;
-	var discard : OGButton;
+	public var name : OGLabel;
+	public var description : OGLabel;
+	public var attrName : OGLabel;
+	public var attrVal : OGLabel;
+	public var action : OGButton;
+	public var discard : OGButton;
+
+	public function Clear () {
+		name.text = "";
+		description.text = "";
+		attrName.text = "";
+		attrVal.text = "";
+		action.gameObject.SetActive ( false );
+		discard.gameObject.SetActive ( false );
+	}
 }
 
 class UIInventory extends OGPage {
+	private class Cell {
+		public var button : OGButton;
+		public var label : OGLabel;
+		public var texture : OGTexture;
+		public var gameObject : GameObject;
+
+		function Cell ( t : Transform ) {
+			gameObject = t.gameObject;
+			button = gameObject.GetComponentInChildren.< OGButton >();
+			label = gameObject.GetComponentInChildren.< OGLabel >();
+			texture = gameObject.GetComponentInChildren.< OGTexture >();
+		}
+	}
+	
 	public var grid : Transform;
 	public var stash : Transform;
 	public var inspector : Inspector;
 	public var creditsDisplay : OGLabel;
 	public var hoverColorGrid : Color;
 	public var normalColorGrid : Color;
-
-	private var selectedEntry : InventoryEntry;
-	private var clickStart : float = 0;
-
-
-	////////////////////
-	// Inventory display
-	////////////////////
-	private function GetClickDuration () : float {
-		var result : float = Time.realtimeSinceStartup - clickStart;
-
-		clickStart = -1;
-		return result;
-	}
+	public var dragTexture : OGTexture;
 	
-	// Round
-	function Round ( val : float, factor : float ) : float {
-		return Mathf.Round ( val / factor ) * factor;
-	}
-	
-	// Clear grid
-	function ClearGrid () {
-		var gridIcons : OGTexture [] = grid.GetComponentsInChildren.<OGTexture>();
+	private var dragging : boolean = false;
+	private var selectedSlot : OSSlot;
+	private var cells : Cell[,];
+	private var inventory : OSInventory;
 
-		for ( var i : int = 0; i < gridIcons.Length; i++ ) {
-			Destroy ( gridIcons[i].gameObject );
-		}
-		
-		var stashIcons : OGTexture [] = stash.GetComponentsInChildren.<OGTexture>();
+	// Method for defining the selected OSSlot
+	public function SelectSlot ( n : String ) {
+		var i : int = int.Parse ( n );
 
-		for ( i = 0; i < stashIcons.Length; i++ ) {
-			Destroy ( stashIcons[i].gameObject );
-		}
+		if ( inventory.slots[i] == selectedSlot ) {
+			dragging = true;
+			selectedSlot.hidden = true;
 		
-		var stashButtons : OGButton [] = stash.GetComponentsInChildren.<OGButton>();
-		
-		for ( i = 0; i < stashButtons.Length; i++ ) {
-			Destroy ( stashButtons[i].gameObject );
-		}
-	}
-	
-	// Create image
-	private function CreateImage ( item : Item, parent : Transform ) : OGTexture {
-		var image : OGTexture = new GameObject ( item.name, OGTexture ).GetComponent(OGTexture);
-		image.mainTexture = item.image;
-		image.isSelectable = true;
-		
-		if ( parent.parent == grid ) {
-			image.isDraggable = true;
-			image.resetAfterDrag = true;
-		}
+		} else {
+			selectedSlot = inventory.slots[i];
 
-		image.transform.parent = parent;
-		image.transform.localScale = new Vector3 ( 90, 90, 1 );
-		image.transform.localEulerAngles = Vector3.zero;
-		image.transform.localPosition = Vector3.zero;
-
-		return image;
-	}
-	
-	// Create remove button
-	private function CreateRemoveButton ( slot : int ) : OGButton {
-		var button : OGButton = new GameObject ( "RemoveButton", OGButton ).GetComponent(OGButton);
-		button.text = "X";
-		button.target = this.gameObject;
-		button.message = "RemoveStashEntry";
-		button.argument = slot.ToString();
-		button.ApplyDefaultStyles();
-
-		button.transform.parent = stash;
-		button.transform.localScale = new Vector3 ( 24, 24, 1 );
-		button.transform.localPosition = new Vector3 ( 66 + slot * 90, 0, -2 );
-		button.transform.localEulerAngles = Vector3.zero;
-		
-		return button;
-	}
-	
-	// Populate grid
-	function PopulateGrid () {
-		ClearGrid ();
-						
-		for ( var x : int = 0; x < InventoryManager.GetInstance().GetSlots().GetLength(0); x++ ) {
-			for ( var y : int = 0; y < InventoryManager.GetInstance().GetSlots().GetLength(1); y++ ) {
-				if ( InventoryManager.GetInstance().GetEntry(x,y) != null ) {
-					var entry : InventoryEntry = InventoryManager.GetInstance().GetEntry(x,y);
-					var item : Item = entry.GetItem();
-					var image : OGTexture = CreateImage ( item, grid.gameObject.Find ( y + "-" + x ).transform );
-					
-					if ( entry.GetItem() == InventoryManager.GetInstance().equippedItem ) {
-						// Show equipped
-					} else if ( entry.installed ) {
-						// Show installed
-					} else {
-						// Show normal
-					}
-				}
-			}
-		}
-		
-		for ( var i : int = 0; i < InventoryManager.GetInstance().GetStash().Length; i++ ) {
-			var reference : InventoryEntryReference = InventoryManager.GetInstance().GetStash()[i];
+			inspector.name.text = selectedSlot.item.id;
+			inspector.description.text = selectedSlot.item.description;
 			
-			if ( reference != null ) {
-				if ( reference.refX != -1 && reference.refY != -1 ) {
-					var slotEntry : InventoryEntry = InventoryManager.GetInstance().GetEntry ( reference.refX, reference.refY );
-					var slotItem : Item = slotEntry.GetItem();
-					var slotImage : OGTexture = CreateImage( slotItem, stash.gameObject.Find ( i.ToString() ).transform );
-				
-					var button : OGButton = CreateRemoveButton ( i );
-				}
+			if ( selectedSlot.item.ammunition.enabled ) {
+				inspector.attrName.text = selectedSlot.item.ammunition.name + "\n\n";
+				inspector.attrVal.text = selectedSlot.item.ammunition.value + "\n\n";
 			}
+
+			for ( var attr : OSAttribute in selectedSlot.item.attributes ) {
+				inspector.attrName.text += attr.name + "\n";
+			       	inspector.attrVal.text += attr.value + "\n";
+			}
+		}
+
+	}
+
+	// Cancel the currently dragged item
+	public function CancelDrag () {
+		if ( selectedSlot ) {
+			selectedSlot.hidden = false;
+		}
+		
+		dragging = false;
+	}
+
+	// Drop selected item
+	public function Drop () {
+		if ( !dragging && selectedSlot ) {
+			if ( inventory.IsEquipped ( selectedSlot.item ) ) {
+				inventory.UnequipAll ();
+			}
+			
+			inventory.SpawnSlot ( selectedSlot, GameCore.GetInstance().levelContainer, new Vector3 ( 0, 0.5, 2.3 ) );
+			inventory.RemoveSlot ( selectedSlot );
+
+			selectedSlot = null;
+			inspector.Clear();
 		}
 	}
 
-	// Update text
-	function UpdateText () {
-		if ( selectedEntry == null ) {
-			inspector.entryName.text = "";
-			inspector.description.text = "";
-			inspector.attrName.text = "";
-			inspector.attrVal.text = "";
+	// Try to move the OSSlot to another location
+	public function PutItem ( btn : OGButton ) {
+		var p : OSPoint = new OSPoint ( btn.gameObject.name, "-"[0], true );
+
+		if ( selectedSlot ) {
+			inventory.grid.Move ( selectedSlot, p.x, p.y );
+			CancelDrag ();
+		}
+	}
+
+	// Consume item
+	public function Consume () {
+		if ( !dragging && selectedSlot && selectedSlot.item ) {
+			inventory.DecreaseSlot ( selectedSlot );
+		}
+	}
+
+	// Equip/unequip item
+	public function Equip () {
+		if ( !dragging && selectedSlot && selectedSlot.item ) {
+			inventory.UnequipAll ();
+			
+			inventory.SetEquipped ( selectedSlot.item );
+		}
+	}
+
+	public function Unequip () {
+		inventory.UnequipAll ();
+	}
+
+	// Update cell content
+	private function UpdateCells () {
+		var slotSize : float = 90;
+		
+		// Keep the drag texture underneath the mouse...
+		dragTexture.transform.position = new Vector3 ( Input.mousePosition.x - slotSize / 2, Screen.height - Input.mousePosition.y - slotSize / 2, 0 );
+
+		// ...and make sure it has the right texture
+		if ( dragging && selectedSlot && selectedSlot.item ) {
+			dragTexture.mainTexture = selectedSlot.item.preview;
+			dragTexture.transform.localScale = new Vector3 ( selectedSlot.scale.x * slotSize, selectedSlot.scale.y * slotSize, 1 );	
+		
+		} else {
+			dragTexture.mainTexture = null;
+		
+		}
+
+		// Set button properties
+		if ( selectedSlot && selectedSlot.item ) {
+			if ( selectedSlot.item.category == "Consumable" ) {
+				inspector.action.gameObject.SetActive ( true );
+				inspector.action.text = "Consume";
+				inspector.action.target = this.gameObject;
+				inspector.action.message = "Consume";
+			
+			} else if ( selectedSlot.item.category == "Equipment" ) {
+				inspector.action.gameObject.SetActive ( true );
+				inspector.action.target = this.gameObject;
+				
+				if ( inventory.IsEquipped ( selectedSlot.item ) ) {
+					inspector.action.text = "Unequip";
+					inspector.action.message = "Unequip";
+				} else {
+					inspector.action.text = "Equip";
+					inspector.action.message = "Equip";
+				}
+			
+			} else {
+				inspector.action.gameObject.SetActive ( false );
+
+			}
+
+			inspector.discard.gameObject.SetActive ( selectedSlot.item.canDrop );
+		} else {
 			inspector.action.gameObject.SetActive ( false );
 			inspector.discard.gameObject.SetActive ( false );
 		
-			return;
 		}
-		
-		var item = selectedEntry.GetItem();
-		
-		inspector.entryName.text = item.GetComponent(Prefab).title;
-		inspector.description.text = item.GetComponent(Prefab).description;
-		inspector.attrName.text = "";
-		inspector.attrVal.text = "";
-		inspector.action.text = "";
-				
-		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
-			if ( selectedEntry.GetItem() == InventoryManager.GetInstance().equippedItem ) {
-				inspector.action.text = "Unequip";
-			} else {
-				inspector.action.text = "Equip";
-				
-			}
 			
-		} else if ( item.type == eItemType.Upgrade ) {
-			if ( selectedEntry.installed ) {
-				inspector.action.text = "Uninstall";
-			} else {
-				inspector.action.text = "Install";
-			}
-			
-		} else if ( item.type == eItemType.Consumable ) {
-			inspector.action.text = "Consume";
-		
-		}
-		
-		inspector.action.gameObject.SetActive ( true );
-		inspector.discard.gameObject.SetActive ( item.canDrop );
-		
-		for ( var a : Item.Attribute in item.attr ) {
-			inspector.attrName.text += a.type.ToString() + ": \n";
-			
-			if ( a.type == eItemAttribute.FireRate ) {
-				inspector.attrVal.text += Mathf.Pow(a.val,-1).ToString() + " rd / sec\n";
-			} else if ( a.type == eItemAttribute.FireRange ) {
-				inspector.attrVal.text += a.val.ToString() + " m\n";
-			} else if ( a.type == eItemAttribute.Accuracy ) {
-				inspector.attrVal.text += a.val.ToString() + " %\n";
-			} else {
-				inspector.attrVal.text += a.val.ToString() + "\n";
-			}
-		}
-	}
-	
-	// Go to page
-	public function GoToPage ( page : String ) {
-		OGRoot.GetInstance().GoToPage ( page );
-	}
-	
-	// Select slot
-	function SelectGridSlot ( index : String ) {
-		var split : String[] = index.Split ( "-"[0] );
-		var y : int = int.Parse ( split[0] );
-		var x : int = int.Parse ( split[1] );
-		var allSlots : InventoryEntry[,] = InventoryManager.GetInstance().GetSlots();
-		
-		clickStart = Time.realtimeSinceStartup;
-		
-		selectedEntry = allSlots[x,y];
-		UpdateText ();
-	}
-	
-	// Remove stash entry
-	public function RemoveStashEntry ( n : String ) {
-		var i : int = int.Parse ( n );
-		
-		InventoryManager.GetInstance().ClearStashSlot ( i );
-		PopulateGrid ();
-	}
-	
-	// Drop on slot
-	private function DropOnStashSlot ( index : String ) {
-		var i : int = int.Parse ( index ); 
-		
-		if ( selectedEntry ) {
-			InventoryManager.GetInstance().SetStash ( selectedEntry.x, selectedEntry.y, i );
-			PopulateGrid ();
-		}
-	}
+		// Get the list of skipped cells, so we know which ones to draw
+		var skip : boolean  [ , ] = inventory.grid.GetSkippedSlots ();
 
-	private function DropOnGridSlot ( index : String ) {
-		var split : String[] = index.Split ( "-"[0] );
-		var y : int = int.Parse ( split[0] );
-		var x : int = int.Parse ( split[1] );
-		
-		if ( selectedEntry ) {
-			InventoryManager.GetInstance().MoveEntry ( selectedEntry.x, selectedEntry.y, x, y );
-			PopulateGrid ();
-		}	
-	}
-	
-	
-	////////////////////
-	// Action buttons
-	////////////////////
-	// Equip entry
-	private function Equip ( shouldEquip : boolean ) {
-		if ( shouldEquip ) {
-			var item : Item = selectedEntry.GetItem();
-			InventoryManager.GetInstance().Equip ( item );
-		} else {
-			InventoryManager.GetInstance().UnEquip ();
-		}
-			
-		UpdateText ();
-		GameCore.GetPlayer().CheckWeaponPosition();
-	}
-	
-	// Destroy entry
-	private function DestroyEntry () {
-		if ( !selectedEntry ) { return; }
-		
-		if ( selectedEntry.GetItem().type == eItemType.Upgrade ) {
-			UpgradeManager.Remove ( ( selectedEntry.GetItem() as Upgrade ).upgSlot );
-		}
-		
-		InventoryManager.GetInstance().RemoveEntry ( selectedEntry, true );
-		selectedEntry = null;		
-		UpdateText();
-		ClearGrid ();
-		PopulateGrid ();
-	}
-	
-	// Consume item
-	private function Consume ( item : Item ) {
-		GameCore.GetPlayer().Consume ( item );
-	}
-	
-	// Install entry
-	private function Install ( install : boolean ) {
-		selectedEntry.installed = install;
-		
-		var item : Item = selectedEntry.GetItem();
-		var upgrade : Upgrade = item as Upgrade;
-		
-		
-		if ( install ) {
-			UpgradeManager.Install ( upgrade );
+		// Loop through both axies of the OSGrid
+		for ( var x : int = 0; x < inventory.grid.width; x++ ) {
+			for ( var y : int = 0; y < inventory.grid.height; y++ ) {
+				var cell : Cell = cells[x,y];
+				
+				if ( cell ) {
+					// Force its position
+					cell.gameObject.transform.localPosition = new Vector3 ( x * slotSize, y * slotSize, 0 );
+					
+					// Get the correspending OSSlot from the OSInventory
+					var slot : OSSlot = inventory.GetSlot ( x, y );
+
+					// If there is a slot, and it's not currently hidden, draw the content
+					if ( slot && !slot.hidden ) {
+						// Set the texture and scale of the cell, bind correct functions	
+						cell.texture.transform.localScale = new Vector3 ( slotSize * slot.scale.x, slotSize * slot.scale.y, 1 );
+						cell.button.transform.localScale = cell.texture.transform.localScale;
+						cell.label.transform.localScale = cell.texture.transform.localScale;
+						
+						if ( slot.item ) {
+							cell.texture.mainTexture = slot.item.preview;
 							
-			// Destroy object if biological upgrade
-			if ( item.subType == eItemSubType.Biological ) {
-				DestroyEntry ();
+							cell.button.target = this.gameObject;
+							cell.button.message = "SelectSlot";
+							cell.button.argument = inventory.GetItemIndex ( slot.item ).ToString();
+							
+							cell.label.text = slot.quantity > 1 ? slot.quantity.ToString() : "";
+
+						} else {
+							cell.texture.mainTexture = null;
+							
+							cell.button.target = this.gameObject;
+							cell.label.text = "";
+							cell.button.message = "PutItem";
+							cell.button.argument = null;
+						}
+
+					// If not, draw an empty cell and cancel any functions bound to it
+					} else {
+						cell.texture.transform.localScale = new Vector3 ( slotSize, slotSize, 1 );
+						cell.texture.mainTexture = null;
+						cell.button.target = this.gameObject;
+						cell.label.text = "";
+						cell.button.message = "PutItem";
+						cell.button.argument = null;
+					}
+				
+					// If this cell is skipped, hide it	
+					cell.gameObject.SetActive ( !skip [ x, y ] );
+				}
 			}
+		}
+	}
+
+	private function InitCells () {
+		cells = new Cell [ inventory.grid.width, inventory.grid.height ];
+
+		var counter : int = 0;
+
+		for ( var x : int = 0; x < inventory.grid.width; x++ ) {
+			for ( var y : int = 0; y < inventory.grid.height; y++ ) {
+				var newCell : Cell = new Cell ( grid.GetChild(counter) );
 			
-		} else {
-			UpgradeManager.Remove ( upgrade.upgSlot );
-		}
-		
-		UpdateText ();
-	}
-	
-	// Discard button
-	function BtnDiscard () {
-		if ( !selectedEntry ) { return; }
-		
-		DestroyEntry ();
-	}
-	
-	// Action button
-	function BtnAction () {
-		if ( !selectedEntry ) { return; }
-		
-		var item : Item = selectedEntry.GetItem();
-		
-		if ( item.type == eItemType.Weapon || item.type == eItemType.Tool ) {
-			if ( selectedEntry.GetItem() != InventoryManager.GetInstance().equippedItem ) {
-				Equip ( true );
-			} else {
-				Equip ( false );
-			}
-	
-		} else if ( item.type == eItemType.Upgrade ) {
-			if ( !selectedEntry.installed ) {
-				Install ( true );
+				newCell.gameObject.name = y + "-" + x;	
+				newCell.gameObject.transform.localPosition = new Vector3 ( x * newCell.button.transform.localScale.x, y * newCell.button.transform.localScale.y );
 				
-			} else {
-				Install ( false );
-			}
-		
-		} else if ( item.type == eItemType.Consumable ) {
-			Consume ( item );
-			DestroyEntry ();
-			return;
-		
-		}
-	}
-	
-	////////////////////
-	// Init
-	////////////////////
-	override function StartPage () {
-		GameCore.state = eGameState.Menu;
-	
-		creditsDisplay.text = "CREDITS: " + InventoryManager.GetInstance().GetCredits();
-		ClearGrid ();
-		GameCore.GetInstance().SetPause ( true );
-		PopulateGrid ();
-		UpdateText ();
-		
-		InputManager.escFunction = Exit;
-	}
-	
-	override function ExitPage () {
-		selectedEntry = null;
-		ClearGrid ();
-	}
-	
-	override function UpdatePage () {
-		if ( Input.GetMouseButtonDown ( 0 ) ) {
-		}
-		
-		var stashChildren : OGSprite [] = stash.GetComponentsInChildren.<OGSprite>();
-		
-		for ( var i : int = 0; i < stashChildren.Length; i++ ) {
-			if ( stashChildren[i].CheckMouseOver() ) {
-				stashChildren[i].tint = hoverColorGrid;
-				
-				if ( Input.GetMouseButtonUp ( 0 ) ) {
-				       	if ( GetClickDuration() > 0.4 ) {
-						DropOnStashSlot ( stashChildren[i].transform.parent.gameObject.name );
-					}
+				cells[x,y] = newCell;
 
-				}
-			} else {
-				stashChildren[i].tint = normalColorGrid;
-			}
-		}
-		
-		var gridChildren : OGSprite [] = grid.GetComponentsInChildren.<OGSprite>();
-		
-		for ( i = 0; i < gridChildren.Length; i++ ) {
-			if ( gridChildren[i].CheckMouseOver() ) {
-				gridChildren[i].tint = hoverColorGrid;
-				
-				if ( Input.GetMouseButtonUp ( 0 ) ) {
-				       	if ( GetClickDuration() > 0.4 ) {
-						DropOnGridSlot ( gridChildren[i].transform.parent.gameObject.name );
-					}
-
-				} else if ( Input.GetMouseButtonDown ( 0 ) ) {
-					SelectGridSlot ( gridChildren[i].transform.parent.gameObject.name );
-				
-				}
-
-			} else {
-				gridChildren[i].tint = normalColorGrid;
+				counter++;
 			}
 		}
 	}
+
+	public function StartPage () {
+		inventory = GameCore.GetInstance().GetComponent.<OSInventory>();
+		
+		InitCells ();
 	
-	function Exit () {
+		UpdateCells ();
+	}
+
+	public function Exit () {
 		OGRoot.GetInstance().GoToPage ( "HUD" );
 	}
 }

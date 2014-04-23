@@ -15,7 +15,7 @@ GameObject:
   - 54: {fileID: 5400000}
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
-  - 114: {fileID: 11400008}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: powerup_battery
   m_TagString: Untagged
@@ -90,6 +90,39 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .200000003, y: .200000003, z: .200000003}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e2f180d32c6fc45a8b08fa6abfa821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: Battery
+  description: This restores bioelectrical energy
+  stackable: 0
+  canDrop: 1
+  catIndex: 0
+  subcatIndex: 2
+  slotSize:
+    x: 1
+    y: 1
+  attributes:
+  - index: 3
+    value: 50
+    item: {fileID: 11400000}
+  ammunition:
+    enabled: 0
+    index: 0
+    value: 0
+    item: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: 43caa1a3ea23a44c5bfeabfc07bd9169, type: 3}
+  preview: {fileID: 2800000, guid: 43caa1a3ea23a44c5bfeabfc07bd9169, type: 3}
+  prefabPath: Items/Consumable/Powerup/powerup_battery
+  definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,30 +169,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GUID: 
---- !u!114 &11400008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b43c61a03b5debc40a6daf6ce2efe651, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canDrop: 1
-  isStackable: 1
-  type: 2
-  subType: 1002
-  image: {fileID: 2800000, guid: 43caa1a3ea23a44c5bfeabfc07bd9169, type: 3}
-  attr:
-  - type: 10
-    val: 25
-  upgSlot: 0
-  ability:
-    id: 0
-    value: 0
-  cost: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

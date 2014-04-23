@@ -12,8 +12,8 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
-  - 114: {fileID: 11400006}
   - 114: {fileID: 11400010}
+  - 114: {fileID: 11400006}
   m_Layer: 0
   m_Name: GameCore
   m_TagString: Untagged
@@ -79,15 +79,11 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  gridSize: {x: 40, y: 10, z: 40}
   mapType: 2
   map:
     nodes: []
   heuristic: 100
   spacing: .5
-  bounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,12 +92,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734956e23cc895b4da8cf276961d0bff, type: 3}
+  m_Script: {fileID: 11500000, guid: 4decdece3b002544ca76c22d0b98c52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  credits: 0
-  equippedItem: {fileID: 0}
-  holsteredItem: {fileID: 0}
+  definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  slots:
+  - item: {fileID: 11400010, guid: ee392d9bd410069448895d35a35e59fe, type: 2}
+    x: 3
+    y: 0
+    quantity: 1
+    hidden: 0
+  - item: {fileID: 11400006, guid: 71be8c321b6226247b065132a711e199, type: 2}
+    x: 2
+    y: 0
+    quantity: 1
+    hidden: 0
+  - item: {fileID: 11400000, guid: 684799d217070ef4ab20f227d6db6447, type: 2}
+    x: 0
+    y: 0
+    quantity: 1
+    hidden: 0
+  - item: {fileID: 11400000, guid: 7ad3433b8d3d07741be5aeea3c36329b, type: 2}
+    x: 4
+    y: 0
+    quantity: 1
+    hidden: 0
+  grid:
+    width: 10
+    height: 3
+    inventory: {fileID: 11400006}
+  wallet: []
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1

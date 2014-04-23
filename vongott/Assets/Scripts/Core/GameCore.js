@@ -229,6 +229,10 @@ class GameCore extends MonoBehaviour {
 	static function GetInstance() : GameCore {
 		return instance;
 	}
+
+	public static function GetInventory() : OSInventory {
+		return instance.GetComponent.< OSInventory > ();
+	}
 	
 	// Find player
 	function FindPlayer () {
@@ -327,9 +331,6 @@ class GameCore extends MonoBehaviour {
 	static function Stop () {	
 		// Quests
 		QuestManager.Clear();
-		
-		// Inventory
-		InventoryManager.GetInstance().Clear();
 		
 		// Upgrades
 		UpgradeManager.Clear();
