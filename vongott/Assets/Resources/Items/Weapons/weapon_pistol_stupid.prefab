@@ -209,36 +209,26 @@ AudioSource:
     m_PostInfinity: 2
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df75ed367a2e185418a6909fdb8d138c, type: 3}
+  m_Script: {fileID: 11500000, guid: c4b7588cbda0a437192e5f9e0783ea3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDrop: 1
-  isStackable: 0
-  type: 0
-  subType: 0
-  image: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
-  attr:
-  - type: 0
-    val: 5
-  - type: 2
-    val: .5
-  - type: 3
-    val: 40
-  - type: 4
-    val: 60
-  eqSlot: 0
-  equipSound: {fileID: 8300000, guid: d78402b617dae2d489f6102b70978d9e, type: 3}
-  fireSounds:
-  - {fileID: 8300000, guid: 04b5c466d964a664b8f318c905d8b065, type: 3}
-  - {fileID: 8300000, guid: 2b8da848904934f4e8dc6b81f1f6358d, type: 3}
-  - {fileID: 8300000, guid: 4459e99508f3f9f49af3d0d3d80606d2, type: 3}
-  - {fileID: 8300000, guid: 9c19056d983c6d24287b81d8795667d4, type: 3}
+  item: {fileID: 11400010}
+  accuracyIndex: 3
+  damageIndex: 1
+  firingRateIndex: 0
+  reloadSpeedIndex: 2
+  firingSoundIndex: 0
+  reloadSoundIndex: 1
+  equippingSoundIndex: 1
+  holsteringSoundIndex: 2
+  muzzleFlash: {fileID: 0}
+  muzzleFlashDuration: .25
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,12 +321,16 @@ MonoBehaviour:
   ammunition:
     enabled: 1
     index: 0
-    value: 20
-    item: {fileID: 0}
+    value: 40
+    item: {fileID: 11400010}
   thumbnail: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
   preview: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
   prefabPath: Items/Weapons/weapon_pistol_stupid
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds:
+  - {fileID: 8300000, guid: 04b5c466d964a664b8f318c905d8b065, type: 3}
+  - {fileID: 8300000, guid: d78402b617dae2d489f6102b70978d9e, type: 3}
+  - {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

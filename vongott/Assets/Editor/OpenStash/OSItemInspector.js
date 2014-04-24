@@ -101,7 +101,47 @@ public class OSItemInspector extends Editor {
 			EditorGUILayout.EndVertical ();
 
 			EditorGUILayout.EndHorizontal ();
+		
+			// Sounds
+			EditorGUILayout.Space ();
+			EditorGUILayout.LabelField ( "Sounds", EditorStyles.boldLabel );
+			EditorGUILayout.BeginHorizontal ();
 			
+			EditorGUILayout.BeginVertical ();
+			
+			for ( i = 0; i < item.sounds.Length; i++ ) {
+				EditorGUILayout.BeginHorizontal ();
+				
+				GUI.backgroundColor = Color.red;
+				if ( GUILayout.Button ( "x" , GUILayout.Width ( 28 ), GUILayout.Height ( 14 ) ) ) {
+					var tmpSound : List.< AudioClip > = new List.< AudioClip > ( item.sounds );
+
+					tmpSound.RemoveAt ( i );
+
+					item.sounds = tmpSound.ToArray ();
+					return;
+				}
+				GUI.backgroundColor = Color.white;
+				
+				item.sounds[i] = EditorGUILayout.ObjectField ( item.sounds[i], typeof ( AudioClip ), false ) as AudioClip;
+				
+				EditorGUILayout.EndHorizontal ();
+			}
+			
+			GUI.backgroundColor = Color.green;
+			if ( GUILayout.Button ( "+" , GUILayout.Width ( 28 ), GUILayout.Height ( 14 ) ) ) {
+				tmpSound = new List.< AudioClip > ( item.sounds );
+
+				tmpSound.Add ( null );
+
+				item.sounds = tmpSound.ToArray ();
+			}
+			GUI.backgroundColor = Color.white;
+
+			EditorGUILayout.EndVertical ();
+
+			EditorGUILayout.EndHorizontal ();
+
 			// Ammunition
 			EditorGUILayout.Space ();
 		

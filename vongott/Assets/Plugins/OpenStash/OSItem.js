@@ -19,11 +19,6 @@ public class OSAmmunitionAmount {
 	}
 }
 
-public class OSSoundReference {
-	public var id : String = "newSound";
-	public var clip : AudioClip;
-}
-
 public class OSAttribute {
 	public var index : int = 0;
 	public var value : float = 0;
@@ -60,7 +55,7 @@ public class OSItem extends MonoBehaviour {
 	public var preview : Texture2D;
 	public var prefabPath : String;
 	public var definitions : OSDefinitions;
-	public var sounds : OSSoundReference[] = new OSSoundReference [0];
+	public var sounds : AudioClip[] = new AudioClip [0];
 
 	public function get category () : String {
 		return definitions.categories [ catIndex ].id;
@@ -72,12 +67,22 @@ public class OSItem extends MonoBehaviour {
 
 	public function GetSound ( id : String ) : AudioClip {
 		for ( var i : int = 0; i < sounds.Length; i++ ) {
-			if ( sounds[i].id == id ) {
-				return sounds[i].clip;
+			if ( sounds[i].name == id ) {
+				return sounds[i];
 			}
 		}
 
 		return null;
+	}
+	
+	public function GetSoundStrings () : String[] {
+		var output : String [] = new String [ sounds.Length ];
+		
+		for ( var i : int = 0; i < sounds.Length; i++ ) {
+			output[i] = ( sounds[i] == null ) ? "(none)" : sounds[i].name;
+		}
+
+		return output;
 	}
 
 	public function PlaySound ( id : String ) {
@@ -104,6 +109,16 @@ public class OSItem extends MonoBehaviour {
 		}
 
 		return -1;
+	}
+	
+	public function GetAttributeStrings () : String [] {
+		var output : String [] = new String [ attributes.Length ];
+
+		for ( var i : int = 0; i < attributes.Length; i++ ) {
+			output[i] = attributes[i].id; 
+		}
+
+		return output;
 	}
 
 	public function AdoptValues ( item : OSItem ) {

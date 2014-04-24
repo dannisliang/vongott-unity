@@ -2073,6 +2073,30 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -130
+      objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 380
+      objectReference: {fileID: 0}
+    - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
   m_RootGameObject: {fileID: 376946497}
@@ -4406,13 +4430,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 966
-    y: 10
+    x: 832
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 966
+    x: 832
     y: 10
     width: 90
     height: 90
@@ -6518,13 +6542,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 336
-    y: 10
+    x: 202
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 336
+    x: 202
     y: 10
     width: 90
     height: 90
@@ -12322,13 +12346,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 623
+    y: 416
     width: 206
     height: 54
   mouseRct:
     serializedVersion: 2
     x: 10
-    y: 623
+    y: 604
     width: 206
     height: 54
   drawDepth: -20
@@ -12447,8 +12471,9 @@ MonoBehaviour:
     item: {fileID: 0}
   thumbnail: {fileID: 2800000, guid: 0c0137840ee164cc8812e49fd487af46, type: 3}
   preview: {fileID: 2800000, guid: 0c0137840ee164cc8812e49fd487af46, type: 3}
-  prefabPath: Items/Upgrades/upgrade_healing_awesome
+  prefabPath: Items/Upgrades/Mechanical/upgrade_healing_awesome
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds: []
 --- !u!23 &330878084
 Renderer:
   m_ObjectHideFlags: 0
@@ -12814,13 +12839,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 246
-    y: 10
+    x: 112
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 246
+    x: 112
     y: 10
     width: 90
     height: 90
@@ -14869,13 +14894,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 696
-    y: 10
+    x: 562
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 696
+    x: 562
     y: 10
     width: 90
     height: 90
@@ -18764,6 +18789,7 @@ GameObject:
   - 54: {fileID: 557481612}
   - 114: {fileID: 557481614}
   - 114: {fileID: 557481607}
+  - 82: {fileID: 557481615}
   m_Layer: 0
   m_Name: weapon_mine
   m_TagString: Untagged
@@ -18936,6 +18962,66 @@ MonoBehaviour:
   preview: {fileID: 2800000, guid: ef4f8ed7dc7274f98ad3b025c4098f1a, type: 3}
   prefabPath: Items/Weapons/weapon_mine
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds: []
+--- !u!82 &557481615
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 8200000, guid: 71be8c321b6226247b065132a711e199,
+    type: 2}
+  m_PrefabInternal: {fileID: 1005937010}
+  m_GameObject: {fileID: 557481605}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &564899908
 GameObject:
   m_ObjectHideFlags: 0
@@ -19216,13 +19302,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 426
-    y: 10
+    x: 292
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 426
+    x: 292
     y: 10
     width: 90
     height: 90
@@ -19278,7 +19364,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .24062039, y: .00514374813, z: -.0121176746}
+  m_ConnectedAnchor: {x: .24062036, y: .00514376024, z: -.012117669}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -90
@@ -22786,13 +22872,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 336
-    y: 10
+    x: 202
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 336
+    x: 202
     y: 10
     width: 90
     height: 90
@@ -23458,7 +23544,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400034, guid: 82e802124ed639a4ba2e99d3f0888aa8, type: 2}
   m_PrefabInternal: {fileID: 1586498284}
   m_GameObject: {fileID: 665988290}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: -.0383335873, y: -2.4980017e-18, z: 4.41263923e-18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -33060,7 +33146,7 @@ Transform:
   m_PrefabInternal: {fileID: 45774655}
   m_GameObject: {fileID: 868118735}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 156, y: 587, z: 0}
+  m_LocalPosition: {x: -130, y: 380, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 91624484}
@@ -33327,7 +33413,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 156
+    x: -130
     y: 99
     width: 1
     height: 1
@@ -34645,13 +34731,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 516
-    y: 10
+    x: 382
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 516
+    x: 382
     y: 10
     width: 90
     height: 90
@@ -36427,7 +36513,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.371734023, y: -.00199639238, z: .0730359927}
+  m_ConnectedAnchor: {x: -.371734053, y: -.00199639052, z: .0730360076}
   m_SwingAxis: {x: 0, y: -1, z: 0}
   m_LowTwistLimit:
     limit: -80
@@ -38564,8 +38650,9 @@ MonoBehaviour:
     item: {fileID: 0}
   thumbnail: {fileID: 2800000, guid: 1f075608d96554922983a274effa12a7, type: 3}
   preview: {fileID: 2800000, guid: 1f075608d96554922983a274effa12a7, type: 3}
-  prefabPath: Items/Upgrades/upgrade_speed_awesome
+  prefabPath: Items/Upgrades/Mechanical/upgrade_speed_awesome
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds: []
 --- !u!23 &949973527
 Renderer:
   m_ObjectHideFlags: 0
@@ -45087,13 +45174,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 786
-    y: 10
+    x: 652
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 786
+    x: 652
     y: 10
     width: 90
     height: 90
@@ -46687,7 +46774,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 633
+    y: 426
     width: 170
     height: 14
   mouseRct:
@@ -46988,13 +47075,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 876
-    y: 10
+    x: 742
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 876
+    x: 742
     y: 10
     width: 90
     height: 90
@@ -47316,13 +47403,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 516
-    y: 10
+    x: 382
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 516
+    x: 382
     y: 10
     width: 90
     height: 90
@@ -48937,13 +49024,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 606
-    y: 10
+    x: 472
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 606
+    x: 472
     y: 10
     width: 90
     height: 90
@@ -50563,13 +50650,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 966
-    y: 10
+    x: 832
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 966
+    x: 832
     y: 10
     width: 90
     height: 90
@@ -52459,13 +52546,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 426
-    y: 10
+    x: 292
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 426
+    x: 292
     y: 10
     width: 90
     height: 90
@@ -54600,7 +54687,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 653
+    y: 446
     width: 170
     height: 14
   mouseRct:
@@ -55322,7 +55409,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400002, guid: 6b964a30b0d042e48aa615d94aeeebb6, type: 2}
   m_PrefabInternal: {fileID: 2103700193}
   m_GameObject: {fileID: 1255206097}
-  m_LocalRotation: {x: .70710665, y: 0, z: 0, w: -.707107008}
+  m_LocalRotation: {x: .70710659, y: 0, z: 0, w: -.707106948}
   m_LocalPosition: {x: 1.06447196, y: 1.61435366, z: 21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -55478,8 +55565,9 @@ MonoBehaviour:
     item: {fileID: 0}
   thumbnail: {fileID: 2800000, guid: 1cd85453f07624059a067b209e7c1601, type: 3}
   preview: {fileID: 2800000, guid: 1cd85453f07624059a067b209e7c1601, type: 3}
-  prefabPath: Items/Upgrades/upgrade_shield_awesome
+  prefabPath: Items/Upgrades/Mechanical/upgrade_shield_awesome
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds: []
 --- !u!23 &1255931977
 Renderer:
   m_ObjectHideFlags: 0
@@ -57840,7 +57928,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .371734321, y: -.00199652789, z: .0730364546}
+  m_ConnectedAnchor: {x: .371734321, y: -.00199652463, z: .0730364695}
   m_SwingAxis: {x: 0, y: -1, z: 0}
   m_LowTwistLimit:
     limit: -80
@@ -60610,13 +60698,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 606
-    y: 10
+    x: 472
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 606
+    x: 472
     y: 10
     width: 90
     height: 90
@@ -61221,13 +61309,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 876
-    y: 10
+    x: 742
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 876
+    x: 742
     y: 10
     width: 90
     height: 90
@@ -65695,30 +65783,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1437758477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df75ed367a2e185418a6909fdb8d138c, type: 3}
+  m_Script: {fileID: 11500000, guid: c4b7588cbda0a437192e5f9e0783ea3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDrop: 1
-  isStackable: 0
-  type: 0
-  subType: 0
-  image: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
-  attr:
-  - type: 0
-    val: 5
-  - type: 2
-    val: .5
-  - type: 3
-    val: 40
-  - type: 4
-    val: 60
-  eqSlot: 0
-  equipSound: {fileID: 8300000, guid: d78402b617dae2d489f6102b70978d9e, type: 3}
-  fireSounds:
-  - {fileID: 8300000, guid: 04b5c466d964a664b8f318c905d8b065, type: 3}
-  - {fileID: 8300000, guid: 2b8da848904934f4e8dc6b81f1f6358d, type: 3}
-  - {fileID: 8300000, guid: 4459e99508f3f9f49af3d0d3d80606d2, type: 3}
-  - {fileID: 8300000, guid: 9c19056d983c6d24287b81d8795667d4, type: 3}
+  item: {fileID: 1437758488}
+  accuracyIndex: 3
+  damageIndex: 1
+  firingRateIndex: 0
+  reloadSpeedIndex: 2
+  firingSoundIndex: 0
+  reloadSoundIndex: 1
+  equippingSoundIndex: 1
+  holsteringSoundIndex: 2
+  muzzleFlash: {fileID: 0}
+  muzzleFlashDuration: .25
 --- !u!23 &1437758484
 Renderer:
   m_ObjectHideFlags: 0
@@ -65865,6 +65943,10 @@ MonoBehaviour:
   preview: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
   prefabPath: Items/Weapons/weapon_pistol_stupid
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds:
+  - {fileID: 8300000, guid: 04b5c466d964a664b8f318c905d8b065, type: 3}
+  - {fileID: 8300000, guid: d78402b617dae2d489f6102b70978d9e, type: 3}
+  - {fileID: 0}
 --- !u!1 &1438016371
 GameObject:
   m_ObjectHideFlags: 0
@@ -66645,7 +66727,7 @@ Transform:
   m_PrefabInternal: {fileID: 45774655}
   m_GameObject: {fileID: 1453765699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 606, y: 343, z: 0}
+  m_LocalPosition: {x: 320, y: 240, z: 0}
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 153922300}
@@ -66902,14 +66984,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 586
-    y: 324
+    x: 300
+    y: 220
     width: 40
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 586
-    y: 324
+    x: 452
+    y: 314
     width: 40
     height: 40
   drawDepth: -0
@@ -67028,8 +67110,9 @@ MonoBehaviour:
     item: {fileID: 0}
   thumbnail: {fileID: 2800000, guid: 6966afb0832e64a399366b140b26bdf1, type: 3}
   preview: {fileID: 2800000, guid: 6966afb0832e64a399366b140b26bdf1, type: 3}
-  prefabPath: Items/Upgrades/upgrade_xray_awesome
+  prefabPath: Items/Upgrades/Mechanical/upgrade_xray_awesome
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds: []
 --- !u!23 &1456969146
 Renderer:
   m_ObjectHideFlags: 0
@@ -67721,7 +67804,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400068, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
   m_PrefabInternal: {fileID: 125764439}
   m_GameObject: {fileID: 1462218830}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: .0383345708, y: -1.48944338e-07, z: 2.93836546e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -68832,13 +68915,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 696
-    y: 10
+    x: 562
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 696
+    x: 562
     y: 10
     width: 90
     height: 90
@@ -69530,13 +69613,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 786
-    y: 10
+    x: 652
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 786
+    x: 652
     y: 10
     width: 90
     height: 90
@@ -71109,13 +71192,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 406
+    x: 120
     y: 130
     width: 400
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 406
+    x: 272
     y: 130
     width: 400
     height: 50
@@ -73280,13 +73363,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 246
-    y: 10
+    x: 112
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 246
+    x: 112
     y: 10
     width: 90
     height: 90
@@ -75371,8 +75454,9 @@ MonoBehaviour:
     item: {fileID: 0}
   thumbnail: {fileID: 2800000, guid: 32263d8b510c2408ba9a2772208ad110, type: 3}
   preview: {fileID: 2800000, guid: 32263d8b510c2408ba9a2772208ad110, type: 3}
-  prefabPath: Items/Upgrades/upgrade_strength_awesome
+  prefabPath: Items/Upgrades/Mechanical/upgrade_strength_awesome
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds: []
 --- !u!23 &1643595348
 Renderer:
   m_ObjectHideFlags: 0
@@ -77952,13 +78036,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 156
-    y: 10
+    x: 22
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 156
+    x: 22
     y: 10
     width: 90
     height: 90
@@ -78076,7 +78160,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.238371462, y: .0353248641, z: -.00126082206}
+  m_ConnectedAnchor: {x: -.238371432, y: .0353248641, z: -.00126081984}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -90
@@ -78641,7 +78725,7 @@ Transform:
   m_PrefabInternal: {fileID: 45774655}
   m_GameObject: {fileID: 1700356800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 606, y: 507, z: 0}
+  m_LocalPosition: {x: 320, y: 300, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1847564145}
@@ -78900,7 +78984,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 606
+    x: 320
     y: 179
     width: 1
     height: 1
@@ -84283,13 +84367,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 386
-    y: 130
+    x: 252
+    y: -58
     width: 440
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 386
+    x: 252
     y: 130
     width: 440
     height: 50
@@ -86717,7 +86801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e2f180d32c6fc45a8b08fa6abfa821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: AwesomeReflexes Upgrade
+  id: Awesome Reflexes Upgrade
   description: This is like drinking 20 pots of coffee
   stackable: 0
   canDrop: 1
@@ -86740,8 +86824,9 @@ MonoBehaviour:
     item: {fileID: 0}
   thumbnail: {fileID: 2800000, guid: 8cbf2735de0ef411abc502d4ff771b4d, type: 3}
   preview: {fileID: 2800000, guid: 8cbf2735de0ef411abc502d4ff771b4d, type: 3}
-  prefabPath: Items/Upgrades/upgrade_reflexes_awesome
+  prefabPath: Items/Upgrades/Mechanical/upgrade_reflexes_awesome
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  sounds: []
 --- !u!23 &1913747148
 Renderer:
   m_ObjectHideFlags: 0
@@ -86817,7 +86902,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400032, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
   m_PrefabInternal: {fileID: 125764439}
   m_GameObject: {fileID: 1920451550}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: -.0383335873, y: -2.4980017e-18, z: 4.41263923e-18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -90753,7 +90838,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400026, guid: 82e802124ed639a4ba2e99d3f0888aa8, type: 2}
   m_PrefabInternal: {fileID: 1586498284}
   m_GameObject: {fileID: 2026752426}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: .0383345708, y: -1.48944338e-07, z: 2.93836546e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -92719,13 +92804,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 156
-    y: 10
+    x: 22
+    y: -178
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 156
+    x: 22
     y: 10
     width: 90
     height: 90
