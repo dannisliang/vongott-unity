@@ -341,6 +341,19 @@ public class OSInventory extends MonoBehaviour {
 		return -1;
 	}
 
+	// Search functions
+	public function FindItemByCategory ( cat : String, subcat : String ) : OSItem {
+		for ( var i : int = 0; i < slots.Count; i++ ) {
+			if ( slots[i] && slots[i].item ) {
+				if ( cat == slots[i].item.category && subcat == slots[i].item.subcategory ) {
+					return slots[i].item;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	// Get/set items
 	public function SpawnSlot ( slot : OSSlot, parent : Transform, position : Vector3 ) {
 		if ( !slot.item ) { return; }

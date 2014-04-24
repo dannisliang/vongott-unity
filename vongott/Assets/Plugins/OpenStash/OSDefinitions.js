@@ -87,4 +87,14 @@ public class OSDefinitions extends MonoBehaviour {
 
 		return strings;
 	}
+	
+	public function GetSubcategoryStrings ( catIndex : int ) : String [] {
+		var strings : String[] = new String [ categories[catIndex].subcategories.Length ];
+
+		for ( var i : int = 0; i < categories[catIndex].subcategories.Length; i++ ) {
+			strings[i] = categories[catIndex].subcategories[i];
+		}
+
+		return strings;
+	}
 }

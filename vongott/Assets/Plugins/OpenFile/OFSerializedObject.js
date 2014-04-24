@@ -60,7 +60,7 @@ public class OFField {
 }
 
 public class OFSerializedObject extends MonoBehaviour {
-	public var fields : OFField [];	
+	public var fields : OFField [] = new OFField[0];	
 	public var guid : String = "";
 	public var prefabPath : String = "";
 

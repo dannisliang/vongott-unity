@@ -250,7 +250,7 @@ public class CameraController extends MonoBehaviour {
 		
 		} else if ( !player ) {
 			player = target.GetComponent.<Player>();
-
+			return;
 		}
 
 		// Only run if not in cutscene mode and controls are enabled
