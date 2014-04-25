@@ -113,12 +113,20 @@ public class OCManager extends MonoBehaviour {
 
 	public function StartConversation ( tree : OCTree ) {
 		if ( !this.tree && tree && tree.rootNodes.Length > 0 ) {
-			DoCallback ( "OnConversationStart" );
 
 			this.tree = tree;
 
 			currentNode = tree.rootNodes[tree.currentRoot].firstNode;
 			
+			
+			if ( tree.rootNodes[tree.currentRoot].tags.Length > 0 ) {
+				DoCallback ( "OnConversationStart", tree.rootNodes[tree.currentRoot].tags );
+
+			} else {
+				DoCallback ( "OnConversationStart" );
+			
+			}
+
 			DisplayNode ();
 		}
 	}

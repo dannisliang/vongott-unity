@@ -142,16 +142,34 @@ class EventManager extends MonoBehaviour {
 	// Callback functions
 	/////////////////
 	// Conversation
-	public function OnConversationStart ( ) {
+	private var passiveConvo : boolean = false;
+
+	public function OnConversationStart () {
+		passiveConvo = false;
+		
 		GameCamera.GetInstance().StorePosRot();
 		GameCore.GetInstance().SetControlsActive ( false );
 		OGRoot.GetInstance().GoToPage ( "Conversation" );
 	}
 
+	public function OnConversationStart ( tags : String[] ) {
+		for ( var i : int = 0; i < tags.Length; i++ ) {
+			if ( tags[i] == "passive" ) {
+				passiveConvo = true;
+			}
+		}
+	}
+
 	public function OnSetLines ( strings : String [] ) {
 		if ( strings.Length == 1 ) {
-			UIConversation.SetLine ( strings[0] );
+			if ( passiveConvo ) {
+				UIHUD.GetInstance().ShowNotification ( strings[0] );
+
+			} else {
+				UIConversation.SetLine ( strings[0] );
 		
+			}
+
 		} else {
 			for ( var i : int = 0; i < strings.Length; i++ ) {
 				UIConversation.SetOption ( i, strings[i] );

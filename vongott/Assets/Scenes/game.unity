@@ -36642,15 +36642,53 @@ MonoBehaviour:
   rootNodes:
   - tags:
     - auto
-    firstNode: 41681
+    firstNode: 74596
     nodes:
-    - connectedTo: 0ccc0000
-      id: 41681
+    - connectedTo: e11601002df10000
+      id: 74596
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: has_arms
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 71393
+      type: 2
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 1
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 33430100
+      id: 61741
       type: 0
       speak:
-        speaker: 1
+        speaker: 0
         lines:
-        - Hello!
+        - You mentioned something about disturbances in the sewer?
       event:
         message: 
         argument: 
@@ -36663,13 +36701,174 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 761c0100
-      id: 52236
+    - connectedTo: 8ea20000
+      id: 82739
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - You couldn't have come along at a better time, we really need someone expendable
+          to take care of this.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 8b9f0000
+      id: 41614
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - There are strange disturbances in the sewers beneath us, which are both
+          preventing our troops from sleeping and moving our valuable cargo through
+          the tunnels.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 29e40000
+      id: 40843
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - You'll probably need a weapon down there, so go see the quartermaster in
+          the canteen about that.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 6b770100
+      id: 58409
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Afterwards, go down to the maintenance tunnels and talk to Marl, the mechanic.
+          He will get you down to the lower sewers. He can fill you in on the specifics
+          too.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: ed77000046920000a91f0100
+      id: 96107
       type: 0
       speak:
         speaker: 0
         lines:
-        - Hi!
+        - Poop!
+        - I am not your plumber. Fix your own shit.
+        - Sure, I'll handle it.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 966c0100
+      id: 30701
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Yes, there probably will be. Now get your equipment from the quartermaster.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 64a70000
+      id: 37446
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I'll have you know that the nanites in your body can be programmed for rapid
+          exponential growth. It's like instant robot cancer. Sound pleasant to you?
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 966c0100
+      id: 73641
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Appreciate it. Let me know how it turns out.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 966c0100
+      id: 42852
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - You make one wrong move, or don't do what we tell you, and we flip the switch.
       event:
         message: 
         argument: 
@@ -36683,7 +36882,7 @@ MonoBehaviour:
       end:
         rootNode: 0
     - connectedTo: 
-      id: 72822
+      id: 93334
       type: 5
       speak:
         speaker: 0
@@ -36700,9 +36899,329 @@ MonoBehaviour:
       getFlag:
         flag: 
       end:
+        rootNode: 3
+  - tags: []
+    firstNode: 10947
+    nodes:
+    - connectedTo: 5b0d0100
+      id: 10947
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - 'Good to see you walking too, this is very promising. You''re the only one
+          so far who even survived. '
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 453c01007453010020550100
+      id: 68955
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - 'I''m pretty sure I used to have these things attached to my shoulders... '
+        - 'Where in the name of merciless fuck are my arms? '
+        - 'Whereabout might my arms be? '
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: c9120100
+      id: 80965
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Haha, yeah. Not so "handy" right now, are you?
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 4a410000
+      id: 86900
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - You're really walking on thin ice, buddy. Talk to our medic here.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 43430100
+      id: 87328
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - You're taking that rather lightly. I'm impressed. I'd have been running
+          around wailing my arms around... Or, you get the idea.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 4a410000
+      id: 70345
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - '...ahem, anyway, talk to our medic here about that.'
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 4a410000
+      id: 82755
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Have a chat with doc here, he'll give you a pair.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 16714
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 2
+  - tags:
+    - passive
+    firstNode: 71931
+    nodes:
+    - connectedTo: dd4d0000c84c0100
+      id: 71931
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: has_arms
+      end:
+        rootNode: 0
+    - connectedTo: e5920000
+      id: 19933
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Get your arms from the medic first.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 85192
+      type: 2
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 37605
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 2
+  - tags: []
+    firstNode: 41975
+    nodes:
+    - connectedTo: eb320100e9400100
+      id: 41975
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: cleared_sewers
+      end:
+        rootNode: 0
+    - connectedTo: bfac0000
+      id: 78571
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Good luck.
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 44223
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 3
+    - connectedTo: 00000000
+      id: 82153
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
         rootNode: 0
   currentRoot: 0
-  speakers: []
+  speakers:
+  - {fileID: 1034786538}
+  - {fileID: 839040912}
 --- !u!114 &839040916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75380,8 +75899,27 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 
+    - connectedTo: 1efa0000
       id: 44176
+      type: 3
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: has_arms
+        b: 1
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 64030
       type: 5
       speak:
         speaker: 0
@@ -75399,7 +75937,8 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 2
-  - tags: []
+  - tags:
+    - passive
     firstNode: 81308
     nodes:
     - connectedTo: 5b5a0100
@@ -75440,7 +75979,8 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 3
-  - tags: []
+  - tags:
+    - passive
     firstNode: 62981
     nodes:
     - connectedTo: dd4b0100
