@@ -28,13 +28,21 @@ class UIUpgrades extends OGPage {
 	}
 	
 	function Pick ( b : OGButton ) {		
-		var slot : String = b.name;
-		
-		if ( !UpgradeManager.GetUpgrade ( slot ) ) {
+		var slot : int = 0;
+		var eStrings : String[] = System.Enum.GetNames ( eUpgradeRegion );
+
+		for ( var i : int = 0; i < eStrings.Length; i++ ) {
+			if ( eStrings[i] == b.name ) {
+				slot = i;
+				break;
+			}
+		}
+
+		if ( !GameCore.GetUpgradeManager().GetUpgrade ( slot ) ) {
 			return;
 		}
 		
-		UpgradeManager.Activate ( slot );
+		GameCore.GetUpgradeManager().Activate ( slot );
 	}
 	
 	override function UpdatePage () {

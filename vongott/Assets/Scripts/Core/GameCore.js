@@ -212,18 +212,22 @@ class GameCore extends MonoBehaviour {
 	// Init
 	////////////////////
 	// Instance
-	static function GetInstance() : GameCore {
+	static function GetInstance () : GameCore {
 		return instance;
 	}
 
-	public static function GetInventory() : OSInventory {
+	public static function GetInventory () : OSInventory {
 		return instance.GetPlayer().inventory;
 	}
 
-	public static function GetConversationManager() : OCManager {
+	public static function GetConversationManager () : OCManager {
 		return instance.GetComponent.< OCManager > ();
 	}
 	
+	public static function GetUpgradeManager () : UpgradeManager {
+		return instance.GetComponent.< UpgradeManager > ();
+	}
+
 	// Find player
 	function FindPlayer () {
 		player = GameObject.FindObjectOfType ( Player );
@@ -280,9 +284,6 @@ class GameCore extends MonoBehaviour {
 			// Quests
 			QuestManager.Init();
 						
-			// Upgrades
-			UpgradeManager.Init();
-			
 			// Flags
 			FlagManager.Init();
 		}
@@ -322,7 +323,7 @@ class GameCore extends MonoBehaviour {
 		QuestManager.Clear();
 		
 		// Upgrades
-		UpgradeManager.Clear();
+		GetUpgradeManager().Clear();
 	
 		running = false;
 	}

@@ -184,7 +184,7 @@ class Player extends MonoBehaviour {
 	}
 	
 	function CanHeal ( amount : int ) : boolean {
-		return health + amount <= UpgradeManager.GetAbility ( eAbilityID.MaxHealth );
+		return health + amount <= GameCore.GetUpgradeManager().GetAbility ( "Max Health" );
 	}
 	
 	function TakeDamage ( amount : int ) {
@@ -282,7 +282,7 @@ class Player extends MonoBehaviour {
 	}
 	
 	function HasFullHealth () : boolean {		
-		return health == UpgradeManager.GetAbility ( eAbilityID.MaxHealth );
+		return health == GameCore.GetUpgradeManager().GetAbility ( "Max Health" );
 	}
 	
 	function Heal ( amount : int ) {
@@ -290,10 +290,10 @@ class Player extends MonoBehaviour {
 			health += amount;
 		
 		} else if ( !HasFullHealth() ) {
-			health = UpgradeManager.GetAbility ( eAbilityID.MaxHealth );
+			health = GameCore.GetUpgradeManager().GetAbility ( "Max Health" );
 		
 		} else {
-			UpgradeManager.Deactivate ( eSlotID.Torso );
+			GameCore.GetUpgradeManager().Deactivate ( "Chest" );
 			return;
 			
 		}
@@ -301,14 +301,6 @@ class Player extends MonoBehaviour {
 		GameCore.Print ( "Player | Healing: " + health );
 	}
 	
-	// Install
-	function Install ( upg : Upgrade, install : boolean ) {
-		if ( install ) {
-			UpgradeManager.Install ( upg );
-		} else {
-			UpgradeManager.Remove ( upg.upgSlot );
-		}
-	}
 	
 	////////////////////
 	// Init
@@ -377,11 +369,11 @@ class Player extends MonoBehaviour {
 		}
 
 		// Calculate energy cost
-		energy -= UpgradeManager.CalculateEnergyCost() * Time.deltaTime;
+		energy -= GameCore.GetUpgradeManager().CalculateEnergyCost() * Time.deltaTime;
 	
-		if ( energy < 0 ) {
+		if ( energy <= 0 ) {
 			energy = 0;
-			UpgradeManager.DeactivateAll ();
+			GameCore.GetUpgradeManager().DeactivateAll ();
 		}
 	}
 }

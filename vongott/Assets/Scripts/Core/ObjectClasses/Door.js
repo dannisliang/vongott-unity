@@ -27,7 +27,7 @@ class Door extends InteractiveObject {
 
 	// Lock picking
 	private function PickLock ( p : Player ) {
-	 	if ( UpgradeManager.GetAbility(eAbilityID.Lockpicking) >= lockLevel ) {
+	 	if ( GameCore.GetUpgradeManager().GetAbility ( "Lockpicking" ) >= lockLevel ) {
 	  		Unlock ();
 	  		UIHUD.GetInstance().ShowNotification ( "Door unlocked" ); 	
 		
