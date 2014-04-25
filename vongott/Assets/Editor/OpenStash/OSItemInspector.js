@@ -4,6 +4,8 @@ import System.Collections.Generic;
 
 @CustomEditor ( OSItem )
 public class OSItemInspector extends Editor {
+	private var resourceWarning : boolean = false;
+	
 	override function OnInspectorGUI () {
 		var item : OSItem = target as OSItem;
 		
@@ -19,22 +21,42 @@ public class OSItemInspector extends Editor {
 			GUI.color = Color.white;
 
 		} else {
+			EditorGUILayout.Space ();
+			EditorGUILayout.LabelField ( "Resource", EditorStyles.boldLabel );
+			
+			EditorGUILayout.BeginHorizontal ();
 
-			// Prefab path
-			if ( !Application.isPlaying ) {
-				EditorGUILayout.BeginHorizontal ();
-				var str : String = "Get prefab path";
-				if ( !String.IsNullOrEmpty ( item.prefabPath ) ) { str = item.prefabPath; }
-				if ( GUILayout.Button ( str ) ) {
+			EditorGUILayout.TextField ( "Path", item.prefabPath );
+
+			if ( !item.gameObject.activeInHierarchy ) {
+				GUI.backgroundColor = Color.green;
+				if ( GUILayout.Button ( "Update", GUILayout.Width ( 60 ) ) ) {
 					var path : String = AssetDatabase.GetAssetPath ( item.gameObject );
-					path = path.Replace ( "Assets/Resources/", "" );
-					path = path.Replace ( ".prefab", "" );
+					if ( path.Contains ( "Assets/Resources/" ) ) {
+						path = path.Replace ( "Assets/Resources/", "" );
+						path = path.Replace ( ".prefab", "" );
 
-					item.prefabPath = path;
+						item.prefabPath = path;
+						
+						resourceWarning = false;
+					
+					} else {
+						resourceWarning = true;
+					
+					}
 				}
-				EditorGUILayout.EndHorizontal ();
+				GUI.backgroundColor = Color.white;
 			}
 
+			EditorGUILayout.EndHorizontal ();
+
+			if ( resourceWarning ) {
+				item.prefabPath = "";
+				GUI.color = Color.red;
+				EditorGUILayout.LabelField ( "Object not in /Resources folder!", EditorStyles.boldLabel );
+				GUI.color = Color.white;
+			}
+			
 			// Category
 			EditorGUILayout.Space ();
 			EditorGUILayout.LabelField ( "Category", EditorStyles.boldLabel );

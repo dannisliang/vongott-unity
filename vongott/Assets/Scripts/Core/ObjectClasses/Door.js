@@ -140,7 +140,7 @@ class Door extends InteractiveObject {
 	}
 		
 	// Interaction
-	override function NPCCollide ( a : Actor ) {
+	override function NPCCollide ( a : OACharacter ) {
 		ToggleDoor ( a.transform );
 	}
 

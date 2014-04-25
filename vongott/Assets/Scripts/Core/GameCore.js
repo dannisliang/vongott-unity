@@ -37,8 +37,8 @@ class GameCore extends MonoBehaviour {
 	static var interactiveObjectLocked : boolean = false;
 	
 	static var state : eGameState;
-	static var playerObject:GameObject;
-	static var scanner:OPScanner;
+	static var player : Player;
+	static var scanner : OPScanner;
 	
 	static var running = false;
 	
@@ -61,11 +61,11 @@ class GameCore extends MonoBehaviour {
 	// Player
 	////////////////////
 	public static function GetPlayerObject () : GameObject {
-		return playerObject;
+		return player.gameObject;
 	}
 	
 	public static function GetPlayer () : Player {
-		return playerObject.GetComponent(Player);
+		return player;
 	}
 
 
@@ -98,12 +98,6 @@ class GameCore extends MonoBehaviour {
 
 	public function SetControlsActive ( state : boolean ) {
 		InputManager.isLocked = !state;
-		
-		if ( state ) {
-			Print ( "GameCore | Controls activated" );
-		} else {
-			Print ( "GameCore | Controls deactivated" );
-		}
 	}
 	
 	public function SetControlsActive ( state : boolean, delay : float ) {
@@ -125,7 +119,7 @@ class GameCore extends MonoBehaviour {
 				Destroy ( skybox.gameObject );
 			}
 
-			playerObject.transform.parent = currentLevel.transform.parent;
+			player.transform.parent = currentLevel.transform.parent;
 			Destroy ( currentLevel );
 			currentLevel = null;
 		}
@@ -138,14 +132,6 @@ class GameCore extends MonoBehaviour {
 		currentLevel.transform.localPosition = Vector3.zero;
 		
 		// Instantiate and position player
-		if ( !playerObject ) {
-			playerObject = Instantiate ( Resources.Load ( "Actors/Player/Player" ) ) as GameObject;
-			
-			playerObject.layer = 9;	
-		}
-		
-		playerObject.transform.parent = currentLevel.transform;
-
 		GoToSpawnPoint ( spawnPoint );
 
 		yield WaitForEndOfFrame ();
@@ -231,14 +217,17 @@ class GameCore extends MonoBehaviour {
 	}
 
 	public static function GetInventory() : OSInventory {
-		return instance.GetComponent.< OSInventory > ();
+		return instance.GetPlayer().inventory;
+	}
+
+	public static function GetConversationManager() : OCManager {
+		return instance.GetComponent.< OCManager > ();
 	}
 	
 	// Find player
 	function FindPlayer () {
-		var player : Player = GameObject.FindObjectOfType ( Player );
-		playerObject = player.gameObject;
-		Debug.Log ( "GameCore | Found player: " + playerObject );
+		player = GameObject.FindObjectOfType ( Player );
+		Debug.Log ( "GameCore | Found player: " + player );
 	}
 	
 	// Find spawn point
@@ -258,13 +247,13 @@ class GameCore extends MonoBehaviour {
 		
 		Debug.Log ( "GameCore | ...failed!" );
 		
-		playerObject.transform.position = currentSpawnPoint.transform.position;
+		player.transform.position = currentSpawnPoint.transform.position;
 		
 		var newRot : Vector3 = currentSpawnPoint.transform.localEulerAngles;
 		newRot.x = 0;
 		newRot.z = 0;
 		
-		playerObject.transform.localEulerAngles = newRot;
+		player.transform.localEulerAngles = newRot;
 	}
 	
 	// Find object from GUID
@@ -381,7 +370,7 @@ class GameCore extends MonoBehaviour {
 	}
 	
 	function Update () {
-		if ( playerObject == null ) {
+		if ( player == null ) {
 			FindPlayer ();
 		}
 		

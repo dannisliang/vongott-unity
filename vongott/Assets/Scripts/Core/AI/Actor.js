@@ -255,7 +255,7 @@ class Actor extends InteractiveObject {
 		Destroy ( equippedItem.rigidbody );
 		
 	
-		GameCore.Print ( "Actor | '" + equippedItem.GetComponent(Item).title + "' equipped" );
+//		GameCore.Print ( "Actor | '" + equippedItem.GetComponent(Item).title + "' equipped" );
 	}
 
 	function UnEquip () {
@@ -514,7 +514,7 @@ class Actor extends InteractiveObject {
 	// Trigger
 	function OnTriggerEnter ( other : Collider ) {
 		if ( other.GetComponent ( InteractiveObject ) ) {
-			other.GetComponent ( InteractiveObject ).NPCCollide ( this );
+			other.GetComponent ( InteractiveObject ).NPCCollide ( this.GetComponent.< OACharacter > () );
 		}
 	}
 	

@@ -11,8 +11,15 @@ public enum OFFieldType {
 	Vector2,
 
 	// Component types
+	Animator,
 	Component,
 	Transform,
+
+	// OpenTools types
+	OACharacter,
+	OCTree,
+	OSInventory,
+	OPPathFinder,
 }
 
 public class OFField {
@@ -61,12 +68,13 @@ public class OFField {
 
 public class OFSerializedObject extends MonoBehaviour {
 	public var fields : OFField [] = new OFField[0];	
-	public var guid : String = "";
+	public var id : String = "";
 	public var prefabPath : String = "";
+	public var exportPath : String = "";
 
 	public function Start () {
-		if ( String.IsNullOrEmpty ( guid ) ) {
-			guid = System.Guid.NewGuid().ToString();
+		if ( String.IsNullOrEmpty ( id ) ) {
+			id = System.Guid.NewGuid().ToString();
 		}
 	}
 
@@ -115,12 +123,12 @@ public class OFSerializedObject extends MonoBehaviour {
 		fields = tmpFields.ToArray ();
 	}
 
-	public static function FindObject ( guid : String ) : OFSerializedObject {
+	public static function FindObject ( id : String ) : OFSerializedObject {
 		var result : OFSerializedObject;
 		var allObjects : OFSerializedObject[] = GameObject.FindObjectsOfType.<OFSerializedObject>();
 
 		for ( var i : int = 0; i < allObjects.Length; i++ ) {
-			if ( allObjects[i].guid == guid ) {
+			if ( allObjects[i].id == id ) {
 				result = allObjects[i];
 				break;
 			}	

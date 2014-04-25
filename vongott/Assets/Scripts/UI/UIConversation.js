@@ -90,7 +90,7 @@ class UIConversation extends OGPage {
 			
 			
 			if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetMouseButtonDown(0) ) {
-				ConversationManager.NextNode ( currentHighlight );
+				OCManager.GetInstance().SelectOption ( currentHighlight );
 			} else if ( Input.GetKeyDown ( KeyCode.UpArrow ) ) {
 				PreviousOption ();
 			} else if ( Input.GetKeyDown ( KeyCode.DownArrow ) ) {
@@ -99,7 +99,7 @@ class UIConversation extends OGPage {
 		
 		} else {
 			if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetMouseButtonDown(0) ) {
-				ConversationManager.NextNode ( 0 );
+				OCManager.GetInstance().NextNode ();
 			}
 		}
 	}

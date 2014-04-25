@@ -93,7 +93,6 @@ public class OCTreeInspector extends Editor {
 		}
 		
 		if ( !showingEditor ) {
-			tree.eventHandler = EditorGUILayout.ObjectField ( "Event handler", tree.eventHandler, typeof ( GameObject ), true ) as GameObject;
 			tree.currentRoot = EditorGUILayout.Popup ( "Current root node", tree.currentRoot, rootNodeStrings );	
 		
 			EditorGUILayout.Space ();
@@ -479,8 +478,12 @@ public class OCTreeInspector extends Editor {
 							var cNode : OCNode = root.GetNode(node.connectedTo[o]);
 
 							if ( cNode ) {
-								var cContainer : NodeContainer = nodeContainers[cNode.id];
-							
+								var cContainer : NodeContainer;
+								
+								if ( nodeContainers.ContainsKey ( cNode.id ) ) {
+									cContainer = nodeContainers[cNode.id];
+								}
+
 								if ( cContainer ) {
 									cContainer.orphan = false;
 									

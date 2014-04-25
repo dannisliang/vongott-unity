@@ -291,8 +291,8 @@ static function PreviewObject ( obj : GameObject ) : ObjectAttributes {
 	if ( obj.GetComponent ( Item ) ) {
 		var itm : Item = obj.GetComponent ( Item );
 		
-		attributes.keys = itm.title + "\n\n";
-		attributes.values = "\n\n";
+//		attributes.keys = itm.title + "\n\n";
+//		attributes.values = "\n\n";
 		
 		for ( var attr : Item.Attribute in itm.attr ) {
 			attributes.keys += attr.type.ToString() + "\n";

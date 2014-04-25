@@ -14,14 +14,26 @@ public class OCManager extends MonoBehaviour {
 		return instance;
 	}
 
+	private function DoCallback ( message : String, argument : Object ) {
+		if ( eventHandler ) {
+			eventHandler.SendMessage ( message, argument, SendMessageOptions.DontRequireReceiver );
+		}
+	}
+	
+	private function DoCallback ( message : String ) {
+		if ( eventHandler ) {
+			eventHandler.SendMessage ( message, SendMessageOptions.DontRequireReceiver );
+		}
+	}
+
 	public function Start () {
 		instance = this;
 	}
 
 	public function EndConversation () {
 		tree = null;
-		
-		eventHandler.SendMessage ( "OnConversationEnd", speaker );
+	
+		DoCallback ( "OnConversationEnd", speaker );
 	}
 
 	public function DisplayNode () {
@@ -42,7 +54,13 @@ public class OCManager extends MonoBehaviour {
 				break;
 
 			case OCNodeType.Event:
-				eventHandler.SendMessage ( node.event.message, node.event.argument, SendMessageOptions.DontRequireReceiver );
+				if ( String.IsNullOrEmpty ( node.event.argument ) ) {
+					DoCallback ( node.event.message );
+
+				} else {
+					DoCallback ( node.event.message, node.event.argument );
+				
+				}
 
 				nextNode = node.connectedTo[0];
 				break;
@@ -77,8 +95,8 @@ public class OCManager extends MonoBehaviour {
 			DisplayNode ();
 		
 		} else if ( node && node.speak ) {
-			eventHandler.SendMessage ( "OnSetLines", node.speak.lines );
-			eventHandler.SendMessage ( "OnSetSpeaker", speaker );
+			DoCallback ( "OnSetLines", node.speak.lines );
+			DoCallback ( "OnSetSpeaker", speaker );
 		
 		}
 	}
@@ -95,8 +113,8 @@ public class OCManager extends MonoBehaviour {
 
 	public function StartConversation ( tree : OCTree ) {
 		if ( !this.tree && tree && tree.rootNodes.Length > 0 ) {
-			eventHandler.SendMessage ( "OnConversationStart" );
-			
+			DoCallback ( "OnConversationStart" );
+
 			this.tree = tree;
 
 			currentNode = tree.rootNodes[tree.currentRoot].firstNode;

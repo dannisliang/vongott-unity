@@ -96,11 +96,14 @@ MonoBehaviour:
   - id: distance
     name: Distance
     suffix: meters
-  currencies: []
+  currencies:
+  - name: Credits
+    image: {fileID: 0}
   ammunitions:
   - enabled: 1
     name: 9mm bullet
     image: {fileID: 0}
+  prefabPath: Prefabs/Core/InventoryDefinitions
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

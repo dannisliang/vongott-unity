@@ -1,7 +1,5 @@
 #pragma strict
 
-@script RequireComponent(GUID)
-
 class InteractiveObject extends MonoBehaviour {
 	function Focus () {
 		var intObj : InteractiveObject = GameCore.GetInteractiveObject();
@@ -19,33 +17,36 @@ class InteractiveObject extends MonoBehaviour {
 		}
 	}
 	
-	function NPCCollide ( a : Actor ) {}
+	function NPCCollide ( c : OACharacter ) {}
 	
-	function InvokePrompt () {}
+	function InvokePrompt () {
+		var character : OACharacter = this.GetComponent.< OACharacter > ();
+
+		if ( character ) {
+			UIHUD.GetInstance().ShowNotification ( "Talk" );
+		}
+	}
 	
-	function Interact () {}
+	function Interact () {
+		var character : OACharacter = this.GetComponent.< OACharacter > ();
+
+		if ( character ) {
+			if ( !character.isEnemy ) {
+				GameCore.GetConversationManager().StartConversation ( character.conversationTree );
+			}
+		}
+	}
 	
 	function UpdateObject () {}
 	
 	function Awake () {
-		this.gameObject.tag = "dynamic";
 	}
 	
-	function Start () {
-		if ( !this.GetComponent(GUID) ) {
-			this.gameObject.AddComponent(GUID);
-		}
-	}
-	
-	function Update () {		
-		UpdateObject ();
-	}
-
 	function OnCollisionEnter ( collision : Collision ) {
 		var other : GameObject = collision.gameObject;
 
-		if ( other.GetComponent(Actor) ) {
-			NPCCollide ( other.GetComponent(Actor) );
+		if ( other.GetComponent.< OACharacter > () ) {
+			NPCCollide ( other.GetComponent.< OACharacter > () );
 		}
 	}
 }

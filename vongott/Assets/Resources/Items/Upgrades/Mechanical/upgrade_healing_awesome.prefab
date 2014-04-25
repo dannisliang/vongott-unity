@@ -11,9 +11,7 @@ GameObject:
   - 33: {fileID: 3300000}
   - 65: {fileID: 6500000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400002}
   - 54: {fileID: 5400000}
-  - 114: {fileID: 11400006}
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: upgrade_healing_awesome
@@ -125,36 +123,6 @@ MonoBehaviour:
   prefabPath: Items/Upgrades/Mechanical/upgrade_healing_awesome
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   sounds: []
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Awesome Healing Upgrade
-  description: Regenerates healh. You know, like cheating.
-  path: Items/Upgrades
-  id: upgrade_healing_awesome
-  materialPath: 
-  tilingModifiers: []
-  canChangeMaterial: 0
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000365db5143b3a4a87f5942957f1fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GUID: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

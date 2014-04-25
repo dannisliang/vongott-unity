@@ -12,33 +12,47 @@ public class OFSerializedObjectInspector extends Editor {
 		}
 		
 		var obj : OFSerializedObject = target as OFSerializedObject;
+		var inScene : boolean = obj.gameObject.activeInHierarchy;
+
+		if ( !inScene ) {
+			GUI.color = new Color ( 1, 1, 1, 0.5 );
+		}
 		
-		if ( obj.gameObject.activeInHierarchy ) {
-			// Instance
-			EditorGUILayout.LabelField ( "Instance", EditorStyles.boldLabel );
-			
-			EditorGUILayout.BeginHorizontal ();
+		// Instance
+		EditorGUILayout.LabelField ( "Instance", EditorStyles.boldLabel );
+		
+		EditorGUILayout.BeginHorizontal ();
 
-			EditorGUILayout.TextField ( "GUID", obj.guid );
+		EditorGUILayout.TextField ( "ID", obj.id );
 
+		if ( inScene ) {
 			GUI.backgroundColor = Color.green;
 			if ( GUILayout.Button ( "Update", GUILayout.Width ( 60 ) ) ) {
-				obj.guid = System.Guid.NewGuid().ToString();
+				obj.id = System.Guid.NewGuid().ToString();
 			}
 			GUI.backgroundColor = Color.white;
+		}
 
-			EditorGUILayout.EndHorizontal ();
+		EditorGUILayout.EndHorizontal ();
+
+		GUI.color = new Color ( 1, 1, 1, 1 );
+
+		if ( !inScene ) {
+			obj.id = "";
 		
 		} else {
-			obj.guid = "";
-			
-			// Resource
-			EditorGUILayout.LabelField ( "Resource", EditorStyles.boldLabel );
-			
-			EditorGUILayout.BeginHorizontal ();
+			GUI.color = new Color ( 1, 1, 1, 0.5 );
+		
+		}
 
-			EditorGUILayout.TextField ( "Path", obj.prefabPath );
+		// Resource
+		EditorGUILayout.LabelField ( "Resource", EditorStyles.boldLabel );
+		
+		EditorGUILayout.BeginHorizontal ();
 
+		EditorGUILayout.TextField ( "Path", obj.prefabPath );
+
+		if ( !inScene ) {
 			GUI.backgroundColor = Color.green;
 			if ( GUILayout.Button ( "Update", GUILayout.Width ( 60 ) ) ) {
 				var path : String = AssetDatabase.GetAssetPath ( obj.gameObject );
@@ -56,9 +70,9 @@ public class OFSerializedObjectInspector extends Editor {
 				}
 			}
 			GUI.backgroundColor = Color.white;
-
-			EditorGUILayout.EndHorizontal ();
 		}
+
+		EditorGUILayout.EndHorizontal ();
 
 		if ( resourceWarning ) {
 			obj.prefabPath = "";
@@ -68,6 +82,8 @@ public class OFSerializedObjectInspector extends Editor {
 		}
 		
 		EditorGUILayout.Space ();
+		
+		GUI.color = new Color ( 1, 1, 1, 1 );
 
 		EditorGUILayout.LabelField ( "Components", EditorStyles.boldLabel );
 		var allComponents : Component[] = obj.gameObject.GetComponents.<Component>();
@@ -121,5 +137,17 @@ public class OFSerializedObjectInspector extends Editor {
 			}
 			
 		}
+
+		EditorGUILayout.Space ();
+
+		EditorGUILayout.BeginHorizontal ();
+
+		obj.exportPath = EditorGUILayout.TextField ( obj.exportPath );
+
+		if ( GUILayout.Button ( "Export" ) ) {
+			OFWriter.SaveFile ( OFSerializer.Serialize ( obj ), Application.dataPath + "/" + obj.exportPath + "/" + obj.name + ".json" );
+		}
+		
+		EditorGUILayout.EndHorizontal ();
 	}
 }

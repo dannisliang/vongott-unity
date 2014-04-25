@@ -23,7 +23,7 @@ public class OACharacterInspector extends Editor {
 			EditorGUILayout.Space ();
 		}
 
-		character.player = EditorGUILayout.ObjectField ( "Player", character.player, typeof ( GameObject ), true ) as GameObject;
+		character.player = EditorGUILayout.ObjectField ( "Player object", character.player, typeof ( GameObject ), true ) as GameObject;
 
 		character.behaviour = EditorGUILayout.Popup ( "Behaviour", character.behaviour, System.Enum.GetNames ( OABehaviour ) );
 

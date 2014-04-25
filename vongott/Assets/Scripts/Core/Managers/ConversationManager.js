@@ -56,7 +56,7 @@ public class ConversationManager {
 	private static var passiveConvo : boolean = false;
 
 	public static function SetSpeaker ( speaker : String ) {
-		var speakerName : String;
+		/*var speakerName : String;
 				
 		if ( speaker == "NPC2" && currentSupportActor != null ) {
 			speakerName = currentSupportActor.displayName;
@@ -73,7 +73,7 @@ public class ConversationManager {
 
 		}
 					
-		UIConversation.SetName ( speakerName );
+		UIConversation.SetName ( speakerName );*/
 	}
 	
 	private static function Exit () {

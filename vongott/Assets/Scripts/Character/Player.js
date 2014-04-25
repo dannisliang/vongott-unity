@@ -314,7 +314,7 @@ class Player extends MonoBehaviour {
 	// Init
 	////////////////////	
 	public function Start () {
-		GameCore.GetInventory().eventHandler = this.gameObject;
+		inventory.eventHandler = this.gameObject;
 	}
 
 	////////////////////

@@ -14,6 +14,7 @@ public class OACharacter extends MonoBehaviour {
 	public var pathFinder : OPPathFinder;
 	public var inventory : OSInventory;
 	public var conversationTree : OCTree;
+	public var isEnemy : boolean = false;
 	public var player : GameObject;
 	
 	public var behaviour : OABehaviour = OABehaviour.Idle;

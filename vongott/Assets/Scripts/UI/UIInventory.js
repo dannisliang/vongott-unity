@@ -365,7 +365,7 @@ class UIInventory extends OGPage {
 	}
 
 	override function StartPage () {
-		inventory = GameCore.GetInstance().GetComponent.<OSInventory>();
+		inventory = GameCore.GetInventory();
 	
 		inspector.Clear ();
 		
@@ -389,7 +389,7 @@ class UIInventory extends OGPage {
 		
 		}
 
-		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I) ) {
+		if ( Input.GetKeyDown(KeyCode.Escape) ) {
 			OGRoot.GetInstance().GoToPage ( "HUD" );
 			GameCore.GetInstance().SetControlsActive ( true );
 		}

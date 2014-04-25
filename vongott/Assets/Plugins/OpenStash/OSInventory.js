@@ -180,7 +180,7 @@ public class OSSlot {
 public class OSInventory extends MonoBehaviour {
 	public var definitions : OSDefinitions;
 	public var slots : List.< OSSlot > = new List.< OSSlot >();
-	public var quick : Dictionary.< int, int > = new Dictionary.< int, int > ();
+	public var quickSlots : List.< int > = new List.< int > ();
 	public var grid : OSGrid = new OSGrid ( this, 5, 3 );
 	public var wallet : OSCurrencyAmount[] = new OSCurrencyAmount[0];
 	public var eventHandler : GameObject;
@@ -246,32 +246,24 @@ public class OSInventory extends MonoBehaviour {
 
 	// Quick info
 	public function SetQuickItem ( item : OSItem, key : int ) {
-		var index : int = GetItemIndex ( item );
-		
-		for ( var kvp : KeyValuePair.< int, int > in quick ) {
-			if ( kvp.Value == index ) {
-				quick.Remove ( kvp.Key );
-				break;
-			}
-		}
-
-		quick[key] = index;
+		quickSlots.Insert ( key, GetItemIndex ( item ) );
 	}
 
 	public function GetQuickItem ( index : int ) : OSItem {
-		if ( quick.ContainsKey ( index ) && slots[quick[index]] ) {
-			return slots[quick[index]].item;
+		if ( index < quickSlots.Count ) {
+			return slots[quickSlots[index]].item;
+		
 		} else {
 			return null;
 		}
 	}
 
 	public function ClearQuickItem ( index : int ) {
-		quick.Remove ( index );
+		quickSlots.RemoveAt ( index );
 	}
 
 	public function ClearQuickItems () {
-		quick.Clear ();
+		quickSlots.Clear ();
 	}
 
 	// Get data
@@ -296,7 +288,7 @@ public class OSInventory extends MonoBehaviour {
 	}
 
 	// Currency
-	private function CheckCurrency ( index : int ) {
+	public function CheckCurrency ( index : int ) {
 		var tmpWallet : List.< OSCurrencyAmount > = new List.< OSCurrencyAmount > ( wallet );
 
 		for ( var i : int = 0; i < tmpWallet.Count; i++ ) {
@@ -313,7 +305,6 @@ public class OSInventory extends MonoBehaviour {
 	public function ChangeCurrencyAmount ( id : String, amount : int ) {
 		for ( var i : int = 0; i < wallet.Length; i++ ) {
 			if ( definitions.currencies [ wallet[i].index ].name == id ) {
-				CheckCurrency ( i );
 				wallet[i].amount += amount;
 				return;
 			}
@@ -323,7 +314,6 @@ public class OSInventory extends MonoBehaviour {
 	public function SetCurrencyAmount ( id : String, amount : int ) {
 		for ( var i : int = 0; i < wallet.Length; i++ ) {
 			if ( definitions.currencies [ wallet[i].index ].name == id ) {
-				CheckCurrency ( i );
 				wallet[i].amount = amount;
 				return;
 			}
@@ -333,7 +323,6 @@ public class OSInventory extends MonoBehaviour {
 	public function GetCurrencyAmount ( id : String ) : int {
 		for ( var i : int = 0; i < wallet.Length; i++ ) {
 			if ( definitions.currencies [ wallet[i].index ].name == id ) {
-				CheckCurrency ( i );
 				return wallet[i].amount;
 			}
 		}

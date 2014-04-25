@@ -13,7 +13,6 @@ public class OCTree extends MonoBehaviour {
 	public var rootNodes : OCRootNode[] = new OCRootNode[1];
 	public var currentRoot : int;
 	public var speakers : GameObject[] = new GameObject[1];
-	public var eventHandler : GameObject;
 
 	private static var random : System.Random = new System.Random ();
 

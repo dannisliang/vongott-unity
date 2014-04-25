@@ -37,6 +37,7 @@ public class OSDefinitions extends MonoBehaviour {
 	public var attributes : OSAttributeDefinition [] = new OSAttributeDefinition [0];
 	public var currencies : OSCurrency [] = new OSCurrency [0];
 	public var ammunitions : OSAmmunition[] = new OSAmmunition [0];
+	public var prefabPath : String = "";
 
 	public function GetAttributeStrings () : String [] {
 		var output : String [] = new String [ attributes.Length ];

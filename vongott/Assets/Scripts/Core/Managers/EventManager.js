@@ -2,7 +2,7 @@
 
 class EventManager extends MonoBehaviour {
 	/////////////////
-	// Main functions
+	// GameEvent functions
 	/////////////////
 	public static function Fire ( id : String ) {
 		Fire ( Loader.LoadEvent ( id ) );
@@ -135,5 +135,54 @@ class EventManager extends MonoBehaviour {
 		iTween.Stop ();
 		
 		GameCore.GetInstance().StartCoroutine ( GameCore.GetInstance().LoadLevel ( map, spawnPoint ) );
+	}
+	
+	
+	/////////////////
+	// Callback functions
+	/////////////////
+	// Conversation
+	public function OnConversationStart ( ) {
+		GameCamera.GetInstance().StorePosRot();
+		GameCore.GetInstance().SetControlsActive ( false );
+		OGRoot.GetInstance().GoToPage ( "Conversation" );
+	}
+
+	public function OnSetLines ( strings : String [] ) {
+		if ( strings.Length == 1 ) {
+			UIConversation.SetLine ( strings[0] );
+		
+		} else {
+			for ( var i : int = 0; i < strings.Length; i++ ) {
+				UIConversation.SetOption ( i, strings[i] );
+			}
+		}
+	}
+
+	public function OnSetSpeaker ( speaker : GameObject ) {
+		GameCamera.GetInstance().ConvoFocus ( speaker, false );
+		UIConversation.SetName ( speaker.name );
+
+		// If the speaker is an actor, turn them towards the player
+		if ( speaker.GetComponent.< OACharacter > () ) {
+			speaker.transform.LookAt ( GameCore.GetPlayerObject().transform );
+		}
+	}
+
+	public function OnConversationEnd () {
+		OGRoot.GetInstance().GoToPage ( "HUD" );
+		GameCore.GetInstance().SetControlsActive ( true );
+		GameCamera.GetInstance().RestorePosRot ( 0 );
+	}
+
+	// Transactions
+	public function GiveItem ( prefabPath : String ) {
+		var go : GameObject = Resources.Load ( prefabPath ) as GameObject;
+		
+		if ( go ) {
+			GameCore.GetInventory().AddItem ( go.GetComponent.< OSItem> () );
+		} else {
+			Debug.LogError ( "EventManager | Object '" + prefabPath + "' doesn't exist" );
+		}
 	}
 }

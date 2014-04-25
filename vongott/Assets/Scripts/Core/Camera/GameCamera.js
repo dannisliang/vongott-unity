@@ -227,7 +227,7 @@ class GameCamera extends MonoBehaviour {
 	}
 	
 	public function SetXRay ( isActive : boolean, meters : int ) {
-		for ( var c : Component in GameObject.FindObjectsOfType ( Actor ) ) {
+		for ( var c : Component in GameObject.FindObjectsOfType ( OACharacter ) ) {
 			var go : GameObject = c.gameObject;
 			
 			var smr : SkinnedMeshRenderer = go.GetComponentInChildren ( SkinnedMeshRenderer );
@@ -242,31 +242,12 @@ class GameCamera extends MonoBehaviour {
 		}
 	}
 		
-	function ConvoFocus ( a : Actor, smooth : boolean ) {
+	public function ConvoFocus ( speaker : GameObject, smooth : boolean ) {
 		var height : Vector3 = new Vector3 ( 0, 1.5, 0 );
-		var player : Player = GameCore.GetPlayer();
-		var camPos : Vector3 = player.transform.position + height + ( player.transform.right * 0.6 ) - ( player.transform.forward * 0.6 );		
-		var lookPos : Vector3 = a.transform.position + height; 
+		var camPos : Vector3 = speaker.transform.position + speaker.transform.forward * 1 + height;
+		var lookPos : Vector3 = speaker.transform.position + height; 
 		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
-				
-		if ( smooth ) {
-			TweenPosition ( camPos, 1 );
-			TweenRotation ( lookQuat.eulerAngles, 1 );
-		
-		} else {
-			this.transform.position = camPos;	
-			this.transform.LookAt ( lookPos );
-		
-		}
-	}
-	
-	function ConvoFocus ( p : Player, smooth : boolean ) {
-		var height : Vector3 = new Vector3 ( 0, 1.5, 0 );
-		var actor : Actor = GameCore.GetPlayer().talkingTo;
-		var camPos : Vector3 =  actor.transform.position + height + ( actor.transform.right * 0.6 ) - ( actor.transform.forward * 0.6 );		
-		var lookPos : Vector3 = p.transform.position + height; 
-		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
-				
+
 		if ( smooth ) {
 			TweenPosition ( camPos, 1 );
 			TweenRotation ( lookQuat.eulerAngles, 1 );
