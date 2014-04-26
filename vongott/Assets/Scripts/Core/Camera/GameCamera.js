@@ -8,6 +8,9 @@ class GameCamera extends MonoBehaviour {
 	private var storedMaterials : List.< Material > = new List.< Material >();
 	private var boundingBoxModifier : float = 1.0;
 	private var boundingBoxDelta : float = 0.1;
+	private var shakeAmount : float;
+	private var shakeFadeOut : float;
+	private var currentSpeaker : GameObject;
 	
 	public var firstPersonLayerMask : LayerMask;
 	public var thirdPersonLayerMask : LayerMask;
@@ -16,13 +19,11 @@ class GameCamera extends MonoBehaviour {
 	public var boundingBoxMaterial : Material;
 	public var firstPerson : boolean = false;	
 	public var inConvo : boolean = false;
-	public var forceLook : Transform;
+	public var convoPosition : Vector3;
+	public var convoFocus : Vector3;
 
 	public static var instance : GameCamera;
 	public static var controller : CameraController;
-
-	private var shakeAmount : float;
-	private var shakeFadeOut : float;
 
 
 	////////////////////
@@ -245,47 +246,31 @@ class GameCamera extends MonoBehaviour {
 	}
 		
 	public function ConvoFocus ( speaker : GameObject, smooth : boolean ) {
-		if ( speaker.transform == forceLook ) {
+		if ( currentSpeaker == speaker ) {
 			return;
-		}
-		
-		var isPlayer : boolean = speaker == GameCore.GetPlayer().gameObject;
-		var prevPos : Vector3;
-		
-		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
-		
-		if ( forceLook ) {
-			prevPos = forceLook.position + height;
+		} else {
+			currentSpeaker = speaker;
 		}
 
-		forceLook = speaker.transform; 
-		
-		var player : Player = GameCore.GetPlayer ();
-		
-		if ( !isPlayer ) {
-			player.transform.LookAt ( forceLook.position );
-		}
-
-		if ( !smooth ) {
-			var center : Vector3 = GetConvoCenter ();
-			var focus : Vector3 = GetConvoFocus ();
-			
-			if ( !isPlayer ) {
-				var p : Vector3 = player.transform.position + height;
-				var pos : Vector3 = p + ( p - ( forceLook.position + height ) ) * 0.15 + player.transform.right * 0.25; 
-
-				this.transform.position = pos;
+		var speakers : GameObject[] = GameCore.GetConversationManager().tree.speakers;
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			if ( speakers[i] != currentSpeaker ) {
+				speakers[i].transform.LookAt ( currentSpeaker.transform.position );
 			
 			} else {
-				if ( prevPos != Vector3.zero ) {
-					this.transform.position = prevPos + ( prevPos - ( forceLook.position + height ) ) * 0.15 + player.transform.right * 0.25; 
-				} else {
-					this.transform.position = center;
-				}
+				speakers[i].transform.LookAt ( player.transform.position );
 			
 			}
-				
-			this.transform.LookAt ( focus );
+		}
+		
+		var random : float = Random.Range ( 0, 5 );
+		
+		convoFocus = GetConvoFocus ( random, speaker.transform );
+		convoPosition = GetConvoPosition ( random, speaker.transform );
+
+		if ( !smooth ) {
+			this.transform.position = convoPosition;
+			this.transform.LookAt ( convoFocus );
 		}
 	}
 	
@@ -302,8 +287,65 @@ class GameCamera extends MonoBehaviour {
 		return center;
 	}
 
-	private function GetConvoFocus () : Vector3 {
-		return forceLook.position + new Vector3 ( 0, 1.5, 0 );
+	private function GetConvoFocus ( random : float, forceLook : Transform ) : Vector3 {
+		var result : Vector3 = forceLook.position;
+
+		if ( random > 4 ) {
+			result = forceLook.position;
+
+		} else if ( random > 3 && forceLook != player.transform ) {
+			result = ( ( forceLook.position + player.transform.position ) / 2 ) + new Vector3 ( 0, 1.5, 0 );
+
+		} else if ( random > 2 ) {
+			result += forceLook.forward * 0.8 + new Vector3 ( 0, 1.4, 0 );
+		
+		} else if ( random > 1 ) {
+			result += forceLook.forward * 0.8 + new Vector3 ( 0, 1.4, 0 );
+		
+		} else {
+			result += forceLook.forward * 0.5 + new Vector3 ( 0, 1.5, 0 );
+
+		}
+
+		return result;
+	}
+
+	private function GetConvoRadius () : float {
+		var result : float;
+		var gameObjects : GameObject[] = GameCore.GetConversationManager().tree.speakers;
+	
+		for ( var i : int = 0; i < gameObjects.Length; i++ ) {
+			var distance : float = Vector3.Distance ( gameObjects[i].transform.position, GetConvoCenter() );
+
+			if ( distance > result ) {
+				result = distance;
+			}
+		}
+
+		return result;
+	}
+
+	private function GetConvoPosition ( random : float, forceLook : Transform ) : Vector3 {
+		var result : Vector3 = convoFocus;
+		
+		if ( random > 4 ) {
+			result = GetConvoCenter ();
+		
+		} else if ( random > 3 && forceLook != player.transform ) {
+			result += forceLook.right * GetConvoRadius () * 1.5;
+
+		} else if ( random > 2 ) {
+			result += forceLook.forward * 1.25 + forceLook.right * 1.25;
+		
+		} else if ( random > 1 ) {
+			result += forceLook.forward * 1.25 - forceLook.right * 1.25;
+
+		} else {
+			result += forceLook.forward * 1;
+
+		}
+
+		return result;
 	}
 
 	
@@ -327,14 +369,9 @@ class GameCamera extends MonoBehaviour {
 		}
 	
 		// Check for conversation cam
-		if ( inConvo && forceLook ) {
-			var focus : Vector3 = GetConvoFocus ();
-			
-			this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, Quaternion.LookRotation ( focus - this.transform.position ), Time.deltaTime );
-		
-		} else {
-			forceLook == null;
-		
+		if ( inConvo ) {
+			this.transform.position = Vector3.Slerp ( this.transform.position, convoPosition, Time.deltaTime * 2 );
+			this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, Quaternion.LookRotation ( convoFocus - this.transform.position ), Time.deltaTime * 5 );
 		}
 
 		// Check for interaction

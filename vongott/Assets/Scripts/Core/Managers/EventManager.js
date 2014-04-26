@@ -181,11 +181,6 @@ class EventManager extends MonoBehaviour {
 		GameCamera.GetInstance().ConvoFocus ( speaker, !GameCamera.GetInstance().inConvo );
 		UIConversation.SetName ( speaker.name );
 		GameCamera.GetInstance().inConvo = true;
-
-		// If the speaker is an actor, turn them towards the player
-		if ( speaker.GetComponent.< OACharacter > () ) {
-			speaker.transform.LookAt ( GameCore.GetPlayerObject().transform );
-		}
 	}
 
 	public function OnConversationEnd () {
