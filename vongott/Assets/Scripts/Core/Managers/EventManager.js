@@ -143,6 +143,7 @@ class EventManager extends MonoBehaviour {
 	/////////////////
 	// Conversation
 	private var passiveConvo : boolean = false;
+	private var choiceConvo : boolean = false;
 
 	public function OnConversationStart () {
 		passiveConvo = false;
@@ -170,15 +171,19 @@ class EventManager extends MonoBehaviour {
 		
 			}
 
+			choiceConvo = false;
+
 		} else {
 			for ( var i : int = 0; i < strings.Length; i++ ) {
 				UIConversation.SetOption ( i, strings[i] );
 			}
+
+			choiceConvo = true;
 		}
 	}
 
 	public function OnSetSpeaker ( speaker : GameObject ) {
-		GameCamera.GetInstance().ConvoFocus ( speaker, !GameCamera.GetInstance().inConvo );
+		GameCamera.GetInstance().ConvoFocus ( speaker, !GameCamera.GetInstance().inConvo || choiceConvo );
 		UIConversation.SetName ( speaker.name );
 		GameCamera.GetInstance().inConvo = true;
 	}
