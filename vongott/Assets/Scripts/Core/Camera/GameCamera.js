@@ -15,7 +15,9 @@ class GameCamera extends MonoBehaviour {
 	public var regularShader : Shader;
 	public var boundingBoxMaterial : Material;
 	public var firstPerson : boolean = false;	
-	
+	public var inConvo : boolean = false;
+	public var forceLook : Transform;
+
 	public static var instance : GameCamera;
 	public static var controller : CameraController;
 
@@ -243,22 +245,67 @@ class GameCamera extends MonoBehaviour {
 	}
 		
 	public function ConvoFocus ( speaker : GameObject, smooth : boolean ) {
-		var height : Vector3 = new Vector3 ( 0, 1.5, 0 );
-		var camPos : Vector3 = speaker.transform.position + speaker.transform.forward * 1 + height;
-		var lookPos : Vector3 = speaker.transform.position + height; 
-		var lookQuat : Quaternion = Quaternion.LookRotation ( lookPos - camPos );
+		if ( speaker.transform == forceLook ) {
+			return;
+		}
+		
+		var isPlayer : boolean = speaker == GameCore.GetPlayer().gameObject;
+		var prevPos : Vector3;
+		
+		var height : Vector3 = new Vector3 ( 0, 1.7, 0 );
+		
+		if ( forceLook ) {
+			prevPos = forceLook.position + height;
+		}
 
-		if ( smooth ) {
-			TweenPosition ( camPos, 1 );
-			TweenRotation ( lookQuat.eulerAngles, 1 );
+		forceLook = speaker.transform; 
 		
-		} else {
-			this.transform.position = camPos;	
-			this.transform.LookAt ( lookPos );
+		var player : Player = GameCore.GetPlayer ();
 		
+		if ( !isPlayer ) {
+			player.transform.LookAt ( forceLook.position );
+		}
+
+		if ( !smooth ) {
+			var center : Vector3 = GetConvoCenter ();
+			var focus : Vector3 = GetConvoFocus ();
+			
+			if ( !isPlayer ) {
+				var p : Vector3 = player.transform.position + height;
+				var pos : Vector3 = p + ( p - ( forceLook.position + height ) ) * 0.15 + player.transform.right * 0.25; 
+
+				this.transform.position = pos;
+			
+			} else {
+				if ( prevPos != Vector3.zero ) {
+					this.transform.position = prevPos + ( prevPos - ( forceLook.position + height ) ) * 0.15 + player.transform.right * 0.25; 
+				} else {
+					this.transform.position = center;
+				}
+			
+			}
+				
+			this.transform.LookAt ( focus );
 		}
 	}
 	
+	private function GetConvoCenter () : Vector3 { 
+		var center : Vector3;
+		var gameObjects : GameObject[] = GameCore.GetConversationManager().tree.speakers;
+	
+		for ( var i : int = 0; i < gameObjects.Length; i++ ) {
+			center += gameObjects[i].transform.position;
+		}
+
+		center = ( ( center ) / gameObjects.Length ) + new Vector3 ( 0, 1.5, 0 );
+	
+		return center;
+	}
+
+	private function GetConvoFocus () : Vector3 {
+		return forceLook.position + new Vector3 ( 0, 1.5, 0 );
+	}
+
 	
 	////////////////////
 	// Render
@@ -278,7 +325,18 @@ class GameCamera extends MonoBehaviour {
 		if ( !player ) {
 			player = GameCore.GetPlayer ();
 		}
+	
+		// Check for conversation cam
+		if ( inConvo && forceLook ) {
+			var focus : Vector3 = GetConvoFocus ();
+			
+			this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, Quaternion.LookRotation ( focus - this.transform.position ), Time.deltaTime );
 		
+		} else {
+			forceLook == null;
+		
+		}
+
 		// Check for interaction
 		if ( !GameCore.interactiveObjectLocked ) {
 			var hit : RaycastHit;

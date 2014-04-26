@@ -33,8 +33,8 @@ public class OCTreeInspector extends Editor {
 		}
 	}
 
-	private var editRoot : int = 0;
 	private static var showingEditor : boolean = false;
+	private var editRoot : int = 0;
 	private var scrollPos : Vector2;
 	private var nodeContainers : Dictionary.< int, NodeContainer > = new Dictionary.< int, NodeContainer > ();
 	private var offset : Dictionary.< float, float > = new Dictionary.< float, float > ();
@@ -385,13 +385,26 @@ public class OCTreeInspector extends Editor {
 								if ( !node.event ) { break; }
 								
 								container.rect.width = 200;
-								container.rect.height = 80;
+
+								if ( node.event.object == null ) {
+									container.rect.height = 110;
+								} else {
+									container.rect.height = 80;
+								}
 
 								EditorGUI.LabelField ( new Rect ( 10, 20, 80, 20 ), "Message" );
 								node.event.message = EditorGUI.TextField ( new Rect ( 80, 20, 110, 20 ), node.event.message );
-								EditorGUI.LabelField ( new Rect ( 10, 50, 80, 20 ), "Argument" );
-								node.event.argument = EditorGUI.TextField ( new Rect ( 80, 50, 110, 20 ), node.event.argument );
 								
+								EditorGUI.LabelField ( new Rect ( 10, 50, 80, 20 ), "Object" );
+								node.event.object = EditorGUI.ObjectField ( new Rect ( 80, 50, 110, 20 ), node.event.object, typeof(GameObject), true ) as GameObject;
+								
+								if ( node.event.object == null ) {
+									EditorGUI.LabelField ( new Rect ( 10, 80, 80, 20 ), "Argument" );
+									node.event.argument = EditorGUI.TextField ( new Rect ( 80, 80, 110, 20 ), node.event.argument );
+								} else {
+									node.event.argument = "";
+								}
+
 								container.SetOutputAmount ( node.connectedTo.Length );
 								container.outputRects[0] = new Rect ( container.rect.xMin + 10, container.rect.yMax - 7, 14, 14 );
 								break;

@@ -215,6 +215,7 @@ public class OCSpeak {
 public class OCEvent {
 	public var message : String;
 	public var argument : String;
+	public var object : GameObject;
 }
 
 public class OCJump {

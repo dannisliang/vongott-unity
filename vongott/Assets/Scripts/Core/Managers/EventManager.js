@@ -178,8 +178,9 @@ class EventManager extends MonoBehaviour {
 	}
 
 	public function OnSetSpeaker ( speaker : GameObject ) {
-		GameCamera.GetInstance().ConvoFocus ( speaker, false );
+		GameCamera.GetInstance().ConvoFocus ( speaker, !GameCamera.GetInstance().inConvo );
 		UIConversation.SetName ( speaker.name );
+		GameCamera.GetInstance().inConvo = true;
 
 		// If the speaker is an actor, turn them towards the player
 		if ( speaker.GetComponent.< OACharacter > () ) {
@@ -190,17 +191,16 @@ class EventManager extends MonoBehaviour {
 	public function OnConversationEnd () {
 		OGRoot.GetInstance().GoToPage ( "HUD" );
 		GameCore.GetInstance().SetControlsActive ( true );
-		GameCamera.GetInstance().RestorePosRot ( 0 );
+		GameCamera.GetInstance().RestorePosRot ( 1 );
+		GameCamera.GetInstance().inConvo = false;
 	}
 
 	// Transactions
-	public function GiveItem ( prefabPath : String ) {
-		var go : GameObject = Resources.Load ( prefabPath ) as GameObject;
-		
-		if ( go ) {
-			GameCore.GetInventory().AddItem ( go.GetComponent.< OSItem> () );
-		} else {
-			Debug.LogError ( "EventManager | Object '" + prefabPath + "' doesn't exist" );
+	public function GiveItem ( go : GameObject ) {
+		var item : OSItem = go.GetComponent.< OSItem > ();
+
+		if ( item ) {
+			GameCore.GetInventory().AddItem ( item );
 		}
 	}
 }

@@ -7,9 +7,11 @@ private class Inspector {
 	public var description : OGLabel;
 	public var attrName : OGLabel;
 	public var attrVal : OGLabel;
+	public var attrTitle : OGLabel;
 	public var ammoName : OGLabel;
 	public var ammoVal : OGLabel;
 	public var ammoTex : OGTexture;
+	public var ammoTitle : OGLabel;
 	public var action : OGButton;
 	public var discard : OGButton;
 
@@ -22,6 +24,36 @@ private class Inspector {
 		ammoVal.text = "";
 		action.gameObject.SetActive ( false );
 		discard.gameObject.SetActive ( false );
+		ammoTitle.gameObject.SetActive ( false );
+		attrTitle.gameObject.SetActive ( false );
+	}
+
+	public function Display ( item : OSItem ) {
+		if ( item == null ) {
+			Clear ();
+
+		} else {
+			attrTitle.gameObject.SetActive ( true );
+
+			name.text = item.id;
+			description.text = item.description;
+			
+			if ( item.ammunition.enabled ) {
+				ammoTitle.gameObject.SetActive ( true );
+				ammoName.text = item.ammunition.name;
+				ammoVal.text = item.ammunition.value.ToString();
+			
+			} else {
+				ammoTitle.gameObject.SetActive ( false );
+			
+			}
+
+			for ( var attr : OSAttribute in item.attributes ) {
+				attrName.text += attr.name + "\n";
+			       	attrVal.text += attr.value + "\n";
+			}
+
+		}
 	}
 }
 
@@ -92,18 +124,7 @@ class UIInventory extends OGPage {
 		} else {
 			selectedSlot = inventory.slots[i];
 
-			inspector.name.text = selectedSlot.item.id;
-			inspector.description.text = selectedSlot.item.description;
-			
-			if ( selectedSlot.item.ammunition.enabled ) {
-				inspector.ammoName.text = selectedSlot.item.ammunition.name;
-				inspector.ammoVal.text = selectedSlot.item.ammunition.value.ToString();
-			}
-
-			for ( var attr : OSAttribute in selectedSlot.item.attributes ) {
-				inspector.attrName.text += attr.name + "\n";
-			       	inspector.attrVal.text += attr.value + "\n";
-			}
+			inspector.Display ( selectedSlot.item );
 		}
 
 		UpdateCells ();
@@ -174,6 +195,10 @@ class UIInventory extends OGPage {
 			inventory.DecreaseSlot ( selectedSlot );
 		}
 		
+		if ( selectedSlot.quantity < 1 ) {
+			selectedSlot = null;
+		}
+		
 		UpdateCells ();
 	}
 
@@ -182,7 +207,9 @@ class UIInventory extends OGPage {
 		if ( !dragging && selectedSlot && selectedSlot.item ) {
 			inventory.DecreaseSlot ( selectedSlot );
 		}
-		
+	
+		selectedSlot = null;
+
 		UpdateCells ();
 	}
 
@@ -241,9 +268,8 @@ class UIInventory extends OGPage {
 
 			inspector.discard.gameObject.SetActive ( selectedSlot.item.canDrop );
 		} else {
-			inspector.action.gameObject.SetActive ( false );
-			inspector.discard.gameObject.SetActive ( false );
-		
+			inspector.Clear ();
+
 		}
 			
 		// Get the list of skipped cells, so we know which ones to draw

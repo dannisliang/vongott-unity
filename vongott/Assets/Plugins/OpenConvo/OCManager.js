@@ -14,7 +14,13 @@ public class OCManager extends MonoBehaviour {
 		return instance;
 	}
 
-	private function DoCallback ( message : String, argument : Object ) {
+	private function DoCallback ( message : String, object : Object ) {	
+		if ( eventHandler ) {
+			eventHandler.SendMessage ( message, object, SendMessageOptions.DontRequireReceiver );
+		}
+	}
+
+	private function DoCallback ( message : String, argument : String ) {
 		if ( eventHandler ) {
 			eventHandler.SendMessage ( message, argument, SendMessageOptions.DontRequireReceiver );
 		}
@@ -54,11 +60,14 @@ public class OCManager extends MonoBehaviour {
 				break;
 
 			case OCNodeType.Event:
-				if ( String.IsNullOrEmpty ( node.event.argument ) ) {
-					DoCallback ( node.event.message );
+				if ( !String.IsNullOrEmpty ( node.event.argument ) ) {
+					DoCallback ( node.event.message, node.event.argument );
+
+				} else if ( node.event.object != null ) {
+					DoCallback ( node.event.message, node.event.object );
 
 				} else {
-					DoCallback ( node.event.message, node.event.argument );
+					DoCallback ( node.event.message );
 				
 				}
 
