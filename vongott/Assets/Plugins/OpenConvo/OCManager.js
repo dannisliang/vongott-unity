@@ -6,7 +6,7 @@ public class OCManager extends MonoBehaviour {
 	public var currentNode : int;
 	public var eventHandler : GameObject;
 
-	private var speaker : GameObject;
+	private var speaker : OCSpeaker;
 
 	public static var instance : OCManager;
 

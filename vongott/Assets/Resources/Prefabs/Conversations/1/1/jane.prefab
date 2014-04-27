@@ -1,0 +1,247 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: jane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faba73abfc5ee40b08adaf871a6fbaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootNodes:
+  - tags: []
+    firstNode: 67393
+    nodes:
+    - connectedTo: cc7f0100
+      id: 67393
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Hey there newbie. I'm Jane, and I'll be your quartermaster for the evening.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: ee2601007fb80000
+      id: 98252
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: talked_about_sewers
+      end:
+        rootNode: 0
+    - connectedTo: cb3a0000
+      id: 47231
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Miguel asked me to get you a regular pistol, so here you go.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: b4360100
+      id: 15051
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - In case you're thinking about popping him, be warned that your killswitch
+          is hooked up to his pulse as a safety precaution. If he goes, so do you.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: f0e50000
+      id: 75502
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - You'll probably want to talk to Miguel about that sewer problem before I
+          give you anything.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 58864
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 79540
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 1
+  - tags: []
+    firstNode: 44284
+    nodes:
+    - connectedTo: 17b50000
+      id: 44284
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I can't help you out more than that, sorry.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 46359
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 1
+  currentRoot: 0
+  speakers:
+  - id: Player
+    gameObject: {fileID: 0}
+  - id: Jane
+    gameObject: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

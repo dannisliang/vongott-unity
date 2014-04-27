@@ -252,13 +252,13 @@ class GameCamera extends MonoBehaviour {
 			currentSpeaker = speaker;
 		}
 
-		var speakers : GameObject[] = GameCore.GetConversationManager().tree.speakers;
+		var speakers : OCSpeaker[] = GameCore.GetConversationManager().tree.speakers;
 		for ( var i : int = 0; i < speakers.Length; i++ ) {
-			if ( speakers[i] != currentSpeaker ) {
-				speakers[i].transform.LookAt ( currentSpeaker.transform.position );
+			if ( speakers[i].gameObject != currentSpeaker ) {
+				speakers[i].gameObject.transform.LookAt ( currentSpeaker.transform.position );
 			
 			} else {
-				speakers[i].transform.LookAt ( player.transform.position );
+				speakers[i].gameObject.transform.LookAt ( player.transform.position );
 			
 			}
 		}
@@ -276,13 +276,13 @@ class GameCamera extends MonoBehaviour {
 	
 	private function GetConvoCenter () : Vector3 { 
 		var center : Vector3;
-		var gameObjects : GameObject[] = GameCore.GetConversationManager().tree.speakers;
+		var speakers : OCSpeaker[] = GameCore.GetConversationManager().tree.speakers;
 	
-		for ( var i : int = 0; i < gameObjects.Length; i++ ) {
-			center += gameObjects[i].transform.position;
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			center += speakers[i].gameObject.transform.position;
 		}
 
-		center = ( ( center ) / gameObjects.Length ) + new Vector3 ( 0, 1.5, 0 );
+		center = ( ( center ) / speakers.Length ) + new Vector3 ( 0, 1.5, 0 );
 	
 		return center;
 	}
@@ -312,10 +312,10 @@ class GameCamera extends MonoBehaviour {
 
 	private function GetConvoRadius () : float {
 		var result : float;
-		var gameObjects : GameObject[] = GameCore.GetConversationManager().tree.speakers;
+		var speakers : OCSpeaker[] = GameCore.GetConversationManager().tree.speakers;
 	
-		for ( var i : int = 0; i < gameObjects.Length; i++ ) {
-			var distance : float = Vector3.Distance ( gameObjects[i].transform.position, GetConvoCenter() );
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			var distance : float = Vector3.Distance ( speakers[i].gameObject.transform.position, GetConvoCenter() );
 
 			if ( distance > result ) {
 				result = distance;
@@ -371,7 +371,7 @@ class GameCamera extends MonoBehaviour {
 		// Check for conversation cam
 		if ( inConvo ) {
 			this.transform.position = Vector3.Slerp ( this.transform.position, convoPosition, Time.deltaTime * 2 );
-			this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, Quaternion.LookRotation ( convoFocus - this.transform.position ), Time.deltaTime * 5 );
+			this.transform.rotation = Quaternion.Lerp ( this.transform.rotation, Quaternion.LookRotation ( convoFocus - this.transform.position ), Time.deltaTime * 5 );
 		}
 
 		// Check for interaction

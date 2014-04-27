@@ -605,7 +605,7 @@ GameObject:
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: NSF Medic
+  m_Name: nsf_medic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1554,6 +1554,7 @@ MonoBehaviour:
   usingWeapons: 1
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 0
+  convoRootNode: 0
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

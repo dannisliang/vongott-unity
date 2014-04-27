@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: nsf_medic
+  m_Name: medic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -692,15 +692,14 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 3
-  currentRoot: 0
+  currentRoot: 2
   speakers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  speakerIDs:
-  - player
-  - nsf_medic
-  - miguel
+  - id: Player
+    gameObject: {fileID: 0}
+  - id: NSF Medic
+    gameObject: {fileID: 0}
+  - id: Miguel
+    gameObject: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

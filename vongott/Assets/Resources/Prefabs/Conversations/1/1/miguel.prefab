@@ -292,8 +292,28 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 
+    - connectedTo: 44330000
       id: 93334
+      type: 3
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: talked_about_sewers
+        b: 1
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 13124
       type: 5
       speak:
         speaker: 0
@@ -648,11 +668,10 @@ MonoBehaviour:
         rootNode: 0
   currentRoot: 0
   speakers:
-  - {fileID: 0}
-  - {fileID: 0}
-  speakerIDs:
-  - player
-  - miguel
+  - id: Player
+    gameObject: {fileID: 0}
+  - id: Miguel
+    gameObject: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

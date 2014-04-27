@@ -10,10 +10,10 @@ GameObject:
   - 4: {fileID: 400000}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
   - 65: {fileID: 6500000}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: interface_terminal
   m_TagString: Untagged
@@ -27,8 +27,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: -1.75391734, y: 1.3796618, z: 21.1359291}
+  m_LocalRotation: {x: 0, y: -.707106829, z: 0, w: -.707106829}
+  m_LocalPosition: {x: -10, y: 1.5, z: 4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,15 +81,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
+  m_Script: {fileID: 11500000, guid: d2ea243763544457196520f74b0cea7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: interface_terminal
-  description: 
-  path: Prefabs/Interfaces
-  materialPath: 
-  tilingModifiers: []
-  canChangeMaterial: 0
+  fields:
+  - type: 9
+    name: Transform
+    b: 0
+    str: 
+    i: 0
+    f: 0
+    v3: {x: 0, y: 0, z: 0}
+    v2: {x: 0, y: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    component: {fileID: 400000}
+  id: 
+  prefabPath: Prefabs/Interfaces/interface_terminal
+  exportPath: 
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

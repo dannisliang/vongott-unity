@@ -42,10 +42,9 @@ public class OACharacterInspector extends Editor {
 		EditorGUILayout.Space ();
 		EditorGUILayout.LabelField ( "Conversation", EditorStyles.boldLabel );
 		
-		if ( !character.conversationTree ) {
-			character.conversationTree = EditorGUILayout.ObjectField ( "Conversation tree", character.conversationTree, typeof ( OCTree ), false ) as OCTree;
+		character.conversationTree = EditorGUILayout.ObjectField ( "Conversation tree", character.conversationTree, typeof ( OCTree ), false ) as OCTree;
 		
-		} else {
+		if ( character.conversationTree != null ) {
 			var rootNodeStrings : String[] = new String[character.conversationTree.rootNodes.Length];
 			for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
 				rootNodeStrings[i] = i.ToString();
@@ -54,7 +53,7 @@ public class OACharacterInspector extends Editor {
 			character.convoRootNode = EditorGUILayout.Popup ( "Starting root node", character.convoRootNode, rootNodeStrings );	
 		
 			for ( i = 0; i < character.conversationTree.speakers.Length; i++ ) {
-				character.conversationTree.speakers[i] = EditorGUILayout.ObjectField ( character.conversationTree.speakerIDs[i], character.conversationTree.speakers[i], typeof ( GameObject ), true ) as GameObject;
+				character.conversationTree.speakers[i].gameObject = EditorGUILayout.ObjectField ( character.conversationTree.speakers[i].id, character.conversationTree.speakers[i].gameObject, typeof ( GameObject ), true ) as GameObject;
 			}
 
 		}
