@@ -10,13 +10,12 @@ GameObject:
   - 4: {fileID: 400000}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400002}
-  - 114: {fileID: 11400004}
-  - 65: {fileID: 6500000}
+  - 65: {fileID: 0}
   - 54: {fileID: 5400000}
   - 114: {fileID: 11400006}
-  - 114: {fileID: 11400000}
   - 82: {fileID: 8200000}
+  - 114: {fileID: 11400002}
+  - 114: {fileID: 11400004}
   m_Layer: 0
   m_Name: weapon_mine
   m_TagString: Untagged
@@ -48,7 +47,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: -5.96046448e-08, y: -1.13446405e-16, z: 1.13446392e-16, w: 1}
-  m_LocalPosition: {x: -2.26963234, y: 2.25752592e-06, z: 18.9102573}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -107,18 +106,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6500000
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .383629024, y: .0476120003, z: .416000009}
-  m_Center: {x: -4.991889e-07, y: .0238060001, z: 1.32134202e-29}
 --- !u!82 &8200000
 AudioSource:
   m_ObjectHideFlags: 1
@@ -177,30 +164,6 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a9bcdc731b66a241bba70cbb92f412a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canDrop: 1
-  isStackable: 1
-  type: 0
-  subType: 2000
-  image: {fileID: 2800000, guid: ef4f8ed7dc7274f98ad3b025c4098f1a, type: 3}
-  attr:
-  - type: 2
-    val: 1
-  eqSlot: 0
-  equipSound: {fileID: 0}
-  fireSounds: []
-  delay: 5
-  timer: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,10 +172,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000365db5143b3a4a87f5942957f1fd1, type: 3}
+  m_Script: {fileID: 11500000, guid: d2ea243763544457196520f74b0cea7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GUID: 
+  fields:
+  - type: 9
+    name: Transform
+    b: 0
+    str: 
+    i: 0
+    f: 0
+    v3: {x: 0, y: 0, z: 0}
+    v2: {x: 0, y: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    component: {fileID: 400000}
+  id: 
+  prefabPath: Items/Weapons/weapon_mine
+  exportPath: 
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,16 +202,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
+  m_Script: {fileID: 11500000, guid: 95ca83a09a9a749f580791d613d2e424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  description: 
-  path: Items/Equipment
-  id: eq_mine
-  materialPath: 
-  tilingModifiers: []
-  canChangeMaterial: 0
+  item: {fileID: 11400006}
+  firingRateIndex: 0
+  damageIndex: 1
+  equippingSoundIndex: 0
+  explodingSoundIndex: 0
+  holsteringSoundIndex: 0
+  throwingSoundIndex: 0
+  countdown: 5
+  trigger: 1
+  armed: 0
+  explosion: {fileID: 0}
+  explosionLifetime: 5
+  eventHandler: {fileID: 0}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -267,7 +254,8 @@ MonoBehaviour:
   preview: {fileID: 2800000, guid: ef4f8ed7dc7274f98ad3b025c4098f1a, type: 3}
   prefabPath: Items/Weapons/weapon_mine
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
-  sounds: []
+  sounds:
+  - {fileID: 0}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

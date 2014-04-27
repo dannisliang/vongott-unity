@@ -3712,13 +3712,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 590
+    x: 768
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 590
+    x: 768
     y: 10
     width: 90
     height: 90
@@ -5313,13 +5313,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 416
+    y: 604
     width: 206
     height: 54
   mouseRct:
     serializedVersion: 2
     x: 10
-    y: 416
+    y: 604
     width: 206
     height: 54
   drawDepth: -20
@@ -5613,13 +5613,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 230
+    x: 408
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 230
+    x: 408
     y: 10
     width: 90
     height: 90
@@ -13048,13 +13048,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 50
+    x: 228
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 50
+    x: 228
     y: 10
     width: 90
     height: 90
@@ -23718,7 +23718,7 @@ Transform:
   m_PrefabInternal: {fileID: 473679306}
   m_GameObject: {fileID: 470562417}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 320, y: 300, z: 0}
+  m_LocalPosition: {x: 498, y: 488, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 710518749}
@@ -23977,7 +23977,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 320
+    x: 498
     y: 179
     width: 1
     height: 1
@@ -24034,27 +24034,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 320
+      value: 498
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 300
+      value: 488
       objectReference: {fileID: 0}
     - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 320
+      value: 498
       objectReference: {fileID: 0}
     - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 240
+      value: 334
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -130
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 380
+      value: 568
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
@@ -26097,13 +26097,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 230
+    x: 408
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 230
+    x: 408
     y: 10
     width: 90
     height: 90
@@ -28287,13 +28287,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: -40
+    x: 138
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: -40
+    x: 138
     y: 10
     width: 90
     height: 90
@@ -34124,13 +34124,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 100
+    x: 278
     y: 130
     width: 440
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 100
+    x: 278
     y: 130
     width: 440
     height: 50
@@ -35723,13 +35723,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 680
+    x: 858
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 680
+    x: 858
     y: 10
     width: 90
     height: 90
@@ -44257,13 +44257,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: -130
+    x: 48
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: -130
+    x: 48
     y: 10
     width: 90
     height: 90
@@ -51327,7 +51327,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
-  slots: []
+  slots:
+  - item: {fileID: 11400006, guid: 71be8c321b6226247b065132a711e199, type: 2}
+    x: 0
+    y: 0
+    quantity: 1
+    hidden: 0
+    equipped: 0
   quickSlots: 
   grid:
     width: 10
@@ -56419,7 +56425,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 446
+    y: 634
     width: 170
     height: 14
   mouseRct:
@@ -56720,13 +56726,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 680
+    x: 858
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 680
+    x: 858
     y: 10
     width: 90
     height: 90
@@ -62559,13 +62565,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 140
+    x: 318
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 140
+    x: 318
     y: 10
     width: 90
     height: 90
@@ -63138,13 +63144,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 320
+    x: 498
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 320
+    x: 498
     y: 10
     width: 90
     height: 90
@@ -64055,13 +64061,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: -40
+    x: 138
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: -40
+    x: 138
     y: 10
     width: 90
     height: 90
@@ -71011,13 +71017,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 500
+    x: 678
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 500
+    x: 678
     y: 10
     width: 90
     height: 90
@@ -71492,7 +71498,7 @@ Transform:
   m_PrefabInternal: {fileID: 473679306}
   m_GameObject: {fileID: 1448615667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 320, y: 240, z: 0}
+  m_LocalPosition: {x: 498, y: 334, z: 0}
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 338398393}
@@ -71749,14 +71755,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 300
-    y: 220
+    x: 478
+    y: 314
     width: 40
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 300
-    y: 220
+    x: 478
+    y: 314
     width: 40
     height: 40
   drawDepth: -0
@@ -73796,13 +73802,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 590
+    x: 768
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 590
+    x: 768
     y: 10
     width: 90
     height: 90
@@ -74876,7 +74882,7 @@ Transform:
   m_PrefabInternal: {fileID: 473679306}
   m_GameObject: {fileID: 1517059393}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -130, y: 380, z: 0}
+  m_LocalPosition: {x: 48, y: 568, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 592807376}
@@ -75143,7 +75149,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: -130
+    x: 48
     y: 99
     width: 1
     height: 1
@@ -78017,13 +78023,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 410
+    x: 588
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 410
+    x: 588
     y: 10
     width: 90
     height: 90
@@ -80086,13 +80092,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 140
+    x: 318
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 140
+    x: 318
     y: 10
     width: 90
     height: 90
@@ -83292,7 +83298,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 426
+    y: 614
     width: 170
     height: 14
   mouseRct:
@@ -83593,13 +83599,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 410
+    x: 588
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 410
+    x: 588
     y: 10
     width: 90
     height: 90
@@ -86237,13 +86243,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 320
+    x: 498
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 320
+    x: 498
     y: 10
     width: 90
     height: 90
@@ -90158,13 +90164,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 50
+    x: 228
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 50
+    x: 228
     y: 10
     width: 90
     height: 90
@@ -93904,13 +93910,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 120
+    x: 298
     y: 130
     width: 400
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 120
+    x: 298
     y: 130
     width: 400
     height: 50
@@ -101516,13 +101522,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 500
+    x: 678
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 500
+    x: 678
     y: 10
     width: 90
     height: 90
@@ -101844,13 +101850,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: -130
+    x: 48
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: -130
+    x: 48
     y: 10
     width: 90
     height: 90
