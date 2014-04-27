@@ -603,7 +603,6 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
-  - 114: {fileID: 11400010}
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: NSF Medic
@@ -1245,7 +1244,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100078}
   m_LocalRotation: {x: 0, y: .212721005, z: 0, w: -.977113008}
-  m_LocalPosition: {x: -17.750845, y: 0, z: 15.3623695}
+  m_LocalPosition: {x: 3.70017815, y: -1.78433943, z: 1.97425365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400004}
@@ -1529,7 +1528,7 @@ MonoBehaviour:
       y: 0
       width: 0
       height: 0
-    component: {fileID: 11400010}
+    component: {fileID: 0}
   id: 
   prefabPath: Actors/NPC/GenericMale
   exportPath: Dump
@@ -1547,7 +1546,7 @@ MonoBehaviour:
   prefabPath: 
   pathFinder: {fileID: 11400006}
   inventory: {fileID: 11400008}
-  conversationTree: {fileID: 11400010}
+  conversationTree: {fileID: 11400000, guid: 8d18441696a23904fb68de1eab2721b3, type: 2}
   isEnemy: 0
   player: {fileID: 0}
   behaviour: 1
@@ -1601,85 +1600,6 @@ MonoBehaviour:
   wallet:
   - index: 0
     amount: 200
-  eventHandler: {fileID: 0}
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faba73abfc5ee40b08adaf871a6fbaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootNodes:
-  - tags:
-    - auto
-    firstNode: 41681
-    nodes:
-    - connectedTo: 0ccc0000
-      id: 41681
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - Hello!
-      event:
-        message: 
-        argument: 
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 761c0100
-      id: 52236
-      type: 0
-      speak:
-        speaker: 0
-        lines:
-        - Hi!
-      event:
-        message: 
-        argument: 
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 
-      id: 72822
-      type: 5
-      speak:
-        speaker: 0
-        lines:
-        - 
-      event:
-        message: 
-        argument: 
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-  currentRoot: 0
-  speakers:
-  - {fileID: 0}
-  - {fileID: 100078}
-  - {fileID: 0}
   eventHandler: {fileID: 0}
 --- !u!135 &13500000
 SphereCollider:
@@ -1797,7 +1717,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -17.7646675, y: 1.61106837, z: 15.3926115}
+  m_ConnectedAnchor: {x: -19.4156036, y: 1.61106837, z: 11.4685602}
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_LowTwistLimit:
     limit: -40

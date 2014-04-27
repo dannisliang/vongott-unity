@@ -179,7 +179,6 @@ GameObject:
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400002}
-  - 114: {fileID: 11400000}
   - 114: {fileID: 11400010}
   m_Layer: 0
   m_Name: Miguel
@@ -921,7 +920,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100022}
   m_LocalRotation: {x: 0, y: .212721393, z: 0, w: -.977112949}
-  m_LocalPosition: {x: -17.750845, y: 0, z: 15.3623705}
+  m_LocalPosition: {x: 5.35111427, y: -1.78433943, z: 5.89830589}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400096}
@@ -1417,84 +1416,6 @@ Animator:
   m_ApplyRootMotion: 1
   m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faba73abfc5ee40b08adaf871a6fbaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootNodes:
-  - tags:
-    - auto
-    firstNode: 41681
-    nodes:
-    - connectedTo: 0ccc0000
-      id: 41681
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - Hello!
-      event:
-        message: 
-        argument: 
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 761c0100
-      id: 52236
-      type: 0
-      speak:
-        speaker: 0
-        lines:
-        - Hi!
-      event:
-        message: 
-        argument: 
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 
-      id: 72822
-      type: 5
-      speak:
-        speaker: 0
-        lines:
-        - 
-      event:
-        message: 
-        argument: 
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-  currentRoot: 0
-  speakers:
-  - {fileID: 0}
-  - {fileID: 100022}
-  eventHandler: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1556,7 +1477,7 @@ MonoBehaviour:
   prefabPath: 
   pathFinder: {fileID: 11400004}
   inventory: {fileID: 11400002}
-  conversationTree: {fileID: 11400000}
+  conversationTree: {fileID: 11400000, guid: 52961efc7a966fe4e8b6cdd2d0a3b388, type: 2}
   isEnemy: 0
   player: {fileID: 0}
   behaviour: 1
@@ -1665,7 +1586,7 @@ MonoBehaviour:
       y: 0
       width: 0
       height: 0
-    component: {fileID: 11400000}
+    component: {fileID: 0}
   id: 
   prefabPath: Actors/NPC/GenericMale
   exportPath: Dump

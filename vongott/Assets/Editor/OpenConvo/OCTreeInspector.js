@@ -73,15 +73,7 @@ public class OCTreeInspector extends Editor {
 	}
 	
 	private function GetSpeakerStrings ( tree : OCTree ) : String[] {
-		var result : String[] = new String [tree.speakers.Length];
-
-		for ( var i : int = 0; i < result.Length; i++ ) {
-			var go : GameObject = tree.speakers[i];
-			
-			result[i] = ( go == null ) ? i.ToString () : go.name;
-		}
-
-		return result;
+		return tree.speakerIDs.ToArray ();
 	}
 
 	override function OnInspectorGUI () {
@@ -99,17 +91,13 @@ public class OCTreeInspector extends Editor {
 
 			EditorGUILayout.LabelField ( "Speakers", EditorStyles.boldLabel );
 
-			for ( i = 0; i < tree.speakers.Length; i++ ) {
+			for ( i = 0; i < tree.speakerIDs.Length; i++ ) {
 				EditorGUILayout.BeginHorizontal ();
-				tree.speakers[i] = EditorGUILayout.ObjectField ( i.ToString(), tree.speakers[i], typeof ( GameObject ), true ) as GameObject;
+				tree.speakerIDs[i] = EditorGUILayout.TextField ( i.ToString(), tree.speakerIDs[i] );
 				
 				GUI.backgroundColor = Color.red;
 				if ( GUILayout.Button ( "x", GUILayout.Width ( 28 ), GUILayout.Height ( 14 ) ) ) {
-					var tmpSpk : List.< GameObject > = new List.< GameObject > ( tree.speakers );
-
-					tmpSpk.RemoveAt ( i );
-
-					tree.speakers = tmpSpk.ToArray ();
+					tree.RemoveSpeaker ( i );
 				}
 				GUI.backgroundColor = Color.white;
 				
@@ -118,11 +106,7 @@ public class OCTreeInspector extends Editor {
 			
 			GUI.backgroundColor = Color.green;
 			if ( GUILayout.Button ( "+", GUILayout.Width ( 28 ), GUILayout.Height ( 14 ) ) ) {
-				tmpSpk = new List.< GameObject > ( tree.speakers );
-
-				tmpSpk.Add ( null );
-
-				tree.speakers = tmpSpk.ToArray ();
+				tree.AddSpeaker ();
 			}
 			GUI.backgroundColor = Color.white;
 

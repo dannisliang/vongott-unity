@@ -1,0 +1,711 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: nsf_medic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faba73abfc5ee40b08adaf871a6fbaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootNodes:
+  - tags: []
+    firstNode: 75672
+    nodes:
+    - connectedTo: ca030100
+      id: 75672
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I think it's done. Let's have a look.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: ee2f0100
+      id: 66506
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - 'The signs are stable. Looks like it really worked this time. '
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: dcc60000
+      id: 77806
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - I told you, man. I knew we could bring this one back!
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 4c500000
+      id: 50908
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - How are you doing? You awake?
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 58030100d20901000d0a0100
+      id: 20556
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - 'Mommy? '
+        - The fuck is going on here?
+        - 'Where am I? '
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 7dfa0000
+      id: 66392
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - Hijo de puta. This one's retarded, doc.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: a8480000
+      id: 68050
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - Wow, you've been alive for 10 seconds, and this is your attitude already?
+          You need some serious attitude adjustments, cabron!
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 07f50000
+      id: 68109
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - Good to see you can keep a level head, amiga. That will be useful.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 07f50000
+      id: 64125
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - These neural signals are normal. The stupidity will wear off in a few hours.
+          Just speak slowly.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 276f0000
+      id: 18600
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Easy, Miguel. Imagine how you'd feel after after this kind of treatment.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 07f50000
+      id: 28455
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - '...OK, whatever. But this better improve soon, I''d hate to put this one
+          down before I have to.'
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: ebe00000
+      id: 62727
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - We've brought you back from the dead and hooked you up with some really
+          loco equipment, so you can help us during our operations.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 2b680000
+      id: 57579
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - We are the Nationalist Secessionist Forces, welcome to our temporary base.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 57ca0000
+      id: 26667
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - The doc and I will be going through your medical results, come talk to us
+          when you're ready.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 51799
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 1
+  - tags: []
+    firstNode: 82717
+    nodes:
+    - connectedTo: 11d70000
+      id: 82717
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Hello there. Your data is very interesting, the nanites seem to have almost
+          completely taken over your bodily functions. Creepy, huh? I'm glad that's
+          not me.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 6e680000
+      id: 55057
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Anyway, I've got a pair of reinforced prosthetic arms for you, but in the
+          field they call it a "strength upgrade". Pretty dumb if you ask me.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: e9ed0000
+      id: 26734
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - These are of pretty shabby quality, but they function as you'd expect normal
+          arms to do. You can supercharge prosthetics like these in various ways,
+          but that will deplete your bioelectrical energy.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: ee41010072370000fa160100
+      id: 60905
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - Is this real life?
+        - What the hell did you do to me?
+        - Thanks.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 6daa0000
+      id: 82414
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Heh, nobody knows, I guess. Don't worry about that crippled brain of yours,
+          it should be operating at regular capacity soon enough. The hardest part
+          is over.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 6daa0000
+      id: 14194
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - We saved your life, in fact, and it wasn't anywhere close to easy. So it
+          would probably be best for you to calm down.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 6daa0000
+      id: 71418
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I'm impressed you're being so calm about this, I would have been terrified.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: e6db0000
+      id: 43629
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - When you're done over there, I've got a task for you. We're having some
+          serious disturbances in the sewers below us.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 86370100
+      id: 56294
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - 'All in good time. First open your inventory [I], select the upgrade and
+          install it. That should take care of the arm issue. '
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 90ac0000
+      id: 79750
+      type: 1
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: GiveItem
+        argument: 
+        object: {fileID: 100000, guid: 622acbb3b744da14e94a78a6748e8f0f, type: 2}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 1efa0000
+      id: 44176
+      type: 3
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: has_arms
+        b: 1
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 64030
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 2
+  - tags:
+    - passive
+    firstNode: 81308
+    nodes:
+    - connectedTo: 5b5a0100
+      id: 81308
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Go talk to Miguel. I'm kind of busy right now.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 88667
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 3
+  - tags:
+    - passive
+    firstNode: 62981
+    nodes:
+    - connectedTo: dd4b0100
+      id: 62981
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - He'll tell you everything you need to know.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 84957
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 3
+  currentRoot: 0
+  speakers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

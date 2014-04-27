@@ -22,6 +22,7 @@ public class OACharacter extends MonoBehaviour {
 	public var usingWeapons : boolean = true;
 	public var weaponCategoryPreference : int = 0;
 	public var weaponSubcategoryPreference : int = 0;
+	public var convoRootNode : int = 0;
 
 	private var updatePathTimer : float = 0;
 
@@ -35,6 +36,12 @@ public class OACharacter extends MonoBehaviour {
 		} else {
 			return null;
 		
+		}
+	}
+
+	public function Start () {
+		if ( conversationTree ) {
+			conversationTree.currentRoot = convoRootNode;
 		}
 	}
 

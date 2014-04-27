@@ -12,12 +12,53 @@ public enum OCNodeType {
 public class OCTree extends MonoBehaviour {
 	public var rootNodes : OCRootNode[] = new OCRootNode[1];
 	public var currentRoot : int;
-	public var speakers : GameObject[] = new GameObject[1];
+	public var speakers : GameObject[] = new GameObject[0];
+	public var speakerIDs : String[] = new String[0];
 
 	private static var random : System.Random = new System.Random ();
 
 	public static function CreateID () : int {
 		return random.Next ( 10000, 99999 );
+	}
+
+	public function AddSpeaker () {
+		var tmpSpkID : List.< String > = new List.< String > ( speakerIDs );
+
+		tmpSpkID.Add ( "newSpeaker" );
+
+		speakerIDs = tmpSpkID.ToArray ();
+		
+		CheckSpeakerAmount ();
+	}
+
+	public function RemoveSpeaker ( i : int ) {
+		var tmpSpkID : List.< String > = new List.< String > ( speakerIDs );
+
+		tmpSpkID.RemoveAt ( i );
+
+		speakerIDs = tmpSpkID.ToArray ();
+
+		CheckSpeakerAmount ();
+	}
+
+	public function CheckSpeakerAmount () {
+		if ( speakerIDs.Length != speakers.Length ) {
+			speakers = new GameObject [speakerIDs.Length];
+		}
+	}
+
+	public function SetSpeaker ( go : GameObject, i : int ) {
+		if ( i < speakers.Length ) {
+			speakers[i] = go;
+			
+		} else {
+			var tmpSpk : List.< GameObject > = new List.< GameObject > ( speakers );
+
+			tmpSpk.Insert ( i, go );
+
+			speakers = tmpSpk.ToArray ();
+
+		}
 	}
 
 	public function AddRootNode () {
