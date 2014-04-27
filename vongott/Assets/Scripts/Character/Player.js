@@ -210,41 +210,42 @@ class Player extends MonoBehaviour {
 	function Shoot ( target : Vector3 ) {
 		if ( equippedObject == null ) { return; }
 		
-		var eq : Equipment = equippedObject as Equipment;
-		
-		if ( eq == null ) { return; }
+		switch ( equippedObject.category ) {
+			case "Weapon":	
+				switch ( equippedObject.subcategory ) {
+					// Mines
+					case "Throwable":
+						if ( shootTimer >= equippedObject.GetAttribute ( "fireRate" ) ) {
+							shootTimer = 0;
+						
+							equippedObject.GetComponent.< OSGrenade >().Throw ( GameCamera.GetInstance().transform.forward * 10 );
+						}
+						break;
 
-		switch ( eq.subType ) {
-			// Mines
-			case eItemSubType.Mine:
-				if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
-					shootTimer = 0;
-				
-					Throw ();
+					// Bullets
+					default:
+					/*	if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
+							shootTimer = 0;
+						
+							var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
+							var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
+						
+							if ( GameCore.GetInstance().timeScale == 1.0 ) {
+								target += Vector3.one * accuracyDegree;
+							}
+						
+							DamageManager.GetInstance().SpawnBullet ( equippedObject.gameObject, target, this.gameObject );
+							
+							SFXManager.GetInstance().Play ( eq.fireSounds [ Random.Range ( 0, eq.fireSounds.Length-1 ) ].name, equippedObject.audio );
+
+							// Muzzle flash
+							if ( equippedObject.transform.GetChild(0) ) {
+								equippedObject.transform.GetChild(0).gameObject.SetActive ( true );
+							}
+						}*/
+						break;
 				}
-				break;
-
-			// Bullets
-			default:
-				if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
-					shootTimer = 0;
 				
-					var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
-					var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
-				
-					if ( GameCore.GetInstance().timeScale == 1.0 ) {
-						target += Vector3.one * accuracyDegree;
-					}
-				
-					DamageManager.GetInstance().SpawnBullet ( equippedObject.gameObject, target, this.gameObject );
-					
-					SFXManager.GetInstance().Play ( eq.fireSounds [ Random.Range ( 0, eq.fireSounds.Length-1 ) ].name, equippedObject.audio );
-
-					// Muzzle flash
-					if ( equippedObject.transform.GetChild(0) ) {
-						equippedObject.transform.GetChild(0).gameObject.SetActive ( true );
-					}
-				}
 				break;
 		}	
 	}

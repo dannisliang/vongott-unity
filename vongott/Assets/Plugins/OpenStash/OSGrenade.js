@@ -27,8 +27,18 @@ public class OSGrenade extends MonoBehaviour {
 	private var thrown : boolean = false;
 	private var exploded : boolean = false;
 
-	public function Throw () {
+	public function Throw ( force : Vector3 ) {
 		thrown = true;
+		
+		if ( collider ) {
+			collider.enabled = true;
+		}
+		
+		if ( rigidbody ) {	
+			rigidbody.useGravity = true;
+			rigidbody.isKinematic = false;
+			rigidbody.velocity = force;
+		}
 	}
 
 	public function Explode () {
