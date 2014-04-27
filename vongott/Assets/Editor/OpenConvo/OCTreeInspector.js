@@ -210,8 +210,6 @@ public class OCTreeInspector extends Editor {
 		}
 		GUI.backgroundColor = Color.white;
 
-		EditorGUILayout.LabelField ( "Nodes: " + root.nodes.Length + ", Containers: " + nodeContainers.Count );
-
 		EditorGUILayout.EndHorizontal ();
 
 		EditorGUILayout.Space ();

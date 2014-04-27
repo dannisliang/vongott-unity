@@ -42,9 +42,111 @@ MonoBehaviour:
   - tags: []
     firstNode: 34291
     nodes:
-    - connectedTo: 00000000
+    - connectedTo: 73810000
       id: 34291
       type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Hey, new sort-of-person. I'm Marl. We need you to take care of the disturbance
+          in the sewer below.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 252d0000
+      id: 33139
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - 'This''ll play out in two parts: Killing the nuisance and fixing the water
+          flow. I trust you got a weapon with ya? '
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 2cf50000f5320100
+      id: 11557
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: has_pistol
+      end:
+        rootNode: 0
+    - connectedTo: b87a0100
+      id: 62764
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - Not yet.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 08310100
+      id: 96952
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Well, better get one then. Talk to the quartermaster up in the canteen.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 78088
+      type: 5
       speak:
         speaker: 0
         lines:
@@ -61,8 +163,673 @@ MonoBehaviour:
       getFlag:
         flag: 
       end:
+        rootNode: 1
+    - connectedTo: b32f0100
+      id: 78581
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - I do.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
         rootNode: 0
-  currentRoot: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 77747
+      type: 2
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 2
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+  - tags: []
+    firstNode: 96440
+    nodes:
+    - connectedTo: 8f6e0000b1640100
+      id: 96440
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: has_pistol
+      end:
+        rootNode: 0
+    - connectedTo: 6f6f0100
+      id: 28303
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - You won't get anywhere without a gun.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 94063
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 1
+    - connectedTo: 157e0000
+      id: 91313
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - I got the gun.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 32277
+      type: 2
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 2
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+  - tags: []
+    firstNode: 55063
+    nodes:
+    - connectedTo: f88f0000
+      id: 55063
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Cool. So just kill the thing, and afterwards I need you to find the engineering
+          room and redirect the water flow. It's the room blocked by rubble.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 37450100
+      id: 36856
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I'll give you a mine to blow away the rubble, but be warned that the blast
+          doors will close if you use it. In that case you'll have to find another
+          way back. If you make it out alive, that is.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 45330000d2d60000a5e00000
+      id: 83255
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - What is the "thing"?
+        - Go fuck yourself.
+        - Right away.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: db7b0100
+      id: 13125
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - We just call them bugs. They're rogue AIs who continuously modify their
+          bodies with discarded prosthetics. It's a perfect mixture of absurd and
+          distugsting, and there is no way in hell I'm going down there.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: e8610000
+      id: 97243
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - Where did they come from?
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: fea40000
+      id: 25064
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I don't think anyone knows. There's too much crazy shit going on at the
+          moment to pay attention to that kind of stuff, I suppose.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: fea40000
+      id: 54994
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Heh, I figured you looked like someone with an attitude. I like it. You
+          don't have a choice though, so giddy-up.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: fea40000
+      id: 57509
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Huh, didn't expect you to be such a pushover. Well, at least you won't cause
+          any trouble.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 355d0100
+      id: 42238
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Let me know when things are cleared up.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: a7c00000
+      id: 89397
+      type: 1
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: GiveItem
+        argument: 
+        object: {fileID: 100000, guid: 71be8c321b6226247b065132a711e199, type: 2}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 49319
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 3
+  - tags: []
+    firstNode: 18825
+    nodes:
+    - connectedTo: 19b00000
+      id: 18825
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - So, how are we doing?
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 2e5400009ada0000
+      id: 45081
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: cleared_sewers
+      end:
+        rootNode: 0
+    - connectedTo: d54d0100
+      id: 21550
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - Not done yet.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: e55c0000
+      id: 55962
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - The water should be running now, and I took care of the things, whatever
+          those were.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: c8cf0000
+      id: 85461
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Well, get your ass back down there, then!
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 53192
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 3
+    - connectedTo: 756c0000
+      id: 23781
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - There were more of them? And you came back alive?
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 69230100
+      id: 27765
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - Well, yeah.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 93510000
+      id: 74601
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Holy crap, you're better than I thought. I was sure I'd never see you again.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: c4390100
+      id: 20883
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I'll let Miguel and the others know on the infolink. You can go on back
+          to them and rub it in their faces.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: b56c0100
+      id: 80324
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - Thanks, I will.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 93365
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 4
+  - tags:
+    - passive
+    firstNode: 57752
+    nodes:
+    - connectedTo: 47620000
+      id: 57752
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Very impressive. I'll be in touch with you later, probably.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 25159
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 4
+  currentRoot: 3
   speakers:
   - id: Player
     gameObject: {fileID: 0}

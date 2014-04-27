@@ -164,8 +164,28 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 
+    - connectedTo: 01d60000
       id: 79540
+      type: 3
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: has_pistol
+        b: 1
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 54785
       type: 5
       speak:
         speaker: 0
@@ -187,8 +207,28 @@ MonoBehaviour:
   - tags: []
     firstNode: 44284
     nodes:
-    - connectedTo: 17b50000
+    - connectedTo: 17b500006d4e0100
       id: 44284
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: cleared_sewers
+      end:
+        rootNode: 0
+    - connectedTo: b59e0000
+      id: 46359
       type: 0
       speak:
         speaker: 1
@@ -208,7 +248,7 @@ MonoBehaviour:
       end:
         rootNode: 0
     - connectedTo: 
-      id: 46359
+      id: 40629
       type: 5
       speak:
         speaker: 0
@@ -227,7 +267,173 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 1
-  currentRoot: 0
+    - connectedTo: 32350000
+      id: 85613
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I'll give it to you, your work in the sewer wasn't too shabby, but don't
+          get too cocky. The guys may appear cynical, but they are going easy on you.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 3cba0000
+      id: 13618
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - I find it patronising, to be honest, but I'm still glad you're alive. It's
+          good to see another female around here.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 47676
+      type: 2
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 2
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+  - tags: []
+    firstNode: 58364
+    nodes:
+    - connectedTo: 56bf000053350100
+      id: 58364
+      type: 4
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: talked_about_mission
+      end:
+        rootNode: 0
+    - connectedTo: af340000
+      id: 48982
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - You better get briefed by Miguel now. We can chat once he has filled you
+          in on our next mission.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 0f5d0000
+      id: 79187
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - Give you weppaans!
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 13487
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 2
+    - connectedTo: 
+      id: 23823
+      type: 5
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 2
+  currentRoot: 1
   speakers:
   - id: Player
     gameObject: {fileID: 0}
