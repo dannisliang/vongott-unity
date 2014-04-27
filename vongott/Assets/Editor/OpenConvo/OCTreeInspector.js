@@ -538,5 +538,9 @@ public class OCTreeInspector extends Editor {
 		
 			Repaint ();
 		}
+
+		if ( GUI.changed ) {
+			SavePrefab ( target );
+		}
 	}
 }
