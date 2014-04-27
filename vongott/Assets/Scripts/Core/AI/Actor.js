@@ -1,5 +1,9 @@
 #pragma strict
 
+////////////////////
+// DEPRECATED: Use OACharacter instead
+////////////////////
+
 class Actor extends InteractiveObject {
 	private class VisionCone {
 		var distance : float = 20.0;

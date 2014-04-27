@@ -38,13 +38,25 @@ public class OCManager extends MonoBehaviour {
 		}
 	}
 
+	public function get optionCount () : int {
+		var node : OCNode = tree.rootNodes[tree.currentRoot].GetNode ( currentNode );
+		
+		if ( node && node.speak && node.type == OCNodeType.Speak ) {
+			return node.speak.lines.Length;
+		
+		} else {
+			return 0;
+		
+		}
+	}
+
 	public function Start () {
 		instance = this;
 	}
 
 	public function EndConversation () {
 		tree = null;
-	
+		
 		DoCallback ( "OnConversationEnd", speaker );
 	}
 

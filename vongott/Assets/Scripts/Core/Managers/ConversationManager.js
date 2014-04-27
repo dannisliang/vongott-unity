@@ -1,5 +1,9 @@
 ﻿#pragma strict
 
+//////////////////
+// DEPRECATED: Use OCManager instead
+//////////////////
+
 public class ConversationTree {
 	var rootNodes : List.< ConversationRootNode > = new List.< ConversationRootNode > ();
 }
