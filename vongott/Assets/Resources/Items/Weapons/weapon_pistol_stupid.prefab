@@ -16,6 +16,7 @@ GameObject:
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400010}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400002}
   m_Layer: 11
   m_Name: weapon_pistol_stupid
   m_TagString: Untagged
@@ -229,7 +230,38 @@ MonoBehaviour:
   muzzleFlash: {fileID: 100002}
   muzzleFlashDuration: .25
   projectileType: 1
-  bullet: {fileID: 11400000, guid: 58bdab7c19f161342bead1a243603b9c, type: 2}
+  aimWithMainCamera: 1
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ea243763544457196520f74b0cea7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fields:
+  - type: 9
+    name: Transform
+    b: 0
+    str: 
+    i: 0
+    f: 0
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+    component: {fileID: 400000}
+  id: 
+  prefabPath: Items/Weapons/weapon_pistol_stupid
+  exportPath: 
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -289,7 +321,7 @@ MonoBehaviour:
     value: 50
     item: {fileID: 11400010}
   - index: 12
-    value: 10
+    value: 50
     item: {fileID: 11400010}
   ammunition:
     enabled: 1

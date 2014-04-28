@@ -28,10 +28,18 @@ public class OFSerializer {
 	        output.AddField ( "prefabPath", input.prefabPath );	
 
 		for ( var i : int = 0; i < input.fields.Length; i++ ) {
-			var c : Component = input.fields[i].component;
+			switch ( input.fields[i].type ) {
+				case OFFieldType.Component:
+					var c : Component = input.fields[i].component;
 
-			if ( c ) {
-				components.Add ( SerializeComponent ( c ) );
+					if ( c ) {
+						components.Add ( Serialize ( c ) );
+					}
+					break;
+
+				case OFFieldType.Color:
+					output.AddField ( input.fields[i].name, Serialize ( input.fields[i].color ) );
+					break;
 			}
 		}
 
@@ -45,17 +53,20 @@ public class OFSerializer {
 	// Classes
 	//////////////////
 	// Component
-	public static function SerializeComponent ( input : Component ) : JSONObject {
+	public static function Serialize ( input : Component ) : JSONObject {
 		var output : JSONObject;
 	
 		if ( input.GetType() == typeof ( Transform ) ) {
-			output = SerializeTransform ( input as Transform );
+			output = Serialize ( input as Transform );
 		
 		} else if ( input.GetType() == typeof ( OCTree ) ) {
-			output = SerializeOCTree ( input as OCTree );
+			output = Serialize ( input as OCTree );
 		
 		} else if ( input.GetType() == typeof ( OSInventory ) ) {
-			output = SerializeOSInventory ( input as OSInventory );
+			output = Serialize ( input as OSInventory );
+		
+		} else if ( input.GetType() == typeof ( OSItem ) ) {
+			output = Serialize ( input as OSItem );
 		
 		}
 
@@ -67,18 +78,18 @@ public class OFSerializer {
 	}
 
 	// Transform
-	public static function SerializeTransform ( input : Transform ) : JSONObject {
+	public static function Serialize ( input : Transform ) : JSONObject {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 
-		output.AddField ( "eulerAngles", SerializeVector3 ( input.eulerAngles ) );
-		output.AddField ( "position", SerializeVector3 ( input.position ) );
-		output.AddField ( "localScale", SerializeVector3 ( input.localScale ) );
+		output.AddField ( "eulerAngles", Serialize ( input.eulerAngles ) );
+		output.AddField ( "position", Serialize ( input.position ) );
+		output.AddField ( "localScale", Serialize ( input.localScale ) );
 	
 		return output;
 	}
 
 	// OCTree
-	public static function SerializeOCTree ( input : OCTree ) : JSONObject {
+	public static function Serialize ( input : OCTree ) : JSONObject {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 		var rootNodes : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
@@ -186,7 +197,7 @@ public class OFSerializer {
 	}
 
 	// OSInventory
-	public static function SerializeOSInventory ( input : OSInventory ) : JSONObject {
+	public static function Serialize ( input : OSInventory ) : JSONObject {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 		var slots : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
@@ -237,11 +248,33 @@ public class OFSerializer {
 		return output;
 	}
 
+	// OSItem
+	public static function Serialize ( input : OSItem ) : JSONObject {
+		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+	
+		output.AddField ( "ammunition", input.ammunition.value );
+
+		return output;
+	}
+
+
 	/////////////////
 	// Structs
 	/////////////////
+	// Color
+	public static function Serialize ( input : Color ) : JSONObject {
+		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+
+		output.AddField ( "r", input.r );
+		output.AddField ( "g", input.g );
+		output.AddField ( "b", input.b );
+		output.AddField ( "a", input.a );
+
+		return output;
+	}
+	
 	// Vector3
-	public static function SerializeVector3 ( input : Vector3 ) : JSONObject {
+	public static function Serialize ( input : Vector3 ) : JSONObject {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 
 		output.AddField ( "x", input.x );
@@ -252,7 +285,7 @@ public class OFSerializer {
 	}
 	
 	// Vector2
-	public static function SerializeVector2 ( input : Vector2 ) : JSONObject {
+	public static function Serialize ( input : Vector2 ) : JSONObject {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 
 		output.AddField ( "x", input.x );

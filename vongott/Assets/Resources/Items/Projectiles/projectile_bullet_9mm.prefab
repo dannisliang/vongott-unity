@@ -13,7 +13,7 @@ GameObject:
   - 96: {fileID: 9600000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: effect_bullet
+  m_Name: projectile_bullet_9mm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,13 +111,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c000392f7392f488d198f62747a993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Bullet
-  thumbnail: {fileID: 0}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 513
   raycastDistance: .25
-  speed: 1
+  speed: 120
+  visibilityByTimeScale: 1
+  maxTimeScale: .899999976
+  renderers:
+  - {fileID: 2300000}
+  - {fileID: 9600000}
   lifetime: 2
   damage: 0
 --- !u!1001 &100100000

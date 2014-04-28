@@ -1,14 +1,19 @@
 ﻿#pragma strict
 
 public enum OFFieldType {
+	// System types
 	None,	
 	Boolean,
 	Float,
 	Int,
-	Rect,
 	String,
+	
+	// Unity structs
+	Rect,
+	Quaternion,
 	Vector3,
 	Vector2,
+	Color,
 
 	// Component types
 	Animator,
@@ -18,8 +23,9 @@ public enum OFFieldType {
 	// OpenTools types
 	OACharacter,
 	OCTree,
-	OSInventory,
 	OPPathFinder,
+	OSInventory,
+	OSItem,
 }
 
 public class OFField {
@@ -30,9 +36,10 @@ public class OFField {
 	public var str : String;
 	public var i : int;
 	public var f : float;
-	public var v3 : Vector3;
-	public var v2 : Vector2;
+	public var vector3 : Vector3;
+	public var vector2 : Vector2;
 	public var rect : Rect;
+	public var color : Color;
 	public var component : Component;
 
 	public function Set ( value : Component ) {
@@ -40,6 +47,11 @@ public class OFField {
 		component = value;
 	}
 	
+	public function Set ( value : Color ) {
+		type = OFFieldType.Color;
+		color = value;
+	}
+
 	public function Set ( value : Rect ) {
 		type = OFFieldType.Rect;
 		rect = value;
@@ -57,12 +69,12 @@ public class OFField {
 	
 	public function Set ( value : Vector3 ) {
 		type = OFFieldType.Vector3;
-		v3 = value;
+		vector3 = value;
 	}
 	
 	public function Set ( value : Vector2 ) {
 		type = OFFieldType.Vector2;
-		v2 = value;
+		vector2 = value;
 	}
 }
 

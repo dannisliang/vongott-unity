@@ -3712,13 +3712,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 768
+    x: 590
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 768
+    x: 590
     y: 10
     width: 90
     height: 90
@@ -3758,8 +3758,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400006, guid: 60e6e680ff561bc4f9052b3d4fa19a0e, type: 2}
   m_PrefabInternal: {fileID: 1999531234}
   m_GameObject: {fileID: 106804214}
-  m_LocalRotation: {x: .70710659, y: 0, z: 0, w: -.707106948}
-  m_LocalPosition: {x: 0, y: 1.10000002, z: 0}
+  m_LocalRotation: {x: .70710665, y: 0, z: 0, w: -.707107008}
+  m_LocalPosition: {x: 0, y: 1.20000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1357055848}
@@ -3779,10 +3779,10 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_Strength: 1
-    m_Bias: .0500000007
+    m_Bias: .379999995
     m_Softness: 4
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
@@ -5313,13 +5313,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 604
+    y: 416
     width: 206
     height: 54
   mouseRct:
     serializedVersion: 2
     x: 10
-    y: 604
+    y: 416
     width: 206
     height: 54
   drawDepth: -20
@@ -5613,13 +5613,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 408
+    x: 230
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 408
+    x: 230
     y: 10
     width: 90
     height: 90
@@ -6850,7 +6850,7 @@ Light:
   serializedVersion: 3
   m_Type: 2
   m_Color: {r: .224653974, g: .360294104, b: .206639275, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2.33999991
   m_Range: 3
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -8453,14 +8453,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 234797433}
   id: 
   prefabPath: Prefabs/Decor/decor_barrel_rusty
@@ -13048,13 +13049,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 228
+    x: 50
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 228
+    x: 50
     y: 10
     width: 90
     height: 90
@@ -13804,14 +13805,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 330870197}
   id: 
   prefabPath: Prefabs/Interfaces/interface_camera
@@ -16766,14 +16768,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 377501589}
   id: 
   prefabPath: Prefabs/Interfaces/interface_camera
@@ -19134,8 +19137,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400006, guid: 60e6e680ff561bc4f9052b3d4fa19a0e, type: 2}
   m_PrefabInternal: {fileID: 1110475969}
   m_GameObject: {fileID: 436266942}
-  m_LocalRotation: {x: .70710659, y: 0, z: 0, w: -.707106948}
-  m_LocalPosition: {x: 0, y: 1.10000002, z: 0}
+  m_LocalRotation: {x: .70710665, y: 0, z: 0, w: -.707107008}
+  m_LocalPosition: {x: 0, y: 1.20000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 234797433}
@@ -19155,10 +19158,10 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_Strength: 1
-    m_Bias: .0500000007
+    m_Bias: .379999995
     m_Softness: 4
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
@@ -23718,7 +23721,7 @@ Transform:
   m_PrefabInternal: {fileID: 473679306}
   m_GameObject: {fileID: 470562417}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 498, y: 488, z: 0}
+  m_LocalPosition: {x: 320, y: 300, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 710518749}
@@ -23977,7 +23980,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 498
+    x: 320
     y: 179
     width: 1
     height: 1
@@ -24034,27 +24037,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 498
+      value: 320
       objectReference: {fileID: 0}
     - target: {fileID: 400134, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 488
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 498
+      value: 320
       objectReference: {fileID: 0}
     - target: {fileID: 400412, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 334
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 48
+      value: -130
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 568
+      value: 380
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5122bf3c2016314aa785480497a55ef, type: 2}
@@ -24939,14 +24942,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 492138492}
   id: 
   prefabPath: Prefabs/Interfaces/interface_terminal
@@ -26097,13 +26101,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 408
+    x: 230
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 408
+    x: 230
     y: 10
     width: 90
     height: 90
@@ -28287,13 +28291,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 138
+    x: -40
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 138
+    x: -40
     y: 10
     width: 90
     height: 90
@@ -33019,14 +33023,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 670376174}
   id: 
   prefabPath: Prefabs/Decor/decor_barrel_rusty
@@ -34124,13 +34129,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 278
+    x: 100
     y: 130
     width: 440
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 278
+    x: 100
     y: 130
     width: 440
     height: 50
@@ -35723,13 +35728,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 858
+    x: 680
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 858
+    x: 680
     y: 10
     width: 90
     height: 90
@@ -41703,6 +41708,7 @@ MonoBehaviour:
   conversationTree: {fileID: 11400000, guid: 52961efc7a966fe4e8b6cdd2d0a3b388, type: 2}
   isEnemy: 0
   player: {fileID: 0}
+  health: 100
   behaviour: 1
   updatePathInterval: 5
   usingWeapons: 1
@@ -41728,14 +41734,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 839040920}
   - type: 9
     name: OPPathFinder
@@ -41743,14 +41750,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 839040921}
   - type: 9
     name: Transform
@@ -41758,14 +41766,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 839040913}
   - type: 9
     name: OACharacter
@@ -41773,14 +41782,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 839040917}
   - type: 9
     name: OSInventory
@@ -41788,14 +41798,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 839040916}
   - type: 9
     name: OCTree
@@ -41803,14 +41814,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 0}
   id: 
   prefabPath: Actors/NPC/GenericMale
@@ -44257,13 +44269,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 48
+    x: -130
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 48
+    x: -130
     y: 10
     width: 90
     height: 90
@@ -51334,6 +51346,12 @@ MonoBehaviour:
     quantity: 1
     hidden: 0
     equipped: 0
+  - item: {fileID: 11400010, guid: ee392d9bd410069448895d35a35e59fe, type: 2}
+    x: 1
+    y: 0
+    quantity: 1
+    hidden: 0
+    equipped: 0
   quickSlots: 
   grid:
     width: 10
@@ -51362,14 +51380,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1034786539}
   - type: 9
     name: OSInventory
@@ -51377,14 +51396,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1034786547}
   id: 
   prefabPath: Actors/Player/player
@@ -56425,7 +56445,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 634
+    y: 446
     width: 170
     height: 14
   mouseRct:
@@ -56726,13 +56746,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 858
+    x: 680
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 858
+    x: 680
     y: 10
     width: 90
     height: 90
@@ -62565,13 +62585,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 318
+    x: 140
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 318
+    x: 140
     y: 10
     width: 90
     height: 90
@@ -63144,13 +63164,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 498
+    x: 320
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 498
+    x: 320
     y: 10
     width: 90
     height: 90
@@ -64061,13 +64081,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 138
+    x: -40
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 138
+    x: -40
     y: 10
     width: 90
     height: 90
@@ -67821,14 +67841,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1357055848}
   id: 
   prefabPath: Prefabs/Decor/decor_barrel_rusty
@@ -69040,14 +69061,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1390282189}
   id: 
   prefabPath: Prefabs/Maps/la_guardia_air_terminal
@@ -71017,13 +71039,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 678
+    x: 500
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 678
+    x: 500
     y: 10
     width: 90
     height: 90
@@ -71498,7 +71520,7 @@ Transform:
   m_PrefabInternal: {fileID: 473679306}
   m_GameObject: {fileID: 1448615667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 498, y: 334, z: 0}
+  m_LocalPosition: {x: 320, y: 240, z: 0}
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 338398393}
@@ -71755,14 +71777,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 478
-    y: 314
+    x: 300
+    y: 220
     width: 40
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 478
-    y: 314
+    x: 300
+    y: 220
     width: 40
     height: 40
   drawDepth: -0
@@ -73453,14 +73475,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1484058282}
   id: 
   prefabPath: Prefabs/Decor/decor_barrel_rusty
@@ -73802,13 +73825,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 768
+    x: 590
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 768
+    x: 590
     y: 10
     width: 90
     height: 90
@@ -74882,7 +74905,7 @@ Transform:
   m_PrefabInternal: {fileID: 473679306}
   m_GameObject: {fileID: 1517059393}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48, y: 568, z: 0}
+  m_LocalPosition: {x: -130, y: 380, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 592807376}
@@ -75149,7 +75172,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 48
+    x: -130
     y: 99
     width: 1
     height: 1
@@ -76247,6 +76270,7 @@ MonoBehaviour:
   conversationTree: {fileID: 11400000, guid: e2a9dcbae2d256e4bbebe45918b99eac, type: 2}
   isEnemy: 0
   player: {fileID: 0}
+  health: 100
   behaviour: 1
   updatePathInterval: 5
   usingWeapons: 1
@@ -76272,14 +76296,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1543291711}
   - type: 9
     name: OPPathFinder
@@ -76287,14 +76312,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1543291712}
   - type: 9
     name: Transform
@@ -76302,14 +76328,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1543291705}
   - type: 9
     name: OACharacter
@@ -76317,14 +76344,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1543291708}
   - type: 9
     name: OSInventory
@@ -76332,14 +76360,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1543291707}
   - type: 9
     name: OCTree
@@ -76347,14 +76376,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 0}
   id: 
   prefabPath: Actors/NPC/nsf_jane
@@ -78023,13 +78053,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 588
+    x: 410
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 588
+    x: 410
     y: 10
     width: 90
     height: 90
@@ -78098,8 +78128,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400006, guid: 60e6e680ff561bc4f9052b3d4fa19a0e, type: 2}
   m_PrefabInternal: {fileID: 1417190439}
   m_GameObject: {fileID: 1593465832}
-  m_LocalRotation: {x: .70710659, y: 0, z: 0, w: -.707106948}
-  m_LocalPosition: {x: 0, y: 1.10000002, z: 0}
+  m_LocalRotation: {x: .70710665, y: 0, z: 0, w: -.707107008}
+  m_LocalPosition: {x: 0, y: 1.20000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 670376174}
@@ -78119,10 +78149,10 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_Strength: 1
-    m_Bias: .0500000007
+    m_Bias: .379999995
     m_Softness: 4
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
@@ -80092,13 +80122,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 318
+    x: 140
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 318
+    x: 140
     y: 10
     width: 90
     height: 90
@@ -83298,7 +83328,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 614
+    y: 426
     width: 170
     height: 14
   mouseRct:
@@ -83599,13 +83629,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 588
+    x: 410
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 588
+    x: 410
     y: 10
     width: 90
     height: 90
@@ -83714,6 +83744,7 @@ MonoBehaviour:
   conversationTree: {fileID: 11400000, guid: 8d18441696a23904fb68de1eab2721b3, type: 2}
   isEnemy: 0
   player: {fileID: 0}
+  health: 100
   behaviour: 1
   updatePathInterval: 5
   usingWeapons: 1
@@ -83739,14 +83770,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1698108008}
   - type: 9
     name: OPPathFinder
@@ -83754,14 +83786,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1698108009}
   - type: 9
     name: Transform
@@ -83769,14 +83802,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1698108001}
   - type: 9
     name: OACharacter
@@ -83784,14 +83818,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1698108005}
   - type: 9
     name: OSInventory
@@ -83799,14 +83834,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1698108004}
   - type: 9
     name: OCTree
@@ -83814,14 +83850,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 0}
   id: 
   prefabPath: Actors/NPC/GenericMale
@@ -86243,13 +86280,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 498
+    x: 320
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 498
+    x: 320
     y: 10
     width: 90
     height: 90
@@ -86415,6 +86452,7 @@ MonoBehaviour:
   conversationTree: {fileID: 11400000, guid: 04264badc15aedf4a949005af30ff4ff, type: 2}
   isEnemy: 0
   player: {fileID: 0}
+  health: 100
   behaviour: 1
   updatePathInterval: 5
   usingWeapons: 1
@@ -86440,14 +86478,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1762125408}
   - type: 9
     name: OPPathFinder
@@ -86455,14 +86494,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1762125409}
   - type: 9
     name: Transform
@@ -86470,14 +86510,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1762125402}
   - type: 9
     name: OACharacter
@@ -86485,14 +86526,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1762125405}
   - type: 9
     name: OSInventory
@@ -86500,14 +86542,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 1762125404}
   - type: 9
     name: OCTree
@@ -86515,14 +86558,15 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 0}
   id: 
   prefabPath: Actors/NPC/GenericMale
@@ -90164,13 +90208,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 228
+    x: 50
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 228
+    x: 50
     y: 10
     width: 90
     height: 90
@@ -93910,13 +93954,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 298
+    x: 120
     y: 130
     width: 400
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 298
+    x: 120
     y: 130
     width: 400
     height: 50
@@ -101522,13 +101566,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 678
+    x: 500
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 678
+    x: 500
     y: 10
     width: 90
     height: 90
@@ -101850,13 +101894,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 48
+    x: -130
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 48
+    x: -130
     y: 10
     width: 90
     height: 90
@@ -101896,8 +101940,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400006, guid: 60e6e680ff561bc4f9052b3d4fa19a0e, type: 2}
   m_PrefabInternal: {fileID: 1247168743}
   m_GameObject: {fileID: 2138186247}
-  m_LocalRotation: {x: .70710659, y: 0, z: 0, w: -.707106948}
-  m_LocalPosition: {x: 0, y: 1.10000002, z: 0}
+  m_LocalRotation: {x: .70710665, y: 0, z: 0, w: -.707107008}
+  m_LocalPosition: {x: 0, y: 1.20000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1484058282}
@@ -101917,10 +101961,10 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_Strength: 1
-    m_Bias: .0500000007
+    m_Bias: .379999995
     m_Softness: 4
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
