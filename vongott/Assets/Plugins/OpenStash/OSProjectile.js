@@ -37,18 +37,23 @@ public class OSProjectile extends MonoBehaviour {
 				this.transform.position = hit.point;
 				lifetime = 0;
 
-				hit.collider.gameObject.SendMessage ( "OnBulletHit", damage, SendMessageOptions.DontRequireReceiver );
+				hit.collider.gameObject.SendMessage ( "OnProjectileHit", damage, SendMessageOptions.DontRequireReceiver );
 			}
 		
 		}
 	}
 
-	public static function Fire ( p : OSProjectile, range : float, damage : float, position : Vector3, rotation : Quaternion ) {
+	public static function Fire ( p : OSProjectile, range : float, damage : float, position : Vector3, ray : Ray ) {
 		var projectile : OSProjectile = Instantiate ( p );
 
 		projectile.lifetime = range / projectile.speed;
 		projectile.damage = damage;
 		projectile.transform.position = position;
-		projectile.transform.rotation = rotation;
+		
+		var hit : RaycastHit;
+
+		if ( Physics.Raycast ( ray, hit, Mathf.Infinity, projectile.layerMask ) ) {
+			projectile.transform.LookAt ( hit.point );
+		}
 	}
 }

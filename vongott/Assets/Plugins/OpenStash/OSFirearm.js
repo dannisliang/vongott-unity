@@ -15,6 +15,7 @@ public class OSFirearm extends MonoBehaviour {
 	public var muzzleFlash : GameObject;
 	public var muzzleFlashDuration : float = 0.25;
 	public var projectileType : OSProjectileType;
+	public var aimWithMainCamera : boolean = true;
 
 	private var fireTimer : float = 0;
 	private var flashTimer : float = 0;
@@ -66,23 +67,33 @@ public class OSFirearm extends MonoBehaviour {
 			fireTimer = 1 / firingRate;
 			flashTimer = muzzleFlashDuration;
 
+			var ray : Ray;
+			var pos : Vector3;
+
+			if ( muzzleFlash ) {
+				pos = muzzleFlash.transform.position;
+			
+			} else {
+				pos = this.transform.position;
+			
+			}
+
+			if ( aimWithMainCamera ) {
+				ray = new Ray ( Camera.main.transform.position, Camera.main.transform.forward );
+
+			} else {
+				ray = new Ray ( pos, this.transform.forward );
+
+			}
+
 			if ( projectileType == OSProjectileType.Prefab && bullet ) {
-				OSProjectile.Fire ( bullet, range, damage, muzzleFlash.transform.position, this.transform.rotation );
+				OSProjectile.Fire ( bullet, range, damage, pos, ray );
 			
 			} else {
 				var hit : RaycastHit;
-				var pos : Vector3;
 
-				if ( muzzleFlash ) {
-					pos = muzzleFlash.transform.position;
-				
-				} else {
-					pos = this.transform.position;
-				
-				}
-
-				if ( Physics.Raycast ( pos, this.transform.forward, hit, range ) ) {
-					hit.collider.gameObject.SendMessage ( "OnBulletHit", damage );
+				if ( Physics.Raycast ( ray, hit, range ) ) {
+					hit.collider.gameObject.SendMessage ( "OnProjectileHit", damage );
 				}
 
 			}

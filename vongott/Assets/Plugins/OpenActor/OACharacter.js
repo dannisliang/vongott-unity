@@ -42,11 +42,9 @@ public class OACharacter extends MonoBehaviour {
 
 	public function TakeDamage ( damage : float ) {
 		health -= damage;
-	
-		Debug.Log ( "Ouch!" );
 	}
 
-	public function OnBulletHit ( damage : float ) {
+	public function OnProjectileHit ( damage : float ) {
 		TakeDamage ( damage );
 	}
 
