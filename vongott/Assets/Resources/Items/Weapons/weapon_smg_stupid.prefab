@@ -18,7 +18,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   m_Layer: 11
-  m_Name: weapon_pistol_stupid
+  m_Name: weapon_smg_stupid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 4300002, guid: d9fbf64328ea9274f89dc1c45b4cb09e, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 9068356711ab38e4c9ca1938e0c88242, type: 3}
 --- !u!33 &3300002
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -146,8 +146,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .0500000007, y: .150000006, z: .25}
-  m_Center: {x: 0, y: -.0599999987, z: -.119999997}
+  m_Size: {x: .0399999991, y: .219999999, z: .600000024}
+  m_Center: {x: 0, y: -.0700000003, z: -.300000012}
 --- !u!82 &8200000
 AudioSource:
   m_ObjectHideFlags: 1
@@ -260,7 +260,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 400000}
   id: 
-  prefabPath: Items/Weapons/weapon_pistol_stupid
+  prefabPath: Items/Weapons/weapon_smg_stupid
   exportPath: 
 --- !u!114 &11400004
 MonoBehaviour:
@@ -309,10 +309,10 @@ MonoBehaviour:
     y: 1
   attributes:
   - index: 0
-    value: 2
+    value: 10
     item: {fileID: 11400010}
   - index: 2
-    value: 15
+    value: 5
     item: {fileID: 11400010}
   - index: 4
     value: 2
@@ -330,7 +330,7 @@ MonoBehaviour:
     item: {fileID: 11400010}
   thumbnail: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
   preview: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
-  prefabPath: Items/Weapons/weapon_pistol_stupid
+  prefabPath: Items/Weapons/weapon_smg_stupid
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   sounds:
   - {fileID: 8300000, guid: 04b5c466d964a664b8f318c905d8b065, type: 3}

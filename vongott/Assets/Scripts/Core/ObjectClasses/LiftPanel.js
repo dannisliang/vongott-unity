@@ -99,7 +99,7 @@ class LiftPanel extends InteractiveObject {
 		UIHUD.GetInstance().ShowNotification ( "Use" );
 	}
 	
-	override function UpdateObject () {
+	public function Update () {
 		if ( EditorCore.running ) { return; }
 		
 		if ( allDestinations.Count > 0 ) {

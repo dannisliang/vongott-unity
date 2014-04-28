@@ -97,6 +97,8 @@ public class OSFirearm extends MonoBehaviour {
 				}
 
 			}
+
+			item.PlaySound ( firingSoundIndex );
 		}
 	}
 

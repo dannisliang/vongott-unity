@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: marl
+  m_Name: convo_marl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,7 +829,7 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 4
-  currentRoot: 3
+  currentRoot: 0
   speakers:
   - id: Player
     gameObject: {fileID: 0}

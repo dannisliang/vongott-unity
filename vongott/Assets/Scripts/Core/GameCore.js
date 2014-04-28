@@ -394,6 +394,6 @@ class GameCore extends MonoBehaviour {
 			timeCounter = 0.0f;
 		}
 
-		timeScale = Mathf.SmoothStep ( timeScale, timeScaleGoal, Time.deltaTime * 10 );
+		timeScale = Mathf.Lerp ( timeScale, timeScaleGoal, Time.deltaTime * 10 );
 	}
 }

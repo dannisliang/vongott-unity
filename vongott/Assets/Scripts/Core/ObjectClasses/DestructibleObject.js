@@ -2,6 +2,7 @@
 
 public class DestructibleObject extends MonoBehaviour {
 	public var pieces : GameObject[];
+	public var event : OCEvent;
 
 	private function SpawnPieces () : List.< Collider > {
 		var list : List.< Collider > = new List.< Collider > ();

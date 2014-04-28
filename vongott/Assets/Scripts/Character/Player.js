@@ -16,8 +16,6 @@ class Player extends MonoBehaviour {
 	public var automaticHeal : int = 0;
 	public var shieldPrefab : GameObject;
 	
-	public var talkingTo : Actor;
-
 	public var inventory : OSInventory;
 
 	// Private vars	
@@ -26,36 +24,13 @@ class Player extends MonoBehaviour {
 	private var equippedObject : OSItem;
 	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
-					
-	////////////////////
-	// Actor interaction
-	////////////////////
+				
 	// Turn towards
 	function TurnTowards ( v : Vector3 ) {
 		var lookPos : Vector3 = v - transform.position;
 		lookPos.y = 0;
 		
 		transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 4 * Time.deltaTime );
-	}
-	
-	// Talking
-	function TalkTo ( a : Actor ) {
-		GameCore.GetInstance().SetControlsActive ( false );
-		
-		talkingTo = a;
-		
-		this.GetComponent(Animator).SetFloat ( "DeltaVertical", 0 );
-		this.GetComponent(Animator).SetFloat ( "DeltaHorizontal", 0 );
-		this.GetComponent(Animator).SetFloat ( "DeltaCombined", 0 );
-		
-		GameCore.Print ( "Player | conversation with " + a.displayName + " started" ); 
-	}
-	
-	function StopTalking () {
-		GameCore.Print ( "Player | conversation with " + talkingTo.displayName + " ended" ); 
-		
-		talkingTo = null;
-	
 	}
 	
 	
@@ -216,9 +191,12 @@ class Player extends MonoBehaviour {
 					// Mines
 					case "Throwable":
 						if ( shootTimer <= 0 ) {
-							shootTimer = equippedObject.GetAttribute ( "fireRate" );
-						
-							equippedObject.GetComponent.< OSGrenade >().Throw ( GameCamera.GetInstance().transform.forward * 10 );
+							var hit : RaycastHit;
+
+							if ( Physics.Raycast ( Camera.main.transform.position, Camera.main.transform.forward, hit, Mathf.Infinity ) ) {
+								shootTimer = equippedObject.GetAttribute ( "fireRate" );
+								equippedObject.GetComponent.< OSGrenade >().Throw ( hit.point );
+							}
 						}
 						break;
 
@@ -305,11 +283,6 @@ class Player extends MonoBehaviour {
 		if ( liftedObject ) {
 			liftedObject.transform.rotation = this.transform.rotation;
 			liftedObject.transform.position = head.position + this.transform.forward;
-		}
-		
-		// Talking
-		if ( talkingTo != null ) {
-			TurnTowards ( talkingTo.transform.position );
 		}
 		
 		// Shoot timer

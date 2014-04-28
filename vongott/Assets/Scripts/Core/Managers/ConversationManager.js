@@ -91,8 +91,6 @@ public class ConversationManager {
 			currentSupportActor.talking = false;
 		}
 
-		GameCore.GetPlayer().StopTalking ();
-		
 
 		currentActor = null;
 		currentSupportActor = null;
@@ -182,7 +180,6 @@ public class ConversationManager {
 		}
 
 		// Send signal to player object		
-		GameCore.GetPlayer().TalkTo ( actor );
 	
 		NextRoot ( currentActor.currentConvoRoot );	
 	}

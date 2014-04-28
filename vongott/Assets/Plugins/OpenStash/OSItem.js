@@ -71,7 +71,7 @@ public class OSItem extends MonoBehaviour {
 
 	public function GetSound ( id : String ) : AudioClip {
 		for ( var i : int = 0; i < sounds.Length; i++ ) {
-			if ( sounds[i].name == id ) {
+			if ( sounds[i] && sounds[i].name == id ) {
 				return sounds[i];
 			}
 		}
@@ -95,6 +95,15 @@ public class OSItem extends MonoBehaviour {
 		}
 
 		audio.clip = GetSound ( id );
+	}
+
+	public function PlaySound ( index : int ) {
+		if ( !audio ) {
+			this.gameObject.AddComponent.< AudioSource > ();
+		}
+
+		audio.clip = sounds[index];
+		audio.Play ();
 	}
 
 	public function ChangeAmmunition ( value : int ) {

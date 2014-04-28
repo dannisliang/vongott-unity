@@ -24,6 +24,7 @@ public class OACharacter extends MonoBehaviour {
 	public var weaponCategoryPreference : int = 0;
 	public var weaponSubcategoryPreference : int = 0;
 	public var convoRootNode : int = 0;
+	public var convoSpeakers : GameObject [];
 
 	private var updatePathTimer : float = 0;
 
@@ -55,6 +56,10 @@ public class OACharacter extends MonoBehaviour {
 	public function Start () {
 		if ( conversationTree ) {
 			conversationTree.currentRoot = convoRootNode;
+
+			for ( var i : int = 0; i < convoSpeakers.Length; i++ ) {
+				conversationTree.speakers[i].gameObject = convoSpeakers[i];
+			}
 		}
 	}
 

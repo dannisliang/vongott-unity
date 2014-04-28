@@ -1,7 +1,5 @@
 #pragma strict
 
-@script RequireComponent(GUID)
-
 class Trigger extends MonoBehaviour {
 	enum eTriggerActivation {
 		Collision,
@@ -70,10 +68,6 @@ class Trigger extends MonoBehaviour {
 	}
 	
 	function Start () {
-		if ( !this.GetComponent(GUID) ) {
-			this.gameObject.AddComponent(GUID);
-		}
-		
 		if ( Camera.main && Camera.main.GetComponent(EditorCamera) && !this.GetComponent(InteractiveObject) ) {
 			Camera.main.GetComponent(EditorCamera).drawBoxes.Add ( this.gameObject );
 		}

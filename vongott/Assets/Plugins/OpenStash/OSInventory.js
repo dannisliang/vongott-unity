@@ -361,6 +361,14 @@ public class OSInventory extends MonoBehaviour {
 		}
 	}
 	
+	public function DecreaseItem ( item : OSItem ) {
+		var slot : OSSlot = GetSlot ( item );
+
+		if ( slot ) {
+			DecreaseSlot ( slot );
+		}
+	}
+	
 	public function DecreaseSlot ( slot : OSSlot ) {
 		slot.quantity--;
 		
@@ -437,7 +445,17 @@ public class OSInventory extends MonoBehaviour {
 		
 		}
 	}
-	
+
+	public function GetSlot ( item : OSItem ) : OSSlot {
+		for ( var i : int = 0; i < slots.Count; i++ ) {
+			if ( slots[i] && slots[i].item.prefabPath == item.prefabPath ) {
+				return slots[i];
+			}
+		}
+
+		return null;
+	}
+
 	public function GetItem ( x : int, y : int ) : OSItem {
 		for ( var i : int = 0; i < slots.Count; i++ ) {
 			if ( slots[i].x == x && slots[i].y == y ) {

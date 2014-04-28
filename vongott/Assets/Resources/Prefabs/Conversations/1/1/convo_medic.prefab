@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: miguel
+  m_Name: convo_medic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,17 +39,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootNodes:
-  - tags:
-    - auto
-    firstNode: 74596
+  - tags: []
+    firstNode: 75672
     nodes:
-    - connectedTo: e11601002df10000
-      id: 74596
-      type: 4
+    - connectedTo: ca030100
+      id: 75672
+      type: 0
       speak:
-        speaker: 0
+        speaker: 1
         lines:
-        - 
+        - I think it's done. Let's have a look.
       event:
         message: 
         argument: 
@@ -60,260 +59,278 @@ MonoBehaviour:
         flag: 
         b: 0
       getFlag:
-        flag: has_arms
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: ee2f0100
+      id: 66506
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - 'The signs are stable. Looks like it really worked this time. '
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: dcc60000
+      id: 77806
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - I told you, man. I knew we could bring this one back!
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 4c500000
+      id: 50908
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - How are you doing? You awake?
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 58030100d20901000d0a0100
+      id: 20556
+      type: 0
+      speak:
+        speaker: 0
+        lines:
+        - 'Mommy? '
+        - The fuck is going on here?
+        - 'Where am I? '
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 7dfa0000
+      id: 66392
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - Hijo de puta. This one's retarded, doc.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: a8480000
+      id: 68050
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - Wow, you've been alive for 10 seconds, and this is your attitude already?
+          You need some serious attitude adjustments, cabron!
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 07f50000
+      id: 68109
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - Good to see you can keep a level head, amiga. That will be useful.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 07f50000
+      id: 64125
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - These neural signals are normal. The stupidity will wear off in a few hours.
+          Just speak slowly.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 276f0000
+      id: 18600
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Easy, Miguel. Imagine how you'd feel after after this kind of treatment.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 07f50000
+      id: 28455
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - '...OK, whatever. But this better improve soon, I''d hate to put this one
+          down before I have to.'
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: ebe00000
+      id: 62727
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - We've brought you back from the dead and hooked you up with some really
+          loco equipment, so you can help us during our operations.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 2b680000
+      id: 57579
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - We are the Nationalist Secessionist Forces, welcome to our temporary base.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 57ca0000
+      id: 26667
+      type: 0
+      speak:
+        speaker: 2
+        lines:
+        - The doc and I will be going through your medical results, come talk to us
+          when you're ready.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
       end:
         rootNode: 0
     - connectedTo: 
-      id: 71393
-      type: 2
-      speak:
-        speaker: 0
-        lines:
-        - 
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 1
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 33430100
-      id: 61741
-      type: 0
-      speak:
-        speaker: 0
-        lines:
-        - You mentioned something about disturbances in the sewer?
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 8ea20000
-      id: 82739
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - You couldn't have come along at a better time, we really need someone expendable
-          to take care of this.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 8b9f0000
-      id: 41614
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - There are strange disturbances in the sewers beneath us, which are both
-          preventing our troops from sleeping and moving our valuable cargo through
-          the tunnels.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 29e40000
-      id: 40843
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - You'll probably need a weapon down there, so go see the quartermaster in
-          the canteen about that.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 6b770100
-      id: 58409
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - Afterwards, go down to the maintenance tunnels and talk to Marl, the mechanic.
-          He will get you down to the lower sewers. He can fill you in on the specifics
-          too.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: ed77000046920000a91f0100
-      id: 96107
-      type: 0
-      speak:
-        speaker: 0
-        lines:
-        - Poop!
-        - I am not your plumber. Fix your own shit.
-        - Sure, I'll handle it.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 966c0100
-      id: 30701
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - Yes, there probably will be. Now get your equipment from the quartermaster.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 64a70000
-      id: 37446
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - I'll have you know that the nanites in your body can be programmed for rapid
-          exponential growth. It's like instant robot cancer. Sound pleasant to you?
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 966c0100
-      id: 73641
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - Appreciate it. Let me know how it turns out.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 966c0100
-      id: 42852
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - You make one wrong move, or don't do what we tell you, and we flip the switch.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 44330000
-      id: 93334
-      type: 3
-      speak:
-        speaker: 0
-        lines:
-        - 
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: talked_about_sewers
-        b: 1
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 
-      id: 13124
+      id: 51799
       type: 5
       speak:
         speaker: 0
@@ -331,18 +348,19 @@ MonoBehaviour:
       getFlag:
         flag: 
       end:
-        rootNode: 3
+        rootNode: 1
   - tags: []
-    firstNode: 10947
+    firstNode: 82717
     nodes:
-    - connectedTo: 5b0d0100
-      id: 10947
+    - connectedTo: 11d70000
+      id: 82717
       type: 0
       speak:
         speaker: 1
         lines:
-        - 'Good to see you walking too, this is very promising. You''re the only one
-          so far who even survived. '
+        - Hello there. Your data is very interesting, the nanites seem to have almost
+          completely taken over your bodily functions. Creepy, huh? I'm glad that's
+          not me.
       event:
         message: 
         argument: 
@@ -356,15 +374,58 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 453c01007453010020550100
-      id: 68955
+    - connectedTo: 6e680000
+      id: 55057
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - Anyway, I've got a pair of reinforced prosthetic arms for you, but in the
+          field they call it a "strength upgrade". Pretty dumb if you ask me.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: e9ed0000
+      id: 26734
+      type: 0
+      speak:
+        speaker: 1
+        lines:
+        - These are of pretty shabby quality, but they function as you'd expect normal
+          arms to do. You can supercharge prosthetics like these in various ways,
+          but that will deplete your bioelectrical energy.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: ee41010072370000fa160100
+      id: 60905
       type: 0
       speak:
         speaker: 0
         lines:
-        - 'I''m pretty sure I used to have these things attached to my shoulders... '
-        - 'Where in the name of merciless fuck are my arms? '
-        - 'Whereabout might my arms be? '
+        - Is this real life?
+        - What the hell did you do to me?
+        - Thanks.
       event:
         message: 
         argument: 
@@ -378,13 +439,15 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: c9120100
-      id: 80965
+    - connectedTo: 6daa0000
+      id: 82414
       type: 0
       speak:
         speaker: 1
         lines:
-        - Haha, yeah. Not so "handy" right now, are you?
+        - Heh, nobody knows, I guess. Don't worry about that crippled brain of yours,
+          it should be operating at regular capacity soon enough. The hardest part
+          is over.
       event:
         message: 
         argument: 
@@ -398,13 +461,14 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 4a410000
-      id: 86900
+    - connectedTo: 6daa0000
+      id: 14194
       type: 0
       speak:
         speaker: 1
         lines:
-        - You're really walking on thin ice, buddy. Talk to our medic here.
+        - We saved your life, in fact, and it wasn't anywhere close to easy. So it
+          would probably be best for you to calm down.
       event:
         message: 
         argument: 
@@ -418,14 +482,13 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 43430100
-      id: 87328
+    - connectedTo: 6daa0000
+      id: 71418
       type: 0
       speak:
         speaker: 1
         lines:
-        - You're taking that rather lightly. I'm impressed. I'd have been running
-          around wailing my arms around... Or, you get the idea.
+        - I'm impressed you're being so calm about this, I would have been terrified.
       event:
         message: 
         argument: 
@@ -439,13 +502,14 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 4a410000
-      id: 70345
+    - connectedTo: e6db0000
+      id: 43629
       type: 0
       speak:
-        speaker: 1
+        speaker: 2
         lines:
-        - '...ahem, anyway, talk to our medic here about that.'
+        - When you're done over there, I've got a task for you. We're having some
+          serious disturbances in the sewers below us.
       event:
         message: 
         argument: 
@@ -459,13 +523,14 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 4a410000
-      id: 82755
+    - connectedTo: 86370100
+      id: 56294
       type: 0
       speak:
         speaker: 1
         lines:
-        - Have a chat with doc here, he'll give you a pair.
+        - 'All in good time. First open your inventory [I], select the upgrade and
+          install it. That should take care of the arm issue. '
       event:
         message: 
         argument: 
@@ -475,12 +540,52 @@ MonoBehaviour:
       setFlag:
         flag: 
         b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 90ac0000
+      id: 79750
+      type: 1
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: GiveItem
+        argument: 
+        object: {fileID: 100000, guid: 622acbb3b744da14e94a78a6748e8f0f, type: 2}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 1efa0000
+      id: 44176
+      type: 3
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: has_arms
+        b: 1
       getFlag:
         flag: 
       end:
         rootNode: 0
     - connectedTo: 
-      id: 16714
+      id: 64030
       type: 5
       speak:
         speaker: 0
@@ -501,35 +606,15 @@ MonoBehaviour:
         rootNode: 2
   - tags:
     - passive
-    firstNode: 71931
+    firstNode: 81308
     nodes:
-    - connectedTo: dd4d0000c84c0100
-      id: 71931
-      type: 4
-      speak:
-        speaker: 0
-        lines:
-        - 
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: has_arms
-      end:
-        rootNode: 0
-    - connectedTo: e5920000
-      id: 19933
+    - connectedTo: 5b5a0100
+      id: 81308
       type: 0
       speak:
         speaker: 1
         lines:
-        - Get your arms from the medic first.
+        - Go talk to Miguel. I'm kind of busy right now.
       event:
         message: 
         argument: 
@@ -544,90 +629,7 @@ MonoBehaviour:
       end:
         rootNode: 0
     - connectedTo: 
-      id: 85192
-      type: 2
-      speak:
-        speaker: 0
-        lines:
-        - 
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 
-      id: 37605
-      type: 5
-      speak:
-        speaker: 0
-        lines:
-        - 
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 2
-  - tags: []
-    firstNode: 41975
-    nodes:
-    - connectedTo: eb320100e9400100
-      id: 41975
-      type: 4
-      speak:
-        speaker: 0
-        lines:
-        - 
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: cleared_sewers
-      end:
-        rootNode: 0
-    - connectedTo: bfac0000
-      id: 78571
-      type: 0
-      speak:
-        speaker: 1
-        lines:
-        - Good luck.
-      event:
-        message: 
-        argument: 
-        object: {fileID: 0}
-      jump:
-        rootNode: 0
-      setFlag:
-        flag: 
-        b: 0
-      getFlag:
-        flag: 
-      end:
-        rootNode: 0
-    - connectedTo: 
-      id: 44223
+      id: 88667
       type: 5
       speak:
         speaker: 0
@@ -646,11 +648,35 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 3
-    - connectedTo: 00000000
-      id: 82153
+  - tags:
+    - passive
+    firstNode: 62981
+    nodes:
+    - connectedTo: dd4b0100
+      id: 62981
       type: 0
       speak:
-        speaker: 1
+        speaker: 0
+        lines:
+        - He'll tell you everything you need to know.
+      event:
+        message: 
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 84957
+      type: 5
+      speak:
+        speaker: 0
         lines:
         - 
       event:
@@ -665,10 +691,12 @@ MonoBehaviour:
       getFlag:
         flag: 
       end:
-        rootNode: 0
+        rootNode: 3
   currentRoot: 0
   speakers:
   - id: Player
+    gameObject: {fileID: 0}
+  - id: Medic
     gameObject: {fileID: 0}
   - id: Miguel
     gameObject: {fileID: 0}
