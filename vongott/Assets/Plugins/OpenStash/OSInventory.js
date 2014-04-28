@@ -424,6 +424,18 @@ public class OSInventory extends MonoBehaviour {
 			return true;
 
 		}
+
+		// Set up reference for item behaviours
+		var grenade : OSGrenade = item.GetComponent.< OSGrenade > ();
+		var firearm : OSFirearm = item.GetComponent.< OSFirearm > ();
+
+		if ( grenade ) {
+			grenade.SetInventory ( this );
+		
+		} else if ( firearm ) {
+			firearm.SetInventory ( this );
+		
+		}
 	}
 	
 	public function GetItem ( x : int, y : int ) : OSItem {

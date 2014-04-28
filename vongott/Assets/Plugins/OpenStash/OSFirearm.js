@@ -1,21 +1,29 @@
 ﻿#pragma strict
 
 public class OSFirearm extends MonoBehaviour {
-	public var item : OSItem;
-	public var accuracyIndex : int;
-	public var damageIndex : int;
-	public var firingRateIndex : int;
-	public var reloadSpeedIndex : int;
-	public var firingSoundIndex : int;
-	public var reloadSoundIndex : int;
-	public var equippingSoundIndex : int;
-	public var holsteringSoundIndex : int;
+	@HideInInspector public var item : OSItem;
+	@HideInInspector public var accuracyIndex : int;
+	@HideInInspector public var damageIndex : int;
+	@HideInInspector public var firingRateIndex : int;
+	@HideInInspector public var reloadSpeedIndex : int;
+	@HideInInspector public var rangeIndex : int;
+	@HideInInspector public var firingSoundIndex : int;
+	@HideInInspector public var reloadSoundIndex : int;
+	@HideInInspector public var equippingSoundIndex : int;
+	@HideInInspector public var holsteringSoundIndex : int;
+	
 	public var muzzleFlash : GameObject;
 	public var muzzleFlashDuration : float = 0.25;
+	public var projectileType : OSProjectileType;
 
 	private var fireTimer : float = 0;
 	private var flashTimer : float = 0;
-	private var firing : boolean = false;
+	private var inventory : OSInventory;
+	private var bullet : OSProjectile;
+
+	public function SetInventory ( inventory : OSInventory ) {
+		this.inventory = inventory;
+	}
 
 	public function get accuracy () : float {
 		return item.attributes[accuracyIndex].value;
@@ -27,6 +35,10 @@ public class OSFirearm extends MonoBehaviour {
 
 	public function get firingRate () : float {
 		return item.attributes[firingRateIndex].value;
+	}
+	
+	public function get range () : float {
+		return item.attributes[rangeIndex].value;
 	}
 	
 	public function get firingSound () : AudioClip {
@@ -49,9 +61,38 @@ public class OSFirearm extends MonoBehaviour {
 		return item.sounds[holsteringSoundIndex];
 	}
 
-	private function Fire () {
-		fireTimer = 1 / firingRate;
-		flashTimer = muzzleFlashDuration;
+	public function Fire () {
+		if ( fireTimer <= 0 ) {
+			fireTimer = 1 / firingRate;
+			flashTimer = muzzleFlashDuration;
+
+			if ( projectileType == OSProjectileType.Prefab && bullet ) {
+				OSProjectile.Fire ( bullet, range, damage, muzzleFlash.transform.position, this.transform.rotation );
+			
+			} else {
+				var hit : RaycastHit;
+				var pos : Vector3;
+
+				if ( muzzleFlash ) {
+					pos = muzzleFlash.transform.position;
+				
+				} else {
+					pos = this.transform.position;
+				
+				}
+
+				if ( Physics.Raycast ( pos, this.transform.forward, hit, range ) ) {
+					hit.collider.gameObject.SendMessage ( "OnBulletHit", damage );
+				}
+
+			}
+		}
+	}
+
+	public function Start () {
+		if ( muzzleFlash ) {
+			muzzleFlash.SetActive ( false );
+		}
 	}
 
 	public function Update () {
@@ -60,11 +101,8 @@ public class OSFirearm extends MonoBehaviour {
 			return;
 		}
 
-		if ( firing ) {
-			if ( fireTimer <= 0 ) {
-				Fire ();
-
-			}
+		if ( !bullet ) {
+			bullet = item.ammunition.projectile;
 		}
 
 		if ( fireTimer > 0 ) {

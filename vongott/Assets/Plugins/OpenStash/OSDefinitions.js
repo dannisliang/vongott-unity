@@ -15,6 +15,7 @@ public class OSAmmunition {
 	public var enabled : boolean = true;
 	public var name : String = "Bullets";
 	public var image : Texture2D;
+	public var projectile : OSProjectile;
 }
 
 public class OSCategory {

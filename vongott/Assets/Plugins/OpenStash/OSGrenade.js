@@ -26,6 +26,11 @@ public class OSGrenade extends MonoBehaviour {
 
 	private var thrown : boolean = false;
 	private var exploded : boolean = false;
+	private var inventory : OSInventory;
+
+	public function SetInventory ( inventory : OSInventory ) {
+		this.inventory = inventory;
+	}
 
 	public function Throw ( force : Vector3 ) {
 		thrown = true;

@@ -169,6 +169,15 @@ public class Console extends MonoBehaviour {
 		return output;
 	}
 
+	private function Slomo ( input : String ) : String {
+		var timeScale : float = float.Parse ( input );
+		var output : String = "Time scale set to " + timeScale;
+
+		GameCore.GetInstance().SetTimeScaleGoal ( timeScale );
+
+		return output;
+	}
+
 	public function Parse ( input : String ) : String {
 		var strings : String [] = input.Split ( " "[0], 2 );
 		var output : String = "> " + input + "\n";
@@ -181,12 +190,10 @@ public class Console extends MonoBehaviour {
 
 		if ( strings.Length > 1 ) {
 			switch ( strings[0] ) {
-				// Set
 				case "set":
 					output += Set ( args );
 					break;
 			
-				// Give
 				case "give":
 					output += Give ( args );
 					break;
@@ -195,7 +202,10 @@ public class Console extends MonoBehaviour {
 					output += Kill ( args );
 					break;
 
-				// Unknown
+				case "slomo":
+					output += Slomo ( args );
+					break;
+
 				default:
 					output += "[ERROR] Invalid function '" + strings[0] + "'";
 					break;

@@ -176,7 +176,7 @@ class Player extends MonoBehaviour {
 	// Fighting
 	////////////////////
 	function ResetFire () {
-		shootTimer = GetEquipmentAttribute ( eItemAttribute.FireRate );
+		shootTimer = 0;
 	}
 	
 	function Die () {
@@ -193,7 +193,7 @@ class Player extends MonoBehaviour {
 		GameCore.Print ( "Player | Damage taken: " + amount );
 	}
 	
-	function Shoot () {
+	public function Shoot () {
 		var cam : Camera = Camera.main;
 		var ray : Ray = cam.ScreenPointToRay ( new Vector3 ( Screen.width/2, Screen.height/2, 0 ) );
 		var hit : RaycastHit;
@@ -207,7 +207,7 @@ class Player extends MonoBehaviour {
 		Shoot ( target );
 	}
 
-	function Shoot ( target : Vector3 ) {
+	public function Shoot ( target : Vector3 ) {
 		if ( equippedObject == null ) { return; }
 		
 		switch ( equippedObject.category ) {
@@ -215,34 +215,21 @@ class Player extends MonoBehaviour {
 				switch ( equippedObject.subcategory ) {
 					// Mines
 					case "Throwable":
-						if ( shootTimer >= equippedObject.GetAttribute ( "fireRate" ) ) {
-							shootTimer = 0;
+						if ( shootTimer <= 0 ) {
+							shootTimer = equippedObject.GetAttribute ( "fireRate" );
 						
 							equippedObject.GetComponent.< OSGrenade >().Throw ( GameCamera.GetInstance().transform.forward * 10 );
 						}
 						break;
 
 					// Bullets
-					default:
-					/*	if ( shootTimer >= GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
-							shootTimer = 0;
-						
-							var accuracyDecimal : float = 1.0 - ( GetEquipmentAttribute ( eItemAttribute.Accuracy ) / 100 );
-							var accuracyDegree : float = Random.Range ( -accuracyDecimal, accuracyDecimal );
-						
-							if ( GameCore.GetInstance().timeScale == 1.0 ) {
-								target += Vector3.one * accuracyDegree;
-							}
-						
-							DamageManager.GetInstance().SpawnBullet ( equippedObject.gameObject, target, this.gameObject );
-							
-							SFXManager.GetInstance().Play ( eq.fireSounds [ Random.Range ( 0, eq.fireSounds.Length-1 ) ].name, equippedObject.audio );
+					case "OneHanded":
+						var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 
-							// Muzzle flash
-							if ( equippedObject.transform.GetChild(0) ) {
-								equippedObject.transform.GetChild(0).gameObject.SetActive ( true );
-							}
-						}*/
+						if ( firearm ) {
+							firearm.Fire ();
+						}
+
 						break;
 				}
 				
@@ -325,14 +312,11 @@ class Player extends MonoBehaviour {
 			TurnTowards ( talkingTo.transform.position );
 		}
 		
-		// Equipped weapon
-		if ( IsEquippedWeapon() ) {	
-			if ( shootTimer < GetEquipmentAttribute ( eItemAttribute.FireRate ) ) {
-				shootTimer += Time.deltaTime;
-			}
-			
+		// Shoot timer
+		if ( shootTimer > 0 ) {
+			shootTimer -= Time.deltaTime;
 		}
-		
+
 		// Automatic heal
 		if ( automaticHeal > 0 ) {
 			if ( healTimer <= 0 ) {
@@ -350,7 +334,7 @@ class Player extends MonoBehaviour {
 		
 		// Player state
 		if ( !controller ) {
-			controller = this.GetComponent(PlayerController);
+			controller = this.GetComponent.< PlayerController >();
 		}
 		
 		switch ( controller.actionState ) {

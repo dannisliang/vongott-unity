@@ -187,6 +187,7 @@ public class OSDefinitionsInspector extends Editor {
 			EditorGUILayout.BeginVertical ();
 
 			definitions.ammunitions[a].name = EditorGUILayout.TextField ( "Name", definitions.ammunitions[a].name );
+			definitions.ammunitions[a].projectile = EditorGUILayout.ObjectField ( "Projectile", definitions.ammunitions[a].projectile, typeof ( OSProjectile ), false ) as OSProjectile;
 			
 			EditorGUILayout.EndVertical ();
 

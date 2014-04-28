@@ -140,7 +140,7 @@ public class PlayerController extends MonoBehaviour {
 		}
 				
 		// Shoot
-		if ( Input.GetMouseButton ( 0 ) && GameCore.GetInventory().IsEquippedCategory ( "OneHanded" ) || GameCore.GetInventory().IsEquippedCategory ( "TwoHanded" ) ) {
+		if ( Input.GetMouseButton ( 0 ) ) {
 			actionState = ePlayerActionState.Shooting;
 		
 		// Interact

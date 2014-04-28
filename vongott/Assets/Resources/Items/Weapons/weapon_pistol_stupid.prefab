@@ -11,9 +11,7 @@ GameObject:
   - 33: {fileID: 3300000}
   - 65: {fileID: 6500000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400002}
   - 54: {fileID: 5400000}
-  - 114: {fileID: 11400008}
   - 82: {fileID: 8200000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400010}
@@ -223,31 +221,15 @@ MonoBehaviour:
   damageIndex: 1
   firingRateIndex: 0
   reloadSpeedIndex: 2
+  rangeIndex: 4
   firingSoundIndex: 0
   reloadSoundIndex: 1
   equippingSoundIndex: 1
   holsteringSoundIndex: 2
-  muzzleFlash: {fileID: 0}
+  muzzleFlash: {fileID: 100002}
   muzzleFlashDuration: .25
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Stupid Pistol
-  description: This tool supposedly embeds bullets into faces, but is more useful
-    as a paperweight.
-  path: Items/Equipment
-  id: eq_pistol_stupid
-  materialPath: 
-  tilingModifiers: []
-  canChangeMaterial: 0
+  projectileType: 1
+  bullet: {fileID: 11400000, guid: 58bdab7c19f161342bead1a243603b9c, type: 2}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,18 +254,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   maxTime: .400000006
---- !u!114 &11400008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000365db5143b3a4a87f5942957f1fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GUID: 
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -317,6 +287,9 @@ MonoBehaviour:
     item: {fileID: 11400010}
   - index: 5
     value: 50
+    item: {fileID: 11400010}
+  - index: 12
+    value: 10
     item: {fileID: 11400010}
   ammunition:
     enabled: 1

@@ -187,7 +187,6 @@ class GameCore extends MonoBehaviour {
 	// Timescale
 	function SetTimeScaleGoal ( goal : float ) {
 		timeScaleGoal = goal;
-		Print ( "GameCore | timeScale set to " + goal );
 	}
 	
 	function TweenTimeScale ( start : float, goal : float, time : float ) {
@@ -205,6 +204,7 @@ class GameCore extends MonoBehaviour {
 	
 	function SetTimeScale ( time : float ) {
 		timeScale = time;
+		timeScaleGoal = timeScale;
 	}
 	
 	
@@ -394,5 +394,6 @@ class GameCore extends MonoBehaviour {
 			timeCounter = 0.0f;
 		}
 
+		timeScale = Mathf.SmoothStep ( timeScale, timeScaleGoal, Time.deltaTime * 10 );
 	}
 }

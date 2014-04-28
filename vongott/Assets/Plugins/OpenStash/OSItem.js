@@ -17,6 +17,10 @@ public class OSAmmunitionAmount {
 	public function get image () : Texture2D {
 		return item.definitions.ammunitions[index].image;
 	}
+	
+	public function get projectile () : OSProjectile {
+		return item.definitions.ammunitions[index].projectile;
+	}
 }
 
 public class OSAttribute {

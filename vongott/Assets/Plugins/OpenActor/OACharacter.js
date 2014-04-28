@@ -16,6 +16,7 @@ public class OACharacter extends MonoBehaviour {
 	public var conversationTree : OCTree;
 	public var isEnemy : boolean = false;
 	public var player : GameObject;
+	public var health : float = 100;
 	
 	public var behaviour : OABehaviour = OABehaviour.Idle;
 	public var updatePathInterval : float = 5;
@@ -39,6 +40,20 @@ public class OACharacter extends MonoBehaviour {
 		}
 	}
 
+	public function TakeDamage ( damage : float ) {
+		health -= damage;
+	
+		Debug.Log ( "Ouch!" );
+	}
+
+	public function OnBulletHit ( damage : float ) {
+		TakeDamage ( damage );
+	}
+
+	public function Die () {
+		
+	}
+
 	public function Start () {
 		if ( conversationTree ) {
 			conversationTree.currentRoot = convoRootNode;
@@ -59,6 +74,10 @@ public class OACharacter extends MonoBehaviour {
 
 		if ( updatePathTimer > 0 ) {
 			updatePathTimer -= Time.deltaTime;
+		}
+
+		if ( health <= 0 ) {
+			Die ();
 		}
 	}
 }
