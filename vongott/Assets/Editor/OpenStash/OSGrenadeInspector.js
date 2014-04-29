@@ -23,6 +23,7 @@ public class OSGrenadeInspector extends Editor {
 
 		grenade.damageIndex = EditorGUILayout.Popup ( "Damage", grenade.damageIndex, grenade.item.GetAttributeStrings () );
 		grenade.firingRateIndex = EditorGUILayout.Popup ( "Throwing rate", grenade.firingRateIndex, grenade.item.GetAttributeStrings () );
+		grenade.rangeIndex = EditorGUILayout.Popup ( "Throwing range", grenade.rangeIndex, grenade.item.GetAttributeStrings () );
 
 		EditorGUILayout.Space ();
 

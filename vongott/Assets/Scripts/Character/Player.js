@@ -15,7 +15,6 @@ class Player extends MonoBehaviour {
 	
 	public var automaticHeal : int = 0;
 	public var shieldPrefab : GameObject;
-	
 	public var inventory : OSInventory;
 
 	// Private vars	
@@ -193,10 +192,10 @@ class Player extends MonoBehaviour {
 						if ( shootTimer <= 0 ) {
 							var hit : RaycastHit;
 
-							if ( Physics.Raycast ( Camera.main.transform.position, Camera.main.transform.forward, hit, Mathf.Infinity ) ) {
-								shootTimer = equippedObject.GetAttribute ( "fireRate" );
-								equippedObject.GetComponent.< OSGrenade >().Throw ( hit.point );
-							}
+							equippedObject.GetComponent.< OSGrenade >().Throw ();
+							shootTimer = equippedObject.GetAttribute ( "fireRate" );
+
+							equippedObject = null;
 						}
 						break;
 
@@ -332,6 +331,11 @@ class Player extends MonoBehaviour {
 		if ( energy <= 0 ) {
 			energy = 0;
 			GameCore.GetUpgradeManager().DeactivateAll ();
+		}
+
+		// Check if aiming
+		if ( equippedObject && equippedObject.GetComponent.< OSGrenade > () ) {
+			equippedObject.GetComponent.< OSGrenade >().Aim ( Camera.main.transform.position, Camera.main.transform.forward );
 		}
 	}
 }
