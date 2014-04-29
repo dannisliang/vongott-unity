@@ -11,7 +11,8 @@ class GameCamera extends MonoBehaviour {
 	private var shakeAmount : float;
 	private var shakeFadeOut : float;
 	private var currentSpeaker : GameObject;
-	
+	private var focusSleep : float = 0;
+
 	public var firstPersonLayerMask : LayerMask;
 	public var thirdPersonLayerMask : LayerMask;
 	public var xRayShader : Shader;
@@ -377,14 +378,19 @@ class GameCamera extends MonoBehaviour {
 		// Check for interaction
 		if ( !GameCore.interactiveObjectLocked ) {
 			var hit : RaycastHit;
+
 			Debug.DrawRay ( transform.position, transform.forward * 4, Color.yellow );
+
 			if ( Physics.Raycast ( transform.position, transform.forward, hit, 4 ) ) {
-				if ( hit.collider.GetComponent ( InteractiveObject ) && GameCore.GetInteractiveObject() != hit.collider.GetComponent(InteractiveObject) ) {
-					hit.collider.GetComponent ( InteractiveObject ).Focus ();
+				var thisObject : InteractiveObject = hit.collider.GetComponent.< InteractiveObject > ();
+			
+				if ( thisObject && GameCore.GetInteractiveObject() != thisObject ) {
+					thisObject.Focus ();
+					focusSleep = 1;
 				}
 					
-			} else if ( GameCore.GetInteractiveObject() ) {
-					GameCore.GetInteractiveObject().Unfocus ();
+			} else if ( GameCore.GetInteractiveObject() && focusSleep <= 0 ) {
+				GameCore.GetInteractiveObject().Unfocus ();
 			
 			}
 			
@@ -431,6 +437,11 @@ class GameCamera extends MonoBehaviour {
 				player.controller.controlMode = ePlayerControlMode.FirstPerson;
 				this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
 				break;
+		}
+
+		// Focus sleep
+		if ( focusSleep > 0 ) {
+			focusSleep -= GameCore.GetInstance().ignoreTimeScale;
 		}
 	}
 }

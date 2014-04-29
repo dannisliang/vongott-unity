@@ -64,6 +64,16 @@ public class OCTree extends MonoBehaviour {
 			rootNodes = tempNodes.ToArray ();
 		}
 	}
+
+	public function CurrentRootHasTag ( tag : String ) : boolean {
+		for ( var t : String in rootNodes[currentRoot].tags ) {
+			if ( t == tag ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
 
 public class OCRootNode {

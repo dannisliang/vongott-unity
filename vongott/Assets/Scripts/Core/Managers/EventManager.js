@@ -145,19 +145,17 @@ class EventManager extends MonoBehaviour {
 	private var passiveConvo : boolean = false;
 	private var choiceConvo : boolean = false;
 
-	public function OnConversationStart () {
+	public function OnConversationStart ( tree : OCTree ) {
 		passiveConvo = false;
+	
+		if ( tree.CurrentRootHasTag ( "passive" ) ) {
+			passiveConvo = true;	
 		
-		GameCamera.GetInstance().StorePosRot();
-		GameCore.GetInstance().SetControlsActive ( false );
-		OGRoot.GetInstance().GoToPage ( "Conversation" );
-	}
-
-	public function OnConversationStart ( tags : String[] ) {
-		for ( var i : int = 0; i < tags.Length; i++ ) {
-			if ( tags[i] == "passive" ) {
-				passiveConvo = true;
-			}
+		} else {
+			GameCamera.GetInstance().StorePosRot();
+			GameCore.GetInstance().SetControlsActive ( false );
+			OGRoot.GetInstance().GoToPage ( "Conversation" );
+		
 		}
 	}
 

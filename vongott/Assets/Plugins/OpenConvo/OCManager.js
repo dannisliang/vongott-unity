@@ -20,12 +20,6 @@ public class OCManager extends MonoBehaviour {
 		}
 	}
 	
-	private function DoCallback ( message : String, tags : String[] ) {
-		if ( eventHandler ) {
-			eventHandler.SendMessage ( message, tags, SendMessageOptions.DontRequireReceiver );
-		}
-	}
-
 	private function DoCallback ( message : String, argument : String ) {
 		if ( eventHandler ) {
 			eventHandler.SendMessage ( message, argument, SendMessageOptions.DontRequireReceiver );
@@ -145,13 +139,7 @@ public class OCManager extends MonoBehaviour {
 
 			currentNode = tree.rootNodes[tree.currentRoot].firstNode;
 			
-			if ( tree.rootNodes[tree.currentRoot].tags.Length > 0 ) {
-				DoCallback ( "OnConversationStart", tree.rootNodes[tree.currentRoot].tags );
-
-			} else {
-				DoCallback ( "OnConversationStart" );
-			
-			}
+			DoCallback ( "OnConversationStart", tree );
 
 			DisplayNode ();
 		}

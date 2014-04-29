@@ -24,12 +24,14 @@ public class OSGrenade extends MonoBehaviour {
 	public var sticky : boolean = false;
 	public var explosion : GameObject;
 	public var explosionLifetime : float = 5;
+	public var throwingForce : float = 20;
 
 	private var thrown : boolean = false;
 	private var exploded : boolean = false;
 	private var inventory : OSInventory;
 	private var bezier : Bezier;
 	private var bezierTimer : float;
+	private var distance : float;
 	private var startNormal : Vector3;
 	private var endNormal : Vector3;
 	private var hit : RaycastHit;
@@ -59,33 +61,36 @@ public class OSGrenade extends MonoBehaviour {
 		}
 
 		startNormal = this.transform.up;
+
+		if ( lineRenderer ) {
+			lineRenderer.enabled = false;
+		}
 	}
 
 	public function Aim ( pos : Vector3, dir : Vector3 ) {
 		if ( thrown ) { return; }
 		
-		var reflected : Vector3 = Vector3.Reflect ( dir, -Vector3.up );
-
 		if ( Physics.Raycast ( pos, dir, hit, range ) ) {
 			endNormal = hit.normal;
-			bezier = new Bezier ( this.transform.position, dir, reflected, hit.point );
+			bezier = new Bezier ( this.transform.position, dir, Vector3.up, hit.point );
 		
-		} else if ( Physics.Raycast ( pos + dir * range, Vector3.down, hit, 1 ) ) {
+		} else if ( Physics.Raycast ( pos + dir * range, Vector3.down, hit, Mathf.Infinity ) ) {
 			endNormal = hit.normal;
-			bezier = new Bezier ( this.transform.position, dir, reflected, hit.point );
+			bezier = new Bezier ( this.transform.position, dir, Vector3.up, hit.point );
 		
 		}
 
-
 		if ( lineRenderer && bezier ) {
-			lineRenderer.SetVertexCount ( 8 );
+			lineRenderer.SetVertexCount ( 32 );
 			
-			for ( var i : int = 0; i < 8; i++ ) {
-				var time : float = ( i * 1.0 ) * ( 1.0 / 8 );
+			for ( var i : int = 0; i < 32; i++ ) {
+				var time : float = ( i * 1.0 ) * ( 1.0 / 32 );
 
 				lineRenderer.SetPosition ( i, bezier.GetPointAtTime ( time ) );
 			}
 		}
+
+		distance = Vector3.Distance ( pos, hit.point ); 
 	}
 
 	public function Explode () {
@@ -146,7 +151,9 @@ public class OSGrenade extends MonoBehaviour {
 			
 			}
 
-			this.transform.localEulerAngles -= new Vector3 ( 0, 0, 720 ) * bezierTimer;
+			var revolutions : int = Mathf.RoundToInt ( ( distance * 2 ) / throwingForce );
+
+			this.transform.localEulerAngles -= new Vector3 ( 0, 0, 360 * revolutions ) * bezierTimer;
 
 			if ( countdown <= 0 ) {
 				armed = true;
@@ -165,7 +172,7 @@ public class OSGrenade extends MonoBehaviour {
 			} else {
 				this.transform.position = bezier.GetPointAtTime ( bezierTimer );
 				
-				bezierTimer += Time.deltaTime;
+				bezierTimer += Time.deltaTime * ( throwingForce / distance );
 
 			}
 
