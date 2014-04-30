@@ -1,5 +1,11 @@
 ﻿#pragma strict
 
+public enum OETransformMode {
+	Position,
+	Rotation,
+	Scale
+}
+
 public class OEUndoAction {
 	public var oldGO : GameObject;
 	public var newGO : GameObject;
@@ -26,18 +32,28 @@ public class OEUndoAction {
 }
 
 public class OEWorkspace extends MonoBehaviour {
-	
 	public var inspector : OEInspector;
-	public var focusPoint : Vector3;
-	public var selection : List.< OFSerializedObject > = new List.< OFSerializedObject > ();
-	public var undoBuffer : List.< OEUndoAction > = new List.< OEUndoAction > ();
+	public var fileBrowser : OEFileBrowser;
+	public var transformMode : OETransformMode;
+	public var gizmoPosition : OEGizmo;
+	public var gizmoRotation : OEGizmo;
+	public var gizmoScale : OEGizmo;
 
+	@HideInInspector public var focusPoint : Vector3;
+	@HideInInspector public var selection : List.< OFSerializedObject > = new List.< OFSerializedObject > ();
+
+	private var undoBuffer : List.< OEUndoAction > = new List.< OEUndoAction > ();
 	private var lastUndo : int = -1;
 
 	public static var instance : OEWorkspace;
 
 	public static function GetInstance () : OEWorkspace {
 		return instance;
+	}
+
+	// Switch screens
+	public function OpenFile () {
+		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 
 	// Undo buffer
@@ -73,14 +89,38 @@ public class OEWorkspace extends MonoBehaviour {
 		undoBuffer.Add ( new OEUndoAction ( go ) );
 	}
 
+	// Transform modes
+	public function SetTransformMode ( mode : String ) {
+		var names : String[] = System.Enum.GetNames ( OETransformMode );
+		var result : OETransformMode;
+		
+		for ( var i : int = 0; i < names.Length; i++ ) {
+			if ( names[i] == mode ) {
+				result = i;
+			}
+		}
+
+		SetTransformMode ( result );
+	}
+	
+	public function SetTransformMode ( mode : OETransformMode ) {
+
+	}
+
 	// Selection
+	public function ClearSelection () {
+		instance.selection.Clear ();
+		inspector.Refresh ( selection );
+	}
+	
 	public function SelectObject ( obj : OFSerializedObject, additive : boolean ) {
 		if ( !additive ) {
 			instance.selection.Clear ();
 		}
 
 		instance.selection.Add ( obj );
-		instance.inspector.SetObject ( obj );
+
+		inspector.Refresh ( selection );
 	}
 
 	// Instatiate
@@ -112,5 +152,22 @@ public class OEWorkspace extends MonoBehaviour {
 	// Init
 	public function Start () {
 		instance = this;
+	}
+
+	// Update
+	public function Update () {
+		// Gizmos
+		if ( selection.Count > 0 ) {
+			gizmoPosition.gameObject.SetActive ( transformMode == gizmoPosition.mode );
+			gizmoScale.gameObject.SetActive ( transformMode == gizmoScale.mode );
+			gizmoRotation.gameObject.SetActive ( transformMode == gizmoRotation.mode );
+		
+		} else {
+			gizmoPosition.gameObject.SetActive ( false );
+			gizmoScale.gameObject.SetActive ( false );
+			gizmoRotation.gameObject.SetActive ( false );
+
+		}
+		
 	}
 }
