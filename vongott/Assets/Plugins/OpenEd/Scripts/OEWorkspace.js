@@ -58,8 +58,9 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 
 	// Pick things
-	public function PickObject ( callback : Function ) {
+	public function PickObject ( callback : Function, type : System.Type ) {
 		picker.callback = callback;
+		picker.type = type;
 		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 

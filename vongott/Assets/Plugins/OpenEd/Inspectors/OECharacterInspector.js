@@ -6,7 +6,7 @@ public class OECharacterInspector extends OEComponentInspector {
 	override function In () {
 		var character : OACharacter = target.GetComponent.< OACharacter >();
 	
-		playerObject.In ( character.player );
+		playerObject.In ( character.player, typeof ( GameObject ) );
 	}	
 	
 	override function Out () {

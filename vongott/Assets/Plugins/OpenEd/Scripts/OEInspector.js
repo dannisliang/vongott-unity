@@ -73,12 +73,18 @@ public class OEInspector extends MonoBehaviour {
 			}
 
 			componentSwitch.options = tmpStrings.ToArray ();
+
+			if ( componentSwitch.options.Length > 0 ) {
+				componentSwitch.selectedOption = componentSwitch.options[0];
+				SelectComponent ( componentSwitch.selectedOption );
+			}
 		
 		} else {
 			objectName.gameObject.SetActive ( false );
 			transformInspector.gameObject.SetActive ( false );
 			componentContainer.gameObject.SetActive ( false );
 			componentSwitch.gameObject.SetActive ( false );
+			componentSwitch.selectedOption = "";
 
 		}
 	}

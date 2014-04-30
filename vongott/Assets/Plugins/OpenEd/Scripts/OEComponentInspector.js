@@ -35,13 +35,13 @@ public class OEObjectField {
 
 	private var obj : Object;
 
-	public function In ( obj : Object ) {
+	public function In ( obj : Object, type : System.Type ) {
 		this.obj = obj;
 		
 		button.func = function () {
 			OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
 				this.obj = picked;
-			} );
+			}, type );
 		};
 	}
 
