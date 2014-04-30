@@ -1,35 +1,5 @@
 ﻿#pragma strict
 
-public class OEVector3Field {
-	public var x : OGTextField;
-	public var y : OGTextField;
-	public var z : OGTextField;
-
-	public function Read ( v : Vector3 ) {
-		x.text = v.x.ToString();
-		y.text = v.y.ToString();
-		z.text = v.z.ToString();
-	}
-
-	public function Write () : Vector3 {
-		var nx : float;
-		var ny : float; 
-		var nz : float;
-
-		float.TryParse ( x.text, nx );
-		float.TryParse ( y.text, ny );
-		float.TryParse ( z.text, nz );
-
-		return new Vector3 ( nx, ny, nz );
-	}
-
-	public function Clear () {
-		x.text = "";
-		y.text = "";
-		z.text = "";
-	}
-}
-	
 public class OEInspector extends MonoBehaviour {
 	public var objectName : OGTextField;
 	public var transformInspector : OETransformInspector;
@@ -55,24 +25,10 @@ public class OEInspector extends MonoBehaviour {
 		return false;
 	}
 
-	private function ReadName () {
-		if ( OEWorkspace.GetInstance().selection.Count == 1 ) {
-			objectName.text = OEWorkspace.GetInstance().selection[0].gameObject.name;
-		
-		} else {
-			objectName.text = "( multiple objects selected )";
-		
-		}
-	}
-	
-	private function WriteName () {
-		if ( OEWorkspace.GetInstance().selection.Count == 1 ) {
-			OEWorkspace.GetInstance().selection[0].gameObject.name = objectName.text;
-		}
-	}
-
 	public function Update () {
-		WriteName ();
+		if ( selection.Length == 1 ) {
+			selection[0].gameObject.name = objectName.text;
+		}
 	}
 
 	public function Refresh ( list : List.< OFSerializedObject > ) {
@@ -80,16 +36,16 @@ public class OEInspector extends MonoBehaviour {
 
 		selection = list.ToArray ();
 
-		if ( selection.Length > 0 ) {
+		if ( selection.Length == 1 ) {
 			objectName.gameObject.SetActive ( true );
 			transformInspector.gameObject.SetActive ( true );
 			componentContainer.gameObject.SetActive ( true );
 			componentSwitch.gameObject.SetActive ( true );
 
-			transformInspector.Init ( selection );
+			transformInspector.Init ( selection[0] );
+			objectName.text = selection[0].gameObject.name;
 
-			ReadName ();
-			
+		/*	
 			var tmpStrings : List.< String > = new List.< String > ();
 			var tmpComponents : List.< Component > = new List.< Component > ();
 
@@ -104,7 +60,7 @@ public class OEInspector extends MonoBehaviour {
 				}
 			}
 
-			componentSwitch.options = tmpStrings.ToArray ();
+			componentSwitch.options = tmpStrings.ToArray ();*/
 		
 		} else {
 			objectName.gameObject.SetActive ( false );

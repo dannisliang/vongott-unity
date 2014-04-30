@@ -135,6 +135,16 @@ public class OFSerializedObject extends MonoBehaviour {
 		fields = tmpFields.ToArray ();
 	}
 
+	public function GetComponentType ( type : OFFieldType ) : Component {
+		for ( var i : int = 0; i < fields.Length; i++ ) {
+			if ( fields[i] && fields[i].component && fields[i].type == type ) {
+				return fields[i].component;
+			}
+		}
+		
+		return null;
+	}
+
 	public static function FindObject ( id : String ) : OFSerializedObject {
 		var result : OFSerializedObject;
 		var allObjects : OFSerializedObject[] = GameObject.FindObjectsOfType.<OFSerializedObject>();

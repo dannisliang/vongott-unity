@@ -5,37 +5,19 @@ public class OETransformInspector extends OEComponentInspector {
 	public var rotation : OEVector3Field;
 	public var scale : OEVector3Field;
 
-	private function Read () {
-		if ( selection.Length == 1 ) {
-			var t : Transform = selection[0].transform;
+	override function In () {
+		var t : Transform = target.transform;
 
-			position.Read ( t.localPosition );
-			rotation.Read ( t.localEulerAngles );
-			scale.Read ( t.localScale );
-		
-		} else {
-			position.Clear ();
-			rotation.Clear ();
-			scale.Clear ();
-
-		}
+		position.In ( t.localPosition );
+		rotation.In ( t.localEulerAngles );
+		scale.In ( t.localScale );
 	}
 
-	private function Write () {
-		if ( selection.Length == 1 ) {
-			var t : Transform = selection[0].transform;
+	override function Out () {
+		var t : Transform = target.transform;
 
-			t.localPosition = position.Write ();
-			t.localEulerAngles = rotation.Write ();
-			t.localScale = scale.Write ();
-		}
-	}
-	
-	public function Update () {
-		Write ();
-	}
-
-	public function Refresh () {
-		Read ();
+		t.localPosition = position.Out ();
+		t.localEulerAngles = rotation.Out ();
+		t.localScale = scale.Out ();
 	}
 }

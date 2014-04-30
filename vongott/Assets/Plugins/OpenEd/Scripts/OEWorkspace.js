@@ -33,6 +33,7 @@ public class OEUndoAction {
 
 public class OEWorkspace extends MonoBehaviour {
 	public var inspector : OEInspector;
+	public var picker : OEPicker;
 	public var fileBrowser : OEFileBrowser;
 	public var transformMode : OETransformMode;
 	public var gizmoPosition : OEGizmo;
@@ -54,6 +55,12 @@ public class OEWorkspace extends MonoBehaviour {
 	// Switch screens
 	public function OpenFile () {
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
+	}
+
+	// Pick things
+	public function PickObject ( callback : Function ) {
+		picker.callback = callback;
+		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 
 	// Undo buffer
