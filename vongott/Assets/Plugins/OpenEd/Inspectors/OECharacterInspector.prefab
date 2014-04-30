@@ -266,6 +266,10 @@ MonoBehaviour:
   target: {fileID: 0}
   playerObject:
     button: {fileID: 11400012}
+  behaviour:
+    popup: {fileID: 11400008}
+  pathUpdate:
+    textfield: {fileID: 11400004}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

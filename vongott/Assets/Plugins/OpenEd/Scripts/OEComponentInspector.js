@@ -59,7 +59,64 @@ public class OEObjectField {
 public class OEPopup {
 	public var popup : OGPopUp;
 
+	public function In ( selected : int, strings : String [] ) {
+		popup.options = strings;
+		popup.selectedOption = strings[selected];
+	}
 
+	public function Out () : int {
+		for ( var i : int = 0; i < popup.options.Length; i++ ) {
+			if ( popup.selectedOption == popup.options[i] ) {
+				return i;
+			}
+		}
+		
+		return 0;
+	}	
+}
+
+public class OEFloatField {
+	public var textfield : OGTextField;
+
+	public function In ( value : float ) {
+		textfield.text = value.ToString ();
+	}
+
+	public function Out () : float {
+		var value : float;
+
+		float.TryParse ( textfield.text, value );
+		
+		return value;
+	}	
+}
+
+public class OEIntField {
+	public var textfield : OGTextField;
+
+	public function In ( value : int ) {
+		textfield.text = value.ToString ();
+	}
+
+	public function Out () : int {
+		var value : int;
+
+		int.TryParse ( textfield.text, value );
+		
+		return value;
+	}	
+}
+
+public class OETextField {
+	public var textfield : OGTextField;
+
+	public function In ( string : String ) {
+		textfield.text = string;
+	}
+
+	public function Out () : String {
+		return textfield.text;
+	}	
 }
 
 public class OEComponentInspector extends MonoBehaviour {
