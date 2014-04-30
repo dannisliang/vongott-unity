@@ -57,7 +57,7 @@ public class OECamera extends MonoBehaviour {
 
 	public function Update () {
 		// Selection & focus
-		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage == "Home" && !OGRoot.GetInstance().isMouseOver ) {
+		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage.name == "Home" && !OGRoot.GetInstance().isMouseOver ) {
 			var hit : RaycastHit;
 				
 			if ( Input.GetMouseButtonDown ( 1 ) || Input.GetMouseButtonDown ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) ) {

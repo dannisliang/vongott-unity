@@ -25,6 +25,21 @@ public class OEInspector extends MonoBehaviour {
 		return false;
 	}
 
+	public function SelectComponent ( name : String ) {
+		for ( var i : int = 0; i < componentTypes.Length; i++ ) {
+			if ( componentTypes[i].typeId == name ) {
+				Clear ();
+
+				var newComponent : OEComponentInspector = Instantiate ( componentTypes[i] ) as OEComponentInspector;
+				newComponent.transform.parent = componentContainer;
+				newComponent.transform.localPosition = Vector3.zero;
+				newComponent.transform.localScale = Vector3.one;
+
+				newComponent.Init ( selection[0] );
+			}	
+		}
+	}
+
 	public function Update () {
 		if ( selection.Length == 1 ) {
 			selection[0].gameObject.name = objectName.text;
@@ -45,9 +60,7 @@ public class OEInspector extends MonoBehaviour {
 			transformInspector.Init ( selection[0] );
 			objectName.text = selection[0].gameObject.name;
 
-		/*	
 			var tmpStrings : List.< String > = new List.< String > ();
-			var tmpComponents : List.< Component > = new List.< Component > ();
 
 			for ( var i : int = 0; i < selection.Length; i++ ) {
 				var obj : OFSerializedObject = selection[i];
@@ -55,19 +68,18 @@ public class OEInspector extends MonoBehaviour {
 				for ( var f : int = 0; f < obj.fields.Length; f++ ) {
 					if ( obj.fields[f].component && obj.fields[f].name != "Transform" && IsComponentSupported ( obj.fields[f].name ) ) {
 						tmpStrings.Add ( obj.fields[f].name );
-						tmpComponents.Add ( obj.fields[f].component );
 					}
 				}
 			}
 
-			componentSwitch.options = tmpStrings.ToArray ();*/
+			componentSwitch.options = tmpStrings.ToArray ();
 		
 		} else {
 			objectName.gameObject.SetActive ( false );
 			transformInspector.gameObject.SetActive ( false );
 			componentContainer.gameObject.SetActive ( false );
 			componentSwitch.gameObject.SetActive ( false );
-		
+
 		}
 	}
 }

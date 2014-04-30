@@ -6,10 +6,10 @@ public class OEPicker extends OGPage {
 	public function Update () {
 		if ( Input.GetMouseButtonDown ( 0 ) ) {
 			var hit : RaycastHit;
-			var ray : Ray = this.camera.ScreenPointToRay ( Input.mousePosition );
+			var ray : Ray = Camera.main.ScreenPointToRay ( Input.mousePosition );
 			
 			if ( Physics.Raycast ( ray, hit, Mathf.Infinity ) ) {
-				var obj : OFSerializedObject = hit.collider.gameObject.GetComponent.< OFSerializedObject > ();
+				var obj : Object = hit.collider.gameObject;
 
 				callback ( obj );
 			
