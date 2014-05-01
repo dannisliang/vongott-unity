@@ -72,9 +72,7 @@ public class OECamera extends MonoBehaviour {
 					var obj : OFSerializedObject = hit.collider.gameObject.GetComponent.< OFSerializedObject > ();
 
 					if ( obj ) {
-						var additive : boolean = Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift );
-
-						OEWorkspace.GetInstance().SelectObject ( obj, additive );
+						OEWorkspace.GetInstance().SelectObject ( obj );
 					}
 				
 				} else {

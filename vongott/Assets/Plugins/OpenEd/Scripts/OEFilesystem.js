@@ -1,24 +1,23 @@
 ﻿#pragma strict
 
+import System.IO;
+
 public class OEFileSystem {
-	public static function GetFiles ( dir : String ) : Object [] {
-		return Resources.LoadAll ( dir );
+	public static function GetFiles ( path : String ) : FileInfo [] {
+		var info : DirectoryInfo = new DirectoryInfo ( path );
+		return info.GetFiles ();
 	}
 
-	public static function GetDirectoryNames ( root : String ) : String [] { 
-		var files : Object[] = GetFiles ( root );
-		var tempNames : List.< String > = new List.< String > ();
+	public static function GetFolders ( path : String ) : DirectoryInfo [] {
+		var info : DirectoryInfo = new DirectoryInfo ( path );
+		return info.GetDirectories ();
+	}
 
-		for ( var i : int = 0; i < files.Length; i++ ) {
-			var n : String = "[ERROR]";
-			
-			if ( files[i].GetType() == typeof ( GameObject ) ) {
-				n = ( files[i] as GameObject ).name;
-			}
-				
-			tempNames.Add ( n );
-		}
+	public static function GetResources ( path : String, type : System.Type ) : Object[] {
+		return Resources.LoadAll ( path, type );
+	}
 
-		return tempNames.ToArray ();
-	}	
+	public static function GetParentFolder ( path : String ) : DirectoryInfo {
+		return Directory.GetParent ( path );
+	}
 }

@@ -20,4 +20,16 @@ public class OETransformInspector extends OEComponentInspector {
 		t.localEulerAngles = rotation.Out ();
 		t.localScale = scale.Out ();
 	}
+
+	public function ResetPosition () {
+		position.In ( Vector3.zero );
+	}
+	
+	public function ResetRotation () {
+		rotation.In ( Vector3.zero );
+	}
+	
+	public function ResetScale () {
+		scale.In ( Vector3.one );
+	}
 }

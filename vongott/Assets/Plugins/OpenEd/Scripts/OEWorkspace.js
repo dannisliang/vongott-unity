@@ -35,6 +35,7 @@ public class OEWorkspace extends MonoBehaviour {
 	public var inspector : OEInspector;
 	public var picker : OEPicker;
 	public var fileBrowser : OEFileBrowser;
+	public var toolbar : OEToolbar;
 	public var transformMode : OETransformMode;
 	public var gizmoPosition : OEGizmo;
 	public var gizmoRotation : OEGizmo;
@@ -52,8 +53,24 @@ public class OEWorkspace extends MonoBehaviour {
 		return instance;
 	}
 
-	// Switch screens
+	// Refresh data
+	public function RefreshAll () {
+		inspector.Refresh ( selection );
+		toolbar.Refresh ();
+	}
+
+	// File I/O
 	public function OpenFile () {
+		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
+		fileBrowser.callback = function ( file : FileInfo ) {};
+		fileBrowser.sender = "Home";
+		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
+	}
+
+	public function SaveAs () {
+		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Save;
+		fileBrowser.callback = function ( path : String ) {};
+		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 
@@ -118,17 +135,30 @@ public class OEWorkspace extends MonoBehaviour {
 	// Selection
 	public function ClearSelection () {
 		instance.selection.Clear ();
-		inspector.Refresh ( selection );
+
+		RefreshAll ();
 	}
-	
-	public function SelectObject ( obj : OFSerializedObject, additive : boolean ) {
+
+	public function IsSelected ( obj : OFSerializedObject ) {
+		for ( var i : int = 0; i < selection.Count; i++ ) {
+			if ( selection[i] == obj ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function SelectObject ( obj : OFSerializedObject ) {
+		var additive : boolean = Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift );
+
 		if ( !additive ) {
 			instance.selection.Clear ();
 		}
 
 		instance.selection.Add ( obj );
 
-		inspector.Refresh ( selection );
+		RefreshAll ();
 	}
 
 	// Instatiate

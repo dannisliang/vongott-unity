@@ -19,6 +19,11 @@ public class OEHierarchyDrawer extends OEDrawer {
 
 			yOffset += 20;
 
+			li.isTicked = OEWorkspace.GetInstance().IsSelected ( node.GetChild(i).GetComponent.< OFSerializedObject >() );
+			li.func = function () {
+				OEWorkspace.GetInstance().SelectObject ( node.GetChild(i).GetComponent.< OFSerializedObject >() );
+			}; // THIS WON'T WORK
+
 			Traverse ( node.GetChild ( i ), xOffset + 20 );
 		}
 	}

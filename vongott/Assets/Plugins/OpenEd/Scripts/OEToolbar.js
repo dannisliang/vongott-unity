@@ -2,6 +2,7 @@
 
 public class OEToolbar extends MonoBehaviour {
 	public var collapsed : boolean = true;
+	public var stretched : boolean = true;
 	public var background : Transform;
 	public var drawerTypes : OEDrawer[];
 	public var drawerContainer : Transform;
@@ -13,7 +14,10 @@ public class OEToolbar extends MonoBehaviour {
 			Destroy ( drawerContainer.GetChild ( i ).gameObject );
 		}
 		
+		currentDrawer = "";
+
 		collapsed = true;
+		stretched = false;
 	}
 
 	public function GetDrawer ( name : String ) : OEDrawer {
@@ -27,9 +31,9 @@ public class OEToolbar extends MonoBehaviour {
 	}
 
 	public function OpenDrawer ( name : String ) {
-		Clear ();
-		
 		if ( currentDrawer != name ) {
+			Clear ();
+			
 			collapsed = false;
 
 			var drawer : OEDrawer = GetDrawer ( name );
@@ -41,17 +45,45 @@ public class OEToolbar extends MonoBehaviour {
 				drawer.transform.localPosition = Vector3.zero;
 				drawer.transform.localScale = Vector3.one;
 				drawer.transform.localEulerAngles = Vector3.zero;
+
+				stretched = drawer.stretch;
 			}
+
+			currentDrawer = name;
+		
+		} else {
+			Clear ();
+		
 		}
 	}	
 
+	public function Refresh () {
+		if ( !String.IsNullOrEmpty ( currentDrawer ) ) {
+			var n : String = currentDrawer;
+
+			currentDrawer = "";
+
+			OpenDrawer ( n );
+		}
+	}
+
 	public function Update () {
 		if ( collapsed ) {
-			background.transform.localScale = new Vector3 ( 60, background.transform.localScale.y, 1 );
+			background.GetComponent.< OGSlicedSprite > ().stretch.width = ScreenSize.None;
+			background.localScale = new Vector3 ( 60, background.transform.localScale.y, 1 );
 			drawerContainer.gameObject.SetActive ( false );
 
 		} else {
-			background.transform.localScale = new Vector3 ( 300, background.transform.localScale.y, 1 );
+			if ( stretched ) {
+				background.GetComponent.< OGSlicedSprite > ().stretch.width = ScreenSize.ScreenWidth;
+				background.GetComponent.< OGSlicedSprite > ().stretch.widthOffset = -270;
+			
+			} else {
+				background.GetComponent.< OGSlicedSprite > ().stretch.width = ScreenSize.None;
+
+			}
+			
+			background.localScale = new Vector3 ( 300, background.transform.localScale.y, 1 );
 			drawerContainer.gameObject.SetActive ( true );
 		
 		}
