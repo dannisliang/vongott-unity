@@ -40,9 +40,19 @@ public class OEInspector extends MonoBehaviour {
 		}
 	}
 
+	public function Start () {
+		SetActive ( false );
+	}
+
 	public function Update () {
 		if ( selection.Length == 1 ) {
 			selection[0].gameObject.name = objectName.text;
+		}
+	}
+
+	public function SetActive ( isActive : boolean ) {
+		for ( var i : int = 0; i < this.transform.childCount; i++ ) {
+			this.transform.GetChild ( i ).gameObject.SetActive ( isActive );
 		}
 	}
 
@@ -52,10 +62,7 @@ public class OEInspector extends MonoBehaviour {
 		selection = list.ToArray ();
 
 		if ( selection.Length == 1 ) {
-			objectName.gameObject.SetActive ( true );
-			transformInspector.gameObject.SetActive ( true );
-			componentContainer.gameObject.SetActive ( true );
-			componentSwitch.gameObject.SetActive ( true );
+			SetActive ( true );
 
 			transformInspector.Init ( selection[0] );
 			objectName.text = selection[0].gameObject.name;
@@ -80,10 +87,7 @@ public class OEInspector extends MonoBehaviour {
 			}
 		
 		} else {
-			objectName.gameObject.SetActive ( false );
-			transformInspector.gameObject.SetActive ( false );
-			componentContainer.gameObject.SetActive ( false );
-			componentSwitch.gameObject.SetActive ( false );
+			SetActive ( false );
 			componentSwitch.selectedOption = "";
 
 		}

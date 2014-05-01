@@ -10,6 +10,18 @@ public class OEGizmo extends MonoBehaviour {
 
 	private var prevPos : Vector3;
 
+	private function Round ( v : Vector3 ) : Vector3 {
+		v.x = Mathf.Round ( v.x / 0.25 ) * 0.25;
+		v.y = Mathf.Round ( v.y / 0.25 ) * 0.25;
+		v.z = Mathf.Round ( v.z / 0.25 ) * 0.25;
+		
+		return v; 
+	}
+
+	private function ShouldRound () : boolean {
+		return Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.RightControl ) || Input.GetKey ( KeyCode.LeftCommand ) || Input.GetKey ( KeyCode.RightCommand );
+	}
+
 	private function GetAveragePosition () : Vector3 {
 		var result : Vector3 = Vector3.zero;
 		
@@ -29,11 +41,19 @@ public class OEGizmo extends MonoBehaviour {
 	}
 
 	public function Move ( delta : Vector3 ) {
-		this.transform.Translate ( delta );
+		this.transform.position += delta;
 		
+		if ( ShouldRound() ) {
+			this.transform.position = Round ( this.transform.position );
+		}
+
 		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
 			var t : Transform = OEWorkspace.GetInstance().selection[i].transform;
 			t.position += delta;
+			
+			if ( ShouldRound() ) {
+				t.position = Round ( t.position );
+			}
 		}
 	}
 	
@@ -59,17 +79,25 @@ public class OEGizmo extends MonoBehaviour {
 		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
 			var t : Transform = OEWorkspace.GetInstance().selection[i].transform;
 			t.localRotation = Quaternion.Euler ( t.localEulerAngles + delta );
+
+			if ( ShouldRound() ) {
+				t.localEulerAngles = Round ( t.localEulerAngles );
+			}
 		}
 	}
 	
 	public function Scale ( delta : Vector3 ) {
 		delta.z = -delta.z;
-		
+
 		this.transform.localScale += delta;
 		
 		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
 			var t : Transform = OEWorkspace.GetInstance().selection[i].transform;
 			t.localScale += delta;
+			
+			if ( ShouldRound() ) {
+				t.localScale = Round ( t.localScale );
+			}
 		}
 	}
 
