@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 public class OEGizmoAxis extends MonoBehaviour {
-	private enum Axis {
+	public enum Axis {
 		X,
 		Y,
 		Z
@@ -16,6 +16,8 @@ public class OEGizmoAxis extends MonoBehaviour {
 	private var prevPosition : Vector3;
 
     	public function OnMouseDown () {
+		gizmo.following = false;
+		
 		screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 		lockedPosition = gameObject.transform.position;
    		offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint ( new Vector3 ( Input.mousePosition.x, Input.mousePosition.y, screenPoint.z ) );
@@ -43,8 +45,24 @@ public class OEGizmoAxis extends MonoBehaviour {
 				break;
 		}
 		
-		gizmo.Move ( curPosition - prevPosition );
+		switch ( gizmo.mode ) {
+			case OETransformMode.Position:
+				gizmo.Move ( curPosition - prevPosition );
+				break;
+			
+			case OETransformMode.Rotation:
+				gizmo.Rotate ( axis );
+				break;
+			
+			case OETransformMode.Scale:
+				gizmo.Scale ( curPosition - prevPosition );
+				break;
+		}
 
 		prevPosition = curPosition;
+	}
+
+	public function OnMouseUp () {
+		gizmo.following = true;
 	}
 }

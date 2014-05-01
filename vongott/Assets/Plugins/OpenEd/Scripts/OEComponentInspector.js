@@ -5,10 +5,14 @@ public class OEVector3Field {
 	public var y : OGTextField;
 	public var z : OGTextField;
 
+	public function get listening () : boolean {
+		return x.listening || y.listening || z.listening;
+	}
+
 	public function In ( v : Vector3 ) {
-		x.text = v.x.ToString();
-		y.text = v.y.ToString();
-		z.text = v.z.ToString();
+		x.text = ( Mathf.Round ( v.x * 1000 ) / 1000 ).ToString();
+		y.text = ( Mathf.Round ( v.y * 1000 ) / 1000 ).ToString();
+		z.text = ( Mathf.Round ( v.z * 1000 ) / 1000 ).ToString();
 	}
 
 	public function Out () : Vector3 {

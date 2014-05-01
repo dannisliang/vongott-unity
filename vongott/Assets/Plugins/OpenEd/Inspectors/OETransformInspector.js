@@ -5,31 +5,48 @@ public class OETransformInspector extends OEComponentInspector {
 	public var rotation : OEVector3Field;
 	public var scale : OEVector3Field;
 
-	override function In () {
-		var t : Transform = target.transform;
+	override function Update () {
+		if ( target ) {
+			var t : Transform = target.transform;
 
-		position.In ( t.localPosition );
-		rotation.In ( t.localEulerAngles );
-		scale.In ( t.localScale );
-	}
+			if ( position.listening ) {
+				t.localPosition = position.Out ();
+			} else {
+				position.In ( t.localPosition );
+			}
 
-	override function Out () {
-		var t : Transform = target.transform;
+			if ( rotation.listening ) {
+				t.localEulerAngles = rotation.Out ();
+			} else {
+				rotation.In ( t.localEulerAngles );
+			}
 
-		t.localPosition = position.Out ();
-		t.localEulerAngles = rotation.Out ();
-		t.localScale = scale.Out ();
+			if ( scale.listening ) {
+				t.localScale = scale.Out ();
+			} else {
+				scale.In ( t.localScale );
+			}
+		}
 	}
 
 	public function ResetPosition () {
-		position.In ( Vector3.zero );
+		if ( target ) {
+			var t : Transform = target.transform;
+			t.localPosition = position.Out ();
+		}
 	}
 	
 	public function ResetRotation () {
-		rotation.In ( Vector3.zero );
+		if ( target ) {
+			var t : Transform = target.transform;
+			t.localEulerAngles = rotation.Out ();
+		}
 	}
 	
 	public function ResetScale () {
-		scale.In ( Vector3.one );
+		if ( target ) {
+			var t : Transform = target.transform;
+			t.localScale = scale.Out ();
+		}
 	}
 }

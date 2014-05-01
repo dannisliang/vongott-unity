@@ -36,6 +36,7 @@ public class OECamera extends MonoBehaviour {
 			if ( meshFilter ) {
 				var mesh : Mesh = meshFilter.mesh;
 
+				GL.MultMatrix ( Matrix4x4.TRS ( go.transform.position, go.transform.rotation, go.transform.lossyScale ) );
 				for ( var t : int = 0; t < mesh.triangles.Length; t++ ) {
 					GL.Vertex ( mesh.vertices[mesh.triangles[t]] );
 				}
@@ -46,6 +47,8 @@ public class OECamera extends MonoBehaviour {
 	}
 
 	public function OnPostRender () {
+		GL.PushMatrix ();
+
 		if ( materials.grid ) {
 			DrawGrid ();
 		}
@@ -53,6 +56,8 @@ public class OECamera extends MonoBehaviour {
 		if ( materials.selection && OEWorkspace.GetInstance().selection.Count > 0 ) {
 			DrawSelection ();
 		}
+
+		GL.PopMatrix ();
 	}
 
 	public function Update () {
