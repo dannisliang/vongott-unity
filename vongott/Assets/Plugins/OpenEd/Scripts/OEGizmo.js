@@ -9,22 +9,28 @@ public class OEGizmo extends MonoBehaviour {
 	private var prevPos : Vector3;
 
 	private function GetCenter () : Vector3 {
-		var result : Vector3;
+		var result : Vector3 = Vector3.zero;
 		
-		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
-			result += OEWorkspace.GetInstance().selection[i].transform.position;
-		}
+		if ( OEWorkspace.GetInstance().selection.Count > 0 ) {
+			for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
+				result += OEWorkspace.GetInstance().selection[i].transform.position;
+			}
 
-		result /= OEWorkspace.GetInstance().selection.Count;
+			result /= OEWorkspace.GetInstance().selection.Count;
+		}
 
 		return result;
 	}
 
-	public function Update () {
-		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
-			OEWorkspace.GetInstance().selection[i].transform.position += this.transform.position - prevPos;
-		}
+	public function PutInCenter () {
+		this.transform.position = GetCenter ();
+	}
 
-		prevPos = this.transform.position;
+	public function Move ( delta : Vector3 ) {
+		this.transform.Translate ( delta );
+		
+		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
+			OEWorkspace.GetInstance().selection[i].transform.Translate ( delta );
+		}
 	}
 }

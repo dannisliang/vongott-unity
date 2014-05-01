@@ -57,6 +57,10 @@ public class OEWorkspace extends MonoBehaviour {
 	public function RefreshAll () {
 		inspector.Refresh ( selection );
 		toolbar.Refresh ();
+
+		gizmoPosition.PutInCenter ();
+		gizmoRotation.PutInCenter ();
+		gizmoScale.PutInCenter ();
 	}
 
 	// File I/O
