@@ -4,6 +4,7 @@ public class OECamera extends MonoBehaviour {
 	private class Materials {
 		public var grid : Material;
 		public var selection : Material;
+		public var cursor : Material;
 	}
 	
 	public var rotateSensitivity : Vector2 = new Vector2 ( 5, 5 );
@@ -46,8 +47,27 @@ public class OECamera extends MonoBehaviour {
 		GL.End ();
 	}
 
+	private function DrawCursor () {
+		var point : Vector3 = OEWorkspace.GetInstance().GetFocus ();
+		var size : float = 0.1;
+
+		GL.Begin ( GL.LINES );
+
+		materials.cursor.SetPass ( 0 );
+
+		GL.Vertex ( point - Vector3.forward * size );
+		GL.Vertex ( point + Vector3.forward * size );
+
+		GL.Vertex ( point - Vector3.left * size );
+		GL.Vertex ( point + Vector3.left * size );
+		
+		GL.End ();
+	}
+
 	public function OnPostRender () {
 		GL.PushMatrix ();
+		
+		DrawCursor ();
 
 		if ( materials.grid ) {
 			DrawGrid ();
@@ -61,8 +81,8 @@ public class OECamera extends MonoBehaviour {
 	}
 
 	public function Update () {
-		// Selection & focus
 		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage.name == "Home" && !OGRoot.GetInstance().isMouseOver ) {
+			// Selection & focus
 			var hit : RaycastHit;
 				
 			if ( Input.GetMouseButtonDown ( 1 ) || Input.GetMouseButtonDown ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) ) {

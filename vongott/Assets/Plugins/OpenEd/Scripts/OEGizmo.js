@@ -11,9 +11,9 @@ public class OEGizmo extends MonoBehaviour {
 	private var prevPos : Vector3;
 
 	private function Round ( v : Vector3 ) : Vector3 {
-		v.x = Mathf.Round ( v.x / 0.25 ) * 0.25;
-		v.y = Mathf.Round ( v.y / 0.25 ) * 0.25;
-		v.z = Mathf.Round ( v.z / 0.25 ) * 0.25;
+		v.x = Math.Round ( v.x / 0.25, MidpointRounding.AwayFromZero ) * 0.25;
+		v.y = Math.Round ( v.y / 0.25, MidpointRounding.AwayFromZero ) * 0.25;
+		v.z = Math.Round ( v.z / 0.25, MidpointRounding.AwayFromZero ) * 0.25;
 		
 		return v; 
 	}
@@ -89,14 +89,16 @@ public class OEGizmo extends MonoBehaviour {
 	public function Scale ( delta : Vector3 ) {
 		delta.z = -delta.z;
 
-		this.transform.localScale += delta;
-		
 		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
 			var t : Transform = OEWorkspace.GetInstance().selection[i].transform;
-			t.localScale += delta;
+			var result = t.localScale + delta;
 			
-			if ( ShouldRound() ) {
-				t.localScale = Round ( t.localScale );
+			if ( result.x > 0.1 && result.y > 0.1 && result.z > 0.1 ) {
+				t.localScale += delta;
+				
+				if ( ShouldRound() ) {
+					t.localScale = Round ( t.localScale );
+				}
 			}
 		}
 	}

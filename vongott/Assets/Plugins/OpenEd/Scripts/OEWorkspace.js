@@ -161,6 +161,11 @@ public class OEWorkspace extends MonoBehaviour {
 		RefreshAll ();
 	}
 
+	// Create
+	public function CreateLight () {
+		
+	}
+	
 	// Instatiate
 	public function AddPrefab ( path : String, pos : Vector3 ) : OFSerializedObject {
 		var go : GameObject = Instantiate ( Resources.Load ( path ) ) as GameObject;
@@ -176,6 +181,13 @@ public class OEWorkspace extends MonoBehaviour {
 		}
 
 		return obj;
+	}
+
+	// Duplicate
+	public function DuplicateSelection () {
+		for ( var i : int = 0; i < selection.Count; i++ ) {
+			Instantiate ( selection[i] );
+		}
 	}
 
 	// Focus
