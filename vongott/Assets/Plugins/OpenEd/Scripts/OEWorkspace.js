@@ -40,12 +40,14 @@ public class OEWorkspace extends MonoBehaviour {
 	public var gizmoPosition : OEGizmo;
 	public var gizmoRotation : OEGizmo;
 	public var gizmoScale : OEGizmo;
+	public var serializedTransforms : Transform[];
 
 	@HideInInspector public var focusPoint : Vector3;
 	@HideInInspector public var selection : List.< OFSerializedObject > = new List.< OFSerializedObject > ();
 
 	private var undoBuffer : List.< OEUndoAction > = new List.< OEUndoAction > ();
 	private var lastUndo : int = -1;
+	private var currentSavePath : String;
 
 	public static var instance : OEWorkspace;
 
@@ -62,14 +64,24 @@ public class OEWorkspace extends MonoBehaviour {
 	// File I/O
 	public function OpenFile () {
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
-		fileBrowser.callback = function ( file : FileInfo ) {};
+		fileBrowser.callback = function ( file : FileInfo, path : String ) { currentSavePath = path; };
 		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 
+	public function Save () {
+		if ( String.IsNullOrEmpty ( currentSavePath ) ) {
+			SaveAs ();
+		
+		} else {
+			OFWriter.SaveChildren ( serializedTransforms, currentSavePath );
+		
+		}
+	}
+
 	public function SaveAs () {
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Save;
-		fileBrowser.callback = function ( path : String ) {};
+		fileBrowser.callback = function ( path : String ) { currentSavePath = path; Save(); };
 		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
@@ -79,6 +91,20 @@ public class OEWorkspace extends MonoBehaviour {
 		picker.callback = callback;
 		picker.type = type;
 		OGRoot.GetInstance().GoToPage ( "Picker" );
+	}
+
+	public function GetObject ( id : String ) : OFSerializedObject {
+		var result : OFSerializedObject;
+		var allObjects : OFSerializedObject[] = this.GetComponentsInChildren.< OFSerializedObject >();
+
+		for ( var i : int = 0; i < allObjects.Length; i++ ) {
+			if ( allObjects[i].id == id ) {
+				result = allObjects[i];
+				break;
+			}
+		}
+
+		return result;
 	}
 
 	// Undo buffer
@@ -149,23 +175,40 @@ public class OEWorkspace extends MonoBehaviour {
 		return false;
 	}
 
-	public function SelectObject ( obj : OFSerializedObject ) {
-		var additive : boolean = Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift );
-
-		if ( !additive ) {
-			instance.selection.Clear ();
-		}
-
-		instance.selection.Add ( obj );
-
-		RefreshAll ();
+	public function SelectObject ( id : String ) {
+		SelectObject ( GetObject ( id ) );
 	}
 
-	// Create
-	public function CreateLight () {
+	public function SelectObject ( obj : OFSerializedObject ) {
+		if ( !obj ) {
+			ClearSelection ();
+		
+		} else {
+			var additive : boolean = Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift );
+
+			if ( !additive ) {
+				instance.selection.Clear ();
+			}
+
+			instance.selection.Add ( obj );
+
+			RefreshAll ();
+		
+		}
+	}
+
+	// Add
+	public function AddLight () {
 		
 	}
-	
+
+	// Delete
+	public function DeleteSelection () {
+		for ( var i : int = 0; i < selection.Count; i++ ) {
+			Destroy ( selection[i].gameObject );
+		}
+	}
+
 	// Instatiate
 	public function AddPrefab ( path : String, pos : Vector3 ) : OFSerializedObject {
 		var go : GameObject = Instantiate ( Resources.Load ( path ) ) as GameObject;
@@ -186,8 +229,16 @@ public class OEWorkspace extends MonoBehaviour {
 	// Duplicate
 	public function DuplicateSelection () {
 		for ( var i : int = 0; i < selection.Count; i++ ) {
-			Instantiate ( selection[i] );
+			var newObj : OFSerializedObject = Instantiate ( selection[i] );
+			newObj.transform.parent = selection[i].transform.parent;
+			newObj.transform.localPosition = selection[i].transform.localPosition;
+			newObj.transform.localRotation = selection[i].transform.localRotation;
+			newObj.transform.localScale = selection[i].transform.localScale;
+			newObj.gameObject.name = selection[i].gameObject.name;
+			newObj.RenewId ();
 		}
+
+		RefreshAll ();
 	}
 
 	// Focus
@@ -219,5 +270,15 @@ public class OEWorkspace extends MonoBehaviour {
 
 		}
 		
+		// Input
+		var ctrlOrCmd : boolean = Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.RightControl ) || Input.GetKey ( KeyCode.LeftCommand ) || Input.GetKey ( KeyCode.RightCommand );
+
+		if ( Input.GetKeyDown ( KeyCode.D ) && ctrlOrCmd ) {
+			DuplicateSelection ();
+		
+		} else if ( Input.GetKeyDown ( KeyCode.Delete ) || Input.GetKeyDown ( KeyCode.Backspace ) ) {
+			DeleteSelection ();
+
+		}	
 	}
 }

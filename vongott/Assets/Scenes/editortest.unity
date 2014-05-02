@@ -394,6 +394,7 @@ GameObject:
   - 20: {fileID: 139346420}
   - 81: {fileID: 139346419}
   - 114: {fileID: 139346422}
+  - 108: {fileID: 139346423}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -464,6 +465,42 @@ MonoBehaviour:
   materials:
     grid: {fileID: 2100000, guid: 754b60f0423dcc0408a9a03daa89a69f, type: 2}
     selection: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}
+    cursor: {fileID: 2100000, guid: f59966ddb6fa13240ab811615acbdc8f, type: 2}
+--- !u!108 &139346423
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 139346418}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
 --- !u!1 &153376602
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +594,7 @@ GameObject:
   - 4: {fileID: 170817629}
   - 114: {fileID: 170817630}
   m_Layer: 0
-  m_Name: drp_Create
+  m_Name: drp_Add
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -846,17 +883,12 @@ MonoBehaviour:
   isDirty: 0
   isAlwaysOnTop: 0
   root: {fileID: 1088966305}
-  title: Create
+  title: Add
   target: {fileID: 351795168}
   nestedOffset: -10
   submenu:
   - name: Light
-    message: 
-    tickable: 0
-    isTicked: 0
-    nestedMenu: []
-  - name: Redo
-    message: RedoLastAction
+    message: AddLight
     tickable: 0
     isTicked: 0
     nestedMenu: []
@@ -1232,6 +1264,8 @@ MonoBehaviour:
   gizmoPosition: {fileID: 652171075}
   gizmoRotation: {fileID: 1035447463}
   gizmoScale: {fileID: 1918293503}
+  serializedTransforms:
+  - {fileID: 1635873999}
   focusPoint: {x: 0, y: 0, z: 0}
   selection: []
 --- !u!4 &351795170
@@ -1244,7 +1278,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1053182958}
+  - {fileID: 1635873999}
   m_Father: {fileID: 0}
 --- !u!1 &353206098
 GameObject:
@@ -7777,7 +7811,7 @@ MonoBehaviour:
     height: 130
   mouseRct:
     serializedVersion: 2
-    x: 641
+    x: 385
     y: 468
     width: 250
     height: 130
@@ -8260,7 +8294,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 351795170}
+  m_Father: {fileID: 1635873999}
 --- !u!114 &1053182959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8384,7 +8418,7 @@ GameObject:
   - 20: {fileID: 1088966307}
   - 114: {fileID: 1088966305}
   m_Layer: 0
-  m_Name: Root
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12793,6 +12827,33 @@ Transform:
   - {fileID: 1749965559}
   - {fileID: 968923774}
   m_Father: {fileID: 733793659}
+--- !u!1 &1635873998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1635873999}
+  m_Layer: 0
+  m_Name: Actors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1635873999
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1635873998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1053182958}
+  m_Father: {fileID: 351795170}
 --- !u!1 &1637487256
 GameObject:
   m_ObjectHideFlags: 0
@@ -15774,7 +15835,7 @@ MonoBehaviour:
     height: 593
   mouseRct:
     serializedVersion: 2
-    x: 641
+    x: 385
     y: 5
     width: 250
     height: 593
@@ -16110,6 +16171,11 @@ MonoBehaviour:
     nestedMenu: []
   - name: Redo
     message: RedoLastAction
+    tickable: 0
+    isTicked: 0
+    nestedMenu: []
+  - name: Duplicate
+    message: DuplicateSelection
     tickable: 0
     isTicked: 0
     nestedMenu: []

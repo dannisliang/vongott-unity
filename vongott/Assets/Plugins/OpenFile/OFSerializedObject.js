@@ -84,9 +84,13 @@ public class OFSerializedObject extends MonoBehaviour {
 	public var prefabPath : String = "";
 	public var exportPath : String = "";
 
+	public function RenewId () {
+		id = System.Guid.NewGuid().ToString();
+	}
+
 	public function Start () {
 		if ( String.IsNullOrEmpty ( id ) ) {
-			id = System.Guid.NewGuid().ToString();
+			RenewId ();
 		}
 	}
 

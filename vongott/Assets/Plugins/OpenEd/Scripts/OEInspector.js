@@ -46,6 +46,7 @@ public class OEInspector extends MonoBehaviour {
 
 	public function Update () {
 		if ( selection.Length == 1 ) {
+			objectName.text = objectName.text.Replace ( "\n", "" );
 			selection[0].gameObject.name = objectName.text;
 		}
 	}

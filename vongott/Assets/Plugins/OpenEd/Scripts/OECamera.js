@@ -36,10 +36,9 @@ public class OECamera extends MonoBehaviour {
 
 			if ( meshFilter ) {
 				var mesh : Mesh = meshFilter.mesh;
-
-				GL.MultMatrix ( Matrix4x4.TRS ( go.transform.position, go.transform.rotation, go.transform.lossyScale ) );
+				var matrix : Matrix4x4 = Matrix4x4.TRS ( go.transform.position, go.transform.rotation, go.transform.lossyScale );
 				for ( var t : int = 0; t < mesh.triangles.Length; t++ ) {
-					GL.Vertex ( mesh.vertices[mesh.triangles[t]] );
+					GL.Vertex ( matrix.MultiplyPoint3x4 ( mesh.vertices[mesh.triangles[t]] ) );
 				}
 			}
 		}
@@ -81,30 +80,47 @@ public class OECamera extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage.name == "Home" && !OGRoot.GetInstance().isMouseOver ) {
+		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage.name == "Home" ) {
 			// Selection & focus
-			var hit : RaycastHit;
-				
-			if ( Input.GetMouseButtonDown ( 1 ) || Input.GetMouseButtonDown ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) ) {
-				if ( Physics.Raycast ( this.transform.position, this.transform.forward, hit, Mathf.Infinity ) ) {
-					OEWorkspace.GetInstance().SetFocus ( hit.point );
-				}
-			
-			} else if ( Input.GetMouseButtonDown ( 0 ) ) {
+			if ( !OGRoot.GetInstance().isMouseOver ) {
 				var ray : Ray = this.camera.ScreenPointToRay ( Input.mousePosition );
+					
+				if ( Input.GetMouseButtonDown ( 1 ) || Input.GetMouseButtonDown ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) ) {
+					var hit : RaycastHit;
+					
+					if ( Physics.Raycast ( ray, hit, Mathf.Infinity ) ) {
+						OEWorkspace.GetInstance().SetFocus ( hit.point );
+					}
 				
-				if ( Physics.Raycast ( ray, hit, Mathf.Infinity ) ) {
-					var obj : OFSerializedObject = hit.collider.gameObject.GetComponent.< OFSerializedObject > ();
+				} else if ( Input.GetMouseButtonDown ( 0 ) ) {
+					var hits : RaycastHit[] = Physics.RaycastAll ( ray, Mathf.Infinity );
+				
+					if ( hits.Length < 1 ) {
+						OEWorkspace.GetInstance().ClearSelection ();
+						return;
+					}
 
+					var obj : OFSerializedObject;
+					
+					for ( var i : int = 0; i < hits.Length; i++ ) {
+						var axis : OEGizmoAxis = hits[i].collider.gameObject.GetComponent.< OEGizmoAxis> (); 
+						var hitObj = hits[i].collider.gameObject.GetComponent.< OFSerializedObject > ();
+
+						if ( axis ) {	
+							axis.OnMouseDown ();
+							return;
+						
+						} else if ( hitObj ) {
+							obj = hitObj;
+						
+						}
+					}
+					
 					if ( obj ) {
 						OEWorkspace.GetInstance().SelectObject ( obj );
 					}
-				
-				} else {
-					OEWorkspace.GetInstance().ClearSelection ();
-
-				}
-			}		
+				}		
+			}
 
 			// Pan
 			if ( Input.GetMouseButton ( 2 ) || Input.GetMouseButton ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) && Input.GetKey ( KeyCode.LeftShift ) ) {
@@ -124,7 +140,7 @@ public class OECamera extends MonoBehaviour {
 				transform.rotation = Quaternion.LookRotation ( target - this.transform.position );
 
 			// Zoom
-			} else {
+			} else if ( !OGRoot.GetInstance().isMouseOver ) {
 				var translation = Input.GetAxis("Mouse ScrollWheel");
 				var speed : float = 10;			
 

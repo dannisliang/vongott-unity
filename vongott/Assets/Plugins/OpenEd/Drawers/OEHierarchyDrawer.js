@@ -4,13 +4,14 @@ public class OEHierarchyDrawer extends OEDrawer {
 	public var scrollview : Transform;
 
 	private var yOffset : float;
+	private var updateNames : Dictionary.< GameObject, OGListItem > = new Dictionary.< GameObject, OGListItem > ();
 
 	public function Traverse ( node : Transform, xOffset : float ) {
 		for ( var i : int = 0; i < node.childCount; i++ ) {
 			var n : String = node.GetChild ( i ).gameObject.name;
 			var li : OGListItem = new GameObject ( n ).AddComponent.< OGListItem > ();
 
-			li.text = n;
+			updateNames.Add ( node.GetChild ( i ).gameObject, li );
 			li.ApplyDefaultStyles ();
 
 			li.transform.parent = scrollview;
@@ -19,12 +20,27 @@ public class OEHierarchyDrawer extends OEDrawer {
 
 			yOffset += 20;
 
-			li.isTicked = OEWorkspace.GetInstance().IsSelected ( node.GetChild(i).GetComponent.< OFSerializedObject >() );
-			li.func = function () {
-				OEWorkspace.GetInstance().SelectObject ( node.GetChild(i).GetComponent.< OFSerializedObject >() );
-			}; // THIS WON'T WORK
+			var obj : OFSerializedObject = node.GetChild(i).GetComponent.< OFSerializedObject >();
+			li.isTicked = OEWorkspace.GetInstance().IsSelected ( obj );
+			
+			li.target = OEWorkspace.GetInstance().gameObject;
+		       	
+			if ( obj ) {
+				li.message = "SelectObject";
+				li.argument = obj.id;
+			
+			} else {
+				li.message = "ClearSelection";
+	
+			}
 
 			Traverse ( node.GetChild ( i ), xOffset + 20 );
+		}
+	}
+
+	public function Update () {
+		for ( var kvp : KeyValuePair.< GameObject, OGListItem > in updateNames ) {
+			kvp.Value.text = kvp.Key.name;
 		}
 	}
 

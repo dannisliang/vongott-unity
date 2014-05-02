@@ -147,7 +147,7 @@ public class OEFileBrowser extends OGPage {
 
 	public function Open () {
 		if ( callback && selectedFile ) {
-			callback ( selectedFile );
+			callback ( selectedFile, openPath );
 			OGRoot.GetInstance().GoToPage ( sender );
 		
 		} else {

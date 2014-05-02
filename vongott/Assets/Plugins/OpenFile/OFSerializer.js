@@ -18,7 +18,31 @@ public class OFSerializer {
 
 		return false;
 	}
+
+	public static function SerializeChildren ( input : Transform ) : JSONObject {
+		return SerializeChildren ( [ input ] );
+	}
+
+	public static function SerializeChildren ( input : Transform[] ) : JSONObject {
+		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 	
+		for ( var i : int = 0; i < input.Length; i++ ) {
+			var t : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+	
+			for ( var o : int = 0; o < input[i].childCount; o++ ) {
+				var obj : OFSerializedObject = input[i].GetChild ( o ).GetComponent.< OFSerializedObject > ();
+
+				if ( obj ) {
+					t.Add ( Serialize ( obj ) );
+				}
+			}
+
+			output.AddField ( input[i].gameObject.name, t );
+		}
+
+		return output;
+	}
+
 	public static function Serialize ( input : OFSerializedObject ) : JSONObject {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 		var components : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
@@ -67,6 +91,9 @@ public class OFSerializer {
 		
 		} else if ( input.GetType() == typeof ( OSItem ) ) {
 			output = Serialize ( input as OSItem );
+		
+		} else if ( input.GetType() == typeof ( OACharacter ) ) {
+			output = Serialize ( input as OACharacter );
 		
 		}
 
@@ -253,6 +280,15 @@ public class OFSerializer {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 	
 		output.AddField ( "ammunition", input.ammunition.value );
+
+		return output;
+	}
+
+	// OACharacter
+	public static function Serialize ( input : OACharacter ) : JSONObject {
+		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+	
+		output.AddField ( "health", input.health );
 
 		return output;
 	}

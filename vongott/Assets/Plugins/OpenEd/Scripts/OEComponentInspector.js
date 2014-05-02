@@ -19,6 +19,10 @@ public class OEVector3Field {
 		var nx : float;
 		var ny : float; 
 		var nz : float;
+		
+		x.text = x.text.Replace ( "\n", "" );
+		y.text = y.text.Replace ( "\n", "" );
+		z.text = z.text.Replace ( "\n", "" );
 
 		float.TryParse ( x.text, nx );
 		float.TryParse ( y.text, ny );
@@ -89,6 +93,8 @@ public class OEFloatField {
 	public function Out () : float {
 		var value : float;
 
+		textfield.text = textfield.text.Replace ( "\n", "" );
+		
 		float.TryParse ( textfield.text, value );
 		
 		return value;
@@ -104,6 +110,8 @@ public class OEIntField {
 
 	public function Out () : int {
 		var value : int;
+		
+		textfield.text = textfield.text.Replace ( "\n", "" );
 
 		int.TryParse ( textfield.text, value );
 		
@@ -119,6 +127,8 @@ public class OETextField {
 	}
 
 	public function Out () : String {
+		textfield.text = textfield.text.Replace ( "\n", "" );
+		
 		return textfield.text;
 	}	
 }

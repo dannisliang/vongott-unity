@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: editor_gizmo_z
+  m_Name: grid
   m_Shader: {fileID: 4800000, guid: 8876f1ca13186044bb9de3dc92be043e, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
@@ -44,7 +44,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0, g: 0, b: 1, a: 1}
+        second: {r: .41911763, g: .41911763, b: .41911763, a: .556862772}
       data:
         first:
           name: _LineColor

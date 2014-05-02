@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: editor_selection
+  m_Name: selection
   m_Shader: {fileID: 4800000, guid: 155e0a880b13cfd46b4e140684753fd2, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
@@ -37,20 +37,20 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Outline
-        second: .00999999791
+          name: _LineWidth
+        second: .100000001
       data:
         first:
           name: _RimPower
         second: 1.70777202
       data:
         first:
-          name: _LineWidth
-        second: .100000001
-      data:
-        first:
           name: _Glossiness
         second: .430051804
+      data:
+        first:
+          name: _Outline
+        second: .00999999791
       data:
         first:
           name: _LinesSize
@@ -66,14 +66,6 @@ Material:
         second: {r: .533333361, g: .815686285, b: 1, a: .470588237}
       data:
         first:
-          name: _OutlineColor
-        second: {r: 0, g: .478431374, b: 1, a: 1}
-      data:
-        first:
-          name: _RimColor
-        second: {r: 0, g: .709803879, b: 1, a: 1}
-      data:
-        first:
           name: _LineColor
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
@@ -86,8 +78,16 @@ Material:
         second: {r: 0, g: 0, b: 0, a: 1}
       data:
         first:
+          name: _RimColor
+        second: {r: 0, g: .709803879, b: 1, a: 1}
+      data:
+        first:
           name: _SpecularColor
         second: {r: .300699413, g: 1, b: 0, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 0, g: .478431374, b: 1, a: 1}
       data:
         first:
           name: _LinesColor
