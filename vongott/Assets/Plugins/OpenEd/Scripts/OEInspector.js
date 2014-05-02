@@ -41,7 +41,6 @@ public class OEInspector extends MonoBehaviour {
 	}
 
 	public function Start () {
-		SetActive ( false );
 	}
 
 	public function Update () {
@@ -63,8 +62,6 @@ public class OEInspector extends MonoBehaviour {
 		selection = list.ToArray ();
 
 		if ( selection.Length == 1 ) {
-			SetActive ( true );
-
 			transformInspector.Init ( selection[0] );
 			objectName.text = selection[0].gameObject.name;
 
@@ -83,12 +80,16 @@ public class OEInspector extends MonoBehaviour {
 			componentSwitch.options = tmpStrings.ToArray ();
 
 			if ( componentSwitch.options.Length > 0 ) {
+				componentSwitch.gameObject.SetActive ( true );
 				componentSwitch.selectedOption = componentSwitch.options[0];
 				SelectComponent ( componentSwitch.selectedOption );
+			
+			} else {
+				componentSwitch.gameObject.SetActive ( false );
+			
 			}
 		
 		} else {
-			SetActive ( false );
 			componentSwitch.selectedOption = "";
 
 		}

@@ -56,13 +56,14 @@ public class OEPrefabsDrawer extends OEDrawer {
 	
 		subdirSwitch.selectedOption = "";
 		subdirSwitch.options = currentFolder.GetSubfolderNames();
+		subdirSwitch.gameObject.SetActive ( subdirSwitch.options.Length > 0 );
 		foldername.text = fullPath;
 
 		var objects : Object [] = OEFileSystem.GetResources ( fullPath, typeof ( OFSerializedObject ) ); 
 
 		var offset : Vector2;
-		var width : float = Screen.width - 332 - 20;
-		var size : float = 80;
+		var width : float = Screen.width - 12;
+		var size : float = 100;
 		var spacing : float = 10;
 
 		for ( var i : int = 0; i < objects.Length; i++ ) {
@@ -107,7 +108,7 @@ public class OEPrefabsDrawer extends OEDrawer {
 		
 		fullPath = "";
 
-		for ( var i : int = 1; i < strings.Length - 1; i++ ) {
+		for ( var i : int = 0; i < strings.Length - 1; i++ ) {
 			if ( i > 1 ) {
 				fullPath += "/";
 			}

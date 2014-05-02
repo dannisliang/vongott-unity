@@ -5,11 +5,13 @@ public class OECamera extends MonoBehaviour {
 		public var grid : Material;
 		public var selection : Material;
 		public var cursor : Material;
+		public var light : Material;
 	}
 	
 	public var rotateSensitivity : Vector2 = new Vector2 ( 5, 5 );
 	public var panSensitivity : Vector2 = new Vector2 ( 0.2, 0.2 );
 	public var materials : Materials;
+	public var lights : Light [] = new Light[0];
 
 	private function DrawGrid () {
 		GL.Begin ( GL.LINES );
@@ -63,6 +65,39 @@ public class OECamera extends MonoBehaviour {
 		GL.End ();
 	}
 
+	private function DrawLights () {
+		GL.Begin ( GL.QUADS );
+		materials.light.SetPass ( 0 );
+		
+		for ( var i : int = 0; i < lights.Length; i++ ) {
+			var t : Transform = lights[i].transform;
+			var right : Vector3 = this.transform.right * 0.25;
+			var left : Vector3  = -right;
+			var up : Vector3 = this.transform.up * 0.25;
+			var down : Vector3 = -up;
+
+			if ( t != this.transform ) {
+				// Bottom Left
+				GL.TexCoord2 ( 0, 0 );
+				GL.Vertex ( t.position + left + down );
+				
+				// Top left
+				GL.TexCoord2 ( 0, 1 );
+				GL.Vertex ( t.position + left + up );
+				
+				// Top right
+				GL.TexCoord2 ( 1, 1 );
+				GL.Vertex ( t.position + right + up );
+				
+				// Bottom right
+				GL.TexCoord2 ( 1, 0 );
+				GL.Vertex ( t.position + right + down );
+			}
+		}
+
+		GL.End ();
+	}
+
 	public function OnPostRender () {
 		GL.PushMatrix ();
 		
@@ -74,6 +109,10 @@ public class OECamera extends MonoBehaviour {
 
 		if ( materials.selection && OEWorkspace.GetInstance().selection.Count > 0 ) {
 			DrawSelection ();
+		}
+
+		if ( lights.Length > 0 ) {
+			DrawLights ();
 		}
 
 		GL.PopMatrix ();

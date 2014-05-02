@@ -72,7 +72,7 @@ public class OEGizmo extends MonoBehaviour {
 				break;
 			
 			case OEGizmoAxis.Axis.Z:
-				delta.z = dy;
+				delta.z = dx;
 				break;
 		}
 		
@@ -104,8 +104,8 @@ public class OEGizmo extends MonoBehaviour {
 	}
 
 	public function Update () {
-		this.transform.localScale = new Vector3 ( 0.1, 0.1, 0.1 ) * Vector3.Distance ( Camera.main.transform.position, this.transform.position );
-		
+		this.transform.localScale = new Vector3 ( 0.075, 0.075, 0.075 ) * Vector3.Distance ( Camera.main.transform.position, this.transform.position );
+	
 		if ( following ) {
 			this.transform.position = GetAveragePosition ();
 		}

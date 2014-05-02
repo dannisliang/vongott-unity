@@ -114,7 +114,7 @@ Transform:
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 50, y: 5, z: 0}
-  m_LocalScale: {x: 144, y: 20, z: 1}
+  m_LocalScale: {x: 200, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
 --- !u!4 &400006
@@ -161,7 +161,7 @@ MonoBehaviour:
     y: 0
   anchor:
     x: 3
-    xOffset: -280
+    xOffset: -20
     y: 0
     yOffset: 0
   stretch:
@@ -497,7 +497,7 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -617,7 +617,7 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -725,7 +725,7 @@ MonoBehaviour:
   stretch:
     width: 1
     widthFactor: 1
-    widthOffset: -332
+    widthOffset: -72
     height: 2
     heightFactor: 1
     heightOffset: -110
@@ -1002,6 +1002,16 @@ MonoBehaviour:
       subfolders:
       - name: City
         subfolders: []
+    - name: Fences
+      subfolders: []
+    - name: Furniture
+      subfolders: []
+    - name: Interfaces
+      subfolders: []
+    - name: Obstructions
+      subfolders: []
+    - name: Vehicles
+      subfolders: []
   subdirSwitch: {fileID: 11400002}
   scrollview: {fileID: 400006}
   foldername: {fileID: 11400000}

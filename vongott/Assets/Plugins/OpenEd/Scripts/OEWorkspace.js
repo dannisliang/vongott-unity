@@ -34,6 +34,7 @@ public class OEUndoAction {
 public class OEWorkspace extends MonoBehaviour {
 	public var inspector : OEInspector;
 	public var picker : OEPicker;
+	public var cam : OECamera;
 	public var fileBrowser : OEFileBrowser;
 	public var toolbar : OEToolbar;
 	public var transformMode : OETransformMode;
@@ -59,6 +60,7 @@ public class OEWorkspace extends MonoBehaviour {
 	public function RefreshAll () {
 		inspector.Refresh ( selection );
 		toolbar.Refresh ();
+		cam.lights = this.GetComponentsInChildren.< Light >();
 	}
 
 	// File I/O
@@ -197,9 +199,21 @@ public class OEWorkspace extends MonoBehaviour {
 		}
 	}
 
+	// Place
+	public function PlaceAtCursor ( t : Transform ) {
+		var prevScale : Vector3 = t.localScale;
+		
+		t.parent = this.transform;
+		t.position = focusPoint;
+		t.localScale = prevScale;
+	}
+
 	// Add
 	public function AddLight () {
+		var go : GameObject = new GameObject ( "Light", Light, OFSerializedObject, SphereCollider );
+		PlaceAtCursor ( go.transform );
 		
+		RefreshAll ();
 	}
 
 	// Delete
@@ -279,6 +293,9 @@ public class OEWorkspace extends MonoBehaviour {
 		} else if ( Input.GetKeyDown ( KeyCode.Delete ) || Input.GetKeyDown ( KeyCode.Backspace ) ) {
 			DeleteSelection ();
 
-		}	
+		}
+
+		// Inspector visibility
+		inspector.SetActive ( selection.Count == 1 && ( toolbar.collapsed || !toolbar.stretched ) );	
 	}
 }

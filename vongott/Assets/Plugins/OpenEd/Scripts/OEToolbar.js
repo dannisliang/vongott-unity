@@ -76,7 +76,7 @@ public class OEToolbar extends MonoBehaviour {
 		} else {
 			if ( stretched ) {
 				background.GetComponent.< OGSlicedSprite > ().stretch.width = ScreenSize.ScreenWidth;
-				background.GetComponent.< OGSlicedSprite > ().stretch.widthOffset = -270;
+				background.GetComponent.< OGSlicedSprite > ().stretch.widthOffset = -10;
 			
 			} else {
 				background.GetComponent.< OGSlicedSprite > ().stretch.width = ScreenSize.None;
