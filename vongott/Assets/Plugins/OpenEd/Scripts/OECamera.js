@@ -77,21 +77,18 @@ public class OECamera extends MonoBehaviour {
 			var down : Vector3 = -up;
 
 			if ( t != this.transform ) {
-				// Bottom Left
+				GL.Color ( lights[i].color );
+				
 				GL.TexCoord2 ( 0, 0 );
 				GL.Vertex ( t.position + left + down );
-				
-				// Top left
 				GL.TexCoord2 ( 0, 1 );
 				GL.Vertex ( t.position + left + up );
-				
-				// Top right
 				GL.TexCoord2 ( 1, 1 );
 				GL.Vertex ( t.position + right + up );
-				
-				// Bottom right
 				GL.TexCoord2 ( 1, 0 );
 				GL.Vertex ( t.position + right + down );
+
+				GL.Color ( Color.white );
 			}
 		}
 
