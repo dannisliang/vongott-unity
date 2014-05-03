@@ -56,6 +56,8 @@ MonoBehaviour:
     subcategories:
     - Mechanical
     - Biological
+  - id: Wallet
+    subcategories: []
   attributes:
   - id: fireRate
     name: Fire Rate
@@ -96,6 +98,9 @@ MonoBehaviour:
   - id: distance
     name: Distance
     suffix: meters
+  - id: creditAmount
+    name: Credit amount
+    suffix: 
   currencies:
   - name: Credits
     image: {fileID: 0}

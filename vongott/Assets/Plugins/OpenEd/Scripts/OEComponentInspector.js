@@ -38,6 +38,50 @@ public class OEVector3Field {
 	}
 }
 
+public class OEColorField {
+	public var r : OGTextField;
+	public var g : OGTextField;
+	public var b : OGTextField;
+	public var a : OGTextField;
+
+	public function get listening () : boolean {
+		return r.listening || g.listening || b.listening || a.listening;
+	}
+
+	public function In ( c : Color ) {
+		r.text = ( Mathf.Round ( c.r * 1000 ) / 1000 ).ToString();
+		g.text = ( Mathf.Round ( c.g * 1000 ) / 1000 ).ToString();
+		b.text = ( Mathf.Round ( c.b * 1000 ) / 1000 ).ToString();
+		a.text = ( Mathf.Round ( c.a * 1000 ) / 1000 ).ToString();
+	}
+
+	public function Out () : Color {
+		var nr : float;
+		var ng : float; 
+		var nb : float;
+		var na : float;
+		
+		r.text = r.text.Replace ( "\n", "" );
+		g.text = g.text.Replace ( "\n", "" );
+		b.text = b.text.Replace ( "\n", "" );
+		a.text = a.text.Replace ( "\n", "" );
+
+		float.TryParse ( r.text, nr );
+		float.TryParse ( g.text, ng );
+		float.TryParse ( b.text, nb );
+		float.TryParse ( a.text, na );
+
+		return new Color ( nr, ng, nb, na );
+	}
+
+	public function Clear () {
+		r.text = "0";
+		g.text = "0";
+		b.text = "0";
+		a.text = "0";
+	}
+}
+
 public class OEObjectField {
 	public var button : OGButton;
 
@@ -80,6 +124,32 @@ public class OEPopup {
 		}
 		
 		return 0;
+	}	
+}
+
+public class OESlider {
+	public var slider : OGSlider;
+
+	private var min : float;
+	private var max : float;
+	
+	private function CalcValue ( value : float ) : float {
+		return ( ( max - min ) * value ) + min;
+	}
+
+	private function CalcValuePercent ( value : float ) : float {
+		return ( value - min ) / ( max - min );
+	}
+
+	public function In ( value : float, min : float, max : float ) {
+		this.min = min;
+		this.max = max;
+
+		slider.sliderValue = CalcValuePercent ( value );
+	}
+
+	public function Out () : float {
+		return CalcValue ( slider.sliderValue );
 	}	
 }
 

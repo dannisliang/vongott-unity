@@ -52,7 +52,7 @@ public class OACharacterInspector extends Editor {
 			
 			character.convoRootNode = EditorGUILayout.Popup ( "Starting root node", character.convoRootNode, rootNodeStrings );	
 	
-			if ( character.convoSpeakers.Length != character.conversationTree.speakers.Length ) {
+			if ( !character.gameObject.activeInHierarchy || character.convoSpeakers.Length != character.conversationTree.speakers.Length ) {
 				character.convoSpeakers = new GameObject [ character.conversationTree.speakers.Length ];
 			}
 

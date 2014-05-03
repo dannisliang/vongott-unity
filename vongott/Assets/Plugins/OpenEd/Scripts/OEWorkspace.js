@@ -32,13 +32,20 @@ public class OEUndoAction {
 }
 
 public class OEWorkspace extends MonoBehaviour {
+	private class PreferredParent {
+		public var type : OFFieldType;
+		public var parent : Transform;
+	}
+	
 	public var cam : OECamera;
 	public var fileBrowser : OEFileBrowser;
 	public var inspector : OEInspector;
 	public var picker : OEPicker;
 	public var previewCamera : OEPreviewCamera;
 	public var toolbar : OEToolbar;
+	public var currentMap : String = "";
 	
+	public var preferredParents : PreferredParent[];
 	public var transformMode : OETransformMode;
 	public var gizmoPosition : OEGizmo;
 	public var gizmoRotation : OEGizmo;
@@ -202,19 +209,33 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 
 	// Place
-	public function PlaceAtCursor ( t : Transform ) {
-		var prevScale : Vector3 = t.localScale;
+	public function PlaceAtCursor ( obj : OFSerializedObject ) {
+		var prevScale : Vector3 = obj.transform.localScale;
 		
-		t.parent = this.transform;
-		t.position = focusPoint;
-		t.localScale = prevScale;
+		obj.transform.parent = GetPreferredParent ( obj );
+		obj.transform.position = focusPoint;
+		obj.transform.localScale = prevScale;
 	}
 
 	// Add
+	public function GetPreferredParent ( obj : OFSerializedObject ) : Transform {
+		for ( var i : int = 0; i < preferredParents.Length; i++ ) {
+			if ( obj.HasFieldType ( preferredParents[i].type ) ) {
+				return preferredParents[i].parent;
+			}
+		}
+
+		return this.transform;
+	}
+	
 	public function AddLight () {
-		var go : GameObject = new GameObject ( "Light", Light, OFSerializedObject, SphereCollider );
-		PlaceAtCursor ( go.transform );
+		var obj : OFSerializedObject = new GameObject ( "Light", Light, SphereCollider ).AddComponent.< OFSerializedObject > ();
 		
+		obj.SetField ( "Light", obj.GetComponent.< Light > () );
+		PlaceAtCursor ( obj );
+	
+		SelectObject ( obj );
+
 		RefreshAll ();
 	}
 
@@ -223,6 +244,8 @@ public class OEWorkspace extends MonoBehaviour {
 		for ( var i : int = 0; i < selection.Count; i++ ) {
 			Destroy ( selection[i].gameObject );
 		}
+
+		selection.Clear ();
 	}
 
 	// Instatiate
@@ -247,6 +270,8 @@ public class OEWorkspace extends MonoBehaviour {
 			obj = go.GetComponent.< OFSerializedObject > ();
 
 			go.name = go.name.Replace ( "(Clone)", "" );
+
+			SelectObject ( obj );
 		}
 
 		return obj;

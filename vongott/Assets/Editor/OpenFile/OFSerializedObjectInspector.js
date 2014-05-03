@@ -46,13 +46,16 @@ public class OFSerializedObjectInspector extends Editor {
 		}
 
 		// Resource
+		EditorGUILayout.Space ();
 		EditorGUILayout.LabelField ( "Resource", EditorStyles.boldLabel );
 		
 		EditorGUILayout.BeginHorizontal ();
 
 		EditorGUILayout.TextField ( "Path", obj.prefabPath );
 
-		if ( !inScene ) {
+		var item : OSItem = obj.GetComponent.< OSItem > ();
+
+		if ( !inScene && !item ) {
 			GUI.backgroundColor = Color.green;
 			if ( GUILayout.Button ( "Update", GUILayout.Width ( 60 ) ) ) {
 				var path : String = AssetDatabase.GetAssetPath ( obj.gameObject );
@@ -70,7 +73,11 @@ public class OFSerializedObjectInspector extends Editor {
 				}
 			}
 			GUI.backgroundColor = Color.white;
-		}
+		
+		} else if ( item ) {
+			obj.prefabPath = item.prefabPath;
+
+		}	
 
 		EditorGUILayout.EndHorizontal ();
 

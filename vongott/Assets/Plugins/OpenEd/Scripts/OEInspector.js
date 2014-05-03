@@ -67,13 +67,11 @@ public class OEInspector extends MonoBehaviour {
 
 			var tmpStrings : List.< String > = new List.< String > ();
 
-			for ( var i : int = 0; i < selection.Length; i++ ) {
-				var obj : OFSerializedObject = selection[i];
-				
-				for ( var f : int = 0; f < obj.fields.Length; f++ ) {
-					if ( obj.fields[f].component && obj.fields[f].name != "Transform" && IsComponentSupported ( obj.fields[f].name ) ) {
-						tmpStrings.Add ( obj.fields[f].name );
-					}
+			var obj : OFSerializedObject = selection[0];
+			
+			for ( var f : int = 0; f < obj.fields.Length; f++ ) {
+				if ( obj.fields[f].component && obj.fields[f].name != "Transform" && IsComponentSupported ( obj.fields[f].name ) ) {
+					tmpStrings.Add ( obj.fields[f].name );
 				}
 			}
 

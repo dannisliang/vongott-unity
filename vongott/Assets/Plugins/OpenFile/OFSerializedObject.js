@@ -1,27 +1,29 @@
 ﻿#pragma strict
+#pragma downcast
 
 public enum OFFieldType {
 	// System types
-	None,	
+	None = 0,	
 	Boolean,
 	Float,
 	Int,
 	String,
 	
 	// Unity structs
-	Rect,
+	Rect = 100,
 	Quaternion,
 	Vector3,
 	Vector2,
 	Color,
 
 	// Component types
-	Animator,
+	Animator = 200,
 	Component,
+	Light,
 	Transform,
 
 	// OpenTools types
-	OACharacter,
+	OACharacter = 300,
 	OCTree,
 	OPPathFinder,
 	OSInventory,
@@ -42,8 +44,15 @@ public class OFField {
 	public var color : Color;
 	public var component : Component;
 
+	public static function GetComponentType ( value : Component ) : int {
+		var strings : String [] = System.Enum.GetNames ( OFFieldType );
+		var type : String = value.GetType().ToString().Replace ( "UnityEngine.", "" ); 
+		
+		return System.Enum.Parse ( typeof ( OFFieldType ), type );
+	}
+
 	public function Set ( value : Component ) {
-		type = OFFieldType.Component;
+		type = GetComponentType ( value );
 		component = value;
 	}
 	
@@ -116,6 +125,16 @@ public class OFSerializedObject extends MonoBehaviour {
 		fields = tmpFields.ToArray ();
 	}
 	
+	public function HasFieldType ( type : OFFieldType ) : boolean {
+		for ( var i : int = 0; i < fields.Length; i++ ) {
+			if ( fields[i].type == type ) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 	public function HasField ( name : String ) : boolean {
 		for ( var i : int = 0; i < fields.Length; i++ ) {
 			if ( fields[i].name == name ) {
