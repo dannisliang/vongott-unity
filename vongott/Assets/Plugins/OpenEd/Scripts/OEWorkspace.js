@@ -226,7 +226,7 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 
 	// Instatiate
-	public function AddPrefab ( path : String, pos : Vector3 ) : OFSerializedObject {
+	public function AddPrefab ( path : String ) : OFSerializedObject {
 		var go : GameObject = Instantiate ( Resources.Load ( path ) ) as GameObject;
 		var obj : OFSerializedObject;
 		
@@ -235,8 +235,18 @@ public class OEWorkspace extends MonoBehaviour {
 
 			go.transform.parent = instance.transform;
 			go.transform.localScale = origScale;
+			go.transform.position = focusPoint;
+
+			var rb : Rigidbody = go.GetComponentInChildren.< Rigidbody > ();
+
+			if ( rb ) {
+				rb.isKinematic = true;
+				rb.useGravity = false;
+			}
 
 			obj = go.GetComponent.< OFSerializedObject > ();
+
+			go.name = go.name.Replace ( "(Clone)", "" );
 		}
 
 		return obj;

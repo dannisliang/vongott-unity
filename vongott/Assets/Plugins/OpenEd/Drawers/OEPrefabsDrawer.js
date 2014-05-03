@@ -171,6 +171,14 @@ public class OEPrefabsDrawer extends OEDrawer {
 		Populate ();
 	}
 
+	public function Add () {
+		if ( !String.IsNullOrEmpty ( selectedObject ) ) {
+			OEWorkspace.GetInstance().AddPrefab ( fullPath + "/" + selectedObject );
+	
+			OEWorkspace.GetInstance().toolbar.Clear ();
+		}
+	}
+
 	public function Start () {
 		if ( rootFolder.subfolders.Length > 0 ) {
 			currentFolder = rootFolder.subfolders[0];

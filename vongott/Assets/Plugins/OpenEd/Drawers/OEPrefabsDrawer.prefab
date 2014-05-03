@@ -106,7 +106,7 @@ GameObject:
   - 4: {fileID: 400012}
   - 114: {fileID: 11400012}
   m_Layer: 0
-  m_Name: btn_Place
+  m_Name: btn_Add
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1907,9 +1907,9 @@ MonoBehaviour:
   isAlwaysOnTop: 0
   root: {fileID: 0}
   hiddenString: 
-  text: Place
+  text: Add
   target: {fileID: 100000}
-  message: PlaceObject
+  message: Add
   argument: 
   argumentSource: {fileID: 0}
   argumentSourceField: 
