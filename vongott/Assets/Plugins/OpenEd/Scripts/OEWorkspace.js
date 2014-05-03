@@ -32,11 +32,13 @@ public class OEUndoAction {
 }
 
 public class OEWorkspace extends MonoBehaviour {
-	public var inspector : OEInspector;
-	public var picker : OEPicker;
 	public var cam : OECamera;
 	public var fileBrowser : OEFileBrowser;
+	public var inspector : OEInspector;
+	public var picker : OEPicker;
+	public var previewCamera : OEPreviewCamera;
 	public var toolbar : OEToolbar;
+	
 	public var transformMode : OETransformMode;
 	public var gizmoPosition : OEGizmo;
 	public var gizmoRotation : OEGizmo;

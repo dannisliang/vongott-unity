@@ -140,6 +140,8 @@ public class OFSerializedObjectInspector extends Editor {
 
 		EditorGUILayout.Space ();
 
+		EditorGUILayout.LabelField ( "File operations", EditorStyles.boldLabel );
+
 		EditorGUILayout.BeginHorizontal ();
 
 		obj.exportPath = EditorGUILayout.TextField ( obj.exportPath );
