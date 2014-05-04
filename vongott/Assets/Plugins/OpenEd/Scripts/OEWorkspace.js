@@ -104,7 +104,21 @@ public class OEWorkspace extends MonoBehaviour {
 		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 
-	public function GetObject ( id : String ) : OFSerializedObject {
+	public function PickPrefab ( callback : Function, type : System.Type ) {
+		var drawer : OEPrefabsDrawer = toolbar.OpenDrawer ( "Prefabs" ) as OEPrefabsDrawer;
+
+		if ( drawer ) {
+			drawer.SetPicker ( callback, type );
+		}
+	}
+
+	public function PickFile ( callback : Function, type : System.Type ) {
+		fileBrowser.callback = callback;
+		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
+	}
+
+	// Searching
+	public function FindObject ( id : String ) : OFSerializedObject {
 		var result : OFSerializedObject;
 		var allObjects : OFSerializedObject[] = this.GetComponentsInChildren.< OFSerializedObject >();
 
@@ -187,7 +201,7 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 
 	public function SelectObject ( id : String ) {
-		SelectObject ( GetObject ( id ) );
+		SelectObject ( FindObject ( id ) );
 	}
 
 	public function SelectObject ( obj : OFSerializedObject ) {

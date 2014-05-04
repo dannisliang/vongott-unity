@@ -30,7 +30,7 @@ public class OEToolbar extends MonoBehaviour {
 		return null;
 	}
 
-	public function OpenDrawer ( name : String ) {
+	public function OpenDrawer ( name : String ) : OEDrawer {
 		if ( currentDrawer != name ) {
 			Clear ();
 			
@@ -50,10 +50,13 @@ public class OEToolbar extends MonoBehaviour {
 			}
 
 			currentDrawer = name;
+
+			return drawer;
 		
 		} else {
 			Clear ();
-		
+			return null;
+
 		}
 	}	
 

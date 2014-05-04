@@ -9,44 +9,30 @@ public class OETransformInspector extends OEComponentInspector {
 		if ( target ) {
 			var t : Transform = target.transform;
 
-			if ( position.listening ) {
-				t.localPosition = position.Out ();
-			} else {
-				position.In ( t.localPosition );
-			}
-
-			if ( rotation.listening ) {
-				t.localEulerAngles = rotation.Out ();
-			} else {
-				rotation.In ( t.localEulerAngles );
-			}
-
-			if ( scale.listening ) {
-				t.localScale = scale.Out ();
-			} else {
-				scale.In ( t.localScale );
-			}
+			t.localPosition = position.Set ( t.localPosition );
+			t.localEulerAngles = rotation.Set ( t.localEulerAngles );
+			t.localScale = scale.Set ( t.localScale );
 		}
 	}
 
 	public function ResetPosition () {
 		if ( target ) {
 			var t : Transform = target.transform;
-			t.localPosition = position.Out ();
+			t.localPosition = Vector3.zero;
 		}
 	}
 	
 	public function ResetRotation () {
 		if ( target ) {
 			var t : Transform = target.transform;
-			t.localEulerAngles = rotation.Out ();
+			t.localEulerAngles = Vector3.zero;
 		}
 	}
 	
 	public function ResetScale () {
 		if ( target ) {
 			var t : Transform = target.transform;
-			t.localScale = scale.Out ();
+			t.localScale = Vector3.one;
 		}
 	}
 }

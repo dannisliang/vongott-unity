@@ -7,23 +7,13 @@ public class OELightInspector extends OEComponentInspector {
 	public var intensity : OESlider;
 	public var shadowType : OEPopup;
 
-	override function In () {
+	override function Update () {
 		var light : Light = target.GetComponent.< Light >();
 
-		lightType.In ( light.type, System.Enum.GetNames ( typeof ( LightType ) ) );
-		range.In ( light.range );
-		color.In ( light.color );
-		intensity.In ( light.intensity, 0, 8 );
-		shadowType.In ( light.shadows, System.Enum.GetNames ( typeof ( LightShadows ) ) );
-	}	
-	
-	override function Out () {
-		var light : Light = target.GetComponent.< Light >();
-
-		light.type = lightType.Out ();
-		light.range = range.Out ();
-	       	light.color = color.Out ();
-		light.intensity = intensity.Out ();
-		light.shadows = shadowType.Out ();
+		light.type = lightType.Set ( light.type, System.Enum.GetNames ( typeof ( LightType ) ) );
+		light.range = range.Set ( light.range );
+		light.color = color.Set ( light.color );
+		light.intensity = intensity.Set ( light.intensity, 0, 8 );
+		light.shadows = shadowType.Set ( light.shadows, System.Enum.GetNames ( typeof ( LightShadows ) ) );
 	}	
 }

@@ -49,6 +49,7 @@ public class OEPrefabsDrawer extends OEDrawer {
 	private var currentParent : Folder;
 	private var fullPath : String;
 	private var selectedObject : String = "";
+	private var typeFilter : System.Type;
 
 	public function Clear () {
 		for ( var i : int = 0; i < scrollview.childCount; i++ ) {
@@ -64,6 +65,15 @@ public class OEPrefabsDrawer extends OEDrawer {
 		selectedObject = n;
 		objectName.text = selectedObject;
 		placeButton.gameObject.SetActive ( true );
+	}
+
+	public function SetPicker ( callback : Function, type : System.Type ) {
+		typeFilter = type;
+		Populate ();
+
+		placeButton.func = function () {
+			callback ( Resources.Load ( fullPath + "/" + selectedObject ) );	
+		};
 	}
 
 	public function Populate () {
@@ -184,6 +194,7 @@ public class OEPrefabsDrawer extends OEDrawer {
 			currentFolder = rootFolder.subfolders[0];
 			fullPath = rootFolder.name + "/" + currentFolder.name;
 			Populate ();
+			placeButton.func = null;
 		
 		} else {
 			Debug.LogError ( "OEPrefabsDrawer | Root folder has no children" );

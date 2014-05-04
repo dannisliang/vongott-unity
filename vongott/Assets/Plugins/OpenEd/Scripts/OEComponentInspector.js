@@ -1,6 +1,22 @@
 ﻿#pragma strict
 
-public class OEVector3Field {
+public class OEField {
+	public var timer : float = 0;
+
+	public function get canSet () : boolean {
+		if ( timer <= 0 ) {
+			timer = 0.5;
+			return true;
+		
+		} else {
+			timer -= Time.deltaTime;
+			return false;
+		
+		}
+	}
+}
+
+public class OEVector3Field extends OEField {
 	public var x : OGTextField;
 	public var y : OGTextField;
 	public var z : OGTextField;
@@ -9,10 +25,14 @@ public class OEVector3Field {
 		return x.listening || y.listening || z.listening;
 	}
 
-	public function In ( v : Vector3 ) {
-		x.text = ( Mathf.Round ( v.x * 1000 ) / 1000 ).ToString();
-		y.text = ( Mathf.Round ( v.y * 1000 ) / 1000 ).ToString();
-		z.text = ( Mathf.Round ( v.z * 1000 ) / 1000 ).ToString();
+	public function Set ( v : Vector3 ) : Vector3 {
+		if ( !listening ) {
+			x.text = ( Mathf.Round ( v.x * 1000 ) / 1000 ).ToString();
+			y.text = ( Mathf.Round ( v.y * 1000 ) / 1000 ).ToString();
+			z.text = ( Mathf.Round ( v.z * 1000 ) / 1000 ).ToString();
+		}
+
+		return Out();
 	}
 
 	public function Out () : Vector3 {
@@ -30,15 +50,9 @@ public class OEVector3Field {
 
 		return new Vector3 ( nx, ny, nz );
 	}
-
-	public function Clear () {
-		x.text = "";
-		y.text = "";
-		z.text = "";
-	}
 }
 
-public class OEColorField {
+public class OEColorField extends OEField {
 	public var r : OGTextField;
 	public var g : OGTextField;
 	public var b : OGTextField;
@@ -48,11 +62,15 @@ public class OEColorField {
 		return r.listening || g.listening || b.listening || a.listening;
 	}
 
-	public function In ( c : Color ) {
-		r.text = ( Mathf.Round ( c.r * 1000 ) / 1000 ).ToString();
-		g.text = ( Mathf.Round ( c.g * 1000 ) / 1000 ).ToString();
-		b.text = ( Mathf.Round ( c.b * 1000 ) / 1000 ).ToString();
-		a.text = ( Mathf.Round ( c.a * 1000 ) / 1000 ).ToString();
+	public function Set ( c : Color ) : Color {
+		if ( canSet && !listening ) {
+			r.text = ( Mathf.Round ( c.r * 1000 ) / 1000 ).ToString();
+			g.text = ( Mathf.Round ( c.g * 1000 ) / 1000 ).ToString();
+			b.text = ( Mathf.Round ( c.b * 1000 ) / 1000 ).ToString();
+			a.text = ( Mathf.Round ( c.a * 1000 ) / 1000 ).ToString();
+		}
+
+		return Out ();
 	}
 
 	public function Out () : Color {
@@ -73,28 +91,49 @@ public class OEColorField {
 
 		return new Color ( nr, ng, nb, na );
 	}
-
-	public function Clear () {
-		r.text = "0";
-		g.text = "0";
-		b.text = "0";
-		a.text = "0";
-	}
 }
 
-public class OEObjectField {
+public class OEObjectField extends OEField {
+	public enum Target {
+		Scene,
+		Prefab,
+		File
+	}
+	
 	public var button : OGButton;
 
 	private var obj : Object;
+	private var target : Target;
 
-	public function In ( obj : Object, type : System.Type ) {
-		this.obj = obj;
-		
-		button.func = function () {
-			OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
-				this.obj = picked;
-			}, type );
-		};
+	public function Set ( obj : Object, type : System.Type, target : Target ) : Object {
+		if ( canSet ) {
+			this.obj = obj;
+			this.target = target;
+			
+			button.func = function () {
+				switch ( target ) {
+					case Target.Scene:
+						OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
+							this.obj = picked;
+						}, type );
+						break;
+
+					case Target.Prefab:
+						OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
+							this.obj = picked;
+						}, type );
+						break;
+
+					case Target.File:
+						OEWorkspace.GetInstance().PickFile ( function ( file : System.IO.FileInfo ) {
+							this.obj = OFReader.LoadFile ( file.FullName );
+						}, type );
+						break;
+				}
+			};
+		}
+
+		return Out ();
 	}
 
 	public function Out () : Object {
@@ -108,12 +147,24 @@ public class OEObjectField {
 	}
 }
 
-public class OEPopup {
+public class OELabelField extends OEField {
+	public var label : OGLabel;
+
+	public function Set ( text : String ) {
+		label.text = text;
+	}
+}
+
+public class OEPopup extends OEField {
 	public var popup : OGPopUp;
 
-	public function In ( selected : int, strings : String [] ) {
-		popup.options = strings;
-		popup.selectedOption = strings[selected];
+	public function Set ( selected : int, strings : String [] ) : int {
+		if ( canSet ) {
+			popup.options = strings;
+			popup.selectedOption = strings[selected];
+		}
+
+		return Out ();
 	}
 
 	public function Out () : int {
@@ -127,7 +178,23 @@ public class OEPopup {
 	}	
 }
 
-public class OESlider {
+public class OEToggle extends OEField {
+	public var tickbox : OGTickBox;
+
+	public function Set ( isTicked : boolean ) : boolean {
+		if ( canSet ) {
+			tickbox.isTicked = isTicked;
+		}
+
+		return Out ();
+	}
+
+	public function Out () : boolean {
+		return tickbox.isTicked;
+	}
+}
+
+public class OESlider extends OEField {
 	public var slider : OGSlider;
 
 	private var min : float;
@@ -141,11 +208,15 @@ public class OESlider {
 		return ( value - min ) / ( max - min );
 	}
 
-	public function In ( value : float, min : float, max : float ) {
-		this.min = min;
-		this.max = max;
+	public function Set ( value : float, min : float, max : float ) : float {
+		if ( canSet ) {
+			this.min = min;
+			this.max = max;
 
-		slider.sliderValue = CalcValuePercent ( value );
+			slider.sliderValue = CalcValuePercent ( value );
+		}
+
+		return Out ();
 	}
 
 	public function Out () : float {
@@ -153,11 +224,15 @@ public class OESlider {
 	}	
 }
 
-public class OEFloatField {
+public class OEFloatField extends OEField {
 	public var textfield : OGTextField;
 
-	public function In ( value : float ) {
-		textfield.text = value.ToString ();
+	public function Set ( value : float ) : float {
+		if ( canSet ) {
+			textfield.text = value.ToString ();
+		}
+
+		return Out ();
 	}
 
 	public function Out () : float {
@@ -171,11 +246,15 @@ public class OEFloatField {
 	}	
 }
 
-public class OEIntField {
+public class OEIntField extends OEField {
 	public var textfield : OGTextField;
 
-	public function In ( value : int ) {
-		textfield.text = value.ToString ();
+	public function Set ( value : int ) : int {
+		if ( canSet ) {	
+			textfield.text = value.ToString ();
+		}
+
+		return Out ();
 	}
 
 	public function Out () : int {
@@ -189,11 +268,15 @@ public class OEIntField {
 	}	
 }
 
-public class OETextField {
+public class OETextField extends OEField {
 	public var textfield : OGTextField;
 
-	public function In ( string : String ) {
-		textfield.text = string;
+	public function Set ( string : String ) : String {
+		if ( canSet || textfield.listening ) {
+			textfield.text = string;
+		}
+
+		return Out ();
 	}
 
 	public function Out () : String {
