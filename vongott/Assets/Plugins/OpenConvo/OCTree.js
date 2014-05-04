@@ -25,6 +25,16 @@ public class OCTree extends MonoBehaviour {
 		return random.Next ( 10000, 99999 );
 	}
 
+	public function GetSpeakerStrings () : String[] {
+		var strings : String[] = new String [ speakers.Length ];
+
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			strings[i] = speakers[i].id;
+		}
+
+		return strings;
+	}
+
 	public function AddSpeaker () {
 		var tmpSpk : List.< OCSpeaker > = new List.< OCSpeaker > ( speakers );
 

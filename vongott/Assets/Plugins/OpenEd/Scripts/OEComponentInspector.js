@@ -2,6 +2,7 @@
 
 public class OEField {
 	public var timer : float = 0;
+	public var enabled : boolean = true;
 
 	public function get canSet () : boolean {
 		if ( timer <= 0 ) {
@@ -26,6 +27,10 @@ public class OEVector3Field extends OEField {
 	}
 
 	public function Set ( v : Vector3 ) : Vector3 {
+		x.isDisabled = !enabled;
+		y.isDisabled = !enabled;
+		z.isDisabled = !enabled;
+		
 		if ( !listening ) {
 			x.text = ( Mathf.Round ( v.x * 1000 ) / 1000 ).ToString();
 			y.text = ( Mathf.Round ( v.y * 1000 ) / 1000 ).ToString();
@@ -63,6 +68,11 @@ public class OEColorField extends OEField {
 	}
 
 	public function Set ( c : Color ) : Color {
+		r.isDisabled = !enabled;
+		g.isDisabled = !enabled;
+		b.isDisabled = !enabled;
+		a.isDisabled = !enabled;
+		
 		if ( canSet && !listening ) {
 			r.text = ( Mathf.Round ( c.r * 1000 ) / 1000 ).ToString();
 			g.text = ( Mathf.Round ( c.g * 1000 ) / 1000 ).ToString();
@@ -106,6 +116,8 @@ public class OEObjectField extends OEField {
 	private var target : Target;
 
 	public function Set ( obj : Object, type : System.Type, target : Target ) : Object {
+		button.isDisabled = !enabled;
+		
 		if ( canSet ) {
 			this.obj = obj;
 			this.target = target;
@@ -151,6 +163,8 @@ public class OELabelField extends OEField {
 	public var label : OGLabel;
 
 	public function Set ( text : String ) {
+		label.isDisabled = !enabled;
+
 		label.text = text;
 	}
 }
@@ -159,6 +173,8 @@ public class OEPopup extends OEField {
 	public var popup : OGPopUp;
 
 	public function Set ( selected : int, strings : String [] ) : int {
+		popup.isDisabled = !enabled;
+
 		if ( canSet ) {
 			popup.options = strings;
 			popup.selectedOption = strings[selected];
@@ -182,6 +198,8 @@ public class OEToggle extends OEField {
 	public var tickbox : OGTickBox;
 
 	public function Set ( isTicked : boolean ) : boolean {
+		tickbox.isDisabled = !enabled;
+		
 		if ( canSet ) {
 			tickbox.isTicked = isTicked;
 		}
@@ -209,6 +227,8 @@ public class OESlider extends OEField {
 	}
 
 	public function Set ( value : float, min : float, max : float ) : float {
+		slider.isDisabled = !enabled;
+
 		if ( canSet ) {
 			this.min = min;
 			this.max = max;
@@ -228,6 +248,8 @@ public class OEFloatField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( value : float ) : float {
+		textfield.isDisabled = !enabled;
+		
 		if ( canSet ) {
 			textfield.text = value.ToString ();
 		}
@@ -250,6 +272,8 @@ public class OEIntField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( value : int ) : int {
+		textfield.isDisabled = !enabled;
+		
 		if ( canSet ) {	
 			textfield.text = value.ToString ();
 		}
@@ -272,6 +296,8 @@ public class OETextField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( string : String ) : String {
+		textfield.isDisabled = !enabled;
+		
 		if ( canSet || textfield.listening ) {
 			textfield.text = string;
 		}

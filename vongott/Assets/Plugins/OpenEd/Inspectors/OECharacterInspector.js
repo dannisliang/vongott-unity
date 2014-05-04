@@ -10,7 +10,10 @@ public class OECharacterInspector extends OEComponentInspector {
 	public var weaponPrefSubcat : OEPopup;
 	public var convoTree : OEObjectField;
 	public var convoStartNode : OEPopup;
-	public var convoSpeakers : OEObjectField[];
+	public var convoSpeakerIndex : OEPopup;
+	public var convoSpeakerObject : OEObjectField;
+
+	private var currentSpeaker : int = 0;
 
 	override function Update () {
 		var character : OACharacter = target.GetComponent.< OACharacter >();
@@ -21,26 +24,39 @@ public class OECharacterInspector extends OEComponentInspector {
 		character.updatePathInterval = pathUpdate.Set ( character.updatePathInterval );
 		
 		character.usingWeapons = usingWeapons.Set ( character.usingWeapons );
+	
+		weaponPrefCat.enabled = character.usingWeapons;
+		weaponPrefSubcat.enabled = character.usingWeapons;
+
 		character.weaponCategoryPreference = weaponPrefCat.Set ( character.weaponCategoryPreference, character.inventory.definitions.GetCategoryStrings () );
 		character.weaponSubcategoryPreference = weaponPrefSubcat.Set ( character.weaponSubcategoryPreference, character.inventory.definitions.GetSubcategoryStrings ( character.weaponCategoryPreference ) );
-		
+
 		character.conversationTree = convoTree.Set ( character.conversationTree, typeof ( OCTree ), OEObjectField.Target.File ) as OCTree;
 		
-		/*if ( character.conversationTree != null ) {
-			var rootNodeStrings : String[] = new String[character.conversationTree.rootNodes.Length];
+		var rootNodeStrings : String[] = new String[0];
+		var speakerStrings : String[] = new String[0];
+		
+		if ( character.conversationTree ) {
+			rootNodeStrings = new String[character.conversationTree.rootNodes.Length];
 			for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
 				rootNodeStrings[i] = i.ToString();
 			}
 			
-			convoStartNode.Set ( character.convoRootNode, rootNodeStrings );	
-	
-			if ( !character.gameObject.activeInHierarchy || character.convoSpeakers.Length != character.conversationTree.speakers.Length ) {
+			if ( character.convoSpeakers.Length != character.conversationTree.speakers.Length ) {
 				character.convoSpeakers = new GameObject [ character.conversationTree.speakers.Length ];
 			}
+		
+			speakerStrings = character.conversationTree.GetSpeakerStrings ();
+		
+		} else {
+			character.convoSpeakers = new GameObject [ 1 ];
 
-			for ( i = 0; i < character.conversationTree.speakers.Length; i++ ) {
-				convoSpeakers[i].Set ( character.convoSpeakers[i], typeof ( GameObject ), OEObjectField.Target.Scene );
-			}
-		}*/
+		}
+
+		character.convoRootNode = convoStartNode.Set ( character.convoRootNode, rootNodeStrings );	
+	
+		currentSpeaker = convoSpeakerIndex.Set ( currentSpeaker, speakerStrings );
+
+		character.convoSpeakers[currentSpeaker] = convoSpeakerObject.Set ( character.convoSpeakers[currentSpeaker], typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
 	}	
 }
