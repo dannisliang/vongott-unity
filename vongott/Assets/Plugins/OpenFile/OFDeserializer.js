@@ -12,15 +12,17 @@ public class OFDeserializer {
 
 		return -1;
 	}
-	
-	public static function Deserialize ( input : JSONObject ) : OFSerializedObject {
-		var output : OFSerializedObject;
 
-		if ( input.HasField ( "prefabPath" ) && !String.IsNullOrEmpty ( input.GetField ( "prefabPath" ).str ) ) {	
+	public static function Deserialize ( input : JSONObject ) : OFSerializedObject {
+		var obj : OFSerializedObject;
+
+		return Deserialize ( input, obj );
+	}
+
+	public static function Deserialize ( input : JSONObject, output : OFSerializedObject ) : OFSerializedObject {
+		if ( !output && input.HasField ( "prefabPath" ) && !String.IsNullOrEmpty ( input.GetField ( "prefabPath" ).str ) ) {	
 			var newGO : GameObject = MonoBehaviour.Instantiate ( Resources.Load ( input.GetField ( "prefabPath" ).str ) ) as GameObject;
 			output = newGO.GetComponent.<OFSerializedObject>();
-		} else {
-			output = new GameObject ( "name", OFSerializedObject ).GetComponent.<OFSerializedObject>();
 		}
 		
 		var components : JSONObject = input.GetField ( "components" );
@@ -31,15 +33,15 @@ public class OFDeserializer {
 		for ( var i : int = 0; i < components.list.Count; i++ ) {
 			switch ( components.list[i].GetField ( "_TYPE_" ).str ) {
 				case "Transform":
-					DeserializeTransform ( components.list[i], output.gameObject.transform );
+					Deserialize ( components.list[i], output.gameObject.transform );
 					break;
 
 				case "OCTree":
-					DeserializeOCTree ( components.list[i], output.gameObject.AddComponent ( OCTree ) );
+					Deserialize ( components.list[i], output.gameObject.AddComponent ( OCTree ) );
 					break;
 				
 				case "OSInventory":
-					DeserializeOSInventory ( components.list[i], output.gameObject.AddComponent ( OSInventory ) );
+					Deserialize ( components.list[i], output.gameObject.AddComponent ( OSInventory ) );
 					break;
 			}
 		}
@@ -52,22 +54,22 @@ public class OFDeserializer {
 	// Classes
 	//////////////////
 	// Component
-	public static function DeserializeComponent ( input : JSONObject, component : Component ) {
+	public static function Deserialize ( input : JSONObject, component : Component ) {
 		if ( component.GetType() == typeof ( Transform ) ) {
-			DeserializeTransform ( input, component as Transform );
+			Deserialize ( input, component as Transform );
 		
 		}
 	}
 
 	// Transform
-	public static function DeserializeTransform ( input : JSONObject, transform : Transform ) {
+	public static function Deserialize ( input : JSONObject, transform : Transform ) {
 		transform.eulerAngles = DeserializeVector3 ( input.GetField ( "eulerAngles" ) );
 		transform.position = DeserializeVector3 ( input.GetField ( "position" ) );
 		transform.localScale = DeserializeVector3 ( input.GetField ( "localScale" ) );
 	}
 
 	// OCTree
-	public static function DeserializeOCTree ( input : JSONObject, tree : OCTree ) {
+	public static function Deserialize ( input : JSONObject, tree : OCTree ) {
 		var rootNodes : List.< OCRootNode > = new List.< OCRootNode > ();
 
 		for ( var root : JSONObject in input.GetField ( "rootNodes" ).list ) {
@@ -171,7 +173,7 @@ public class OFDeserializer {
 	}
 
 	// OSInventory
-	public static function DeserializeOSInventory ( input : JSONObject, inventory : OSInventory ) {
+	public static function Deserialize ( input : JSONObject, inventory : OSInventory ) {
 		var slots : List.< OSSlot > = new List.< OSSlot > ();
 
 		for ( var slot : JSONObject in input.GetField ( "slots" ).list ) {

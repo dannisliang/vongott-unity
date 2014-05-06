@@ -52,19 +52,7 @@ public class OFSerializer {
 	        output.AddField ( "prefabPath", input.prefabPath );	
 
 		for ( var i : int = 0; i < input.fields.Length; i++ ) {
-			switch ( input.fields[i].type ) {
-				case OFFieldType.Component:
-					var c : Component = input.fields[i].component;
-
-					if ( c ) {
-						components.Add ( Serialize ( c ) );
-					}
-					break;
-
-				case OFFieldType.Color:
-					output.AddField ( input.fields[i].name, Serialize ( input.fields[i].color ) );
-					break;
-			}
+			components.Add ( Serialize ( input.fields[i].component ) );
 		}
 
 		output.AddField ( "components", components );
@@ -79,7 +67,7 @@ public class OFSerializer {
 	// Component
 	public static function Serialize ( input : Component ) : JSONObject {
 		var output : JSONObject;
-	
+
 		if ( input.GetType() == typeof ( Transform ) ) {
 			output = Serialize ( input as Transform );
 		

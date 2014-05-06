@@ -104,43 +104,46 @@ public class OEColorField extends OEField {
 }
 
 public class OEObjectField extends OEField {
-	public enum Target {
-		Scene,
-		Prefab,
-		File
-	}
-	
 	public var button : OGButton;
 
 	private var obj : Object;
-	private var target : Target;
 
-	public function Set ( obj : Object, type : System.Type, target : Target ) : Object {
+	public function Set ( obj : Object, strType : String ) : Object {
+		return Set ( obj, strType, null );
+	}
+
+	public function Set ( obj : Object, strType : String, attachTo : OFSerializedObject ) : Object {
 		button.isDisabled = !enabled;
 		
 		if ( canSet ) {
 			this.obj = obj;
-			this.target = target;
 			
 			button.func = function () {
-				switch ( target ) {
-					case Target.Scene:
-						OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
-							this.obj = picked;
-						}, type );
-						break;
+				OEWorkspace.GetInstance().PickFile ( function ( file : System.IO.FileInfo ) {
+					this.obj = OFDeserializer.Deserialize ( OFReader.LoadFile ( file.FullName ), attachTo ).gameObject;
+				}, strType );
+			};
+		}
 
-					case Target.Prefab:
-						OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
-							this.obj = picked;
-						}, type );
-						break;
+		return Out ();
+	}
 
-					case Target.File:
-						OEWorkspace.GetInstance().PickFile ( function ( file : System.IO.FileInfo ) {
-							this.obj = OFReader.LoadFile ( file.FullName );
-						}, type );
-						break;
+	public function Set ( obj : Object, sysType : System.Type, allowSceneObjects : boolean) : Object {
+		button.isDisabled = !enabled;
+		
+		if ( canSet ) {
+			this.obj = obj;
+			
+			button.func = function () {
+				if ( allowSceneObjects ) {		
+					OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
+						this.obj = picked;
+					}, sysType );
+				
+				} else {
+					OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
+						this.obj = picked;
+					}, sysType );
 				}
 			};
 		}
@@ -149,10 +152,25 @@ public class OEObjectField extends OEField {
 	}
 
 	public function Out () : Object {
+		var go : GameObject;
+		
 		if ( obj ) {
-			button.text = ( obj as GameObject ).name;
+			var c : Component = obj as Component;
+
+			if ( c ) {
+				go = c.gameObject;
+			} else {
+				go = obj as GameObject;
+			}
+
+		}
+
+		if ( go ) {
+			button.text = go.name;
+		
 		} else {
 			button.text = "(none)";
+
 		}
 
 		return obj;

@@ -24,7 +24,7 @@ public class OFReader {
 			}
 		
 			sr.Close();
-			
+		
 			return new JSONObject ( input, -2, false, false );
 		#endif
 	}

@@ -131,8 +131,10 @@ public class OEFileBrowser extends OGPage {
 		}
 		
 		for ( i = 0; i < files.Length; i++ ) {
-			AddListItem ( files[i].Name, "SelectFile", offset, Color.white );
-			offset += 20;
+			if ( !files[i].Name.Contains ( ".meta" ) && ( String.IsNullOrEmpty ( filter ) || files[i].Name.Contains ( filter ) ) ) {
+				AddListItem ( files[i].Name, "SelectFile", offset, Color.white );
+				offset += 20;
+			}
 		}
 		
 		filepathInput.text = GetPath();
