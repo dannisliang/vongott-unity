@@ -66,6 +66,8 @@ public class OFSerializer {
 	//////////////////
 	// Component
 	public static function Serialize ( input : Component ) : JSONObject {
+		if ( !input ) { return null; }
+		
 		var output : JSONObject;
 
 		if ( input.GetType() == typeof ( Transform ) ) {
@@ -94,6 +96,8 @@ public class OFSerializer {
 
 	// Transform
 	public static function Serialize ( input : Transform ) : JSONObject {
+		if ( !input ) { return null; }
+		
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 
 		output.AddField ( "eulerAngles", Serialize ( input.eulerAngles ) );
@@ -105,8 +109,17 @@ public class OFSerializer {
 
 	// OCTree
 	public static function Serialize ( input : OCTree ) : JSONObject {
+		if ( !input ) { return null; }
+		
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 		var rootNodes : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+		var speakers : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+
+		for ( var speaker : OCSpeaker in input.speakers ) {
+			var s : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+			s.AddField ( "id", speaker.id );
+			speakers.Add ( s );
+		}
 
 		for ( var root : OCRootNode in input.rootNodes ) {
 			var r : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
@@ -206,6 +219,7 @@ public class OFSerializer {
 		}
 
 		output.AddField ( "rootNodes", rootNodes );
+		output.AddField ( "speakers", speakers );
 		output.AddField ( "currentRoot", input.currentRoot );
 
 		return output;
@@ -213,6 +227,8 @@ public class OFSerializer {
 
 	// OSInventory
 	public static function Serialize ( input : OSInventory ) : JSONObject {
+		if ( !input ) { return null; }
+		
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 		var slots : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
@@ -265,6 +281,8 @@ public class OFSerializer {
 
 	// OSItem
 	public static function Serialize ( input : OSItem ) : JSONObject {
+		if ( !input ) { return null; }
+		
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 	
 		output.AddField ( "ammunition", input.ammunition.value );
@@ -274,9 +292,12 @@ public class OFSerializer {
 
 	// OACharacter
 	public static function Serialize ( input : OACharacter ) : JSONObject {
+		if ( !input ) { return null; }
+		
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 	
 		output.AddField ( "health", input.health );
+		output.AddField ( "conversationTree", Serialize ( input.conversationTree ) );		
 
 		return output;
 	}

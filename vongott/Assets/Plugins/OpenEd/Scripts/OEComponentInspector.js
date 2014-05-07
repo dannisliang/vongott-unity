@@ -108,19 +108,26 @@ public class OEObjectField extends OEField {
 
 	private var obj : Object;
 
-	public function Set ( obj : Object, strType : String ) : Object {
-		return Set ( obj, strType, null );
+	public function Clear () {
+		obj = null;
+		timer = 0;
 	}
 
-	public function Set ( obj : Object, strType : String, attachTo : OFSerializedObject ) : Object {
+	public function Set ( setObj : Object, sysType : System.Type, strType : String ) : Object {
+		Set ( setObj, sysType, strType, null );
+	}
+
+	public function Set ( setObj : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject ) : Object {
 		button.isDisabled = !enabled;
 		
 		if ( canSet ) {
-			this.obj = obj;
+			obj = setObj;
 			
 			button.func = function () {
 				OEWorkspace.GetInstance().PickFile ( function ( file : System.IO.FileInfo ) {
-					this.obj = OFDeserializer.Deserialize ( OFReader.LoadFile ( file.FullName ), attachTo ).gameObject;
+					var json : JSONObject = OFReader.LoadFile ( file.FullName );
+					var so : OFSerializedObject = OFDeserializer.Deserialize ( json, attachTo );
+					obj = so.GetComponent ( sysType );
 				}, strType );
 			};
 		}
@@ -128,21 +135,21 @@ public class OEObjectField extends OEField {
 		return Out ();
 	}
 
-	public function Set ( obj : Object, sysType : System.Type, allowSceneObjects : boolean) : Object {
+	public function Set ( setObj : Object, sysType : System.Type, allowSceneObjects : boolean) : Object {
 		button.isDisabled = !enabled;
 		
 		if ( canSet ) {
-			this.obj = obj;
+			obj = setObj;
 			
 			button.func = function () {
 				if ( allowSceneObjects ) {		
 					OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
-						this.obj = picked;
+						obj = picked;
 					}, sysType );
 				
 				} else {
 					OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
-						this.obj = picked;
+						obj = picked;
 					}, sysType );
 				}
 			};
@@ -169,10 +176,10 @@ public class OEObjectField extends OEField {
 			button.text = go.name;
 		
 		} else {
-			button.text = "(none)";
+			button.text = "None";
 
 		}
-
+		
 		return obj;
 	}
 }
@@ -195,7 +202,11 @@ public class OEPopup extends OEField {
 
 		if ( canSet ) {
 			popup.options = strings;
-			popup.selectedOption = strings[selected];
+			if ( strings.Length > 0 ) {
+				popup.selectedOption = strings[selected];
+			} else {
+				popup.selectedOption = "";
+			}
 		}
 
 		return Out ();

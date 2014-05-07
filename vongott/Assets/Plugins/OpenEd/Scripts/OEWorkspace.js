@@ -101,7 +101,6 @@ public class OEWorkspace extends MonoBehaviour {
 	public function PickObject ( callback : Function, type : System.Type ) {
 		picker.callback = callback;
 		picker.type = type;
-		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 
@@ -117,6 +116,7 @@ public class OEWorkspace extends MonoBehaviour {
 		fileBrowser.callback = callback;
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
 		fileBrowser.filter = filterString;
+		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 

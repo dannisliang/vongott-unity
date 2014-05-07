@@ -31,11 +31,15 @@ public class OECharacterInspector extends OEComponentInspector {
 		character.weaponCategoryPreference = weaponPrefCat.Set ( character.weaponCategoryPreference, character.inventory.definitions.GetCategoryStrings () );
 		character.weaponSubcategoryPreference = weaponPrefSubcat.Set ( character.weaponSubcategoryPreference, character.inventory.definitions.GetSubcategoryStrings ( character.weaponCategoryPreference ) );
 
-		character.conversationTree = convoTree.Set ( character.conversationTree, ".tree", this.GetComponent.< OFSerializedObject > () ) as OCTree;
-		
+		character.conversationTree = convoTree.Set ( character.conversationTree, typeof ( OCTree ), ".tree", character.GetComponent.< OFSerializedObject > () ) as OCTree;
+
 		var rootNodeStrings : String[] = new String[0];
 		var speakerStrings : String[] = new String[0];
-		
+	
+		convoStartNode.enabled = character.conversationTree != null;
+		convoSpeakerIndex.enabled = character.conversationTree != null;
+		convoSpeakerObject.enabled = character.conversationTree != null;
+
 		if ( character.conversationTree ) {
 			rootNodeStrings = new String[character.conversationTree.rootNodes.Length];
 			for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
@@ -47,15 +51,20 @@ public class OECharacterInspector extends OEComponentInspector {
 			}
 		
 			speakerStrings = character.conversationTree.GetSpeakerStrings ();
-		
-		} else {
+	
+		} else {	
 			character.convoSpeakers = new GameObject [ 1 ];
 
 		}
 
 		character.convoRootNode = convoStartNode.Set ( character.convoRootNode, rootNodeStrings );	
 	
+		var lastSpeaker : int = currentSpeaker;
 		currentSpeaker = convoSpeakerIndex.Set ( currentSpeaker, speakerStrings );
+
+		if ( lastSpeaker != currentSpeaker ) {
+			convoSpeakerObject.Clear ();
+		}
 
 		character.convoSpeakers[currentSpeaker] = convoSpeakerObject.Set ( character.convoSpeakers[currentSpeaker], typeof ( GameObject ), true ) as GameObject;
 	}	

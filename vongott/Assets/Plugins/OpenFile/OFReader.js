@@ -33,7 +33,7 @@ public class OFReader {
 		var input : JSONObject = LoadFile ( path );
 
 		for ( var i : int = 0; i < input.list.Count; i++ ) {
-			var newObject : OFSerializedObject = OFDeserializer.Deserialize ( input.list[i] );
+			var newObject : OFSerializedObject = OFDeserializer.Deserialize ( input.list[i] ) as OFSerializedObject;
 			newObject.transform.parent = parent.transform;
 		}
 	}

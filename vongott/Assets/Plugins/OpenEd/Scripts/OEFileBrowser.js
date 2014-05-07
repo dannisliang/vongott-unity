@@ -148,13 +148,13 @@ public class OEFileBrowser extends OGPage {
 	}
 
 	public function Open () {
-		if ( callback && selectedFile ) {
+		if ( callback && selectedFile && !String.IsNullOrEmpty ( sender ) ) {
 			callback ( selectedFile, openPath );
 			OGRoot.GetInstance().GoToPage ( sender );
 		
 		} else {
 		
-			Debug.LogError ( "OEFileBrowser | No callback set" );
+			Debug.LogError ( "OEFileBrowser | Missing callback or sender" );
 		}
 	}
 
