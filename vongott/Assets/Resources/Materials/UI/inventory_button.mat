@@ -30,33 +30,25 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Outline
-        second: .0196461529
+          name: _LineWidth
+        second: .200000003
       data:
         first:
           name: _RimPower
         second: 1.0385412
       data:
         first:
-          name: _LineWidth
-        second: .200000003
-      data:
-        first:
           name: _Glossiness
         second: .100000001
+      data:
+        first:
+          name: _Outline
+        second: .0196461529
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .942494988, g: 1, b: .404411793, a: 1}
-      data:
-        first:
-          name: _OutlineColor
-        second: {r: 1, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _RimColor
-        second: {r: 0, g: .538461685, b: 1, a: 1}
+        second: {r: 0, g: .478431374, b: 1, a: 1}
       data:
         first:
           name: _LineColor
@@ -71,5 +63,13 @@ Material:
         second: {r: .0185470115, g: 0, b: .286764681, a: 0}
       data:
         first:
+          name: _RimColor
+        second: {r: 0, g: .538461685, b: 1, a: 1}
+      data:
+        first:
           name: _SpecularColor
         second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 1, g: 0, b: 0, a: 1}

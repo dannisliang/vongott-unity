@@ -43,7 +43,7 @@ public class OEPrefabsDrawer extends OEDrawer {
 	public var foldername : OGLabel;
 	public var placeButton : OGButton;
 	public var parentButton : OGButton;
-	public var objectName : OGLabel;
+	public var message : OGLabel;
 
 	private var currentFolder : Folder;
 	private var currentParent : Folder;
@@ -57,13 +57,12 @@ public class OEPrefabsDrawer extends OEDrawer {
 		}
 
 		selectedObject = "";
-		objectName.text = selectedObject;
 		placeButton.gameObject.SetActive ( false );
 	}
 
 	public function SelectObject ( n : String ) {
 		selectedObject = n;
-		objectName.text = selectedObject;
+		placeButton.text = "Place " + selectedObject;
 		placeButton.gameObject.SetActive ( true );
 	}
 
@@ -86,11 +85,10 @@ public class OEPrefabsDrawer extends OEDrawer {
 		var size : float = 100;
 		var spacing : float = 10;
 		
-		LookForParent ( rootFolder );
-		
 		subdirSwitch.selectedOption = currentFolder.name;
 		subdirSwitch.options = currentFolder.GetSubfolderNames ();
 		subdirSwitch.gameObject.SetActive ( subdirSwitch.options.Length > 0 );
+		message.gameObject.SetActive ( subdirSwitch.options.Length > 0 );
 
 		if ( subdirSwitch.options.Length == 0 ) {
 			var objects : Object [] = OEFileSystem.GetResources ( fullPath, typeof ( OFSerializedObject ) ); 
@@ -134,6 +132,8 @@ public class OEPrefabsDrawer extends OEDrawer {
 	}
 
 	public function LookForParent ( folder : Folder ) {
+		currentParent = null;
+		
 		for ( var i : int = 0; i < folder.subfolders.Length; i++ ) {
 			if ( folder.subfolders[i] == currentFolder ) {
 				currentParent = folder;
@@ -144,40 +144,38 @@ public class OEPrefabsDrawer extends OEDrawer {
 			
 			}
 		}
-
-		currentParent = null;
 	}
 
-	public function ReplacePathFolder ( n : String ) {
+	public function DecrementPath () {
 		var strings : String [] = fullPath.Split ( "/"[0] );
 		fullPath = "";
 
 		for ( var i : int = 0; i < strings.Length - 1; i++ ) {
-			if ( i > 1 ) {
+			if ( i > 0 ) {
 				fullPath += "/";
 			}
 			
 			fullPath += strings[i];
 		}
-	
-		if ( !String.IsNullOrEmpty ( n ) ) {
-			fullPath += "/" + n;
-		}
 	}
 
 	public function GoToParentFolder () {
-		if ( currentParent == null || currentFolder == rootFolder ) { return; }
+		if ( currentParent == null || currentFolder == rootFolder ) { LookForParent ( rootFolder ); return; }
 		
-		ReplacePathFolder ( "" );
+		DecrementPath ();
 
 		currentFolder = currentParent;
+		LookForParent ( rootFolder );
 
 		Populate ();
 	}
 
 	public function ChangeFolder ( folder : String ) {
 		fullPath += "/" + folder;
+		
 		currentFolder = currentFolder.GetSubfolder ( folder );
+		LookForParent ( rootFolder );
+		
 		Populate ();
 	}
 
