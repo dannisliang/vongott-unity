@@ -297,7 +297,22 @@ public class OFSerializer {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 	
 		output.AddField ( "health", input.health );
-		output.AddField ( "conversationTree", Serialize ( input.conversationTree ) );		
+
+		if ( input.conversationTree ) {
+			output.AddField ( "conversationTree", Serialize ( input.conversationTree ) );
+		
+			var speakers : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+
+			for ( var i : int = 0; i < input.convoSpeakers.Length; i++ ) {
+				var so : OFSerializedObject = input.convoSpeakers[i].GetComponent.< OFSerializedObject > ();
+				
+				if ( so ) {
+					speakers.Add ( so.id );
+				}
+			}
+
+			output.AddField ( "convoSpeakers", speakers );
+		}
 
 		return output;
 	}

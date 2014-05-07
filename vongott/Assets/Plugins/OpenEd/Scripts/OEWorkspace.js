@@ -75,7 +75,9 @@ public class OEWorkspace extends MonoBehaviour {
 	// File I/O
 	public function OpenFile () {
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
-		fileBrowser.callback = function ( file : FileInfo, path : String ) { currentSavePath = path; };
+		fileBrowser.callback = function ( file : FileInfo ) {
+			OFReader.LoadChildren ( serializedTransforms, file.FullName );
+		};
 		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
@@ -263,6 +265,8 @@ public class OEWorkspace extends MonoBehaviour {
 		}
 
 		selection.Clear ();
+
+		RefreshAll ();
 	}
 
 	// Instatiate

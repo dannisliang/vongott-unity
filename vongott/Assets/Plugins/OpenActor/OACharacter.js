@@ -24,7 +24,7 @@ public class OACharacter extends MonoBehaviour {
 	public var weaponCategoryPreference : int = 0;
 	public var weaponSubcategoryPreference : int = 0;
 	public var convoRootNode : int = 0;
-	public var convoSpeakers : GameObject [];
+	public var convoSpeakers : GameObject [] = new GameObject[1];
 
 	private var updatePathTimer : float = 0;
 

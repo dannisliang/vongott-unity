@@ -1,6 +1,34 @@
 #pragma strict
 
 public class OFDeserializer {
+	private static var connectQueue : List.< Function > = new List.< Function > ();
+
+	private static function FindObject ( id : String ) : GameObject {
+		var result : GameObject;
+		var allObjects : OFSerializedObject[] = GameObject.FindObjectsOfType ( typeof ( OFSerializedObject ) );
+
+		for ( var i : int = 0; i < allObjects.Length; i++ ) {
+			if ( ( allObjects[i] as OFSerializedObject ).id == id ) {
+				result = allObjects[i] as GameObject;
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	private static function DeferConnection ( f : Function ) {
+		connectQueue.Add ( f );
+	}
+
+	private static function ConnectAll () {
+		for ( var i : int = 0; i < connectQueue.Count; i++ ) {
+			connectQueue[i] ();
+		}
+
+		connectQueue.Clear ();
+	}
+	
 	private static function ParseEnum ( e : System.Type, s : String ) : int {
 		var strings : String[] = System.Enum.GetNames ( e );
 		
@@ -21,6 +49,28 @@ public class OFDeserializer {
 		}
 
 		return component;
+	}
+	
+	public static function DeserializeChildren ( input : JSONObject, parent : Transform ) {
+		DeserializeChildren ( input, [ parent ] );
+	}
+
+	public static function DeserializeChildren ( input : JSONObject, parents : Transform[] ) {
+		for ( var i : int = 0; i < parents.Length; i++ ) {
+			if ( input.HasField ( parents[i].gameObject.name ) ) {
+				var t : JSONObject = input.GetField ( parents[i].gameObject.name );
+
+				for ( var json : JSONObject in t.list ) {
+					var so : OFSerializedObject = Deserialize ( json );
+					
+					if ( so ) {
+						so.transform.parent = parents[i];
+					}
+				}
+			}
+		}
+
+		ConnectAll ();
 	}
 	
 	// This creates a new GameObject
@@ -55,6 +105,10 @@ public class OFDeserializer {
 					Deserialize ( components.list[i], output.gameObject.transform );
 					break;
 
+				case "OACharacter":
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( OACharacter ) ) as OACharacter );
+					break;
+				
 				case "OCTree":
 					Deserialize ( components.list[i], CheckComponent ( output, typeof ( OCTree ) ) as OCTree );
 					break;
@@ -246,6 +300,29 @@ public class OFDeserializer {
 		inventory.quickSlots = quickSlots;
 		inventory.grid = grid;
 		inventory.wallet = wallet.ToArray ();
+	}
+	
+	// OACharacter
+	public static function Deserialize ( input : JSONObject, character : OACharacter ) {
+		character.health = input.GetField ( "health" ).n;
+		
+		if ( input.HasField ( "conversationTree" ) ) {
+			if ( !character.conversationTree ) {
+				character.conversationTree = character.gameObject.AddComponent.< OCTree > ();
+			}
+
+			Deserialize ( input.GetField ( "conversationTree" ), character.conversationTree );		
+		
+			var speakerList : List.< JSONObject > = input.GetField ( "convoSpeakers" ).list;
+
+			character.convoSpeakers = new GameObject [ speakerList.Count ];
+			
+			DeferConnection ( function () {
+				for ( var i : int = 0; i < speakerList.Count; i++ ) {
+					character.convoSpeakers[i] = FindObject ( speakerList[i].str );
+				}
+			} );
+		}
 	}
 
 
