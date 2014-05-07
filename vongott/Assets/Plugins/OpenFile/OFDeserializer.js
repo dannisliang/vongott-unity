@@ -1,34 +1,52 @@
 #pragma strict
 
 public class OFDeserializer {
-	private static var connectQueue : List.< Function > = new List.< Function > ();
+	private class QueueItem {
+		public var id : String;
+		public var f : Function;
+		public var i : int = -1;
+		
+		function QueueItem ( f : Function, id : String, i : int ) {
+			this.f = f;
+			this.id = id;
+			this.i = i;
+		}
+	}
 
-	private static function FindObject ( id : String ) : GameObject {
-		var result : GameObject;
-		var allObjects : OFSerializedObject[] = GameObject.FindObjectsOfType ( typeof ( OFSerializedObject ) );
+	private static var connectQueue : List.< QueueItem > = new List.< QueueItem > ();
+	private static var spawnedObjects : List.< OFSerializedObject > = new List.< OFSerializedObject > ();
+	
+	private static function DeferConnection ( f : Function, id : String, i : int ) {
+		connectQueue.Add ( new QueueItem ( f, id, i ) );
+	}
 
-		for ( var i : int = 0; i < allObjects.Length; i++ ) {
-			if ( ( allObjects[i] as OFSerializedObject ).id == id ) {
-				result = allObjects[i] as GameObject;
-				break;
+	private static function DeferConnection ( f : Function, id : String ) {
+		connectQueue.Add ( new QueueItem ( f, id, -1 ) );
+	}
+
+	private static function FindObject ( id : String ) : OFSerializedObject {
+		for ( var i : int = 0; i < spawnedObjects.Count; i++ ) {
+			if ( spawnedObjects[i].id == id ) {
+				return spawnedObjects[i];
 			}
 		}
 
-		return result;
+		return null;
 	}
-
-	private static function DeferConnection ( f : Function ) {
-		connectQueue.Add ( f );
-	}
-
+	
 	private static function ConnectAll () {
 		for ( var i : int = 0; i < connectQueue.Count; i++ ) {
-			connectQueue[i] ();
+			if ( connectQueue[i].i >= 0 ) {
+				connectQueue[i].f ( FindObject ( connectQueue[i].id ), connectQueue[i].i );
+			} else {
+				connectQueue[i].f ( FindObject ( connectQueue[i].id ) );
+			}
 		}
 
 		connectQueue.Clear ();
+		spawnedObjects.Clear ();
 	}
-	
+
 	private static function ParseEnum ( e : System.Type, s : String ) : int {
 		var strings : String[] = System.Enum.GetNames ( e );
 		
@@ -120,6 +138,8 @@ public class OFDeserializer {
 
 
 		}
+
+		spawnedObjects.Add ( output );
 
 		return output;
 	}
@@ -317,11 +337,11 @@ public class OFDeserializer {
 
 			character.convoSpeakers = new GameObject [ speakerList.Count ];
 			
-			DeferConnection ( function () {
-				for ( var i : int = 0; i < speakerList.Count; i++ ) {
-					character.convoSpeakers[i] = FindObject ( speakerList[i].str );
-				}
-			} );
+			for ( var i : int = 0; i < speakerList.Count; i++ ) {
+				DeferConnection ( function ( so : OFSerializedObject, index : int ) {
+					character.convoSpeakers[index] = so.gameObject;
+				}, speakerList[i].str, i );
+			}
 		}
 	}
 

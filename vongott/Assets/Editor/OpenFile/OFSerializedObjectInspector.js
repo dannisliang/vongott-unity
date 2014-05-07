@@ -6,11 +6,6 @@ public class OFSerializedObjectInspector extends Editor {
 	private var resourceWarning : boolean = false;
 	
 	override function OnInspectorGUI () {
-		if ( Application.isPlaying ) {
-			EditorGUILayout.LabelField ( "Cannot edit serializable objects while playing" );
-			return;
-		}
-		
 		var obj : OFSerializedObject = target as OFSerializedObject;
 		var inScene : boolean = obj.gameObject.activeInHierarchy;
 
@@ -28,7 +23,7 @@ public class OFSerializedObjectInspector extends Editor {
 		if ( inScene ) {
 			GUI.backgroundColor = Color.green;
 			if ( GUILayout.Button ( "Update", GUILayout.Width ( 60 ) ) ) {
-				obj.id = System.Guid.NewGuid().ToString();
+				obj.RenewId();
 			}
 			GUI.backgroundColor = Color.white;
 		}

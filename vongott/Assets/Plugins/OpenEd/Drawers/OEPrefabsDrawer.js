@@ -81,56 +81,56 @@ public class OEPrefabsDrawer extends OEDrawer {
 
 		foldername.text = fullPath;
 
-		var objects : Object [] = OEFileSystem.GetResources ( fullPath, typeof ( OFSerializedObject ) ); 
-
 		var offset : Vector2;
 		var width : float = Screen.width - 12;
 		var size : float = 100;
 		var spacing : float = 10;
-
-		for ( var i : int = 0; i < objects.Length; i++ ) {
-			var obj : OFSerializedObject = objects[i] as OFSerializedObject;
-
-			if ( obj ) {
-				var b : OGButton = new GameObject ( obj.gameObject.name ).AddComponent.< OGButton >();
-				var t : OGTexture = new GameObject ( obj.gameObject.name + "_tex" ).AddComponent.< OGTexture >();
-
-				b.transform.parent = scrollview;
-				b.transform.localScale = new Vector3 ( size, size, 1 );
-				b.transform.localPosition = new Vector3 ( offset.x, offset.y, 1 );
-
-				b.target = this.gameObject;
-				b.message = "SelectObject";
-				b.argument = obj.gameObject.name;
-
-				t.transform.parent = scrollview;
-				t.transform.localScale = new Vector3 ( size, size, 1 );
-				t.transform.localPosition = new Vector3 ( offset.x, offset.y, 0 );
-
-				offset.x += size + spacing;
-
-				if ( offset.x >= width - size + spacing ) {
-					offset.x = 0;
-					offset.y += size + spacing;
-				}
-
-				OEWorkspace.GetInstance().previewCamera.CreatePreview ( obj.gameObject, t );
-
-				b.ApplyDefaultStyles ();
-			}
-		}
 		
 		LookForParent ( rootFolder );
 		
 		subdirSwitch.selectedOption = currentFolder.name;
-		
-		if ( currentParent != null ) {	
-			subdirSwitch.options = currentParent.GetSubfolderNames ();
-		} else {
-			subdirSwitch.options = new String [0];
-		}
-
+		subdirSwitch.options = currentFolder.GetSubfolderNames ();
 		subdirSwitch.gameObject.SetActive ( subdirSwitch.options.Length > 0 );
+
+		if ( subdirSwitch.options.Length == 0 ) {
+			var objects : Object [] = OEFileSystem.GetResources ( fullPath, typeof ( OFSerializedObject ) ); 
+
+			for ( var i : int = 0; i < objects.Length; i++ ) {
+				var obj : OFSerializedObject = objects[i] as OFSerializedObject;
+
+				if ( obj ) {
+					var b : OGButton = new GameObject ( obj.gameObject.name ).AddComponent.< OGButton >();
+					var t : OGTexture = new GameObject ( obj.gameObject.name + "_tex" ).AddComponent.< OGTexture >();
+
+					b.transform.parent = scrollview;
+					b.transform.localScale = new Vector3 ( size, size, 1 );
+					b.transform.localPosition = new Vector3 ( offset.x, offset.y, 1 );
+
+					b.target = this.gameObject;
+					b.message = "SelectObject";
+					b.argument = obj.gameObject.name;
+
+					t.transform.parent = scrollview;
+					t.transform.localScale = new Vector3 ( size, size, 1 );
+					t.transform.localPosition = new Vector3 ( offset.x, offset.y, 0 );
+
+					offset.x += size + spacing;
+
+					if ( offset.x >= width - size + spacing ) {
+						offset.x = 0;
+						offset.y += size + spacing;
+					}
+
+					OEWorkspace.GetInstance().previewCamera.CreatePreview ( obj.gameObject, t );
+
+					b.ApplyDefaultStyles ();
+				}
+			}
+		
+		} else {
+			subdirSwitch.selectedOption = "";
+
+		}
 	}
 
 	public function LookForParent ( folder : Folder ) {
@@ -166,7 +166,7 @@ public class OEPrefabsDrawer extends OEDrawer {
 	}
 
 	public function GoToParentFolder () {
-		if ( currentParent == null || currentParent == rootFolder ) { return; }
+		if ( currentParent == null || currentFolder == rootFolder ) { return; }
 		
 		ReplacePathFolder ( "" );
 
@@ -176,8 +176,8 @@ public class OEPrefabsDrawer extends OEDrawer {
 	}
 
 	public function ChangeFolder ( folder : String ) {
-		ReplacePathFolder ( folder );
-		currentFolder = currentParent.GetSubfolder ( folder );
+		fullPath += "/" + folder;
+		currentFolder = currentFolder.GetSubfolder ( folder );
 		Populate ();
 	}
 
@@ -191,8 +191,8 @@ public class OEPrefabsDrawer extends OEDrawer {
 
 	public function Start () {
 		if ( rootFolder.subfolders.Length > 0 ) {
-			currentFolder = rootFolder.subfolders[0];
-			fullPath = rootFolder.name + "/" + currentFolder.name;
+			currentFolder = rootFolder;
+			fullPath = currentFolder.name;
 			Populate ();
 			placeButton.func = null;
 		

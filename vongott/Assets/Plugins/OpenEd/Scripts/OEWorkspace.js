@@ -61,6 +61,10 @@ public class OEWorkspace extends MonoBehaviour {
 
 	public static var instance : OEWorkspace;
 
+	public static function running () : boolean {
+		return instance != null;
+	}
+
 	public static function GetInstance () : OEWorkspace {
 		return instance;
 	}
@@ -281,11 +285,28 @@ public class OEWorkspace extends MonoBehaviour {
 			go.transform.localScale = origScale;
 			go.transform.position = focusPoint;
 
-			var rb : Rigidbody = go.GetComponentInChildren.< Rigidbody > ();
+			for ( var c : Component in go.GetComponentsInChildren.< Component > () ) {
+				var rb : Rigidbody = c as Rigidbody;
+				var cc : CharacterController = c as CharacterController;
+				var a : Animator = c as Animator;
 
-			if ( rb ) {
-				rb.isKinematic = true;
-				rb.useGravity = false;
+				if ( rb ) {
+					rb.isKinematic = true;
+					rb.useGravity = false;
+				
+				} else if ( cc ) {
+					var capsule : CapsuleCollider = go.AddComponent.< CapsuleCollider > ();
+
+					capsule.center = cc.center;
+					capsule.radius = cc.radius;
+					capsule.height = cc.height;
+
+					cc.enabled = false;
+				
+				} else if ( a ) {
+					a.enabled = false;
+				
+				}
 			}
 
 			obj = go.GetComponent.< OFSerializedObject > ();
@@ -293,6 +314,7 @@ public class OEWorkspace extends MonoBehaviour {
 			go.name = go.name.Replace ( "(Clone)", "" );
 
 			SelectObject ( obj );
+		
 		}
 
 		return obj;
@@ -329,6 +351,10 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Update
 	public function Update () {
+		this.transform.position = Vector3.zero;
+		this.transform.eulerAngles = Vector3.zero;
+		this.transform.localScale = Vector3.one;
+		
 		// Gizmos
 		if ( selection.Count > 0 ) {
 			gizmoPosition.gameObject.SetActive ( transformMode == gizmoPosition.mode );
