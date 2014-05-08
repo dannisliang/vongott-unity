@@ -5,6 +5,25 @@ public class OFSerializedObjectInspector extends Editor {
 	private var expandedComponent : int = -1;
 	private var resourceWarning : boolean = false;
 	
+	private function SavePrefab ( target : UnityEngine.Object ) {
+		var selectedGameObject : GameObject;
+		var selectedPrefabType : PrefabType;
+		var parentGameObject : GameObject;
+		var prefabParent : UnityEngine.Object;
+		     
+		selectedGameObject = Selection.gameObjects[0];
+		selectedPrefabType = PrefabUtility.GetPrefabType(selectedGameObject);
+		parentGameObject = selectedGameObject.transform.root.gameObject;
+		prefabParent = PrefabUtility.GetPrefabParent(selectedGameObject);
+		     
+		EditorUtility.SetDirty(target);
+		     
+		if (selectedPrefabType == PrefabType.PrefabInstance) {
+			PrefabUtility.ReplacePrefab(parentGameObject, prefabParent,
+			ReplacePrefabOptions.ConnectToPrefab);
+	    	}
+	}
+	
 	override function OnInspectorGUI () {
 		var obj : OFSerializedObject = target as OFSerializedObject;
 		var inScene : boolean = obj.gameObject.activeInHierarchy;
@@ -153,5 +172,9 @@ public class OFSerializedObjectInspector extends Editor {
 		}
 		
 		EditorGUILayout.EndHorizontal ();
+
+		if ( GUI.changed ) {
+			SavePrefab ( target );
+		}
 	}
 }

@@ -2,6 +2,25 @@
 
 @CustomEditor ( OACharacter )
 public class OACharacterInspector extends Editor {
+	private function SavePrefab ( target : UnityEngine.Object ) {
+		var selectedGameObject : GameObject;
+		var selectedPrefabType : PrefabType;
+		var parentGameObject : GameObject;
+		var prefabParent : UnityEngine.Object;
+		     
+		selectedGameObject = Selection.gameObjects[0];
+		selectedPrefabType = PrefabUtility.GetPrefabType(selectedGameObject);
+		parentGameObject = selectedGameObject.transform.root.gameObject;
+		prefabParent = PrefabUtility.GetPrefabParent(selectedGameObject);
+		     
+		EditorUtility.SetDirty(target);
+		     
+		if (selectedPrefabType == PrefabType.PrefabInstance) {
+			PrefabUtility.ReplacePrefab(parentGameObject, prefabParent,
+			ReplacePrefabOptions.ConnectToPrefab);
+	    	}
+	}
+	
 	override function OnInspectorGUI () {
 		var character : OACharacter = target as OACharacter;
 
@@ -41,25 +60,36 @@ public class OACharacterInspector extends Editor {
 
 		EditorGUILayout.Space ();
 		EditorGUILayout.LabelField ( "Conversation", EditorStyles.boldLabel );
-		
-		character.conversationTree = EditorGUILayout.ObjectField ( "Conversation tree", character.conversationTree, typeof ( OCTree ), false ) as OCTree;
-		
-		if ( character.conversationTree != null ) {
-			var rootNodeStrings : String[] = new String[character.conversationTree.rootNodes.Length];
-			for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
-				rootNodeStrings[i] = i.ToString();
-			}
 			
-			character.convoRootNode = EditorGUILayout.Popup ( "Starting root node", character.convoRootNode, rootNodeStrings );	
-	
-			if ( !character.gameObject.activeInHierarchy || character.convoSpeakers.Length != character.conversationTree.speakers.Length ) {
-				character.convoSpeakers = new GameObject [ character.conversationTree.speakers.Length ];
-			}
+		if ( character.gameObject.activeInHierarchy ) {
+			character.conversationTree = EditorGUILayout.ObjectField ( "Conversation tree", character.conversationTree, typeof ( OCTree ), false ) as OCTree;
+		
+			if ( character.conversationTree != null ) {
+				var rootNodeStrings : String[] = new String[character.conversationTree.rootNodes.Length];
+				for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
+					rootNodeStrings[i] = i.ToString();
+				}
+				
+				character.convoRootNode = EditorGUILayout.Popup ( "Starting root node", character.convoRootNode, rootNodeStrings );	
+		
+				if ( !character.gameObject.activeInHierarchy || character.convoSpeakers.Length != character.conversationTree.speakers.Length ) {
+					character.convoSpeakers = new GameObject [ character.conversationTree.speakers.Length ];
+				}
 
-			for ( i = 0; i < character.conversationTree.speakers.Length; i++ ) {
-				character.convoSpeakers[i] = EditorGUILayout.ObjectField ( character.conversationTree.speakers[i].id, character.convoSpeakers[i], typeof ( GameObject ), true ) as GameObject;
-			}
+				for ( i = 0; i < character.conversationTree.speakers.Length; i++ ) {
+					character.convoSpeakers[i] = EditorGUILayout.ObjectField ( character.conversationTree.speakers[i].id, character.convoSpeakers[i], typeof ( GameObject ), true ) as GameObject;
+				}
 
+			}
+		
+		} else {
+			EditorGUILayout.LabelField ( "Conversation trees should only be linked to characters in the scene." );
+			character.conversationTree = null;
+
+		}
+
+		if ( GUI.changed ) {
+			SavePrefab ( target );
 		}
 	}
 }

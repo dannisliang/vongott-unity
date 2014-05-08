@@ -624,6 +624,32 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 153376602}
   m_Mesh: {fileID: 4300004, guid: 2087f368afe8c4906bf80110b5cecf4c, type: 3}
+--- !u!1 &156829038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 156829039}
+  m_Layer: 0
+  m_Name: Misc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &156829039
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 156829038}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 351795170}
 --- !u!1 &170817628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,12 +1361,14 @@ MonoBehaviour:
     parent: {fileID: 1635873999}
   - type: 202
     parent: {fileID: 612219828}
+  - type: 0
+    parent: {fileID: 156829039}
+  - type: 304
+    parent: {fileID: 1099657457}
   transformMode: 0
   gizmoPosition: {fileID: 652171075}
   gizmoRotation: {fileID: 1035447463}
   gizmoScale: {fileID: 1918293503}
-  serializedTransforms:
-  - {fileID: 1635873999}
   focusPoint: {x: 0, y: 0, z: 0}
   selection: []
 --- !u!4 &351795170
@@ -1354,8 +1382,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1635873999}
+  - {fileID: 1099657457}
   - {fileID: 612219828}
   - {fileID: 273476642}
+  - {fileID: 156829039}
   m_Father: {fileID: 0}
 --- !u!114 &351795171
 MonoBehaviour:
@@ -10237,6 +10267,32 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
   m_OcclusionCulling: 1
+--- !u!1 &1099657456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1099657457}
+  m_Layer: 0
+  m_Name: Items
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1099657457
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1099657456}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 351795170}
 --- !u!1 &1112696342
 GameObject:
   m_ObjectHideFlags: 0

@@ -1369,7 +1369,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100098}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: .0383345708, y: -1.48944338e-07, z: 2.93836546e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1381,7 +1381,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100100}
-  m_LocalRotation: {x: .000756177469, y: .000507914403, z: .0118389875, w: .999929488}
+  m_LocalRotation: {x: .000756177527, y: .000507914461, z: .0118389884, w: .999929547}
   m_LocalPosition: {x: -.0383335873, y: -2.4980017e-18, z: 4.41263923e-18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1439,80 +1439,85 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - type: 9
+  - type: 200
     name: Animator
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 9500000}
-  - type: 9
+  - type: 302
     name: OPPathFinder
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400006}
-  - type: 9
+  - type: 203
     name: Transform
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 400078}
-  - type: 9
+  - type: 300
     name: OACharacter
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400004}
-  - type: 9
+  - type: 303
     name: OSInventory
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400008}
   - type: 9
     name: OCTree
@@ -1520,17 +1525,18 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 0}
   id: 
-  prefabPath: Actors/NPC/nsf_jane
+  prefabPath: Prefabs/Actors/NPC/nsf_jane
   exportPath: Dump
 --- !u!114 &11400004
 MonoBehaviour:
@@ -1546,15 +1552,18 @@ MonoBehaviour:
   prefabPath: 
   pathFinder: {fileID: 11400006}
   inventory: {fileID: 11400008}
-  conversationTree: {fileID: 11400000, guid: e2a9dcbae2d256e4bbebe45918b99eac, type: 2}
+  conversationTree: {fileID: 0}
   isEnemy: 0
   player: {fileID: 0}
+  health: 100
   behaviour: 1
   updatePathInterval: 5
   usingWeapons: 1
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 0
   convoRootNode: 0
+  convoSpeakers:
+  - {fileID: 0}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

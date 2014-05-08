@@ -36,15 +36,16 @@ public class OEPreviewCamera extends MonoBehaviour {
 		var go : GameObject = Instantiate ( obj.gameObject ) as GameObject;
 		var tex : OGTexture = obj.texture;
 		var distance : float = 2;
+		var renderer : Renderer = go.GetComponentInChildren.< Renderer > ();
 
 		SetLayerRecursively ( go, this.gameObject.layer );
 		go.transform.eulerAngles = this.transform.eulerAngles + new Vector3 ( 0, 180, 0 );
 		go.transform.position = Vector3.zero;
 		
 		this.transform.eulerAngles = Vector3.zero;
-		
-		if ( go.renderer ) {
-			var b : Bounds = go.renderer.bounds;
+	
+		if ( renderer ) {
+			var b : Bounds = renderer.bounds;
 
 			if ( b.size.x > b.size.y ) {
 				distance = b.size.x;

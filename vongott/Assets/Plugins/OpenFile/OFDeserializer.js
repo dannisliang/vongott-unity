@@ -281,11 +281,13 @@ public class OFDeserializer {
 
 		for ( var slot : JSONObject in input.GetField ( "slots" ).list ) {
 			var s : OSSlot = new OSSlot ();
-			var i : OSItem = Resources.Load ( slot.GetField ( "item" ).GetField ( "prefabPath" ).str ) as OSItem;
-		
-			i.ammunition.value = slot.GetField ( "item" ).GetField ( "ammunition" ).n;
+			var prefabPath : String = slot.GetField ( "item" ).GetField ( "prefabPath" ).str;
+			var go : GameObject = Resources.Load ( prefabPath ) as GameObject;
+			var i : OSItem = go.GetComponent.< OSItem > ();
 
+			i.ammunition.value = slot.GetField ( "item" ).GetField ( "ammunition" ).n;
 			s.item = i;
+
 			s.x = slot.GetField ( "x" ).n;
 			s.y = slot.GetField ( "y" ).n;
 			s.quantity = slot.GetField ( "quantity" ).n;
@@ -302,12 +304,12 @@ public class OFDeserializer {
 
 		var grid : OSGrid = new OSGrid ( inventory );
 
-		grid.width = input.GetField ( "width" ).n;
-		grid.height = input.GetField ( "height" ).n;
+		grid.width = input.GetField ( "grid" ).GetField ( "width" ).n;
+		grid.height = input.GetField ( "grid" ).GetField ( "height" ).n;
 
 		var wallet : List.< OSCurrencyAmount > = new List.< OSCurrencyAmount > ();
 
-		for ( var currency : JSONObject in input.GetField ( "wallet " ).list ) {
+		for ( var currency : JSONObject in input.GetField ( "wallet" ).list ) {
 			var c : OSCurrencyAmount = new OSCurrencyAmount ( currency.GetField ( "index" ).n );
 
 			c.amount = currency.GetField ( "amount" ).n;
@@ -315,7 +317,8 @@ public class OFDeserializer {
 			wallet.Add ( c );
 		}
 
-		inventory.definitions = Resources.Load ( input.GetField ( "definitions" ).str ) as OSDefinitions;
+		var defGO : GameObject = Resources.Load ( input.GetField ( "definitions" ).str ) as GameObject;
+		inventory.definitions = defGO.GetComponent.< OSDefinitions > ();
 		inventory.slots = slots;
 		inventory.quickSlots = quickSlots;
 		inventory.grid = grid;

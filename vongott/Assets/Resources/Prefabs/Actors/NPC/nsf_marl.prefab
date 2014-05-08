@@ -1477,15 +1477,18 @@ MonoBehaviour:
   prefabPath: 
   pathFinder: {fileID: 11400004}
   inventory: {fileID: 11400002}
-  conversationTree: {fileID: 11400000, guid: 52961efc7a966fe4e8b6cdd2d0a3b388, type: 2}
+  conversationTree: {fileID: 0}
   isEnemy: 0
   player: {fileID: 0}
+  health: 100
   behaviour: 1
   updatePathInterval: 5
   usingWeapons: 1
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 0
   convoRootNode: 0
+  convoSpeakers:
+  - {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1498,80 +1501,85 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - type: 9
+  - type: 200
     name: Animator
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 9500000}
-  - type: 9
+  - type: 302
     name: OPPathFinder
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400004}
-  - type: 9
+  - type: 203
     name: Transform
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 400022}
-  - type: 9
+  - type: 300
     name: OACharacter
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400006}
-  - type: 9
+  - type: 303
     name: OSInventory
     b: 0
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400002}
   - type: 9
     name: OCTree
@@ -1579,17 +1587,18 @@ MonoBehaviour:
     str: 
     i: 0
     f: 0
-    v3: {x: 0, y: 0, z: 0}
-    v2: {x: 0, y: 0}
+    vector3: {x: 0, y: 0, z: 0}
+    vector2: {x: 0, y: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 0
       height: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 0}
   id: 
-  prefabPath: Actors/NPC/GenericMale
+  prefabPath: Prefabs/Actors/NPC/nsf_marl
   exportPath: Dump
 --- !u!114 &11400010
 MonoBehaviour:

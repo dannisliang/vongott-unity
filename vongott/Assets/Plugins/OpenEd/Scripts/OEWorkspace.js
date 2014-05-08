@@ -50,7 +50,6 @@ public class OEWorkspace extends MonoBehaviour {
 	public var gizmoPosition : OEGizmo;
 	public var gizmoRotation : OEGizmo;
 	public var gizmoScale : OEGizmo;
-	public var serializedTransforms : Transform[];
 
 	@HideInInspector public var focusPoint : Vector3;
 	@HideInInspector public var selection : List.< OFSerializedObject > = new List.< OFSerializedObject > ();
@@ -69,6 +68,39 @@ public class OEWorkspace extends MonoBehaviour {
 		return instance;
 	}
 
+	// Serialized transforms
+	public function get serializedTransforms () : Transform [] {
+		var tmp : List.< Transform > = new List.< Transform > ();
+
+		for ( var i : int = 0; i < preferredParents.Length; i++ ) {
+			tmp.Add ( preferredParents[i].parent );
+		}
+
+		return tmp.ToArray ();
+	}
+
+	// Strip components
+	public function StripComponents () {
+		for ( var rb : Rigidbody in this.GetComponentsInChildren.< Rigidbody > () ) {
+			rb.isKinematic = true;
+			rb.useGravity = false;
+		}
+	
+		for ( var cc : CharacterController in this.GetComponentsInChildren.< CharacterController > () ) {
+			var capsule : CapsuleCollider = cc.gameObject.AddComponent.< CapsuleCollider > ();
+
+			capsule.center = cc.center;
+			capsule.radius = cc.radius;
+			capsule.height = cc.height;
+
+			cc.enabled = false;
+		}
+		
+		for ( var a : Animator in this.GetComponentsInChildren.< Animator > () ) {
+			a.enabled = false;
+		}
+	}
+
 	// Refresh data
 	public function RefreshAll () {
 		inspector.Refresh ( selection );
@@ -81,6 +113,7 @@ public class OEWorkspace extends MonoBehaviour {
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
 		fileBrowser.callback = function ( file : FileInfo ) {
 			OFReader.LoadChildren ( serializedTransforms, file.FullName );
+			StripComponents ();
 		};
 		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
@@ -279,12 +312,6 @@ public class OEWorkspace extends MonoBehaviour {
 		var obj : OFSerializedObject;
 		
 		if ( go ) {
-			var origScale : Vector3 = go.transform.localScale;
-
-			go.transform.parent = instance.transform;
-			go.transform.localScale = origScale;
-			go.transform.position = focusPoint;
-
 			for ( var c : Component in go.GetComponentsInChildren.< Component > () ) {
 				var rb : Rigidbody = c as Rigidbody;
 				var cc : CharacterController = c as CharacterController;
@@ -310,6 +337,8 @@ public class OEWorkspace extends MonoBehaviour {
 			}
 
 			obj = go.GetComponent.< OFSerializedObject > ();
+
+			PlaceAtCursor ( obj );
 
 			go.name = go.name.Replace ( "(Clone)", "" );
 
