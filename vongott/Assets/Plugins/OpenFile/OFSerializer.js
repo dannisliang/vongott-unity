@@ -70,7 +70,10 @@ public class OFSerializer {
 		
 		var output : JSONObject;
 
-		if ( input.GetType() == typeof ( Transform ) ) {
+		if ( input.GetType() == typeof ( Light ) ) {
+			output = Serialize ( input as Light );
+		
+		} else if ( input.GetType() == typeof ( Transform ) ) {
 			output = Serialize ( input as Transform );
 		
 		} else if ( input.GetType() == typeof ( OCTree ) ) {
@@ -91,6 +94,21 @@ public class OFSerializer {
 			output.AddField ( "_TYPE_", input.GetType().ToString().Replace ( "UnityEngine.", "" ) );
 		}
 
+		return output;
+	}
+
+	// Light
+	public static function Serialize ( input : Light ) : JSONObject {
+		if ( !input ) { return null; }
+		
+		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+
+		output.AddField ( "type", input.type.ToString () );
+		output.AddField ( "range", input.range );
+		output.AddField ( "color", Serialize ( input.color ) );
+		output.AddField ( "intensity", input.intensity );
+		output.AddField ( "shadows", input.shadows.ToString () );
+	
 		return output;
 	}
 

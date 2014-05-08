@@ -6,7 +6,7 @@ class OPAStar {
 	private static var closedList : OPPriorityQueue;
 			
 	// Find a path and return a list of each step
-	public static function Search ( start : OPNode, goal : OPNode, map : OPMap, heuristicWeight : float ) : List.<OPNode> {
+	public static function Search ( start : OPNode, goal : OPNode, map : OPMap, heuristicWeight : float ) : OPNode[] {
 		if ( start == null || goal == null ) {
 			Debug.LogError ( "OPAStar | Either target or goal unspecified. Perhaps the scanner has not been initialised?" );
 			return;
@@ -84,7 +84,7 @@ class OPAStar {
 		if ( !currentNode.Equals ( goal ) ) {
 			//Debug.LogError ( "OpenPath | Path not found!" );
 			// Return the empty array			
-			return new List.<OPNode>();
+			return new OPNode[0];
 		
 		} else {
 			// Path complete			
@@ -103,7 +103,7 @@ class OPAStar {
 	}
 		
 	// Helper function used to build path for AStar search
-	private static function GetPath ( node : OPNode ) : List.<OPNode> {
+	private static function GetPath ( node : OPNode ) : OPNode[] {
 		var path : List.<OPNode> = new List.<OPNode> ();
 		
 		// Traverse the path from goal to start
@@ -113,7 +113,7 @@ class OPAStar {
 			if ( counter > 100 ) {
 				Debug.LogError ( "OpenPath | Screech! Failsafe engaged." );
 				path = null;
-				return new List.<OPNode>();
+				return new OPNode [0];
 			};
 			
 			path.Add  ( node );
@@ -123,7 +123,7 @@ class OPAStar {
 		
 		// Reverse it
 		path.Reverse();
-		return path;
+		return path.ToArray();
 	}
 	
 	// Get straight line distance between two points

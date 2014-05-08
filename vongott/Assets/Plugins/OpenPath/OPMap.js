@@ -7,7 +7,7 @@ public enum OPMapType {
 }
 
 public class OPMap {
-	var nodes : OPNode[] = null;
+	@NonSerialized public var nodes : OPNode[] = null;
 
 	function GetNode ( position : Vector3 ) : OPNode {
 		for ( var node : OPNode in nodes ) {

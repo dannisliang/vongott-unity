@@ -1462,7 +1462,6 @@ MonoBehaviour:
   nodeDistance: 1
   target: {fileID: 0}
   autoChase: 0
-  nodes: []
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1501,7 +1500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - type: 200
+  - type: 10
     name: Animator
     b: 0
     str: 
@@ -1517,7 +1516,7 @@ MonoBehaviour:
       height: 0
     color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 9500000}
-  - type: 302
+  - type: 16
     name: OPPathFinder
     b: 0
     str: 
@@ -1533,7 +1532,7 @@ MonoBehaviour:
       height: 0
     color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400004}
-  - type: 203
+  - type: 13
     name: Transform
     b: 0
     str: 
@@ -1549,7 +1548,7 @@ MonoBehaviour:
       height: 0
     color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 400022}
-  - type: 300
+  - type: 14
     name: OACharacter
     b: 0
     str: 
@@ -1565,7 +1564,7 @@ MonoBehaviour:
       height: 0
     color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400006}
-  - type: 303
+  - type: 17
     name: OSInventory
     b: 0
     str: 

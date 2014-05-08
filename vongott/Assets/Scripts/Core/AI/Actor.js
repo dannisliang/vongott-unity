@@ -414,7 +414,7 @@ class Actor extends InteractiveObject {
 				waiting = true;
 				ClearPath();
 			
-			} else if ( pathFinder.nodes.Count > 0 ) {
+			} else if ( pathFinder.nodes.Length > 0 ) {
 				if ( this.GetComponent(LocalAvoidance) && this.GetComponent(LocalAvoidance).detecting ) {
 					TurnTo ( this.GetComponent(LocalAvoidance).targetDirection );
 				
@@ -615,7 +615,7 @@ class Actor extends InteractiveObject {
 				}
 				
 				// Follow path
-				if ( pathFinder.nodes.Count > 0 ) {
+				if ( pathFinder.nodes.Length > 0 ) {
 					TurnTowards ( ( pathFinder.nodes[pathFinder.currentNode] as OPNode ).position );
 					RunForward ();
 				}

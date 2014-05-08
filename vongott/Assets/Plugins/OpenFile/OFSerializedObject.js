@@ -45,10 +45,9 @@ public class OFField {
 	public var component : Component;
 
 	public static function GetComponentType ( value : Component ) : int {
-		var strings : String [] = System.Enum.GetNames ( OFFieldType );
-		var type : String = value.GetType().ToString().Replace ( "UnityEngine.", "" ); 
+		var newType : String = value.GetType().ToString().Replace ( "UnityEngine.", "" ); 
 		
-		return System.Enum.Parse ( typeof ( OFFieldType ), type );
+		return System.Enum.Parse ( typeof ( OFFieldType ), newType );
 	}
 
 	public function Set ( value : Component ) {

@@ -93,6 +93,12 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Strip components
 	public function StripComponents () {
+		for ( var l : Light in this.GetComponentsInChildren.< Light > () ) {
+			if ( !l.gameObject.GetComponent.< SphereCollider > () ) {
+				l.gameObject.AddComponent.< SphereCollider > ();
+			}
+		}
+
 		for ( var rb : Rigidbody in this.GetComponentsInChildren.< Rigidbody > () ) {
 			rb.isKinematic = true;
 			rb.useGravity = false;
@@ -128,6 +134,7 @@ public class OEWorkspace extends MonoBehaviour {
 			ClearScene ();
 			OFReader.LoadChildren ( serializedTransforms, file.FullName );
 			StripComponents ();
+			RefreshAll ();
 		};
 		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
@@ -268,10 +275,16 @@ public class OEWorkspace extends MonoBehaviour {
 			var additive : boolean = Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift );
 
 			if ( !additive ) {
-				instance.selection.Clear ();
+				selection.Clear ();
+			} 
+			
+			if ( IsSelected ( obj ) ) {
+				selection.Remove ( obj );
+			
+			} else {
+				selection.Add ( obj );
+			
 			}
-
-			instance.selection.Add ( obj );
 
 			RefreshAll ();
 		
@@ -301,6 +314,7 @@ public class OEWorkspace extends MonoBehaviour {
 	public function AddLight () {
 		var obj : OFSerializedObject = new GameObject ( "Light", Light, SphereCollider ).AddComponent.< OFSerializedObject > ();
 		
+		obj.SetField ( "Transform", obj.GetComponent.< Transform > () );
 		obj.SetField ( "Light", obj.GetComponent.< Light > () );
 		PlaceAtCursor ( obj );
 	

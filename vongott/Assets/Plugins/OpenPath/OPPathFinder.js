@@ -8,7 +8,8 @@ class OPPathFinder extends MonoBehaviour {
 	public var nodeDistance : float = 1.0;
 	public var target : Transform;
 	public var autoChase : boolean = false;
-	public var nodes : List.<OPNode> = new List.<OPNode>();
+	
+	@NonSerialized public var nodes : OPNode[] = new OPNode[0];
 	
 	private var goal : Vector3;
 	
@@ -30,7 +31,7 @@ class OPPathFinder extends MonoBehaviour {
 			node.parent = null;
 		}
 		
-		nodes.Clear ();	
+		nodes = new OPNode[0];	
 	}
 	
 	public function GetCurrentNode () : Vector3 {
@@ -65,7 +66,7 @@ class OPPathFinder extends MonoBehaviour {
 					
 		nodes = scanner.FindPath ( start, goal );
 								
-		for ( var i : int = 0; i < nodes.Count; i++ ) {
+		for ( var i : int = 0; i < nodes.Length; i++ ) {
 			nodes[i].active = true;
 		}
 		
@@ -83,8 +84,8 @@ class OPPathFinder extends MonoBehaviour {
 		}
 			
 		// If there are nodes to follow		
-		if ( nodes && nodes.Count > 0 ) {
-			if ( ( transform.position - ( nodes[currentNode] as OPNode ).position ).magnitude < nodeDistance && currentNode < nodes.Count - 1 ) {
+		if ( nodes && nodes.Length > 0 ) {
+			if ( ( transform.position - ( nodes[currentNode] as OPNode ).position ).magnitude < nodeDistance && currentNode < nodes.Length - 1 ) {
 				currentNode++;
 			}
 			

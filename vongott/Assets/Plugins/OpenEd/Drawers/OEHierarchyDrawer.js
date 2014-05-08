@@ -45,7 +45,9 @@ public class OEHierarchyDrawer extends OEDrawer {
 
 	public function Update () {
 		for ( var kvp : KeyValuePair.< GameObject, OGListItem > in updateNames ) {
-			kvp.Value.text = kvp.Key.name;
+			if ( kvp.Key ) {
+				kvp.Value.text = kvp.Key.name;
+			}
 		}
 	}
 

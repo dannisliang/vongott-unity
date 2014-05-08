@@ -77,10 +77,10 @@ class OPScanner extends MonoBehaviour {
 		}
 	}
 	
-	public function FindPath ( start : Vector3, goal : Vector3 ) : List.<OPNode> {
+	public function FindPath ( start : Vector3, goal : Vector3 ) : OPNode[] {
 		var here : OPNode = GetClosestNode ( start );
 		var there : OPNode = GetClosestNode ( goal );
-		var list : List.<OPNode> = OPAStar.Search ( here, there, map, heuristic );
+		var list : OPNode[] = OPAStar.Search ( here, there, map, heuristic );
 	
 		map.Reset ();
 	

@@ -47,7 +47,7 @@ public class OFDeserializer {
 		spawnedObjects.Clear ();
 	}
 
-	private static function ParseEnum ( e : System.Type, s : String ) : int {
+	public static function ParseEnum ( e : System.Type, s : String ) : int {
 		var strings : String[] = System.Enum.GetNames ( e );
 		
 		for ( var i : int = 0; i < strings.Length; i++ ) {
@@ -60,10 +60,19 @@ public class OFDeserializer {
 	}
 
 	public static function CheckComponent ( obj : OFSerializedObject, type : System.Type ) : Component {
+		return CheckComponent ( obj, type, false );
+	}
+
+	public static function CheckComponent ( obj : OFSerializedObject, type : System.Type, forceAdd : boolean ) : Component {
 		var component = obj.gameObject.GetComponent ( type );
 		
 		if ( !component ) {
 			component = obj.gameObject.AddComponent ( type );
+			forceAdd = true;
+		}
+
+		if ( forceAdd ) {
+			obj.SetField ( type.ToString().Replace ( "UnityEngine.", "" ), component );
 		}
 
 		return component;
@@ -119,8 +128,12 @@ public class OFDeserializer {
 			var c : Component;
 			
 			switch ( components.list[i].GetField ( "_TYPE_" ).str ) {
+				case "Light":
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( Light ) ) as Light );
+					break;
+				
 				case "Transform":
-					Deserialize ( components.list[i], output.gameObject.transform );
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( Transform ), true ) as Transform );
 					break;
 
 				case "OACharacter":
@@ -154,6 +167,15 @@ public class OFDeserializer {
 			Deserialize ( input, component as Transform );
 		
 		}
+	}
+	
+	// Light
+	public static function Deserialize ( input : JSONObject, light : Light ) {
+		light.type = ParseEnum ( typeof ( LightType ), input.GetField ( "type" ).str );
+		light.range = input.GetField ( "range" ).n;
+		light.color = DeserializeColor ( input.GetField ( "color" ) );
+		light.intensity = input.GetField ( "intensity" ).n;
+		light.shadows = ParseEnum ( typeof ( LightShadows ), input.GetField ( "shadows" ).str );
 	}
 
 	// Transform
@@ -352,6 +374,18 @@ public class OFDeserializer {
 	/////////////////
 	// Structs
 	/////////////////
+	// Color
+	public static function DeserializeColor ( input : JSONObject ) : Color {
+		var output : Color = new Color ();
+
+		output.r = input.GetField ( "r" ).n;
+		output.g = input.GetField ( "g" ).n;
+		output.b = input.GetField ( "b" ).n;
+		output.a = input.GetField ( "a" ).n;
+
+		return output;
+	}
+	
 	// Vector3
 	public static function DeserializeVector3 ( input : JSONObject ) : Vector3 {
 		var output : Vector3 = new Vector3();
