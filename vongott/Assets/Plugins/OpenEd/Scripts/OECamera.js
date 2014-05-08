@@ -70,25 +70,27 @@ public class OECamera extends MonoBehaviour {
 		materials.light.SetPass ( 0 );
 		
 		for ( var i : int = 0; i < lights.Length; i++ ) {
-			var t : Transform = lights[i].transform;
-			var right : Vector3 = this.transform.right * 0.25;
-			var left : Vector3  = -right;
-			var up : Vector3 = this.transform.up * 0.25;
-			var down : Vector3 = -up;
+			if ( lights[i] ) {
+				var t : Transform = lights[i].transform;
+				var right : Vector3 = this.transform.right * 0.25;
+				var left : Vector3  = -right;
+				var up : Vector3 = this.transform.up * 0.25;
+				var down : Vector3 = -up;
 
-			if ( t != this.transform ) {
-				GL.Color ( lights[i].color );
-				
-				GL.TexCoord2 ( 0, 0 );
-				GL.Vertex ( t.position + left + down );
-				GL.TexCoord2 ( 0, 1 );
-				GL.Vertex ( t.position + left + up );
-				GL.TexCoord2 ( 1, 1 );
-				GL.Vertex ( t.position + right + up );
-				GL.TexCoord2 ( 1, 0 );
-				GL.Vertex ( t.position + right + down );
+				if ( t != this.transform ) {
+					GL.Color ( lights[i].color );
+					
+					GL.TexCoord2 ( 0, 0 );
+					GL.Vertex ( t.position + left + down );
+					GL.TexCoord2 ( 0, 1 );
+					GL.Vertex ( t.position + left + up );
+					GL.TexCoord2 ( 1, 1 );
+					GL.Vertex ( t.position + right + up );
+					GL.TexCoord2 ( 1, 0 );
+					GL.Vertex ( t.position + right + down );
 
-				GL.Color ( Color.white );
+					GL.Color ( Color.white );
+				}
 			}
 		}
 

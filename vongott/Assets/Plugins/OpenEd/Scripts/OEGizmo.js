@@ -27,7 +27,14 @@ public class OEGizmo extends MonoBehaviour {
 		
 		if ( OEWorkspace.GetInstance().selection.Count > 0 ) {
 			for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
-				result += OEWorkspace.GetInstance().selection[i].transform.position;
+				var pos : Vector3 = OEWorkspace.GetInstance().selection[i].transform.position;
+				var renderer : Renderer = OEWorkspace.GetInstance().selection[i].gameObject.GetComponentInChildren.< Renderer > ();
+				
+				if ( renderer ) {
+					pos = renderer.bounds.center;
+				}
+
+				result += pos;
 			}
 
 			result /= OEWorkspace.GetInstance().selection.Count;

@@ -79,6 +79,18 @@ public class OEWorkspace extends MonoBehaviour {
 		return tmp.ToArray ();
 	}
 
+	public function ClearScene () {
+		selection.Clear ();
+		
+		for ( var t : Transform in serializedTransforms ) {
+			for ( var i : int = 0; i < t.childCount; i++ ) {
+				Destroy ( t.GetChild ( i ).gameObject );
+			}
+		}
+
+		RefreshAll ();
+	}
+
 	// Strip components
 	public function StripComponents () {
 		for ( var rb : Rigidbody in this.GetComponentsInChildren.< Rigidbody > () ) {
@@ -103,15 +115,17 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Refresh data
 	public function RefreshAll () {
+		cam.lights = this.GetComponentsInChildren.< Light >();
 		inspector.Refresh ( selection );
 		toolbar.Refresh ();
-		cam.lights = this.GetComponentsInChildren.< Light >();
 	}
 
 	// File I/O
 	public function OpenFile () {
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
+		fileBrowser.filter = ".map";
 		fileBrowser.callback = function ( file : FileInfo ) {
+			ClearScene ();
 			OFReader.LoadChildren ( serializedTransforms, file.FullName );
 			StripComponents ();
 		};
