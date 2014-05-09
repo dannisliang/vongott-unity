@@ -584,8 +584,28 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 
+    - connectedTo: 0b5f0100
       id: 64030
+      type: 1
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: NextPathGoal
+        argument: 
+        object: {fileID: 0}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 89867
       type: 5
       speak:
         speaker: 0

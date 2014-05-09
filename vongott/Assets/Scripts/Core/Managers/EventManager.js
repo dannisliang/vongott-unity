@@ -193,6 +193,15 @@ class EventManager extends MonoBehaviour {
 		GameCamera.GetInstance().inConvo = false;
 	}
 
+	// Actors
+	public function NextPathGoal ( t : OCTree ) {
+		var c : OACharacter = t.gameObject.GetComponent.< OACharacter > ();
+
+		if ( c ) {
+			c.NextPathGoal ();
+		}
+	}
+
 	// Transactions
 	public function GiveItem ( go : GameObject ) {
 		var item : OSItem = go.GetComponent.< OSItem > ();

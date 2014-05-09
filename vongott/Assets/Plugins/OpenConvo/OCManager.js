@@ -28,7 +28,7 @@ public class OCManager extends MonoBehaviour {
 	
 	private function DoCallback ( message : String ) {
 		if ( eventHandler ) {
-			eventHandler.SendMessage ( message, SendMessageOptions.DontRequireReceiver );
+			eventHandler.SendMessage ( message, tree, SendMessageOptions.DontRequireReceiver );
 		}
 	}
 

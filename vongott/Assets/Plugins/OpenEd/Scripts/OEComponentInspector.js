@@ -1,9 +1,34 @@
 ﻿#pragma strict
 
 public class OEField {
-	public var timer : float = 0;
 	public var enabled : boolean = true;
-	public var canSet : boolean = true; // WHAT TO DO ABOUT THIS??
+	
+	private var setCounter : int = 0;
+
+	public function get canSet () : boolean {
+		if ( setCounter > 0 ) {
+			setCounter--;
+		}
+		
+		return setCounter == 0;
+	}
+
+	public function set canSet ( value : boolean ) {
+		setCounter = value ? 2 : -1;
+	}
+
+	public function set canSetForce ( value : boolean ) {
+		setCounter = value ? 0 : -1;
+	}
+
+	public function CheckEnabled ( w : OGWidget [] ) : boolean {
+		for ( var i : int = 0; i < w.Length; i++ ) {
+			w[i].tint.a = enabled ? 1.0 : 0.5;
+			w[i].isDisabled = !enabled;
+		}
+
+		return enabled;
+	}
 }
 
 public class OEVector3Field extends OEField {
@@ -16,11 +41,7 @@ public class OEVector3Field extends OEField {
 	}
 
 	public function Set ( v : Vector3 ) : Vector3 {
-		if ( !enabled ) { return new Vector3(); }
-		
-		x.isDisabled = !enabled;
-		y.isDisabled = !enabled;
-		z.isDisabled = !enabled;
+		if ( !CheckEnabled ( [ x, y, x ] ) ) { return new Vector3(); }
 		
 		if ( !listening ) {
 			x.text = ( Mathf.Round ( v.x * 1000 ) / 1000 ).ToString();
@@ -59,14 +80,9 @@ public class OEColorField extends OEField {
 	}
 
 	public function Set ( c : Color ) : Color {
-		if ( !enabled ) { return new Color(); }
+		if ( !CheckEnabled ( [ r, g, b, a ] ) ) { return new Color(); }
 		
-		r.isDisabled = !enabled;
-		g.isDisabled = !enabled;
-		b.isDisabled = !enabled;
-		a.isDisabled = !enabled;
-		
-		if ( canSet && !listening ) {
+		if ( !listening ) {
 			r.text = ( Mathf.Round ( c.r * 1000 ) / 1000 ).ToString();
 			g.text = ( Mathf.Round ( c.g * 1000 ) / 1000 ).ToString();
 			b.text = ( Mathf.Round ( c.b * 1000 ) / 1000 ).ToString();
@@ -96,6 +112,54 @@ public class OEColorField extends OEField {
 	}
 }
 
+public class OEButton extends OEField {
+	public var button : OGButton;
+
+	public function Set ( func : Function ) {
+		if ( !CheckEnabled ( [ button ] ) ) { 
+			button.func = null;
+		
+		} else {
+			button.func = func;
+		}
+	}
+}
+
+public class OEPointField extends OEField {
+	public var button : OGButton;
+
+	private var pos : Vector3;
+		
+	public function Set ( p : Vector3 ) : Vector3 {
+		if ( !CheckEnabled ( [ button ] ) ) { return Vector3.zero; }
+		
+		if ( canSet ) {
+			pos = p;
+
+			button.func = function () {
+				canSet = false;
+
+				OEWorkspace.GetInstance().PickPoint ( function ( picked : Vector3 ) {
+					picked.x = Mathf.Round ( picked.x * 10 ) / 10;
+					picked.y = Mathf.Round ( picked.y * 10 ) / 10;
+					picked.z = Mathf.Round ( picked.z * 10 ) / 10;
+					
+					pos = picked;
+					canSet = true;
+				} );
+			};
+		}
+
+		return Out ();
+	}
+
+	public function Out () : Vector3 {
+		button.text = pos.x + "," + pos.y + "," + pos.x;
+		
+		return pos;
+	}
+}
+
 public class OEObjectField extends OEField {
 	public var button : OGButton;
 	public var clear : OGButton; 
@@ -104,7 +168,7 @@ public class OEObjectField extends OEField {
 
 	public function Clear () {
 		obj = null;
-		timer = 0.2;
+		canSet = true;
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String ) : Object {
@@ -112,18 +176,20 @@ public class OEObjectField extends OEField {
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject ) : Object {
-		if ( !enabled ) { return null; }
-		
-		button.isDisabled = !enabled;
+		if ( !CheckEnabled ( [ button, clear ] ) ) { return null; }
 		
 		if ( canSet ) {
 			obj = setObj;
 			
 			button.func = function () {
+				canSet = false;
+				
 				OEWorkspace.GetInstance().PickFile ( function ( file : System.IO.FileInfo ) {
 					var json : JSONObject = OFReader.LoadFile ( file.FullName );
 					var so : OFSerializedObject = OFDeserializer.Deserialize ( json, attachTo );
 					obj = so.GetComponent ( sysType );
+
+					canSet = true;
 				}, strType );
 			};
 		}
@@ -132,22 +198,24 @@ public class OEObjectField extends OEField {
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, allowSceneObjects : boolean) : Object {
-		if ( !enabled ) { return null; }
-		
-		button.isDisabled = !enabled;
+		if ( !CheckEnabled ( [ button, clear ] ) ) { return null; }
 		
 		if ( canSet ) {
 			obj = setObj;
 			
 			button.func = function () {
+				canSet = false;
+				
 				if ( allowSceneObjects ) {		
 					OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
 						obj = picked;
+						canSet = true;
 					}, sysType );
 				
 				} else {
 					OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
 						obj = picked;
+						canSet = true;
 					}, sysType );
 				}
 			};
@@ -188,7 +256,7 @@ public class OELabelField extends OEField {
 	public var label : OGLabel;
 
 	public function Set ( text : String ) {
-		label.isDisabled = !enabled;
+		CheckEnabled ( [ label ] );
 
 		label.text = text;
 	}
@@ -198,10 +266,8 @@ public class OEPopup extends OEField {
 	public var popup : OGPopUp;
 
 	public function Set ( selected : int, strings : String [] ) : int {
-		if ( !enabled ) { return 0; }
+		if ( !CheckEnabled ( [ popup ] ) ) { return 0; }
 		
-		popup.isDisabled = !enabled;
-
 		if ( canSet ) {
 			popup.options = strings;
 			if ( strings.Length > 0 ) {
@@ -210,6 +276,8 @@ public class OEPopup extends OEField {
 				popup.selectedOption = "";
 			}
 		}
+		
+		canSetForce = !popup.isUp;
 
 		return Out ();
 	}
@@ -229,12 +297,11 @@ public class OEToggle extends OEField {
 	public var tickbox : OGTickBox;
 
 	public function Set ( isTicked : boolean ) : boolean {
-		if ( !enabled ) { return false; }
-		
-		tickbox.isDisabled = !enabled;
+		if ( !CheckEnabled ( [ tickbox ] ) ) { return false; }
 		
 		if ( canSet ) {
 			tickbox.isTicked = isTicked;
+			canSet = true;
 		}
 
 		return Out ();
@@ -260,10 +327,8 @@ public class OESlider extends OEField {
 	}
 
 	public function Set ( value : float, min : float, max : float ) : float {
-		if ( !enabled ) { return 0; }
+		if ( !CheckEnabled ( [ slider ] ) ) { return 0; }
 		
-		slider.isDisabled = !enabled;
-
 		if ( canSet ) {
 			this.min = min;
 			this.max = max;
@@ -283,11 +348,9 @@ public class OEFloatField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( value : float ) : float {
-		if ( !enabled ) { return 0; }
+		if ( !CheckEnabled ( [ textfield ] ) ) { return 0; }
 		
-		textfield.isDisabled = !enabled;
-		
-		if ( canSet ) {
+		if ( !textfield.listening ) {
 			textfield.text = value.ToString ();
 		}
 
@@ -309,11 +372,9 @@ public class OEIntField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( value : int ) : int {
-		if ( !enabled ) { return 0; }
+		if ( !CheckEnabled ( [ textfield ] ) ) { return 0; }
 		
-		textfield.isDisabled = !enabled;
-		
-		if ( canSet ) {	
+		if ( !textfield.listening ) {	
 			textfield.text = value.ToString ();
 		}
 
@@ -335,14 +396,12 @@ public class OETextField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( string : String ) : String {
-		if ( !enabled ) { return ""; }
+		if ( !CheckEnabled ( [ textfield ] ) ) { return ""; }
 		
-		textfield.isDisabled = !enabled;
-		
-		if ( canSet || textfield.listening ) {
+		if ( !textfield.listening ) {
 			textfield.text = string;
 		}
-
+		
 		return Out ();
 	}
 

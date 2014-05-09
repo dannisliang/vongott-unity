@@ -27,6 +27,26 @@ public class OECamera extends MonoBehaviour {
 		GL.End ();
 	}
 
+	private function DrawPaths () {
+		GL.Begin ( GL.LINES );
+		
+		materials.selection.SetPass ( 0 );
+		
+		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
+			var go : GameObject = OEWorkspace.GetInstance().selection[i].gameObject;
+			var character : OACharacter = go.GetComponent.< OACharacter > ();
+
+			if ( character && character.pathGoals.Length > 1 ) {
+				for ( var l : int = 1; l < character.pathGoals.Length; l++ ) {
+					GL.Vertex ( character.pathGoals[l-1] );
+					GL.Vertex ( character.pathGoals[l] );
+				}
+			}
+		}
+
+		GL.End ();
+	}
+
 	private function DrawSelection () {
 		GL.Begin ( GL.QUADS );
 
@@ -148,6 +168,7 @@ public class OECamera extends MonoBehaviour {
 
 		if ( materials.selection && OEWorkspace.GetInstance().selection.Count > 0 ) {
 			DrawSelection ();
+			DrawPaths ();
 		}
 
 		if ( lights.Length > 0 ) {
@@ -179,6 +200,7 @@ public class OECamera extends MonoBehaviour {
 					}
 
 					var obj : OFSerializedObject;
+					var closest : float;
 					
 					for ( var i : int = 0; i < hits.Length; i++ ) {
 						var axis : OEGizmoAxis = hits[i].collider.gameObject.GetComponent.< OEGizmoAxis> (); 
@@ -188,8 +210,9 @@ public class OECamera extends MonoBehaviour {
 							axis.OnMouseDown ();
 							return;
 						
-						} else if ( hitObj && obj == null || Vector3.Distance ( this.transform.position, hitObj.transform.position ) < Vector3.Distance ( this.transform.position, obj.transform.position ) ) {
+						} else if ( hitObj && obj == null || Vector3.Distance ( this.transform.position, hits[i].point ) < closest ) {
 							obj = hitObj;
+							closest = Vector3.Distance ( this.transform.position, hits[i].point );
 						
 						}
 					}

@@ -4,16 +4,26 @@ public class OECharacterInspector extends OEComponentInspector {
 	public var playerObject : OEObjectField;
 	public var isEnemy : OEToggle;
 	public var behaviour : OEPopup;
-	public var pathUpdate : OEFloatField;
+	
+	// Inventory
 	public var usingWeapons : OEToggle;
 	public var weaponPrefCat : OEPopup;
 	public var weaponPrefSubcat : OEPopup;
+	
+	// Conversation
 	public var convoTree : OEObjectField;
 	public var convoStartNode : OEPopup;
 	public var convoSpeakerIndex : OEPopup;
 	public var convoSpeakerObject : OEObjectField;
-
 	private var currentSpeaker : int = 0;
+	
+	// Path
+	public var pathIndex : OEPopup;
+	public var pathGoal : OEPointField;
+	public var pathUpdate : OEFloatField;
+	public var pathRemove : OEButton;
+	public var pathAdd : OEButton;
+	private var currentPathGoal : int = 0;
 
 	override function Update () {
 		var character : OACharacter = target.GetComponent.< OACharacter >();
@@ -21,8 +31,8 @@ public class OECharacterInspector extends OEComponentInspector {
 		character.player = playerObject.Set ( character.player, typeof ( GameObject ), true ) as GameObject;
 		character.isEnemy = isEnemy.Set ( character.isEnemy );
 		character.behaviour = behaviour.Set ( character.behaviour, System.Enum.GetNames ( typeof ( OABehaviour ) ) );
-		character.updatePathInterval = pathUpdate.Set ( character.updatePathInterval );
 		
+		// Inventory
 		character.usingWeapons = usingWeapons.Set ( character.usingWeapons && character.inventory != null );
 	
 		weaponPrefCat.enabled = character.usingWeapons;
@@ -31,6 +41,7 @@ public class OECharacterInspector extends OEComponentInspector {
 		character.weaponCategoryPreference = weaponPrefCat.Set ( character.weaponCategoryPreference, character.inventory.definitions.GetCategoryStrings () );
 		character.weaponSubcategoryPreference = weaponPrefSubcat.Set ( character.weaponSubcategoryPreference, character.inventory.definitions.GetSubcategoryStrings ( character.weaponCategoryPreference ) );
 
+		// Conversation
 		character.conversationTree = convoTree.Set ( character.conversationTree, typeof ( OCTree ), ".tree", character.GetComponent.< OFSerializedObject > () ) as OCTree;
 
 		var rootNodeStrings : String[] = new String[0];
@@ -67,5 +78,37 @@ public class OECharacterInspector extends OEComponentInspector {
 		}
 
 		character.convoSpeakers[currentSpeaker] = convoSpeakerObject.Set ( character.convoSpeakers[currentSpeaker], typeof ( GameObject ), true ) as GameObject;
+	
+		// Path
+		if ( character.pathGoals.Length < 1 ) {
+			character.pathGoals = new Vector3[1];
+		}
+
+		var pathStrings : String [] = new String [ character.pathGoals.Length ];
+		for ( i = 0; i < character.pathGoals.Length; i++ ) {
+			pathStrings[i] = i.ToString();
+		}
+
+		currentPathGoal = pathIndex.Set ( currentPathGoal, pathStrings );
+		character.pathGoals[currentPathGoal] = pathGoal.Set ( character.pathGoals[currentPathGoal] );
+
+		pathRemove.Set ( function () {
+			if ( character.pathGoals.Length > 1 ) {
+				var tmpGoals : List.< Vector3 > = new List.< Vector3 > ( character.pathGoals );
+				tmpGoals.RemoveAt ( currentPathGoal );
+				currentPathGoal = 0;
+				character.pathGoals = tmpGoals.ToArray ();
+			}
+		} );
+
+		pathAdd.Set ( function () {
+			var tmpGoals : List.< Vector3 > = new List.< Vector3 > ( character.pathGoals );
+			tmpGoals.Add ( character.pathGoals[character.pathGoals.Length-1] );
+			currentPathGoal = tmpGoals.Count - 1;
+			character.pathGoals = tmpGoals.ToArray ();
+		} );
+
+		character.updatePathInterval = pathUpdate.Set ( character.updatePathInterval );
+	
 	}	
 }
