@@ -182,6 +182,14 @@ public class OFSerializer {
 
 						event.AddField ( "message", node.event.message );
 						event.AddField ( "argument", node.event.argument );
+						
+						var prefabPath : String = "";
+						
+						if ( node.event.object && node.event.object.GetComponent.< OFSerializedObject > () ) {
+							prefabPath = node.event.object.GetComponent.< OFSerializedObject > ().prefabPath;
+						}
+
+						event.AddField ( "object", prefabPath );
 
 						n.AddField ( "event", event );
 

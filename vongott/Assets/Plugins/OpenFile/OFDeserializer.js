@@ -246,6 +246,11 @@ public class OFDeserializer {
 
 						event.message = node.GetField ( "event" ).GetField ( "message" ).str;
 						event.argument = node.GetField ( "event" ).GetField ( "argument" ).str;
+						DeferConnection ( function ( so : OFSerializedObject ) {
+							if ( so ) {
+								event.object = so.gameObject;
+							}
+						}, node.GetField ( "event" ).GetField ( "object" ).str );
 
 						n.event = event;
 
