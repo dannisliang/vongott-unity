@@ -79,20 +79,27 @@ public class OFDeserializer {
 	}
 	
 	public static function DeserializeChildren ( input : JSONObject, parent : Transform ) {
-		DeserializeChildren ( input, [ parent ] );
-	}
+		for ( var i : int = 0; i < input.list.Count; i++ ) {
+			var p : JSONObject = input.list[i];
+			var k : String = input.keys[i];
+			var t : Transform;
+		       	var go : GameObject = parent.gameObject.Find ( k );
+			
+			if ( go ) {
+				t = go.transform;
+			}
 
-	public static function DeserializeChildren ( input : JSONObject, parents : Transform[] ) {
-		for ( var i : int = 0; i < parents.Length; i++ ) {
-			if ( input.HasField ( parents[i].gameObject.name ) ) {
-				var t : JSONObject = input.GetField ( parents[i].gameObject.name );
+			if ( !t ) {
+				t = new GameObject ( k ).transform;
+				t.parent = parent;
+				t.position = Vector3.zero;
+			}
 
-				for ( var json : JSONObject in t.list ) {
-					var so : OFSerializedObject = Deserialize ( json );
-					
-					if ( so ) {
-						so.transform.parent = parents[i];
-					}
+			for ( var json : JSONObject in p.list ) {
+				var so : OFSerializedObject = Deserialize ( json );
+				
+				if ( so ) {
+					so.transform.parent = t;
 				}
 			}
 		}

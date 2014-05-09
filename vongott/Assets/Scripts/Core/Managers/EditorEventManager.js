@@ -1,9 +1,11 @@
 ﻿#pragma strict
 
-function Start () {
+public class EditorEventManager extends MonoBehaviour {
+	public function Play () {
+		if ( !String.IsNullOrEmpty ( OEWorkspace.GetInstance().currentSavePath ) ) {
+			GameCore.nextLevel = OEWorkspace.GetInstance().currentSavePath;
 
-}
-
-function Update () {
-
+			Application.LoadLevel ( "game" );
+		}
+	}
 }

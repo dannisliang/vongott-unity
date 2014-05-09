@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: wireframe
-  m_Shader: {fileID: 4800000, guid: d35aa953e2c9d724c9312d809b4d5d20, type: 3}
+  m_Shader: {fileID: 4800000, guid: 15f8c77f2892f4c48a7578b348cf5577, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -25,11 +25,15 @@ Material:
         first:
           name: _LineWidth
         second: .00999999978
+      data:
+        first:
+          name: _Outline
+        second: .00499999989
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .392156869, g: .392156869, b: .392156869, a: 1}
+        second: {r: 1, g: .764705896, b: 0, a: .784313738}
       data:
         first:
           name: _LineColor
@@ -38,3 +42,7 @@ Material:
         first:
           name: _GridColor
         second: {r: 1, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 1, g: 1, b: 1, a: 1}

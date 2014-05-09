@@ -44,8 +44,10 @@ public class OEWorkspace extends MonoBehaviour {
 	public var previewCamera : OEPreviewCamera;
 	public var toolbar : OEToolbar;
 	public var currentMap : String = "";
+	public var currentSavePath : String;
 	
 	public var preferredParents : PreferredParent[];
+	public var metaParent : Transform;
 	public var transformMode : OETransformMode;
 	public var gizmoPosition : OEGizmo;
 	public var gizmoRotation : OEGizmo;
@@ -56,7 +58,6 @@ public class OEWorkspace extends MonoBehaviour {
 
 	private var undoBuffer : List.< OEUndoAction > = new List.< OEUndoAction > ();
 	private var lastUndo : int = -1;
-	private var currentSavePath : String;
 
 	public static var instance : OEWorkspace;
 
@@ -74,6 +75,10 @@ public class OEWorkspace extends MonoBehaviour {
 
 		for ( var i : int = 0; i < preferredParents.Length; i++ ) {
 			tmp.Add ( preferredParents[i].parent );
+		}
+
+		if ( metaParent ) {
+			tmp.Add ( metaParent );
 		}
 
 		return tmp.ToArray ();
@@ -132,7 +137,8 @@ public class OEWorkspace extends MonoBehaviour {
 		fileBrowser.filter = ".map";
 		fileBrowser.callback = function ( file : FileInfo ) {
 			ClearScene ();
-			OFReader.LoadChildren ( serializedTransforms, file.FullName );
+			OFReader.LoadChildren ( this.transform, file.FullName );
+			currentSavePath = file.FullName;
 			StripComponents ();
 			RefreshAll ();
 		};
@@ -302,13 +308,22 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Add
 	public function GetPreferredParent ( obj : OFSerializedObject ) : Transform {
+		var lastResort : Transform = this.transform;
+		
 		for ( var i : int = 0; i < preferredParents.Length; i++ ) {
-			if ( obj.HasFieldType ( preferredParents[i].type ) ) {
+			if ( obj.prefabPath.Contains ( "Meta" ) ) {
+				return metaParent;
+		
+			} else if ( obj.HasFieldType ( preferredParents[i].type ) ) {
 				return preferredParents[i].parent;
+			
+			} else if ( preferredParents[i].type == OFFieldType.None ) {
+				lastResort = preferredParents[i].parent;
+			
 			}
 		}
 
-		return this.transform;
+		return lastResort;
 	}
 	
 	public function AddLight () {

@@ -23,7 +23,7 @@ public class OECharacterInspector extends OEComponentInspector {
 		character.behaviour = behaviour.Set ( character.behaviour, System.Enum.GetNames ( typeof ( OABehaviour ) ) );
 		character.updatePathInterval = pathUpdate.Set ( character.updatePathInterval );
 		
-		character.usingWeapons = usingWeapons.Set ( character.usingWeapons );
+		character.usingWeapons = usingWeapons.Set ( character.usingWeapons && character.inventory != null );
 	
 		weaponPrefCat.enabled = character.usingWeapons;
 		weaponPrefSubcat.enabled = character.usingWeapons;

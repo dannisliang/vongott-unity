@@ -25,6 +25,7 @@ class GameCore extends MonoBehaviour {
 	
 	public var selectedOutlineColor : Color;
 	public var deselectedOutlineColor : Color;
+	public var player : Player;
 
 	// Private vars
 	private var tempCamPos : Vector3;
@@ -37,7 +38,6 @@ class GameCore extends MonoBehaviour {
 	static var interactiveObjectLocked : boolean = false;
 	
 	static var state : eGameState;
-	static var player : Player;
 	static var scanner : OPScanner;
 	
 	static var running = false;
@@ -61,11 +61,11 @@ class GameCore extends MonoBehaviour {
 	// Player
 	////////////////////
 	public static function GetPlayerObject () : GameObject {
-		return player.gameObject;
+		return instance.player.gameObject;
 	}
 	
 	public static function GetPlayer () : Player {
-		return player;
+		return instance.player;
 	}
 
 
@@ -125,23 +125,28 @@ class GameCore extends MonoBehaviour {
 		}
 		
 		// Read .vgmap file
-		currentLevel = Loader.LoadMap ( path );
+		currentLevel = new GameObject ( "Map" );
+		currentLevel.transform.parent = levelContainer;
+		OFReader.LoadChildren ( currentLevel.transform, path );
 		
 		// Nest under level container
 		currentLevel.transform.parent = levelContainer;
 		currentLevel.transform.localPosition = Vector3.zero;
 		
 		// Instantiate and position player
-		GoToSpawnPoint ( spawnPoint );
-
 		yield WaitForEndOfFrame ();
+		
+		GoToSpawnPoint ( spawnPoint );
+		SetPlayerSpeaker ();
 
 		Time.timeScale = 1;
 		
-		MusicManager.GetInstance().LoadCalm ( currentLevelData.musicCalm );	
-		MusicManager.GetInstance().LoadAggressive ( currentLevelData.musicAggressive );	
+		if ( currentLevelData ) {
+			MusicManager.GetInstance().LoadCalm ( currentLevelData.musicCalm );	
+			MusicManager.GetInstance().LoadAggressive ( currentLevelData.musicAggressive );	
 
-		MusicManager.GetInstance().PlayCalm ();
+			MusicManager.GetInstance().PlayCalm ();
+		}
 
 	}
 	
@@ -228,14 +233,21 @@ class GameCore extends MonoBehaviour {
 		return instance.GetComponent.< UpgradeManager > ();
 	}
 
-	// Find player
-	function FindPlayer () {
-		player = GameObject.FindObjectOfType ( Player );
-		Debug.Log ( "GameCore | Found player: " + player );
+	// Set player as "player" speaker
+	public function SetPlayerSpeaker () {
+		for ( var a : OACharacter in levelContainer.GetComponentsInChildren.< OACharacter > () ) {
+			if ( a.conversationTree ) {
+				for ( var i : int = 0; i < a.conversationTree.speakers.Length; i++ ) {
+					if ( a.conversationTree.speakers[i].id == "Player" ) {
+						a.convoSpeakers[i] = player.gameObject;
+					}
+				}
+			}
+		}
 	}
-	
+
 	// Find spawn point
-	public static function GoToSpawnPoint ( s : String ) {
+	public function GoToSpawnPoint ( s : String ) {
 		var currentSpawnPoint : SpawnPoint;
 		
 		Debug.Log ( "GameCore | Searching for SpawnPoint '" + s + "'..." );
@@ -251,6 +263,7 @@ class GameCore extends MonoBehaviour {
 		
 		Debug.Log ( "GameCore | ...failed!" );
 		
+		player.transform.parent = levelContainer;
 		player.transform.position = currentSpawnPoint.transform.position;
 		
 		var newRot : Vector3 = currentSpawnPoint.transform.localEulerAngles;
@@ -293,7 +306,12 @@ class GameCore extends MonoBehaviour {
 		
 		// AStar scanner
 		scanner = this.GetComponent(OPScanner);
-			
+		
+		// Player
+		if ( !player.gameObject.activeInHierarchy ) {
+			player = Instantiate ( player );
+		}	
+
 		// Load level
 		if ( nextLevel != "" ) {
 			StartCoroutine ( LoadLevel ( nextLevel, nextSpawnPoint ) );
@@ -302,9 +320,6 @@ class GameCore extends MonoBehaviour {
 		nextLevel = "";
 		nextSpawnPoint = "";
 		
-		// Player
-		FindPlayer ();
-			
 		// Signal
 		Print ("GameCore | Started");
 		running = true;
@@ -371,10 +386,6 @@ class GameCore extends MonoBehaviour {
 	}
 	
 	function Update () {
-		if ( player == null ) {
-			FindPlayer ();
-		}
-		
 		Time.timeScale = timeScale;
 		
 		if ( timeScale > 0 ) {

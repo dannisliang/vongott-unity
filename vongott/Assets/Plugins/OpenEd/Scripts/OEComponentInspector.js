@@ -27,6 +27,8 @@ public class OEVector3Field extends OEField {
 	}
 
 	public function Set ( v : Vector3 ) : Vector3 {
+		if ( !enabled ) { return new Vector3(); }
+		
 		x.isDisabled = !enabled;
 		y.isDisabled = !enabled;
 		z.isDisabled = !enabled;
@@ -68,6 +70,8 @@ public class OEColorField extends OEField {
 	}
 
 	public function Set ( c : Color ) : Color {
+		if ( !enabled ) { return new Color(); }
+		
 		r.isDisabled = !enabled;
 		g.isDisabled = !enabled;
 		b.isDisabled = !enabled;
@@ -118,6 +122,8 @@ public class OEObjectField extends OEField {
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject ) : Object {
+		if ( !enabled ) { return null; }
+		
 		button.isDisabled = !enabled;
 		
 		if ( canSet ) {
@@ -136,6 +142,8 @@ public class OEObjectField extends OEField {
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, allowSceneObjects : boolean) : Object {
+		if ( !enabled ) { return null; }
+		
 		button.isDisabled = !enabled;
 		
 		if ( canSet ) {
@@ -198,6 +206,8 @@ public class OEPopup extends OEField {
 	public var popup : OGPopUp;
 
 	public function Set ( selected : int, strings : String [] ) : int {
+		if ( !enabled ) { return 0; }
+		
 		popup.isDisabled = !enabled;
 
 		if ( canSet ) {
@@ -227,6 +237,8 @@ public class OEToggle extends OEField {
 	public var tickbox : OGTickBox;
 
 	public function Set ( isTicked : boolean ) : boolean {
+		if ( !enabled ) { return false; }
+		
 		tickbox.isDisabled = !enabled;
 		
 		if ( canSet ) {
@@ -256,6 +268,8 @@ public class OESlider extends OEField {
 	}
 
 	public function Set ( value : float, min : float, max : float ) : float {
+		if ( !enabled ) { return 0; }
+		
 		slider.isDisabled = !enabled;
 
 		if ( canSet ) {
@@ -277,6 +291,8 @@ public class OEFloatField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( value : float ) : float {
+		if ( !enabled ) { return 0; }
+		
 		textfield.isDisabled = !enabled;
 		
 		if ( canSet ) {
@@ -301,6 +317,8 @@ public class OEIntField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( value : int ) : int {
+		if ( !enabled ) { return 0; }
+		
 		textfield.isDisabled = !enabled;
 		
 		if ( canSet ) {	
@@ -325,6 +343,8 @@ public class OETextField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( string : String ) : String {
+		if ( !enabled ) { return ""; }
+		
 		textfield.isDisabled = !enabled;
 		
 		if ( canSet || textfield.listening ) {

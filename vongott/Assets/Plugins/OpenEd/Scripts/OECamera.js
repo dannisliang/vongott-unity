@@ -28,20 +28,60 @@ public class OECamera extends MonoBehaviour {
 	}
 
 	private function DrawSelection () {
-		GL.Begin ( GL.TRIANGLES );
+		GL.Begin ( GL.QUADS );
 
 		materials.selection.SetPass ( 0 );
 
 		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
 			var go : GameObject = OEWorkspace.GetInstance().selection[i].gameObject;
-			var meshFilter : MeshFilter = go.GetComponentInChildren.< MeshFilter > ();
+			var renderer : Renderer = go.GetComponentInChildren.< Renderer > ();
 
-			if ( meshFilter ) {
-				var mesh : Mesh = meshFilter.mesh;
-				var matrix : Matrix4x4 = Matrix4x4.TRS ( go.transform.position, go.transform.rotation, go.transform.lossyScale );
-				for ( var t : int = 0; t < mesh.triangles.Length; t++ ) {
-					GL.Vertex ( matrix.MultiplyPoint3x4 ( mesh.vertices[mesh.triangles[t]] ) );
-				}
+			if ( renderer ) {
+				var b : Bounds = renderer.bounds;
+				
+				var bbl : Vector3 = b.min;
+				var btl : Vector3 = bbl + Vector3.up * b.size.y;
+				var btr : Vector3 = btl + Vector3.right * b.size.x;
+				var bbr : Vector3 = btr - Vector3.up * b.size.y;
+				var fbl : Vector3 = bbl + Vector3.forward * b.size.z;
+				var ftl : Vector3 = fbl + Vector3.up * b.size.y;
+				var ftr : Vector3 = ftl + Vector3.right * b.size.x;
+				var fbr : Vector3 = ftr - Vector3.up * b.size.y;
+
+				GL.Vertex ( bbl );
+				GL.Vertex ( btl );
+				GL.Vertex ( btr );
+				GL.Vertex ( bbr );
+				
+				GL.Vertex ( fbl );
+				GL.Vertex ( ftl );
+				GL.Vertex ( btl );
+				GL.Vertex ( bbl );
+				
+				GL.Vertex ( fbl );
+				GL.Vertex ( ftl );
+				GL.Vertex ( ftr );
+				GL.Vertex ( fbr );
+				
+				GL.Vertex ( fbr );
+				GL.Vertex ( ftr );
+				GL.Vertex ( btr );
+				GL.Vertex ( bbr );
+				
+				GL.Vertex ( btl );
+				GL.Vertex ( ftl );
+				GL.Vertex ( ftr );
+				GL.Vertex ( btr );
+				
+				GL.Vertex ( bbl );
+				GL.Vertex ( fbl );
+				GL.Vertex ( fbr );
+				GL.Vertex ( bbr );
+				
+				//var matrix : Matrix4x4 = Matrix4x4.TRS ( go.transform.position, go.transform.rotation, go.transform.lossyScale );
+				//for ( var t : int = 0; t < mesh.triangles.Length; t++ ) {
+				//	GL.Vertex ( matrix.MultiplyPoint3x4 ( mesh.vertices[mesh.triangles[t]] ) );
+				//}
 			}
 		}
 
@@ -148,7 +188,7 @@ public class OECamera extends MonoBehaviour {
 							axis.OnMouseDown ();
 							return;
 						
-						} else if ( hitObj ) {
+						} else if ( hitObj && obj == null || Vector3.Distance ( this.transform.position, hitObj.transform.position ) < Vector3.Distance ( this.transform.position, obj.transform.position ) ) {
 							obj = hitObj;
 						
 						}

@@ -48,6 +48,7 @@ MonoBehaviour:
   _levelContainer: {fileID: 0}
   selectedOutlineColor: {r: .79411763, g: .79411763, b: .79411763, a: 1}
   deselectedOutlineColor: {r: 0, g: 0, b: 0, a: 1}
+  player: {fileID: 11400000, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
   timeScale: 1
   ignoreTimeScale: 0
   tempTimeScale: 1
@@ -82,8 +83,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   mapType: 2
-  map:
-    nodes: []
   heuristic: 100
   spacing: .5
 --- !u!114 &11400006

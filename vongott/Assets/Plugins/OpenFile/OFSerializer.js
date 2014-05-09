@@ -322,10 +322,19 @@ public class OFSerializer {
 			var speakers : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
 			for ( var i : int = 0; i < input.convoSpeakers.Length; i++ ) {
-				var so : OFSerializedObject = input.convoSpeakers[i].GetComponent.< OFSerializedObject > ();
-				
+				var go : GameObject = input.convoSpeakers[i];
+				var so : OFSerializedObject;
+
+				if ( go ) {
+					so = go.GetComponent.< OFSerializedObject > ();
+				}
+
 				if ( so ) {
 					speakers.Add ( so.id );
+				
+				} else {
+					speakers.Add ( "" );
+				
 				}
 			}
 
