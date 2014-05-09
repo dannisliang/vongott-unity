@@ -3,18 +3,7 @@
 public class OEField {
 	public var timer : float = 0;
 	public var enabled : boolean = true;
-
-	public function get canSet () : boolean {
-		if ( timer <= 0 ) {
-			timer = 0.5;
-			return true;
-		
-		} else {
-			timer -= Time.deltaTime;
-			return false;
-		
-		}
-	}
+	public var canSet : boolean = true; // WHAT TO DO ABOUT THIS??
 }
 
 public class OEVector3Field extends OEField {
@@ -109,12 +98,13 @@ public class OEColorField extends OEField {
 
 public class OEObjectField extends OEField {
 	public var button : OGButton;
+	public var clear : OGButton; 
 
 	private var obj : Object;
 
 	public function Clear () {
 		obj = null;
-		timer = 0;
+		timer = 0.2;
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String ) : Object {
@@ -167,6 +157,8 @@ public class OEObjectField extends OEField {
 	}
 
 	public function Out () : Object {
+		clear.func = Clear;
+		
 		var go : GameObject;
 		
 		if ( obj ) {

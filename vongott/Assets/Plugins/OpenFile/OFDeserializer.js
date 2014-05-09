@@ -371,7 +371,9 @@ public class OFDeserializer {
 			
 			for ( var i : int = 0; i < speakerList.Count; i++ ) {
 				DeferConnection ( function ( so : OFSerializedObject, index : int ) {
-					character.convoSpeakers[index] = so.gameObject;
+					if ( so ) {
+						character.convoSpeakers[index] = so.gameObject;
+					}
 				}, speakerList[i].str, i );
 			}
 		}

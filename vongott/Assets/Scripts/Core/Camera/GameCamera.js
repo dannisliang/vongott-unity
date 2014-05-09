@@ -255,7 +255,7 @@ class GameCamera extends MonoBehaviour {
 
 		var speakers : OCSpeaker[] = GameCore.GetConversationManager().tree.speakers;
 		for ( var i : int = 0; i < speakers.Length; i++ ) {
-			if ( speakers[i].gameObject != currentSpeaker ) {
+			if ( !speakers[i].gameObject && speakers[i].gameObject != currentSpeaker ) {
 				speakers[i].gameObject.transform.LookAt ( currentSpeaker.transform.position );
 			
 			} else {
