@@ -36,9 +36,14 @@ public class OECamera extends MonoBehaviour {
 			var go : GameObject = OEWorkspace.GetInstance().selection[i].gameObject;
 			var character : OACharacter = go.GetComponent.< OACharacter > ();
 
-			if ( character && character.pathGoals.Length > 1 ) {
-				for ( var l : int = 1; l < character.pathGoals.Length; l++ ) {
-					GL.Vertex ( character.pathGoals[l-1] );
+			if ( character && character.pathGoals.Length > 0 ) {
+				for ( var l : int = 0; l < character.pathGoals.Length; l++ ) {
+					if ( l == 0 ) {
+						GL.Vertex ( character.transform.position );
+					} else {
+						GL.Vertex ( character.pathGoals[l-1] );
+					}
+
 					GL.Vertex ( character.pathGoals[l] );
 				}
 			}

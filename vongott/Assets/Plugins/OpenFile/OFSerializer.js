@@ -316,6 +316,12 @@ public class OFSerializer {
 	
 		output.AddField ( "health", input.health );
 
+		// Inventory
+		output.AddField ( "usingWeapons", input.usingWeapons );
+		output.AddField ( "weaponCategoryPreference", input.weaponCategoryPreference );
+		output.AddField ( "weaponSubcategoryPreference", input.weaponSubcategoryPreference );
+
+		// Conversation
 		if ( input.conversationTree ) {
 			output.AddField ( "conversationTree", Serialize ( input.conversationTree ) );
 		
@@ -340,6 +346,17 @@ public class OFSerializer {
 
 			output.AddField ( "convoSpeakers", speakers );
 		}
+
+		// Path
+		output.AddField ( "updatePathInterval", input.updatePathInterval );
+		
+		var pathGoals : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
+		
+		for ( i = 0; i < input.pathGoals.Length; i++ ) {
+			pathGoals.Add ( Serialize ( input.pathGoals[i] ) );
+		}
+
+		output.AddField ( "pathGoals", pathGoals );
 
 		return output;
 	}

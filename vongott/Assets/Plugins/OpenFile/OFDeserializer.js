@@ -357,7 +357,15 @@ public class OFDeserializer {
 	// OACharacter
 	public static function Deserialize ( input : JSONObject, character : OACharacter ) {
 		character.health = input.GetField ( "health" ).n;
-		
+		character.usingWeapons = input.GetField ( "usingWeapons" ).b;
+
+		// Inventory
+		if ( character.usingWeapons ) {
+			character.weaponCategoryPreference = input.GetField ( "weaponCategoryPreference" ).n;
+			character.weaponSubcategoryPreference = input.GetField ( "weaponSubcategoryPreference" ).n;
+		}
+
+		// Conversation
 		if ( input.HasField ( "conversationTree" ) ) {
 			if ( !character.conversationTree ) {
 				character.conversationTree = character.gameObject.AddComponent.< OCTree > ();
@@ -376,6 +384,16 @@ public class OFDeserializer {
 					}
 				}, speakerList[i].str, i );
 			}
+		}
+
+		// Path
+		character.updatePathInterval = input.GetField ( "updatePathInterval" ).n;
+
+		var goalList : List.< JSONObject > = input.GetField ( "pathGoals" ).list;
+
+		character.pathGoals = new Vector3 [ goalList.Count ];
+		for ( i = 0; i < goalList.Count; i++ ) {
+			character.pathGoals[i] = DeserializeVector3 ( goalList[i] );
 		}
 	}
 
