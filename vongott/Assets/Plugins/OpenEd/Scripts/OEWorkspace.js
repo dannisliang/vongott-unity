@@ -355,6 +355,15 @@ public class OEWorkspace extends MonoBehaviour {
 		RefreshAll ();
 	}
 
+	// View
+	public function ToggleWireframe () {
+		cam.wireframe = !cam.wireframe;
+	}
+
+	public function ToggleGizmos () {
+		cam.showGizmos = !cam.showGizmos;
+	}
+
 	// Instatiate
 	public function AddPrefab ( path : String ) : OFSerializedObject {
 		var go : GameObject = Instantiate ( Resources.Load ( path ) ) as GameObject;

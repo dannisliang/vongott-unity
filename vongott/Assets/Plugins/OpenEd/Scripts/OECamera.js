@@ -12,6 +12,8 @@ public class OECamera extends MonoBehaviour {
 	public var panSensitivity : Vector2 = new Vector2 ( 0.2, 0.2 );
 	public var materials : Materials;
 	public var lights : Light [] = new Light[0];
+	public var wireframe : boolean = false;
+	public var showGizmos : boolean = true;
 
 	private function DrawGrid () {
 		GL.Begin ( GL.LINES );
@@ -162,7 +164,13 @@ public class OECamera extends MonoBehaviour {
 		GL.End ();
 	}
 
+	public function OnPreRender () {
+		GL.wireframe = wireframe;
+	}
+
 	public function OnPostRender () {
+		GL.wireframe = false;
+		
 		GL.PushMatrix ();
 		
 		DrawCursor ();
@@ -176,7 +184,7 @@ public class OECamera extends MonoBehaviour {
 			DrawPaths ();
 		}
 
-		if ( lights.Length > 0 ) {
+		if ( showGizmos && lights.Length > 0 ) {
 			DrawLights ();
 		}
 
