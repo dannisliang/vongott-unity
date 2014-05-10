@@ -79,7 +79,7 @@ public class OCManager extends MonoBehaviour {
 					DoCallback ( node.event.message, node.event.object );
 
 				} else {
-					DoCallback ( node.event.message );
+					DoCallback ( node.event.message, tree );
 				
 				}
 
