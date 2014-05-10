@@ -87,7 +87,7 @@ public class OACharacter extends MonoBehaviour {
 		
 	}
 
-	public function Start () {
+	public function UpdateSpeakers () {
 		if ( conversationTree ) {
 			conversationTree.currentRoot = convoRootNode;
 
@@ -95,6 +95,10 @@ public class OACharacter extends MonoBehaviour {
 				conversationTree.speakers[i].gameObject = convoSpeakers[i];
 			}
 		}
+	}
+
+	public function Start () {
+		UpdateSpeakers ();
 	}
 
 	public function Update () {

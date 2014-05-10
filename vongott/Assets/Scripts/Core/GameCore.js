@@ -148,6 +148,8 @@ class GameCore extends MonoBehaviour {
 			MusicManager.GetInstance().PlayCalm ();
 		}
 
+		// Scan navmesh
+		this.GetComponent.< OPScanner > ().Scan ();
 	}
 	
 	
@@ -240,6 +242,7 @@ class GameCore extends MonoBehaviour {
 				for ( var i : int = 0; i < a.conversationTree.speakers.Length; i++ ) {
 					if ( a.conversationTree.speakers[i].id == "Player" ) {
 						a.convoSpeakers[i] = player.gameObject;
+						a.UpdateSpeakers ();
 					}
 				}
 			}

@@ -134,7 +134,6 @@ public class OCManager extends MonoBehaviour {
 
 	public function StartConversation ( tree : OCTree ) {
 		if ( !this.tree && tree && tree.rootNodes.Length > 0 ) {
-
 			this.tree = tree;
 
 			currentNode = tree.rootNodes[tree.currentRoot].firstNode;
