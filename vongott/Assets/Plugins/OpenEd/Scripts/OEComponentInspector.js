@@ -1,9 +1,9 @@
 ﻿#pragma strict
 
 public class OEField {
-	public var enabled : boolean = true;
-	
-	private var setCounter : int = 0;
+	@NonSerialized public var enabled : boolean = true;
+	@NonSerialized public var setCounter : int = 0;
+	@NonSerialized public var scale : Vector2 = new Vector2 ( 140, 16 );
 
 	public function get canSet () : boolean {
 		if ( setCounter > 0 ) {
@@ -16,18 +16,36 @@ public class OEField {
 	public function set canSet ( value : boolean ) {
 		setCounter = value ? 2 : -1;
 	}
+	
+	public function Update ( text : String, pos : Vector2, scale : Vector2 ) {}
 
-	public function set canSetForce ( value : boolean ) {
-		setCounter = value ? 0 : -1;
-	}
+	public function Destroy () {}
 
-	public function CheckEnabled ( w : OGWidget [] ) : boolean {
-		for ( var i : int = 0; i < w.Length; i++ ) {
-			w[i].tint.a = enabled ? 1.0 : 0.5;
-			w[i].isDisabled = !enabled;
+	public static function New ( type : System.Type, transform : Transform ) : OEField {
+		if ( type == typeof ( OEToggle ) ) {
+			return new OEToggle ( transform );
+		
+		} else if ( type == typeof ( OEFloatField ) ) {
+			return new OEFloatField ( transform );
+		
+		} else if ( type == typeof ( OEObjectField ) ) {
+			return new OEObjectField ( transform );
+		
+		} else if ( type == typeof ( OEButton ) ) {
+			return new OEButton ( transform );
+		
+		} else if ( type == typeof ( OEVector3Field ) ) {
+			return new OEVector3Field ( transform );
+		
+		} else if ( type == typeof ( OEPopup ) ) {
+			return new OEPopup ( transform );
+		
+		} else if ( type == typeof ( OEPointField ) ) {
+			return new OEPointField ( transform );
+		
 		}
 
-		return enabled;
+		return null;	
 	}
 }
 
@@ -35,14 +53,76 @@ public class OEVector3Field extends OEField {
 	public var x : OGTextField;
 	public var y : OGTextField;
 	public var z : OGTextField;
+	public var title : OGLabel;
+
+	function OEVector3Field ( parent : Transform ) {
+		x = new GameObject ( "fld_X" ).AddComponent.< OGTextField > ();
+		y = new GameObject ( "fld_Y" ).AddComponent.< OGTextField > ();
+		z = new GameObject ( "fld_Z" ).AddComponent.< OGTextField > ();
+		title = new GameObject ( "lbl_Vector3" ).AddComponent.< OGLabel > ();
+
+		x.transform.parent = parent;
+		y.transform.parent = parent;
+		z.transform.parent = parent;
+		title.transform.parent = parent;
+		
+		x.ApplyDefaultStyles ();
+		y.ApplyDefaultStyles ();
+		z.ApplyDefaultStyles ();
+		title.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( x.gameObject );
+		MonoBehaviour.Destroy ( y.gameObject );
+		MonoBehaviour.Destroy ( z.gameObject );
+		MonoBehaviour.Destroy ( title.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+		title.tint.a = enabled ? 1.0 : 0.5;
+		
+		x.tint.a = enabled ? 1.0 : 0.5;
+		x.isDisabled = !enabled;
+		
+		y.tint.a = enabled ? 1.0 : 0.5;
+		y.isDisabled = !enabled;
+		
+		z.tint.a = enabled ? 1.0 : 0.5;
+		z.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			
+			x.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			x.transform.localScale = new Vector3 ( scale.x / 6, scale.y, 1 );
+
+			y.transform.localPosition = new Vector3 ( pos.x + scale.x / 2 + scale.x / 6, pos.y, 0 );
+			y.transform.localScale = new Vector3 ( scale.x / 6, scale.y, 1 );
+			
+			z.transform.localPosition = new Vector3 ( pos.x + scale.x / 2 + ( ( scale.x / 6 ) * 2 ), pos.y, 0 );
+			z.transform.localScale = new Vector3 ( scale.x / 6, scale.y, 1 );
+
+		} else {
+			x.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			x.transform.localScale = new Vector3 ( scale.x / 3, scale.y, 1 );
+
+			y.transform.localPosition = new Vector3 ( pos.x + scale.x / 3, pos.y, 0 );
+			y.transform.localScale = new Vector3 ( scale.x / 3, scale.y, 1 );
+			
+			z.transform.localPosition = new Vector3 ( pos.x + ( ( scale.x / 3 ) * 2 ), pos.y, 0 );
+			z.transform.localScale = new Vector3 ( scale.x / 3, scale.y, 1 );
+
+		}
+	}
 
 	public function get listening () : boolean {
 		return x.listening || y.listening || z.listening;
 	}
 
 	public function Set ( v : Vector3 ) : Vector3 {
-		if ( !CheckEnabled ( [ x, y, x ] ) ) { return new Vector3(); }
-		
 		if ( !listening ) {
 			x.text = ( Mathf.Round ( v.x * 1000 ) / 1000 ).ToString();
 			y.text = ( Mathf.Round ( v.y * 1000 ) / 1000 ).ToString();
@@ -80,8 +160,6 @@ public class OEColorField extends OEField {
 	}
 
 	public function Set ( c : Color ) : Color {
-		if ( !CheckEnabled ( [ r, g, b, a ] ) ) { return new Color(); }
-		
 		if ( !listening ) {
 			r.text = ( Mathf.Round ( c.r * 1000 ) / 1000 ).ToString();
 			g.text = ( Mathf.Round ( c.g * 1000 ) / 1000 ).ToString();
@@ -115,24 +193,72 @@ public class OEColorField extends OEField {
 public class OEButton extends OEField {
 	public var button : OGButton;
 
+	function OEButton ( parent : Transform ) {
+		button = new GameObject ( "btn_Button" ).AddComponent.< OGButton > ();
+		button.transform.parent = parent;
+		button.ApplyDefaultStyles ();
+	}
+	
+	override function Destroy () {
+		MonoBehaviour.Destroy ( button.gameObject );
+	}
+	
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		button.text = text;
+		button.tint.a = enabled ? 1.0 : 0.5;
+		button.isDisabled = !enabled;
+
+		button.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+		button.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+	}
+
 	public function Set ( func : Function ) {
-		if ( !CheckEnabled ( [ button ] ) ) { 
-			button.func = null;
-		
-		} else {
-			button.func = func;
-		}
+		button.func = func;
 	}
 }
 
 public class OEPointField extends OEField {
 	public var button : OGButton;
+	public var title : OGLabel;
 
 	private var pos : Vector3;
+	
+	function OEPointField ( parent : Transform ) {
+		title = new GameObject ( "lbl_Point" ).AddComponent.< OGLabel > ();
+		button = new GameObject ( "btn_Point" ).AddComponent.< OGButton > ();
+
+		title.transform.parent = parent;
+		button.transform.parent = parent;
+		
+		title.ApplyDefaultStyles ();
+		button.ApplyDefaultStyles ();
+	}
+	
+	override function Destroy () {
+		MonoBehaviour.Destroy ( title.gameObject );
+		MonoBehaviour.Destroy ( button.gameObject );
+	}
+	
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+
+		title.tint.a = enabled ? 1.0 : 0.5;
+		button.tint.a = enabled ? 1.0 : 0.5;
+		button.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			button.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			button.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+		
+		} else {
+			button.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			button.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+		}
+	}
 		
 	public function Set ( p : Vector3 ) : Vector3 {
-		if ( !CheckEnabled ( [ button ] ) ) { return Vector3.zero; }
-		
 		if ( canSet ) {
 			pos = p;
 
@@ -161,10 +287,59 @@ public class OEPointField extends OEField {
 }
 
 public class OEObjectField extends OEField {
+	public var title : OGLabel;
 	public var button : OGButton;
 	public var clear : OGButton; 
 
 	private var obj : Object;
+
+	function OEObjectField ( parent : Transform ) {
+		title = new GameObject ( "lbl_Object" ).AddComponent.< OGLabel > ();
+		button = new GameObject ( "btn_Object" ).AddComponent.< OGButton > ();
+		clear = new GameObject ( "btn_Clear" ).AddComponent.< OGButton > ();
+
+		title.transform.parent = parent;
+		button.transform.parent = parent;
+		clear.transform.parent = parent;
+		
+		title.ApplyDefaultStyles ();
+		button.ApplyDefaultStyles ();
+		clear.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( title.gameObject );
+		MonoBehaviour.Destroy ( button.gameObject );
+		MonoBehaviour.Destroy ( clear.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+		clear.text = "x";
+		clear.tint = Color.red;
+
+		title.tint.a = enabled ? 1.0 : 0.5;
+		button.tint.a = enabled ? 1.0 : 0.5;
+		button.isDisabled = !enabled;
+		clear.tint.a = enabled ? 1.0 : 0.5;
+		clear.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			button.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			button.transform.localScale = new Vector3 ( scale.x / 2 - ( scale.y + 5 ), scale.y, 1 );
+			clear.transform.localPosition = new Vector3 ( pos.x + scale.x - scale.y, pos.y, 0 );
+			clear.transform.localScale = new Vector3 ( scale.y, scale.y, 1 );
+		
+		} else {
+			button.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			button.transform.localScale = new Vector3 ( scale.x - ( scale.y + 5 ), scale.y, 1 );
+			clear.transform.localPosition = new Vector3 ( pos.x + scale.x - scale.y, pos.y, 0 );
+			clear.transform.localScale = new Vector3 ( scale.y, scale.y, 1 );
+		
+		}
+	}
 
 	public function Clear () {
 		obj = null;
@@ -176,50 +351,46 @@ public class OEObjectField extends OEField {
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject ) : Object {
-		if ( !CheckEnabled ( [ button, clear ] ) ) { return null; }
-		
 		if ( canSet ) {
 			obj = setObj;
-			
-			button.func = function () {
-				canSet = false;
-				
-				OEWorkspace.GetInstance().PickFile ( function ( file : System.IO.FileInfo ) {
-					var json : JSONObject = OFReader.LoadFile ( file.FullName );
-					var so : OFSerializedObject = OFDeserializer.Deserialize ( json, attachTo );
-					obj = so.GetComponent ( sysType );
-
-					canSet = true;
-				}, strType );
-			};
 		}
+		
+		button.func = function () {
+			canSet = false;
+			
+			OEWorkspace.GetInstance().PickFile ( function ( file : System.IO.FileInfo ) {
+				var json : JSONObject = OFReader.LoadFile ( file.FullName );
+				var so : OFSerializedObject = OFDeserializer.Deserialize ( json, attachTo );
+				obj = so.GetComponent ( sysType );
+
+				canSet = true;
+			}, strType );
+		};
 
 		return Out ();
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, allowSceneObjects : boolean) : Object {
-		if ( !CheckEnabled ( [ button, clear ] ) ) { return null; }
-		
 		if ( canSet ) {
 			obj = setObj;
-			
-			button.func = function () {
-				canSet = false;
-				
-				if ( allowSceneObjects ) {		
-					OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
-						obj = picked;
-						canSet = true;
-					}, sysType );
-				
-				} else {
-					OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
-						obj = picked;
-						canSet = true;
-					}, sysType );
-				}
-			};
 		}
+		
+		button.func = function () {
+			canSet = false;
+			
+			if ( allowSceneObjects ) {		
+				OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
+					obj = picked;
+					canSet = true;
+				}, sysType );
+			
+			} else {
+				OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
+					obj = picked;
+					canSet = true;
+				}, sysType );
+			}
+		};
 
 		return Out ();
 	}
@@ -256,18 +427,52 @@ public class OELabelField extends OEField {
 	public var label : OGLabel;
 
 	public function Set ( text : String ) {
-		CheckEnabled ( [ label ] );
-
 		label.text = text;
 	}
 }
 
 public class OEPopup extends OEField {
 	public var popup : OGPopUp;
+	public var title : OGLabel;
 
-	public function Set ( selected : int, strings : String [] ) : int {
-		if ( !CheckEnabled ( [ popup ] ) ) { return 0; }
+	function OEPopup ( parent : Transform ) {
+		popup = new GameObject ( "pop_Popup" ).AddComponent.< OGPopUp > ();
+		title = new GameObject ( "lbl_Popup" ).AddComponent.< OGLabel > ();
+
+		popup.transform.parent = parent;
+		title.transform.parent = parent;
 		
+		popup.ApplyDefaultStyles ();
+		title.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( popup.gameObject );
+		MonoBehaviour.Destroy ( title.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+		popup.title = "< " + text.ToLower() + " >";
+		
+		title.tint.a = enabled ? 1.0 : 0.5;
+		popup.tint.a = enabled ? 1.0 : 0.5;
+		popup.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			popup.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			popup.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+		
+		} else {
+			popup.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			popup.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+		
+		}
+	}
+	
+	public function Set ( selected : int, strings : String [] ) : int {
 		if ( canSet ) {
 			popup.options = strings;
 			if ( strings.Length > 0 ) {
@@ -277,7 +482,7 @@ public class OEPopup extends OEField {
 			}
 		}
 		
-		canSetForce = !popup.isUp;
+		setCounter = popup.isUp ? -1 : 0;
 
 		return Out ();
 	}
@@ -296,9 +501,28 @@ public class OEPopup extends OEField {
 public class OEToggle extends OEField {
 	public var tickbox : OGTickBox;
 
-	public function Set ( isTicked : boolean ) : boolean {
-		if ( !CheckEnabled ( [ tickbox ] ) ) { return false; }
+	function OEToggle ( parent : Transform ) {
+		tickbox = new GameObject ( "tbx_Toggle" ).AddComponent.< OGTickBox > ();
 		
+		tickbox.transform.parent = parent;
+			
+		tickbox.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( tickbox.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		tickbox.tint.a = enabled ? 1.0 : 0.5;
+		tickbox.isDisabled = !enabled;
+		
+		tickbox.text = text;
+		tickbox.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+		tickbox.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+	}
+
+	public function Set ( isTicked : boolean ) : boolean {
 		if ( canSet ) {
 			tickbox.isTicked = isTicked;
 			canSet = true;
@@ -327,8 +551,6 @@ public class OESlider extends OEField {
 	}
 
 	public function Set ( value : float, min : float, max : float ) : float {
-		if ( !CheckEnabled ( [ slider ] ) ) { return 0; }
-		
 		if ( canSet ) {
 			this.min = min;
 			this.max = max;
@@ -346,10 +568,45 @@ public class OESlider extends OEField {
 
 public class OEFloatField extends OEField {
 	public var textfield : OGTextField;
+	public var title : OGLabel;
+
+	function OEFloatField ( parent : Transform ) {
+		textfield = new GameObject ( "fld_Float" ).AddComponent.< OGTextField > ();
+		title = new GameObject ( "lbl_Float" ).AddComponent.< OGLabel > ();
+
+		textfield.transform.parent = parent;
+		title.transform.parent = parent;
+		
+		textfield.ApplyDefaultStyles ();
+		title.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( textfield.gameObject );
+		MonoBehaviour.Destroy ( title.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+		
+		title.tint.a = enabled ? 1.0 : 0.5;
+		textfield.tint.a = enabled ? 1.0 : 0.5;
+		textfield.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			textfield.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			textfield.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+		
+		} else {
+			textfield.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			textfield.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+		
+		}
+	}
 
 	public function Set ( value : float ) : float {
-		if ( !CheckEnabled ( [ textfield ] ) ) { return 0; }
-		
 		if ( !textfield.listening ) {
 			textfield.text = value.ToString ();
 		}
@@ -372,8 +629,6 @@ public class OEIntField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( value : int ) : int {
-		if ( !CheckEnabled ( [ textfield ] ) ) { return 0; }
-		
 		if ( !textfield.listening ) {	
 			textfield.text = value.ToString ();
 		}
@@ -396,8 +651,6 @@ public class OETextField extends OEField {
 	public var textfield : OGTextField;
 
 	public function Set ( string : String ) : String {
-		if ( !CheckEnabled ( [ textfield ] ) ) { return ""; }
-		
 		if ( !textfield.listening ) {
 			textfield.text = string;
 		}
@@ -414,24 +667,191 @@ public class OETextField extends OEField {
 
 public class OEComponentInspector extends MonoBehaviour {
 	public var type : OFFieldType;
-	@HideInInspector public var target : OFSerializedObject;
+	@NonSerialized public var target : OFSerializedObject;
+	@NonSerialized public var offset : Vector2;
+
+	private var fields : OEField[] = new OEField[100];
+	private var fieldCounter : int = 0;
+	private var disabled : boolean = false;;
 
 	public function get typeId () : String {
 		return type.ToString();
 	}
 
-	public function Out () {}
-	
-	public function In () {}
-
 	public function Init ( obj : OFSerializedObject ) {
 		target = obj;
-		In ();
+	}
+
+	public function Inspector () {}
+
+	// Clean up
+	public function CleanUp () {
+		for ( var i : int = fieldCounter; i < fields.Length; i++ ) {
+			if ( fields[i] ) {
+				fields[i].Destroy ();
+				fields[i] = null;
+			}
+		}
+	}
+
+	// Disable fields
+	public function BeginDisabled ( b : boolean ) {
+		disabled = b;
+	}
+
+	public function EndDisabled () {
+		disabled = false;
+	}
+
+	private function CheckField ( type : System.Type ) : OEField {
+		if ( fields [ fieldCounter ] ) {
+			if ( fields [ fieldCounter ].GetType() != type ) {
+				fields [ fieldCounter ].Destroy ();
+				fields [ fieldCounter ] = OEField.New ( type, this.transform );
+			}
+		
+		} else {
+			fields [ fieldCounter ] = OEField.New ( type, this.transform );
+
+		}
+		
+		return fields [ fieldCounter ];
+	}
+
+	// Space
+	public function Offset ( x : float, y : float ) {
+		offset.x += x;
+		offset.y += y;
+	}
+
+	// OEObjectField
+	public function ObjectField ( text : String, input : Object, sysType : System.Type, strType : String ) : Object {
+		offset.y += 20;
+		return ObjectField ( text, input, sysType, strType, null );
 	}
 	
+	public function ObjectField ( text : String, input : Object, sysType : System.Type, strType : String, rect : Rect ) : Object {
+		return ObjectField ( text, input, sysType, strType, null, rect );
+	}
+
+	public function ObjectField ( text : String, input : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject ) : Object {
+		offset.y += 20;
+		return ObjectField ( text, input, sysType, strType, attachTo, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+	}
+
+	public function ObjectField ( text : String, input : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject, rect : Rect ) : Object {
+		var objectField : OEObjectField = CheckField ( typeof ( OEObjectField ) ) as OEObjectField;
+		objectField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		objectField.enabled = !disabled;
+		fieldCounter++;
+		return objectField.Set ( input, sysType, strType, attachTo );
+	}
+	
+	public function ObjectField ( text : String, input : Object, type : System.Type, allowSceneObjects : boolean ) : Object {
+		offset.y += 20;
+		return ObjectField ( text, input, type, allowSceneObjects, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+	}
+
+	public function ObjectField ( text : String, input : Object, type : System.Type, allowSceneObjects : boolean, rect : Rect ) : Object {
+		var objectField : OEObjectField = CheckField ( typeof ( OEObjectField ) ) as OEObjectField;
+		objectField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		objectField.enabled = !disabled;
+		fieldCounter++;
+		return objectField.Set ( input, type, allowSceneObjects );
+	}
+	
+	// OEVector3Field
+	public function Vector3Field ( text : String, input : Vector3 ) : Vector3 {
+		offset.y += 20;
+		return Vector3Field ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+	}
+
+	public function Vector3Field ( text : String, input : Vector3, rect : Rect ) : Vector3 {
+		var vector3Field : OEVector3Field = CheckField ( typeof ( OEVector3Field ) ) as OEVector3Field;
+		vector3Field.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		vector3Field.enabled = !disabled;
+		fieldCounter++;
+		return vector3Field.Set ( input );
+	}
+
+	// OEFloatField
+	public function FloatField ( text : String, input : float ) : float {
+		offset.y += 20;
+		return FloatField ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+	}
+
+	public function FloatField ( text : String, input : float, rect : Rect ) : float {
+		var floatField : OEFloatField = CheckField ( typeof ( OEFloatField ) ) as OEFloatField;
+		floatField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		floatField.enabled = !disabled;
+		fieldCounter++;
+		return floatField.Set ( input );
+	}
+
+	// OEButton
+	public function Button ( text : String, input : Function ) {
+		offset.y += 20;
+		Button ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+	}
+
+	public function Button ( text : String, input : Function, rect : Rect ) {
+		var button : OEButton = CheckField ( typeof ( OEButton ) ) as OEButton;
+		button.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		button.enabled = !disabled;
+		fieldCounter++;
+		button.Set ( input );
+	}
+
+	// OEPopup
+	public function Popup ( text : String, input : int, strings : String[] ) : int {
+		offset.y += 20;
+		return Popup ( text, input, strings, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+	}
+	
+	public function Popup ( text : String, input : int, strings : String[], rect : Rect ) : int {
+		var popup : OEPopup = CheckField ( typeof ( OEPopup ) ) as OEPopup;
+		popup.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		popup.enabled = !disabled;
+		fieldCounter++;
+		return popup.Set ( input, strings );
+	}
+
+	// OEPointField
+	public function PointField ( text : String, input : Vector3 ) : Vector3 {
+		offset.y += 20;
+		return PointField ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+	}
+
+	public function PointField ( text : String, input : Vector3, rect : Rect ) : Vector3 {
+		var pointField : OEPointField = CheckField ( typeof ( OEPointField ) ) as OEPointField;
+		pointField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		pointField.enabled = !disabled;
+		fieldCounter++;
+		return pointField.Set ( input );
+	}
+
+	// OEToggle
+	public function Toggle ( text : String, input : boolean ) : boolean {
+		offset.y += 20;
+		return Toggle ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+	}
+	
+	public function Toggle ( text : String, input : boolean, rect : Rect ) : boolean {
+		var toggle : OEToggle = CheckField ( typeof ( OEToggle ) ) as OEToggle;
+		toggle.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		toggle.enabled = !disabled;
+		fieldCounter++;
+		return toggle.Set ( input );
+	}
+
 	public function Update () {
+		fieldCounter = 0;
+		offset = new Vector2 ( 0, -20 );
+
        		if ( target ) {
-			Out ();
+			Inspector ();
 		}
+
+		CleanUp ();
 	}
 }

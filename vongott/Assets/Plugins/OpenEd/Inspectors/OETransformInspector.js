@@ -1,18 +1,18 @@
 ﻿#pragma strict
 
 public class OETransformInspector extends OEComponentInspector {
-	public var position : OEVector3Field;
-	public var rotation : OEVector3Field;
-	public var scale : OEVector3Field;
+	override function Inspector () {
+		var t : Transform = target.transform;
 
-	override function Update () {
-		if ( target ) {
-			var t : Transform = target.transform;
+		Button ( "P", ResetPosition, new Rect ( 0, 0, 20, 16 ) );
+		Button ( "R", ResetRotation, new Rect ( 0, 20, 20, 16 ) );
+		Button ( "S", ResetScale, new Rect ( 0, 40, 20, 16 ) );
 
-			t.localPosition = position.Set ( t.localPosition );
-			t.localEulerAngles = rotation.Set ( t.localEulerAngles );
-			t.localScale = scale.Set ( t.localScale );
-		}
+		Offset ( 25, 0 );
+
+		t.localPosition = Vector3Field ( "", t.localPosition );
+		t.localEulerAngles = Vector3Field ( "", t.localEulerAngles );
+		t.localScale = Vector3Field ( "", t.localScale );
 	}
 
 	public function ResetPosition () {
