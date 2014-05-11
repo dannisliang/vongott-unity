@@ -33,7 +33,11 @@ public class OEUndoAction {
 
 public class OEWorkspace extends MonoBehaviour {
 	private class PreferredParent {
-		public var type : OFFieldType;
+		public function get type () : System.Type {
+			return OFField.GetTypeByIndex ( typeIndex );
+		}
+		
+		public var typeIndex : int = -1;
 		public var parent : Transform;
 	}
 	
@@ -46,8 +50,9 @@ public class OEWorkspace extends MonoBehaviour {
 	public var currentMap : String = "";
 	public var currentSavePath : String;
 	
-	public var preferredParents : PreferredParent[];
+	@HideInInspector public var preferredParents : PreferredParent[];
 	public var metaParent : Transform;
+	public var miscParent : Transform;
 	public var transformMode : OETransformMode;
 	public var gizmoPosition : OEGizmo;
 	public var gizmoRotation : OEGizmo;
@@ -71,17 +76,13 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Serialized transforms
 	public function get serializedTransforms () : Transform [] {
-		var tmp : List.< Transform > = new List.< Transform > ();
+		var tmp : Transform[] = new Transform [ this.transform.childCount ];
 
-		for ( var i : int = 0; i < preferredParents.Length; i++ ) {
-			tmp.Add ( preferredParents[i].parent );
+		for ( var i : int = 0; i < tmp.Length; i++ ) {
+			tmp[i] = this.transform.GetChild ( i );
 		}
 
-		if ( metaParent ) {
-			tmp.Add ( metaParent );
-		}
-
-		return tmp.ToArray ();
+		return tmp;
 	}
 
 	public function ClearScene () {
@@ -314,8 +315,6 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Add
 	public function GetPreferredParent ( obj : OFSerializedObject ) : Transform {
-		var lastResort : Transform = this.transform;
-		
 		for ( var i : int = 0; i < preferredParents.Length; i++ ) {
 			if ( obj.prefabPath.Contains ( "Meta" ) ) {
 				return metaParent;
@@ -323,13 +322,10 @@ public class OEWorkspace extends MonoBehaviour {
 			} else if ( obj.HasFieldType ( preferredParents[i].type ) ) {
 				return preferredParents[i].parent;
 			
-			} else if ( preferredParents[i].type == OFFieldType.None ) {
-				lastResort = preferredParents[i].parent;
-			
 			}
 		}
 
-		return lastResort;
+		return miscParent;
 	}
 	
 	public function AddLight () {

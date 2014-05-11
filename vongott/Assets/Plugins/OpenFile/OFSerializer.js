@@ -3,6 +3,20 @@
 public class OFSerializer extends MonoBehaviour {
 	private static var plugins : OFPlugin[];
 	
+	public static function GetPlugin ( type : System.Type ) : OFPlugin {
+		if ( !plugins ) {
+			plugins = OFReflector.GetPlugins ();
+		}
+		
+		for ( var i : int = 0; i < plugins.Length; i++ ) {
+			if ( plugins[i].CheckType ( type ) ) {
+				return plugins[i];
+			}
+		}
+
+		return null;
+	}
+
 	public static function CanSerialize ( type : System.Type ) : boolean {
 		return CanSerialize ( type.ToString () );
 	}
@@ -10,7 +24,7 @@ public class OFSerializer extends MonoBehaviour {
 	public static function CanSerialize ( type : String ) : boolean {
 		var str : String = type;
 		str = str.Replace ( "UnityEngine.", "" );
-		var strings : String[] = System.Enum.GetNames ( OFFieldType );
+		var strings : String[] = OFField.GetTypeStrings ();
 
 		for ( var i : int = 0; i < strings.Length; i++ ) {
 			if ( strings[i] == str ) {

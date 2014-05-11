@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
-public class OFReflector {
-	public static function GetPlugins () : OFPlugin [] {
-		var types : List.< OFPlugin > = new List.< OFPlugin > ();
+public class OEReflector {
+	public static function GetInspectors () : OEComponentInspector [] {
+		var inspectors : List.< OEComponentInspector > = new List.< OEComponentInspector > ();
 
 		for ( var assembly : System.Reflection.Assembly in AppDomain.CurrentDomain.GetAssemblies () ) {
 			if ( assembly.FullName.StartsWith ( "Mono.Cecil" ) ) {
@@ -38,15 +38,15 @@ public class OFReflector {
 				} else if ( type.IsAbstract ) {
 			    		continue;
 
-				} else if ( !type.IsSubclassOf ( typeof ( OFPlugin ) ) ) {
+				} else if ( !type.IsSubclassOf ( typeof ( OEComponentInspector ) ) ) {
 			    		continue;
 				
 				}
 				
-				types.Add ( System.Activator.CreateInstance ( type ) as OFPlugin );
+				inspectors.Add ( System.Activator.CreateInstance ( type ) as OEComponentInspector );
 			} 
 		}
 
-		return types.ToArray ();
+		return inspectors.ToArray ();
 	}
 }

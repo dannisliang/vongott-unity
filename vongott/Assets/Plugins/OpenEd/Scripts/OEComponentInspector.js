@@ -787,22 +787,25 @@ public class OETextField extends OEField {
 	}	
 }
 
-public class OEComponentInspector extends MonoBehaviour {
-	public var type : OFFieldType;
+public class OEComponentInspector {
 	public var width : float = 280;
+	public var transform : Transform;
 	@NonSerialized public var target : OFSerializedObject;
 	@NonSerialized public var offset : Vector2;
 
 	private var fields : OEField[] = new OEField[100];
 	private var fieldCounter : int = 0;
-	private var disabled : boolean = false;;
+	private var disabled : boolean = false;
 
-	public function get typeId () : String {
-		return type.ToString();
+	public function get type () : System.Type { return null; }
+	
+	public function CheckType ( str : String ) {
+		return type != null && type.ToString().Replace ( "UnityEngine.", "" ) == str;
 	}
 
-	public function Init ( obj : OFSerializedObject ) {
+	public function Init ( obj : OFSerializedObject, t : Transform ) {
 		target = obj;
+		transform = t;
 	}
 
 	public function Inspector () {}
@@ -815,6 +818,13 @@ public class OEComponentInspector extends MonoBehaviour {
 				fields[i] = null;
 			}
 		}
+	}
+
+	public function Clear () {
+		target = null;
+		offset = Vector2.zero;
+		fields = new OEField[100];
+		fieldCounter = 0;
 	}
 
 	// Disable fields

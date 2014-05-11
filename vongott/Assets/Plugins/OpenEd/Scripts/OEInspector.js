@@ -2,22 +2,30 @@
 
 public class OEInspector extends MonoBehaviour {
 	public var objectName : OGTextField;
-	public var transformInspector : OETransformInspector;
+	public var transformContainer : Transform;
 	public var componentContainer : Transform;
-	public var componentTypes : OEComponentInspector[];
 	public var componentSwitch : OGPopUp;
 	
 	@HideInInspector public var selection : OFSerializedObject[];
 
+	private var inspectors : OEComponentInspector [];
+	private var currentInspector : OEComponentInspector;
+	private var transformInspector : OETransformInspector;
+
 	public function Clear () {
+		if ( currentInspector ) {
+			currentInspector.Clear ();
+			currentInspector = null;
+		}
+
 		for ( var i : int = 0; i < componentContainer.childCount; i++ ) {
 			Destroy ( componentContainer.GetChild ( i ).gameObject );
 		}
 	}
 
 	public function IsComponentSupported ( name : String ) : boolean {
-		for ( var i : int = 0; i < componentTypes.Length; i++ ) {
-			if ( componentTypes[i].typeId == name ) {
+		for ( var i : int = 0; i < inspectors.Length; i++ ) {
+			if ( inspectors[i].CheckType ( name ) ) {
 				return true;
 			}	
 		}
@@ -26,27 +34,41 @@ public class OEInspector extends MonoBehaviour {
 	}
 
 	public function SelectComponent ( name : String ) {
-		for ( var i : int = 0; i < componentTypes.Length; i++ ) {
-			if ( componentTypes[i].typeId == name ) {
+		for ( var i : int = 0; i < inspectors.Length; i++ ) {
+			if ( inspectors[i].CheckType ( name ) ) {
 				Clear ();
-
-				var newComponent : OEComponentInspector = Instantiate ( componentTypes[i] ) as OEComponentInspector;
-				newComponent.transform.parent = componentContainer;
-				newComponent.transform.localPosition = Vector3.zero;
-				newComponent.transform.localScale = Vector3.one;
-
-				newComponent.Init ( selection[0] );
+				currentInspector = inspectors[i];
+				currentInspector.Init ( selection[0], componentContainer );
 			}	
 		}
 	}
 
 	public function Start () {
+		inspectors = OEReflector.GetInspectors ();
+
+		for ( var i : int = 0; i < inspectors.Length; i++ ) {
+			if ( inspectors[i].type == typeof ( Transform ) ) {
+				transformInspector = inspectors[i] as OETransformInspector;
+			}
+		}
 	}
 
 	public function Update () {
 		if ( selection.Length == 1 ) {
 			objectName.text = objectName.text.Replace ( "\n", "" );
 			selection[0].gameObject.name = objectName.text;
+		
+			if ( currentInspector ) {
+				currentInspector.Update ();
+			}
+
+			if ( transformInspector ) {
+				transformInspector.Update ();
+			}
+		
+		} else if ( currentInspector ) {
+			Clear ();
+
 		}
 	}
 
@@ -62,7 +84,7 @@ public class OEInspector extends MonoBehaviour {
 		selection = list.ToArray ();
 
 		if ( selection.Length == 1 ) {
-			transformInspector.Init ( selection[0] );
+			transformInspector.Init ( selection[0], transformContainer );
 			objectName.text = selection[0].gameObject.name;
 
 			var tmpStrings : List.< String > = new List.< String > ();

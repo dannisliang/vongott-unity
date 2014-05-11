@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
 public class OFOpenActor extends OFPlugin {
-	override function CheckType ( type : System.Type ) {
-		return type == typeof ( OACharacter );
+	override function get types () : System.Type[] {
+		return [ typeof ( OACharacter ) ];
 	}
 	
 	override function Serialize ( component : Component ) : JSONObject {
@@ -21,7 +21,7 @@ public class OFOpenActor extends OFPlugin {
 
 		// Conversation
 		if ( input.conversationTree ) {
-			output.AddField ( "conversationTree", Serialize ( input.conversationTree ) );
+			output.AddField ( "conversationTree", OFSerializer.GetPlugin( typeof ( OCTree ) ).Serialize ( input.conversationTree ) );
 		
 			var speakers : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
@@ -79,7 +79,7 @@ public class OFOpenActor extends OFPlugin {
 				output.conversationTree = output.gameObject.AddComponent.< OCTree > ();
 			}
 
-			Deserialize ( input.GetField ( "conversationTree" ), output.conversationTree );		
+			OFSerializer.GetPlugin ( typeof ( OCTree ) ).Deserialize ( input.GetField ( "conversationTree" ), output.conversationTree );		
 		
 			var speakerList : List.< JSONObject > = input.GetField ( "convoSpeakers" ).list;
 

@@ -1,10 +1,10 @@
 ﻿#pragma strict
 
 public class OFOpenConvo extends OFPlugin {
-	override function CheckType ( type : System.Type ) {
-		return type == typeof ( OCTree );
+	override function get types () : System.Type[] {
+		return [ typeof ( OCTree ) ];
 	}
-	
+
 	override function Serialize ( component : Component ) : JSONObject {
 		var input : OCTree = component as OCTree;
 

@@ -1,6 +1,8 @@
 ﻿#pragma strict
 
 public class OELightInspector extends OEComponentInspector {
+	override function get type () : System.Type { return typeof ( Light ); }
+	
 	override function Inspector () {
 		var light : Light = target.GetComponent.< Light >();
 

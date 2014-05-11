@@ -1,6 +1,8 @@
 ﻿#pragma strict
 
 public class OETransformInspector extends OEComponentInspector {
+	override function get type () : System.Type { return typeof ( Transform ); }
+	
 	override function Inspector () {
 		var t : Transform = target.transform;
 

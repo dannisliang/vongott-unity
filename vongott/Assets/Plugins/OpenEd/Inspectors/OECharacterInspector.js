@@ -1,6 +1,8 @@
 ﻿#pragma strict
 
 public class OECharacterInspector extends OEComponentInspector {
+	override function get type () : System.Type { return typeof ( OACharacter ); }
+	
 	override function Inspector () {
 		var character : OACharacter = target.GetComponent.< OACharacter >();
 	

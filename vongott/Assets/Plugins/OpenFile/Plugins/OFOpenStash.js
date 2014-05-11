@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
 public class OFOpenStash extends OFPlugin {
-	override function CheckType ( type : System.Type ) {
-		return type == typeof ( OSInventory ) || type == typeof ( OSItem );
+	override function get types () : System.Type[] {
+		return [ typeof ( OSInventory ), typeof ( OSItem ) ];
 	}
 	
 	private function SerializeInventory ( input : OSInventory ) : JSONObject {
