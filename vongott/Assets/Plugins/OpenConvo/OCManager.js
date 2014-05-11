@@ -26,12 +26,6 @@ public class OCManager extends MonoBehaviour {
 		}
 	}
 	
-	private function DoCallback ( message : String ) {
-		if ( eventHandler ) {
-			eventHandler.SendMessage ( message, SendMessageOptions.DontRequireReceiver );
-		}
-	}
-
 	public function get optionCount () : int {
 		var node : OCNode = tree.rootNodes[tree.currentRoot].GetNode ( currentNode );
 		

@@ -31,6 +31,12 @@ public class OEField {
 		} else if ( type == typeof ( OEObjectField ) ) {
 			return new OEObjectField ( transform );
 		
+		} else if ( type == typeof ( OEColorField ) ) {
+			return new OEColorField ( transform );
+		
+		} else if ( type == typeof ( OESlider ) ) {
+			return new OESlider ( transform );
+		
 		} else if ( type == typeof ( OEButton ) ) {
 			return new OEButton ( transform );
 		
@@ -154,6 +160,7 @@ public class OEColorField extends OEField {
 	public var g : OGTextField;
 	public var b : OGTextField;
 	public var a : OGTextField;
+	public var title : OGLabel;
 
 	public function get listening () : boolean {
 		return r.listening || g.listening || b.listening || a.listening;
@@ -168,6 +175,82 @@ public class OEColorField extends OEField {
 		}
 
 		return Out ();
+	}
+
+	function OEColorField ( parent : Transform ) {
+		r = new GameObject ( "fld_R" ).AddComponent.< OGTextField > ();
+		g = new GameObject ( "fld_G" ).AddComponent.< OGTextField > ();
+		b = new GameObject ( "fld_B" ).AddComponent.< OGTextField > ();
+		a = new GameObject ( "fld_A" ).AddComponent.< OGTextField > ();
+		title = new GameObject ( "lbl_Vector3" ).AddComponent.< OGLabel > ();
+
+		r.transform.parent = parent;
+		g.transform.parent = parent;
+		b.transform.parent = parent;
+		a.transform.parent = parent;
+		title.transform.parent = parent;
+		
+		r.ApplyDefaultStyles ();
+		g.ApplyDefaultStyles ();
+		b.ApplyDefaultStyles ();
+		a.ApplyDefaultStyles ();
+		title.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( r.gameObject );
+		MonoBehaviour.Destroy ( g.gameObject );
+		MonoBehaviour.Destroy ( b.gameObject );
+		MonoBehaviour.Destroy ( a.gameObject );
+		MonoBehaviour.Destroy ( title.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+		title.tint.a = enabled ? 1.0 : 0.5;
+		
+		r.tint.a = enabled ? 1.0 : 0.5;
+		r.isDisabled = !enabled;
+		
+		g.tint.a = enabled ? 1.0 : 0.5;
+		g.isDisabled = !enabled;
+		
+		b.tint.a = enabled ? 1.0 : 0.5;
+		b.isDisabled = !enabled;
+
+		a.tint.a = enabled ? 1.0 : 0.5;
+		a.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			
+			r.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			r.transform.localScale = new Vector3 ( scale.x / 8, scale.y, 1 );
+
+			g.transform.localPosition = new Vector3 ( pos.x + scale.x / 2 + scale.x / 8, pos.y, 0 );
+			g.transform.localScale = new Vector3 ( scale.x / 8, scale.y, 1 );
+			
+			b.transform.localPosition = new Vector3 ( pos.x + scale.x / 2 + ( ( scale.x / 8 ) * 2 ), pos.y, 0 );
+			b.transform.localScale = new Vector3 ( scale.x / 8, scale.y, 1 );
+			
+			a.transform.localPosition = new Vector3 ( pos.x + scale.x / 2 + ( ( scale.x / 8 ) * 3 ), pos.y, 0 );
+			a.transform.localScale = new Vector3 ( scale.x / 8, scale.y, 1 );
+
+		} else {
+			r.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			r.transform.localScale = new Vector3 ( scale.x / 4, scale.y, 1 );
+
+			g.transform.localPosition = new Vector3 ( pos.x + scale.x / 4, pos.y, 0 );
+			g.transform.localScale = new Vector3 ( scale.x / 4, scale.y, 1 );
+			
+			b.transform.localPosition = new Vector3 ( pos.x + ( ( scale.x / 4 ) * 2 ), pos.y, 0 );
+			b.transform.localScale = new Vector3 ( scale.x / 4, scale.y, 1 );
+			
+			a.transform.localPosition = new Vector3 ( pos.x + ( ( scale.x / 4 ) * 3 ), pos.y, 0 );
+			a.transform.localScale = new Vector3 ( scale.x / 4, scale.y, 1 );
+
+		}
 	}
 
 	public function Out () : Color {
@@ -538,6 +621,7 @@ public class OEToggle extends OEField {
 
 public class OESlider extends OEField {
 	public var slider : OGSlider;
+	public var title : OGLabel;
 
 	private var min : float;
 	private var max : float;
@@ -550,6 +634,42 @@ public class OESlider extends OEField {
 		return ( value - min ) / ( max - min );
 	}
 
+	function OESlider ( parent : Transform ) {
+		slider = new GameObject ( "sld_Slider" ).AddComponent.< OGSlider > ();
+		title = new GameObject ( "lbl_Slider" ).AddComponent.< OGLabel > ();
+
+		slider.transform.parent = parent;
+		title.transform.parent = parent;
+		
+		slider.ApplyDefaultStyles ();
+		title.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( slider.gameObject );
+		MonoBehaviour.Destroy ( title.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+		
+		title.tint.a = enabled ? 1.0 : 0.5;
+		slider.tint.a = enabled ? 1.0 : 0.5;
+		slider.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			slider.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			slider.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+		
+		} else {
+			slider.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			slider.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+		
+		}
+	}
+
 	public function Set ( value : float, min : float, max : float ) : float {
 		if ( canSet ) {
 			this.min = min;
@@ -557,6 +677,8 @@ public class OESlider extends OEField {
 
 			slider.sliderValue = CalcValuePercent ( value );
 		}
+
+		setCounter = slider.CheckMouseOver () ? -1 : 0;
 
 		return Out ();
 	}
@@ -667,6 +789,7 @@ public class OETextField extends OEField {
 
 public class OEComponentInspector extends MonoBehaviour {
 	public var type : OFFieldType;
+	public var width : float = 280;
 	@NonSerialized public var target : OFSerializedObject;
 	@NonSerialized public var offset : Vector2;
 
@@ -736,7 +859,7 @@ public class OEComponentInspector extends MonoBehaviour {
 
 	public function ObjectField ( text : String, input : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject ) : Object {
 		offset.y += 20;
-		return ObjectField ( text, input, sysType, strType, attachTo, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+		return ObjectField ( text, input, sysType, strType, attachTo, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 
 	public function ObjectField ( text : String, input : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject, rect : Rect ) : Object {
@@ -749,7 +872,7 @@ public class OEComponentInspector extends MonoBehaviour {
 	
 	public function ObjectField ( text : String, input : Object, type : System.Type, allowSceneObjects : boolean ) : Object {
 		offset.y += 20;
-		return ObjectField ( text, input, type, allowSceneObjects, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+		return ObjectField ( text, input, type, allowSceneObjects, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 
 	public function ObjectField ( text : String, input : Object, type : System.Type, allowSceneObjects : boolean, rect : Rect ) : Object {
@@ -763,7 +886,7 @@ public class OEComponentInspector extends MonoBehaviour {
 	// OEVector3Field
 	public function Vector3Field ( text : String, input : Vector3 ) : Vector3 {
 		offset.y += 20;
-		return Vector3Field ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+		return Vector3Field ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 
 	public function Vector3Field ( text : String, input : Vector3, rect : Rect ) : Vector3 {
@@ -773,11 +896,40 @@ public class OEComponentInspector extends MonoBehaviour {
 		fieldCounter++;
 		return vector3Field.Set ( input );
 	}
+	
+	// OEColorField
+	public function ColorField ( text : String, input : Color ) : Color {
+		offset.y += 20;
+		return ColorField ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+	}
+
+	public function ColorField ( text : String, input : Color, rect : Rect ) : Color {
+		var colorField : OEColorField = CheckField ( typeof ( OEColorField ) ) as OEColorField;
+		colorField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		colorField.enabled = !disabled;
+		fieldCounter++;
+		return colorField.Set ( input );
+	}
+	
+	// OESlider
+	public function Slider ( text : String, input : float, min : float, max : float ) : float {
+		offset.y += 20;
+		return Slider ( text, input, min, max, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+	}
+
+	public function Slider ( text : String, input : float, min : float, max : float, rect : Rect ) : float {
+		var slider : OESlider = CheckField ( typeof ( OESlider ) ) as OESlider;
+		slider.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		slider.enabled = !disabled;
+		fieldCounter++;
+		return slider.Set ( input, min, max );
+	}
+
 
 	// OEFloatField
 	public function FloatField ( text : String, input : float ) : float {
 		offset.y += 20;
-		return FloatField ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+		return FloatField ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 
 	public function FloatField ( text : String, input : float, rect : Rect ) : float {
@@ -791,7 +943,7 @@ public class OEComponentInspector extends MonoBehaviour {
 	// OEButton
 	public function Button ( text : String, input : Function ) {
 		offset.y += 20;
-		Button ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+		Button ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 
 	public function Button ( text : String, input : Function, rect : Rect ) {
@@ -805,7 +957,7 @@ public class OEComponentInspector extends MonoBehaviour {
 	// OEPopup
 	public function Popup ( text : String, input : int, strings : String[] ) : int {
 		offset.y += 20;
-		return Popup ( text, input, strings, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+		return Popup ( text, input, strings, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 	
 	public function Popup ( text : String, input : int, strings : String[], rect : Rect ) : int {
@@ -819,7 +971,7 @@ public class OEComponentInspector extends MonoBehaviour {
 	// OEPointField
 	public function PointField ( text : String, input : Vector3 ) : Vector3 {
 		offset.y += 20;
-		return PointField ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+		return PointField ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 
 	public function PointField ( text : String, input : Vector3, rect : Rect ) : Vector3 {
@@ -833,7 +985,7 @@ public class OEComponentInspector extends MonoBehaviour {
 	// OEToggle
 	public function Toggle ( text : String, input : boolean ) : boolean {
 		offset.y += 20;
-		return Toggle ( text, input, new Rect ( offset.x, offset.y, 280 - offset.x, 16 ) );
+		return Toggle ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 	
 	public function Toggle ( text : String, input : boolean, rect : Rect ) : boolean {

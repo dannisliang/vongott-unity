@@ -42,7 +42,7 @@ public class OECharacterInspector extends OEComponentInspector {
 			speakerStrings = character.conversationTree.GetSpeakerStrings ();
 	
 		} else {	
-			character.convoSpeakers = new GameObject [ 1 ];
+			character.convoSpeakers = new GameObject [ 0 ];
 
 		}
 
@@ -59,12 +59,8 @@ public class OECharacterInspector extends OEComponentInspector {
 
 		character.updatePathInterval = FloatField ( "Path update interval", character.updatePathInterval );
 
-		if ( character.pathGoals.Length < 1 ) {
-			character.pathGoals = new Vector3[1];
-		}
-
 		for ( i = 0; i < character.pathGoals.Length; i++ ) {
-			character.pathGoals[i] = PointField ( i.ToString(), character.pathGoals[i] );
+			character.pathGoals[i] = PointField ( "Goal #" + i.ToString(), character.pathGoals[i] );
 		}
 
 		Button ( "Add", function () {
@@ -74,7 +70,7 @@ public class OECharacterInspector extends OEComponentInspector {
 		} );
 
 		Button ( "Remove", function () {
-			if ( character.pathGoals.Length > 1 ) {
+			if ( character.pathGoals.Length > 0 ) {
 				var tmpGoals : List.< Vector3 > = new List.< Vector3 > ( character.pathGoals );
 				tmpGoals.RemoveAt ( tmpGoals.Count - 1 );
 				character.pathGoals = tmpGoals.ToArray ();
