@@ -6,6 +6,7 @@ public class OECamera extends MonoBehaviour {
 		public var selection : Material;
 		public var cursor : Material;
 		public var light : Material;
+		public var highlight : Material;
 	}
 	
 	public var rotateSensitivity : Vector2 = new Vector2 ( 5, 5 );
@@ -32,7 +33,7 @@ public class OECamera extends MonoBehaviour {
 	private function DrawPaths () {
 		GL.Begin ( GL.LINES );
 		
-		materials.selection.SetPass ( 0 );
+		materials.highlight.SetPass ( 0 );
 		
 		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
 			var go : GameObject = OEWorkspace.GetInstance().selection[i].gameObject;

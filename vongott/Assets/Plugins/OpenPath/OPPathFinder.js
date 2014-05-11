@@ -8,6 +8,7 @@ class OPPathFinder extends MonoBehaviour {
 	public var nodeDistance : float = 1.0;
 	public var target : Transform;
 	public var autoChase : boolean = false;
+	public var raycastToGoal : boolean = true;
 	
 	@NonSerialized public var nodes : OPNode[] = new OPNode[0];
 	
@@ -36,6 +37,24 @@ class OPPathFinder extends MonoBehaviour {
 	
 	public function GetCurrentNode () : Vector3 {
 		return nodes[currentNode].position;
+	}
+
+	public function GetCurrentGoal () : Vector3 {
+		var here : Vector3 = this.transform.position + Vector3.up * 0.1;
+		var there : Vector3 = goal + Vector3.up * 0.1;
+		var hits : RaycastHit [] = Physics.RaycastAll ( here, there - here, Vector3.Distance ( here, there ) );
+	       
+		Debug.DrawRay ( here, ( there - here ) * Vector3.Distance ( here, there ) );
+
+		if ( hits.Length > 0 ) {
+			for ( var i : int = 0; i < hits.Length; i++ ) {
+				if ( hits[i].collider.gameObject != this.gameObject ) {
+					return GetCurrentNode ();
+				}
+			}
+		}
+
+		return goal;
 	}
 
 	public function SetGoal ( t : Transform ) {

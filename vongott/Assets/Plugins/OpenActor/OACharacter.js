@@ -15,6 +15,7 @@ public class OACharacter extends MonoBehaviour {
 	public var health : float = 100;
 	public var behaviour : OABehaviour = OABehaviour.Idle;
 	public var speed : float = 0;
+	private var animator : Animator;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -73,6 +74,7 @@ public class OACharacter extends MonoBehaviour {
 		}
 
 		behaviour = OABehaviour.GoToGoal;
+		speed = 0.25;
 	}
 
 	public function TakeDamage ( damage : float ) {
@@ -99,6 +101,7 @@ public class OACharacter extends MonoBehaviour {
 
 	public function Start () {
 		UpdateSpeakers ();
+		animator = this.GetComponent.< Animator > ();
 	}
 
 	public function Update () {
@@ -146,6 +149,17 @@ public class OACharacter extends MonoBehaviour {
 
 		if ( health <= 0 ) {
 			Die ();
+		}
+
+		if ( animator ) {
+			animator.SetFloat ( "Speed", speed );
+		}
+
+		if ( speed > 0 && pathFinder ) {
+			var lookPos : Vector3 = pathFinder.GetCurrentGoal() - this.transform.position;
+			lookPos.y = 0;
+			
+			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 4 * Time.deltaTime );
 		}
 	}
 }
