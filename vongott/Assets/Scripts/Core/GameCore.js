@@ -72,8 +72,8 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Actors
 	////////////////////
-	public static function GetActors () : Actor[] { 
-		return levelContainer.GetComponentsInChildren.<Actor>();
+	public static function GetActors () : OACharacter[] { 
+		return levelContainer.GetComponentsInChildren.<OACharacter>();
 	}
 
 
@@ -154,20 +154,6 @@ class GameCore extends MonoBehaviour {
 	
 	
 	////////////////////
-	// Go to editor
-	////////////////////
-	static function GoToEditor () {
-		EditorCore.initPos = Camera.main.transform.position;
-		EditorCore.initRot = Camera.main.transform.eulerAngles;
-		EditorCore.initMap = currentLevel.name;
-		
-		Stop ();
-		
-		Application.LoadLevel ( "editor" );
-	}
-	
-	
-	////////////////////
 	// Pause
 	////////////////////
 	// Regular
@@ -231,6 +217,10 @@ class GameCore extends MonoBehaviour {
 		return instance.GetComponent.< OCManager > ();
 	}
 	
+	public static function GetEventManager () : EventManager {
+		return instance.GetComponent.< EventManager > ();
+	}
+	
 	public static function GetUpgradeManager () : UpgradeManager {
 		return instance.GetComponent.< UpgradeManager > ();
 	}
@@ -280,8 +270,8 @@ class GameCore extends MonoBehaviour {
 	public static function GetObjectFromGUID ( id : String ) : GameObject {
 		if ( !running ) { return null; }
 		
-		for ( var c : Component in levelContainer.GetComponentsInChildren(GUID) ) {
-			if ( (c as GUID).GUID == id ) {
+		for ( var c : Component in levelContainer.GetComponentsInChildren(OFSerializedObject) ) {
+			if ( (c as OFSerializedObject).id == id ) {
 				return c.gameObject;
 			}
 		}
@@ -299,9 +289,6 @@ class GameCore extends MonoBehaviour {
 		if ( !running ) {
 			// Quests
 			QuestManager.Init();
-						
-			// Flags
-			FlagManager.Init();
 		}
 		
 		// Level container

@@ -52,24 +52,11 @@ class Trigger extends MonoBehaviour {
 	// Activate trigger
 	public function Activate () {
 		for ( var event : String in events ) {
-			EventManager.Fire ( event );
+			GameCore.GetEventManager().SendMessage ( event, SendMessageOptions.DontRequireReceiver );
 		}
 		
 		if ( fireOnce ) {
 			this.GetComponent(BoxCollider).enabled = false;
-		}
-	}
-	
-	// Init
-	function OnDisable () {
-		if ( EditorCore.running && Camera.main && Camera.main.GetComponent(EditorCamera) ) {
-			Camera.main.GetComponent(EditorCamera).drawBoxes.Remove ( this.gameObject );
-		}
-	}
-	
-	function Start () {
-		if ( Camera.main && Camera.main.GetComponent(EditorCamera) && !this.GetComponent(InteractiveObject) ) {
-			Camera.main.GetComponent(EditorCamera).drawBoxes.Add ( this.gameObject );
 		}
 	}
 }

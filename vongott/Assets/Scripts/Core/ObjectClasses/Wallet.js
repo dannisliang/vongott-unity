@@ -4,7 +4,7 @@ class Wallet extends InteractiveObject {
 	var creditAmount : int = 0;
 	
 	function Start () {		
-		if ( EditorCore.running ) {
+		if ( !GameCore.running ) {
 			Destroy ( this.rigidbody );			
 		}
 	}
@@ -16,7 +16,7 @@ class Wallet extends InteractiveObject {
 	}
 	
 	override function Interact () {
-		EditorCore.GetInstance().GetComponent.<OSInventory>().ChangeCurrencyAmount ( "Credits", creditAmount );
+		GameCore.GetInventory().ChangeCurrencyAmount ( "Credits", creditAmount );
 		Destroy ( this.gameObject );
 		GameCore.SetInteractiveObject ( null );
 		UIHUD.GetInstance().ShowTimedNotification ( "Picked up " + creditAmount + " credits", 2 );

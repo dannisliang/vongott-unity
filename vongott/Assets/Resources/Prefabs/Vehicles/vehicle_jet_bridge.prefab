@@ -10,9 +10,8 @@ GameObject:
   - 4: {fileID: 400000}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400000}
   - 64: {fileID: 6400000}
-  - 114: {fileID: 11400002}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: vehicle_jet_bridge
   m_TagString: Untagged
@@ -71,7 +70,7 @@ MeshCollider:
   serializedVersion: 2
   m_SmoothSphereCollisions: 1
   m_Convex: 0
-  m_Mesh: {fileID: 4300008, guid: 6d6ed000a0ff96640be520f38dfb03fd, type: 3}
+  m_Mesh: {fileID: 4300000, guid: d6aba1033a4227b4baac5d4600784b8f, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,28 +79,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
+  m_Script: {fileID: 11500000, guid: d2ea243763544457196520f74b0cea7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: vehicle_jet_bridge
-  title: 
-  description: 
-  path: Prefabs/Vehicles
-  materialPath: 
-  tilingModifiers: []
-  canChangeMaterial: 0
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000365db5143b3a4a87f5942957f1fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GUID: 
+  fields:
+  - typeIndex: 4
+    name: Transform
+    component: {fileID: 400000}
+  id: 
+  prefabPath: Prefabs/Vehicles/vehicle_jet_bridge
+  exportPath: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -110,6 +110,8 @@ public class OFSerializedObjectInspector extends Editor {
 		var allComponents : Component[] = obj.gameObject.GetComponents.<Component>();
 
 		for ( var i : int = 0; i < allComponents.Length; i++ ) {
+			if ( !allComponents[i] ) { continue; }
+
 			var name : String = allComponents[i].GetType().ToString();
 			name = name.Replace ( "UnityEngine.", "" );
 

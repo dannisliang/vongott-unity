@@ -78,7 +78,7 @@ class UIComputerDisplay extends OGPage {
 	// Computer operations
 	////////////////////
 	public function SendMessage () {
-		currentAccount.messages += "\n\n" + DateTime.Now.ToString("HH:mm") + " - " + currentAccount.username + ":\n" + messageTextField.text;
+		currentAccount.messages += "\n\n" + System.DateTime.Now.ToString("HH:mm") + " - " + currentAccount.username + ":\n" + messageTextField.text;
 		messageTextField.text = "";
 		
 		PopulateMessages ();

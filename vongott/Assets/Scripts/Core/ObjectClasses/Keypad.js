@@ -80,7 +80,7 @@ class Keypad extends InteractiveObject {
 	}
 	
 	override function UpdateObject () {
-		if ( EditorCore.running ) { return; }
+		if ( !GameCore.running ) { return; }
 		
 		if ( doorGUID != "" && door == null ) {
 			var obj : GameObject = GameCore.GetObjectFromGUID ( doorGUID );

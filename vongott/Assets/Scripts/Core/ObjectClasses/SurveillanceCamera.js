@@ -36,7 +36,7 @@ class SurveillanceCamera extends MonoBehaviour {
 	}
 
 	function Update () {
-		if ( EditorCore.running ) {
+		if ( !GameCore.running ) {
 			if ( cameraView.enabled ) { cameraView.enabled = false; }
 			return;
 		}

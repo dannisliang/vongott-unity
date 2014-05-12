@@ -69,7 +69,7 @@ class Terminal extends InteractiveObject {
 	}
 	
 	override function UpdateObject () {
-		if ( EditorCore.running ) { return; }
+		if ( !GameCore.running ) { return; }
 		
 		for ( var i = 0; i < 3; i++ ) {
 			if ( cameraGUIDs[i] != "" && cameras[i] == null ) {
@@ -83,7 +83,5 @@ class Terminal extends InteractiveObject {
 	}
 	
 	function Start () {
-		if ( EditorCore.running ) {
-		}
 	}
 }

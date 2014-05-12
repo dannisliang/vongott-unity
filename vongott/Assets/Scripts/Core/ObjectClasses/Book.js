@@ -51,7 +51,7 @@ class Book extends InteractiveObject {
 	}
 	
 	function Start () {
-		if ( EditorCore.running ) {
+		if ( !GameCore.running ) {
 			Destroy ( this.rigidbody );			
 		}
 	}

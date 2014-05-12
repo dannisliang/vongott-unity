@@ -109,7 +109,7 @@ class Door extends InteractiveObject {
 
 		// Colliders
 		if ( type == eDoorType.DoubleSlide ) {
-			if ( EditorCore.running ) {
+			if ( !GameCore.running ) {
 				leftDoor.collider.enabled = false;
 				rightDoor.collider.enabled = false;
 			} else {

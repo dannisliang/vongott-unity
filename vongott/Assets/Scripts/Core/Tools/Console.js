@@ -142,9 +142,9 @@ public class Console extends MonoBehaviour {
 						hit.collider.gameObject.GetComponent(Trigger).OnDeath();
 					}
 					
-					if ( hit.collider.gameObject.GetComponent(Actor) ) {
-						hit.collider.gameObject.GetComponent(Actor).Die ();
-						str = hit.collider.gameObject.GetComponent(Actor).displayName + " killed";
+					if ( hit.collider.gameObject.GetComponent(OACharacter) ) {
+						hit.collider.gameObject.GetComponent(OACharacter).Die ();
+						str = hit.collider.gameObject.name + " killed";
 
 					} else if ( hit.collider.gameObject.GetComponent(DestructibleObject) ) {
 						hit.collider.gameObject.GetComponent(DestructibleObject).Explode ( 20, 50 );

@@ -25,22 +25,6 @@ class DamageManager extends MonoBehaviour {
 	//////////////////
 	// Spawn
 	//////////////////
-	// Bullet
-	function SpawnBullet ( origin : GameObject, target : Vector3, owner : GameObject ) {
-		var weapon : Item = origin.GetComponent ( Equipment ) as Item;
-		
-		var bullet : GameObject = Instantiate ( prefabBullet );
-				
-		bullet.transform.parent = GameCore.levelContainer;
-		bullet.transform.position = weapon.transform.position;
-		bullet.transform.LookAt ( target );
-		
-		var projectile : Projectile = bullet.GetComponent ( Projectile );
-		projectile.owner = owner;
-		projectile.damage = GetEquipmentAttribute ( weapon, eItemAttribute.Damage );
-		projectile.expirationTime = GetEquipmentAttribute ( weapon, eItemAttribute.FireRange ) / projectile.speed;
-	}
-	
 	// Explosion
 	public function SpawnExplosion ( target : Vector3, radius : float, damage : float )  {
 		var explosion : GameObject = Instantiate ( prefabExplosion );
@@ -56,24 +40,26 @@ class DamageManager extends MonoBehaviour {
 				hit.rigidbody.AddExplosionForce ( damage, target, radius, 3 );
 			
 				// Is it an actor?
-				var a : Actor = hit.GetComponent(Actor);
+				var a : OACharacter = hit.GetComponent(OACharacter);
 
-				if ( a != null && a.vitalState == a.vitalState.Alive ) {
+				if ( a != null && a.health > 0 ) {
 					var dist : float = (a.transform.position-target).sqrMagnitude;
 					a.TakeDamage ( damage / dist );
 
-					if ( a.vitalState == Actor.eVitalState.Dead ) {
-						for ( var col : Collider in a.GetLimbColliders() ) {
-							col.rigidbody.AddExplosionForce ( damage * 20, target, radius * 2, 1 );
+					if ( a.health <= 0 ) {
+						for ( var col : Collider in a.GetComponentsInChildren.< Collider > () ) {
+							if ( col != hit ) {
+								col.rigidbody.AddExplosionForce ( damage * 20, target, radius * 2, 1 );
+							}
 						}
 					}
 				}
 
 				// Is it a mine?
-				var m : Mine = hit.GetComponent(Mine);
+				var m : OSGrenade = hit.GetComponent(OSGrenade);
 
 				if ( m != null ) {
-					m.Detonate ();
+					m.Explode ();
 				}
 			}
 
@@ -92,23 +78,6 @@ class DamageManager extends MonoBehaviour {
 	}
 
 
-	/////////////////
-	// Get info
-	/////////////////
-	// Attr
-	function GetEquipmentAttribute ( item : Item, a : eItemAttribute ) : float {
-		for ( var attr : Item.Attribute in item.GetComponent(Item).attr ) {
-			if ( attr.type == a ) {
-				return attr.val;
-			} 
-		}
-		
-		GameCore.Error ( "DamageManager | Found no attribute " + a + " for item " + item );
-		
-		return 100;
-	}
-	
-	
 	/////////////////
 	// Init
 	/////////////////

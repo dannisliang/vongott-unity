@@ -11,7 +11,7 @@ class LiftPanel extends InteractiveObject {
 	private var inSession : boolean = false;
 	
 	function Start () {
-		if ( EditorCore.running ) {
+		if ( !GameCore.running ) {
 			this.GetComponent(BoxCollider).enabled = false;
 		}
 		
@@ -100,7 +100,7 @@ class LiftPanel extends InteractiveObject {
 	}
 	
 	public function Update () {
-		if ( EditorCore.running ) { return; }
+		if ( !GameCore.running ) { return; }
 		
 		if ( allDestinations.Count > 0 ) {
 			if ( currentDestination > allDestinations.Count - 1 ) {

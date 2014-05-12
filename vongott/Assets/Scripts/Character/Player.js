@@ -71,27 +71,6 @@ class Player extends MonoBehaviour {
 
 	}
 
-	// Throw
-	function Throw () {
-		var obj : Item = Instantiate ( equippedObject ) as Item;
-		obj.transform.parent = this.transform.parent;
-		
-		obj.GetComponent(BoxCollider).enabled = true;
-		obj.rigidbody.useGravity = true;
-		obj.rigidbody.isKinematic = false;
-		
-		obj.transform.position = equippedObject.transform.position;
-		obj.transform.eulerAngles = equippedObject.transform.eulerAngles;
-		obj.transform.localScale = Vector3.one;
-
-		obj.rigidbody.velocity = GameCamera.GetInstance().transform.forward * 10;
-
-		// Arm mine
-		if ( obj.GetComponent ( Mine ) ) {
-			obj.GetComponent ( Mine ).Arm();
-		}
-	}
-
 
 	////////////////////
 	// Inventory interfacing
@@ -142,9 +121,6 @@ class Player extends MonoBehaviour {
 	//	}
 	}
 	
-	function GetEquipmentAttribute ( a : eItemAttribute ) : float {
-		return 100;
-	}
 	
 	////////////////////
 	// Fighting

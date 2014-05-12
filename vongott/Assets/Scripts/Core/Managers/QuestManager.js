@@ -12,11 +12,11 @@ static var quests : List.< Quest > = new List.< Quest >();
 ////////////////////
 // All quests
 static function Init () {	
-	var allQuests : JSONObject = Loader.LoadQuests ();
+	//var allQuests : JSONObject = Loader.LoadQuests ();
 
-	for ( var o : Object in allQuests.list ) {
-		quests.Add ( Deserializer.DeserializeQuest ( o as JSONObject ) );
-	}
+	//for ( var o : Object in allQuests.list ) {
+	//	quests.Add ( Deserializer.DeserializeQuest ( o as JSONObject ) );
+	//}
 }
 
 
