@@ -117,6 +117,8 @@ public class OFDeserializer {
 	
 	// This applies the deserialized values to an existing GameObject
 	public static function Deserialize ( input : JSONObject, output : OFSerializedObject ) : OFSerializedObject {
+		if ( !input.HasField ( "name" ) || !input.HasField ( "id" ) ) { return null; }
+		
 		if ( !output ) {
 			if ( input.HasField ( "prefabPath" ) && !String.IsNullOrEmpty ( input.GetField ( "prefabPath" ).str ) ) {	
 				var newGO : GameObject = MonoBehaviour.Instantiate ( Resources.Load ( input.GetField ( "prefabPath" ).str ) ) as GameObject;

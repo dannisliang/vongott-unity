@@ -90,13 +90,13 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Serialized transforms
 	public function get serializedTransforms () : Transform [] {
-		var tmp : List.< Transform > = new List.< Transform > ();
+		var transforms : Transform [] = new Transform [ this.transform.childCount ];
 
-		for ( var i : int = 0; i < tmp.Count; i++ ) {
-			tmp.Add ( this.transform.GetChild ( i ) );
+		for ( var i : int = 0; i < transforms.Length; i++ ) {
+			transforms [ i ] = this.transform.GetChild ( i );
 		}
 
-		return tmp.ToArray();
+		return transforms;
 	}
 
 	public function ClearScene () {

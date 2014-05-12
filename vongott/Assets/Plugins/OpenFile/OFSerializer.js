@@ -41,10 +41,12 @@ public class OFSerializer extends MonoBehaviour {
 
 	public static function SerializeChildren ( input : Transform[] ) : JSONObject {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
-	
+
 		for ( var i : int = 0; i < input.Length; i++ ) {
 			var t : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 	
+			Debug.Log ( t );
+
 			for ( var o : int = 0; o < input[i].childCount; o++ ) {
 				var obj : OFSerializedObject = input[i].GetChild ( o ).GetComponent.< OFSerializedObject > ();
 				
