@@ -49,6 +49,7 @@ public class OEWorkspace extends MonoBehaviour {
 	public var toolbar : OEToolbar;
 	public var currentMap : String = "";
 	public var currentSavePath : String;
+	public var eventHandler : GameObject;
 	
 	@HideInInspector public var preferredParents : PreferredParent[];
 	public var metaParent : Transform;
@@ -72,6 +73,11 @@ public class OEWorkspace extends MonoBehaviour {
 
 	public static function GetInstance () : OEWorkspace {
 		return instance;
+	}
+
+	// Event
+	public function Event ( msg : String ) {
+		eventHandler.SendMessage ( msg );
 	}
 
 	// Serialized transforms

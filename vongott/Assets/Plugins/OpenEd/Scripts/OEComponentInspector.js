@@ -28,6 +28,9 @@ public class OEField {
 		} else if ( type == typeof ( OEFloatField ) ) {
 			return new OEFloatField ( transform );
 		
+		} else if ( type == typeof ( OETextField ) ) {
+			return new OETextField ( transform );
+		
 		} else if ( type == typeof ( OEObjectField ) ) {
 			return new OEObjectField ( transform );
 		
@@ -771,6 +774,44 @@ public class OEIntField extends OEField {
 
 public class OETextField extends OEField {
 	public var textfield : OGTextField;
+	public var title : OGLabel;
+
+	function OETextField ( parent : Transform ) {
+		textfield = new GameObject ( "fld_Text" ).AddComponent.< OGTextField > ();
+		title = new GameObject ( "lbl_Text" ).AddComponent.< OGLabel > ();
+
+		textfield.transform.parent = parent;
+		title.transform.parent = parent;
+		
+		textfield.ApplyDefaultStyles ();
+		title.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( textfield.gameObject );
+		MonoBehaviour.Destroy ( title.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+		
+		title.tint.a = enabled ? 1.0 : 0.5;
+		textfield.tint.a = enabled ? 1.0 : 0.5;
+		textfield.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			textfield.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			textfield.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+		
+		} else {
+			textfield.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			textfield.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+		
+		}
+	}
+
 
 	public function Set ( string : String ) : String {
 		if ( !textfield.listening ) {
@@ -793,7 +834,7 @@ public class OEComponentInspector {
 	@NonSerialized public var target : OFSerializedObject;
 	@NonSerialized public var offset : Vector2;
 
-	private var fields : OEField[] = new OEField[100];
+	private var fields : OEField[] = new OEField[900];
 	private var fieldCounter : int = 0;
 	private var disabled : boolean = false;
 
@@ -823,7 +864,7 @@ public class OEComponentInspector {
 	public function Clear () {
 		target = null;
 		offset = Vector2.zero;
-		fields = new OEField[100];
+		fields = new OEField[900];
 		fieldCounter = 0;
 	}
 
@@ -935,6 +976,19 @@ public class OEComponentInspector {
 		return slider.Set ( input, min, max );
 	}
 
+	// OETextField
+	public function TextField ( text : String, input : String ) : String {
+		offset.y += 20;
+		return TextField ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+	}
+
+	public function TextField ( text : String, input : String, rect : Rect ) : String {
+		var textField : OETextField = CheckField ( typeof ( OETextField ) ) as OETextField;
+		textField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		textField.enabled = !disabled;
+		fieldCounter++;
+		return textField.Set ( input );
+	}
 
 	// OEFloatField
 	public function FloatField ( text : String, input : float ) : float {

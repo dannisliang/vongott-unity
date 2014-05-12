@@ -43,7 +43,31 @@ public class OEPreviewCamera extends MonoBehaviour {
 		go.transform.position = Vector3.zero;
 		
 		this.transform.eulerAngles = Vector3.zero;
-	
+		
+		for ( var c : Component in go.GetComponentsInChildren.< Component > () ) {
+			var rb : Rigidbody = c as Rigidbody;
+			var cc : CharacterController = c as CharacterController;
+			var a : Animator = c as Animator;
+
+			if ( rb ) {
+				rb.isKinematic = true;
+				rb.useGravity = false;
+			
+			} else if ( cc ) {
+				var capsule : CapsuleCollider = go.AddComponent.< CapsuleCollider > ();
+
+				capsule.center = cc.center;
+				capsule.radius = cc.radius;
+				capsule.height = cc.height;
+
+				cc.enabled = false;
+			
+			} else if ( a ) {
+				a.enabled = false;
+			
+			}
+		}
+
 		if ( renderer ) {
 			var b : Bounds = renderer.bounds;
 
