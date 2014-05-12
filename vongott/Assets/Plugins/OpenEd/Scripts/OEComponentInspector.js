@@ -279,6 +279,8 @@ public class OEColorField extends OEField {
 public class OEButton extends OEField {
 	public var button : OGButton;
 
+	private var clicked : boolean = false;
+
 	function OEButton ( parent : Transform ) {
 		button = new GameObject ( "btn_Button" ).AddComponent.< OGButton > ();
 		button.transform.parent = parent;
@@ -298,8 +300,17 @@ public class OEButton extends OEField {
 		button.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
 	}
 
-	public function Set ( func : Function ) {
-		button.func = func;
+	public function Set () : boolean {
+		button.func = function () {
+			if ( enabled ) {
+				clicked = true;
+			}
+		};
+
+		var wasClicked : boolean = clicked;
+		clicked = false;
+
+		return wasClicked;
 	}
 }
 
@@ -1012,17 +1023,17 @@ public class OEComponentInspector {
 	}
 
 	// OEButton
-	public function Button ( text : String, input : Function ) {
+	public function Button ( text : String ) : boolean {
 		offset.y += 20;
-		Button ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+		return Button ( text, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 
-	public function Button ( text : String, input : Function, rect : Rect ) {
+	public function Button ( text : String, rect : Rect ) : boolean {
 		var button : OEButton = CheckField ( typeof ( OEButton ) ) as OEButton;
 		button.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
 		button.enabled = !disabled;
 		fieldCounter++;
-		button.Set ( input );
+		return button.Set ();
 	}
 
 	// OEPopup

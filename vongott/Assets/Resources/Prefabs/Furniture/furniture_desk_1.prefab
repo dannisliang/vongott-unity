@@ -12,7 +12,6 @@ GameObject:
   - 23: {fileID: 2300000}
   - 64: {fileID: 6400000}
   - 114: {fileID: 11400000}
-  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: furniture_desk_1
   m_TagString: Untagged
@@ -84,24 +83,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 4
+  - typeIndex: 5
     name: Transform
     component: {fileID: 400000}
   id: 
   prefabPath: Prefabs/Furniture/furniture_desk_1
   exportPath: 
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000365db5143b3a4a87f5942957f1fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GUID: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

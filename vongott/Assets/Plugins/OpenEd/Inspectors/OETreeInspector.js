@@ -16,19 +16,19 @@ public class OETreeInspector extends OEComponentInspector {
 					node.speak.lines[l] = TextField ( "", node.speak.lines[l], new Rect ( x + 10, y + l * 20, 200, 16 ) );
 					
 					if ( l > 0 ) {
-						Button ( "x", function () {
+						if ( Button ( "x", new Rect ( x + 220, y + l * 20, 24, 16 ) ) ) {
 							var tmpLines : List.< String > = new List. < String > ( node.speak.lines );
 							tmpLines.RemoveAt ( l );
 							node.speak.lines = tmpLines.ToArray ();
-						}, new Rect ( x + 220, y + l * 20, 24, 16 ) );
+						}
 					}
 				}
 				
-				Button ( "+", function () {
-					var tmpLines : List.< String > = new List.< String > ( node.speak.lines );
+				if ( Button ( "+", new Rect ( x + 10, y + node.speak.lines.Length * 20, 24, 16 ) ) ) {
+					tmpLines = new List.< String > ( node.speak.lines );
 					tmpLines.Add ( "" );
 					node.speak.lines = tmpLines.ToArray ();
-				}, new Rect ( x + 10, y + node.speak.lines.Length * 20, 24, 16 ) );
+				}
 				
 				break;
 		}
@@ -47,15 +47,15 @@ public class OETreeInspector extends OEComponentInspector {
 		for ( i = 0; i < tree.speakers.Length; i++ ) {
 			tree.speakers[i].id = TextField ( i.ToString(), tree.speakers[i].id, new Rect ( 0, i * 20, 200, 16 ) );
 			
-			Button ( "x", function () {
+			if ( Button ( "x", new Rect ( 210, i * 20, 24, 16 ) ) ) {
 				tree.RemoveSpeaker ( i );
-			}, new Rect ( 210, i * 20, 24, 16 ) );
+			}
 
 		}
 
-		Button ( "+", function () {
+		if ( Button ( "+", new Rect ( 0, tree.speakers.Length * 20, 24, 16 ) ) ) {
 			tree.AddSpeaker ();
-		}, new Rect ( 0, tree.speakers.Length * 20, 24, 16 ) );
+		}
 		
 		DrawNode ( tree.rootNodes[0].nodes[0], 10, 100 );
 	}

@@ -82,6 +82,8 @@ public class OFDeserializer {
 	public static function DeserializeChildren ( input : JSONObject, parent : Transform ) {
 		for ( var i : int = 0; i < input.list.Count; i++ ) {
 			var p : JSONObject = input.list[i];
+			if ( p.HasField ( "dontInstantiate" ) ) { continue; }
+			
 			var k : String = input.keys[i];
 			var t : Transform;
 		       	var go : GameObject = parent.gameObject.Find ( k );

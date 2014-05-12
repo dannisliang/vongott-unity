@@ -32,15 +32,15 @@ public class OEPropertiesInspector extends OEComponentInspector {
 					break;
 			}
 			
-			Button ( "x", function () {
+			if ( Button ( "x", new Rect ( 450, offset.y, 24, 16 ) ) ) {
 				properties.data.list.RemoveAt ( i );
-			}, new Rect ( 450, offset.y, 24, 16 ) ); 
+			} 
 
 			Offset ( 0, 20 );
 		}
 
-		Button ( "+", function () {
+		if ( Button ( "+", new Rect ( 0, offset.y, 24, 16 ) ) ) {
 			properties.data.AddField ( "newField", "" );
-		}, new Rect ( 0, offset.y, 24, 16 ) ); 
+		}
 	}	
 }

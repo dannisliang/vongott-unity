@@ -65,19 +65,19 @@ public class OECharacterInspector extends OEComponentInspector {
 			character.pathGoals[i] = PointField ( "Goal #" + i.ToString(), character.pathGoals[i] );
 		}
 
-		Button ( "Add", function () {
+		if ( Button ( "Add" ) ) {
 			var tmpGoals : List.< Vector3 > = new List.< Vector3 > ( character.pathGoals );
 			tmpGoals.Add ( character.pathGoals[character.pathGoals.Length-1] );
 			character.pathGoals = tmpGoals.ToArray ();
-		} );
+		}
 
-		Button ( "Remove", function () {
+		if ( Button ( "Remove" ) ) {
 			if ( character.pathGoals.Length > 0 ) {
-				var tmpGoals : List.< Vector3 > = new List.< Vector3 > ( character.pathGoals );
+				tmpGoals = new List.< Vector3 > ( character.pathGoals );
 				tmpGoals.RemoveAt ( tmpGoals.Count - 1 );
 				character.pathGoals = tmpGoals.ToArray ();
 			}
-		} );
+		}
 	
 	}	
 }

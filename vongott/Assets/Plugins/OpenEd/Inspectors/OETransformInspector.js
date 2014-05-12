@@ -6,9 +6,9 @@ public class OETransformInspector extends OEComponentInspector {
 	override function Inspector () {
 		var t : Transform = target.transform;
 
-		Button ( "P", ResetPosition, new Rect ( 0, 0, 20, 16 ) );
-		Button ( "R", ResetRotation, new Rect ( 0, 20, 20, 16 ) );
-		Button ( "S", ResetScale, new Rect ( 0, 40, 20, 16 ) );
+		if ( Button ( "P", new Rect ( 0, 0, 20, 16 ) ) ) { ResetPosition (); }
+		if ( Button ( "R", new Rect ( 0, 20, 20, 16 ) ) ) { ResetRotation (); }
+		if ( Button ( "S", new Rect ( 0, 40, 20, 16 ) ) ) { ResetScale (); }
 
 		Offset ( 25, 0 );
 

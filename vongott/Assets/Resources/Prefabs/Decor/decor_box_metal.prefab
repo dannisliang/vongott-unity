@@ -14,8 +14,6 @@ GameObject:
   - 65: {fileID: 6500000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400006}
-  - 114: {fileID: 11400000}
-  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: decor_box_metal
   m_TagString: Untagged
@@ -89,36 +87,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: .5, z: 0}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: decor_box_metal
-  title: 
-  description: 
-  path: Prefabs/Decor
-  materialPath: 
-  tilingModifiers: []
-  canChangeMaterial: 0
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000365db5143b3a4a87f5942957f1fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GUID: 
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 4
+  - typeIndex: 5
     name: Transform
     component: {fileID: 400000}
   id: 

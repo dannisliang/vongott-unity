@@ -9,16 +9,6 @@ public enum eGameState {
 	Menu
 }
 
-public class MapData {
-	public var name : String = "MapName";
-	public var musicCalm : String = "";
-	public var musicAggressive : String = "";
-	public var ambientLight : Color;
-	public var fogEnabled : boolean = false;
-	public var fogColor : Color;
-	public var fogDensity : float = 0.01;
-}
-
 class GameCore extends MonoBehaviour {
 	// Public vars
 	var _levelContainer : Transform;
@@ -43,7 +33,6 @@ class GameCore extends MonoBehaviour {
 	static var running = false;
 	
 	static var currentLevel : GameObject;
-	static var currentLevelData : MapData;
 	static var nextLevel : String = "";
 	static var nextSpawnPoint : String = "";
 	
@@ -131,7 +120,8 @@ class GameCore extends MonoBehaviour {
 		currentLevel.transform.parent = levelContainer;
 		
 		var json : JSONObject = OFReader.LoadFile ( path );
-	       	OFDeserializer.DeserializeChildren ( json, levelContainer.transform );
+	       	var properties : JSONObject = json.GetField ( "properties" );
+		OFDeserializer.DeserializeChildren ( json, currentLevel.transform );
 		
 		// Nest under level container
 		currentLevel.transform.parent = levelContainer;
@@ -145,11 +135,31 @@ class GameCore extends MonoBehaviour {
 
 		Time.timeScale = 1;
 		
-		if ( currentLevelData ) {
-			MusicManager.GetInstance().LoadCalm ( currentLevelData.musicCalm );	
-			MusicManager.GetInstance().LoadAggressive ( currentLevelData.musicAggressive );	
+		if ( properties ) {
+			if ( properties.HasField ( "musicCalm" ) ) {
+				MusicManager.GetInstance().LoadCalm ( properties.GetField ( "musicCalm" ).str );
+				MusicManager.GetInstance().PlayCalm ();
+			}
+			
+			if ( properties.HasField ( "musicAggressive" ) ) {
+				MusicManager.GetInstance().LoadAggressive ( properties.GetField ( "musicAggressive" ).str );
+			}
 
-			MusicManager.GetInstance().PlayCalm ();
+			if ( properties.HasField ( "title" ) ) {
+				currentLevel.name = properties.GetField ( "title" ).str;
+			}
+			
+			if ( properties.HasField ( "fogEnabled" ) ) {
+				RenderSettings.fog = properties.GetField ( "fogEnabled" ).b;
+			} else {
+				RenderSettings.fog = false;
+			}
+
+			if ( properties.HasField ( "fogDensity" ) ) {
+				RenderSettings.fogDensity = properties.GetField ( "fogDensity" ).n;
+			} else {
+				RenderSettings.fogDensity = 0.01;
+			}
 		}
 
 		// Set trigger event links

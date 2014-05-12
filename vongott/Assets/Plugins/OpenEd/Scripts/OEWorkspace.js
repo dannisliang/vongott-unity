@@ -155,9 +155,17 @@ public class OEWorkspace extends MonoBehaviour {
 			ClearScene ();
 			
 			var json : JSONObject = OFReader.LoadFile ( file.FullName );
+			
+			if ( json.HasField ( "info" ) ) {
+				var info : JSONObject = json.GetField ( "info" );
+
+				if ( info.HasField ( "properties" ) ) {
+					properties.data = info.GetField ( "properties" );
+				}
 				
-			if ( json.HasField ( "properties" ) ) {
-				properties.data = json.GetField ( "properties" );
+				if ( info.HasField ( "editorCamera" ) ) {
+					OFDeserializer.Deserialize ( info.GetField ( "editorCamera" ), Camera.main.transform );
+				}
 			}
 
 			OFDeserializer.DeserializeChildren ( json, this.transform );
@@ -177,7 +185,12 @@ public class OEWorkspace extends MonoBehaviour {
 		} else {
 			var json : JSONObject = OFSerializer.SerializeChildren ( serializedTransforms );
 
-			json.AddField ( "properties", properties.data );
+			var info : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+			info.AddField ( "properties", properties.data );
+			info.AddField ( "editorCamera", OFSerializer.Serialize ( Camera.main.transform ) );
+			info.AddField ( "dontInstantiate", true );
+			
+			json.AddField ( "info", info );
 
 			OFWriter.SaveFile ( json, currentSavePath );
 		
