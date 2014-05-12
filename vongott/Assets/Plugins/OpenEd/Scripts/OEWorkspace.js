@@ -47,6 +47,7 @@ public class OEWorkspace extends MonoBehaviour {
 	public var picker : OEPicker;
 	public var previewCamera : OEPreviewCamera;
 	public var toolbar : OEToolbar;
+	public var navmesh : OPNavMesh;
 	public var currentMap : String = "";
 	public var currentSavePath : String;
 	public var eventHandler : GameObject;
@@ -54,6 +55,7 @@ public class OEWorkspace extends MonoBehaviour {
 	@HideInInspector public var preferredParents : PreferredParent[];
 	public var metaParent : Transform;
 	public var miscParent : Transform;
+	public var navmeshParent : Transform;
 	public var transformMode : OETransformMode;
 	public var gizmoPosition : OEGizmo;
 	public var gizmoRotation : OEGizmo;
@@ -136,6 +138,7 @@ public class OEWorkspace extends MonoBehaviour {
 		cam.lights = this.GetComponentsInChildren.< Light >();
 		inspector.Refresh ( selection );
 		toolbar.Refresh ();
+		navmesh = this.GetComponentInChildren.< OPNavMesh > ();
 	}
 
 	// File I/O
@@ -364,6 +367,24 @@ public class OEWorkspace extends MonoBehaviour {
 
 	public function ToggleGizmos () {
 		cam.showGizmos = !cam.showGizmos;
+	}
+	
+	public function ToggleNavmesh () {
+		if ( navmesh ) {
+			if ( navmeshParent.childCount > 0 ) {
+				for ( var i : int = 0; i < navmeshParent.childCount; i++ ) {
+					Destroy ( navmeshParent.GetChild ( i ).gameObject );
+				}
+			
+			} else {
+				var go = GameObject ( "nanmesh", MeshRenderer, MeshFilter );
+				go.renderer.material = cam.materials.navmesh;
+				go.transform.parent = navmeshParent;
+				go.transform.position = Vector3.zero;
+				go.GetComponent.< MeshFilter > ().mesh = navmesh.GetComponent.< MeshFilter > ().mesh;
+				
+			}
+		}
 	}
 
 	// Instatiate

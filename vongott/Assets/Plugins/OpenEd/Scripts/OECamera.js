@@ -7,6 +7,7 @@ public class OECamera extends MonoBehaviour {
 		public var cursor : Material;
 		public var light : Material;
 		public var highlight : Material;
+		public var navmesh : Material;
 	}
 	
 	public var rotateSensitivity : Vector2 = new Vector2 ( 5, 5 );

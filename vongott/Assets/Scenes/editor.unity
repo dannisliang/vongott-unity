@@ -1084,6 +1084,7 @@ MonoBehaviour:
     cursor: {fileID: 2100000, guid: f59966ddb6fa13240ab811615acbdc8f, type: 2}
     light: {fileID: 2100000, guid: 8e6aaec074cac46a5a819686e7e80d77, type: 2}
     highlight: {fileID: 2100000, guid: bc148260939374bf18c0c4a9e5ccb860, type: 2}
+    navmesh: {fileID: 2100000, guid: a09f0da0c23804125befa92975f6a455, type: 2}
   lights: []
   wireframe: 0
   showGizmos: 1
@@ -2355,6 +2356,7 @@ MonoBehaviour:
   picker: {fileID: 1669080645}
   previewCamera: {fileID: 650137784}
   toolbar: {fileID: 736775722}
+  navmesh: {fileID: 0}
   currentMap: 
   currentSavePath: 
   eventHandler: {fileID: 0}
@@ -2367,6 +2369,7 @@ MonoBehaviour:
     parent: {fileID: 1099657457}
   metaParent: {fileID: 273476642}
   miscParent: {fileID: 156829039}
+  navmeshParent: {fileID: 1312891034}
   transformMode: 0
   gizmoPosition: {fileID: 652171075}
   gizmoRotation: {fileID: 1035447463}
@@ -7763,6 +7766,12 @@ MonoBehaviour:
     tickable: 1
     isTicked: 1
     nestedMenu: []
+  - name: Show Navmesh
+    message: ToggleNavmesh
+    argument: 
+    tickable: 1
+    isTicked: 0
+    nestedMenu: []
   - name: Wireframe
     message: ToggleWireframe
     argument: 
@@ -10069,7 +10078,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1198779128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 280, y: 16, z: 1}
   m_Children: []
   m_Father: {fileID: 1670079979}
@@ -10326,13 +10335,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 345
-    y: 274
+    y: 279
     width: 280
     height: 16
   mouseRct:
     serializedVersion: 2
     x: 345
-    y: 274
+    y: 279
     width: 280
     height: 16
   drawDepth: -20
@@ -11266,6 +11275,32 @@ MonoBehaviour:
   isAlwaysOnTop: 0
   root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
+--- !u!1 &1312891033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1312891034}
+  m_Layer: 0
+  m_Name: Navmesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1312891034
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1312891033}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &1333509987
 GameObject:
   m_ObjectHideFlags: 0

@@ -111,6 +111,8 @@ class GameCore extends MonoBehaviour {
 	public function LoadLevel ( path : String, spawnPoint : String ) : IEnumerator {
 		Time.timeScale = 0;
 
+		this.GetComponent.< OPScanner > ().Clear ();
+
 		// Check if a level is already loaded
 		if ( currentLevel != null ) {
 			var skybox : SkyBox = GameObject.FindObjectOfType.<SkyBox>();
@@ -124,7 +126,7 @@ class GameCore extends MonoBehaviour {
 			currentLevel = null;
 		}
 		
-		// Read .vgmap file
+		// Read .map file
 		currentLevel = new GameObject ( "Map" );
 		currentLevel.transform.parent = levelContainer;
 		OFReader.LoadChildren ( currentLevel.transform, path );
@@ -146,6 +148,11 @@ class GameCore extends MonoBehaviour {
 			MusicManager.GetInstance().LoadAggressive ( currentLevelData.musicAggressive );	
 
 			MusicManager.GetInstance().PlayCalm ();
+		}
+
+		// Set trigger event links
+		for ( var t : OATrigger in levelContainer.GetComponentsInChildren.< OATrigger > () ) {
+			t.eventHandler = this.gameObject;
 		}
 
 		// Scan navmesh
@@ -240,15 +247,15 @@ class GameCore extends MonoBehaviour {
 	}
 
 	// Find spawn point
-	public function GoToSpawnPoint ( s : String ) {
+	public function GoToSpawnPoint ( sName : String ) {
 		var currentSpawnPoint : SpawnPoint;
 		
-		Debug.Log ( "GameCore | Searching for SpawnPoint '" + s + "'..." );
+		Debug.Log ( "GameCore | Searching for SpawnPoint '" + sName + "'..." );
 					
-		for ( var c : Component in GameCore.levelContainer.GetComponentsInChildren ( SpawnPoint ) ) {
-			currentSpawnPoint = c as SpawnPoint;
+		for ( var s : SpawnPoint in GameCore.levelContainer.GetComponentsInChildren.< SpawnPoint >() ) {
+			currentSpawnPoint = s;
 			
-			if ( currentSpawnPoint.gameObject.name == s ) {
+			if ( currentSpawnPoint.gameObject.name == sName ) {
 				Debug.Log ( "GameCore | ...found!" );
 				break;
 			}
@@ -257,13 +264,16 @@ class GameCore extends MonoBehaviour {
 		Debug.Log ( "GameCore | ...failed!" );
 		
 		player.transform.parent = levelContainer;
-		player.transform.position = currentSpawnPoint.transform.position;
-		
-		var newRot : Vector3 = currentSpawnPoint.transform.localEulerAngles;
-		newRot.x = 0;
-		newRot.z = 0;
-		
-		player.transform.localEulerAngles = newRot;
+
+		if ( currentSpawnPoint ) {
+			player.transform.position = currentSpawnPoint.transform.position;
+			var newRot : Vector3 = currentSpawnPoint.transform.localEulerAngles;
+			newRot.x = 0;
+			newRot.z = 0;
+			
+			player.transform.localEulerAngles = newRot;
+		}
+
 	}
 	
 	// Find object from GUID

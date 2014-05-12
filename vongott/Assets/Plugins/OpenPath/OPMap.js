@@ -141,8 +141,6 @@ public class OPGridMap extends OPMap {
 
 	// Locate neighbouring nodes
 	private function FindNeighbors () {
-		Debug.Log ( "OPGridMap | Finding neighbours..." );
-		
 		for ( var o : int = 0; o < nodes.Length; o++ ) {
 			var thisNode : OPNode = nodes[o];
 			
@@ -154,7 +152,5 @@ public class OPGridMap extends OPMap {
 				}
 			}
 		}
-
-		Debug.Log ( "OPGridMap | ...all neighbours found!" );
 	}
 }

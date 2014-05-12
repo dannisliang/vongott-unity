@@ -53,13 +53,26 @@ class EventManager extends MonoBehaviour {
 		GameCamera.GetInstance().inConvo = false;
 	}
 
-	// Actors
+	// Character
 	public function NextPathGoal ( t : OCTree ) {
 		var c : OACharacter = t.gameObject.GetComponent.< OACharacter > ();
 
 		if ( c ) {
 			c.NextPathGoal ();
 		}
+	}
+
+	// Travel
+	public function TravelTo ( info : String ) {
+		var split : String[] = info.Split ( ","[0] );
+		var mapName : String = split[0];
+		var spawnpointName : String;
+
+		if ( split.Length > 1 ) {
+			spawnpointName = split[1];
+		}
+
+		StartCoroutine ( GameCore.GetInstance().LoadLevel ( Application.dataPath + "/Maps/" + mapName + ".map", spawnpointName ) );
 	}
 
 	// Transactions

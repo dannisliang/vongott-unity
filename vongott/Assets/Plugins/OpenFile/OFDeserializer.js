@@ -85,7 +85,7 @@ public class OFDeserializer {
 			var k : String = input.keys[i];
 			var t : Transform;
 		       	var go : GameObject = parent.gameObject.Find ( k );
-			
+		
 			if ( go ) {
 				t = go.transform;
 			}
@@ -95,6 +95,8 @@ public class OFDeserializer {
 				t.parent = parent;
 				t.position = Vector3.zero;
 			}
+
+			Debug.Log ( "this", t );
 
 			for ( var json : JSONObject in p.list ) {
 				var so : OFSerializedObject = Deserialize ( json );

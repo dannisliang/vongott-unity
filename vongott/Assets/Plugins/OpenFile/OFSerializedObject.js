@@ -52,12 +52,7 @@ public class OFField {
 	}
 
 	public static function GetTypeStrings () : String [] {
-		if ( !plugins ) {
-			plugins = OFReflector.GetPlugins ();
-		}
-
 		var strings : List.< String > = new List.< String > ();
-
 		var types : System.Type [] = GetTypes ();
 		
 		for ( var i : int = 0; i < types.Length; i++ ) {

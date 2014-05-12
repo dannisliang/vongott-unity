@@ -1,0 +1,61 @@
+﻿#pragma strict
+
+public enum OATriggerType {
+	OnCollision,
+	OnDeath,
+	OnDestruction
+}
+
+public class OATrigger extends MonoBehaviour {
+	public var eventHandler : GameObject;
+	public var type : OATriggerType;
+	public var message : String;
+	public var argument : String;
+       	public var object : GameObject;
+	public var fireOnce : boolean = true;
+
+	private var character : OACharacter;
+
+	public function Fire () {
+		if ( eventHandler ) {
+			if ( !String.IsNullOrEmpty ( message ) ) {
+				if ( object ) {
+					eventHandler.SendMessage ( message, object, SendMessageOptions.DontRequireReceiver );
+
+				} else if ( !String.IsNullOrEmpty ( argument ) ) {
+					eventHandler.SendMessage ( message, argument, SendMessageOptions.DontRequireReceiver );
+					
+				} else {
+					eventHandler.SendMessage ( message, SendMessageOptions.DontRequireReceiver );
+
+				}
+			}
+			
+			if ( fireOnce && type != OATriggerType.OnDestruction ) {
+				Destroy ( this.gameObject );
+			}
+		}
+	}
+
+	public function OnTriggerEnter () {
+		if ( type == OATriggerType.OnCollision ) {
+			Fire ();
+		}
+	}
+
+	public function OnDestroy () {
+		if ( type == OATriggerType.OnDestruction ) {
+			Fire ();
+		}
+	}
+
+	public function Start () {
+		character = this.GetComponent.< OACharacter > ();
+	}
+
+	public function Update () {
+		if ( character && character.health >= 0 && type == OATriggerType.OnDeath ) {
+			Fire ();
+		}
+	}
+}
