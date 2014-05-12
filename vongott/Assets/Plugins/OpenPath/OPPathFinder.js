@@ -21,6 +21,8 @@ class OPPathFinder extends MonoBehaviour {
 	}
 	
 	function Start () {
+		scanner = GameObject.FindObjectOfType(OPScanner);
+		
 		if ( target != null ) {
 			StartCoroutine ( SetGoalAfterSeconds ( 2 ) );
 		}
@@ -91,33 +93,26 @@ class OPPathFinder extends MonoBehaviour {
 		
 		currentNode = 0;
 	}
-	
+
 	function Update () {
-		if ( scanner == null ) {
-			if ( GameObject.FindObjectOfType(OPScanner) ) {
-				scanner = GameObject.FindObjectOfType(OPScanner);
-			} else {
-				Debug.LogError ( "No scanner found! Attach an OPScanner to the scanner variable." );
-				return;
-			}
-		}
-			
-		// If there are nodes to follow		
-		if ( nodes && nodes.Length > 0 ) {
-			if ( ( transform.position - ( nodes[currentNode] as OPNode ).position ).magnitude < nodeDistance && currentNode < nodes.Length - 1 ) {
-				currentNode++;
-			}
-			
-			if ( autoChase ) {
-				var lookPos : Vector3 = ( nodes[currentNode] as OPNode ).position - transform.position;
-				lookPos.y = 0;
+		if ( scanner ) {
+			// If there are nodes to follow		
+			if ( nodes && nodes.Length > 0 ) {
+				if ( ( transform.position - ( nodes[currentNode] as OPNode ).position ).magnitude < nodeDistance && currentNode < nodes.Length - 1 ) {
+					currentNode++;
+				}
 				
-				transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
-				transform.localPosition += transform.forward * speed * Time.deltaTime;
-			}
-		
-			if ( ( transform.position - goal ).magnitude <= stoppingDistance ) {
-				ClearNodes ();
+				if ( autoChase ) {
+					var lookPos : Vector3 = ( nodes[currentNode] as OPNode ).position - transform.position;
+					lookPos.y = 0;
+					
+					transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
+					transform.localPosition += transform.forward * speed * Time.deltaTime;
+				}
+			
+				if ( ( transform.position - goal ).magnitude <= stoppingDistance ) {
+					ClearNodes ();
+				}
 			}
 		}
 	}

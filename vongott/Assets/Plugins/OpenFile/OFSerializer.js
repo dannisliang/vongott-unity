@@ -47,7 +47,7 @@ public class OFSerializer extends MonoBehaviour {
 	
 			for ( var o : int = 0; o < input[i].childCount; o++ ) {
 				var obj : OFSerializedObject = input[i].GetChild ( o ).GetComponent.< OFSerializedObject > ();
-
+				
 				if ( obj ) {
 					t.Add ( Serialize ( obj ) );
 				}

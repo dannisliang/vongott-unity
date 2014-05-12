@@ -28,8 +28,4 @@ public class OFReader {
 			return new JSONObject ( input, -2, false, false );
 		#endif
 	}
-
-	public static function LoadChildren ( parent : Transform, path : String ) {
-		OFDeserializer.DeserializeChildren ( LoadFile ( path ), parent );
-	}
 }

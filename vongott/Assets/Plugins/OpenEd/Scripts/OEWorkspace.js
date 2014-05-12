@@ -43,6 +43,7 @@ public class OEWorkspace extends MonoBehaviour {
 	
 	public var cam : OECamera;
 	public var fileBrowser : OEFileBrowser;
+	public var properties : OEProperties;
 	public var inspector : OEInspector;
 	public var picker : OEPicker;
 	public var previewCamera : OEPreviewCamera;
@@ -82,15 +83,20 @@ public class OEWorkspace extends MonoBehaviour {
 		eventHandler.SendMessage ( msg );
 	}
 
+	// Properties
+	public function GoToProperties () {
+		OGRoot.GetInstance().GoToPage ( "Properties" );
+	}
+
 	// Serialized transforms
 	public function get serializedTransforms () : Transform [] {
-		var tmp : Transform[] = new Transform [ this.transform.childCount ];
+		var tmp : List.< Transform > = new List.< Transform > ();
 
-		for ( var i : int = 0; i < tmp.Length; i++ ) {
-			tmp[i] = this.transform.GetChild ( i );
+		for ( var i : int = 0; i < tmp.Count; i++ ) {
+			tmp.Add ( this.transform.GetChild ( i ) );
 		}
 
-		return tmp;
+		return tmp.ToArray();
 	}
 
 	public function ClearScene () {
@@ -147,7 +153,15 @@ public class OEWorkspace extends MonoBehaviour {
 		fileBrowser.filter = ".map";
 		fileBrowser.callback = function ( file : FileInfo ) {
 			ClearScene ();
-			OFReader.LoadChildren ( this.transform, file.FullName );
+			
+			var json : JSONObject = OFReader.LoadFile ( file.FullName );
+				
+			if ( json.HasField ( "properties" ) ) {
+				properties.data = json.GetField ( "properties" );
+			}
+
+			OFDeserializer.DeserializeChildren ( json, this.transform );
+
 			currentSavePath = file.FullName;
 			StripComponents ();
 			RefreshAll ();
@@ -161,7 +175,11 @@ public class OEWorkspace extends MonoBehaviour {
 			SaveAs ();
 		
 		} else {
-			OFWriter.SaveChildren ( serializedTransforms, currentSavePath );
+			var json : JSONObject = OFSerializer.SerializeChildren ( serializedTransforms );
+
+			json.AddField ( "properties", properties.data );
+
+			OFWriter.SaveFile ( json, currentSavePath );
 		
 		}
 	}

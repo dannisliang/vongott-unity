@@ -96,8 +96,6 @@ public class OFDeserializer {
 				t.position = Vector3.zero;
 			}
 
-			Debug.Log ( "this", t );
-
 			for ( var json : JSONObject in p.list ) {
 				var so : OFSerializedObject = Deserialize ( json );
 				
@@ -171,16 +169,8 @@ public class OFDeserializer {
 
 
 	//////////////////
-	// Classes
+	// Unity classes
 	//////////////////
-	// Component
-	public static function Deserialize ( input : JSONObject, component : Component ) {
-		if ( component.GetType() == typeof ( Transform ) ) {
-			Deserialize ( input, component as Transform );
-		
-		}
-	}
-	
 	// Light
 	public static function Deserialize ( input : JSONObject, light : Light ) {
 		light.type = ParseEnum ( typeof ( LightType ), input.GetField ( "type" ).str );

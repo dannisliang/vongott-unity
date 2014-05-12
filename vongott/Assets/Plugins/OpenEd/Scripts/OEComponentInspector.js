@@ -539,8 +539,15 @@ public class OEPopup extends OEField {
 
 	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
 		title.text = text;
-		popup.title = "< " + text.ToLower() + " >";
 		
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			popup.title = "< " + text.ToLower() + " >";
+		
+		} else {
+			popup.title = "...";
+		
+		}
+
 		title.tint.a = enabled ? 1.0 : 0.5;
 		popup.tint.a = enabled ? 1.0 : 0.5;
 		popup.isDisabled = !enabled;
@@ -548,11 +555,11 @@ public class OEPopup extends OEField {
 		if ( !String.IsNullOrEmpty ( text ) ) {
 			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
 			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
-			popup.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			popup.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, popup.isUp ? -1 : 0 );
 			popup.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
 		
 		} else {
-			popup.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			popup.transform.localPosition = new Vector3 ( pos.x, pos.y, popup.isUp ? -1 : 0 );
 			popup.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
 		
 		}

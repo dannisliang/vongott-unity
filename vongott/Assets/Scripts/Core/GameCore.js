@@ -129,7 +129,9 @@ class GameCore extends MonoBehaviour {
 		// Read .map file
 		currentLevel = new GameObject ( "Map" );
 		currentLevel.transform.parent = levelContainer;
-		OFReader.LoadChildren ( currentLevel.transform, path );
+		
+		var json : JSONObject = OFReader.LoadFile ( path );
+	       	OFDeserializer.DeserializeChildren ( json, levelContainer.transform );
 		
 		// Nest under level container
 		currentLevel.transform.parent = levelContainer;
