@@ -166,6 +166,10 @@ public class OEWorkspace extends MonoBehaviour {
 				if ( info.HasField ( "editorCamera" ) ) {
 					OFDeserializer.Deserialize ( info.GetField ( "editorCamera" ), cam.transform );
 				}
+				
+				if ( info.HasField ( "editorFocus" ) ) {
+					focusPoint = OFDeserializer.DeserializeVector3 ( info.GetField ( "editorFocus" ) );
+				}
 			}
 
 			OFDeserializer.DeserializeChildren ( json, this.transform );
@@ -188,6 +192,7 @@ public class OEWorkspace extends MonoBehaviour {
 			var info : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 			info.AddField ( "properties", properties.data );
 			info.AddField ( "editorCamera", OFSerializer.Serialize ( Camera.main.transform ) );
+			info.AddField ( "editorFocus", OFSerializer.Serialize ( focusPoint ) );
 			info.AddField ( "dontInstantiate", true );
 			
 			json.AddField ( "info", info );

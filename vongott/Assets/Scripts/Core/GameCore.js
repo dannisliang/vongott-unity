@@ -15,6 +15,7 @@ class GameCore extends MonoBehaviour {
 	
 	public var selectedOutlineColor : Color;
 	public var deselectedOutlineColor : Color;
+	public var skyboxContainer : Transform;
 	public var player : Player;
 
 	// Private vars
@@ -104,8 +105,8 @@ class GameCore extends MonoBehaviour {
 
 		// Check if a level is already loaded
 		if ( currentLevel != null ) {
-			var skybox : SkyBox = GameObject.FindObjectOfType.<SkyBox>();
-
+			var skybox : SkyBox = skyboxContainer.GetComponentInChildren.<SkyBox>();
+			
 			if ( skybox != null ) {
 				Destroy ( skybox.gameObject );
 			}
@@ -120,7 +121,13 @@ class GameCore extends MonoBehaviour {
 		currentLevel.transform.parent = levelContainer;
 		
 		var json : JSONObject = OFReader.LoadFile ( path );
-	       	var properties : JSONObject = json.GetField ( "properties" );
+	       	var info : JSONObject = json.GetField ( "info" );
+	       	var properties : JSONObject;
+	       
+		if ( info ) {
+			properties = info.GetField ( "properties" );
+		}
+
 		OFDeserializer.DeserializeChildren ( json, currentLevel.transform );
 		
 		// Nest under level container
@@ -159,6 +166,16 @@ class GameCore extends MonoBehaviour {
 				RenderSettings.fogDensity = properties.GetField ( "fogDensity" ).n;
 			} else {
 				RenderSettings.fogDensity = 0.01;
+			}
+			
+			if ( properties.HasField ( "skybox" ) ) {
+				var go : GameObject = Instantiate ( Resources.Load ( "Prefabs/Skyboxes/skybox_" + properties.GetField ( "skybox" ).str ) ) as GameObject;
+
+				if ( go ) {
+					go.transform.parent = skyboxContainer;
+					go.transform.localScale = Vector3.one;
+					go.transform.localPosition = Vector3.zero;
+				}
 			}
 		}
 
