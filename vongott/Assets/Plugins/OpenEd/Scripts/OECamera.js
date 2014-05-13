@@ -131,17 +131,17 @@ public class OECamera extends MonoBehaviour {
 
 	private function DrawCursor () {
 		var point : Vector3 = OEWorkspace.GetInstance().GetFocus ();
-		var size : float = 0.1;
+		var size : float = Vector3.Distance ( this.transform.position, point ) * 0.01;
 
 		GL.Begin ( GL.LINES );
 
 		materials.cursor.SetPass ( 0 );
 
-		GL.Vertex ( point - Vector3.forward * size );
-		GL.Vertex ( point + Vector3.forward * size );
+		GL.Vertex ( point - this.transform.up * size );
+		GL.Vertex ( point + this.transform.up * size );
 
-		GL.Vertex ( point - Vector3.left * size );
-		GL.Vertex ( point + Vector3.left * size );
+		GL.Vertex ( point - this.transform.right * size );
+		GL.Vertex ( point + this.transform.right * size );
 		
 		GL.End ();
 	}
@@ -207,6 +207,8 @@ public class OECamera extends MonoBehaviour {
 
 	public function Update () {
 		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage.name == "Home" ) {
+			var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
+			
 			// Selection & focus
 			if ( !OGRoot.GetInstance().isMouseOver ) {
 				var ray : Ray = this.camera.ScreenPointToRay ( Input.mousePosition );
@@ -269,11 +271,17 @@ public class OECamera extends MonoBehaviour {
 
 			// Zoom
 			} else if ( !OGRoot.GetInstance().isMouseOver ) {
-				var translation = Input.GetAxis("Mouse ScrollWheel");
+				var translation = Mathf.Clamp ( Input.GetAxis ( "Mouse ScrollWheel" ), -0.5, 0.5 );
 				var speed : float = 10;			
 
 				if ( translation != 0.0 && !OGRoot.GetInstance().isMouseOver ) {				
-					transform.position += transform.forward * ( translation * speed );
+					if ( translation > 0 && Vector3.Distance ( this.transform.position, focus ) < 2 ) {
+						return;
+
+					} else {
+						this.transform.position += this.transform.forward * ( translation * speed );
+					
+					}
 				}
 			}
 
