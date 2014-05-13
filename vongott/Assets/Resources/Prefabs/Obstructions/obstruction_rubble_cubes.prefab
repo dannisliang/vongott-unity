@@ -12,7 +12,6 @@ GameObject:
   - 23: {fileID: 2300000}
   - 65: {fileID: 6500000}
   - 114: {fileID: 11400004}
-  - 114: {fileID: 11400006}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   m_Layer: 0
@@ -85,29 +84,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 4
+  - typeIndex: 5
     name: Transform
     component: {fileID: 400000}
+  - typeIndex: 1
+    name: OATrigger
+    component: {fileID: 11400002}
   id: 
   prefabPath: Prefabs/Obstructions/obstruction_rubble_cubes
   exportPath: 
 --- !u!114 &11400002
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e57786cca44a224b95b402685751e89, type: 3}
+  m_Script: {fileID: 11500000, guid: fa068c8cb44d548588382f9a8c0ebe3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: obstruction_rubble_cubes
-  description: A bunch of cubes
-  path: Prefabs/Obstructions
-  materialPath: 
-  tilingModifiers: []
-  canChangeMaterial: 0
+  eventHandler: {fileID: 0}
+  type: 2
+  message: 
+  argument: 
+  object: {fileID: 0}
+  fireOnce: 1
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -134,21 +136,6 @@ MonoBehaviour:
     message: 
     argument: 
     object: {fileID: 0}
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 114c24d93f7d439499858a09d571fc73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activation: 1
-  fireOnce: 1
-  events: []
-  boundingBoxMaterial: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -10,7 +10,7 @@ public enum eDoorType {
 class Door extends InteractiveObject {
 	public var locked : boolean = false;
 	public var lockLevel : int = 1;
-	public var lockKeyGUID : String = "";
+	public var keyId : String = "";
 	public var closed : boolean = true;
 	public var type : eDoorType = eDoorType.SingleSwing;
 	public var leftDoor : GameObject;

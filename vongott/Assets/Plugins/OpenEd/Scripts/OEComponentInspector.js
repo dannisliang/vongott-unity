@@ -28,6 +28,9 @@ public class OEField {
 		} else if ( type == typeof ( OEFloatField ) ) {
 			return new OEFloatField ( transform );
 		
+		} else if ( type == typeof ( OEIntField ) ) {
+			return new OEIntField ( transform );
+		
 		} else if ( type == typeof ( OETextField ) ) {
 			return new OETextField ( transform );
 		
@@ -509,7 +512,13 @@ public class OEObjectField extends OEField {
 		}
 
 		if ( go ) {
-			button.text = go.name;
+			var name : String = go.name;
+
+			if ( name.Length > 15 ) {
+				name = name.Substring ( 0, 15 ) + "...";
+			}
+			
+			button.text = name;
 		
 		} else {
 			button.text = "None";
@@ -770,6 +779,43 @@ public class OEFloatField extends OEField {
 
 public class OEIntField extends OEField {
 	public var textfield : OGTextField;
+	public var title : OGLabel;
+
+	function OEIntField ( parent : Transform ) {
+		textfield = new GameObject ( "fld_Int" ).AddComponent.< OGTextField > ();
+		title = new GameObject ( "lbl_Int" ).AddComponent.< OGLabel > ();
+
+		textfield.transform.parent = parent;
+		title.transform.parent = parent;
+		
+		textfield.ApplyDefaultStyles ();
+		title.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( textfield.gameObject );
+		MonoBehaviour.Destroy ( title.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+		
+		title.tint.a = enabled ? 1.0 : 0.5;
+		textfield.tint.a = enabled ? 1.0 : 0.5;
+		textfield.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			textfield.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			textfield.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+		
+		} else {
+			textfield.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			textfield.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+		
+		}
+	}
 
 	public function Set ( value : int ) : int {
 		if ( !textfield.listening ) {	
@@ -1006,6 +1052,20 @@ public class OEComponentInspector {
 		textField.enabled = !disabled;
 		fieldCounter++;
 		return textField.Set ( input );
+	}
+	
+	// OEIntField
+	public function IntField ( text : String, input : int ) : int {
+		offset.y += 20;
+		return IntField ( text, input, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+	}
+
+	public function IntField ( text : String, input : int, rect : Rect ) : int {
+		var intField : OEIntField = CheckField ( typeof ( OEIntField ) ) as OEIntField;
+		intField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		intField.enabled = !disabled;
+		fieldCounter++;
+		return intField.Set ( input );
 	}
 
 	// OEFloatField
