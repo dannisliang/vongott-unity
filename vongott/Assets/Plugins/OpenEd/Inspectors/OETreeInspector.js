@@ -8,15 +8,25 @@ public class OETreeInspector extends OEComponentInspector {
 		var typeIndex : int = node.type;
 		var newTypeIndex : int = 0;
 		
-		newTypeIndex = Popup ( "Type", typeIndex, nodeTypeStrings );
+		newTypeIndex = Popup ( "", typeIndex, nodeTypeStrings, new Rect ( x + 20, y - 8, 100, 16 ) );
+
+		if ( newTypeIndex != typeIndex ) {
+			node.type = newTypeIndex;
+			
+			switch ( node.type ) {
+				case OCNodeType.Speak:
+					if ( !node.speak ) { node.speak = new OCSpeak (); }
+					break;
+			}
+		}
 
 		switch ( node.type ) {
 			case OCNodeType.Speak:	
 				for ( var l : int = 0; l < node.speak.lines.Length; l++ ) {
-					node.speak.lines[l] = TextField ( "", node.speak.lines[l], new Rect ( x + 10, y + l * 20, 200, 16 ) );
+					node.speak.lines[l] = TextField ( "", node.speak.lines[l], new Rect ( x + 10, y + 20 + l * 20, 200, 16 ) );
 					
 					if ( l > 0 ) {
-						if ( Button ( "x", new Rect ( x + 220, y + l * 20, 24, 16 ) ) ) {
+						if ( Button ( "x", new Rect ( x + 220, y + 20 + l * 20, 24, 16 ) ) ) {
 							var tmpLines : List.< String > = new List. < String > ( node.speak.lines );
 							tmpLines.RemoveAt ( l );
 							node.speak.lines = tmpLines.ToArray ();
@@ -24,7 +34,7 @@ public class OETreeInspector extends OEComponentInspector {
 					}
 				}
 				
-				if ( Button ( "+", new Rect ( x + 10, y + node.speak.lines.Length * 20, 24, 16 ) ) ) {
+				if ( Button ( "+", new Rect ( x + 10, y + 20 + node.speak.lines.Length * 20, 24, 16 ) ) ) {
 					tmpLines = new List.< String > ( node.speak.lines );
 					tmpLines.Add ( "" );
 					node.speak.lines = tmpLines.ToArray ();
@@ -42,8 +52,6 @@ public class OETreeInspector extends OEComponentInspector {
 			rootNodeStrings[i] = i.ToString();
 		}
 		
-		//Label ( "Speakers", EditorStyles.boldLabel );
-
 		for ( i = 0; i < tree.speakers.Length; i++ ) {
 			tree.speakers[i].id = TextField ( i.ToString(), tree.speakers[i].id, new Rect ( 0, i * 20, 200, 16 ) );
 			

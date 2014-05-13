@@ -164,7 +164,7 @@ public class OEWorkspace extends MonoBehaviour {
 				}
 				
 				if ( info.HasField ( "editorCamera" ) ) {
-					OFDeserializer.Deserialize ( info.GetField ( "editorCamera" ), Camera.main.transform );
+					OFDeserializer.Deserialize ( info.GetField ( "editorCamera" ), cam.transform );
 				}
 			}
 
@@ -394,6 +394,14 @@ public class OEWorkspace extends MonoBehaviour {
 	// View
 	public function ToggleWireframe () {
 		cam.wireframe = !cam.wireframe;
+	}
+	
+	public function ToggleDynamicLights () {
+		cam.dynamicLights = !cam.dynamicLights;
+	
+		for ( var l : Light in this.GetComponentsInChildren.< Light > () ) {
+			l.enabled = cam.dynamicLights;
+		}
 	}
 
 	public function ToggleGizmos () {

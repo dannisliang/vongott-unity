@@ -16,19 +16,31 @@ public class OECamera extends MonoBehaviour {
 	public var lights : Light [] = new Light[0];
 	public var wireframe : boolean = false;
 	public var showGizmos : boolean = true;
+	public var defaultAmbientLight : Color = new Color ( 0.2, 0.2, 0.2, 1.0 );
+	public var dynamicLights : boolean = false;
+	public var nearClipSlider : OGSlider;
 
 	private function DrawGrid () {
-		GL.Begin ( GL.LINES );
-
-		materials.grid.SetPass ( 0 );		
-
-		GL.Vertex ( Vector3.right * 1000 );
-		GL.Vertex ( Vector3.right * -1000 );
+		var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
+		var distance : int = Vector3.Distance ( this.transform.position, focus ) * 4;
 		
-		GL.Vertex ( Vector3.forward * 1000 );
-		GL.Vertex ( Vector3.forward * -1000 );
+		if ( distance < 500 ) {
+			GL.Begin ( GL.LINES );
 
-		GL.End ();
+			materials.grid.SetPass ( 0 );		
+
+			for ( var z : int = -distance; z < distance; z++ ) {
+				GL.Vertex ( new Vector3 ( -distance, 0, z ) );
+				GL.Vertex ( new Vector3 ( distance, 0, z ) );
+			}
+			
+			for ( var x : int = -distance; x < distance; x++ ) {
+				GL.Vertex ( new Vector3 ( x, 0, -distance ) );
+				GL.Vertex ( new Vector3 ( x, 0, distance ) );
+			}
+
+			GL.End ();
+		}
 	}
 
 	private function DrawPaths () {
@@ -264,6 +276,18 @@ public class OECamera extends MonoBehaviour {
 					transform.position += transform.forward * ( translation * speed );
 				}
 			}
+
+			// Lighting
+			if ( dynamicLights ) {
+				RenderSettings.ambientLight = defaultAmbientLight;
+			
+			} else {
+				RenderSettings.ambientLight = Color.white;
+
+			}
+
+			// Near clipping
+			this.camera.nearClipPlane = 0.01 + nearClipSlider.sliderValue * 100;
 		}
 	}
 }
