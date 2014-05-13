@@ -16,6 +16,41 @@ public class OGDrawHelper {
 		texSize.y = mat.mainTexture.height;
 	}
 
+	
+	//////////////////
+	// Curve
+	//////////////////
+	// Bezier
+	public static function CalculateBezierPoint ( t : float, p0 : Vector3, p1 : Vector3, p2 : Vector3, p3 : Vector3 ) : Vector3 {
+		var u : float = 1 - t;
+		var tt : float = t*t;
+	  	var uu : float = u*u;
+	  	var uuu : float = uu * u;
+	  	var ttt : float = tt * t;
+	 
+	  	var p : Vector3 = uuu * p0;
+	  	p += 3 * uu * t * p1;
+	  	p += 3 * u * tt * p2;
+	  	p += ttt * p3;
+	 
+	  	return p;
+	}	
+	
+	// Draw
+	public static function DrawCurve ( start : Vector3, startDir : Vector3, end : Vector3, endDir : Vector3, segments : int ) {
+		var q0 : Vector3 = CalculateBezierPoint ( 0, start, startDir, end, endDir );
+
+		for ( var i : int = 0; i < segments; i++ ) {
+			var t : float = i / ( segments * 1.0 );
+			var q1 : Vector3 = CalculateBezierPoint ( t, start, startDir, end, endDir );
+			
+			GL.Vertex ( q0 );
+			GL.Vertex ( q1 );
+
+			q0 = q1;
+		}
+	}
+
 
 	//////////////////
 	// Label

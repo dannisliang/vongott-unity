@@ -3,49 +3,70 @@
 public class OETreeInspector extends OEComponentInspector {
 	override function get type () : System.Type { return typeof ( OCTree ); }
 
+	private var expandedNode : int = 0;
+	private var tree : OCTree;
+	private var currentRootNode : int = 0;
+
 	private function DrawNode ( node : OCNode, x : float, y : float ) {
-		var nodeTypeStrings : String[] = System.Enum.GetNames ( typeof ( OCNodeType ) );
-		var typeIndex : int = node.type;
-		var newTypeIndex : int = 0;
+		var expanded : boolean = expandedNode == node.id;
 		
-		newTypeIndex = Popup ( "", typeIndex, nodeTypeStrings, new Rect ( x + 20, y - 8, 100, 16 ) );
-
-		if ( newTypeIndex != typeIndex ) {
-			node.type = newTypeIndex;
+		if ( expanded ) {
+			var nodeTypeStrings : String[] = System.Enum.GetNames ( typeof ( OCNodeType ) );
+			var typeIndex : int = node.type;
+			var newTypeIndex : int = 0;
 			
-			switch ( node.type ) {
-				case OCNodeType.Speak:
-					if ( !node.speak ) { node.speak = new OCSpeak (); }
-					break;
-			}
-		}
+			newTypeIndex = Popup ( "", typeIndex, nodeTypeStrings, new Rect ( x + 20, y - 8, 100, 16 ) );
 
-		switch ( node.type ) {
-			case OCNodeType.Speak:	
-				for ( var l : int = 0; l < node.speak.lines.Length; l++ ) {
-					node.speak.lines[l] = TextField ( "", node.speak.lines[l], new Rect ( x + 10, y + 20 + l * 20, 200, 16 ) );
-					
-					if ( l > 0 ) {
-						if ( Button ( "x", new Rect ( x + 220, y + 20 + l * 20, 24, 16 ) ) ) {
-							var tmpLines : List.< String > = new List. < String > ( node.speak.lines );
-							tmpLines.RemoveAt ( l );
-							node.speak.lines = tmpLines.ToArray ();
+			if ( newTypeIndex != typeIndex ) {
+				node.type = newTypeIndex;
+				
+				switch ( node.type ) {
+					case OCNodeType.Speak:
+						if ( !node.speak ) { node.speak = new OCSpeak (); }
+						break;
+				}
+			}
+
+			switch ( node.type ) {
+				case OCNodeType.Speak:	
+					for ( var l : int = 0; l < node.speak.lines.Length; l++ ) {
+						node.speak.lines[l] = TextField ( "", node.speak.lines[l], new Rect ( x + 10, y + 20 + l * 20, 200, 16 ) );
+						
+						if ( l > 0 ) {
+							if ( Button ( "x", new Rect ( x + 220, y + 20 + l * 20, 24, 16 ) ) ) {
+								var tmpLines : List.< String > = new List. < String > ( node.speak.lines );
+								tmpLines.RemoveAt ( l );
+								node.speak.lines = tmpLines.ToArray ();
+							}
 						}
 					}
-				}
-				
-				if ( Button ( "+", new Rect ( x + 10, y + 20 + node.speak.lines.Length * 20, 24, 16 ) ) ) {
-					tmpLines = new List.< String > ( node.speak.lines );
-					tmpLines.Add ( "" );
-					node.speak.lines = tmpLines.ToArray ();
-				}
-				
-				break;
+					
+					if ( Button ( "+", new Rect ( x + 10, y + 20 + node.speak.lines.Length * 20, 24, 16 ) ) ) {
+						tmpLines = new List.< String > ( node.speak.lines );
+						tmpLines.Add ( "" );
+						node.speak.lines = tmpLines.ToArray ();
+					}
+					
+					break;
+			}
+		
+		} else {
+			if ( Button ( "+", new Rect ( x, y, 16, 16 ) ) ) {
+				expandedNode = node.id;
+			}
+
+		}
+
+		for ( var c : int = 0; c < node.connectedTo.Length; c++ ) {
+			var nx : float = x + c * 200;
+			var ny : float = y + 200;
+			
+			DrawNode ( tree.rootNodes[currentRootNode].GetNode ( node.connectedTo[c] ), nx, ny );
 		}
 	}
 
 	override function Inspector () {
-		var tree : OCTree = target.GetComponent.< OCTree >();
+		tree = target.GetComponent.< OCTree >();
 	
 		var rootNodeStrings : String[] = new String[tree.rootNodes.Length];
 		for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {

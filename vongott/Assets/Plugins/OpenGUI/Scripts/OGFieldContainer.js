@@ -1,11 +1,10 @@
 ﻿#pragma strict
 
-@ExecuteInEditMode
-public class FieldContainer extends MonoBehaviour {
+public class OGFieldContainer extends MonoBehaviour {
 	private class Field {
-		@NonSerialized public var enabled : boolean = true;
-		@NonSerialized public var setCounter : int = 0;
-		@NonSerialized public var scale : Vector2 = new Vector2 ( 140, 16 );
+		@HideInInspector public var enabled : boolean = true;
+		@HideInInspector public var setCounter : int = 0;
+		@HideInInspector public var scale : Vector2 = new Vector2 ( 140, 16 );
 
 		public function get canSet () : boolean {
 			if ( setCounter > 0 ) {
@@ -309,7 +308,7 @@ public class FieldContainer extends MonoBehaviour {
 			return wasClicked;
 		}
 	}
-
+	
 	private class FLabelField extends Field {
 		public var label : OGLabel;
 
@@ -674,7 +673,7 @@ public class FieldContainer extends MonoBehaviour {
 	}
 	
 	public var width : float = 280;
-	@NonSerialized public var offset : Vector2;
+	@HideInInspector public var offset : Vector2;
 
 	private var fields : Field[] = new Field[900];
 	private var fieldCounter : int = 0;

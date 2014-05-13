@@ -6,11 +6,17 @@ import System.Linq;
 @script ExecuteInEditMode();
 class OGLine {
 	public var start : Vector3;
+	public var startDir : Vector3;
 	public var end : Vector3;
+	public var endDir : Vector3;
+	public var segments : int;
 
-	function OGLine ( start : Vector3, end : Vector3 ) {
+	function OGLine ( start : Vector3, startDir : Vector3, end : Vector3, endDir : Vector3, segments : int ) {
 		this.start = start;
+		this.startDir = startDir;
 		this.end = end;
+		this.endDir = endDir;
+		this.segments = segments;
 	}
 }
 
@@ -143,22 +149,10 @@ class OGRoot extends MonoBehaviour {
 			if ( lines != null && lines.Length > 0 ) {
 				GL.Begin(GL.LINES);
 				lineMaterial.SetPass(0);
+				
 				for ( i = 0; i < lines.Length; i++ ) {
-					var noClip : boolean = lineClip.width <= 0 || lineClip.height <= 0;
-					var containsStart : boolean = lineClip.Contains ( lines[i].start );
-					var containsEnd : boolean = lineClip.Contains ( lines[i].end );
-
-					if ( noClip || containsStart ) {
-						GL.Vertex3 ( lines[i].start.x, Screen.height - lines[i].start.y, 0 );
-					} else if ( containsEnd ) {
-						GL.Vertex3 ( Mathf.Clamp ( lines[i].start.x, lineClip.xMin, lineClip.xMax ), Mathf.Clamp ( Screen.height - lines[i].start.y, lineClip.yMin, lineClip.yMax ), 0 );
-					}
-					
-					if ( noClip || containsEnd ) {
-						GL.Vertex3 ( lines[i].end.x, Screen.height - lines[i].end.y, 0 );
-					} else if ( containsStart ) {
-						GL.Vertex3 ( Mathf.Clamp ( lines[i].end.x, lineClip.xMin, lineClip.xMax ), Mathf.Clamp ( Screen.height - lines[i].end.y, lineClip.yMin, lineClip.yMax ), 0 );
-					}
+					var l : OGLine = lines[i];
+					OGDrawHelper.DrawCurve ( l.start, l.startDir, l.end, l.endDir, l.segments );
 				}	
 			
 				GL.End();
