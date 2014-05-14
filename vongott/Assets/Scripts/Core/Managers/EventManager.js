@@ -88,4 +88,19 @@ class EventManager extends MonoBehaviour {
 	public function OnExplosion ( grenade : OSGrenade ) {
 		GameCore.GetDamageManager().ExplosionDamage ( grenade.transform.position, 2, 0.1 );	
 	}
+
+	// Flag
+	public function SetFlag ( input : String ) {
+		var split : String[] = input.Split ( ","[0] );
+		var flag : String = split[0];
+		var bool : boolean = true;
+		
+		if ( split.Length > 1 ) {
+			bool = split[1] == "true";
+		}
+
+		GameCore.GetConversationManager().flags.Set ( flag, bool );
+
+		GameCore.Print ( "Flag '" + flag + "' set to " + bool );
+	}
 }

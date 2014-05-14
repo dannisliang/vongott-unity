@@ -84,10 +84,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 5
+  - typeIndex: 6
     name: Transform
     component: {fileID: 400000}
-  - typeIndex: 1
+  - typeIndex: 2
     name: OATrigger
     component: {fileID: 11400002}
   id: 
@@ -110,6 +110,7 @@ MonoBehaviour:
   argument: 
   object: {fileID: 0}
   fireOnce: 1
+  eventToTarget: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,6 +137,7 @@ MonoBehaviour:
     message: 
     argument: 
     object: {fileID: 0}
+  destroyed: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

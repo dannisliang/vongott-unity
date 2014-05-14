@@ -124,6 +124,24 @@ public class Console extends MonoBehaviour {
 
 		return output;
 	}
+	
+	private function OpenSesame () : String {
+		var output : String = "";
+
+		var ray : Ray = Camera.main.ScreenPointToRay ( new Vector3 ( Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0 ) );
+		var hit : RaycastHit;
+		var str : String = "";
+
+		if ( Physics.Raycast ( Camera.main.transform.position, ray.direction, hit, Mathf.Infinity ) ) {
+			str = hit.collider.gameObject.name + " destroyed";
+			
+			if ( hit.collider.gameObject.GetComponent(Door) ) {
+				hit.collider.gameObject.GetComponent(Door).Toggle();
+			}
+		}
+
+		return output;
+	}
 
 	private function Kill ( input : String ) : String {
 		var args : String [] = input.Split ( " "[0] );
@@ -146,8 +164,8 @@ public class Console extends MonoBehaviour {
 						hit.collider.gameObject.GetComponent(OACharacter).Die ();
 						str = hit.collider.gameObject.name + " killed";
 
-					} else if ( hit.collider.gameObject.GetComponent(DestructibleObject) ) {
-						hit.collider.gameObject.GetComponent(DestructibleObject).Explode ( 20, 50 );
+					} else if ( hit.collider.gameObject.GetComponent(ODDestructibleObject) ) {
+						hit.collider.gameObject.GetComponent(ODDestructibleObject).Explode ( 20, 50 );
 
 					}
 					
@@ -214,6 +232,11 @@ public class Console extends MonoBehaviour {
 		} else {
 			// Shorcuts
 			switch ( input ) {
+				case "opensesame":
+					// TODO: check for toggle
+					output += OpenSesame ();
+					break;
+				
 				case "god":
 					// TODO: check for toggle
 					output += Set ( "player immortal" );

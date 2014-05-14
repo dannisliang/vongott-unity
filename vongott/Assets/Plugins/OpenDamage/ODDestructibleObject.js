@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public class DestructibleObject extends MonoBehaviour {
+public class ODDestructibleObject extends MonoBehaviour {
 	public var pieces : GameObject[];
 	public var event : OCEvent;
 

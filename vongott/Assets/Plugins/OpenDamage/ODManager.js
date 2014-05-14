@@ -1,36 +1,56 @@
 #pragma strict
 
-class DamageManager extends MonoBehaviour {
-	// Static vars
-	static var instance : DamageManager;
+class ODManager extends MonoBehaviour {
+	static var instance : ODManager;
 	
-	// Constants
 	public var expirationTime : float = 20.0;
-	
-	// Prefab links
 	public var prefabBullet : GameObject;
 	public var prefabExplosion : GameObject;
-
 	
-	//////////////////
+	private var shakeAmount : float;
+	private var shakeFadeOut : float;
+
+	// Start
+	function Start () {
+		instance = this;
+	}
+	
+	// Get instance
+	static function GetInstance () : ODManager {
+		return instance;
+	}
+	
 	// Destroy
-	//////////////////
 	private function DestroyDelayed ( obj : GameObject, seconds : float ) : IEnumerator {
 		yield WaitForSeconds ( seconds );
 
 		Destroy ( obj );
 	}
 
+	// Update
+	public function LateUpdate () {
+		// Shake
+		if ( shakeAmount > 0 ) {
+			shakeAmount -= shakeFadeOut;
 
-	//////////////////
-	// Spawn
-	//////////////////
+			var x : float = Random.Range ( -shakeAmount, shakeAmount );
+			var y : float = Random.Range ( -shakeAmount, shakeAmount );
+		
+			Camera.main.transform.position += new Vector3 ( x, y, 0 );			
+		}
+
+	}
+
 	// Explosion
+	public function ShakeCam ( amount : float, fadeOut : float ) {
+		shakeAmount = amount;
+		shakeFadeOut = fadeOut;
+	}
+	
 	public function ExplosionDamage ( target : Vector3, radius : float, damage : float ) {
 		var colliders : Collider[] = Physics.OverlapSphere ( target, radius );
 
 		for ( var hit : Collider in colliders ) {
-			Debug.Log ( hit );
 			/*if ( hit.rigidbody != null ) {
 				hit.rigidbody.AddExplosionForce ( damage, target, radius, 3 );
 			
@@ -59,20 +79,19 @@ class DamageManager extends MonoBehaviour {
 			}*/
 
 			// Is it a destructible object?
-			var destructible : DestructibleObject = hit.GetComponent.< DestructibleObject >();
+			var destructible : ODDestructibleObject = hit.GetComponent.< ODDestructibleObject >();
 
 			if ( destructible != null ) {
 				destructible.Explode ( target, damage * 10, radius );
 			}
 		}
 
-		GameCamera.GetInstance().Shake ( 0.6, 0.03 );
+		ShakeCam ( 0.6, 0.03 );
 	}
 	
 	public function SpawnExplosion ( target : Vector3, radius : float, damage : float )  {
 		var explosion : GameObject = Instantiate ( prefabExplosion );
 
-		explosion.transform.parent = GameCore.levelContainer;
 		explosion.transform.position = target;
 
 		ExplosionDamage ( target, radius, damage );
@@ -81,16 +100,4 @@ class DamageManager extends MonoBehaviour {
 	}
 
 
-	/////////////////
-	// Init
-	/////////////////
-	// Start
-	function Start () {
-		instance = this;
-	}
-	
-	// Get instance
-	static function GetInstance () : DamageManager {
-		return instance;
-	}
 }
