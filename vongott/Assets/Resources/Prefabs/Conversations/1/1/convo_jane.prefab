@@ -184,8 +184,28 @@ MonoBehaviour:
         flag: 
       end:
         rootNode: 0
-    - connectedTo: 
+    - connectedTo: 5f870000
       id: 54785
+      type: 1
+      speak:
+        speaker: 0
+        lines:
+        - 
+      event:
+        message: GiveItem
+        argument: 
+        object: {fileID: 100000, guid: ee392d9bd410069448895d35a35e59fe, type: 2}
+      jump:
+        rootNode: 0
+      setFlag:
+        flag: 
+        b: 0
+      getFlag:
+        flag: 
+      end:
+        rootNode: 0
+    - connectedTo: 
+      id: 34655
       type: 5
       speak:
         speaker: 0

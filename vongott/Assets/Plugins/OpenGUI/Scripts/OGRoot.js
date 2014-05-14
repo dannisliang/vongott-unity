@@ -5,13 +5,13 @@ import System.Linq;
 
 @script ExecuteInEditMode();
 class OGLine {
-	public var start : Vector3;
+	public var start : OGWidget;
 	public var startDir : Vector3;
-	public var end : Vector3;
+	public var end : OGWidget;
 	public var endDir : Vector3;
 	public var segments : int;
 
-	function OGLine ( start : Vector3, startDir : Vector3, end : Vector3, endDir : Vector3, segments : int ) {
+	function OGLine ( start : OGWidget, startDir : Vector3, end : OGWidget, endDir : Vector3, segments : int ) {
 		this.start = start;
 		this.startDir = startDir;
 		this.end = end;
@@ -152,7 +152,7 @@ class OGRoot extends MonoBehaviour {
 				
 				for ( i = 0; i < lines.Length; i++ ) {
 					var l : OGLine = lines[i];
-					OGDrawHelper.DrawCurve ( l.start, l.startDir, l.end, l.endDir, l.segments );
+					OGDrawHelper.DrawCurve ( l.start.drawRct.center, l.startDir, l.end.drawRct.center, l.endDir, l.segments );
 				}	
 			
 				GL.End();

@@ -8,6 +8,7 @@ Shader "Vongott/Unlit/AlphaDistanceSingleColor" {
 	SubShader {
 		Lighting Off
 		ZWrite Off
+		ZTest Always
 		Cull Off
 		Blend SrcAlpha OneMinusSrcAlpha
 		 

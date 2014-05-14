@@ -28,6 +28,9 @@ public class OEField {
 		} else if ( type == typeof ( OEFloatField ) ) {
 			return new OEFloatField ( transform );
 		
+		} else if ( type == typeof ( OEBox ) ) {
+			return new OEBox ( transform );
+		
 		} else if ( type == typeof ( OEIntField ) ) {
 			return new OEIntField ( transform );
 		
@@ -531,9 +534,48 @@ public class OEObjectField extends OEField {
 
 public class OELabelField extends OEField {
 	public var label : OGLabel;
+	
+	function OELabelField ( parent : Transform ) {
+		label = new GameObject ( "lbl_Label" ).AddComponent.< OGLabel > ();
+		
+		label.transform.parent = parent;
+			
+		label.ApplyDefaultStyles ();
+	}
 
-	public function Set ( text : String ) {
+	override function Destroy () {
+		MonoBehaviour.Destroy ( label.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		label.tint.a = enabled ? 1.0 : 0.5;
+		
 		label.text = text;
+		label.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+		label.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+	}
+}
+
+public class OEBox extends OEField {
+	public var sprite : OGSlicedSprite;
+	
+	function OEBox ( parent : Transform ) {
+		sprite = new GameObject ( "img_Box" ).AddComponent.< OGSlicedSprite > ();
+		
+		sprite.transform.parent = parent;
+			
+		sprite.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( sprite.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		sprite.tint.a = enabled ? 1.0 : 0.5;
+		
+		sprite.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+		sprite.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
 	}
 }
 
@@ -1122,6 +1164,18 @@ public class OEComponentInspector {
 		pointField.enabled = !disabled;
 		fieldCounter++;
 		return pointField.Set ( input );
+	}
+	
+	// OEBox
+	public function Box ( text : String ) {
+		offset.y += 20;
+		Box ( text, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+	}
+	
+	public function Box ( text : String, rect : Rect ) {
+		var box : OEBox = CheckField ( typeof ( OEBox ) ) as OEBox;
+		box.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		fieldCounter++;
 	}
 
 	// OEToggle

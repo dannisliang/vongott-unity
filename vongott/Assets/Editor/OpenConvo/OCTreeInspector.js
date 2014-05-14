@@ -229,7 +229,7 @@ public class OCTreeInspector extends Editor {
 
 		if ( root.nodes.Length < 1 ) {
 			GUI.backgroundColor = Color.green;
-			if ( GUI.Button ( new Rect ( 0, 0, 20, 20 ), "+" ) ) {
+			if ( GUI.Button ( new Rect ( 0, 0, 20, 16 ), "+" ) ) {
 				root.AddFirstNode ();
 			}
 			viewRect.xMax = 100;
@@ -301,7 +301,7 @@ public class OCTreeInspector extends Editor {
 						container.rect.x = 400;
 						container.rect.y = scrollPos.y + 20;
 
-						GUI.Label ( new Rect ( container.rect.x + 140, container.rect.y - 10, 100, 20 ), "orphan" );
+						GUI.Label ( new Rect ( container.rect.x + 140, container.rect.y - 10, 100, 16 ), "orphan" );
 					}
 
 
@@ -309,7 +309,7 @@ public class OCTreeInspector extends Editor {
 					var nodeTypeStrings : String[] = System.Enum.GetNames ( typeof ( OCNodeType ) );
 					var typeIndex : int = node.type;
 					var newTypeIndex : int = 0;
-					var typeRect : Rect = new Rect ( container.rect.x + 20, container.rect.y - 7, 100, 20 );
+					var typeRect : Rect = new Rect ( container.rect.x + 20, container.rect.y - 7, 100, 16 );
 
 					newTypeIndex = EditorGUI.Popup ( typeRect, typeIndex, nodeTypeStrings );
 
@@ -330,14 +330,14 @@ public class OCTreeInspector extends Editor {
 							container.rect.width = 50 + node.speak.lines.length * 190;
 							container.rect.height = 80;
 
-							EditorGUI.LabelField ( new Rect ( 10, 20, 60, 20 ), "Speaker" );
-							node.speak.speaker = EditorGUI.Popup ( new Rect ( 70, 20, 120, 20 ), node.speak.speaker, GetSpeakerStrings ( tree ) );
+							EditorGUI.LabelField ( new Rect ( 10, 20, 60, 16 ), "Speaker" );
+							node.speak.speaker = EditorGUI.Popup ( new Rect ( 70, 20, 120, 16 ), node.speak.speaker, GetSpeakerStrings ( tree ) );
 					
 							node.SetOutputAmount ( node.speak.lines.Length );
 							container.SetOutputAmount ( node.connectedTo.Length );
 
 							for ( var l : int = 0; l < node.speak.lines.Length; l++ ) {
-								var lineRect : Rect = new Rect ( 10 + l * ( lineWidth + 10 ), 40, lineWidth, 20 );
+								var lineRect : Rect = new Rect ( 10 + l * ( lineWidth + 10 ), 40, lineWidth, 16 );
 								node.speak.lines[l] = EditorGUI.TextField ( lineRect, node.speak.lines[l] );
 
 								if ( l > 0 ) {
@@ -377,15 +377,15 @@ public class OCTreeInspector extends Editor {
 								container.rect.height = 80;
 							}
 
-							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 20 ), "Message" );
-							node.event.message = EditorGUI.TextField ( new Rect ( 80, 20, 110, 20 ), node.event.message );
+							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 16 ), "Message" );
+							node.event.message = EditorGUI.TextField ( new Rect ( 80, 20, 110, 16 ), node.event.message );
 							
-							EditorGUI.LabelField ( new Rect ( 10, 50, 80, 20 ), "Object" );
-							node.event.object = EditorGUI.ObjectField ( new Rect ( 80, 50, 110, 20 ), node.event.object, typeof(GameObject), true ) as GameObject;
+							EditorGUI.LabelField ( new Rect ( 10, 50, 80, 16 ), "Object" );
+							node.event.object = EditorGUI.ObjectField ( new Rect ( 80, 50, 110, 16 ), node.event.object, typeof(GameObject), true ) as GameObject;
 							
 							if ( node.event.object == null ) {
-								EditorGUI.LabelField ( new Rect ( 10, 80, 80, 20 ), "Argument" );
-								node.event.argument = EditorGUI.TextField ( new Rect ( 80, 80, 110, 20 ), node.event.argument );
+								EditorGUI.LabelField ( new Rect ( 10, 80, 80, 16 ), "Argument" );
+								node.event.argument = EditorGUI.TextField ( new Rect ( 80, 80, 110, 16 ), node.event.argument );
 							} else {
 								node.event.argument = "";
 							}
@@ -400,8 +400,8 @@ public class OCTreeInspector extends Editor {
 							container.rect.width = 200;
 							container.rect.height = 40;
 							
-							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 20 ), "To root" );
-							node.jump.rootNode = EditorGUI.Popup ( new Rect ( 80, 20, 110, 20 ), node.jump.rootNode, rootNodeStrings );
+							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 16 ), "To root" );
+							node.jump.rootNode = EditorGUI.Popup ( new Rect ( 80, 20, 110, 16 ), node.jump.rootNode, rootNodeStrings );
 							
 							container.SetOutputAmount ( 0 );
 							break;
@@ -412,10 +412,10 @@ public class OCTreeInspector extends Editor {
 							container.rect.width = 200;
 							container.rect.height = 80;
 
-							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 20 ), "Flag" );
-							node.setFlag.flag = EditorGUI.TextField ( new Rect ( 80, 20, 110, 20 ), node.setFlag.flag );
-							EditorGUI.LabelField ( new Rect ( 10, 50, 80, 20 ), "Bool" );
-							node.setFlag.b = EditorGUI.Toggle ( new Rect ( 80, 50, 110, 20 ), node.setFlag.b );
+							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 16 ), "Flag" );
+							node.setFlag.flag = EditorGUI.TextField ( new Rect ( 80, 20, 110, 16 ), node.setFlag.flag );
+							EditorGUI.LabelField ( new Rect ( 10, 50, 80, 16 ), "Bool" );
+							node.setFlag.b = EditorGUI.Toggle ( new Rect ( 80, 50, 110, 16 ), node.setFlag.b );
 							
 							container.SetOutputAmount ( node.connectedTo.Length );
 							container.outputRects[0] = new Rect ( container.rect.xMin + 10, container.rect.yMax - 7, 14, 14 );
@@ -427,11 +427,11 @@ public class OCTreeInspector extends Editor {
 							container.rect.width = 200;
 							container.rect.height = 80;
 
-							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 20 ), "Flag" );
-							node.getFlag.flag = EditorGUI.TextField ( new Rect ( 80, 20, 110, 20 ), node.getFlag.flag );
+							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 16 ), "Flag" );
+							node.getFlag.flag = EditorGUI.TextField ( new Rect ( 80, 20, 110, 16 ), node.getFlag.flag );
 							
-							EditorGUI.LabelField ( new Rect ( 10, 50, 80, 20 ), "False" );
-							EditorGUI.LabelField ( new Rect ( 200 - 40, 50, 80, 20 ), "True" );
+							EditorGUI.LabelField ( new Rect ( 10, 50, 80, 16 ), "False" );
+							EditorGUI.LabelField ( new Rect ( 200 - 40, 50, 80, 16 ), "True" );
 
 							container.SetOutputAmount ( node.connectedTo.Length );
 							container.outputRects[0] = new Rect ( container.rect.xMin + 10, container.rect.yMax - 7, 14, 14 );
@@ -444,8 +444,8 @@ public class OCTreeInspector extends Editor {
 							container.rect.width = 200;
 							container.rect.height = 40;
 							
-							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 20 ), "Next root" );
-							node.end.rootNode = EditorGUI.Popup ( new Rect ( 80, 20, 110, 20 ), node.end.rootNode, rootNodeStrings );
+							EditorGUI.LabelField ( new Rect ( 10, 20, 80, 16 ), "Next root" );
+							node.end.rootNode = EditorGUI.Popup ( new Rect ( 80, 20, 110, 16 ), node.end.rootNode, rootNodeStrings );
 							
 							container.SetOutputAmount ( 0 );
 							break;
@@ -455,7 +455,7 @@ public class OCTreeInspector extends Editor {
 							container.rect.height = 50;
 
 							container.SetOutputAmount ( 0 );
-							EditorGUI.LabelField ( new Rect ( 10, 20, 180, 20 ), "Invalid node" );
+							EditorGUI.LabelField ( new Rect ( 10, 20, 180, 16 ), "Invalid node" );
 							break;
 					}
 					
