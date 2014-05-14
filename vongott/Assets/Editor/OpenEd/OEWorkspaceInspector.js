@@ -13,7 +13,17 @@ public class OEWorkspaceInspector extends Editor {
 
 		for ( var i : int = 0; i < workspace.preferredParents.Length; i++ ) {
 			EditorGUILayout.BeginHorizontal ();
-			workspace.preferredParents[i].typeIndex = EditorGUILayout.Popup ( workspace.preferredParents[i].typeIndex, OFField.GetTypeStrings () );
+			
+			var typeIndex : int = 0;
+			var typeStrings : String[] = OFField.GetTypeStrings ();
+
+			for ( var t : int = 0; t < typeStrings.Length; t++ ) {
+				if ( workspace.preferredParents[i].typeName == typeStrings[t] ) {
+					typeIndex = t;
+				}
+			}
+			
+			workspace.preferredParents[i].typeName = typeStrings [ EditorGUILayout.Popup ( typeIndex, OFField.GetTypeStrings () ) ];
 			workspace.preferredParents[i].parent = EditorGUILayout.ObjectField ( workspace.preferredParents[i].parent, typeof ( Transform ), true ) as Transform;
 			
 			GUI.backgroundColor = Color.red;

@@ -4,6 +4,8 @@ public class DestructibleObject extends MonoBehaviour {
 	public var pieces : GameObject[];
 	public var event : OCEvent;
 
+	public var destroyed : boolean = false;
+
 	private function SpawnPieces () : List.< Collider > {
 		var list : List.< Collider > = new List.< Collider > ();
 		
@@ -26,52 +28,18 @@ public class DestructibleObject extends MonoBehaviour {
 		return list;
 	}
 
-	private function DisableObject () {
-		if ( this.renderer ) {
-			this.renderer.enabled = false;
-		}
-
-		if ( this.collider ) {
-			this.collider.enabled = false;
-		}
-
-		if ( this.rigidbody ) {
-			this.rigidbody.isKinematic = true;
-		}
-	}
-
-	private function CleanUp ( colliders : List.< Collider > ) : IEnumerator {
-		CheckTrigger ();
-		
-		DisableObject ();
-
-		yield WaitForSeconds ( 5.0 );
-
-		for ( var col : Collider in colliders ) {
-			Destroy ( col.gameObject );
-		}
-
-		yield WaitForEndOfFrame ();
-
-		Destroy ( this.gameObject );
-	}
-
-	private function CheckTrigger () {
-		var trigger : Trigger = this.GetComponent ( Trigger );
-
-		if ( trigger != null ) {
-			trigger.OnDeath ();
-		}
-	}
-
 	public function Explode ( position : Vector3, force : float, radius : float ) {
+		if ( destroyed ) { return; }
+		
 		var colliders : List.< Collider > = SpawnPieces ();
 
 		for ( var col : Collider in colliders ) {
 			col.rigidbody.AddExplosionForce ( force, position, radius, 1 );
 		}
 
-		StartCoroutine ( CleanUp ( colliders ) );
+		destroyed = true;
+
+		Destroy ( this.gameObject );
 	}
 	
 	public function Explode ( force : float, radius : float ) {

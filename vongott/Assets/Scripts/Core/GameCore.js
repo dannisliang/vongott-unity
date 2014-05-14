@@ -257,6 +257,10 @@ class GameCore extends MonoBehaviour {
 		return instance.GetComponent.< EventManager > ();
 	}
 	
+	public static function GetDamageManager () : DamageManager {
+		return instance.GetComponent.< DamageManager > ();
+	}
+	
 	public static function GetUpgradeManager () : UpgradeManager {
 		return instance.GetComponent.< UpgradeManager > ();
 	}

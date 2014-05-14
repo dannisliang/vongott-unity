@@ -55,7 +55,7 @@ public class MusicManager extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( shouldPlay && shouldPlay.clip && shouldPlay.clip.isReadyToPlay ) {
+/*		if ( shouldPlay && shouldPlay.clip && shouldPlay.clip.isReadyToPlay ) {
 			if ( !shouldPlay.isPlaying ) {
 				shouldPlay.Play ();
 			
@@ -73,5 +73,5 @@ public class MusicManager extends MonoBehaviour {
 				shouldNotPlay.Stop ();
 			}
 		}
-	}
+	*/}
 }

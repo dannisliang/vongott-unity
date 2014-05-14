@@ -34,10 +34,10 @@ public class OEUndoAction {
 public class OEWorkspace extends MonoBehaviour {
 	private class PreferredParent {
 		public function get type () : System.Type {
-			return OFField.GetTypeByIndex ( typeIndex );
+			return OFField.GetTypeByName ( typeName );
 		}
 		
-		public var typeIndex : int = -1;
+		public var typeName : String = "Transform";
 		public var parent : Transform;
 	}
 	

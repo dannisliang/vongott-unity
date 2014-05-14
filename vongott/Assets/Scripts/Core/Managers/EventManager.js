@@ -83,4 +83,9 @@ class EventManager extends MonoBehaviour {
 			GameCore.GetInventory().AddItem ( item );
 		}
 	}
+
+	// Explosions
+	public function OnExplosion ( grenade : OSGrenade ) {
+		GameCore.GetDamageManager().ExplosionDamage ( grenade.transform.position, 2, 0.1 );	
+	}
 }

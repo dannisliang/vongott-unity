@@ -28,6 +28,22 @@ public class OFField {
 		}
 	}
 	
+	public static function GetTypeByName ( n : String ) : System.Type {
+		if ( !plugins ) {
+			plugins = OFReflector.GetPlugins ();
+		}
+
+		var types : System.Type [] = GetTypes ();
+
+		for ( var i : int = 0; i < types.Length; i++ ) {
+			if ( types[i].ToString().Replace ( "UnityEngine.", "" ) == n ) {
+				return types [i];
+			}
+		}
+		
+		return null;
+	}
+	
 	public static function GetTypes () : System.Type [] {
 		if ( !allTypes ) {
 			if ( !plugins ) {

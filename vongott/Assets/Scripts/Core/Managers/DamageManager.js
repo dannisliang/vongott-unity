@@ -26,17 +26,12 @@ class DamageManager extends MonoBehaviour {
 	// Spawn
 	//////////////////
 	// Explosion
-	public function SpawnExplosion ( target : Vector3, radius : float, damage : float )  {
-		var explosion : GameObject = Instantiate ( prefabExplosion );
-
-		explosion.transform.parent = GameCore.levelContainer;
-		explosion.transform.position = target;
-
-		// Inflict colliders
+	public function ExplosionDamage ( target : Vector3, radius : float, damage : float ) {
 		var colliders : Collider[] = Physics.OverlapSphere ( target, radius );
 
 		for ( var hit : Collider in colliders ) {
-			if ( hit.rigidbody != null ) {
+			Debug.Log ( hit );
+			/*if ( hit.rigidbody != null ) {
 				hit.rigidbody.AddExplosionForce ( damage, target, radius, 3 );
 			
 				// Is it an actor?
@@ -61,20 +56,28 @@ class DamageManager extends MonoBehaviour {
 				if ( m != null ) {
 					m.Explode ();
 				}
-			}
+			}*/
 
 			// Is it a destructible object?
-			var destructible : DestructibleObject = hit.GetComponent ( DestructibleObject );
+			var destructible : DestructibleObject = hit.GetComponent.< DestructibleObject >();
+
 			if ( destructible != null ) {
 				destructible.Explode ( target, damage * 10, radius );
 			}
 		}
 
 		GameCamera.GetInstance().Shake ( 0.6, 0.03 );
+	}
+	
+	public function SpawnExplosion ( target : Vector3, radius : float, damage : float )  {
+		var explosion : GameObject = Instantiate ( prefabExplosion );
+
+		explosion.transform.parent = GameCore.levelContainer;
+		explosion.transform.position = target;
+
+		ExplosionDamage ( target, radius, damage );
 
 		StartCoroutine ( DestroyDelayed ( explosion, 10 ) );
-
-		GameCore.Print ( "DamageManager | Explosion!" );
 	}
 
 

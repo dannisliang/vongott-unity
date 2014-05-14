@@ -29,11 +29,16 @@ class InteractiveObject extends MonoBehaviour {
 	
 	function Interact () {
 		var character : OACharacter = this.GetComponent.< OACharacter > ();
+		var item : OSItem = this.GetComponent.< OSItem > ();
 
 		if ( character ) {
 			if ( !character.isEnemy ) {
 				GameCore.GetConversationManager().StartConversation ( character.conversationTree );
 			}
+		
+		} else if ( item ) {
+			GameCore.GetInventory().AddItemFromScene ( item );
+
 		}
 	}
 	

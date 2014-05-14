@@ -1,11 +1,11 @@
 ﻿#pragma strict
 
-public class OETreeEditor extends OGPage {
+public class OCTreeEditor extends OGPage {
 
 	public var currentTree : OFSerializedObject;
 	public var componentContainer : Transform;
 
-	private var inspector : OETreeInspector;
+	private var inspector : OCTreeInspector;
 	private var savePath : String;
 
 	public function New () {
@@ -54,7 +54,7 @@ public class OETreeEditor extends OGPage {
 
 	override function StartPage () {
 		if ( !inspector ) {
-			inspector = System.Activator.CreateInstance ( typeof ( OETreeInspector ) ) as OETreeInspector;
+			inspector = System.Activator.CreateInstance ( typeof ( OCTreeInspector ) ) as OCTreeInspector;
 			inspector.width = Screen.width - 40;
 		}
 	}

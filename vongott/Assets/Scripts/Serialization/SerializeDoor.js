@@ -21,7 +21,7 @@ public class SerializeDoor extends OFPlugin {
 		var door : Door = component as Door;
 		
 		door.locked = input.GetField ( "locked" ).b;
-		door.closed = input.GetField ( "Closed" ).b;
+		door.closed = input.GetField ( "closed" ).b;
 		door.keyId = input.GetField ( "keyId" ).str;
 		door.lockLevel = input.GetField ( "lockLevel" ).n;
 	}

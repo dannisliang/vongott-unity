@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public class OECharacterInspector extends OEComponentInspector {
+public class OACharacterInspector extends OEComponentInspector {
 	override function get type () : System.Type { return typeof ( OACharacter ); }
 	
 	override function Inspector () {

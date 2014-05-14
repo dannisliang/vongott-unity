@@ -2,8 +2,10 @@
 
 public class Debris extends MonoBehaviour {
 	public var sounds : AudioClip [] = new AudioClip [0];
+	public var lifetime : float = 10;
 
 	private var timeOut : float = 0.2;
+
 
 	function Start () {
 
@@ -11,6 +13,11 @@ public class Debris extends MonoBehaviour {
 
 	function Update () {
 		timeOut -= Time.deltaTime;
+		lifetime -= Time.deltaTime;
+
+		if ( lifetime <= 0 ) {
+			Destroy ( this.gameObject );
+		}
 	}
 
 	function OnCollisionEnter ( c : Collision ) {

@@ -17,6 +17,7 @@ GameObject:
   - 114: {fileID: 11400004}
   - 65: {fileID: 6500000}
   - 120: {fileID: 12000000}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: weapon_mine
   m_TagString: Untagged
@@ -148,6 +149,17 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1014cc6350486014d94c8bb0585650a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,37 +172,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - type: 201
+  - typeIndex: 6
     name: Transform
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 400000}
-  - type: 201
+  - typeIndex: 5
     name: OSItem
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400006}
   id: 
   prefabPath: Prefabs/Items/Weapons/weapon_mine
@@ -221,6 +207,7 @@ MonoBehaviour:
   explosion: {fileID: 100004, guid: 77bb5ff8d1fa34ceb9201aab14a7a157, type: 2}
   explosionLifetime: 5
   throwingForce: 20
+  eventHandler: {fileID: 0}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

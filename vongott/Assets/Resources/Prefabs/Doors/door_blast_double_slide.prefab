@@ -193,9 +193,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 5
+  - typeIndex: 6
     name: Transform
     component: {fileID: 400002}
+  - typeIndex: 0
+    name: Door
+    component: {fileID: 11400004}
   id: 
   prefabPath: Prefabs/Doors/door_blast_double_slide
   exportPath: 
@@ -212,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: 0
   lockLevel: 9
-  lockKeyGUID: 
+  keyId: 
   closed: 0
   type: 3
   leftDoor: {fileID: 100000}

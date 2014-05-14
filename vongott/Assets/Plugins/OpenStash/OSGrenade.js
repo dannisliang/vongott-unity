@@ -25,6 +25,7 @@ public class OSGrenade extends MonoBehaviour {
 	public var explosion : GameObject;
 	public var explosionLifetime : float = 5;
 	public var throwingForce : float = 20;
+	public var eventHandler : GameObject;
 
 	private var thrown : boolean = false;
 	private var exploded : boolean = false;
@@ -39,6 +40,10 @@ public class OSGrenade extends MonoBehaviour {
 	
 	public function get range () : float {
 		return item.attributes[rangeIndex].value;
+	}
+	
+	public function get damage () : float {
+		return item.attributes[damageIndex].value;
 	}
 
 	public function SetInventory ( inventory : OSInventory ) {
@@ -94,7 +99,7 @@ public class OSGrenade extends MonoBehaviour {
 	}
 
 	public function Explode () {
-		if ( explosion ) {
+		if ( !exploded && explosion ) {
 			if ( explosion.activeInHierarchy ) {
 				explosion.SetActive ( true );
 				explosion.transform.parent = this.transform.parent;
@@ -106,6 +111,11 @@ public class OSGrenade extends MonoBehaviour {
 				explosion.transform.position = this.transform.position;
 		
 			}
+			
+			if ( eventHandler ) {
+				eventHandler.SendMessage ( "OnExplosion", this, SendMessageOptions.DontRequireReceiver );
+			}
+			
 		}
 
 		exploded = true;

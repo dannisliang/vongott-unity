@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public class OETreeInspector extends OEComponentInspector {
+public class OCTreeInspector extends OEComponentInspector {
 	override function get type () : System.Type { return typeof ( OCTree ); }
 
 	private var expandedNode : int = 0;

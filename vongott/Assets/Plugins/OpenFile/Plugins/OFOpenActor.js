@@ -62,6 +62,7 @@ public class OFOpenActor extends OFPlugin {
 		output.AddField ( "message", input.message );
 		output.AddField ( "argument", input.argument );
 		output.AddField ( "fireOnce", input.fireOnce );
+		output.AddField ( "eventToTarget", input.eventToTarget );
 
 		var go : GameObject = input.object;
 		var so : OFSerializedObject;
@@ -149,6 +150,7 @@ public class OFOpenActor extends OFPlugin {
 			}
 		}, input.GetField ( "object" ).str );
 		output.fireOnce = input.GetField ( "fireOnce" ).b;
+		output.eventToTarget = input.GetField ( "eventToTarget" ).b;
 	}
 	
 	override function Deserialize ( input : JSONObject, component : Component ) {

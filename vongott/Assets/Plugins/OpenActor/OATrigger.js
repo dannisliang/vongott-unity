@@ -13,13 +13,18 @@ public class OATrigger extends MonoBehaviour {
 	public var argument : String;
        	public var object : GameObject;
 	public var fireOnce : boolean = true;
+	public var eventToTarget : boolean = false;
 
 	private var character : OACharacter;
 
 	public function Fire () {
+		if ( object && eventToTarget ) {
+			eventHandler = object;
+		}
+		
 		if ( eventHandler ) {
 			if ( !String.IsNullOrEmpty ( message ) ) {
-				if ( object ) {
+				if ( object && !eventToTarget ) {
 					eventHandler.SendMessage ( message, object, SendMessageOptions.DontRequireReceiver );
 
 				} else if ( !String.IsNullOrEmpty ( argument ) ) {
