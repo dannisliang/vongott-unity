@@ -142,6 +142,7 @@ public class OEWorkspace extends MonoBehaviour {
 	// Refresh data
 	public function RefreshAll () {
 		cam.lights = this.GetComponentsInChildren.< Light >();
+		cam.audioSources = this.GetComponentsInChildren.< AudioSource >();
 		inspector.Refresh ( selection );
 		toolbar.Refresh ();
 		navmesh = this.GetComponentInChildren.< OPNavMesh > ();
@@ -398,6 +399,18 @@ public class OEWorkspace extends MonoBehaviour {
 		
 		obj.SetField ( "Transform", obj.GetComponent.< Transform > () );
 		obj.SetField ( "Light", obj.GetComponent.< Light > () );
+		PlaceAtCursor ( obj );
+	
+		SelectObject ( obj );
+
+		RefreshAll ();
+	}
+	
+	public function AddAudioSource () {
+		var obj : OFSerializedObject = new GameObject ( "AudioSource", AudioSource, SphereCollider ).AddComponent.< OFSerializedObject > ();
+		
+		obj.SetField ( "Transform", obj.GetComponent.< Transform > () );
+		obj.SetField ( "AudioSource", obj.GetComponent.< AudioSource > () );
 		PlaceAtCursor ( obj );
 	
 		SelectObject ( obj );

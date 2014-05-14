@@ -153,6 +153,10 @@ public class OFDeserializer {
 				case "Transform":
 					Deserialize ( components.list[i], CheckComponent ( output, typeof ( Transform ), true ) as Transform );
 					break;
+				
+				case "AudioSource":
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( AudioSource ), true ) as AudioSource );
+					break;
 			}
 
 			// Plugins
@@ -189,6 +193,24 @@ public class OFDeserializer {
 		transform.eulerAngles = DeserializeVector3 ( input.GetField ( "eulerAngles" ) );
 		transform.position = DeserializeVector3 ( input.GetField ( "position" ) );
 		transform.localScale = DeserializeVector3 ( input.GetField ( "localScale" ) );
+	}
+	
+	// AudioSource
+	public static function Deserialize ( input : JSONObject, audio : AudioSource ) {
+		audio.clip.name = input.GetField ( "clip" ).str;
+		audio.dopplerLevel = input.GetField ( "dopplerLevel" ).n;
+		audio.ignoreListenerPause = input.GetField ( "ignoreListenerPause" ).b;
+		audio.ignoreListenerVolume = input.GetField ( "ignoreListenerVolume" ).b;
+		audio.loop = input.GetField ( "loop" ).b;
+		audio.maxDistance = input.GetField ( "maxDistance" ).n;
+		audio.minDistance = input.GetField ( "minDistance" ).n;
+		audio.panLevel = input.GetField ( "panLevel" ).n;
+		audio.pitch = input.GetField ( "pitch" ).n;
+		audio.playOnAwake = input.GetField ( "playOnAwake" ).b;
+		audio.priority = input.GetField ( "priority" ).n;
+		audio.rolloffMode = Mathf.RoundToInt ( input.GetField ( "rolloffMode" ).n );
+		audio.spread = input.GetField ( "spread" ).n;
+		audio.volume = input.GetField ( "volume" ).n;
 	}
 
 
