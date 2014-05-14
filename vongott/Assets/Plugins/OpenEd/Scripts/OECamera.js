@@ -22,25 +22,23 @@ public class OECamera extends MonoBehaviour {
 
 	private function DrawGrid () {
 		var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
-		var distance : int = Vector3.Distance ( this.transform.position, focus ) * 4;
-		
-		if ( distance < 500 ) {
-			GL.Begin ( GL.LINES );
+		var distance : int = 100;//Vector3.Distance ( this.transform.position, focus ) * 4;
 
-			materials.grid.SetPass ( 0 );		
+		GL.Begin ( GL.LINES );
 
-			for ( var z : int = -distance; z < distance; z++ ) {
-				GL.Vertex ( new Vector3 ( -distance, 0, z ) );
-				GL.Vertex ( new Vector3 ( distance, 0, z ) );
-			}
-			
-			for ( var x : int = -distance; x < distance; x++ ) {
-				GL.Vertex ( new Vector3 ( x, 0, -distance ) );
-				GL.Vertex ( new Vector3 ( x, 0, distance ) );
-			}
+		materials.grid.SetPass ( 0 );		
 
-			GL.End ();
+		for ( var z : int = -distance; z < distance; z++ ) {
+			GL.Vertex ( new Vector3 ( -distance, focus.y, z ) );
+			GL.Vertex ( new Vector3 ( distance, focus.y, z ) );
 		}
+		
+		for ( var x : int = -distance; x < distance; x++ ) {
+			GL.Vertex ( new Vector3 ( x, focus.y, -distance ) );
+			GL.Vertex ( new Vector3 ( x, focus.y, distance ) );
+		}
+
+		GL.End ();
 	}
 
 	private function DrawPaths () {
@@ -275,12 +273,12 @@ public class OECamera extends MonoBehaviour {
 				var speed : float = 10;			
 
 				if ( translation != 0.0 && !OGRoot.GetInstance().isMouseOver ) {				
-					if ( translation > 0 && Vector3.Distance ( this.transform.position, focus ) < 2 ) {
-						return;
+					this.transform.position += this.transform.forward * ( translation * speed );
+				
+					var viewportPoint : Vector3 = camera.WorldToViewportPoint ( focus );
 
-					} else {
-						this.transform.position += this.transform.forward * ( translation * speed );
-					
+   					if ( viewportPoint.z < 0 || !( new Rect ( 0, 0, 1, 1 ) ).Contains ( viewportPoint ) ) {
+						OEWorkspace.GetInstance().SetFocus ( this.transform.position + this.transform.forward * 3 );
 					}
 				}
 			}
@@ -296,6 +294,9 @@ public class OECamera extends MonoBehaviour {
 
 			// Near clipping
 			this.camera.nearClipPlane = 0.01 + nearClipSlider.sliderValue * 100;
+
+			// Set grid focus
+			materials.grid.SetVector ( "_Focus", focus );
 		}
 	}
 }

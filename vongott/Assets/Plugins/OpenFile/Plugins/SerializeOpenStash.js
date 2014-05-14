@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public class OFOpenStash extends OFPlugin {
+public class SerializeOpenStash extends OFPlugin {
 	override function get types () : System.Type[] {
 		return [ typeof ( OSInventory ), typeof ( OSItem ) ];
 	}

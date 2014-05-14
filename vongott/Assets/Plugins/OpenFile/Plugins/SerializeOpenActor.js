@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public class OFOpenActor extends OFPlugin {
+public class SerializeOpenActor extends OFPlugin {
 	override function get types () : System.Type[] {
 		return [ typeof ( OACharacter ), typeof ( OATrigger ) ];
 	}

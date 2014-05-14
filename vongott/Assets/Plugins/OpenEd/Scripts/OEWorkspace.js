@@ -148,37 +148,56 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 
 	// File I/O
+	private function LoadMap ( json : JSONObject ) : IEnumerator {
+		yield WaitForEndOfFrame ();
+		
+		ClearScene ();
+		
+		yield WaitForEndOfFrame ();
+		
+		OFDeserializer.DeserializeChildren ( json, this.transform );
+		
+		if ( json.HasField ( "info" ) ) {
+			var info : JSONObject = json.GetField ( "info" );
+
+			if ( info.HasField ( "properties" ) ) {
+				properties.data = info.GetField ( "properties" );
+			}
+			
+			if ( info.HasField ( "editorCamera" ) ) {
+				OFDeserializer.Deserialize ( info.GetField ( "editorCamera" ), cam.transform );
+			}
+			
+			if ( info.HasField ( "editorClip" ) ) {
+				cam.nearClipSlider.sliderValue = info.GetField ( "editorClip" ).n;
+			}
+			
+			if ( info.HasField ( "editorFocus" ) ) {
+				focusPoint = OFDeserializer.DeserializeVector3 ( info.GetField ( "editorFocus" ) );
+			}
+		}
+
+		yield WaitForEndOfFrame ();
+
+		StripComponents ();
+		RefreshAll ();
+
+		yield WaitForEndOfFrame ();
+
+		OGRoot.GetInstance().GoToPage ( "Home" );
+	}
+
 	public function OpenFile () {
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
 		fileBrowser.filter = ".map";
 		fileBrowser.callback = function ( file : FileInfo ) {
-			ClearScene ();
-			
 			var json : JSONObject = OFReader.LoadFile ( file.FullName );
 			
-			if ( json.HasField ( "info" ) ) {
-				var info : JSONObject = json.GetField ( "info" );
-
-				if ( info.HasField ( "properties" ) ) {
-					properties.data = info.GetField ( "properties" );
-				}
-				
-				if ( info.HasField ( "editorCamera" ) ) {
-					OFDeserializer.Deserialize ( info.GetField ( "editorCamera" ), cam.transform );
-				}
-				
-				if ( info.HasField ( "editorFocus" ) ) {
-					focusPoint = OFDeserializer.DeserializeVector3 ( info.GetField ( "editorFocus" ) );
-				}
-			}
-
-			OFDeserializer.DeserializeChildren ( json, this.transform );
-
 			currentSavePath = file.FullName;
-			StripComponents ();
-			RefreshAll ();
+
+			StartCoroutine ( LoadMap ( json ) );
 		};
-		fileBrowser.sender = "Home";
+		fileBrowser.sender = "Loading";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 
@@ -193,6 +212,7 @@ public class OEWorkspace extends MonoBehaviour {
 			info.AddField ( "properties", properties.data );
 			info.AddField ( "editorCamera", OFSerializer.Serialize ( Camera.main.transform ) );
 			info.AddField ( "editorFocus", OFSerializer.Serialize ( focusPoint ) );
+			info.AddField ( "editorClip", cam.nearClipSlider.sliderValue );
 			info.AddField ( "dontInstantiate", true );
 			
 			json.AddField ( "info", info );

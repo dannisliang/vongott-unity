@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public class OFOpenConvo extends OFPlugin {
+public class SerializeOpenConvo extends OFPlugin {
 	override function get types () : System.Type[] {
 		return [ typeof ( OCTree ) ];
 	}
