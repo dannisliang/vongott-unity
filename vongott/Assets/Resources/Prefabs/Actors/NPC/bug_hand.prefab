@@ -356,7 +356,6 @@ GameObject:
   - 4: {fileID: 400046}
   - 54: {fileID: 5400000}
   - 95: {fileID: 9500000}
-  - 114: {fileID: 11400002}
   - 135: {fileID: 13500000}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400004}
@@ -702,22 +701,7 @@ MonoBehaviour:
   nodeDistance: 1
   target: {fileID: 0}
   autoChase: 0
-  nodes: []
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 114c24d93f7d439499858a09d571fc73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activation: 1
-  fireOnce: 1
-  events: []
-  boundingBoxMaterial: {fileID: 0}
+  raycastToGoal: 1
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -729,20 +713,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8a5dbf8f4cd9e48862d1efe9560849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPath: 
-  pathFinder: {fileID: 11400000}
-  inventory: {fileID: 0}
-  conversationTree: {fileID: 0}
   isEnemy: 0
   player: {fileID: 0}
   health: 100
   behaviour: 1
-  updatePathInterval: 5
+  speed: 0
+  inventory: {fileID: 0}
   usingWeapons: 1
   weaponCategoryPreference: 0
   weaponSubcategoryPreference: 0
+  conversationTree: {fileID: 0}
   convoRootNode: 0
   convoSpeakers: []
+  pathFinder: {fileID: 11400000}
+  pathGoals: []
+  updatePathInterval: 5
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -754,7 +739,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ea243763544457196520f74b0cea7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fields: []
+  fields:
+  - typeIndex: 1
+    name: OACharacter
+    component: {fileID: 11400004}
+  - typeIndex: 2
+    name: OATrigger
+    component: {fileID: 0}
+  - typeIndex: 6
+    name: Transform
+    component: {fileID: 400046}
   id: 
   prefabPath: Prefabs/Actors/NPC/bug_hand
   exportPath: 

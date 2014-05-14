@@ -6,20 +6,19 @@ public class OACharacterInspector extends OEComponentInspector {
 	override function Inspector () {
 		var character : OACharacter = target.GetComponent.< OACharacter >();
 	
-		character.player = ObjectField ( "Player", character.player, typeof ( GameObject ), true ) as GameObject;
 		character.isEnemy = Toggle ( "Is enemy", character.isEnemy );
 		character.behaviour = Popup ( "Behaviour", character.behaviour, System.Enum.GetNames ( typeof ( OABehaviour ) ) );
 		
 		// Inventory
-		Offset ( 0, 20 );
-		character.usingWeapons = Toggle ( "Using weapons", character.usingWeapons && character.inventory != null );
-		
-		BeginDisabled ( !character.usingWeapons );
-		
-		character.weaponCategoryPreference = Popup ( "Preference", character.weaponCategoryPreference, character.inventory.definitions.GetCategoryStrings () );
-		character.weaponSubcategoryPreference = Popup ( " ", character.weaponSubcategoryPreference, character.inventory.definitions.GetSubcategoryStrings ( character.weaponCategoryPreference ) );
-		
-		EndDisabled ();
+		if ( character.inventory ) {
+			Offset ( 0, 20 );
+			character.usingWeapons = Toggle ( "Using weapons", character.usingWeapons );
+			
+			if ( character.usingWeapons ) {
+				character.weaponCategoryPreference = Popup ( "Preference", character.weaponCategoryPreference, character.inventory.definitions.GetCategoryStrings () );
+				character.weaponSubcategoryPreference = Popup ( " ", character.weaponSubcategoryPreference, character.inventory.definitions.GetSubcategoryStrings ( character.weaponCategoryPreference ) );
+			}
+		}
 
 		// Conversation
 		Offset ( 0, 20 );
