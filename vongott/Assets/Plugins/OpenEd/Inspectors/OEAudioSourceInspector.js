@@ -14,9 +14,9 @@ public class OEAudioSourceInspector extends OEComponentInspector {
 		audio.maxDistance = FloatField ( "Max distance", audio.maxDistance );
 		audio.minDistance = FloatField ( "Min distance", audio.minDistance );
 		audio.panLevel = FloatField ( "Pan level", audio.panLevel );
-		audio.pitch = FloatField ( "Pitch", audio.pitch );
+		audio.pitch = Slider ( "Pitch", audio.pitch, -3, 3 );
 		audio.playOnAwake = Toggle ( "Play on awake", audio.playOnAwake );
-		audio.priority = IntField ( "Priority", audio.priority );
+		audio.priority = Slider ( "Priority", audio.priority, 0, 255 );
 		audio.rolloffMode = Popup ( "Rolloff mode", audio.rolloffMode, System.Enum.GetNames ( AudioRolloffMode ) );
 		audio.spread = FloatField ( "Spread", audio.spread );
 		audio.volume = Slider ( "Volume", audio.volume, 0, 1 );

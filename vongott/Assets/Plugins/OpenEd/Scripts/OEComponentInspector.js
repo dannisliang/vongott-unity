@@ -401,6 +401,7 @@ public class OEObjectField extends OEField {
 	public var clear : OGButton; 
 
 	private var obj : Object;
+	private var forcedName : String;
 
 	function OEObjectField ( parent : Transform ) {
 		title = new GameObject ( "lbl_Object" ).AddComponent.< OGLabel > ();
@@ -453,6 +454,7 @@ public class OEObjectField extends OEField {
 	public function Clear () {
 		obj = null;
 		canSet = true;
+		forcedName = "";
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String ) : Object {
@@ -471,6 +473,7 @@ public class OEObjectField extends OEField {
 				var json : JSONObject = OFReader.LoadFile ( file.FullName );
 				var so : OFSerializedObject = OFDeserializer.Deserialize ( json, attachTo );
 				obj = so.GetComponent ( sysType );
+				forcedName = file.Name;
 
 				canSet = true;
 			}, strType );
@@ -486,6 +489,7 @@ public class OEObjectField extends OEField {
 		
 		button.func = function () {
 			canSet = false;
+			forcedName = "";
 			
 			switch ( target ) {		
 				case Target.Scene:
@@ -521,27 +525,33 @@ public class OEObjectField extends OEField {
 		var o : UnityEngine.Object;
 		var name : String;
 
-		if ( obj ) {
-			var c : Component = obj as Component;
-			o = obj as UnityEngine.Object;
+		if ( String.IsNullOrEmpty ( forcedName ) ) {
+			if ( obj ) {
+				var c : Component = obj as Component;
+				o = obj as UnityEngine.Object;
 
-			if ( c ) {
-				go = c.gameObject;
-			} else {
-				go = obj as GameObject;
+				if ( c ) {
+					go = c.gameObject;
+				} else {
+					go = obj as GameObject;
+				}
+
 			}
 
-		}
+			if ( go ) {
+				name = go.name;
+			
+			} else if ( o ) {
+				name = o.name;
 
-		if ( go ) {
-			name = go.name;
+			} else {
+				name = "None";
+
+			}
 		
-		} else if ( o ) {
-			name = o.name;
-
 		} else {
-			name = "None";
-
+			name = forcedName;
+		
 		}
 		
 		if ( name.Length > 15 ) {
@@ -696,7 +706,7 @@ public class OEToggle extends OEField {
 		
 		tickbox.text = text;
 		tickbox.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
-		tickbox.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+		tickbox.transform.localScale = new Vector3 ( scale.x / 2 + scale.y * 0.75, scale.y, 1 );
 	}
 
 	public function Set ( isTicked : boolean ) : boolean {
@@ -719,9 +729,10 @@ public class OESlider extends OEField {
 
 	private var min : float;
 	private var max : float;
+	private var val : float;
 	
 	private function CalcValue ( value : float ) : float {
-		return ( ( max - min ) * value ) + min;
+		return Mathf.Round ( ( ( ( max - min ) * value ) + min ) * 100 ) / 100;
 	}
 
 	private function CalcValuePercent ( value : float ) : float {
@@ -745,7 +756,7 @@ public class OESlider extends OEField {
 	}
 
 	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
-		title.text = text;
+		title.text = text + " (" + val + ")";
 		
 		title.tint.a = enabled ? 1.0 : 0.5;
 		slider.tint.a = enabled ? 1.0 : 0.5;
@@ -765,6 +776,8 @@ public class OESlider extends OEField {
 	}
 
 	public function Set ( value : float, min : float, max : float ) : float {
+		val = value;
+		
 		if ( canSet ) {
 			this.min = min;
 			this.max = max;
