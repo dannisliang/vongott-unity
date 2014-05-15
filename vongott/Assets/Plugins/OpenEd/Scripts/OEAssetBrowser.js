@@ -57,11 +57,10 @@ public class OEAssetBrowser extends OGPage {
 		selectedAsset = file;
 	}
 
-	private function AddListItem ( text : String, message : String, offset : float, color : Color ) {
+	private function AddListItem ( text : String, message : String, offset : float ) {
 		var li : OGListItem = new GameObject ( text ).AddComponent.< OGListItem > ();
 
 		li.text = text;
-		li.tint = color;
 		
 		if ( String.IsNullOrEmpty ( message ) ) {
 			li.isDisabled = true;
@@ -90,7 +89,7 @@ public class OEAssetBrowser extends OGPage {
 	
 		if ( currentFolder.subfolders.Length > 0 ) {
 			for ( var i : int = 0; i < currentFolder.subfolders.Length; i++ ) {
-				AddListItem ( currentFolder.subfolders[i].name, "GoToChildFolder", offset, new Color ( 0.1, 0.1, 0.1, 1.0 ) );
+				AddListItem ( currentFolder.subfolders[i].name, "GoToChildFolder", offset );
 				offset += 20;
 			}
 		
@@ -98,11 +97,8 @@ public class OEAssetBrowser extends OGPage {
 			var objects : Object [] = Resources.LoadAll ( path );
 			
 			for ( i = 0; i < objects.Length; i++ ) {
-				if ( filter != null && objects[i].GetType() != filter ) {
-					AddListItem ( ( objects[i] as UnityEngine.Object ).name, "", offset, Color.white );
-
-				} else {
-					AddListItem ( ( objects[i] as UnityEngine.Object ).name, "SelectAsset", offset, Color.white );
+				if ( filter == null || objects[i].GetType() == filter ) {
+					AddListItem ( ( objects[i] as UnityEngine.Object ).name, "SelectAsset", offset );
 				
 				}
 

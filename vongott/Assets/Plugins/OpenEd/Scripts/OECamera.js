@@ -24,21 +24,20 @@ public class OECamera extends MonoBehaviour {
 
 	private function DrawGrid () {
 		var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
-		var distance : int = 100;//Vector3.Distance ( this.transform.position, focus ) * 4;
-		var y : float = Mathf.Round ( focus.y );
+		var distance : int = 100;
 
 		GL.Begin ( GL.LINES );
 
 		materials.grid.SetPass ( 0 );		
 
 		for ( var z : int = -distance; z < distance; z++ ) {
-			GL.Vertex ( new Vector3 ( -distance, y, z ) );
-			GL.Vertex ( new Vector3 ( distance, y, z ) );
+			GL.Vertex ( new Vector3 ( -distance, 0, z ) );
+			GL.Vertex ( new Vector3 ( distance, 0, z ) );
 		}
 		
 		for ( var x : int = -distance; x < distance; x++ ) {
-			GL.Vertex ( new Vector3 ( x, y, -distance ) );
-			GL.Vertex ( new Vector3 ( x, y, distance ) );
+			GL.Vertex ( new Vector3 ( x, 0, -distance ) );
+			GL.Vertex ( new Vector3 ( x, 0, distance ) );
 		}
 
 		GL.End ();

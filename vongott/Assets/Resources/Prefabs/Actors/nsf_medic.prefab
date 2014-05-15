@@ -1445,20 +1445,20 @@ MonoBehaviour:
   - typeIndex: 0
     name: OPPathFinder
     component: {fileID: 11400006}
-  - typeIndex: 0
+  - typeIndex: 2
     name: Transform
     component: {fileID: 400078}
-  - typeIndex: 0
+  - typeIndex: 4
     name: OACharacter
     component: {fileID: 11400004}
-  - typeIndex: 0
+  - typeIndex: 7
     name: OSInventory
     component: {fileID: 11400008}
   - typeIndex: 0
     name: OCTree
     component: {fileID: 0}
   id: 
-  prefabPath: Prefabs/Actors/NPC/nsf_medic
+  prefabPath: Prefabs/Actors/nsf_medic
   exportPath: Dump
 --- !u!114 &11400004
 MonoBehaviour:

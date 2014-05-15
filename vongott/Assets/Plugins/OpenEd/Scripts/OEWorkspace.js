@@ -6,6 +6,21 @@ public enum OETransformMode {
 	Scale
 }
 
+public class OEBrush {
+	public enum Shape {
+		Circle,
+		Square
+	}
+
+	public var enabled : boolean = false;
+	public var shape : Shape;
+	public var size : float;
+	public var spread : float;
+	public var material : float;
+	public var scale : float;
+	public var randomize : float;
+}
+
 public class OEUndoAction {
 	public var oldGO : GameObject;
 	public var newGO : GameObject;
@@ -151,6 +166,8 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// File I/O
 	private function LoadMap ( json : JSONObject ) : IEnumerator {
+		OGRoot.GetInstance().GoToPage ( "Loading" );
+		
 		yield WaitForEndOfFrame ();
 		
 		ClearScene ();
@@ -185,7 +202,7 @@ public class OEWorkspace extends MonoBehaviour {
 		RefreshAll ();
 
 		yield WaitForEndOfFrame ();
-
+		
 		OGRoot.GetInstance().GoToPage ( "Home" );
 	}
 
@@ -199,7 +216,7 @@ public class OEWorkspace extends MonoBehaviour {
 
 			StartCoroutine ( LoadMap ( json ) );
 		};
-		fileBrowser.sender = "Loading";
+		fileBrowser.sender = "Home";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 

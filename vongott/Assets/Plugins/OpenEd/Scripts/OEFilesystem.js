@@ -25,6 +25,10 @@ public class OEFolder {
 				}
 			}
 		}
+		
+		if ( !result ) {
+			result = prev;
+		}
 
 		return result;
 	}
@@ -34,6 +38,10 @@ public class OEFolder {
 			if ( name == subfolders[i].name ) {
 				return subfolders[i];
 			}
+		}
+
+		if ( name == this.name ) {
+			return this;
 		}
 
 		return null;
