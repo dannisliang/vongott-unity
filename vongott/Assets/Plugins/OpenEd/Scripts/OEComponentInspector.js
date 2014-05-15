@@ -390,6 +390,12 @@ public class OEPointField extends OEField {
 }
 
 public class OEObjectField extends OEField {
+	public enum Target {
+		Asset,
+		Prefab,
+		Scene
+	}
+	
 	public var title : OGLabel;
 	public var button : OGButton;
 	public var clear : OGButton; 
@@ -473,7 +479,7 @@ public class OEObjectField extends OEField {
 		return Out ();
 	}
 
-	public function Set ( setObj : Object, sysType : System.Type, allowSceneObjects : boolean) : Object {
+	public function Set ( setObj : Object, sysType : System.Type, target : Target ) : Object {
 		if ( canSet ) {
 			obj = setObj;
 		}
@@ -481,17 +487,27 @@ public class OEObjectField extends OEField {
 		button.func = function () {
 			canSet = false;
 			
-			if ( allowSceneObjects ) {		
-				OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
-					obj = picked;
-					canSet = true;
-				}, sysType );
-			
-			} else {
-				OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
-					obj = picked;
-					canSet = true;
-				}, sysType );
+			switch ( target ) {		
+				case Target.Scene:
+					OEWorkspace.GetInstance().PickObject ( function ( picked : Object ) {
+						obj = picked;
+						canSet = true;
+					}, sysType );
+					break;
+				
+				case Target.Prefab:
+					OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
+						obj = picked;
+						canSet = true;
+					}, sysType );
+					break;
+				
+				case Target.Asset:
+					OEWorkspace.GetInstance().PickAsset ( function ( picked : Object ) {
+						obj = picked;
+						canSet = true;
+					}, sysType );
+					break;
 			}
 		};
 
@@ -502,9 +518,12 @@ public class OEObjectField extends OEField {
 		clear.func = Clear;
 		
 		var go : GameObject;
-		
+		var o : UnityEngine.Object;
+		var name : String;
+
 		if ( obj ) {
 			var c : Component = obj as Component;
+			o = obj as UnityEngine.Object;
 
 			if ( c ) {
 				go = c.gameObject;
@@ -515,19 +534,22 @@ public class OEObjectField extends OEField {
 		}
 
 		if ( go ) {
-			var name : String = go.name;
-
-			if ( name.Length > 15 ) {
-				name = name.Substring ( 0, 15 ) + "...";
-			}
-			
-			button.text = name;
+			name = go.name;
 		
+		} else if ( o ) {
+			name = o.name;
+
 		} else {
-			button.text = "None";
+			name = "None";
 
 		}
 		
+		if ( name.Length > 15 ) {
+			name = name.Substring ( 0, 15 ) + "...";
+		}
+		
+		button.text = name;
+
 		return obj;
 	}
 }
@@ -1027,17 +1049,17 @@ public class OEComponentInspector {
 		return objectField.Set ( input, sysType, strType, attachTo );
 	}
 	
-	public function ObjectField ( text : String, input : Object, type : System.Type, allowSceneObjects : boolean ) : Object {
+	public function ObjectField ( text : String, input : Object, type : System.Type, target : OEObjectField.Target ) : Object {
 		offset.y += 20;
-		return ObjectField ( text, input, type, allowSceneObjects, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+		return ObjectField ( text, input, type, target, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
 	}
 
-	public function ObjectField ( text : String, input : Object, type : System.Type, allowSceneObjects : boolean, rect : Rect ) : Object {
+	public function ObjectField ( text : String, input : Object, type : System.Type, target : OEObjectField.Target, rect : Rect ) : Object {
 		var objectField : OEObjectField = CheckField ( typeof ( OEObjectField ) ) as OEObjectField;
 		objectField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
 		objectField.enabled = !disabled;
 		fieldCounter++;
-		return objectField.Set ( input, type, allowSceneObjects );
+		return objectField.Set ( input, type, target );
 	}
 	
 	// OEVector3Field

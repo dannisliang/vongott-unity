@@ -9,7 +9,7 @@ public class OATriggerInspector extends OEComponentInspector {
 		trigger.type = Popup ( "Type", trigger.type, System.Enum.GetNames ( typeof ( OATriggerType ) ) );
 		trigger.fireOnce = Toggle ( "Fire once", trigger.fireOnce );
 		trigger.message = TextField ( "Message", trigger.message );	
-		trigger.object = ObjectField ( "Object", trigger.object, typeof ( GameObject ), true ) as GameObject;	
+		trigger.object = ObjectField ( "Object", trigger.object, typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;	
 		
 		if ( !trigger.object ) {	
 			trigger.argument = TextField ( "Argument", trigger.argument );

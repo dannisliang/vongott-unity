@@ -1048,9 +1048,7 @@ MonoBehaviour:
     name: Prefabs
     subfolders:
     - name: Actors
-      subfolders:
-      - name: NPC
-        subfolders: []
+      subfolders: []
     - name: Decor
       subfolders: []
     - name: Doors
@@ -1059,8 +1057,18 @@ MonoBehaviour:
       subfolders: []
     - name: Furniture
       subfolders: []
+    - name: Interfaces
+      subfolders: []
     - name: Items
       subfolders:
+      - name: Consumable
+        subfolders:
+        - name: Food
+          subfolders: []
+        - name: Powerup
+          subfolders: []
+      - name: Misc
+        subfolders: []
       - name: Tools
         subfolders: []
       - name: Upgrades
@@ -1071,13 +1079,13 @@ MonoBehaviour:
           subfolders: []
       - name: Weapons
         subfolders: []
-    - name: Interfaces
-      subfolders: []
     - name: Maps
       subfolders: []
     - name: Meta
       subfolders: []
     - name: Obstructions
+      subfolders: []
+    - name: Stairs
       subfolders: []
     - name: Vehicles
       subfolders: []

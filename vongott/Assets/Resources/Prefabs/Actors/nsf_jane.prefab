@@ -1439,101 +1439,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - type: 200
+  - typeIndex: 0
     name: Animator
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 9500000}
-  - type: 302
+  - typeIndex: 0
     name: OPPathFinder
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400006}
-  - type: 203
+  - typeIndex: 0
     name: Transform
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 400078}
-  - type: 300
+  - typeIndex: 0
     name: OACharacter
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400004}
-  - type: 303
+  - typeIndex: 0
     name: OSInventory
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400008}
-  - type: 9
+  - typeIndex: 0
     name: OCTree
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 0}
   id: 
   prefabPath: Prefabs/Actors/NPC/nsf_jane
@@ -1549,21 +1471,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8a5dbf8f4cd9e48862d1efe9560849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPath: 
-  pathFinder: {fileID: 11400006}
-  inventory: {fileID: 11400008}
-  conversationTree: {fileID: 0}
   isEnemy: 0
   player: {fileID: 0}
   health: 100
   behaviour: 1
-  updatePathInterval: 5
+  speed: 0
+  inventory: {fileID: 11400008}
   usingWeapons: 1
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 0
+  conversationTree: {fileID: 0}
   convoRootNode: 0
   convoSpeakers:
   - {fileID: 0}
+  pathFinder: {fileID: 11400006}
+  pathGoals: []
+  updatePathInterval: 5
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1582,7 +1505,7 @@ MonoBehaviour:
   nodeDistance: 1
   target: {fileID: 0}
   autoChase: 0
-  nodes: []
+  raycastToGoal: 1
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1

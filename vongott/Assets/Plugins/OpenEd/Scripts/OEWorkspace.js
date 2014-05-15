@@ -43,6 +43,7 @@ public class OEWorkspace extends MonoBehaviour {
 	
 	public var cam : OECamera;
 	public var fileBrowser : OEFileBrowser;
+	public var assetBrowser : OEAssetBrowser;
 	public var properties : OEProperties;
 	public var inspector : OEInspector;
 	public var picker : OEPicker;
@@ -249,6 +250,13 @@ public class OEWorkspace extends MonoBehaviour {
 		if ( drawer ) {
 			drawer.SetPicker ( callback, type );
 		}
+	}
+	
+	public function PickAsset ( callback : Function, type : System.Type ) {
+		assetBrowser.callback = callback;
+		assetBrowser.filter = type;
+		assetBrowser.sender = "Home";
+		OGRoot.GetInstance().GoToPage ( "AssetBrowser" );
 	}
 	
 	public function PickFile ( callback : Function, filterString : String ) {

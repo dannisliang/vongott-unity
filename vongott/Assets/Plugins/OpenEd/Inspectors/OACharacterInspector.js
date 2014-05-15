@@ -50,7 +50,7 @@ public class OACharacterInspector extends OEComponentInspector {
 		character.convoRootNode = Popup ( "First root node", character.convoRootNode, rootNodeStrings );	
 
 		for ( i = 0; i < speakerStrings.Length; i++ ) {
-			character.convoSpeakers[i] = ObjectField ( speakerStrings[i], character.convoSpeakers[i], typeof ( GameObject ), true ) as GameObject;
+			character.convoSpeakers[i] = ObjectField ( speakerStrings[i], character.convoSpeakers[i], typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
 		}
 
 		EndDisabled ();

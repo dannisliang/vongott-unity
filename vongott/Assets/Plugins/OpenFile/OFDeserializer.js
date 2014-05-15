@@ -197,7 +197,7 @@ public class OFDeserializer {
 	
 	// AudioSource
 	public static function Deserialize ( input : JSONObject, audio : AudioSource ) {
-		audio.clip.name = input.GetField ( "clip" ).str;
+		//audio.clip = input.GetField ( "clip" ).str;
 		audio.dopplerLevel = input.GetField ( "dopplerLevel" ).n;
 		audio.ignoreListenerPause = input.GetField ( "ignoreListenerPause" ).b;
 		audio.ignoreListenerVolume = input.GetField ( "ignoreListenerVolume" ).b;

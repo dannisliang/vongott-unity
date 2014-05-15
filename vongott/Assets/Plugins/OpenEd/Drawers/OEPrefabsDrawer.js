@@ -1,42 +1,7 @@
 ﻿#pragma strict
 
 public class OEPrefabsDrawer extends OEDrawer {
-	public class Folder {
-		public var name : String;
-		public var subfolders : Folder[];
-
-		public function GetSubfolder ( name : String ) : Folder {
-			for ( var i : int = 0; i < subfolders.Length; i++ ) {
-				if ( name == subfolders[i].name ) {
-					return subfolders[i];
-				}
-			}
-
-			return null;
-		}
-
-		public function GetSubfolderNames () : String [] {
-			var tmp : List.< String > = new List.< String > ();
-
-			for ( var i : int = 0; i < subfolders.Length; i++ ) {
-				tmp.Add ( subfolders[i].name );
-			}
-
-			return tmp.ToArray ();
-		}
-
-		public function HasChild ( folder : Folder ) : boolean {
-			for ( var i : int = 0; i < subfolders.Length; i++ ) {
-				if ( folder == subfolders[i] ) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-	}
-	
-	public var rootFolder : Folder;
+	public var rootFolder : OEFolder;
 	
 	public var subdirSwitch : OGPopUp;
 	public var scrollview : Transform;
@@ -45,8 +10,8 @@ public class OEPrefabsDrawer extends OEDrawer {
 	public var parentButton : OGButton;
 	public var message : OGLabel;
 
-	private var currentFolder : Folder;
-	private var currentParent : Folder;
+	private var currentFolder : OEFolder;
+	private var currentParent : OEFolder;
 	private var fullPath : String;
 	private var selectedObject : String = "";
 	private var typeFilter : System.Type;
@@ -131,7 +96,7 @@ public class OEPrefabsDrawer extends OEDrawer {
 		}
 	}
 
-	public function LookForParent ( folder : Folder ) {
+	public function LookForParent ( folder : OEFolder ) {
 		currentParent = null;
 		
 		for ( var i : int = 0; i < folder.subfolders.Length; i++ ) {
