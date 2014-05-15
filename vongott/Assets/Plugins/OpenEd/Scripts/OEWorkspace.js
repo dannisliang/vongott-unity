@@ -71,6 +71,7 @@ public class OEWorkspace extends MonoBehaviour {
 	
 	@HideInInspector public var preferredParents : PreferredParent[];
 	public var metaParent : Transform;
+	public var skydomeParent : Transform;
 	public var miscParent : Transform;
 	public var navmeshParent : Transform;
 	public var transformMode : OETransformMode;
@@ -162,6 +163,13 @@ public class OEWorkspace extends MonoBehaviour {
 		inspector.Refresh ( selection );
 		toolbar.Refresh ();
 		navmesh = this.GetComponentInChildren.< OPNavMesh > ();
+	}
+
+	// Exit
+	public function Exit () {
+		if ( eventHandler ) {
+			eventHandler.SendMessage ( "Exit", SendMessageOptions.DontRequireReceiver );
+		}
 	}
 
 	// File I/O
@@ -407,7 +415,10 @@ public class OEWorkspace extends MonoBehaviour {
 	// Add
 	public function GetPreferredParent ( obj : OFSerializedObject ) : Transform {
 		for ( var i : int = 0; i < preferredParents.Length; i++ ) {
-			if ( obj.prefabPath.Contains ( "Meta" ) ) {
+			if ( obj.GetComponent.< OESkydome > () ) {
+				return skydomeParent;
+
+			} else if ( obj.prefabPath.Contains ( "Meta" ) ) {
 				return metaParent;
 		
 			} else if ( obj.HasFieldType ( preferredParents[i].type ) ) {
@@ -525,7 +536,9 @@ public class OEWorkspace extends MonoBehaviour {
 
 			go.name = go.name.Replace ( "(Clone)", "" );
 
-			SelectObject ( obj );
+			if ( !obj.GetComponent.< OESkydome > () ) {
+				SelectObject ( obj );
+			}
 		
 		}
 

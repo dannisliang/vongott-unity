@@ -15,7 +15,6 @@ class GameCore extends MonoBehaviour {
 	
 	public var selectedOutlineColor : Color;
 	public var deselectedOutlineColor : Color;
-	public var skyboxContainer : Transform;
 	public var player : Player;
 
 	// Private vars
@@ -99,26 +98,20 @@ class GameCore extends MonoBehaviour {
 	// Load level
 	////////////////////
 	public function LoadLevel ( path : String, spawnPoint : String ) : IEnumerator {
-		Time.timeScale = 0;
-
+		// Clear the OpenPath scanner
 		this.GetComponent.< OPScanner > ().Clear ();
 
 		// Check if a level is already loaded
 		if ( currentLevel != null ) {
-			var skybox : SkyBox = skyboxContainer.GetComponentInChildren.<SkyBox>();
-			
-			if ( skybox != null ) {
-				Destroy ( skybox.gameObject );
-			}
-
 			player.transform.parent = currentLevel.transform.parent;
 			Destroy ( currentLevel );
 			currentLevel = null;
 		}
 		
+		yield WaitForEndOfFrame ();
+		
 		// Read .map file
 		currentLevel = new GameObject ( "Map" );
-		currentLevel.transform.parent = levelContainer;
 		
 		var json : JSONObject = OFReader.LoadFile ( path );
 	       	var info : JSONObject = json.GetField ( "info" );
@@ -127,21 +120,26 @@ class GameCore extends MonoBehaviour {
 		if ( info ) {
 			properties = info.GetField ( "properties" );
 		}
-
+		
+		// Deserialise
 		OFDeserializer.DeserializeChildren ( json, currentLevel.transform );
 		
 		// Nest under level container
 		currentLevel.transform.parent = levelContainer;
 		currentLevel.transform.localPosition = Vector3.zero;
 		
-		// Instantiate and position player
 		yield WaitForEndOfFrame ();
 		
+		// Set necessary init values
 		GoToSpawnPoint ( spawnPoint );
-		SetPlayerSpeaker ();
-
-		Time.timeScale = 1;
 		
+		SetPlayerSpeaker ();
+		
+		for ( var t : OATrigger in levelContainer.GetComponentsInChildren.< OATrigger > () ) {
+			t.eventHandler = this.gameObject;
+		}
+
+
 		if ( properties ) {
 			if ( properties.HasField ( "musicCalm" ) ) {
 				MusicManager.GetInstance().LoadCalm ( properties.GetField ( "musicCalm" ).str );
@@ -167,21 +165,18 @@ class GameCore extends MonoBehaviour {
 			} else {
 				RenderSettings.fogDensity = 0.01;
 			}
-			
-			if ( properties.HasField ( "skybox" ) ) {
-				var go : GameObject = Instantiate ( Resources.Load ( "Prefabs/Skyboxes/skybox_" + properties.GetField ( "skybox" ).str ) ) as GameObject;
-
-				if ( go ) {
-					go.transform.parent = skyboxContainer;
-					go.transform.localScale = Vector3.one;
-					go.transform.localPosition = Vector3.zero;
-				}
-			}
 		}
 
-		// Set trigger event links
-		for ( var t : OATrigger in levelContainer.GetComponentsInChildren.< OATrigger > () ) {
-			t.eventHandler = this.gameObject;
+		// Skydome
+		var skydome : OESkydome = GameObject.FindObjectOfType.< OESkydome > ();
+
+		if ( skydome ) {
+			skydome.target = player.transform;
+			Camera.main.clearFlags = CameraClearFlags.Depth;
+		
+		} else {
+			Camera.main.clearFlags = CameraClearFlags.Skybox;
+		
 		}
 
 		// Scan navmesh

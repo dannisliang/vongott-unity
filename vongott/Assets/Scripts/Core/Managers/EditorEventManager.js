@@ -5,7 +5,13 @@ public class EditorEventManager extends MonoBehaviour {
 		if ( !String.IsNullOrEmpty ( OEWorkspace.GetInstance().currentSavePath ) ) {
 			GameCore.nextLevel = OEWorkspace.GetInstance().currentSavePath;
 
+			OGRoot.GetInstance().GoToPage ( "Loading" );
+
 			Application.LoadLevel ( "game" );
 		}
+	}
+
+	public function Exit () {
+		Application.LoadLevel ( "main_menu" );
 	}
 }

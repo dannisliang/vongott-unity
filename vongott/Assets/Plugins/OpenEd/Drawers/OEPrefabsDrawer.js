@@ -146,16 +146,10 @@ public class OEPrefabsDrawer extends OEDrawer {
 	}
 
 	public function Start () {
-		if ( rootFolder.subfolders.Length > 0 ) {
-			currentFolder = rootFolder;
-			path = currentFolder.name;
-			Populate ();
-			objectName.text = "";
-			placeButton.func = null;
-		
-		} else {
-			Debug.LogError ( "OEPrefabsDrawer | Root folder has no children" );
-		
-		}
+		currentFolder = rootFolder;
+		path = currentFolder.name;
+		Populate ();
+		objectName.text = "";
+		placeButton.func = null;
 	}
 }

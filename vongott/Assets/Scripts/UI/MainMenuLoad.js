@@ -24,7 +24,7 @@ class MainMenuLoad extends OGPage {
 	}
 
 	private function PopulateMaps () {
-		var files : String[] = Directory.GetFiles ( Application.dataPath + "/Maps", "*.vgmap" );
+		var files : String[] = Directory.GetFiles ( Application.dataPath + "/Maps", "*.map" );
 
 		for ( var i : int = 0; i < slots.Length; i++ ) {
 			if ( i < files.Length ) {
@@ -89,9 +89,9 @@ class MainMenuLoad extends OGPage {
 	}
 	
 	public function LoadFile ( mapName : String ) {		
-		LoadingManager.nextScene = mapName;
-	
-		Application.LoadLevel ( "loading" );
+		GameCore.nextLevel = Application.dataPath + "/Maps/" + mapName + ".map";
+
+		Application.LoadLevel ( "game" );
 	}
 
 	public function GoBack () {

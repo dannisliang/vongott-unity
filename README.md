@@ -1,5 +1,5 @@
 ### What?
-This is a Deus Ex fangame. It will be created with the help of the Vongott SDK, which is being developed with Unity.
+This is a Deus Ex fangame. It will be created with the help of OpenTools, which is being developed with Unity.
 
 ### Why?
 Obviously, a lot of obsessive Deus Ex fandom goes into the equation, but there are reasonable arguments for making this from scratch, some of which are outlined in the "Design" page of the wiki.

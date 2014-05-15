@@ -44394,7 +44394,6 @@ MonoBehaviour:
   _levelContainer: {fileID: 1905375002}
   selectedOutlineColor: {r: .79411763, g: .79411763, b: .79411763, a: 1}
   deselectedOutlineColor: {r: 0, g: 0, b: 0, a: 1}
-  skyboxContainer: {fileID: 1095883320}
   player: {fileID: 11400000, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
   timeScale: 1
   ignoreTimeScale: 0
@@ -44778,33 +44777,6 @@ MonoBehaviour:
   enableImage: 0
   imageScale: 1
   imageOffset: {x: 0, y: 0}
---- !u!1 &1095883319
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100000, guid: 08727739e550d3b46bbf22fb061f7a1e, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1095883320}
-  m_Layer: 13
-  m_Name: Skybox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1095883320
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400000, guid: 08727739e550d3b46bbf22fb061f7a1e, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1095883319}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1753455579}
-  m_Father: {fileID: 0}
 --- !u!1 &1102182629
 GameObject:
   m_ObjectHideFlags: 0
@@ -72243,63 +72215,6 @@ MonoBehaviour:
   isAlwaysOnTop: 0
   root: {fileID: 2073870449}
   mainTexture: {fileID: 0}
---- !u!1 &1753455577
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100002, guid: 08727739e550d3b46bbf22fb061f7a1e, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1753455579}
-  - 20: {fileID: 1753455578}
-  m_Layer: 13
-  m_Name: Camera
-  m_TagString: SkyboxCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!20 &1753455578
-Camera:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 2000000, guid: 08727739e550d3b46bbf22fb061f7a1e,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1753455577}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .29411763, g: .29411763, b: .29411763, a: .0196078438}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: .300000012
-  far clip plane: 1000
-  field of view: 30
-  orthographic: 0
-  orthographic size: 100
-  m_Depth: -2
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 8208
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_HDR: 0
-  m_OcclusionCulling: 1
---- !u!4 &1753455579
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400002, guid: 08727739e550d3b46bbf22fb061f7a1e, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1753455577}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1095883320}
 --- !u!1 &1762458220
 GameObject:
   m_ObjectHideFlags: 0
@@ -83124,7 +83039,7 @@ Prefab:
     - target: {fileID: 11400000, guid: 6055b9fee55f22e439e4807377ba75b1, type: 2}
       propertyPath: skyboxContainer
       value: 
-      objectReference: {fileID: 1095883320}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6055b9fee55f22e439e4807377ba75b1, type: 2}
   m_RootGameObject: {fileID: 1082207467}

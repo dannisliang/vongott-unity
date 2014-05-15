@@ -2,7 +2,6 @@
 
 class GameCamera extends MonoBehaviour {
 	private var player : Player;
-	private var skyboxCamera : GameObject;
 	private var storedPos : Vector3;
 	private var storedRot : Vector3;
 	private var storedMaterials : List.< Material > = new List.< Material >();
@@ -406,14 +405,6 @@ class GameCamera extends MonoBehaviour {
 			boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
 		}
 
-		// Move skybox camera with camera
-		if ( skyboxCamera ) {
-			skyboxCamera.transform.rotation = transform.rotation;
-			skyboxCamera.transform.localPosition = GameCore.GetPlayer().transform.position / 40;
-		} else {
-			skyboxCamera = GameObject.FindWithTag ( "SkyboxCamera" );
-		}
-		
 		// Shake
 		if ( shakeAmount > 0 ) {
 			shakeAmount -= shakeFadeOut;

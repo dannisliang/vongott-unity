@@ -97,7 +97,7 @@ public class OFDeserializer {
 				t.parent = parent;
 				t.position = Vector3.zero;
 			}
-
+			
 			for ( var json : JSONObject in p.list ) {
 				var so : OFSerializedObject = Deserialize ( json );
 				
@@ -105,6 +105,7 @@ public class OFDeserializer {
 					so.transform.parent = t;
 				}
 			}
+			
 		}
 
 		ConnectAll ();

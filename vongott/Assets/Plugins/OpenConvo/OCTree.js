@@ -257,6 +257,7 @@ public class OCNode {
 public class OCSpeak {
 	public var speaker : int;
 	public var lines : String[] = new String[1];
+	public var audio : AudioClip [] = new AudioClip[1];
 }
 
 public class OCEvent {
