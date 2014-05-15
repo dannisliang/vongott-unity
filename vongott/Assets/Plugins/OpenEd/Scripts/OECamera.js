@@ -21,6 +21,7 @@ public class OECamera extends MonoBehaviour {
 	public var defaultAmbientLight : Color = new Color ( 0.2, 0.2, 0.2, 1.0 );
 	public var dynamicLights : boolean = false;
 	public var nearClipSlider : OGSlider;
+	public var flyMode : boolean = false;
 
 	private function DrawGrid () {
 		var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
@@ -243,78 +244,105 @@ public class OECamera extends MonoBehaviour {
 		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage.name == "Home" ) {
 			var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
 			
-			// Selection & focus
-			if ( !OGRoot.GetInstance().isMouseOver ) {
-				var ray : Ray = this.camera.ScreenPointToRay ( Input.mousePosition );
-					
-				if ( Input.GetMouseButtonDown ( 1 ) || Input.GetMouseButtonDown ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) ) {
-					var hit : RaycastHit;
-					
-					if ( Physics.Raycast ( ray, hit, Mathf.Infinity ) ) {
-						OEWorkspace.GetInstance().SetFocus ( hit.point );
-					}
-				
-				} else if ( Input.GetMouseButtonDown ( 0 ) ) {
-					var hits : RaycastHit[] = Physics.RaycastAll ( ray, Mathf.Infinity );
-				
-					if ( hits.Length < 1 ) {
-						OEWorkspace.GetInstance().ClearSelection ();
-						return;
-					}
+			if ( flyMode ) {
+				var dx : float = Input.GetAxis ( "Mouse X" ) * rotateSensitivity.x;
+				var dy : float = Input.GetAxis ( "Mouse Y" ) * rotateSensitivity.y;
 
-					var obj : OFSerializedObject;
-					var closest : float;
-					
-					for ( var i : int = 0; i < hits.Length; i++ ) {
-						var axis : OEGizmoAxis = hits[i].collider.gameObject.GetComponent.< OEGizmoAxis> (); 
-						var hitObj = hits[i].collider.gameObject.GetComponent.< OFSerializedObject > ();
+				var newRot : Vector3 = this.transform.localEulerAngles;
+				newRot.y += dx / 2;
+				newRot.x -= dy / 2;
 
-						if ( axis ) {	
-							axis.OnMouseDown ();
-							return;
+				var newPos : Vector3 = this.transform.position;
+
+				newPos += this.transform.forward * Input.GetAxis ( "Vertical" ) * panSensitivity.y;
+				newPos += this.transform.right * Input.GetAxis ( "Horizontal" ) * panSensitivity.x;
+				
+				if ( Input.GetKey ( KeyCode.Space ) ) {
+					newPos += Vector3.up * panSensitivity.y;
+				
+				} else if ( Input.GetKey ( KeyCode.LeftControl ) ) {
+					newPos -= Vector3.up * panSensitivity.y;
+				
+				}
+
+				this.transform.localRotation = Quaternion.Euler ( newRot );
+				this.transform.position = newPos;
+
+
+			} else {
+				// Selection & focus
+				if ( !OGRoot.GetInstance().isMouseOver ) {
+					var ray : Ray = this.camera.ScreenPointToRay ( Input.mousePosition );
 						
-						} else if ( hitObj && obj == null || Vector3.Distance ( this.transform.position, hits[i].point ) < closest ) {
-							obj = hitObj;
-							closest = Vector3.Distance ( this.transform.position, hits[i].point );
+					if ( Input.GetMouseButtonDown ( 1 ) || Input.GetMouseButtonDown ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) ) {
+						var hit : RaycastHit;
 						
+						if ( Physics.Raycast ( ray, hit, Mathf.Infinity ) ) {
+							OEWorkspace.GetInstance().SetFocus ( hit.point );
 						}
-					}
 					
-					if ( obj ) {
-						OEWorkspace.GetInstance().SelectObject ( obj );
-					}
-				}		
-			}
+					} else if ( Input.GetMouseButtonDown ( 0 ) ) {
+						var hits : RaycastHit[] = Physics.RaycastAll ( ray, Mathf.Infinity );
+					
+						if ( hits.Length < 1 ) {
+							OEWorkspace.GetInstance().ClearSelection ();
+							return;
+						}
 
-			// Pan
-			if ( Input.GetMouseButton ( 2 ) || Input.GetMouseButton ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) && Input.GetKey ( KeyCode.LeftShift ) ) {
-				var dx : float = Input.GetAxis ( "Mouse X" ) * panSensitivity.x;
-				var dy : float = Input.GetAxis ( "Mouse Y" ) * panSensitivity.y;
+						var obj : OFSerializedObject;
+						var closest : float;
+						
+						for ( var i : int = 0; i < hits.Length; i++ ) {
+							var axis : OEGizmoAxis = hits[i].collider.gameObject.GetComponent.< OEGizmoAxis> (); 
+							var hitObj = hits[i].collider.gameObject.GetComponent.< OFSerializedObject > ();
 
-				transform.position -= transform.right * dx + transform.up * dy;
+							if ( axis ) {	
+								axis.OnMouseDown ();
+								return;
+							
+							} else if ( hitObj && obj == null || Vector3.Distance ( this.transform.position, hits[i].point ) < closest ) {
+								obj = hitObj;
+								closest = Vector3.Distance ( this.transform.position, hits[i].point );
+							
+							}
+						}
+						
+						if ( obj ) {
+							OEWorkspace.GetInstance().SelectObject ( obj );
+						}
+					}		
+				}
 
-			// Rotate
-			} else if ( Input.GetMouseButton ( 1 ) || Input.GetMouseButton ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) ) {
-				var target : Vector3 = OEWorkspace.GetInstance().GetFocus ();	
-				dx = Input.GetAxis ( "Mouse X" ) * rotateSensitivity.x;
-				dy = Input.GetAxis ( "Mouse Y" ) * rotateSensitivity.y;
+				// Pan
+				if ( Input.GetMouseButton ( 2 ) || Input.GetMouseButton ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) && Input.GetKey ( KeyCode.LeftShift ) ) {
+					dx = Input.GetAxis ( "Mouse X" ) * panSensitivity.x;
+					dy = Input.GetAxis ( "Mouse Y" ) * panSensitivity.y;
 
-				transform.RotateAround ( target, Quaternion.Euler ( 0, -45, 0) * ( target - this.transform.position ), dy );
-				transform.RotateAround ( target, Vector3.up, dx );
-				transform.rotation = Quaternion.LookRotation ( target - this.transform.position );
+					transform.position -= transform.right * dx + transform.up * dy;
 
-			// Zoom
-			} else if ( !OGRoot.GetInstance().isMouseOver ) {
-				var translation = Mathf.Clamp ( Input.GetAxis ( "Mouse ScrollWheel" ), -0.5, 0.5 );
-				var speed : float = 10;			
+				// Rotate
+				} else if ( Input.GetMouseButton ( 1 ) || Input.GetMouseButton ( 0 ) && Input.GetKey ( KeyCode.LeftAlt ) ) {
+					var target : Vector3 = OEWorkspace.GetInstance().GetFocus ();	
+					dx = Input.GetAxis ( "Mouse X" ) * rotateSensitivity.x;
+					dy = Input.GetAxis ( "Mouse Y" ) * rotateSensitivity.y;
 
-				if ( translation != 0.0 && !OGRoot.GetInstance().isMouseOver ) {				
-					this.transform.position += this.transform.forward * ( translation * speed );
-				
-					var viewportPoint : Vector3 = camera.WorldToViewportPoint ( focus );
+					transform.RotateAround ( target, Quaternion.Euler ( 0, -45, 0) * ( target - this.transform.position ), dy );
+					transform.RotateAround ( target, Vector3.up, dx );
+					transform.rotation = Quaternion.LookRotation ( target - this.transform.position );
 
-   					if ( viewportPoint.z < 0 || !( new Rect ( 0, 0, 1, 1 ) ).Contains ( viewportPoint ) ) {
-						OEWorkspace.GetInstance().SetFocus ( this.transform.position + this.transform.forward * 3 );
+				// Zoom
+				} else if ( !OGRoot.GetInstance().isMouseOver ) {
+					var translation = Mathf.Clamp ( Input.GetAxis ( "Mouse ScrollWheel" ), -0.5, 0.5 );
+					var speed : float = 10;			
+
+					if ( translation != 0.0 && !OGRoot.GetInstance().isMouseOver ) {				
+						this.transform.position += this.transform.forward * ( translation * speed );
+					
+						var viewportPoint : Vector3 = camera.WorldToViewportPoint ( focus );
+
+						if ( viewportPoint.z < 0 || !( new Rect ( 0, 0, 1, 1 ) ).Contains ( viewportPoint ) ) {
+							OEWorkspace.GetInstance().SetFocus ( this.transform.position + this.transform.forward * 3 );
+						}
 					}
 				}
 			}

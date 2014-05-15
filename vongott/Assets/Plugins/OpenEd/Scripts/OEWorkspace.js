@@ -470,6 +470,10 @@ public class OEWorkspace extends MonoBehaviour {
 		cam.wireframe = !cam.wireframe;
 	}
 	
+	public function ToggleFlyMode () {
+		cam.flyMode = !cam.flyMode;
+	}
+
 	public function ToggleDynamicLights () {
 		cam.dynamicLights = !cam.dynamicLights;
 	
@@ -599,6 +603,12 @@ public class OEWorkspace extends MonoBehaviour {
 		if ( Input.GetKeyDown ( KeyCode.D ) && ctrlOrCmd ) {
 			DuplicateSelection ();
 		
+		} else if ( Input.GetKeyDown ( KeyCode.F ) && ctrlOrCmd ) {
+			ToggleFlyMode ();
+
+		} else if ( Input.GetKeyDown ( KeyCode.S ) && ctrlOrCmd ) {
+			Save ();
+
 		} else if ( Input.GetKeyDown ( KeyCode.Delete ) || Input.GetKeyDown ( KeyCode.Backspace ) ) {
 			DeleteSelection ();
 
