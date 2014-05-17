@@ -84,9 +84,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 5
+  - typeIndex: 2
     name: Transform
     component: {fileID: 400000}
+  - typeIndex: 3
+    name: Door
+    component: {fileID: 11400004}
   id: 
   prefabPath: Prefabs/Doors/door_wood_single
   exportPath: 
@@ -103,7 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: 1
   lockLevel: 1
-  lockKeyGUID: 
+  keyId: 
   closed: 1
   type: 0
   leftDoor: {fileID: 0}
@@ -132,6 +135,7 @@ MonoBehaviour:
     message: 
     argument: 
     object: {fileID: 0}
+  destroyed: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
