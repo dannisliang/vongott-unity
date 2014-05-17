@@ -12,10 +12,15 @@ public class OATrigger extends MonoBehaviour {
 	public var message : String;
 	public var argument : String;
        	public var object : GameObject;
+	public var isActive : boolean = true;
 	public var fireOnce : boolean = true;
 	public var eventToTarget : boolean = false;
 
 	private var character : OACharacter;
+
+	public function ToggleActive () {
+		isActive = !isActive;
+	}
 
 	public function Fire () {
 		if ( object && eventToTarget ) {
@@ -43,13 +48,13 @@ public class OATrigger extends MonoBehaviour {
 	}
 
 	public function OnTriggerEnter () {
-		if ( type == OATriggerType.OnCollision ) {
+		if ( isActive && type == OATriggerType.OnCollision ) {
 			Fire ();
 		}
 	}
 
 	public function OnDestroy () {
-		if ( type == OATriggerType.OnDestruction ) {
+		if ( isActive && type == OATriggerType.OnDestruction ) {
 			Fire ();
 		}
 	}
@@ -59,7 +64,7 @@ public class OATrigger extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( character && character.health >= 0 && type == OATriggerType.OnDeath ) {
+		if ( isActive && character && character.health >= 0 && type == OATriggerType.OnDeath ) {
 			Fire ();
 		}
 	}

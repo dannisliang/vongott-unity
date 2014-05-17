@@ -61,6 +61,14 @@ class EventManager extends MonoBehaviour {
 			c.NextPathGoal ();
 		}
 	}
+	
+	public function TeleportToNextPathGoal ( t : OCTree ) {
+		var c : OACharacter = t.gameObject.GetComponent.< OACharacter > ();
+
+		if ( c ) {
+			c.TeleportToNextPathGoal ();
+		}
+	}
 
 	// Travel
 	public function TravelTo ( info : String ) {

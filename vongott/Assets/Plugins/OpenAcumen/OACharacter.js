@@ -66,6 +66,19 @@ public class OACharacter extends MonoBehaviour {
 		return speed >= 0.5;
 	}
 
+	public function TeleportToNextPathGoal () {
+		if ( currentPathGoal + 1 < pathGoals.Length ) {
+			currentPathGoal++;
+		} else {
+			currentPathGoal = 0;
+		}
+
+		this.transform.position = pathGoals [ currentPathGoal ];
+
+		behaviour = OABehaviour.Idle;
+		speed = 0;
+	}
+
 	public function NextPathGoal () {
 		if ( currentPathGoal + 1 < pathGoals.Length ) {
 			currentPathGoal++;

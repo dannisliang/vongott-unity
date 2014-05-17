@@ -66,7 +66,7 @@ public class OACharacterInspector extends OEComponentInspector {
 
 		if ( Button ( "Add" ) ) {
 			var tmpGoals : List.< Vector3 > = new List.< Vector3 > ( character.pathGoals );
-			tmpGoals.Add ( character.pathGoals[character.pathGoals.Length-1] );
+			tmpGoals.Add ( character.pathGoals.Length > 0 ? character.pathGoals[character.pathGoals.Length-1] : character.transform.position );
 			character.pathGoals = tmpGoals.ToArray ();
 		}
 
