@@ -710,9 +710,8 @@ public class OEToggle extends OEField {
 	}
 
 	public function Set ( isTicked : boolean ) : boolean {
-		if ( canSet ) {
+		if ( !tickbox.CheckMouseOver() ) {
 			tickbox.isTicked = isTicked;
-			canSet = true;
 		}
 
 		return Out ();

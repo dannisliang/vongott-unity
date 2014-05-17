@@ -62,6 +62,7 @@ public class SerializeOpenAcumen extends OFPlugin {
 		output.AddField ( "message", input.message );
 		output.AddField ( "argument", input.argument );
 		output.AddField ( "fireOnce", input.fireOnce );
+		output.AddField ( "isActive", input.isActive );
 		output.AddField ( "eventToTarget", input.eventToTarget );
 
 		var go : GameObject = input.object;
@@ -150,6 +151,7 @@ public class SerializeOpenAcumen extends OFPlugin {
 			}
 		}, input.GetField ( "object" ).str );
 		output.fireOnce = input.GetField ( "fireOnce" ).b;
+		output.isActive = input.GetField ( "isActive" ).b;
 		output.eventToTarget = input.GetField ( "eventToTarget" ).b;
 	}
 	
