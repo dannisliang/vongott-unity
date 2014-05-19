@@ -86,10 +86,6 @@ Material:
         second: {r: 1, g: 1, b: 0, a: 0}
       data:
         first:
-          name: _BumpMap_ST
-        second: {r: 1, g: 1, b: 0, a: 0}
-      data:
-        first:
           name: _RefrColor
         second: {r: .242647052, g: .242647052, b: .242647052, a: 1}
       data:
@@ -100,6 +96,10 @@ Material:
         first:
           name: _HorizonColor
         second: {r: .149019614, g: .282352954, b: .380392164, a: 0}
+      data:
+        first:
+          name: _BumpMap_ST
+        second: {r: 1, g: 1, b: 0, a: 0}
       data:
         first:
           name: _ReflectionTex_ST

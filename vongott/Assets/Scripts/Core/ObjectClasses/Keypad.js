@@ -17,6 +17,11 @@ class Keypad extends InteractiveObject {
 	public function LoginSuccess () {
 		if ( door ) {
 			door.locked = !door.locked;
+			
+			if ( door.type == eDoorType.SingleSlide || door.type == eDoorType.DoubleSlide ) {
+				door.closed = door.locked;
+				door.CheckState ();
+			}
 		}
 		
 		Exit ();
@@ -81,14 +86,6 @@ class Keypad extends InteractiveObject {
 	
 	override function UpdateObject () {
 		if ( !GameCore.running ) { return; }
-		
-		if ( doorGUID != "" && door == null ) {
-			var obj : GameObject = GameCore.GetObjectFromGUID ( doorGUID );
-			
-			if ( obj ) {
-				door = obj.GetComponent ( Door );
-			}
-		}
 		
 		if ( door ) {
 			if ( door.locked ) {

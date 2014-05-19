@@ -50,6 +50,8 @@ MonoBehaviour:
         lines:
         - Hey, new sort-of-person. I'm Marl. We need you to take care of the disturbance
           in the sewer below.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -71,6 +73,8 @@ MonoBehaviour:
         lines:
         - 'This''ll play out in two parts: Killing the nuisance and fixing the water
           flow. I trust you got a weapon with ya? '
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -91,6 +95,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -111,6 +117,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - Not yet.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -131,6 +139,8 @@ MonoBehaviour:
         speaker: 1
         lines:
         - Well, better get one then. Talk to the quartermaster up in the canteen.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -151,6 +161,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -171,6 +183,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - I do.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -191,6 +205,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -214,6 +230,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -234,6 +252,8 @@ MonoBehaviour:
         speaker: 1
         lines:
         - You won't get anywhere without a gun.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -254,6 +274,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -274,6 +296,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - I got the gun.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -294,6 +318,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -318,6 +344,8 @@ MonoBehaviour:
         lines:
         - Cool. So just kill the thing, and afterwards I need you to find the engineering
           room and redirect the water flow. It's the room blocked by rubble.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -340,6 +368,8 @@ MonoBehaviour:
         - I'll give you a mine to blow away the rubble, but be warned that the blast
           doors will close if you use it. In that case you'll have to find another
           way back. If you make it out alive, that is.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -362,6 +392,8 @@ MonoBehaviour:
         - What is the "thing"?
         - Go fuck yourself.
         - Right away.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -384,6 +416,8 @@ MonoBehaviour:
         - We just call them bugs. They're rogue AIs who continuously modify their
           bodies with discarded prosthetics. It's a perfect mixture of absurd and
           distugsting, and there is no way in hell I'm going down there.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -404,6 +438,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - Where did they come from?
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -425,6 +461,8 @@ MonoBehaviour:
         lines:
         - I don't think anyone knows. There's too much crazy shit going on at the
           moment to pay attention to that kind of stuff, I suppose.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -446,6 +484,8 @@ MonoBehaviour:
         lines:
         - Heh, I figured you looked like someone with an attitude. I like it. You
           don't have a choice though, so giddy-up.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -467,6 +507,8 @@ MonoBehaviour:
         lines:
         - Huh, didn't expect you to be such a pushover. Well, at least you won't cause
           any trouble.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -486,7 +528,9 @@ MonoBehaviour:
       speak:
         speaker: 1
         lines:
-        - Let me know when things are cleared up.
+        - Let me know when things are cleared up. The code to the blast doors is 1337.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -507,6 +551,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: GiveItem
         argument: 
@@ -527,6 +573,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -550,6 +598,8 @@ MonoBehaviour:
         speaker: 1
         lines:
         - So, how are we doing?
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -570,6 +620,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -590,6 +642,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - Not done yet.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -611,6 +665,8 @@ MonoBehaviour:
         lines:
         - The water should be running now, and I took care of the things, whatever
           those were.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -631,6 +687,8 @@ MonoBehaviour:
         speaker: 1
         lines:
         - Well, get your ass back down there, then!
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -651,6 +709,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -671,6 +731,8 @@ MonoBehaviour:
         speaker: 1
         lines:
         - There were more of them? And you came back alive?
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -691,6 +753,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - Well, yeah.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -711,6 +775,8 @@ MonoBehaviour:
         speaker: 1
         lines:
         - Holy crap, you're better than I thought. I was sure I'd never see you again.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -732,6 +798,8 @@ MonoBehaviour:
         lines:
         - I'll let Miguel and the others know on the infolink. You can go on back
           to them and rub it in their faces.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -752,6 +820,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - Thanks, I will.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -772,6 +842,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -796,6 +868,8 @@ MonoBehaviour:
         speaker: 1
         lines:
         - Very impressive. I'll be in touch with you later, probably.
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 
@@ -816,6 +890,8 @@ MonoBehaviour:
         speaker: 0
         lines:
         - 
+        audio:
+        - {fileID: 0}
       event:
         message: 
         argument: 

@@ -6,17 +6,17 @@ class EventManager extends MonoBehaviour {
 	private var choiceConvo : boolean = false;
 
 	public function OnConversationStart ( tree : OCTree ) {
-		passiveConvo = false;
+	/*	passiveConvo = false;
 	
 		if ( tree.CurrentRootHasTag ( "passive" ) ) {
 			passiveConvo = true;	
 		
-		} else {
+		} else {*/
 			GameCamera.GetInstance().StorePosRot();
 			GameCore.GetInstance().SetControlsActive ( false );
 			OGRoot.GetInstance().GoToPage ( "Conversation" );
 		
-		}
+		//}
 	}
 
 	public function OnSetLines ( strings : String [] ) {

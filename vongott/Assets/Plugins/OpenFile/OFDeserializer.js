@@ -79,6 +79,22 @@ public class OFDeserializer {
 		return component;
 	}
 	
+	public static function CheckComponent ( obj : OFSerializedObject, typeString : String ) : Component {
+		var component = obj.gameObject.GetComponent ( typeString );
+		var forceAdd : boolean = false;
+
+		if ( !component ) {
+			component = obj.gameObject.AddComponent ( typeString );
+			forceAdd = true;
+		}
+
+		if ( forceAdd ) {
+			obj.SetField ( typeString.Replace ( "UnityEngine.", "" ), component );
+		}
+
+		return component;
+	}
+	
 	public static function DeserializeChildren ( input : JSONObject, parent : Transform ) {
 		for ( var i : int = 0; i < input.list.Count; i++ ) {
 			var p : JSONObject = input.list[i];
@@ -156,16 +172,14 @@ public class OFDeserializer {
 					break;
 				
 				case "AudioSource":
-					Deserialize ( components.list[i], CheckComponent ( output, typeof ( AudioSource ), true ) as AudioSource );
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( AudioSource ) ) as AudioSource );
 					break;
 			}
 
 			// Plugins
 	       		for ( var p : int = 0; p < plugins.Length; p++ ) {
-				var type : System.Type = System.Type.GetType ( typeString ); 
-
-				if ( type != null && plugins[p].CheckType ( type ) ) {
-					plugins[p].Deserialize ( components.list[i], CheckComponent ( output, type ) );
+				if ( !String.IsNullOrEmpty ( typeString ) && plugins[p].CheckType ( typeString ) ) {
+					plugins[p].Deserialize ( components.list[i], CheckComponent ( output, typeString ) );
 				}
 			}
 
