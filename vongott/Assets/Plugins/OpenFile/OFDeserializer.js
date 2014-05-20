@@ -26,9 +26,11 @@ public class OFDeserializer {
 	}
 
 	public static function FindObject ( id : String ) : OFSerializedObject {
-		for ( var i : int = 0; i < spawnedObjects.Count; i++ ) {
-			if ( spawnedObjects[i].id == id ) {
-				return spawnedObjects[i];
+		if ( !String.IsNullOrEmpty ( id ) ) {
+			for ( var i : int = 0; i < spawnedObjects.Count; i++ ) {
+				if ( spawnedObjects[i].id == id ) {
+					return spawnedObjects[i];
+				}
 			}
 		}
 
