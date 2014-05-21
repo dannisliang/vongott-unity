@@ -22,6 +22,10 @@ class GameCore extends MonoBehaviour {
 	private var tempCamRot : Vector3;
 
 	// Static vars
+	static var overrideSpawnpoint : boolean = false;
+	static var overridePosition : Vector3;
+	static var overrideRotation : Vector3;
+	
 	static var debuggingEnabled = true;
 	static var playerName = "Nameless";
 	static var interactiveObject : InteractiveObject;
@@ -55,6 +59,12 @@ class GameCore extends MonoBehaviour {
 	
 	public static function GetPlayer () : Player {
 		return instance.player;
+	}
+
+	public static function OverrideSpawnpoint ( pos : Vector3, rot : Vector3 ) {
+		overrideSpawnpoint = true;
+		overridePosition = pos;
+		overrideRotation = rot;
 	}
 
 
@@ -276,30 +286,37 @@ class GameCore extends MonoBehaviour {
 
 	// Find spawn point
 	public function GoToSpawnPoint ( sName : String ) {
-		var currentSpawnPoint : SpawnPoint;
+		if ( overrideSpawnpoint ) {
+			overrideSpawnpoint = false;
+			player.transform.position = overridePosition;
+			player.transform.eulerAngles = overrideRotation;
 		
-		Debug.Log ( "GameCore | Searching for SpawnPoint '" + sName + "'..." );
-					
-		for ( var s : SpawnPoint in GameCore.levelContainer.GetComponentsInChildren.< SpawnPoint >() ) {
-			currentSpawnPoint = s;
+		} else {
+			var currentSpawnPoint : SpawnPoint;
 			
-			if ( currentSpawnPoint.gameObject.name == sName ) {
-				Debug.Log ( "GameCore | ...found!" );
-				break;
+			Debug.Log ( "GameCore | Searching for SpawnPoint '" + sName + "'..." );
+						
+			for ( var s : SpawnPoint in GameCore.levelContainer.GetComponentsInChildren.< SpawnPoint >() ) {
+				currentSpawnPoint = s;
+				
+				if ( currentSpawnPoint.gameObject.name == sName ) {
+					Debug.Log ( "GameCore | ...found!" );
+					break;
+				}
 			}
-		}
-		
-		Debug.Log ( "GameCore | ...failed!" );
-		
-		player.transform.parent = levelContainer;
-
-		if ( currentSpawnPoint ) {
-			player.transform.position = currentSpawnPoint.transform.position;
-			var newRot : Vector3 = currentSpawnPoint.transform.localEulerAngles;
-			newRot.x = 0;
-			newRot.z = 0;
 			
-			player.transform.localEulerAngles = newRot;
+			Debug.Log ( "GameCore | ...failed!" );
+			
+			player.transform.parent = levelContainer;
+
+			if ( currentSpawnPoint ) {
+				player.transform.position = currentSpawnPoint.transform.position;
+				var newRot : Vector3 = currentSpawnPoint.transform.localEulerAngles;
+				newRot.x = 0;
+				newRot.z = 0;
+				
+				player.transform.localEulerAngles = newRot;
+			}
 		}
 
 	}
