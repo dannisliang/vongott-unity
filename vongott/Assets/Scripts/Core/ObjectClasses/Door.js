@@ -1,10 +1,8 @@
 #pragma strict
 
 public enum eDoorType {
-	SingleSwing,
-	DoubleSwing,
-	SingleSlide,
-	DoubleSlide
+	Swing,
+	Slide
 }
 
 class Door extends InteractiveObject {
@@ -12,7 +10,7 @@ class Door extends InteractiveObject {
 	public var lockLevel : int = 1;
 	public var keyId : String = "";
 	public var closed : boolean = true;
-	public var type : eDoorType = eDoorType.SingleSwing;
+	public var type : eDoorType = eDoorType.Swing;
 	public var leftDoor : GameObject;
 	public var rightDoor : GameObject;
 
@@ -99,21 +97,21 @@ class Door extends InteractiveObject {
 		backPos = this.transform.position + -this.transform.forward;
 
 		// Slide
-		if ( leftDoor && rightDoor ) {
-			// Start positions
+		if ( leftDoor ) {
 			startPosLeft = leftDoor.transform.localPosition;
-			startPosRight = rightDoor.transform.localPosition;
 			targetPosLeft = startPosLeft;
+		}
+
+		if ( rightDoor ) {
+			startPosRight = rightDoor.transform.localPosition;
 			targetPosRight = startPosRight;
 		}
 
 		// Colliders
-		if ( type == eDoorType.DoubleSlide ) {
+		if ( type == eDoorType.Slide ) {
 			if ( !GameCore.running ) {
-				leftDoor.collider.enabled = false;
-				rightDoor.collider.enabled = false;
-			} else {
-				this.collider.enabled = false;
+				if ( leftDoor ) { leftDoor.collider.enabled = false; }
+				if ( rightDoor ) { rightDoor.collider.enabled = false; }
 			}
 		}	
 	
@@ -123,13 +121,16 @@ class Door extends InteractiveObject {
 	function Update () {
 		if ( GameCore.running ) {
 			switch ( type ) {
-				case eDoorType.SingleSwing:
+				case eDoorType.Swing:
 					this.transform.localRotation = Quaternion.Slerp ( this.transform.localRotation, Quaternion.Euler ( 0, targetRot.y, 0 ), Time.deltaTime * 2 );
 					break;
 			
-				case eDoorType.DoubleSlide:
-					if ( leftDoor && rightDoor ) {
+				case eDoorType.Slide:
+					if ( leftDoor ) {
 						leftDoor.transform.localPosition = Vector3.Lerp ( leftDoor.transform.localPosition, targetPosLeft, Time.deltaTime * 2 );
+					}
+				
+					if ( rightDoor ) {
 						rightDoor.transform.localPosition = Vector3.Lerp ( rightDoor.transform.localPosition, targetPosRight, Time.deltaTime * 2 );
 					}
 			}

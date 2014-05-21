@@ -18,7 +18,7 @@ class Keypad extends InteractiveObject {
 		if ( door ) {
 			door.locked = !door.locked;
 			
-			if ( door.type == eDoorType.SingleSlide || door.type == eDoorType.DoubleSlide ) {
+			if ( door.type == eDoorType.Slide ) {
 				door.closed = door.locked;
 				door.CheckState ();
 			}
