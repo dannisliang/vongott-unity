@@ -41,9 +41,8 @@ class Door extends InteractiveObject {
 				
 	// Movement
 	private function CloseDoor () {
-		targetRot = startRot;
-	
 		closed = true;
+		CheckState ();
 	}
 
 	public function Toggle () {
@@ -66,8 +65,8 @@ class Door extends InteractiveObject {
 			}
 			
 			// Slide
-			targetPosLeft = startPosLeft - this.transform.right;
-			targetPosRight = startPosRight + this.transform.right;
+			targetPosLeft = startPosLeft - Vector3.right;
+			targetPosRight = startPosRight + Vector3.right;
 		
 		} else {
 			// Swing
@@ -122,7 +121,7 @@ class Door extends InteractiveObject {
 		if ( GameCore.running ) {
 			switch ( type ) {
 				case eDoorType.Swing:
-					this.transform.localRotation = Quaternion.Slerp ( this.transform.localRotation, Quaternion.Euler ( 0, targetRot.y, 0 ), Time.deltaTime * 2 );
+					this.transform.localRotation = Quaternion.Lerp ( this.transform.localRotation, Quaternion.Euler ( 0, targetRot.y, 0 ), Time.deltaTime * 2 );
 					break;
 			
 				case eDoorType.Slide:
