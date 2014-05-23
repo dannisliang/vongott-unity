@@ -53,6 +53,49 @@ class Door extends InteractiveObject {
 		CheckState ( this.transform );
 	}
 
+	private function MoveDoors () : IEnumerator {
+		var counter : float = 0;
+
+		switch ( type ) {
+			case eDoorType.Swing:
+				var oldRot : Quaternion = this.transform.localRotation;
+				
+				while ( counter <= 1.2 ) {
+					this.transform.localRotation = Quaternion.Lerp ( oldRot, Quaternion.Euler ( 0, targetRot.y, 0 ), counter );
+					counter += Time.deltaTime * 2;
+					yield WaitForEndOfFrame ();
+				}
+
+				break;
+		
+			case eDoorType.Slide:
+				var oldPosLeft : Vector3;
+				var oldPosRight : Vector3;
+				
+				if ( leftDoor ) {
+			       		oldPosLeft = leftDoor.transform.localPosition;
+				}
+				
+				if ( rightDoor ) {
+			       		oldPosRight = rightDoor.transform.localPosition;
+				}
+
+				while ( counter <= 1.2 ) {
+					if ( leftDoor ) {
+						leftDoor.transform.localPosition = Vector3.Lerp ( oldPosLeft, targetPosLeft, counter );
+					}
+				
+					if ( rightDoor ) {
+						rightDoor.transform.localPosition = Vector3.Lerp ( oldPosRight, targetPosRight, counter );
+					}
+					
+					counter += Time.deltaTime * 2;
+					yield WaitForEndOfFrame ();
+				}
+				break;
+		}
+	}
+
 	private function CheckState ( t : Transform ) {
 		if ( !closed ) {
 			// Swing
@@ -77,6 +120,9 @@ class Door extends InteractiveObject {
 			targetPosRight = startPosRight;
 		
 		}
+
+		StartCoroutine ( MoveDoors () );
+
 	}
 
 	private function ToggleDoor ( t : Transform ) {
@@ -117,28 +163,6 @@ class Door extends InteractiveObject {
 		CheckState ( this.transform );
 	}
 	
-	function Update () {
-		if ( GameCore.running ) {
-			switch ( type ) {
-				case eDoorType.Swing:
-					this.transform.localRotation = Quaternion.Lerp ( this.transform.localRotation, Quaternion.Euler ( 0, targetRot.y, 0 ), Time.deltaTime * 2 );
-					break;
-			
-				case eDoorType.Slide:
-					if ( leftDoor ) {
-						leftDoor.transform.localPosition = Vector3.Lerp ( leftDoor.transform.localPosition, targetPosLeft, Time.deltaTime * 2 );
-					}
-				
-					if ( rightDoor ) {
-						rightDoor.transform.localPosition = Vector3.Lerp ( rightDoor.transform.localPosition, targetPosRight, Time.deltaTime * 2 );
-					}
-			}
-
-			Debug.DrawLine ( this.transform.position, frontPos, Color.green );
-			Debug.DrawLine ( this.transform.position, backPos, Color.red );
-		}
-	}
-		
 	// Interaction
 	override function NPCCollide ( a : OACharacter ) {
 		ToggleDoor ( a.transform );

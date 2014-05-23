@@ -216,7 +216,7 @@ public class PlayerController extends MonoBehaviour {
 		
 		// Set capsule size
 		if ( bodyState == ePlayerBodyState.Crouching ) {
-			character.height = 0.9;
+			character.height = 0.8;
 			character.center = new Vector3 ( 0, 0.45, 0 );
 		
 		} else {
