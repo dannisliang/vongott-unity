@@ -87,6 +87,9 @@ MonoBehaviour:
   - typeIndex: 2
     name: Transform
     component: {fileID: 400000}
+  - typeIndex: 5
+    name: Computer
+    component: {fileID: 11400004}
   id: 
   prefabPath: Prefabs/Interfaces/interface_computer
   exportPath: 
@@ -119,6 +122,7 @@ MonoBehaviour:
     openFile: yaaay!
     openFileName: thisfile.txt
     wallpaper: wallpaper_debian
+    operations: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

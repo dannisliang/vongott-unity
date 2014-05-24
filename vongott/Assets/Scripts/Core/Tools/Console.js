@@ -93,34 +93,17 @@ public class Console extends MonoBehaviour {
 	}
 
 	private function Give ( input : String ) : String {
-		var args : String [] = input.Split ( " "[0] );
 		var output : String = "";
 
-		if ( args.Length > 1 ) {
-			switch ( args[0] ) {
-				case "weapon":
-					switch ( args[1] ) {
-						case "all":
-							// TODO: give all weapons
-							output =  "Got all weapons";
-							break;
+		switch ( input ) {
+			case "mine":
+				GameCore.GetInventory().AddItem ( ( Resources.Load ( "Prefabs/Items/Weapons/weapon_mine" ) as GameObject ).GetComponent.< OSItem > () );
+				break;
 
-						default:
-							output = "[ERROR] No weapon by the name '" + args[1] + "'";
-							break;
-					}
-					break;
-
-				default:
-					output = "[ERROR] give: Invalid argument '" + args[0] + "'";
-					break;			
-							
-			}
-		} else {
-			output = "[ERROR] give: Not enough arguments provided.";
-
+			default:
+				output = "[ERROR] No item by the name '" + input + "'";
+				break;
 		}
-		
 
 		return output;
 	}
@@ -203,7 +186,11 @@ public class Console extends MonoBehaviour {
 		var args : String = "";
 
 		for ( var i : int = 1; i < strings.Length; i++ ) {
-			args += strings[i] + " ";
+			args += strings[i];
+			
+			if ( i < strings.Length - 1 ) { 
+				args += " ";
+			}
 		}
 
 		if ( strings.Length > 1 ) {

@@ -219,9 +219,13 @@ public class OSInventory extends MonoBehaviour {
 	}
 
 	public function SetEquipped ( item : OSItem ) {
+		SetEquipped ( item, true );
+	}
+
+	public function SetEquipped ( item : OSItem, isEquipped : boolean ) {
 		for ( var i : int = 0; i < slots.Count; i++ ) {
 			if ( slots[i] && slots[i].item == item ) {
-				slots[i].equipped = true;
+				slots[i].equipped = isEquipped;
 				
 				if ( eventHandler ) {
 					eventHandler.SendMessage ( "OnEquipItem", slots[i].item, SendMessageOptions.DontRequireReceiver );
@@ -378,6 +382,7 @@ public class OSInventory extends MonoBehaviour {
 	}
 
 	public function RemoveSlot ( slot : OSSlot ) {
+		slot.equipped = false;
 		slots.Remove ( slot );
 	}
 	
@@ -403,6 +408,8 @@ public class OSInventory extends MonoBehaviour {
 		if ( !item ) { return false; }
 	
 		item.definitions = this.definitions;
+		
+		item.gameObject.SendMessage ( "SetInventory", this, SendMessageOptions.DontRequireReceiver );
 
 		// Check if similar item is already in the inventory
 		for ( var i : int = 0; i < slots.Count; i++ ) {

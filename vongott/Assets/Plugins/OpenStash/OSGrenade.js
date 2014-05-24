@@ -61,15 +61,13 @@ public class OSGrenade extends MonoBehaviour {
 			collider.enabled = true;
 		}
 		
-		if ( inventory ) {
-			inventory.GetSlot ( item );
-		}
-
 		startNormal = this.transform.up;
 
 		if ( lineRenderer ) {
 			lineRenderer.enabled = false;
 		}
+
+		inventory.DecreaseItem ( this as OSItem );
 	}
 
 	public function Aim ( pos : Vector3, dir : Vector3 ) {

@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
-public class SerializeKeypad extends OFPlugin {
+public class SerializeComputer extends OFPlugin {
 	override function get types () : System.Type[] {
-		return [ typeof ( Keypad ) ];
+		return [ typeof ( Computer ) ];
 	}
 	
 	override function Serialize ( component : Component ) : JSONObject {

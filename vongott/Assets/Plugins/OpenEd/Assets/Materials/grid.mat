@@ -37,20 +37,20 @@ Material:
     m_Floats:
       data:
         first:
-          name: _RimPower
-        second: 1.70777202
-      data:
-        first:
-          name: _Glossiness
-        second: .430051804
-      data:
-        first:
           name: _InvFade
         second: 1
       data:
         first:
           name: _LineWidth
         second: .100000001
+      data:
+        first:
+          name: _RimPower
+        second: 1.70777202
+      data:
+        first:
+          name: _Glossiness
+        second: .430051804
       data:
         first:
           name: _FadeDistance
@@ -66,8 +66,12 @@ Material:
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _TintColor
-        second: {r: .5, g: .5, b: .5, a: .5}
+          name: _LineColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _GridColor
+        second: {r: 1, g: 1, b: 1, a: 0}
       data:
         first:
           name: _DiffuseColor
@@ -82,12 +86,8 @@ Material:
         second: {r: .300699413, g: 1, b: 0, a: 1}
       data:
         first:
-          name: _LineColor
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _GridColor
-        second: {r: 1, g: 1, b: 1, a: 0}
+          name: _TintColor
+        second: {r: .5, g: .5, b: .5, a: .5}
       data:
         first:
           name: _EmisColor
@@ -95,4 +95,4 @@ Material:
       data:
         first:
           name: _Focus
-        second: {r: 4.89453983, g: -9, b: 5.49376678, a: 0}
+        second: {r: 14.3634958, g: -9, b: 8.2917614, a: 0}

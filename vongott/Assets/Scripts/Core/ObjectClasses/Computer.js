@@ -1,24 +1,35 @@
 ﻿#pragma strict
 
 class Computer extends InteractiveObject {
+	public class Operation {
+		public var title : String = "Operation";
+		public var message : String = "";
+		public var object : GameObject;
+	}
+
 	public class Account {
-		var username : String = "dude";
-		var password : String = "sweet";
-		var messages : String = "";
-		var todoList : String = "";
-		var openFile : String = "";
-		var openFileName : String = "filename.txt";
-		var wallpaper : String = "wallpaper_debian";
+		public var username : String = "dude";
+		public var password : String = "sweet";
+		public var messages : String = "";
+		public var todoList : String = "";
+		public var openFile : String = "";
+		public var openFileName : String = "filename.txt";
+		public var wallpaper : String = "wallpaper_debian";
+		public var operations : List.< Operation > = new List.< Operation > ();
 	}
 	
-	var domain : String = "domainname";
-	var validAccounts : List.< Account > = new List.< Account > ();
+	public var domain : String = "domainname";
+	public var validAccounts : List.< Account > = new List.< Account > ();
 	
 	private var tempPos : Vector3;
 	private var tempRot : Vector3;
 	
 	private var inSession : boolean = false;
 	
+	public function ExecuteOperation ( o : Operation ) {
+		GameCore.GetInstance().SendMessage ( o.message, this, SendMessageOptions.DontRequireReceiver );
+	}
+
 	public function AddAccount () {
 		validAccounts.Add ( new Account () );
 	}
