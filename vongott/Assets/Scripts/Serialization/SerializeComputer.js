@@ -17,6 +17,6 @@ public class SerializeKeypad extends OFPlugin {
 	override function Deserialize ( input : JSONObject, component : Component ) {
 		var computer : Computer = component as Computer;
 	
-//		computer.domain = input.GetField ( "domain" ).str;
+		computer.domain = input.GetField ( "domain" ).str;
 	}
 }

@@ -99,7 +99,7 @@ public class SerializeOpenAcumen extends OFPlugin {
 		}
 	}
 	
-	private function DeserializeCharacter ( input : JSONObject, output : OACharacter ) : JSONObject {
+	private function DeserializeCharacter ( input : JSONObject, output : OACharacter ) {
 		output.health = input.GetField ( "health" ).n;
 		output.usingWeapons = input.GetField ( "usingWeapons" ).b;
 
@@ -122,11 +122,15 @@ public class SerializeOpenAcumen extends OFPlugin {
 			output.convoSpeakers = new GameObject [ speakerList.Count ];
 			
 			for ( var i : int = 0; i < speakerList.Count; i++ ) {
-				OFDeserializer.DeferConnection ( function ( so : OFSerializedObject, index : int ) {
+				OFDeserializer.planner.DeferConnection ( function () : IEnumerator {
+					yield WaitForEndOfFrame ();
+
+					var so : OFSerializedObject = OFDeserializer.FindObject ( speakerList[i].str );
+					
 					if ( so ) {
-						output.convoSpeakers[index] = so.gameObject;
+						output.convoSpeakers[i] = so.gameObject;
 					}
-				}, speakerList[i].str, i );
+				} () );
 			}
 		}
 
@@ -141,15 +145,19 @@ public class SerializeOpenAcumen extends OFPlugin {
 		}
 	}
 	
-	private function DeserializeTrigger ( input : JSONObject, output : OATrigger ) : JSONObject {
+	private function DeserializeTrigger ( input : JSONObject, output : OATrigger ) {
 		output.type = OFDeserializer.ParseEnum ( OATriggerType, input.GetField ( "type" ).str );
 		output.message = input.GetField ( "message" ).str;
 		output.argument = input.GetField ( "argument" ).str;
-		OFDeserializer.DeferConnection ( function ( so : OFSerializedObject ) {
+		OFDeserializer.planner.DeferConnection ( function () : IEnumerator {
+			yield WaitForEndOfFrame ();
+
+			var so : OFSerializedObject = OFDeserializer.FindObject ( input.GetField ( "object" ).str );
+
 			if ( so ) {
 				output.object = so.gameObject;
 			}
-		}, input.GetField ( "object" ).str );
+		} () );
 		output.fireOnce = input.GetField ( "fireOnce" ).b;
 		output.isActive = input.GetField ( "isActive" ).b;
 		output.eventToTarget = input.GetField ( "eventToTarget" ).b;

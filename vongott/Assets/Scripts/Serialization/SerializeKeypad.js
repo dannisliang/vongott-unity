@@ -26,11 +26,15 @@ public class SerializeComputer extends OFPlugin {
 		keypad.difficulty = input.GetField ( "difficulty" ).n;
 	
 		if ( input.HasField ( "door" ) ) {
-			OFDeserializer.DeferConnection ( function ( so : OFSerializedObject ) {
+			OFDeserializer.planner.DeferConnection ( function () : IEnumerator {
+				yield WaitForEndOfFrame ();
+
+				var so : OFSerializedObject = OFDeserializer.FindObject ( input.GetField ( "door" ).str );
+				
 				if ( so ) {
 					keypad.door = so.GetComponent.< Door > ();
 				}
-			}, input.GetField ( "door" ).str );
+			} () );
 		}
 	}
 }
