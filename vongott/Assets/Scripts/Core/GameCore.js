@@ -276,7 +276,7 @@ class GameCore extends MonoBehaviour {
 			if ( a.conversationTree ) {
 				for ( var i : int = 0; i < a.conversationTree.speakers.Length; i++ ) {
 					if ( a.conversationTree.speakers[i].id == "Player" ) {
-						a.convoSpeakers[i] = player.gameObject;
+						a.conversationTree.speakers[i].gameObject = player.gameObject;
 						a.UpdateSpeakers ();
 					}
 				}

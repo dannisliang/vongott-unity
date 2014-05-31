@@ -5,18 +5,6 @@ public class OFDeserializer {
 	
 	private static var plugins : OFPlugin[];
 	
-	public static function FindObject ( id : String ) : OFSerializedObject {
-		if ( !String.IsNullOrEmpty ( id ) ) {
-			for ( var i : int = 0; i < planner.spawnedObjects.Count; i++ ) {
-				if ( planner.spawnedObjects[i].id == id ) {
-					return planner.spawnedObjects[i];
-				}
-			}
-		}
-
-		return null;
-	}
-	
 	public static function ParseEnum ( e : System.Type, s : String ) : int {
 		var strings : String[] = System.Enum.GetNames ( e );
 		
@@ -90,10 +78,13 @@ public class OFDeserializer {
 				
 				if ( so ) {
 					so.transform.parent = t;
+					planner.AddObject ( so );
 				}
 			}
 			
 		}
+
+		planner.ConnectAll ();
 	}
 	
 	// This creates a new GameObject
@@ -153,8 +144,6 @@ public class OFDeserializer {
 			}
 
 		}
-
-		planner.spawnedObjects.Add ( output );
 
 		return output;
 	}

@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
-public class SerializeComputer extends OFPlugin {
+public class SerializeKeypad extends OFPlugin {
 	override function get types () : System.Type[] {
-		return [ typeof ( Computer ) ];
+		return [ typeof ( Keypad ) ];
 	}
 	
 	override function Serialize ( component : Component ) : JSONObject {
@@ -26,15 +26,9 @@ public class SerializeComputer extends OFPlugin {
 		keypad.difficulty = input.GetField ( "difficulty" ).n;
 	
 		if ( input.HasField ( "door" ) ) {
-			OFDeserializer.planner.DeferConnection ( function () : IEnumerator {
-				yield WaitForEndOfFrame ();
-
-				var so : OFSerializedObject = OFDeserializer.FindObject ( input.GetField ( "door" ).str );
-				
-				if ( so ) {
-					keypad.door = so.GetComponent.< Door > ();
-				}
-			} () );
+			OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject ) {
+				keypad.door = so.GetComponent.< Door > ();
+			}, input.GetField ( "door" ).str );
 		}
 	}
 }

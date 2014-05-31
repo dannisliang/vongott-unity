@@ -17,12 +17,10 @@ public class SerializeOpenAcumen extends OFPlugin {
 
 		// Conversation
 		if ( input.conversationTree ) {
-			output.AddField ( "conversationTree", OFSerializer.GetPlugin( typeof ( OCTree ) ).Serialize ( input.conversationTree ) );
-		
-			var speakers : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
-
-			for ( var i : int = 0; i < input.convoSpeakers.Length; i++ ) {
-				var go : GameObject = input.convoSpeakers[i];
+			var tree : JSONObject = OFSerializer.GetPlugin( typeof ( OCTree ) ).Serialize ( input.conversationTree );
+			
+			for ( var i : int = 0; i < tree.GetField ( "speakers" ).list.Count; i++ ) {
+				var go : GameObject = input.conversationTree.speakers[i].gameObject;
 				var so : OFSerializedObject;
 
 				if ( go ) {
@@ -30,15 +28,12 @@ public class SerializeOpenAcumen extends OFPlugin {
 				}
 
 				if ( so ) {
-					speakers.Add ( so.id );
-				
-				} else {
-					speakers.Add ( "" );
+					tree.GetField ( "speakers" ).list[i].AddField ( "gameObject", so.id );
 				
 				}
 			}
-
-			output.AddField ( "convoSpeakers", speakers );
+			
+			output.AddField ( "conversationTree", tree );
 		}
 
 		// Path
@@ -117,20 +112,14 @@ public class SerializeOpenAcumen extends OFPlugin {
 
 			OFSerializer.GetPlugin ( typeof ( OCTree ) ).Deserialize ( input.GetField ( "conversationTree" ), output.conversationTree );		
 		
-			var speakerList : List.< JSONObject > = input.GetField ( "convoSpeakers" ).list;
+			var speakerList : List.< JSONObject > = input.GetField ( "conversationTree" ).GetField ( "speakers" ).list;
 
-			output.convoSpeakers = new GameObject [ speakerList.Count ];
-			
 			for ( var i : int = 0; i < speakerList.Count; i++ ) {
-				OFDeserializer.planner.DeferConnection ( function () : IEnumerator {
-					yield WaitForEndOfFrame ();
-
-					var so : OFSerializedObject = OFDeserializer.FindObject ( speakerList[i].str );
-					
-					if ( so ) {
-						output.convoSpeakers[i] = so.gameObject;
-					}
-				} () );
+				if ( speakerList[i].HasField ( "gameObject" ) ) {
+					OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject, index : int ) {
+						output.conversationTree.speakers[index].gameObject = so.gameObject;
+					}, speakerList[i].GetField ( "gameObject" ).str, i );
+				}
 			}
 		}
 
@@ -149,15 +138,11 @@ public class SerializeOpenAcumen extends OFPlugin {
 		output.type = OFDeserializer.ParseEnum ( OATriggerType, input.GetField ( "type" ).str );
 		output.message = input.GetField ( "message" ).str;
 		output.argument = input.GetField ( "argument" ).str;
-		OFDeserializer.planner.DeferConnection ( function () : IEnumerator {
-			yield WaitForEndOfFrame ();
-
-			var so : OFSerializedObject = OFDeserializer.FindObject ( input.GetField ( "object" ).str );
-
-			if ( so ) {
-				output.object = so.gameObject;
-			}
-		} () );
+		
+		OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject ) {
+			output.object = so.gameObject;
+		}, input.GetField ( "object" ).str );
+		
 		output.fireOnce = input.GetField ( "fireOnce" ).b;
 		output.isActive = input.GetField ( "isActive" ).b;
 		output.eventToTarget = input.GetField ( "eventToTarget" ).b;

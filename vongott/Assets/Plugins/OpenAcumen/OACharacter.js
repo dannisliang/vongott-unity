@@ -26,7 +26,6 @@ public class OACharacter extends MonoBehaviour {
 	// Conversation
 	public var conversationTree : OCTree;
 	public var convoRootNode : int = 0;
-	public var convoSpeakers : GameObject [] = new GameObject[1];
 
 	// Path
 	public var pathFinder : OPPathFinder;
@@ -64,6 +63,20 @@ public class OACharacter extends MonoBehaviour {
 
 	public function get running () : boolean {
 		return speed >= 0.5;
+	}
+
+	public function get convoSpeakers () : GameObject [] {
+		if ( conversationTree ) {
+			var output : GameObject [] = new GameObject [conversationTree.speakers.Length];
+		
+			for ( var i : int = 0; i < output.Length; i++ ) {
+				output[i] = conversationTree.speakers[i].gameObject;
+			}
+
+			return output;
+		}
+		
+		return null;
 	}
 
 	public function TeleportToNextPathGoal () {
@@ -105,10 +118,6 @@ public class OACharacter extends MonoBehaviour {
 	public function UpdateSpeakers () {
 		if ( conversationTree ) {
 			conversationTree.currentRoot = convoRootNode;
-
-			for ( var i : int = 0; i < convoSpeakers.Length; i++ ) {
-				conversationTree.speakers[i].gameObject = convoSpeakers[i];
-			}
 		}
 	}
 

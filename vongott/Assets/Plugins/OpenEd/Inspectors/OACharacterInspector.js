@@ -36,21 +36,13 @@ public class OACharacterInspector extends OEComponentInspector {
 				rootNodeStrings[i] = i.ToString();
 			}
 			
-			if ( character.convoSpeakers.Length != character.conversationTree.speakers.Length ) {
-				character.convoSpeakers = new GameObject [ character.conversationTree.speakers.Length ];
-			}
-		
 			speakerStrings = character.conversationTree.GetSpeakerStrings ();
-	
-		} else {	
-			character.convoSpeakers = new GameObject [ 0 ];
-
 		}
 
 		character.convoRootNode = Popup ( "First root node", character.convoRootNode, rootNodeStrings );	
 
 		for ( i = 0; i < speakerStrings.Length; i++ ) {
-			character.convoSpeakers[i] = ObjectField ( speakerStrings[i], character.convoSpeakers[i], typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
+			character.conversationTree.speakers[i].gameObject = ObjectField ( speakerStrings[i], character.conversationTree.speakers[i].gameObject, typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
 		}
 
 		EndDisabled ();
