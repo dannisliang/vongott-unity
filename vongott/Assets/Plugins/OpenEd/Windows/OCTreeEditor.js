@@ -64,6 +64,7 @@ public class OCTreeEditor extends OGPage {
 	public var treeContainer : Transform;
 	public var inspector : OCNodeInspector;
 
+	private var xOffset : float = 0;
 	private var savePath : String;
 	
 	private static var instance : OCTreeEditor;
@@ -74,6 +75,8 @@ public class OCTreeEditor extends OGPage {
 	}
 
 	public function ClearNodes () {
+		xOffset = 0;
+		
 		for ( var i : int = 0; i < treeContainer.childCount; i++ ) {
 			Destroy ( treeContainer.GetChild ( i ).gameObject );
 		}
@@ -88,12 +91,16 @@ public class OCTreeEditor extends OGPage {
 	public function CreateNode ( tree : OCTree, node : OCNode, x : float, y : float, prevLineNode : OGLineNode ) {
 		if ( !node ) { return; }
 
+		if ( x < xOffset ) {
+			x = xOffset;
+		}
+
 		var container : GameObject = new GameObject ( node.id.ToString() );
 		container.transform.parent = treeContainer;
 		container.transform.localScale = Vector3.one;
 		container.transform.localPosition = new Vector3 ( x, y, 0 );
 
-		var width : float = 140;
+		var width : float = node.type == OCNodeType.Speak ? 140 : 100;
 		var height : float = 20;
 
 		var topLineNode : OGLineNode = new GameObject ( "nod_Top" ).AddComponent.< OGLineNode > ();
@@ -178,7 +185,15 @@ public class OCTreeEditor extends OGPage {
 					lineNodes[i].btnConnect.argument = i.ToString ();
 				}
 
-				CreateNode ( tree, tree.rootNodes [ currentRoot ].GetNode ( node.connectedTo[i] ), x + i * ( width + 80 ), y + ( height + 80 ), lineNodes[i].nodLine );
+				var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetNode ( node.connectedTo[i] );
+			
+				if ( nextNode ) {
+					CreateNode ( tree, nextNode, x + i * 200, y + 100, lineNodes[i].nodLine );
+				}
+				
+				if ( i == node.connectedTo.Length - 1 ) {
+					xOffset = x + ( i + 1 ) * 200;
+				}
 			}
 		}
 	}

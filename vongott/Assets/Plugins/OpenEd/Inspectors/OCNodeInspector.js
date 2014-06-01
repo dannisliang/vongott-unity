@@ -141,12 +141,16 @@ public class OCNodeInspector extends MonoBehaviour {
 		}
 	}
 
+	public class Event {
+		
+	}
+
 	public var tree : OCTree;
 	public var currentRoot : int;
 	@NonSerialized public var node : OCNode;
-	public var popType : OGPopUp;
 	
 	public var inspectorSpeak : Speak;
+	public var inspectorEvent : Event;
 
 	private var currentInspector : Inspector;
 
