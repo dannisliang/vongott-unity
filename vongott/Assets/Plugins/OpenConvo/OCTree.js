@@ -98,7 +98,7 @@ public class OCRootNode {
 	public function AddNode () : OCNode {
 		var tmpNodes : List.< OCNode > = new List.< OCNode > ( nodes );
 		var newNode : OCNode = new OCNode ();
-		newNode.SetType ( OCNodeType.Speak );
+		newNode.SetType ( OCNodeType.Speak, true );
 
 		tmpNodes.Add ( newNode );
 
@@ -112,7 +112,11 @@ public class OCRootNode {
 
 		firstNode = newNode.id;
 	}
-	
+
+	public function GetFirstNode () : OCNode {
+		return GetNode ( firstNode );
+	}
+
 	public function RemoveNode ( id : int ) {
 		var tmpNodes : List.< OCNode > = new List.< OCNode > ( nodes );
 
@@ -213,8 +217,25 @@ public class OCNode {
 		end = null;
 	}
 
+	public function SetType ( string : String ) {
+		var type : int = 0;
+		var names : String [] = System.Enum.GetNames ( OCNodeType );
+
+		for ( var i : int = 0; i < names.Length; i++ ) {
+			if ( names[i] == string ) {
+				type = i;
+			}
+		}
+
+		SetType ( type );
+	}
+
 	public function SetType ( value : OCNodeType ) {
-		if ( value != type ) {
+		SetType ( value, false );
+	}
+
+	public function SetType ( value : OCNodeType, force : boolean ) {
+		if ( value != type || force ) {
 			type = value;
 			
 			Reset ();
