@@ -198,7 +198,7 @@ public class OCNode {
 				connectedTo = tmpConnect.ToArray ();
 			
 			} else if ( n < connectedTo.Length ) {
-				for ( i = connectedTo.Length - 1; i < n; i++ ) {
+				for ( i = connectedTo.Length - 1; i >= n; i-- ) {
 					tmpConnect.RemoveAt ( i );
 				}
 				
