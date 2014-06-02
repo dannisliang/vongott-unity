@@ -51,14 +51,15 @@ public class OCNodeInspector extends MonoBehaviour {
 		public function ClearLines () {
 			var tmp : List.< Line > = new List.< Line > ( lines );
 			
-			for ( var i : int = lines.Length; i > 1; i-- ) {
+			for ( var i : int = tmp.Count - 1; i > 0; i-- ) {
 				Destroy ( tmp[i].fldInput.gameObject );
 				Destroy ( tmp[i].btnRemove.gameObject );
+				Destroy ( tmp[i].lblIndex.gameObject );
 				tmp.RemoveAt ( i );
 			}
 
 			lines = tmp.ToArray ();
-			
+
 			node.SetOutputAmount ( lines.Length );
 		}
 
