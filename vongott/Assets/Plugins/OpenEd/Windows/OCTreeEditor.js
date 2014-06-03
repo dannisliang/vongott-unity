@@ -22,12 +22,12 @@ public class OCTreeEditor extends OGPage {
 			
 			nodLine = new GameObject ( "nod_Top" ).AddComponent.< OGLineNode > ();
 			nodLine.transform.parent = gameObject.transform;
-			nodLine.transform.localPosition = Vector3.zero;
+			nodLine.transform.localPosition = new Vector3 ( 0, 0, -1 );
 			nodLine.transform.localScale = Vector3.one;
 
 			btnConnect = new GameObject ( "btn_TopInput" ).AddComponent.< OGButton > ();
 			btnConnect.transform.parent = gameObject.transform;
-			btnConnect.transform.localPosition = Vector3.zero;
+			btnConnect.transform.localPosition = new Vector3 ( 0, 0, -1 );
 			btnConnect.transform.localScale = new Vector3 ( 16, 16 );
 			btnConnect.pivot.x = RelativeX.Center;
 			btnConnect.pivot.y = RelativeY.Center;
@@ -45,17 +45,15 @@ public class OCTreeEditor extends OGPage {
 		function Output ( title : String, position : Vector3, useButton : boolean, parent : Transform ) {
 			gameObject = new GameObject ( title );
 
-			if ( !String.IsNullOrEmpty ( title ) ) {
-				btnConnect = new GameObject ( "btn_Connect" ).AddComponent.< OGButton > ();
-				btnConnect.text = title;
-				btnConnect.pivot.x = RelativeX.Center;
-				btnConnect.pivot.y = RelativeY.Center;
-				btnConnect.ApplyDefaultStyles ();
+			btnConnect = new GameObject ( "btn_Connect" ).AddComponent.< OGButton > ();
+			btnConnect.text = title;
+			btnConnect.pivot.x = RelativeX.Center;
+			btnConnect.pivot.y = RelativeY.Center;
+			btnConnect.ApplyDefaultStyles ();
 
-				btnConnect.transform.parent = gameObject.transform;
-				btnConnect.transform.localScale = new Vector3 ( 16 + title.Length * 6, 16, 1 );
-				btnConnect.transform.localPosition = new Vector3 ( 0, 0, 0 );
-			}
+			btnConnect.transform.parent = gameObject.transform;
+			btnConnect.transform.localScale = new Vector3 ( 16 + title.Length * 6, 16, 1 );
+			btnConnect.transform.localPosition = new Vector3 ( 0, 0, 0 );
 
 			if ( useButton ) {
 				btnNewNode = new GameObject ( "btn_NewNode" ).AddComponent.< OGButton > ();
@@ -73,7 +71,7 @@ public class OCTreeEditor extends OGPage {
 				nodLine = new GameObject ( "nod_Line" ).AddComponent.< OGLineNode > ();
 				nodLine.transform.parent = gameObject.transform;
 				nodLine.transform.localScale = new Vector3 ( 1, 1, 1 );
-				nodLine.transform.localPosition = new Vector3 ( 0, btnConnect == null ? 0 : 10, 0 );
+				nodLine.transform.localPosition = new Vector3 ( 0, 10, -1 );
 
 			}
 
@@ -96,7 +94,7 @@ public class OCTreeEditor extends OGPage {
 			gameObject = new GameObject ( node.id.ToString () );
 			gameObject.transform.parent = parent;
 			gameObject.transform.localScale = Vector3.one;
-			gameObject.transform.localPosition = new Vector3 ( x, y, 1 );
+			gameObject.transform.localPosition = new Vector3 ( x, y, 2 );
 		
 			input = new Input ( new Vector3 ( 0, -height, -1 ), node, gameObject.transform );
 
@@ -217,7 +215,9 @@ public class OCTreeEditor extends OGPage {
 		var container : NodeContainer = new NodeContainer ( node, x, y, treeContainer );
 
 		if ( prevLineNode ) {
-			prevLineNode.connectedTo = [ container.input.nodLine ];
+			var prevPos : Vector3 = prevLineNode.transform.position;
+			var nextPos : Vector3 = container.input.nodLine.transform.position;
+			prevLineNode.AddConnection ( container.input.nodLine, [ new Vector3 ( 0, ( prevPos.y - nextPos.y ) / 2, 0 ), new Vector3 ( nextPos.x - prevPos.x, ( prevPos.y - nextPos.y ) / 2, 0 ) ] );
 		}
 		
 		for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
@@ -233,7 +233,7 @@ public class OCTreeEditor extends OGPage {
 				var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetNode ( node.connectedTo[i] );
 				
 				if ( containers.ContainsKey ( node.id ) ) {
-					container.outputs[i].nodLine.connectedTo[i] = containers[node.id].input.nodLine;
+					container.outputs[i].nodLine.SetConnection ( i, containers[node.id].input.nodLine );
 				
 				} else if ( nextNode ) {
 					var xPos : float = x;
