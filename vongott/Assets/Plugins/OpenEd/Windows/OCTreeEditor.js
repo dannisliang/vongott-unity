@@ -231,8 +231,11 @@ public class OCTreeEditor extends OGPage {
 				}
 
 				var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetNode ( node.connectedTo[i] );
-			
-				if ( nextNode ) {
+				
+				if ( containers.ContainsKey ( node.id ) ) {
+					container.outputs[i].nodLine.connectedTo[i] = containers[node.id].input.nodLine;
+				
+				} else if ( nextNode ) {
 					var xPos : float = x;
 					if ( node.connectedTo.Length > 1 ) {
 					       	var span : float = GetSpanRecursively ( distance.x, nextNode );
