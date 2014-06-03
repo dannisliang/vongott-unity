@@ -88,7 +88,7 @@ public class OCTreeEditor extends OGPage {
 		public var btnSelect : OGButton;
 
 		function NodeContainer ( node : OCNode, x : float, y : float, parent : Transform ) {
-			var width : float = node.type == OCNodeType.Speak ? 140 : 100;
+			var width : float = 80;
 			var height : float = 20;
 			
 			gameObject = new GameObject ( node.id.ToString () );
@@ -116,8 +116,8 @@ public class OCTreeEditor extends OGPage {
 					if ( String.IsNullOrEmpty ( node.speak.lines[0] ) ) {
 						btnSelect.text = "...";
 
-					} else if ( node.speak.lines[0].Length > 20 ) {
-						btnSelect.text = node.speak.lines[0].Substring ( 0, 17 ) + "...";
+					} else if ( node.speak.lines[0].Length > 13 ) {
+						btnSelect.text = node.speak.lines[0].Substring ( 0, 10 ) + "...";
 					
 					} else {
 						btnSelect.text = node.speak.lines[0];
@@ -135,13 +135,13 @@ public class OCTreeEditor extends OGPage {
 					break;
 
 				case OCNodeType.GetFlag:
-					btnSelect.text = "(condition)";
+					btnSelect.text = "(get flag)";
 					outputs [0] = new Output ( "false", new Vector3 ( -width / 2, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
 					outputs [1] = new Output ( "true", new Vector3 ( width / 2, height, 0 ), node.connectedTo[1] == 0, gameObject.transform );
 					break;
 				
 				case OCNodeType.SetFlag:
-					btnSelect.text = "(consequence)";
+					btnSelect.text = "(set flag)";
 					outputs [0] = new Output ( "", new Vector3 ( 0, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
 					break;
 				
