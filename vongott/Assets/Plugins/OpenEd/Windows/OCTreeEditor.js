@@ -1,6 +1,6 @@
 ﻿#pragma strict
 public class OCTreeEditor extends OGPage {
-	public class Point extends System.ValueType {
+	private class Point extends System.ValueType {
 		public var x : int;
 		public var y : int;
 
@@ -9,18 +9,44 @@ public class OCTreeEditor extends OGPage {
 			this.y = y;
 		}
 	}
-	
-	private class LineNode {
+
+	private class Input {
+		public var gameObject : GameObject;
+		public var nodLine : OGLineNode;
+		public var btnConnect : OGButton;
+
+		function Input ( position : Vector3, node : OCNode, parent : Transform ) {
+			gameObject = new GameObject ( "Input" );
+			gameObject.transform.parent = parent;
+			gameObject.transform.localPosition = position;
+			
+			nodLine = new GameObject ( "nod_Top" ).AddComponent.< OGLineNode > ();
+			nodLine.transform.parent = gameObject.transform;
+			nodLine.transform.localPosition = Vector3.zero;
+			nodLine.transform.localScale = Vector3.one;
+
+			btnConnect = new GameObject ( "btn_TopInput" ).AddComponent.< OGButton > ();
+			btnConnect.transform.parent = gameObject.transform;
+			btnConnect.transform.localPosition = Vector3.zero;
+			btnConnect.transform.localScale = new Vector3 ( 16, 16 );
+			btnConnect.pivot.x = RelativeX.Center;
+			btnConnect.pivot.y = RelativeY.Center;
+			btnConnect.action = function () { ConnectTo ( node.id ); };
+			btnConnect.ApplyDefaultStyles ();
+		}
+	}
+
+	private class Output {
 		public var gameObject : GameObject;
 		public var nodLine : OGLineNode;
 		public var btnConnect : OGButton;
 		public var btnNewNode : OGButton;
 
-		function LineNode ( title : String, position : Vector3, useButton : boolean, parent : Transform ) {
-			gameObject = new GameObject ( "LineNode" );
+		function Output ( title : String, position : Vector3, useButton : boolean, parent : Transform ) {
+			gameObject = new GameObject ( title );
 
 			if ( !String.IsNullOrEmpty ( title ) ) {
-				btnConnect = new GameObject ( "lbl_Title" ).AddComponent.< OGButton > ();
+				btnConnect = new GameObject ( "btn_Connect" ).AddComponent.< OGButton > ();
 				btnConnect.text = title;
 				btnConnect.pivot.x = RelativeX.Center;
 				btnConnect.pivot.y = RelativeY.Center;
@@ -32,7 +58,7 @@ public class OCTreeEditor extends OGPage {
 			}
 
 			if ( useButton ) {
-				btnNewNode = new GameObject ( "btn_Connect" ).AddComponent.< OGButton > ();
+				btnNewNode = new GameObject ( "btn_NewNode" ).AddComponent.< OGButton > ();
 				btnNewNode.text = "+";
 				btnNewNode.tint = Color.green;
 				btnNewNode.pivot.x = RelativeX.Center;
@@ -57,6 +83,92 @@ public class OCTreeEditor extends OGPage {
 		}
 	}
 
+	private class NodeContainer {
+		public var gameObject : GameObject;
+		public var input : Input;
+		public var outputs : Output [];
+		public var btnSelect : OGButton;
+
+		function NodeContainer ( node : OCNode, x : float, y : float, parent : Transform ) {
+			var width : float = node.type == OCNodeType.Speak ? 140 : 100;
+			var height : float = 20;
+			
+			gameObject = new GameObject ( node.id.ToString () );
+			gameObject.transform.parent = parent;
+			gameObject.transform.localScale = Vector3.one;
+			gameObject.transform.localPosition = new Vector3 ( x, y, 1 );
+		
+			input = new Input ( new Vector3 ( 0, -height, -1 ), node, gameObject.transform );
+
+			outputs = new Output [ node.connectedTo.Length ];
+			
+			btnSelect = new GameObject ( "btn_Connect" ).AddComponent.< OGButton > ();
+			btnSelect.transform.parent = gameObject.transform;
+			btnSelect.transform.localScale = new Vector3 ( width, height, 1 );
+			btnSelect.transform.localPosition = Vector3.zero;
+			btnSelect.pivot.x = RelativeX.Center;
+			btnSelect.pivot.y = RelativeY.Center;
+			btnSelect.action = function () { SelectNode ( node.id ); };
+			btnSelect.ApplyDefaultStyles ();
+
+			switch ( node.type ) {
+				case OCNodeType.Speak:
+					btnSelect.tint = new Color ( 0.6, 0.8, 1.0, 1.0 );
+
+					if ( String.IsNullOrEmpty ( node.speak.lines[0] ) ) {
+						btnSelect.text = "...";
+
+					} else if ( node.speak.lines[0].Length > 20 ) {
+						btnSelect.text = node.speak.lines[0].Substring ( 0, 17 ) + "...";
+					
+					} else {
+						btnSelect.text = node.speak.lines[0];
+
+					}
+					
+					for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
+						var xPos : float = 0;
+						if ( node.connectedTo.Length > 1 ) {
+							xPos = i * ( width / ( node.connectedTo.Length - 1 ) ) - ( width / 2 );
+						}
+						outputs[i] = new Output ( i.ToString (), new Vector3 ( xPos, height, -1 ), node.connectedTo[i] == 0, gameObject.transform );
+					}
+
+					break;
+
+				case OCNodeType.GetFlag:
+					btnSelect.text = "(condition)";
+					outputs [0] = new Output ( "false", new Vector3 ( -width / 2, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
+					outputs [1] = new Output ( "true", new Vector3 ( width / 2, height, 0 ), node.connectedTo[1] == 0, gameObject.transform );
+					break;
+				
+				case OCNodeType.SetFlag:
+					btnSelect.text = "(consequence)";
+					outputs [0] = new Output ( "", new Vector3 ( 0, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
+					break;
+				
+				case OCNodeType.Event:
+					btnSelect.text = "(event)";
+					outputs [0] = new Output ( "", new Vector3 ( 0, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
+					break;
+				
+				case OCNodeType.End:
+					btnSelect.text = "(end -> " + node.end.rootNode + ")";
+					break;
+				
+				case OCNodeType.Jump:
+					btnSelect.text = "(jump to " + node.jump.rootNode + ")";
+					break;
+
+				default:
+					btnSelect.text = "[INVALID]";
+					break;
+			}
+
+		}
+
+	}	
+
 	public var currentTree : OFSerializedObject;
 	public var currentRoot : int;
 	public var treeContainer : Transform;
@@ -64,7 +176,7 @@ public class OCTreeEditor extends OGPage {
 	public var distance : Vector2 = new Vector2 ( 200, 200 );
 
 	private var savePath : String;
-	private var containers : Dictionary.< int, GameObject > = new Dictionary.< int, GameObject > ();
+	private var containers : Dictionary.< int, NodeContainer > = new Dictionary.< int, NodeContainer > ();
 
 	private static var instance : OCTreeEditor;
 
@@ -79,20 +191,6 @@ public class OCTreeEditor extends OGPage {
 		for ( var i : int = 0; i < treeContainer.childCount; i++ ) {
 			Destroy ( treeContainer.GetChild ( i ).gameObject );
 		}
-	}
-
-	public function ConnectTo ( id : int ) {
-
-	}
-
-	public function SelectNode ( id : int ) {
-		inspector.SetNode ( id );
-	}
-
-	public function SelectNode ( n : String ) {
-		var id : int = int.Parse ( n );
-
-		inspector.SetNode ( id );
 	}
 
 	private function GetSpanRecursively ( x : float, node : OCNode ) : float {
@@ -116,126 +214,38 @@ public class OCTreeEditor extends OGPage {
 	public function CreateNode ( tree : OCTree, node : OCNode, x : float, y : float, prevLineNode : OGLineNode ) {
 		if ( !node ) { return; }
 
-		var container : GameObject = new GameObject ( node.id.ToString() );
-		container.transform.parent = treeContainer;
-		container.transform.localScale = Vector3.one;
-		container.transform.localPosition = new Vector3 ( x, y, 0 );
-
-		containers.Add ( node.id, container );
-
-		var width : float = node.type == OCNodeType.Speak ? 140 : 100;
-		var height : float = 20;
-
-		var topLineNode : OGLineNode = new GameObject ( "nod_Top" ).AddComponent.< OGLineNode > ();
-		topLineNode.transform.parent = container.transform;
-		topLineNode.transform.localPosition = Vector3.zero;
-		topLineNode.transform.localScale = Vector3.one;
-
-		var topInput : OGButton = new GameObject ( "btn_TopInput" ).AddComponent.< OGButton > ();
-		topInput.transform.parent = container.transform;
-		topInput.transform.localPosition = Vector3.zero;
-		topInput.transform.localScale = new Vector3 ( 16, 16 );
-		topInput.pivot.x = RelativeX.Center;
-		topInput.pivot.y = RelativeY.Center;
-		topInput.action = function () { ConnectTo ( node.id ); };
-		topInput.ApplyDefaultStyles ();
-	
+		var container : NodeContainer = new NodeContainer ( node, x, y, treeContainer );
 
 		if ( prevLineNode ) {
-			prevLineNode.connectedTo = [ topLineNode ];
+			prevLineNode.connectedTo = [ container.input.nodLine ];
 		}
-
-		var btn : OGButton = new GameObject ( "btn_Select" ).AddComponent.< OGButton > ();
-		btn.transform.parent = container.transform;
-		btn.transform.localPosition = Vector3.zero;
-		btn.transform.localScale = new Vector3 ( width, height, 1 );
-		btn.pivot.x = RelativeX.Center;
-		btn.action = function () { SelectNode ( node.id ); };
-		btn.ApplyDefaultStyles ();
-
-		var lineNodes : LineNode[] = new LineNode [ node.connectedTo.Length ];
-		var i : int = 0;
-
-		switch ( node.type ) {
-			case OCNodeType.Speak:
-				btn.tint = new Color ( 0.6, 0.8, 1.0, 1.0 );
-
-				if ( String.IsNullOrEmpty ( node.speak.lines[0] ) ) {
-					btn.text = "...";
-
-				} else if ( node.speak.lines[0].Length > 20 ) {
-					btn.text = node.speak.lines[0].Substring ( 0, 17 ) + "...";
-				
-				} else {
-					btn.text = node.speak.lines[0];
-
-				}
-
-				for ( i = 0; i < node.connectedTo.Length; i++ ) {
-					var xPos : float = 0;
-					
-					if ( node.connectedTo.Length > 1 ) {
-						xPos = i * ( width / ( node.connectedTo.Length - 1 ) ) - ( width / 2 );
-					}
-
-					lineNodes[i] = new LineNode ( i.ToString (), new Vector3 ( xPos, height, 0 ), node.connectedTo[i] == 0, container.transform );
-				}
-
-				break;
-
-			case OCNodeType.GetFlag:
-				btn.text = "(condition)";
-				lineNodes [0] = new LineNode ( "false", new Vector3 ( -width / 2, height, 0 ), node.connectedTo[0] == 0, container.transform );
-				lineNodes [1] = new LineNode ( "true", new Vector3 ( width / 2, height, 0 ), node.connectedTo[1] == 0, container.transform );
-				break;
-			
-			case OCNodeType.SetFlag:
-				btn.text = "(consequence)";
-				lineNodes [0] = new LineNode ( "", new Vector3 ( 0, height, 0 ), node.connectedTo[0] == 0, container.transform );
-				break;
-			
-			case OCNodeType.Event:
-				btn.text = "(event)";
-				lineNodes [0] = new LineNode ( "", new Vector3 ( 0, height, 0 ), node.connectedTo[0] == 0, container.transform );
-				break;
-			
-			case OCNodeType.End:
-				btn.text = "(end -> " + node.end.rootNode + ")";
-				break;
-			
-			case OCNodeType.Jump:
-				btn.text = "(jump to " + node.jump.rootNode + ")";
-				break;
-
-			default:
-				btn.text = "[INVALID]";
-				break;
-		}
-
-		for ( i = 0; i < node.connectedTo.Length; i++ ) {
-			if ( lineNodes[i] ) {
-				if ( lineNodes[i].btnNewNode ) {
-					lineNodes[i].btnNewNode.actionWithArgument = function ( n : String ) {
+		
+		for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
+			if ( container.outputs[i] ) {
+				if ( container.outputs[i].btnNewNode ) {
+					container.outputs[i].btnNewNode.actionWithArgument = function ( n : String ) {
 						node.connectedTo [ int.Parse ( n ) ] = tree.rootNodes [ currentRoot ].AddNode ().id;
 						UpdateNodes ();
 					};
-					lineNodes[i].btnNewNode.argument = i.ToString ();
+					container.outputs[i].btnNewNode.argument = i.ToString ();
 				}
 
 				var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetNode ( node.connectedTo[i] );
 			
 				if ( nextNode ) {
-					xPos = x;
+					var xPos : float = x;
 					if ( node.connectedTo.Length > 1 ) {
 					       	var span : float = GetSpanRecursively ( distance.x, nextNode );
 						var segment : float = span / ( node.connectedTo.Length - 1 );
 						xPos = x - span / 2 + i * segment;
 					}
 					
-					CreateNode ( tree, nextNode, xPos, y + 100, lineNodes[i].nodLine );
+					CreateNode ( tree, nextNode, xPos, y + 100, container.outputs[i].nodLine );
 				}
 			}
 		}
+		
+		containers.Add ( node.id, container );
 	}
 		
 	public function UpdateNodes () {
@@ -280,9 +290,24 @@ public class OCTreeEditor extends OGPage {
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 
+	public static function ConnectTo ( id : int ) {
+
+	}
+
 	public static function Refresh () {
 		instance.UpdateNodes ();
 	}
+	
+	public static function SelectNode ( id : int ) {
+		instance.inspector.SetNode ( id );
+	}
+
+	public static function SelectNode ( n : String ) {
+		var id : int = int.Parse ( n );
+
+		instance.inspector.SetNode ( id );
+	}
+
 
 	override function ExitPage () {
 		savePath = "";
