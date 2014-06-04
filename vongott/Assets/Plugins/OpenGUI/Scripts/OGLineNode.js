@@ -40,6 +40,14 @@ public class OGLineNode extends OGWidget {
 
 		connections = tmp.ToArray ();
 	}
+	
+	public function SetConnection ( i : int, node : OGLineNode, segments : Vector3 [] ) {
+		var tmp : List.< Connection > = new List.< Connection > ( connections );
+		
+		tmp.Insert ( i, new Connection ( node, segments ) );
+
+		connections = tmp.ToArray ();
+	}
 
 	public function SetConnection ( i : int, node : OGLineNode ) {
 		var tmp : List.< Connection > = new List.< Connection > ( connections );

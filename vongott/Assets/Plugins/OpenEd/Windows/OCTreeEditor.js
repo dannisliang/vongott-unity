@@ -155,7 +155,7 @@ public class OCTreeEditor extends OGPage {
 					break;
 				
 				case OCNodeType.Jump:
-					btnSelect.text = "(jump to " + node.jump.rootNode + ")";
+					btnSelect.text = "(jump -> " + node.jump.rootNode + ")";
 					break;
 
 				default:
@@ -232,9 +232,27 @@ public class OCTreeEditor extends OGPage {
 
 				var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetNode ( node.connectedTo[i] );
 				
-				if ( containers.ContainsKey ( node.id ) ) {
-					container.outputs[i].nodLine.SetConnection ( i, containers[node.id].input.nodLine );
-				
+				if ( containers.ContainsKey ( nextNode.id ) ) {
+					prevPos = containers[nextNode.id].input.nodLine.transform.position;
+					nextPos = container.outputs[i].nodLine.transform.position;
+					var xOffset : float = 0;
+
+					if ( prevPos.y < nextPos.y ) {
+						if ( prevPos.x < nextPos.x ) {
+							xOffset = x + container.gameObject.transform.localScale.x / 2 + 10;
+						
+						} else {
+							xOffset = x - container.gameObject.transform.localScale.x / 2 - 10;
+						}
+					
+					} else if ( prevPos.y > nextPos.y ) {
+						// TODO: Set the next container's position
+						containers[nextNode.id].gameObject.transform.position = container.gameObject.transform.position + new Vector3 ( 0, 100, 0 );
+
+					}
+
+					container.outputs[i].nodLine.SetConnection ( i, containers[nextNode.id].input.nodLine, [ new Vector3 ( 0, -10, 0 ), new Vector3 ( xOffset, -10, 0 ), new Vector3 ( xOffset, prevPos.y - nextPos.y, 0 ) ] );
+
 				} else if ( nextNode ) {
 					var xPos : float = x;
 					if ( node.connectedTo.Length > 1 ) {
