@@ -133,6 +133,12 @@ public class OCRootNode {
 		var tmpNodes : List.< OCNode > = new List.< OCNode > ( nodes );
 
 		for ( var i : int = 0; i < tmpNodes.Count; i++ ) {
+			for ( var c : int = 0; c < tmpNodes[i].connectedTo.Length; c++ ) {
+				if ( tmpNodes[i].connectedTo[c] == id ) {
+					tmpNodes[i].connectedTo[c] = 0;
+				}
+			}
+			
 			if ( tmpNodes[i].id == id ) {
 				tmpNodes.RemoveAt ( i );
 			}

@@ -127,6 +127,7 @@ public class OCTreeEditor extends OGPage {
 		public var input : Input;
 		public var outputs : Output [];
 		public var btnSelect : OGButton;
+		public var btnRemove : OGButton;
 		public var connections : NodeContainer [] = new NodeContainer [0];
 
 		public function SetConnection ( i : int, container : NodeContainer ) {
@@ -196,6 +197,17 @@ public class OCTreeEditor extends OGPage {
 			btnSelect.pivot.y = RelativeY.Center;
 			btnSelect.action = function () { SelectNode ( node.id ); };
 			btnSelect.ApplyDefaultStyles ();
+			
+			btnRemove = new GameObject ( "btn_Remove" ).AddComponent.< OGButton > ();
+			btnRemove.transform.parent = gameObject.transform;
+			btnRemove.transform.localScale = new Vector3 ( 16, 16, 1 );
+			btnRemove.transform.localPosition = new Vector3 ( width/2, -height, 2 );
+			btnRemove.text = "x";
+			btnRemove.tint = Color.red;
+			btnRemove.pivot.x = RelativeX.Center;
+			btnRemove.pivot.y = RelativeY.Center;
+			btnRemove.action = function () { RemoveNode ( node.id ); };
+			btnRemove.ApplyDefaultStyles ();
 
 			switch ( node.type ) {
 				case OCNodeType.Speak:
@@ -501,6 +513,15 @@ public class OCTreeEditor extends OGPage {
 	
 	public static function SelectNode ( id : int ) {
 		instance.nodeInspector.Refresh ( instance.tree, instance.tree.rootNodes [ instance.currentRoot ].GetNode ( id ), instance.inspectorContainer );
+	}
+	
+	public static function RemoveNode ( id : int ) {
+		instance.nodeInspector.Refresh ( instance.tree, null, instance.inspectorContainer );
+		instance.tree.rootNodes[instance.currentRoot].RemoveNode ( id );
+
+		Destroy ( instance.containers[id].gameObject );
+
+		Refresh ();
 	}
 
 	public static function SelectNode ( n : String ) {
