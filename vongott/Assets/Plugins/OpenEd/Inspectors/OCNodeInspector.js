@@ -24,13 +24,24 @@ public class OCNodeInspector extends OEComponentInspector {
 			OCTreeEditor.Refresh ();
 		}
 
+		var rootNodeStrings : String [] = new String [ tree.rootNodes.Length ];
+
+		for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
+			rootNodeStrings[i] = i.ToString ();
+		}
+
 		switch ( node.type ) {
 			case OCNodeType.Speak:
-				node.speak.speaker = Popup ( "Speaker", node.speak.speaker, tree.GetSpeakerStrings () );
+				var newSpeaker : int = Popup ( "Speaker", node.speak.speaker, tree.GetSpeakerStrings () );
+
+				if ( newSpeaker != node.speak.speaker ) {
+					node.speak.speaker = newSpeaker;
+					OCTreeEditor.Refresh ();
+				}
 
 				offset.y += 20;
 
-				for ( var i : int = 0; i < node.speak.lines.Length; i++ ) {
+				for ( i = 0; i < node.speak.lines.Length; i++ ) {
 					LabelField ( i.ToString () ); 
 					node.speak.lines[i] = TextField ( "", node.speak.lines[i], new Rect ( 40, offset.y, width - 40, 60 ) );
 					offset.y += 50;
@@ -50,6 +61,42 @@ public class OCNodeInspector extends OEComponentInspector {
 				
 				} 
 
+				break;
+
+			case OCNodeType.Event:
+				node.event.message = TextField ( "Message", node.event.message );
+
+				if ( node.event.eventToTarget || node.event.object == null ) {
+					node.event.argument = TextField ( "Argument", node.event.argument );
+				}
+
+				node.event.object = ObjectField ( "Object", node.event.object, typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
+
+				if ( node.event.object != null ) {
+					node.event.eventToTarget = Toggle ( "Event to target", node.event.eventToTarget );
+				
+				} else {
+					node.event.eventToTarget = false;
+
+				}
+
+				break;
+
+			case OCNodeType.Jump:
+				node.jump.rootNode = Popup ( "Jump to root", node.jump.rootNode, rootNodeStrings );
+				break;
+
+			case OCNodeType.SetFlag:
+				node.setFlag.flag = TextField ( "Flag", node.setFlag.flag );
+				node.setFlag.b = Toggle ( "Bool", node.setFlag.b );
+				break;
+			
+			case OCNodeType.GetFlag:
+				node.getFlag.flag = TextField ( "Flag", node.getFlag.flag );
+				break;
+			
+			case OCNodeType.End:
+				node.end.rootNode = Popup ( "Next root", node.end.rootNode, rootNodeStrings );
 				break;
 		}
 	}

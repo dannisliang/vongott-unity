@@ -14,15 +14,15 @@ public class OCManager extends MonoBehaviour {
 		return instance;
 	}
 
-	private function DoCallback ( message : String, object : Object ) {	
-		if ( eventHandler ) {
-			eventHandler.SendMessage ( message, object, SendMessageOptions.DontRequireReceiver );
+	private function DoCallback ( target : GameObject, message : String, object : Object ) {	
+		if ( target ) {
+			target.SendMessage ( message, object, SendMessageOptions.DontRequireReceiver );
 		}
 	}
 	
-	private function DoCallback ( message : String, argument : String ) {
-		if ( eventHandler ) {
-			eventHandler.SendMessage ( message, argument, SendMessageOptions.DontRequireReceiver );
+	private function DoCallback ( target : GameObject, message : String, argument : String ) {
+		if ( target ) {
+			target.SendMessage ( message, argument, SendMessageOptions.DontRequireReceiver );
 		}
 	}
 	
@@ -45,7 +45,7 @@ public class OCManager extends MonoBehaviour {
 	public function EndConversation () {
 		tree = null;
 		
-		DoCallback ( "OnConversationEnd", speaker );
+		DoCallback ( eventHandler, "OnConversationEnd", speaker );
 	}
 
 	public function DisplayNode () {
@@ -66,15 +66,27 @@ public class OCManager extends MonoBehaviour {
 				break;
 
 			case OCNodeType.Event:
-				if ( !String.IsNullOrEmpty ( node.event.argument ) ) {
-					DoCallback ( node.event.message, node.event.argument );
+				if ( node.event.object != null && node.event.eventToTarget ) {
+					if ( !String.IsNullOrEmpty ( node.event.argument ) ) {
+						DoCallback ( node.event.object, node.event.message, node.event.argument );
 
-				} else if ( node.event.object != null ) {
-					DoCallback ( node.event.message, node.event.object );
+					} else {
+						DoCallback ( node.event.object, node.event.message, tree );
+					
+					}
 
 				} else {
-					DoCallback ( node.event.message, tree );
-				
+					if ( !String.IsNullOrEmpty ( node.event.argument ) ) {
+						DoCallback ( eventHandler, node.event.message, node.event.argument );
+
+					} else if ( node.event.object != null ) {
+						DoCallback ( eventHandler, node.event.message, node.event.object );
+
+					} else {
+						DoCallback ( eventHandler, node.event.message, tree );
+					
+					}
+
 				}
 
 				nextNode = node.connectedTo[0];
@@ -110,8 +122,8 @@ public class OCManager extends MonoBehaviour {
 			DisplayNode ();
 		
 		} else if ( node && node.speak ) {
-			DoCallback ( "OnSetLines", node.speak.lines );
-			DoCallback ( "OnSetSpeaker", speaker );
+			DoCallback ( eventHandler, "OnSetLines", node.speak.lines );
+			DoCallback ( eventHandler, "OnSetSpeaker", speaker );
 		
 		}
 	}
@@ -132,7 +144,7 @@ public class OCManager extends MonoBehaviour {
 
 			currentNode = tree.rootNodes[tree.currentRoot].firstNode;
 			
-			DoCallback ( "OnConversationStart", tree );
+			DoCallback ( eventHandler, "OnConversationStart", tree );
 
 			DisplayNode ();
 		}

@@ -280,8 +280,10 @@ public class OCTreeEditor extends OGPage {
 	public function New () {
 		Destroy ( currentTree.gameObject.GetComponent.< OCTree > () );
 		currentTree.gameObject.AddComponent.< OCTree > ();
+		tree.AddRootNode ();
 		currentRoot = 0;
 		nodeInspector.Refresh ( tree, null, inspectorContainer );
+		UpdateNodes ();
 	}
 
 	public function ClearNodes () {

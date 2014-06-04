@@ -652,11 +652,11 @@ public class OEPopup extends OEField {
 		if ( !String.IsNullOrEmpty ( text ) ) {
 			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
 			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
-			popup.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, popup.isUp ? -1 : 0 );
+			popup.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, popup.isUp ? -5 : 0 );
 			popup.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
 		
 		} else {
-			popup.transform.localPosition = new Vector3 ( pos.x, pos.y, popup.isUp ? -1 : 0 );
+			popup.transform.localPosition = new Vector3 ( pos.x, pos.y, popup.isUp ? -5 : 0 );
 			popup.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
 		
 		}

@@ -15,7 +15,7 @@ public class OCSpeaker {
 }
 
 public class OCTree extends MonoBehaviour {
-	public var rootNodes : OCRootNode[] = new OCRootNode[1];
+	public var rootNodes : OCRootNode[] = new OCRootNode[0];
 	public var currentRoot : int;
 	public var speakers : OCSpeaker[] = new OCSpeaker[0];
 
@@ -321,6 +321,7 @@ public class OCEvent {
 	public var message : String;
 	public var argument : String;
 	public var object : GameObject;
+	public var eventToTarget : boolean = false;
 }
 
 public class OCJump {

@@ -63,6 +63,7 @@ public class SerializeOpenConvo extends OFPlugin {
 
 						event.AddField ( "message", node.event.message );
 						event.AddField ( "argument", node.event.argument );
+						event.AddField ( "eventToTarget", node.event.eventToTarget );
 						
 						var prefabPath : String = "";
 						
@@ -189,6 +190,7 @@ public class SerializeOpenConvo extends OFPlugin {
 
 						event.message = node.GetField ( "event" ).GetField ( "message" ).str;
 						event.argument = node.GetField ( "event" ).GetField ( "argument" ).str;
+						event.eventToTarget = node.GetField ( "event" ).GetField ( "eventToTarget" ).b;
 						event.object = Resources.Load ( node.GetField ( "event" ).GetField ( "object" ).str ) as GameObject;
 
 						n.event = event;
