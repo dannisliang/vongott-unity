@@ -278,6 +278,7 @@ public class OCTreeEditor extends OGPage {
 	private var connectToId : int = 0;
 	private var connectToOutput : int = 0;
 	private var nodeInspector : OCNodeInspector;
+	private var emergencyBrake : int = 200;
 
 	private static var instance : OCTreeEditor;
 
@@ -296,6 +297,8 @@ public class OCTreeEditor extends OGPage {
 
 	public function ClearNodes () {
 		containers.Clear ();
+
+		emergencyBrake = 200;
 
 		for ( var i : int = 0; i < treeContainer.childCount; i++ ) {
 			Destroy ( treeContainer.GetChild ( i ).gameObject );
@@ -320,9 +323,12 @@ public class OCTreeEditor extends OGPage {
 	}
 
 	public function CreateNode ( tree : OCTree, node : OCNode, x : float, y : float ) : NodeContainer {
-		if ( !node ) { return; }
+		if ( !node || emergencyBrake <= 0 ) { return; }
+
+		emergencyBrake--;
 
 		var container : NodeContainer = new NodeContainer ( node, x, y, treeContainer );
+		containers.Add ( node.id, container );
 
 		for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
 			if ( container.outputs[i] ) {
@@ -365,8 +371,6 @@ public class OCTreeEditor extends OGPage {
 				}
 			}
 		}
-		
-		containers.Add ( node.id, container );
 
 		return container;
 	}
@@ -506,7 +510,6 @@ public class OCTreeEditor extends OGPage {
 			var node : OCNode = instance.tree.rootNodes[instance.currentRoot].GetNode ( instance.connectToId );
 			node.SetConnection ( instance.connectToOutput, id );
 			instance.CancelConnect ();
-			Refresh ();
 		}
 	}
 
