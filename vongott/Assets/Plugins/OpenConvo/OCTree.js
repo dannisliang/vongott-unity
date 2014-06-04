@@ -24,6 +24,18 @@ public class OCTree extends MonoBehaviour {
 	public static function CreateID () : int {
 		return random.Next ( 10000, 99999 );
 	}
+	
+	public function SetSpeakerStrings ( strings : String [] ) {
+		if ( strings.Length > speakers.Length ) {
+			for ( var s : int = speakers.Length; s < strings.Length; s++ ) {
+				AddSpeaker ();
+			}	
+		}
+		
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			speakers[i].id = strings[i];
+		}
+	}
 
 	public function GetSpeakerStrings () : String[] {
 		var strings : String[] = new String [ speakers.Length ];
@@ -287,6 +299,22 @@ public class OCSpeak {
 	public var speaker : int;
 	public var lines : String[] = new String[1];
 	public var audio : AudioClip [] = new AudioClip[1];
+
+	public function RemoveLine ( i : int ) {
+		var tmp : List.< String > = new List.< String > ( lines );
+
+		tmp.RemoveAt ( i );
+
+		lines = tmp.ToArray ();
+	}
+
+	public function AddLine () {
+		var tmp : List.< String > = new List.< String > ( lines );
+
+		tmp.Add ( "" );
+
+		lines = tmp.ToArray ();
+	}
 }
 
 public class OCEvent {

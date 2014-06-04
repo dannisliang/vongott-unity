@@ -118,7 +118,7 @@ public class OCTreeEditor extends OGPage {
 			popSelect.transform.localPosition = Vector3.zero;
 			popSelect.transform.localScale = new Vector3 ( 100, 20, 1 );
 
-			output = new Output ( "", new Vector3 ( 0, 20, 0 ), false, gameObject.transform );
+			output = new Output ( "", new Vector3 ( 0, 20, 1 ), false, gameObject.transform );
 		}
 	}
 
@@ -258,7 +258,9 @@ public class OCTreeEditor extends OGPage {
 	public var currentTree : OFSerializedObject;
 	public var currentRoot : int;
 	public var treeContainer : Transform;
-	public var inspector : OCNodeInspector;
+	public var fldSpeakerNames : OGTextField;
+	public var fldRootTags :  OGTextField;
+	public var inspectorContainer : Transform;
 	public var distance : Vector2 = new Vector2 ( 200, 200 );
 	public var speakerColors : Color [];
 
@@ -267,13 +269,19 @@ public class OCTreeEditor extends OGPage {
 	private var mouseNode : OGLineNode;
 	private var connectToId : int = 0;
 	private var connectToOutput : int = 0;
+	private var nodeInspector : OCNodeInspector;
 
 	private static var instance : OCTreeEditor;
+
+	private function get tree () : OCTree {
+		return currentTree.GetComponent.< OCTree > ();
+	}
 
 	public function New () {
 		Destroy ( currentTree.gameObject.GetComponent.< OCTree > () );
 		currentTree.gameObject.AddComponent.< OCTree > ();
 		currentRoot = 0;
+		nodeInspector.Refresh ( tree, null, inspectorContainer );
 	}
 
 	public function ClearNodes () {
@@ -286,7 +294,6 @@ public class OCTreeEditor extends OGPage {
 
 	private function GetSpanRecursively ( x : float, node : OCNode ) : float {
 		var result : float = x;
-		var tree : OCTree = currentTree.GetComponent.< OCTree > ();
 
 		if ( node ) {
 			for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
@@ -348,7 +355,6 @@ public class OCTreeEditor extends OGPage {
 	public function UpdateNodes () {
 		ClearNodes ();
 		
-		var tree : OCTree = currentTree.GetComponent.< OCTree > ();
 		var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetFirstNode ();
 
 		if ( !nextNode ) {
@@ -356,11 +362,31 @@ public class OCTreeEditor extends OGPage {
 			nextNode = tree.rootNodes [ currentRoot ].GetFirstNode ();
 		}
 
+		fldRootTags.text = "";
+		fldSpeakerNames.text = "";
+
+		var tags : String [] = tree.rootNodes [ currentRoot ].tags;
+			
+		for ( var i : int = 0; i < tags.Length; i++ ) {
+			fldRootTags.text += tags[i];
+
+			if ( i < tags.Length - 1 ) {
+				fldRootTags.text += ",";
+			}
+		}
+		
+		var speakerNames : String [] = tree.GetSpeakerStrings ();
+		
+		for ( i = 0; i < speakerNames.Length; i++ ) {
+			fldSpeakerNames.text += speakerNames[i];
+
+			if ( i < speakerNames.Length - 1 ) {
+				fldSpeakerNames.text += ",";
+			}
+		}
+
 		var rootNodeContainer : RootNodeContainer = new RootNodeContainer ( tree, currentRoot );
 		var firstNodeContainer : NodeContainer = CreateNode ( tree, nextNode, treeContainer.GetComponent.< OGScrollView > ().size.x / 2, 100 );
-
-		inspector.tree = tree;
-		inspector.currentRoot = currentRoot;
 
 		rootNodeContainer.output.nodLine.AddConnection ( firstNodeContainer.input.nodLine );
 	}
@@ -374,8 +400,8 @@ public class OCTreeEditor extends OGPage {
 			currentRoot = 0;
 
 			OFDeserializer.Deserialize ( OFReader.LoadFile ( file.FullName ), currentTree );
-			inspector.tree = currentTree.GetComponent.< OCTree > ();
 			UpdateNodes ();
+			nodeInspector.Refresh ( tree, null, inspectorContainer );
 		};
 		fileBrowser.sender = "TreeEditor";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
@@ -405,12 +431,19 @@ public class OCTreeEditor extends OGPage {
 		Refresh ();
 	}
 
+	public function UpdateSpeakers () {
+		tree.SetSpeakerStrings ( fldSpeakerNames.text.Split ( ","[0] ) );
+	}
+
+	public function UpdateTags () {
+		tree.rootNodes [ currentRoot ].tags = fldRootTags.text.Split ( ","[0] );
+	}
+
 	public function CancelConnect () {
 		if ( mouseNode ) {
 			Destroy ( mouseNode.gameObject ); 
 		}
 
-		var tree : OCTree = instance.currentTree.GetComponent.< OCTree > ();
 		var node : OCNode = tree.rootNodes[instance.currentRoot].GetNode ( connectToId );
 		
 		if ( node ) {
@@ -426,8 +459,7 @@ public class OCTreeEditor extends OGPage {
 	}
 
 	public static function ConnectTo ( id : int ) {
-		var tree : OCTree = instance.currentTree.GetComponent.< OCTree > ();
-		var node : OCNode = tree.rootNodes[instance.currentRoot].GetNode ( instance.connectToId );
+		var node : OCNode = instance.tree.rootNodes[instance.currentRoot].GetNode ( instance.connectToId );
 
 		node.SetConnection ( instance.connectToOutput, id );
 		
@@ -436,8 +468,7 @@ public class OCTreeEditor extends OGPage {
 
 	public static function GetSubcontainers ( id : int ) : NodeContainer [] {
 		var tmp : List.< NodeContainer > = new List.< NodeContainer > ();
-		var tree : OCTree = instance.currentTree.GetComponent.< OCTree > ();
-		var node : OCNode = tree.rootNodes [ instance.currentRoot ].GetNode ( id );
+		var node : OCNode = instance.tree.rootNodes [ instance.currentRoot ].GetNode ( id );
 
 		if ( node ) {
 			for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
@@ -467,16 +498,19 @@ public class OCTreeEditor extends OGPage {
 	}
 	
 	public static function SelectNode ( id : int ) {
-		instance.inspector.SetNode ( id );
+		instance.nodeInspector.Refresh ( instance.tree, instance.tree.rootNodes [ instance.currentRoot ].GetNode ( id ), instance.inspectorContainer );
 	}
 
 	public static function SelectNode ( n : String ) {
 		var id : int = int.Parse ( n );
-
-		instance.inspector.SetNode ( id );
+		SelectNode ( id );
 	}
 
 	override function UpdatePage () {
+		if ( nodeInspector ) {
+			nodeInspector.Update ();
+		}
+		
 		if ( mouseNode ) {
 			if ( UnityEngine.Input.GetMouseButtonDown ( 1 ) ) {
 				CancelConnect ();
@@ -496,6 +530,17 @@ public class OCTreeEditor extends OGPage {
 
 	override function StartPage () {
 		instance = this;
+
+		if ( !nodeInspector ) {
+			var inspectors : OEComponentInspector [] = OEReflector.GetInspectors ();
+
+			for ( var i : int = 0; i < inspectors.Length; i++ ) {
+				if ( inspectors[i].type == typeof ( OCNode ) ) {
+					nodeInspector = inspectors[i] as OCNodeInspector;
+					nodeInspector.overrideTarget = true;
+				}
+			}
+		}
 
 		Refresh ();
 	}

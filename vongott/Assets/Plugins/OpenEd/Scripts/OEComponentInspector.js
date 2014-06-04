@@ -28,6 +28,9 @@ public class OEField {
 		} else if ( type == typeof ( OEFloatField ) ) {
 			return new OEFloatField ( transform );
 		
+		} else if ( type == typeof ( OELabelField ) ) {
+			return new OELabelField ( transform );
+		
 		} else if ( type == typeof ( OEBox ) ) {
 			return new OEBox ( transform );
 		
@@ -962,8 +965,10 @@ public class OETextField extends OEField {
 	}
 
 	public function Out () : String {
-		textfield.text = textfield.text.Replace ( "\n", "" );
-		
+		if ( !String.IsNullOrEmpty ( textfield.text ) ) {
+			textfield.text = textfield.text.Replace ( "\n", "" );
+		}
+
 		return textfield.text;
 	}	
 }
@@ -973,6 +978,7 @@ public class OEComponentInspector {
 	public var transform : Transform;
 	@NonSerialized public var target : OFSerializedObject;
 	@NonSerialized public var offset : Vector2;
+	public var overrideTarget : boolean = false;
 
 	private var fields : OEField[] = new OEField[900];
 	private var fieldCounter : int = 0;
@@ -1115,6 +1121,19 @@ public class OEComponentInspector {
 		fieldCounter++;
 		return slider.Set ( input, min, max );
 	}
+	
+	// OELabelField
+	public function LabelField ( text : String ) {
+		offset.y += 20;
+		LabelField ( text, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+	}
+
+	public function LabelField ( text : String, rect : Rect ) : String {
+		var labelField : OELabelField = CheckField ( typeof ( OELabelField ) ) as OELabelField;
+		labelField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		labelField.enabled = !disabled;
+		fieldCounter++;
+	}
 
 	// OETextField
 	public function TextField ( text : String, input : String ) : String {
@@ -1230,7 +1249,7 @@ public class OEComponentInspector {
 		fieldCounter = 0;
 		offset = new Vector2 ( 0, -20 );
 
-       		if ( target ) {
+       		if ( target || overrideTarget ) {
 			Inspector ();
 		}
 
