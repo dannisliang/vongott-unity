@@ -17,7 +17,9 @@ public class OCNodeInspector extends OEComponentInspector {
 
 		width = 284;
 		
-		var newType : int = Popup ( "Type", node.type, System.Enum.GetNames ( OCNodeType ) );
+		var newType : int = Popup ( "", node.type, System.Enum.GetNames ( OCNodeType ), new Rect ( width / 4, 0, width / 2, 16 ) );
+
+		offset.y += 30;
 
 		if ( newType != node.type ) {
 			node.SetType ( newType );

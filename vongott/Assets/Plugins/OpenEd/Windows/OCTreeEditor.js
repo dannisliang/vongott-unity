@@ -42,7 +42,7 @@ public class OCTreeEditor extends OGPage {
 		public var btnConnect : OGButton;
 		public var btnNewNode : OGButton;
 
-		function Output ( title : String, position : Vector3, useButton : boolean, parent : Transform ) {
+		function Output ( title : String, position : Vector3, notConnected : boolean, parent : Transform ) {
 			gameObject = new GameObject ( title );
 
 			btnConnect = new GameObject ( "btn_Connect" ).AddComponent.< OGButton > ();
@@ -62,25 +62,21 @@ public class OCTreeEditor extends OGPage {
 			btnConnect.transform.localScale = new Vector3 ( 16 + title.Length * 6, 16, 1 );
 			btnConnect.transform.localPosition = Vector3.zero;
 
-			if ( useButton ) {
-				btnNewNode = new GameObject ( "btn_NewNode" ).AddComponent.< OGButton > ();
-				btnNewNode.text = "+";
-				btnNewNode.tint = Color.green;
-				btnNewNode.pivot.x = RelativeX.Center;
-				btnNewNode.pivot.y = RelativeY.Center;
-				btnNewNode.ApplyDefaultStyles ();
+			btnNewNode = new GameObject ( "btn_NewNode" ).AddComponent.< OGButton > ();
+			btnNewNode.text = "+";
+			btnNewNode.tint = Color.green;
+			btnNewNode.pivot.x = RelativeX.Center;
+			btnNewNode.pivot.y = RelativeY.Center;
+			btnNewNode.ApplyDefaultStyles ();
 
-				btnNewNode.transform.parent = gameObject.transform;
-				btnNewNode.transform.localScale = new Vector3 ( 16, 16, 1 );
-				btnNewNode.transform.localPosition = new Vector3 ( 0, 20, 0 );
+			btnNewNode.transform.parent = gameObject.transform;
+			btnNewNode.transform.localScale = new Vector3 ( 16, 16, 1 );
+			btnNewNode.transform.localPosition = new Vector3 ( 0, 20, 0 );
 			
-			} else {
-				nodLine = new GameObject ( "nod_Line" ).AddComponent.< OGLineNode > ();
-				nodLine.transform.parent = gameObject.transform;
-				nodLine.transform.localScale = new Vector3 ( 1, 1, 1 );
-				nodLine.transform.localPosition = new Vector3 ( 0, 0, 1 );
-
-			}
+			nodLine = new GameObject ( "nod_Line" ).AddComponent.< OGLineNode > ();
+			nodLine.transform.parent = gameObject.transform;
+			nodLine.transform.localScale = new Vector3 ( 1, 1, 1 );
+			nodLine.transform.localPosition = new Vector3 ( 0, 0, 1 );
 
 			gameObject.transform.parent = parent;
 			gameObject.transform.localPosition = position;
@@ -118,7 +114,7 @@ public class OCTreeEditor extends OGPage {
 			popSelect.transform.localPosition = Vector3.zero;
 			popSelect.transform.localScale = new Vector3 ( 100, 20, 1 );
 
-			output = new Output ( "", new Vector3 ( 0, 20, 1 ), false, gameObject.transform );
+			output = new Output ( "", new Vector3 ( 0, 10, 1 ), false, gameObject.transform );
 		}
 	}
 
@@ -332,7 +328,15 @@ public class OCTreeEditor extends OGPage {
 			if ( container.outputs[i] ) {
 				if ( container.outputs[i].btnNewNode ) {
 					container.outputs[i].btnNewNode.actionWithArgument = function ( n : String ) {
-						node.connectedTo [ int.Parse ( n ) ] = tree.rootNodes [ currentRoot ].AddNode ().id;
+						var newNode : OCNode = tree.rootNodes [ currentRoot ].AddNode ();
+						var output : int = int.Parse ( n );
+
+						if ( node.connectedTo [ output ] > 0 ) {
+							newNode.SetConnection ( 0, node.connectedTo [ output ] );
+						}
+
+						node.connectedTo [ output ] = newNode.id;
+						
 						UpdateNodes ();
 					};
 					container.outputs[i].btnNewNode.argument = i.ToString ();
@@ -341,7 +345,8 @@ public class OCTreeEditor extends OGPage {
 				var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetNode ( node.connectedTo[i] );
 			
 				container.outputs[i].btnConnect.actionWithArgument = function ( n : String ) {
-					TryConnect ( node.id, int.Parse ( n ), container.outputs[int.Parse ( n )].nodLine );
+					var output : int = int.Parse ( n );
+					TryConnect ( node.id, output, container.outputs[output].nodLine );
 				};
 				container.outputs[i].btnConnect.argument = i.ToString ();
 
@@ -351,7 +356,7 @@ public class OCTreeEditor extends OGPage {
 				} else if ( nextNode ) {
 					var xPos : float = x;
 					if ( node.connectedTo.Length > 1 ) {
-					       	var span : float = GetSpanRecursively ( distance.x, nextNode );
+					       	var span : float = distance.x;//GetSpanRecursively ( distance.x, nextNode );
 						var segment : float = span / ( node.connectedTo.Length - 1 );
 						xPos = x - span / 2 + i * segment;
 					}
@@ -401,6 +406,19 @@ public class OCTreeEditor extends OGPage {
 
 		var rootNodeContainer : RootNodeContainer = new RootNodeContainer ( tree, currentRoot );
 		var firstNodeContainer : NodeContainer = CreateNode ( tree, nextNode, treeContainer.GetComponent.< OGScrollView > ().size.x / 2, 100 );
+
+		Destroy ( rootNodeContainer.output.btnConnect.gameObject );
+		rootNodeContainer.output.btnNewNode.action = function () {
+			var newNode : OCNode = tree.rootNodes [ currentRoot ].AddNode ();
+
+			if ( tree.rootNodes[currentRoot].firstNode > 0 ) {
+				newNode.SetConnection ( 0, tree.rootNodes[currentRoot].firstNode );
+			}
+
+			tree.rootNodes[currentRoot].firstNode = newNode.id;
+			
+			UpdateNodes ();
+		};
 
 		rootNodeContainer.output.nodLine.AddConnection ( firstNodeContainer.input.nodLine );
 	}
@@ -453,33 +471,6 @@ public class OCTreeEditor extends OGPage {
 		tree.rootNodes [ currentRoot ].tags = fldRootTags.text.Split ( ","[0] );
 	}
 
-	public function CancelConnect () {
-		if ( mouseNode ) {
-			Destroy ( mouseNode.gameObject ); 
-		}
-
-		var node : OCNode = tree.rootNodes[instance.currentRoot].GetNode ( connectToId );
-		
-		if ( node ) {
-			if ( connectToOutput < node.connectedTo.Length ) {
-				node.connectedTo[connectToOutput] = 0;
-			}
-		}
-
-		connectToId = 0;
-		connectToOutput = 0;
-
-		Refresh ();
-	}
-
-	public static function ConnectTo ( id : int ) {
-		var node : OCNode = instance.tree.rootNodes[instance.currentRoot].GetNode ( instance.connectToId );
-
-		node.SetConnection ( instance.connectToOutput, id );
-		
-		instance.CancelConnect ();
-	}
-
 	public static function GetSubcontainers ( id : int ) : NodeContainer [] {
 		var tmp : List.< NodeContainer > = new List.< NodeContainer > ();
 		var node : OCNode = instance.tree.rootNodes [ instance.currentRoot ].GetNode ( id );
@@ -497,6 +488,26 @@ public class OCTreeEditor extends OGPage {
 		}
 		
 		return tmp.ToArray ();
+	}
+
+	public function CancelConnect () {
+		if ( mouseNode ) {
+			Destroy ( mouseNode.gameObject ); 
+		}
+
+		connectToId = 0;
+		connectToOutput = 0;
+
+		Refresh ();
+	}
+
+	public static function ConnectTo ( id : int ) {
+		if ( instance.mouseNode != null ) {
+			var node : OCNode = instance.tree.rootNodes[instance.currentRoot].GetNode ( instance.connectToId );
+			node.SetConnection ( instance.connectToOutput, id );
+			instance.CancelConnect ();
+			Refresh ();
+		}
 	}
 
 	public static function TryConnect ( id : int, output : int, connectTo : OGLineNode ) {
