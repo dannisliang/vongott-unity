@@ -307,19 +307,25 @@ public class OCSpeak {
 	public var audio : AudioClip [] = new AudioClip[1];
 
 	public function RemoveLine ( i : int ) {
-		var tmp : List.< String > = new List.< String > ( lines );
+		var tmpStrings : List.< String > = new List.< String > ( lines );
+		var tmpAudio : List.< AudioClip > = new List.< AudioClip > ( audio );
 
-		tmp.RemoveAt ( i );
+		tmpStrings.RemoveAt ( i );
+		tmpAudio.RemoveAt ( i );
 
-		lines = tmp.ToArray ();
+		lines = tmpStrings.ToArray ();
+		audio = tmpAudio.ToArray ();
 	}
 
 	public function AddLine () {
-		var tmp : List.< String > = new List.< String > ( lines );
+		var tmpStrings : List.< String > = new List.< String > ( lines );
+		var tmpAudio : List.< AudioClip > = new List.< AudioClip > ( audio );
 
-		tmp.Add ( "" );
+		tmpStrings.Add ( "" );
+		tmpAudio.Add ( null );
 
-		lines = tmp.ToArray ();
+		lines = tmpStrings.ToArray ();
+		audio = tmpAudio.ToArray ();
 	}
 }
 
