@@ -184,6 +184,14 @@ public class OCNode {
 		id = OCTree.CreateID ();
 	}
 
+	public function SetConnection ( i : int, id : int ) {
+		if ( i >= connectedTo.Length ) {
+			SetOutputAmount ( i + 1 );
+		}
+
+		connectedTo[i] = id;
+	}
+
 	public function SetOutputAmount ( n : int ) {
 		if ( n < 1 ) {
 			connectedTo = new int[0];

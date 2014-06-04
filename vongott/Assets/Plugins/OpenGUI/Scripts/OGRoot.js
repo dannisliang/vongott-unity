@@ -146,18 +146,20 @@ class OGRoot extends MonoBehaviour {
 			}
 			
 			// Draw lines
-			GL.Begin(GL.LINES);
-			lineMaterial.SetPass(0);
-				
-			for ( i = 0; i < widgets.Length; i++ ) {	
-				w = widgets[i];
-				
-				if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
-					w.DrawLine();
+			if ( lineMaterial != null ) {
+				GL.Begin(GL.LINES);
+				lineMaterial.SetPass(0);
+					
+				for ( i = 0; i < widgets.Length; i++ ) {	
+					w = widgets[i];
+					
+					if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
+						w.DrawLine();
+					}
 				}
+				
+				GL.End();
 			}
-			
-			GL.End();
 			
 			// Draw textures
 			for ( i = 0; i < widgets.Length; i++ ) {	

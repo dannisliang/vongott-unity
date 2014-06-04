@@ -57,7 +57,7 @@ public class OGLineNode extends OGWidget {
 
 	override function DrawLine () {
 		for ( var i : int = 0; i < connections.Length; i++ ) {
-			if ( connections [i] != null ) {
+			if ( connections[i] != null && connections[i].node != null ) {
 				if ( connections[i].segments.Length == 0 ) {
 					OGDrawHelper.DrawLine ( drawRct.center, connections[i].node.drawRct.center, drawDepth );
 				

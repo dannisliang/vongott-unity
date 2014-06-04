@@ -88,6 +88,40 @@ public class OCTreeEditor extends OGPage {
 		}
 	}
 
+	private class RootNodeContainer {
+		public var gameObject : GameObject;
+		public var output : Output;
+		public var popSelect : OGPopUp;
+
+		function RootNodeContainer ( tree : OCTree, currentRoot : int ) {
+			gameObject = new GameObject ( "RootSelector" );
+			gameObject.transform.parent = instance.treeContainer;
+			gameObject.transform.localPosition = new Vector3 ( instance.treeContainer.GetComponent.< OGScrollView >().size.x / 2, 20, 0 );
+
+			popSelect = new GameObject ( "pop_Select" ).AddComponent.< OGPopUp > ();
+			popSelect.title = "<root>";
+			popSelect.options = new String [ tree.rootNodes.Length ];
+			popSelect.pivot.x = RelativeX.Center;
+			popSelect.pivot.y = RelativeY.Center;
+			popSelect.target = instance.gameObject;
+			popSelect.message = "SelectRoot";
+			popSelect.passSelectedOption = true;
+
+			for ( var i : int = 0; i < tree.rootNodes.Length; i++ ) {
+				popSelect.options[i] = i.ToString ();
+			}
+
+			popSelect.selectedOption = currentRoot.ToString ();
+			popSelect.ApplyDefaultStyles ();
+
+			popSelect.transform.parent = gameObject.transform;
+			popSelect.transform.localPosition = Vector3.zero;
+			popSelect.transform.localScale = new Vector3 ( 100, 20, 1 );
+
+			output = new Output ( "", new Vector3 ( 0, 20, 0 ), false, gameObject.transform );
+		}
+	}
+
 	private class NodeContainer {
 		public var gameObject : GameObject;
 		public var input : Input;
@@ -109,7 +143,7 @@ public class OCTreeEditor extends OGPage {
 					offset.y = outputs[i].nodLine.transform.position.y - container.input.nodLine.transform.position.y + 20;
 					outputs[i].nodLine.AddConnection ( container.input.nodLine, [ new Vector3 ( 0, offset.y, 0 ), new Vector3 ( offset.x, offset.y, 0 ) ] );
 				}
-
+				
 			} else {
 				if ( position.x > container.position.x ) {
 					offset.x = container.position.x - outputs[i].nodLine.transform.position.x;
@@ -230,12 +264,16 @@ public class OCTreeEditor extends OGPage {
 
 	private var savePath : String;
 	private var containers : Dictionary.< int, NodeContainer > = new Dictionary.< int, NodeContainer > ();
+	private var mouseNode : OGLineNode;
+	private var connectToId : int = 0;
+	private var connectToOutput : int = 0;
 
 	private static var instance : OCTreeEditor;
 
 	public function New () {
 		Destroy ( currentTree.gameObject.GetComponent.< OCTree > () );
 		currentTree.gameObject.AddComponent.< OCTree > ();
+		currentRoot = 0;
 	}
 
 	public function ClearNodes () {
@@ -280,7 +318,12 @@ public class OCTreeEditor extends OGPage {
 				}
 
 				var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetNode ( node.connectedTo[i] );
-				
+			
+				container.outputs[i].btnConnect.actionWithArgument = function ( n : String ) {
+					TryConnect ( node.id, int.Parse ( n ), container.outputs[int.Parse ( n )].nodLine );
+				};
+				container.outputs[i].btnConnect.argument = i.ToString ();
+
 				if ( nextNode && containers.ContainsKey ( nextNode.id ) ) {
 					container.SetConnection ( i, containers[nextNode.id] );
 
@@ -308,7 +351,18 @@ public class OCTreeEditor extends OGPage {
 		var tree : OCTree = currentTree.GetComponent.< OCTree > ();
 		var nextNode : OCNode = tree.rootNodes [ currentRoot ].GetFirstNode ();
 
-		CreateNode ( tree, nextNode, treeContainer.GetComponent.< OGScrollView > ().size.x / 2, 20 );
+		if ( !nextNode ) {
+			tree.rootNodes [ currentRoot ].AddFirstNode ();
+			nextNode = tree.rootNodes [ currentRoot ].GetFirstNode ();
+		}
+
+		var rootNodeContainer : RootNodeContainer = new RootNodeContainer ( tree, currentRoot );
+		var firstNodeContainer : NodeContainer = CreateNode ( tree, nextNode, treeContainer.GetComponent.< OGScrollView > ().size.x / 2, 100 );
+
+		inspector.tree = tree;
+		inspector.currentRoot = currentRoot;
+
+		rootNodeContainer.output.nodLine.AddConnection ( firstNodeContainer.input.nodLine );
 	}
 
 	public function Open () {
@@ -317,7 +371,8 @@ public class OCTreeEditor extends OGPage {
 		fileBrowser.filter = ".tree";
 		fileBrowser.callback = function ( file : FileInfo ) {
 			savePath = file.FullName;
-			
+			currentRoot = 0;
+
 			OFDeserializer.Deserialize ( OFReader.LoadFile ( file.FullName ), currentTree );
 			inspector.tree = currentTree.GetComponent.< OCTree > ();
 			UpdateNodes ();
@@ -344,8 +399,39 @@ public class OCTreeEditor extends OGPage {
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 
-	public static function ConnectTo ( id : int ) {
+	public function SelectRoot ( n : String) {
+		currentRoot = int.Parse ( n );
 
+		Refresh ();
+	}
+
+	public function CancelConnect () {
+		if ( mouseNode ) {
+			Destroy ( mouseNode.gameObject ); 
+		}
+
+		var tree : OCTree = instance.currentTree.GetComponent.< OCTree > ();
+		var node : OCNode = tree.rootNodes[instance.currentRoot].GetNode ( connectToId );
+		
+		if ( node ) {
+			if ( connectToOutput < node.connectedTo.Length ) {
+				node.connectedTo[connectToOutput] = 0;
+			}
+		}
+
+		connectToId = 0;
+		connectToOutput = 0;
+
+		Refresh ();
+	}
+
+	public static function ConnectTo ( id : int ) {
+		var tree : OCTree = instance.currentTree.GetComponent.< OCTree > ();
+		var node : OCNode = tree.rootNodes[instance.currentRoot].GetNode ( instance.connectToId );
+
+		node.SetConnection ( instance.connectToOutput, id );
+		
+		instance.CancelConnect ();
 	}
 
 	public static function GetSubcontainers ( id : int ) : NodeContainer [] {
@@ -368,6 +454,14 @@ public class OCTreeEditor extends OGPage {
 		return tmp.ToArray ();
 	}
 
+	public static function TryConnect ( id : int, output : int, connectTo : OGLineNode ) {
+		instance.mouseNode = new GameObject ( "nod_Mouse" ).AddComponent.< OGLineNode > ();
+		instance.mouseNode.transform.parent = instance.gameObject.transform;
+		instance.connectToId = id;
+		instance.connectToOutput = output;
+		instance.mouseNode.AddConnection ( connectTo );
+	}
+
 	public static function Refresh () {
 		instance.UpdateNodes ();
 	}
@@ -382,6 +476,19 @@ public class OCTreeEditor extends OGPage {
 		instance.inspector.SetNode ( id );
 	}
 
+	override function UpdatePage () {
+		if ( mouseNode ) {
+			if ( UnityEngine.Input.GetMouseButtonDown ( 1 ) ) {
+				CancelConnect ();
+			
+			} else {
+				var mousePos : Vector3 = UnityEngine.Input.mousePosition;
+				mousePos.y = Screen.height - mousePos.y;
+				mouseNode.transform.position = mousePos;
+
+			}
+		}
+	}
 
 	override function ExitPage () {
 		savePath = "";
@@ -389,5 +496,7 @@ public class OCTreeEditor extends OGPage {
 
 	override function StartPage () {
 		instance = this;
+
+		Refresh ();
 	}
 }
