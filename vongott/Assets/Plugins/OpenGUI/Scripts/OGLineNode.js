@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 public class OGLineNode extends OGWidget {
-	private class Connection {	
+	public class Connection {	
 		public var node : OGLineNode;
 		public var segments : Vector3 [] = new Vector3 [0];
 		
@@ -26,11 +26,7 @@ public class OGLineNode extends OGWidget {
 	public var connections : Connection [] = new Connection [ 0 ];
 
 	public function AddConnection ( node : OGLineNode ) {
-		var tmp : List.< Connection > = new List.< Connection > ( connections );
-		
-		tmp.Add ( new Connection ( node ) );
-
-		connections = tmp.ToArray ();
+		AddConnection ( node, new Vector3 [0] );
 	}
 	
 	public function AddConnection ( node : OGLineNode, segments : Vector3 [] ) {
@@ -41,18 +37,20 @@ public class OGLineNode extends OGWidget {
 		connections = tmp.ToArray ();
 	}
 	
-	public function SetConnection ( i : int, node : OGLineNode, segments : Vector3 [] ) {
-		var tmp : List.< Connection > = new List.< Connection > ( connections );
-		
-		tmp.Insert ( i, new Connection ( node, segments ) );
-
-		connections = tmp.ToArray ();
+	public function SetConnection ( i : int, node : OGLineNode ) {
+		SetConnection ( i, node, new Vector3 [0] );
 	}
 
-	public function SetConnection ( i : int, node : OGLineNode ) {
+	public function SetConnection ( i : int, node : OGLineNode, segments : Vector3 [] ) {
 		var tmp : List.< Connection > = new List.< Connection > ( connections );
-		
-		tmp.Insert ( i, new Connection ( node ) );
+
+		if ( i >= tmp.Count ) {
+			for ( var n : int = tmp.Count; n <= i; n++ ) {
+				tmp.Add ( null );
+			}
+		}
+
+		tmp[i] = new Connection ( node, segments );
 
 		connections = tmp.ToArray ();
 	}
@@ -61,19 +59,19 @@ public class OGLineNode extends OGWidget {
 		for ( var i : int = 0; i < connections.Length; i++ ) {
 			if ( connections [i] != null ) {
 				if ( connections[i].segments.Length == 0 ) {
-					OGDrawHelper.DrawLine ( drawRct.center, connections[i].node.drawRct.center );
+					OGDrawHelper.DrawLine ( drawRct.center, connections[i].node.drawRct.center, drawDepth );
 				
 				} else {
 					for ( var s : int = 0; s < connections[i].segments.Length; s++ ) {
 						if ( s == 0 ) {
-							OGDrawHelper.DrawLine ( drawRct.center, drawRct.center + connections[i].segments[s] );
+							OGDrawHelper.DrawLine ( drawRct.center, drawRct.center + connections[i].segments[s], drawDepth );
 							
 						} else if ( s == connections[i].segments.Length - 1 ) {
-							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s-1], drawRct.center + connections[i].segments[s] );
-							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s], connections[i].node.drawRct.center );
+							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s-1], drawRct.center + connections[i].segments[s], drawDepth );
+							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s], connections[i].node.drawRct.center, drawDepth );
 						
 						} else {
-							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s-1], drawRct.center + connections[i].segments[s] );
+							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s-1], drawRct.center + connections[i].segments[s], drawDepth );
 						
 						}
 					}

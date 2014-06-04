@@ -37,9 +37,9 @@ public class OGDrawHelper {
 	}	
 	
 	// Draw
-	public static function DrawLine ( start : Vector3, end : Vector3 ) {
-		GL.Vertex ( start );
-		GL.Vertex ( end );
+	public static function DrawLine ( start : Vector3, end : Vector3, depth : float ) {
+		GL.Vertex ( start + new Vector3 ( 0, 0, depth ) );
+		GL.Vertex ( end + new Vector3 ( 0, 0, depth ) );
 	}
 	
 	public static function DrawCurve ( start : Vector3, startDir : Vector3, end : Vector3, endDir : Vector3, segments : int ) {
