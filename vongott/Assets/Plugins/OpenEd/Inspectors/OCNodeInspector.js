@@ -156,7 +156,6 @@ public class OCNodeInspector extends MonoBehaviour {
 	private var currentInspector : Inspector;
 
 	public function SetNode ( id : int ) {
-		Debug.Log ( id );
 		node = tree.rootNodes [ currentRoot ].GetNode ( id );
 		SetType ( node.type.ToString () );
 	}
