@@ -23,7 +23,7 @@ public class OSInventoryInspector extends OEComponentInspector {
 			}
 		}
 
-		offset.y += 20;
+		offset.y += 10;
 
 		// Items
 		LabelField ( "Items" );
@@ -67,12 +67,12 @@ public class OSInventoryInspector extends OEComponentInspector {
 		if ( slot && slot.item ) {
 			LabelField ( slot.item.id );
 
-			if ( Button ( "Remove" ) ) {
+			if ( Button ( "Remove", new Rect ( width / 2, offset.y, width / 2, 16 ) ) ) {
 				inventory.RemoveItem ( slot.item );
 			}
+		
+			offset.y += 20;
 		}
-
-		offset.y += 20;
 
 		if ( Button ( "Add item" ) ) {
 			OEWorkspace.GetInstance().PickPrefab ( function ( picked : GameObject ) {
