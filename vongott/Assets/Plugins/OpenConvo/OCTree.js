@@ -131,19 +131,32 @@ public class OCRootNode {
 
 	public function RemoveNode ( id : int ) {
 		var tmpNodes : List.< OCNode > = new List.< OCNode > ( nodes );
+		var removeIndex : int = -1;
 
+		// Find node
 		for ( var i : int = 0; i < tmpNodes.Count; i++ ) {
-			for ( var c : int = 0; c < tmpNodes[i].connectedTo.Length; c++ ) {
-				if ( tmpNodes[i].connectedTo[c] == id ) {
-					tmpNodes[i].connectedTo[c] = 0;
-				}
-			}
-			
 			if ( tmpNodes[i].id == id ) {
-				tmpNodes.RemoveAt ( i );
+				removeIndex = i;
+				break;
 			}
 		}
-		
+
+		// Fix broken links
+		for ( i = 0; i < tmpNodes.Count; i++ ) {
+			for ( var c : int = 0; c < tmpNodes[i].connectedTo.Length; c++ ) {
+				if ( tmpNodes[i].connectedTo[c] == id ) {
+					if ( removeIndex > 0 && tmpNodes[removeIndex].connectedTo.Length > 0 ) {
+						tmpNodes[i].connectedTo[c] = tmpNodes[removeIndex].connectedTo[0];
+					}
+				}
+			}
+		}
+
+		// Remove node
+		if ( removeIndex > 0 ) {
+			tmpNodes.RemoveAt ( removeIndex );
+		}
+
 		nodes = tmpNodes.ToArray ();
 	}
 

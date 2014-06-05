@@ -344,6 +344,8 @@ public class OCTreeEditor extends OGPage {
 						node.connectedTo [ output ] = newNode.id;
 						
 						UpdateNodes ();
+
+						SelectNode ( newNode.id );
 					};
 					container.outputs[i].btnNewNode.argument = i.ToString ();
 				}
