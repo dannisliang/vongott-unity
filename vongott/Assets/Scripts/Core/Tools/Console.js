@@ -79,6 +79,11 @@ public class Console extends MonoBehaviour {
 					
 					break;
 
+				case "flag":
+					GameCore.GetConversationManager().flags.Set ( args[1], args[2] == "true" );
+
+					break;
+
 				default:
 					output = "[ERROR] set: Invalid argument '" + args[0] + "'";
 					break;			

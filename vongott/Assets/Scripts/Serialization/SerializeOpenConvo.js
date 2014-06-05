@@ -201,7 +201,9 @@ public class SerializeOpenConvo extends OFPlugin {
 						// This is an id
 						} else {
 							OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject ) {
-								event.object = so.gameObject;
+								if ( so ) {
+									event.object = so.gameObject;
+								}
 							}, object );
 
 						}
