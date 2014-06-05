@@ -45,10 +45,16 @@ public class SerializeOpenConvo extends OFPlugin {
 						var speak : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 						var lines : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
-						for ( var l : String in node.speak.lines ) {
-							lines.Add ( l );
-						}
+						for ( var l : OCSpeak.Line in node.speak.lines ) {
+							var line : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 
+							line.AddField ( "text", l.text.Replace ( "\"", "\\\"" ) );
+							line.AddField ( "audio", l.audio == null ? "" : l.audio.name );
+							line.AddField ( "animation", l.animation );
+							
+							lines.Add ( line );
+						}
+						
 						speak.AddField ( "speaker", node.speak.speaker );
 						speak.AddField ( "lines", lines );
 
@@ -168,10 +174,10 @@ public class SerializeOpenConvo extends OFPlugin {
 				switch ( n.type ) {
 					case OCNodeType.Speak:
 						var speak : OCSpeak = new OCSpeak ();
-						var lines : List.< String > = new List.< String > ();
+						var lines : List.< OCSpeak.Line > = new List.< OCSpeak.Line > ();
 
 						for ( var l : JSONObject in node.GetField ( "speak" ).GetField ( "lines" ).list ) {
-							lines.Add ( l.str );
+							lines.Add ( new OCSpeak.Line ( l.GetField ( "text" ).str.Replace ( "\\\"", "\"" ), null, l.GetField ( "animation" ).str ) ); // FIXME: No audio
 						}
 
 						speak.speaker = node.GetField ( "speak" ).GetField ( "speaker" ).n;

@@ -585,7 +585,13 @@ public class OEObjectField extends OEField {
 				name = "None";
 
 			} else {
-				var split : String [] = path.Split ( "/"[0] );
+				var split : String [];
+				 
+				if ( path.Contains ( "\\" ) ) {
+					split = path.Split ( "\\"[0] );
+				} else {	
+					split = path.Split ( "/"[0] );
+				}
 
 				name = split [ split.Length - 1 ];
 			}

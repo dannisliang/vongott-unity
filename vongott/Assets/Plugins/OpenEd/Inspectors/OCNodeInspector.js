@@ -46,7 +46,7 @@ public class OCNodeInspector extends OEComponentInspector {
 
 				for ( i = 0; i < node.speak.lines.Length; i++ ) {
 					LabelField ( i.ToString () ); 
-					node.speak.lines[i] = TextField ( "", node.speak.lines[i], new Rect ( 40, offset.y, width - 40, 60 ) );
+					node.speak.lines[i].text = TextField ( "", node.speak.lines[i].text, new Rect ( 40, offset.y, width - 40, 60 ) );
 					offset.y += 50;
 				}
 

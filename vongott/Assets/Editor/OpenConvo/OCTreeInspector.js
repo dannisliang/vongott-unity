@@ -328,7 +328,7 @@ public class OCTreeInspector extends Editor {
 
 							for ( var l : int = 0; l < node.speak.lines.Length; l++ ) {
 								var lineRect : Rect = new Rect ( 10 + l * ( lineWidth + 10 ), 40, lineWidth, 16 );
-								node.speak.lines[l] = EditorGUI.TextField ( lineRect, node.speak.lines[l] );
+								node.speak.lines[l].text = EditorGUI.TextField ( lineRect, node.speak.lines[l].text );
 
 								if ( l > 0 ) {
 									GUI.backgroundColor = Color.red;
@@ -337,7 +337,7 @@ public class OCTreeInspector extends Editor {
 											nodeContainers [ node.connectedTo[l] ].orphan = true;
 										}
 										
-										var tmpLines : List.<String> = new List.<String>(node.speak.lines);
+										var tmpLines : List.<OCSpeak.Line> = new List.<OCSpeak.Line>(node.speak.lines);
 										tmpLines.RemoveAt ( l );
 										node.speak.lines = tmpLines.ToArray ();
 									}
@@ -349,8 +349,8 @@ public class OCTreeInspector extends Editor {
 									
 							GUI.backgroundColor = Color.green;
 							if ( GUI.Button ( new Rect ( 10 + node.speak.lines.Length * ( lineWidth + 10 ), 42, 28, 14 ), "+" ) ) {
-								tmpLines = new List.<String>(node.speak.lines);
-								tmpLines.Add ( "" );
+								tmpLines = new List.<OCSpeak.Line>(node.speak.lines);
+								tmpLines.Add ( new OCSpeak.Line ( "", null, "" ) );
 								node.speak.lines = tmpLines.ToArray ();
 							}
 							GUI.backgroundColor = Color.white;

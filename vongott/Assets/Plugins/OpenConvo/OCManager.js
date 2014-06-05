@@ -49,6 +49,20 @@ public class OCManager extends MonoBehaviour {
 		}
 	}
 
+	public function SetSpeakerObjects ( speakerObjects : GameObject [] ) {
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			speakers[i].gameObject = speakerObjects [i];
+		}
+	}
+	
+	public function SetSpeakers ( speakerNames : String [], speakerObjects : GameObject [] ) {
+		speakers = new OCSpeaker [ speakerNames.Length ];
+		
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			speakers[i] = new OCSpeaker ( speakerNames[i], speakerObjects[i] );
+		}
+	}
+
 	public function Start () {
 		instance = this;
 	}

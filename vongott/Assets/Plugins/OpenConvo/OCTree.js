@@ -21,7 +21,7 @@ public class OCTree extends MonoBehaviour {
 	}
 
 	public function MoveRoot ( from : int, to : int ) {
-		if ( to > 0 && to < rootNodes.Length ) {
+		if ( to >= 0 && to < rootNodes.Length ) {
 			var fromRootNode : OCRootNode = rootNodes[from];
 			var toRootNode : OCRootNode = rootNodes[to];
 			
@@ -292,30 +292,40 @@ public class OCNode {
 }
 
 public class OCSpeak {
+	public class Line {
+		public var text : String;
+		public var audio : AudioClip;
+		public var animation : String;
+	
+		function Line ( text : String, audio : AudioClip, animation : String ) {
+			this.text = text;
+			this.audio = audio;
+			this.animation = animation;
+		}
+	}
+	
 	public var speaker : int;
-	public var lines : String[] = new String[1];
+	public var lines : Line[] = new Line[0];
 	public var audio : AudioClip [] = new AudioClip[1];
 
+	function OCSpeak () {
+		lines = [ new Line ( "", null, "" ) ];
+	}
+
 	public function RemoveLine ( i : int ) {
-		var tmpStrings : List.< String > = new List.< String > ( lines );
-		var tmpAudio : List.< AudioClip > = new List.< AudioClip > ( audio );
+		var tmp : List.< Line > = new List.< Line > ( lines );
 
-		tmpStrings.RemoveAt ( i );
-		tmpAudio.RemoveAt ( i );
+		tmp.RemoveAt ( i );
 
-		lines = tmpStrings.ToArray ();
-		audio = tmpAudio.ToArray ();
+		lines = tmp.ToArray ();
 	}
 
 	public function AddLine () {
-		var tmpStrings : List.< String > = new List.< String > ( lines );
-		var tmpAudio : List.< AudioClip > = new List.< AudioClip > ( audio );
+		var tmp : List.< Line > = new List.< Line > ( lines );
 
-		tmpStrings.Add ( "" );
-		tmpAudio.Add ( null );
+		tmp.Add ( new Line ( "", null, "" ) );
 
-		lines = tmpStrings.ToArray ();
-		audio = tmpAudio.ToArray ();
+		lines = tmp.ToArray ();
 	}
 }
 

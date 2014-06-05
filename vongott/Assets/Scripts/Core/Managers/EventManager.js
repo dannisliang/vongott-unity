@@ -19,7 +19,13 @@ class EventManager extends MonoBehaviour {
 		//}
 	}
 
-	public function OnSetLines ( strings : String [] ) {
+	public function OnSetLines ( lines : OCSpeak.Line [] ) {
+		var strings : String [] = new String [ lines.Length ];
+
+		for ( var s : int = 0; s < strings.Length; s++ ) {
+			strings[s] = lines[s].text;
+		}
+		
 		if ( strings.Length == 1 ) {
 			if ( passiveConvo ) {
 				UIHUD.GetInstance().ShowNotification ( strings[0] );

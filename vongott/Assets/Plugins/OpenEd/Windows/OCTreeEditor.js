@@ -300,14 +300,14 @@ public class OCTreeEditor extends OGPage {
 				case OCNodeType.Speak:
 					btnSelect.tint = instance.speakerColors[node.speak.speaker];
 
-					if ( String.IsNullOrEmpty ( node.speak.lines[0] ) ) {
+					if ( !node.speak.lines[0] || String.IsNullOrEmpty ( node.speak.lines[0].text ) ) {
 						btnSelect.text = "...";
 
-					} else if ( node.speak.lines[0].Length > 13 ) {
-						btnSelect.text = node.speak.lines[0].Substring ( 0, 10 ) + "...";
+					} else if ( node.speak.lines[0].text.Length > 13 ) {
+						btnSelect.text = node.speak.lines[0].text.Substring ( 0, 10 ) + "...";
 					
 					} else {
-						btnSelect.text = node.speak.lines[0];
+						btnSelect.text = node.speak.lines[0].text;
 
 					}
 					

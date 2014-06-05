@@ -33,6 +33,7 @@ class InteractiveObject extends MonoBehaviour {
 
 		if ( character ) {
 			if ( !character.isEnemy ) {
+				GameCore.GetConversationManager().SetSpeakers ( character.conversationTree.speakers, character.convoSpeakerObjects );
 				GameCore.GetConversationManager().StartConversation ( character.conversationTree );
 			}
 		
