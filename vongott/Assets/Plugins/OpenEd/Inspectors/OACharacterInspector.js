@@ -57,20 +57,46 @@ public class OACharacterInspector extends OEComponentInspector {
 		for ( i = 0; i < character.pathGoals.Length; i++ ) {
 			character.pathGoals[i] = PointField ( "Goal #" + i.ToString(), character.pathGoals[i] );
 		}
+		
+		offset.y += 20;
 
-		if ( Button ( "Add" ) ) {
-			var tmpGoals : List.< Vector3 > = new List.< Vector3 > ( character.pathGoals );
+		if ( character.pathGoals.Length > 0 ) {
+			if ( Button ( "-", new Rect ( 30, offset.y, 24, 16 ) ) ) {
+				if ( character.pathGoals.Length > 0 ) {
+					var tmpGoals : List.< Vector3 > = new List.< Vector3 > ( character.pathGoals );
+					tmpGoals.RemoveAt ( tmpGoals.Count - 1 );
+					character.pathGoals = tmpGoals.ToArray ();
+				}
+			}
+		}
+
+		if ( Button ( "+", new Rect ( 0, offset.y, 24, 16 ) ) ) {
+			tmpGoals = new List.< Vector3 > ( character.pathGoals );
 			tmpGoals.Add ( character.pathGoals.Length > 0 ? character.pathGoals[character.pathGoals.Length-1] : character.transform.position );
 			character.pathGoals = tmpGoals.ToArray ();
 		}
 
-		if ( Button ( "Remove" ) ) {
-			if ( character.pathGoals.Length > 0 ) {
-				tmpGoals = new List.< Vector3 > ( character.pathGoals );
-				tmpGoals.RemoveAt ( tmpGoals.Count - 1 );
-				character.pathGoals = tmpGoals.ToArray ();
+	}	
+
+	override function DrawGL () {
+		GL.Begin ( GL.LINES );
+		
+		OEWorkspace.GetInstance().cam.materials.highlight.SetPass ( 0 );
+		
+		var character : OACharacter = target.GetComponent.< OACharacter >();
+
+		if ( character && character.pathGoals.Length > 0 ) {
+			for ( var l : int = 0; l < character.pathGoals.Length; l++ ) {
+				if ( l == 0 ) {
+					GL.Vertex ( character.transform.position );
+				} else {
+					GL.Vertex ( character.pathGoals[l-1] );
+				}
+
+				GL.Vertex ( character.pathGoals[l] );
 			}
 		}
-	
-	}	
+
+		GL.End ();
+	}
 }

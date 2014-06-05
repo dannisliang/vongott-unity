@@ -2,7 +2,10 @@
 
 public class OSInventoryInspector extends OEComponentInspector {
 	override function get type () : System.Type { return typeof ( OSInventory ); }
-	
+
+	private var xSelected : int;
+	private var ySelected : int;
+
 	override function Inspector () {
 		var inventory : OSInventory = target.GetComponent.< OSInventory >();
 		
@@ -20,9 +23,67 @@ public class OSInventoryInspector extends OEComponentInspector {
 			}
 		}
 
+		offset.y += 20;
+
 		// Items
-		for ( i = 0; i < inventory.slots.Count; i++ ) {
-			inventory.slots[i].item = ObjectField ( i.ToString(), inventory.slots[i].item, typeof ( OSItem ), OEObjectField.Target.Prefab ) as OSItem;
+		LabelField ( "Items" );
+		
+		offset.y += 20;
+
+		var size : float = width / inventory.grid.width;
+		var skip : boolean [ , ] = inventory.grid.GetSkippedSlots();
+		
+		for ( var x : int = 0; x < inventory.grid.width; x++ ) {
+			for ( var y : int = 0; y < inventory.grid.height; y++ ) {
+				var slot : OSSlot = inventory.GetSlot ( x, y ); 
+					
+				if ( skip [ x, y ] == true ) {
+					continue;
+				
+				} else if ( slot && slot.item ) {
+					if ( Button ( "", new Rect ( x * size, offset.y + y * size, size * slot.scale.x, size * slot.scale.y ) ) ) {
+						xSelected = x;
+						ySelected = y;
+					}
+					
+					if ( slot.item.preview ) {
+						Texture ( slot.item.preview, new Rect ( x * size, offset.y + y * size, size * slot.scale.x, size * slot.scale.y ) );
+					}
+				
+				} else {
+					if ( Button ( "", new Rect ( x * size, offset.y + y * size, size, size ) ) ) {
+						xSelected = x;
+						ySelected = y;
+					}
+
+				}
+			}
+		}
+
+		offset.y += inventory.grid.height * size;
+
+		slot = inventory.GetSlot ( xSelected, ySelected );
+	
+		if ( slot && slot.item ) {
+			LabelField ( slot.item.id );
+
+			if ( Button ( "Remove" ) ) {
+				inventory.RemoveItem ( slot.item );
+			}
+		}
+
+		offset.y += 20;
+
+		if ( Button ( "Add item" ) ) {
+			OEWorkspace.GetInstance().PickPrefab ( function ( picked : GameObject ) {
+				var item : OSItem = picked.GetComponent.< OSItem > ();
+
+				if ( item ) {
+					inventory.AddItem ( item );
+				}
+
+				OEWorkspace.GetInstance().toolbar.Clear ();
+			}, typeof ( OSItem ) );
 		}
 	}	
 }

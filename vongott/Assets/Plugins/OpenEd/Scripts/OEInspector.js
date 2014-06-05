@@ -34,11 +34,14 @@ public class OEInspector extends MonoBehaviour {
 	}
 
 	public function SelectComponent ( name : String ) {
+		OEWorkspace.GetInstance().cam.currentInspector = null;
+		
 		for ( var i : int = 0; i < inspectors.Length; i++ ) {
 			if ( inspectors[i].CheckType ( name ) ) {
 				Clear ();
 				currentInspector = inspectors[i];
 				currentInspector.Init ( selection[0], componentContainer );
+				OEWorkspace.GetInstance().cam.currentInspector = currentInspector;
 			}
 		}
 	}

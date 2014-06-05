@@ -1448,10 +1448,10 @@ MonoBehaviour:
   - typeIndex: 2
     name: Transform
     component: {fileID: 400078}
-  - typeIndex: 4
+  - typeIndex: 6
     name: OACharacter
     component: {fileID: 11400004}
-  - typeIndex: 7
+  - typeIndex: 9
     name: OSInventory
     component: {fileID: 11400008}
   - typeIndex: 0
@@ -1480,10 +1480,10 @@ MonoBehaviour:
   usingWeapons: 1
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 0
+  conversationTreePath: 
   conversationTree: {fileID: 0}
+  convoSpeakerObjects: []
   convoRootNode: 0
-  convoSpeakers:
-  - {fileID: 0}
   pathFinder: {fileID: 11400006}
   pathGoals: []
   updatePathInterval: 5
@@ -1528,7 +1528,7 @@ MonoBehaviour:
   quickSlots: 
   grid:
     width: 4
-    height: 1
+    height: 4
     inventory: {fileID: 11400008}
   wallet:
   - index: 0

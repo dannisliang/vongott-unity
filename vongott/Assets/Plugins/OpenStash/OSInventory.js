@@ -408,7 +408,7 @@ public class OSInventory extends MonoBehaviour {
 		if ( !item ) { return false; }
 	
 		item.definitions = this.definitions;
-		
+	
 		item.gameObject.SendMessage ( "SetInventory", this, SendMessageOptions.DontRequireReceiver );
 
 		// Check if similar item is already in the inventory
@@ -421,7 +421,6 @@ public class OSInventory extends MonoBehaviour {
 					slots[i].item.ChangeAmmunition ( item.ammunition.value );
 				
 				}
-				
 				return true;
 			}
 		}
@@ -430,16 +429,7 @@ public class OSInventory extends MonoBehaviour {
 		var availableCell : OSPoint = new OSPoint ( -1, -1 );
 
 		availableCell = grid.GetAvailableCell ( item );
-
-		if ( OSPoint.IsNullOrNegative ( availableCell ) ) {
-			return false;
-
-		} else {
-			slots.Add ( new OSSlot ( availableCell.x, availableCell.y, item ) );
-			return true;
-
-		}
-
+		
 		// Set up reference for item behaviours
 		var grenade : OSGrenade = item.GetComponent.< OSGrenade > ();
 		var firearm : OSFirearm = item.GetComponent.< OSFirearm > ();
@@ -451,6 +441,16 @@ public class OSInventory extends MonoBehaviour {
 			firearm.SetInventory ( this );
 		
 		}
+
+		if ( OSPoint.IsNullOrNegative ( availableCell ) ) {
+			return false;
+
+		} else {
+			slots.Add ( new OSSlot ( availableCell.x, availableCell.y, item ) );
+			return true;
+
+		}
+
 	}
 
 	public function GetSlot ( item : OSItem ) : OSSlot {

@@ -22,6 +22,8 @@ public class OECamera extends MonoBehaviour {
 	public var dynamicLights : boolean = false;
 	public var nearClipSlider : OGSlider;
 	public var flyMode : boolean = false;
+	
+	@NonSerialized public var currentInspector : OEComponentInspector;
 
 	private function DrawGrid () {
 		var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
@@ -39,31 +41,6 @@ public class OECamera extends MonoBehaviour {
 		for ( var x : int = -distance; x < distance; x++ ) {
 			GL.Vertex ( new Vector3 ( x, 0, -distance ) );
 			GL.Vertex ( new Vector3 ( x, 0, distance ) );
-		}
-
-		GL.End ();
-	}
-
-	private function DrawPaths () {
-		GL.Begin ( GL.LINES );
-		
-		materials.highlight.SetPass ( 0 );
-		
-		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
-			var go : GameObject = OEWorkspace.GetInstance().selection[i].gameObject;
-			var character : OACharacter = go.GetComponent.< OACharacter > ();
-
-			if ( character && character.pathGoals.Length > 0 ) {
-				for ( var l : int = 0; l < character.pathGoals.Length; l++ ) {
-					if ( l == 0 ) {
-						GL.Vertex ( character.transform.position );
-					} else {
-						GL.Vertex ( character.pathGoals[l-1] );
-					}
-
-					GL.Vertex ( character.pathGoals[l] );
-				}
-			}
 		}
 
 		GL.End ();
@@ -224,7 +201,10 @@ public class OECamera extends MonoBehaviour {
 
 		if ( materials.selection && OEWorkspace.GetInstance().selection.Count > 0 ) {
 			DrawSelection ();
-			DrawPaths ();
+			
+			if ( currentInspector ) {
+				currentInspector.DrawGL ();
+			}
 		}
 
 		if ( showGizmos ) {

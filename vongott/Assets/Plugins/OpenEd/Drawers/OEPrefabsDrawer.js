@@ -39,7 +39,7 @@ public class OEPrefabsDrawer extends OEDrawer {
 		Populate ();
 
 		placeButton.func = function () {
-			callback ( Resources.Load ( path + "/" + selectedObject ) );	
+			callback ( Resources.Load ( path + "/" + selectedObject ) as GameObject );
 		};
 	}
 
@@ -144,7 +144,6 @@ public class OEPrefabsDrawer extends OEDrawer {
 	public function Add () {
 		if ( !String.IsNullOrEmpty ( selectedObject ) ) {
 			OEWorkspace.GetInstance().AddPrefab ( path + "/" + selectedObject );
-	
 			OEWorkspace.GetInstance().toolbar.Clear ();
 		}
 	}
@@ -154,6 +153,5 @@ public class OEPrefabsDrawer extends OEDrawer {
 		path = currentFolder.name;
 		Populate ();
 		objectName.text = "";
-		placeButton.func = null;
 	}
 }

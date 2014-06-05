@@ -31,6 +31,9 @@ public class OEField {
 		} else if ( type == typeof ( OELabelField ) ) {
 			return new OELabelField ( transform );
 		
+		} else if ( type == typeof ( OETexture ) ) {
+			return new OETexture ( transform );
+		
 		} else if ( type == typeof ( OEBox ) ) {
 			return new OEBox ( transform );
 		
@@ -533,6 +536,7 @@ public class OEObjectField extends OEField {
 					OEWorkspace.GetInstance().PickPrefab ( function ( picked : Object ) {
 						obj = picked;
 						canSet = true;
+						OEWorkspace.GetInstance().toolbar.Clear ();
 					}, sysType );
 					break;
 				
@@ -610,6 +614,27 @@ public class OEObjectField extends OEField {
 	}
 }
 
+public class OETexture extends OEField {
+	public var texture : OGTexture;
+	
+	function OETexture ( parent : Transform ) {
+		texture = new GameObject ( "tex_Texture" ).AddComponent.< OGTexture > ();
+		
+		texture.transform.parent = parent;
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( texture.gameObject );
+	}
+
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		texture.tint.a = enabled ? 1.0 : 0.5;
+		
+		texture.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+		texture.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+	}
+}
+
 public class OELabelField extends OEField {
 	public var label : OGLabel;
 	
@@ -652,7 +677,7 @@ public class OEBox extends OEField {
 	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
 		sprite.tint.a = enabled ? 1.0 : 0.5;
 		
-		sprite.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+		sprite.transform.localPosition = new Vector3 ( pos.x, pos.y, 2 );
 		sprite.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
 	}
 }
@@ -1039,6 +1064,7 @@ public class OEComponentInspector {
 	}
 
 	public function Inspector () {}
+	public function DrawGL () {}
 
 	// Clean up
 	public function CleanUp () {
@@ -1085,6 +1111,15 @@ public class OEComponentInspector {
 	public function Offset ( x : float, y : float ) {
 		offset.x += x;
 		offset.y += y;
+	}
+
+	// OETexture
+	public function Texture ( tex : Texture2D, rect : Rect ) {
+		var texture : OETexture = CheckField ( typeof ( OETexture ) ) as OETexture;
+		texture.texture.mainTexture = tex;
+		texture.Update ( "", new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		texture.enabled = !disabled;
+		fieldCounter++;
 	}
 
 	// OEObjectField
