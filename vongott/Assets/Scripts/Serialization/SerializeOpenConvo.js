@@ -191,7 +191,20 @@ public class SerializeOpenConvo extends OFPlugin {
 						event.message = node.GetField ( "event" ).GetField ( "message" ).str;
 						event.argument = node.GetField ( "event" ).GetField ( "argument" ).str;
 						event.eventToTarget = node.GetField ( "event" ).GetField ( "eventToTarget" ).b;
-						event.object = Resources.Load ( node.GetField ( "event" ).GetField ( "object" ).str ) as GameObject;
+						
+						var object : String = node.GetField ( "event" ).GetField ( "object" ).str;
+
+						// This is a file path
+						if ( object.Contains ( "/" ) ) {
+							event.object = Resources.Load ( object ) as GameObject;
+						
+						// This is an id
+						} else {
+							OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject ) {
+								event.object = so.gameObject;
+							}, object );
+
+						}
 
 						n.event = event;
 

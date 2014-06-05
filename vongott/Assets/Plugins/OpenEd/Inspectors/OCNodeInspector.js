@@ -3,7 +3,8 @@
 public class OCNodeInspector extends OEComponentInspector {
 	private var node : OCNode;
 	private var tree : OCTree;
-	
+	private var eventObjectTarget : OEObjectField.Target = OEObjectField.Target.Prefab;
+
 	public function Refresh ( tree : OCTree, node : OCNode, transform : Transform ) {
 		this.tree = tree;
 		this.node = node;
@@ -72,7 +73,9 @@ public class OCNodeInspector extends OEComponentInspector {
 					node.event.argument = TextField ( "Argument", node.event.argument );
 				}
 
-				node.event.object = ObjectField ( "Object", node.event.object, typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
+				eventObjectTarget = Popup ( "Object location", eventObjectTarget, System.Enum.GetNames ( OEObjectField.Target ) );
+
+				node.event.object = ObjectField ( "Object", node.event.object, typeof ( GameObject ), eventObjectTarget ) as GameObject;
 
 				if ( node.event.object != null ) {
 					node.event.eventToTarget = Toggle ( "Event to target", node.event.eventToTarget );
