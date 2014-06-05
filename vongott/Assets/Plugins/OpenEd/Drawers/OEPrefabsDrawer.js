@@ -31,6 +31,10 @@ public class OEPrefabsDrawer extends OEDrawer {
 	}
 
 	public function SetPicker ( callback : Function, type : System.Type ) {
+		if ( !currentFolder ) {
+			Start ();
+		}
+		
 		typeFilter = type;
 		Populate ();
 

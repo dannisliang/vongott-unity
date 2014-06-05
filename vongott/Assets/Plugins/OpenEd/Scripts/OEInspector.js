@@ -39,7 +39,7 @@ public class OEInspector extends MonoBehaviour {
 				Clear ();
 				currentInspector = inspectors[i];
 				currentInspector.Init ( selection[0], componentContainer );
-			}	
+			}
 		}
 	}
 
