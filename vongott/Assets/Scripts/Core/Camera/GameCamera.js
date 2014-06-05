@@ -252,7 +252,7 @@ class GameCamera extends MonoBehaviour {
 			currentSpeaker = speaker;
 		}
 
-		var speakers : OCSpeaker[] = GameCore.GetConversationManager().tree.speakers;
+		var speakers : OCSpeaker[] = GameCore.GetConversationManager().speakers;
 		for ( var i : int = 0; i < speakers.Length; i++ ) {
 			if ( !speakers[i].gameObject && speakers[i].gameObject != currentSpeaker ) {
 				speakers[i].gameObject.transform.LookAt ( currentSpeaker.transform.position );
@@ -276,7 +276,7 @@ class GameCamera extends MonoBehaviour {
 	
 	private function GetConvoCenter () : Vector3 { 
 		var center : Vector3;
-		var speakers : OCSpeaker[] = GameCore.GetConversationManager().tree.speakers;
+		var speakers : OCSpeaker[] = GameCore.GetConversationManager().speakers;
 	
 		for ( var i : int = 0; i < speakers.Length; i++ ) {
 			center += speakers[i].gameObject.transform.position;
@@ -312,7 +312,7 @@ class GameCamera extends MonoBehaviour {
 
 	private function GetConvoRadius () : float {
 		var result : float;
-		var speakers : OCSpeaker[] = GameCore.GetConversationManager().tree.speakers;
+		var speakers : OCSpeaker[] = GameCore.GetConversationManager().speakers;
 	
 		for ( var i : int = 0; i < speakers.Length; i++ ) {
 			var distance : float = Vector3.Distance ( speakers[i].gameObject.transform.position, GetConvoCenter() );

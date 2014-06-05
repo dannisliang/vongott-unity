@@ -72,8 +72,8 @@ public class OACharacterInspector extends Editor {
 				
 				character.convoRootNode = EditorGUILayout.Popup ( "Starting root node", character.convoRootNode, rootNodeStrings );	
 		
-				for ( i = 0; i < character.conversationTree.speakers.Length; i++ ) {
-					character.conversationTree.speakers[i].gameObject = EditorGUILayout.ObjectField ( character.conversationTree.speakers[i].id, character.conversationTree.speakers[i].gameObject, typeof ( GameObject ), true ) as GameObject;
+				for ( i = 0; i < character.convoSpeakerObjects.Length; i++ ) {
+					character.convoSpeakerObjects[i] = EditorGUILayout.ObjectField ( character.conversationTree.speakers[i], character.convoSpeakerObjects[i], typeof ( GameObject ), true ) as GameObject;
 				}
 
 			}

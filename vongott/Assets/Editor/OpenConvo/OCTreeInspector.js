@@ -71,16 +71,6 @@ public class OCTreeInspector extends Editor {
     		Handles.color = Color.white;
 	}
 	
-	private function GetSpeakerStrings ( tree : OCTree ) : String[] {
-		var result : String[] = new String [ tree.speakers.Length ];
-
-		for ( var i : int = 0; i < result.Length; i++ ) {
-			result[i] = tree.speakers[i].id;
-		}
-
-		return result;
-	}
-
 	override function OnInspectorGUI () {
 		var tree : OCTree = target as OCTree;
 
@@ -100,7 +90,7 @@ public class OCTreeInspector extends Editor {
 
 		for ( i = 0; i < tree.speakers.Length; i++ ) {
 			EditorGUILayout.BeginHorizontal ();
-			tree.speakers[i].id = EditorGUILayout.TextField ( i.ToString(), tree.speakers[i].id );
+			tree.speakers[i] = EditorGUILayout.TextField ( i.ToString(), tree.speakers[i] );
 			
 			GUI.backgroundColor = Color.red;
 			if ( GUILayout.Button ( "x", GUILayout.Width ( 28 ), GUILayout.Height ( 14 ) ) ) {
@@ -331,7 +321,7 @@ public class OCTreeInspector extends Editor {
 							container.rect.height = 80;
 
 							EditorGUI.LabelField ( new Rect ( 10, 20, 60, 16 ), "Speaker" );
-							node.speak.speaker = EditorGUI.Popup ( new Rect ( 70, 20, 120, 16 ), node.speak.speaker, GetSpeakerStrings ( tree ) );
+							node.speak.speaker = EditorGUI.Popup ( new Rect ( 70, 20, 120, 16 ), node.speak.speaker, tree.speakers );
 					
 							node.SetOutputAmount ( node.speak.lines.Length );
 							container.SetOutputAmount ( node.connectedTo.Length );

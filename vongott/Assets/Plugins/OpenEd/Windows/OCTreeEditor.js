@@ -491,7 +491,7 @@ public class OCTreeEditor extends OGPage {
 			}
 		}
 		
-		var speakerNames : String [] = tree.GetSpeakerStrings ();
+		var speakerNames : String [] = tree.speakers;
 		
 		for ( i = 0; i < speakerNames.Length; i++ ) {
 			fldSpeakerNames.text += speakerNames[i];
@@ -529,7 +529,7 @@ public class OCTreeEditor extends OGPage {
 			savePath = file.FullName;
 			currentRoot = 0;
 
-			OFDeserializer.Deserialize ( OFReader.LoadFile ( file.FullName ), currentTree );
+			OFDeserializer.Deserialize ( OFReader.LoadFile ( savePath ), currentTree );
 			UpdateNodes ();
 			nodeInspector.Refresh ( tree, null, inspectorContainer );
 		};
@@ -562,7 +562,7 @@ public class OCTreeEditor extends OGPage {
 	}
 
 	public function UpdateSpeakers () {
-		tree.SetSpeakerStrings ( fldSpeakerNames.text.Split ( ","[0] ) );
+		tree.speakers = fldSpeakerNames.text.Split ( ","[0] );
 	}
 
 	public function UpdateTags () {

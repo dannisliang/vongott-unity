@@ -115,8 +115,11 @@ public class OFDeserializer {
 		
 		var components : JSONObject = input.GetField ( "components" );
 		output.gameObject.name = input.GetField ( "name" ).str;
-		output.id = input.GetField ( "id" ).str;
-
+		
+		if ( String.IsNullOrEmpty ( output.id ) ) {
+			output.id = input.GetField ( "id" ).str;
+		}
+		
 		for ( var i : int = 0; i < components.list.Count; i++ ) {
 			var c : Component;
 			var typeString : String = components.list[i].GetField ( "_TYPE_" ).str;

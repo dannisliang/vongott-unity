@@ -399,12 +399,24 @@ public class OEObjectField extends OEField {
 		Scene
 	}
 	
+	public class Tuple {
+		public var object : Object;
+		public var path : String;
+	
+		function Tuple ( path : String, object : Object ) {
+			this.path = path;
+			this.object = object;
+		}
+	}
+
 	public var title : OGLabel;
 	public var button : OGButton;
 	public var clear : OGButton; 
 
 	private var obj : Object;
 	private var forcedName : String;
+	private var path : String;
+	private var usePath : boolean = false;
 
 	function OEObjectField ( parent : Transform ) {
 		title = new GameObject ( "lbl_Object" ).AddComponent.< OGLabel > ();
@@ -457,7 +469,8 @@ public class OEObjectField extends OEField {
 	public function Clear () {
 		obj = null;
 		canSet = true;
-		forcedName = "";
+		path = "";
+		usePath = false;
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String ) : Object {
@@ -466,14 +479,29 @@ public class OEObjectField extends OEField {
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String, attachTo : OFSerializedObject ) : Object {
 		if ( canSet ) {
-			obj = setObj;
+			if ( setObj.GetType() == typeof ( String ) ) {
+				path = setObj as String;
+				usePath = true;
+			
+				if ( obj == null && !String.IsNullOrEmpty ( path ) ) {
+					var json : JSONObject = OFReader.LoadFile ( path );
+					var so : OFSerializedObject = OFDeserializer.Deserialize ( json, attachTo );
+					obj = so.GetComponent ( sysType );
+				}
+
+			} else {
+				obj = setObj;
+
+			}
 		}
 		
 		button.func = function () {
 			canSet = false;
 			
 			OEWorkspace.GetInstance().PickFile ( function ( file : System.IO.FileInfo ) {
-				var json : JSONObject = OFReader.LoadFile ( file.FullName );
+				path = file.FullName;
+				
+				var json : JSONObject = OFReader.LoadFile ( path );
 				var so : OFSerializedObject = OFDeserializer.Deserialize ( json, attachTo );
 				obj = so.GetComponent ( sysType );
 				forcedName = file.Name;
@@ -528,7 +556,7 @@ public class OEObjectField extends OEField {
 		var o : UnityEngine.Object;
 		var name : String;
 
-		if ( String.IsNullOrEmpty ( forcedName ) ) {
+		if ( !usePath ) {
 			if ( obj ) {
 				var c : Component = obj as Component;
 				o = obj as UnityEngine.Object;
@@ -553,8 +581,14 @@ public class OEObjectField extends OEField {
 			}
 		
 		} else {
-			name = forcedName;
-		
+			if ( String.IsNullOrEmpty ( path ) ) {
+				name = "None";
+
+			} else {
+				var split : String [] = path.Split ( "/"[0] );
+
+				name = split [ split.Length - 1 ];
+			}
 		}
 		
 		if ( name.Length > 15 ) {
@@ -563,7 +597,11 @@ public class OEObjectField extends OEField {
 		
 		button.text = name;
 
-		return obj;
+		if ( !String.IsNullOrEmpty ( path ) ) {
+			return new Tuple ( path, obj );
+		} else {
+			return obj;
+		}
 	}
 }
 

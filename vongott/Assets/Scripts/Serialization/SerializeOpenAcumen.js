@@ -16,25 +16,19 @@ public class SerializeOpenAcumen extends OFPlugin {
 		output.AddField ( "weaponSubcategoryPreference", input.weaponSubcategoryPreference );
 
 		// Conversation
-		if ( input.conversationTree ) {
-			var tree : JSONObject = OFSerializer.GetPlugin( typeof ( OCTree ) ).Serialize ( input.conversationTree );
-			
-			for ( var i : int = 0; i < tree.GetField ( "speakers" ).list.Count; i++ ) {
-				var go : GameObject = input.conversationTree.speakers[i].gameObject;
-				var so : OFSerializedObject;
+		output.AddField ( "conversationTreePath", input.conversationTreePath.Replace ( "\\", "/" ).Replace ( Application.dataPath, "" ) );
 
-				if ( go ) {
-					so = go.GetComponent.< OFSerializedObject > ();
-				}
+		var speakerObjects : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
-				if ( so ) {
-					tree.GetField ( "speakers" ).list[i].AddField ( "gameObject", so.id );
-				
-				}
+		for ( var i : int = 0; i < input.convoSpeakerObjects.Length; i++ ) {
+			if ( input.convoSpeakerObjects[i] != null ) {
+				speakerObjects.Add ( input.convoSpeakerObjects[i].GetComponent.< OFSerializedObject > ().id );
+			} else {
+				speakerObjects.Add ( "null" );
 			}
-			
-			output.AddField ( "conversationTree", tree );
-		}
+		}	
+
+		output.AddField ( "convoSpeakerObjects", speakerObjects );
 
 		// Path
 		output.AddField ( "updatePathInterval", input.updatePathInterval );
@@ -105,20 +99,26 @@ public class SerializeOpenAcumen extends OFPlugin {
 		}
 
 		// Conversation
-		if ( input.HasField ( "conversationTree" ) ) {
+		if ( input.HasField ( "conversationTreePath" ) && !String.IsNullOrEmpty ( input.GetField ( "conversationTreePath" ).str ) ) {
+			output.conversationTreePath = input.GetField ( "conversationTreePath" ).str;
+			
 			if ( !output.conversationTree ) {
 				output.conversationTree = output.gameObject.AddComponent.< OCTree > ();
 			}
 
-			OFSerializer.GetPlugin ( typeof ( OCTree ) ).Deserialize ( input.GetField ( "conversationTree" ), output.conversationTree );		
-		
-			var speakerList : List.< JSONObject > = input.GetField ( "conversationTree" ).GetField ( "speakers" ).list;
+			var fullPath : String = Application.dataPath + output.conversationTreePath;
 
-			for ( var i : int = 0; i < speakerList.Count; i++ ) {
-				if ( speakerList[i].HasField ( "gameObject" ) ) {
-					OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject, index : int ) {
-						output.conversationTree.speakers[index].gameObject = so.gameObject;
-					}, speakerList[i].GetField ( "gameObject" ).str, i );
+			OFDeserializer.Deserialize ( OFReader.LoadFile ( fullPath ), output.GetComponent.< OFSerializedObject > () );
+
+			var speakerObjects : JSONObject = input.GetField ( "convoSpeakerObjects" );
+
+			if ( speakerObjects ) {
+				output.convoSpeakerObjects = new GameObject [ speakerObjects.list.Count ];
+
+				for ( var i : int = 0; i < speakerObjects.list.Count; i++ ) {
+					OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject, i : int ) {
+						output.convoSpeakerObjects[i] = so.gameObject;
+					}, speakerObjects.list[i].str, i );
 				}
 			}
 		}

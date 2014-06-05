@@ -1,10 +1,21 @@
 #pragma strict
 
+public class OCSpeaker {
+	public var name : String = "";
+	public var gameObject : GameObject;
+
+	function OCSpeaker ( name : String, gameObject : GameObject ) {
+		this.name = name;
+		this.gameObject = gameObject;
+	}
+}
+	
 public class OCManager extends MonoBehaviour {
 	public var flags : OCFlags = new OCFlags ();
 	public var tree : OCTree;
 	public var currentNode : int;
 	public var eventHandler : GameObject;
+	public var speakers : OCSpeaker [] = new OCSpeaker [0];
 
 	private var speaker : OCSpeaker;
 
@@ -61,7 +72,7 @@ public class OCManager extends MonoBehaviour {
 				break;
 
 			case OCNodeType.Speak:
-				speaker = tree.speakers [ node.speak.speaker ];
+				speaker = speakers [ node.speak.speaker ];
 				wait = true;
 				break;
 

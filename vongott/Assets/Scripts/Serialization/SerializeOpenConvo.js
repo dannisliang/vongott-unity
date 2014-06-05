@@ -14,10 +14,8 @@ public class SerializeOpenConvo extends OFPlugin {
 		var rootNodes : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 		var speakers : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
-		for ( var speaker : OCSpeaker in input.speakers ) {
-			var s : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
-			s.AddField ( "id", speaker.id );
-			speakers.Add ( s );
+		for ( var speaker : String in input.speakers ) {
+			speakers.Add ( speaker );
 		}
 
 		for ( var root : OCRootNode in input.rootNodes ) {
@@ -136,15 +134,13 @@ public class SerializeOpenConvo extends OFPlugin {
 	override function Deserialize ( input : JSONObject, component : Component ) {
 		var tree : OCTree = component as OCTree;
 
-		if ( !tree ) { return; }
+		if ( !tree && !input ) { return; }
 		
 		var rootNodes : List.< OCRootNode > = new List.< OCRootNode > ();
-		var speakers : List.< OCSpeaker > = new List.< OCSpeaker > ();
+		var speakers : List.< String > = new List.< String > ();
 
 		for ( var speaker : JSONObject in input.GetField ( "speakers" ).list ) {
-			var s : OCSpeaker = new OCSpeaker ();
-			s.id = speaker.GetField ( "id" ).str;
-			speakers.Add ( s );
+			speakers.Add ( speaker.str );
 		}
 
 		for ( var root : JSONObject in input.GetField ( "rootNodes" ).list ) {
@@ -194,18 +190,18 @@ public class SerializeOpenConvo extends OFPlugin {
 						
 						var object : String = node.GetField ( "event" ).GetField ( "object" ).str;
 
-						// This is a file path
-						if ( object.Contains ( "/" ) ) {
-							event.object = Resources.Load ( object ) as GameObject;
-						
-						// This is an id
-						} else {
-							OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject ) {
-								if ( so ) {
+						// This is an asset path
+						if ( !String.IsNullOrEmpty ( object ) ) {
+							if ( object.Contains ( "/" ) ) {
+								event.object = Resources.Load ( object ) as GameObject;
+							
+							// This is an id
+							} else {
+								OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject ) {
 									event.object = so.gameObject;
-								}
-							}, object );
+								}, object );
 
+							}
 						}
 
 						n.event = event;

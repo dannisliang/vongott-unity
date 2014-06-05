@@ -9,15 +9,10 @@ public enum OCNodeType {
 	End
 }
 
-public class OCSpeaker {
-	public var id : String = "newSpeaker";
-	public var gameObject : GameObject;
-}
-
 public class OCTree extends MonoBehaviour {
 	public var rootNodes : OCRootNode[] = new OCRootNode[0];
 	public var currentRoot : int;
-	public var speakers : OCSpeaker[] = new OCSpeaker[0];
+	public var speakers : String[] = new String[0];
 
 	private static var random : System.Random = new System.Random ();
 
@@ -35,48 +30,20 @@ public class OCTree extends MonoBehaviour {
 		}
 	}
 
-	public function SetSpeakerStrings ( strings : String [] ) {
-		if ( strings.Length > speakers.Length ) {
-			for ( var s : int = speakers.Length; s < strings.Length; s++ ) {
-				AddSpeaker ();
-			}	
-		}
-		
-		for ( var i : int = 0; i < speakers.Length; i++ ) {
-			speakers[i].id = strings[i];
-		}
-	}
-
-	public function GetSpeakerStrings () : String[] {
-		var strings : String[] = new String [ speakers.Length ];
-
-		for ( var i : int = 0; i < speakers.Length; i++ ) {
-			strings[i] = speakers[i].id;
-		}
-
-		return strings;
-	}
-
 	public function AddSpeaker () {
-		var tmpSpk : List.< OCSpeaker > = new List.< OCSpeaker > ( speakers );
+		var tmpSpk : List.< String > = new List.< String > ( speakers );
 
-		tmpSpk.Add ( new OCSpeaker () );
+		tmpSpk.Add ( "" );
 
 		speakers = tmpSpk.ToArray ();
 	}
 
 	public function RemoveSpeaker ( i : int ) {
-		var tmpSpk : List.< OCSpeaker > = new List.< OCSpeaker > ( speakers );
+		var tmpSpk : List.< String > = new List.< String > ( speakers );
 
 		tmpSpk.RemoveAt ( i );
 
 		speakers = tmpSpk.ToArray ();
-	}
-
-	public function SetSpeaker ( go : GameObject, i : int ) {
-		if ( i < speakers.Length ) {
-			speakers[i].gameObject = go;
-		}
 	}
 
 	public function AddRootNode () {

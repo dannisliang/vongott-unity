@@ -275,8 +275,8 @@ class GameCore extends MonoBehaviour {
 		for ( var a : OACharacter in levelContainer.GetComponentsInChildren.< OACharacter > () ) {
 			if ( a.conversationTree ) {
 				for ( var i : int = 0; i < a.conversationTree.speakers.Length; i++ ) {
-					if ( a.conversationTree.speakers[i].id == "Player" ) {
-						a.conversationTree.speakers[i].gameObject = player.gameObject;
+					if ( a.conversationTree.speakers[i] == "Player" ) {
+						a.convoSpeakerObjects[i] = player.gameObject;
 						a.UpdateSpeakers ();
 					}
 				}

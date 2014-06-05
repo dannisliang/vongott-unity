@@ -35,7 +35,7 @@ public class OCNodeInspector extends OEComponentInspector {
 
 		switch ( node.type ) {
 			case OCNodeType.Speak:
-				var newSpeaker : int = Popup ( "Speaker", node.speak.speaker, tree.GetSpeakerStrings () );
+				var newSpeaker : int = Popup ( "Speaker", node.speak.speaker, tree.speakers );
 
 				if ( newSpeaker != node.speak.speaker ) {
 					node.speak.speaker = newSpeaker;

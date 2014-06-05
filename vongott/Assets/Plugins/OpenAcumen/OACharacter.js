@@ -24,7 +24,9 @@ public class OACharacter extends MonoBehaviour {
 	public var weaponSubcategoryPreference : int = 0;
 	
 	// Conversation
+	public var conversationTreePath : String = "";
 	public var conversationTree : OCTree;
+	public var convoSpeakerObjects : GameObject [] = new GameObject [0];
 	public var convoRootNode : int = 0;
 
 	// Path
@@ -67,13 +69,11 @@ public class OACharacter extends MonoBehaviour {
 
 	public function get convoSpeakers () : GameObject [] {
 		if ( conversationTree ) {
-			var output : GameObject [] = new GameObject [conversationTree.speakers.Length];
-		
-			for ( var i : int = 0; i < output.Length; i++ ) {
-				output[i] = conversationTree.speakers[i].gameObject;
+			if ( convoSpeakerObjects.Length != conversationTree.speakers.Length ) {
+				convoSpeakerObjects = new GameObject [conversationTree.speakers.Length];
 			}
 
-			return output;
+			return convoSpeakerObjects;
 		}
 		
 		return null;

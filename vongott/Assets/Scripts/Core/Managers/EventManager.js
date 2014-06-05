@@ -42,7 +42,7 @@ class EventManager extends MonoBehaviour {
 
 	public function OnSetSpeaker ( speaker : OCSpeaker ) {
 		GameCamera.GetInstance().ConvoFocus ( speaker.gameObject, !GameCamera.GetInstance().inConvo || choiceConvo );
-		UIConversation.SetName ( speaker.id );
+		UIConversation.SetName ( speaker.name );
 		GameCamera.GetInstance().inConvo = true;
 	}
 

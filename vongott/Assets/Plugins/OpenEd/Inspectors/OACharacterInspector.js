@@ -23,29 +23,31 @@ public class OACharacterInspector extends OEComponentInspector {
 		// Conversation
 		Offset ( 0, 20 );
 		
-		character.conversationTree = ObjectField ( "Tree", character.conversationTree, typeof ( OCTree ), ".tree", character.GetComponent.< OFSerializedObject > () ) as OCTree;
+		var tuple : OEObjectField.Tuple = ObjectField ( "Tree", character.conversationTreePath, typeof ( OCTree ), ".tree", character.GetComponent.< OFSerializedObject > () ) as OEObjectField.Tuple;
+		
+		if ( tuple ) {
+			character.conversationTreePath = tuple.path;
+			character.conversationTree = tuple.object as OCTree;
+		}
 
-		BeginDisabled ( character.conversationTree == null );
-
-		var rootNodeStrings : String[] = new String[0];
-		var speakerStrings : String[] = new String[0];
-	
 		if ( character.conversationTree ) {
+			var rootNodeStrings : String[] = new String[0];
+		
 			rootNodeStrings = new String[character.conversationTree.rootNodes.Length];
 			for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
 				rootNodeStrings[i] = i.ToString();
 			}
-			
-			speakerStrings = character.conversationTree.GetSpeakerStrings ();
+
+			character.convoRootNode = Popup ( "First root node", character.convoRootNode, rootNodeStrings );	
+
+			if ( character.convoSpeakerObjects.Length != character.conversationTree.speakers.Length ) {
+				character.convoSpeakerObjects = new GameObject [ character.conversationTree.speakers.Length ];
+			}
+
+			for ( i = 0; i < character.convoSpeakerObjects.Length; i++ ) {
+				character.convoSpeakerObjects[i] = ObjectField ( character.conversationTree.speakers[i], character.convoSpeakerObjects[i], typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
+			}
 		}
-
-		character.convoRootNode = Popup ( "First root node", character.convoRootNode, rootNodeStrings );	
-
-		for ( i = 0; i < speakerStrings.Length; i++ ) {
-			character.conversationTree.speakers[i].gameObject = ObjectField ( speakerStrings[i], character.conversationTree.speakers[i].gameObject, typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
-		}
-
-		EndDisabled ();
 
 		// Path
 		Offset ( 0, 20 );
