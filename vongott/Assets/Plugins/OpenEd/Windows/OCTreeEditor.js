@@ -87,34 +87,125 @@ public class OCTreeEditor extends OGPage {
 	private class RootNodeContainer {
 		public var gameObject : GameObject;
 		public var output : Output;
-		public var popSelect : OGPopUp;
+		public var buttons : OGButton [] = new OGButton [0];
+		public var btnMoveLeft : OGButton;
+		public var btnMoveRight : OGButton;
+		public var btnNew : OGButton;
+		public var btnRemove : OGButton;
 
 		function RootNodeContainer ( tree : OCTree, currentRoot : int ) {
 			gameObject = new GameObject ( "RootSelector" );
 			gameObject.transform.parent = instance.treeContainer;
-			gameObject.transform.localPosition = new Vector3 ( instance.treeContainer.GetComponent.< OGScrollView >().size.x / 2, 20, 0 );
+			gameObject.transform.localPosition = new Vector3 ( instance.treeContainer.GetComponent.< OGScrollView >().size.x / 2 - tree.rootNodes.Length * 20 / 2, 40, 0 );
 
-			popSelect = new GameObject ( "pop_Select" ).AddComponent.< OGPopUp > ();
-			popSelect.title = "<root>";
-			popSelect.options = new String [ tree.rootNodes.Length ];
-			popSelect.pivot.x = RelativeX.Center;
-			popSelect.pivot.y = RelativeY.Center;
-			popSelect.target = instance.gameObject;
-			popSelect.message = "SelectRoot";
-			popSelect.passSelectedOption = true;
+			var tmp : List.< OGButton > = new List.< OGButton > ();
 
 			for ( var i : int = 0; i < tree.rootNodes.Length; i++ ) {
-				popSelect.options[i] = i.ToString ();
+				var btn : OGButton = new GameObject ( "btn_Root" + i ).AddComponent.< OGButton > ();
+				btn.transform.parent = gameObject.transform;
+				btn.transform.localPosition = new Vector3 ( i * 20, 0, 0 );
+				btn.transform.localScale = new Vector3 ( 16, 16, 1 );
+
+				btn.actionWithArgument = function ( n : String ) {
+					instance.SelectRoot ( int.Parse ( n ) );
+				};
+				btn.argument = i.ToString ();
+
+				if ( i == currentRoot ) {
+					btn.tint = new Color ( 0.6, 0.8, 1.0, 1.0 );
+
+					output = new Output ( "", new Vector3 ( i * 20, 0, 1 ), false, gameObject.transform );
+
+					if ( tree.rootNodes.Length > 1 ) {
+						btnRemove = new GameObject ( "btn_New" ).AddComponent.< OGButton > ();
+						btnRemove.transform.parent = gameObject.transform;
+						btnRemove.transform.localPosition = new Vector3 ( i * 20, -20, 0 );
+						btnRemove.transform.localScale = new Vector3 ( 16, 16, 1 );
+
+						btnRemove.actionWithArgument = function ( n : String ) {
+							if ( instance.currentRoot >= tree.rootNodes.Length - 1 ) { 
+								instance.currentRoot--;
+							}
+							
+							tree.RemoveRootNode ( int.Parse ( n ) );
+							
+							
+							Refresh ();
+						};
+						btnRemove.argument = i.ToString ();
+
+						btnRemove.tint = Color.red;
+						btnRemove.text = "x";
+						btnRemove.pivot.x = RelativeX.Center;
+						btnRemove.pivot.y = RelativeY.Center;
+						btnRemove.ApplyDefaultStyles ();
+					}
+
+					if ( i > 0 ) {
+						btnMoveLeft = new GameObject ( "btn_MoveLeft" ).AddComponent.< OGButton > ();
+						btnMoveLeft.transform.parent = gameObject.transform;
+						btnMoveLeft.transform.localPosition = new Vector3 ( i * 20 - 20, -20, 0 );
+						btnMoveLeft.transform.localScale = new Vector3 ( 16, 16, 1 );
+
+						btnMoveLeft.text = "<";	
+						btnMoveLeft.actionWithArgument = function ( n : String ) {
+							var i : int = int.Parse ( n );
+							tree.MoveRoot ( i, i - 1 );
+							instance.currentRoot--;
+							Refresh ();
+						};
+						btnMoveLeft.argument = i.ToString ();
+
+						btnMoveLeft.pivot.x = RelativeX.Center;
+						btnMoveLeft.pivot.y = RelativeY.Center;
+						btnMoveLeft.ApplyDefaultStyles ();
+					}
+					
+					if ( i < tree.rootNodes.Length - 1 ) {
+						btnMoveRight = new GameObject ( "btn_MoveRight" ).AddComponent.< OGButton > ();
+						btnMoveRight.transform.parent = gameObject.transform;
+						btnMoveRight.transform.localPosition = new Vector3 ( i * 20 + 20, -20, 0 );
+						btnMoveRight.transform.localScale = new Vector3 ( 16, 16, 1 );
+					
+						btnMoveRight.text = ">";	
+						btnMoveRight.actionWithArgument = function ( n : String ) {
+							var i : int = int.Parse ( n );
+							tree.MoveRoot ( i, i + 1 );
+							instance.currentRoot++;
+							Refresh ();
+						};
+						btnMoveRight.argument = i.ToString ();
+
+
+						btnMoveRight.pivot.x = RelativeX.Center;
+						btnMoveRight.pivot.y = RelativeY.Center;
+						btnMoveRight.ApplyDefaultStyles ();
+					}
+				}
+
+				btn.text = i.ToString ();
+				btn.pivot.x = RelativeX.Center;
+				btn.pivot.y = RelativeY.Center;
+				btn.ApplyDefaultStyles ();
+
+				tmp.Add ( btn );
 			}
 
-			popSelect.selectedOption = currentRoot.ToString ();
-			popSelect.ApplyDefaultStyles ();
+			btnNew = new GameObject ( "btn_New" ).AddComponent.< OGButton > ();
+			btnNew.transform.parent = gameObject.transform;
+			btnNew.transform.localPosition = new Vector3 ( i * 20, 0, 0 );
+			btnNew.transform.localScale = new Vector3 ( 16, 16, 1 );
 
-			popSelect.transform.parent = gameObject.transform;
-			popSelect.transform.localPosition = Vector3.zero;
-			popSelect.transform.localScale = new Vector3 ( 100, 20, 1 );
+			btnNew.action = function () {
+				tree.AddRootNode ();
+				Refresh ();
+			};
 
-			output = new Output ( "", new Vector3 ( 0, 10, 1 ), false, gameObject.transform );
+			btnNew.tint = Color.green;
+			btnNew.text = "+";
+			btnNew.pivot.x = RelativeX.Center;
+			btnNew.pivot.y = RelativeY.Center;
+			btnNew.ApplyDefaultStyles ();
 		}
 	}
 
@@ -410,8 +501,9 @@ public class OCTreeEditor extends OGPage {
 			}
 		}
 
+		var middle : float = treeContainer.GetComponent.< OGScrollView > ().size.x / 2;
 		var rootNodeContainer : RootNodeContainer = new RootNodeContainer ( tree, currentRoot );
-		var firstNodeContainer : NodeContainer = CreateNode ( tree, nextNode, treeContainer.GetComponent.< OGScrollView > ().size.x / 2, 100 );
+		var firstNodeContainer : NodeContainer = CreateNode ( tree, nextNode, middle, 120 );
 
 		Destroy ( rootNodeContainer.output.btnConnect.gameObject );
 		rootNodeContainer.output.btnNewNode.action = function () {
@@ -426,7 +518,7 @@ public class OCTreeEditor extends OGPage {
 			UpdateNodes ();
 		};
 
-		rootNodeContainer.output.nodLine.AddConnection ( firstNodeContainer.input.nodLine );
+		rootNodeContainer.output.nodLine.AddConnection ( firstNodeContainer.input.nodLine, [ new Vector3 ( 0, -40, 0 ), new Vector3 ( middle - ( rootNodeContainer.gameObject.transform.localPosition.x + currentRoot * 20 ), -40, 0 ) ] );
 	}
 
 	public function Open () {
@@ -463,8 +555,8 @@ public class OCTreeEditor extends OGPage {
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 
-	public function SelectRoot ( n : String) {
-		currentRoot = int.Parse ( n );
+	public function SelectRoot ( i : int ) {
+		currentRoot = i;
 
 		Refresh ();
 	}

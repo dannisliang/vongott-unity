@@ -24,7 +24,17 @@ public class OCTree extends MonoBehaviour {
 	public static function CreateID () : int {
 		return random.Next ( 10000, 99999 );
 	}
-	
+
+	public function MoveRoot ( from : int, to : int ) {
+		if ( to > 0 && to < rootNodes.Length ) {
+			var fromRootNode : OCRootNode = rootNodes[from];
+			var toRootNode : OCRootNode = rootNodes[to];
+			
+			rootNodes[to] = fromRootNode;
+			rootNodes[from] = toRootNode;
+		}
+	}
+
 	public function SetSpeakerStrings ( strings : String [] ) {
 		if ( strings.Length > speakers.Length ) {
 			for ( var s : int = speakers.Length; s < strings.Length; s++ ) {
