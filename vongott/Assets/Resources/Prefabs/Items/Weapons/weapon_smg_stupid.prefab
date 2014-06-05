@@ -243,37 +243,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - type: 201
+  - typeIndex: 2
     name: Transform
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 400000}
-  - type: 201
+  - typeIndex: 10
     name: OSItem
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400010}
   id: 
   prefabPath: Prefabs/Items/Weapons/weapon_smg_stupid
@@ -313,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e2f180d32c6fc45a8b08fa6abfa821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Stupid Pistol
+  id: Stupid SMG
   description: This tool is supposedly designed to embed bullets into faces, but does
     a very poor job of it.
   stackable: 0
@@ -321,7 +295,7 @@ MonoBehaviour:
   catIndex: 1
   subcatIndex: 0
   slotSize:
-    x: 1
+    x: 3
     y: 1
   attributes:
   - index: 0
