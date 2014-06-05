@@ -468,9 +468,8 @@ public class OEObjectField extends OEField {
 
 	public function Clear () {
 		obj = null;
-		canSet = true;
+		setCounter = 10;
 		path = "";
-		usePath = false;
 	}
 
 	public function Set ( setObj : Object, sysType : System.Type, strType : String ) : Object {
@@ -603,7 +602,7 @@ public class OEObjectField extends OEField {
 		
 		button.text = name;
 
-		if ( !String.IsNullOrEmpty ( path ) ) {
+		if ( usePath ) {
 			return new Tuple ( path, obj );
 		} else {
 			return obj;
