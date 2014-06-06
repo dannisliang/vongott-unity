@@ -100,8 +100,6 @@ public class PlayerController extends MonoBehaviour {
 			lockedRotationVector = ladder.transform.eulerAngles;
 
 		} else {
-			bodyState = ePlayerBodyState.Idle;
-			
 			isRotationLocked = false;
 
 		}

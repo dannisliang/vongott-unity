@@ -140,7 +140,7 @@ public class OEWorkspace extends MonoBehaviour {
 			rb.isKinematic = true;
 			rb.useGravity = false;
 		}
-	
+		
 		for ( var cc : CharacterController in this.GetComponentsInChildren.< CharacterController > () ) {
 			var capsule : CapsuleCollider = cc.gameObject.AddComponent.< CapsuleCollider > ();
 
@@ -151,9 +151,10 @@ public class OEWorkspace extends MonoBehaviour {
 			cc.enabled = false;
 		}
 		
-		for ( var a : Animator in this.GetComponentsInChildren.< Animator > () ) {
-			a.enabled = false;
-		}
+		// FIXME: This causes strange decapitation bugs
+		//for ( var a : Animator in this.GetComponentsInChildren.< Animator > () ) {
+		//	a.enabled = false;
+		//}
 	}
 
 	// Refresh data

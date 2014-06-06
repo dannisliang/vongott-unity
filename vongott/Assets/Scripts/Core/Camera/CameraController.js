@@ -207,8 +207,6 @@ public class CameraController extends MonoBehaviour {
 		state = eCameraState.FirstPerson;
 		GameCore.GetPlayer().CheckWeaponPosition();
 		locked = true;
-	
-		GameCore.Print ( "CameraController | Locked to first person" );
 	}
 
 	function Unlock () {
@@ -219,8 +217,6 @@ public class CameraController extends MonoBehaviour {
 		}
 		
 		GameCore.GetPlayer().CheckWeaponPosition();
-
-		GameCore.Print ( "CameraController | Unlocked" );
 
 		storedPreference = eCameraState.None;	
 	}
