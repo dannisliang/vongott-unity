@@ -1,7 +1,6 @@
 ﻿#pragma strict
 
-public class Ladder extends InteractiveObject {
-
+public class Ladder extends MonoBehaviour {
 	private var adjacentLadders : Ladder [];
 
 	public function GetHighestPoint () : float {
@@ -40,22 +39,12 @@ public class Ladder extends InteractiveObject {
 		adjacentLadders = tempList.ToArray();
 	}
 	
-	override function InvokePrompt () {
-		UIHUD.GetInstance().ShowNotification ( "Climb" );
-	}
+	public function OnTriggerEnter ( c : Collider ) {
+		var player : Player = c.gameObject.GetComponent.< Player > ();
 
-	override function Interact () {
-		GameCore.interactiveObjectLocked = true;
-		
-		GameCore.GetPlayer().controller.SetClimbing ( true, this );
-
-		InputManager.jumpFunction = Exit;
-	}
-
-	public function Exit () {
-		GameCore.GetPlayer().controller.SetClimbing ( false );
-
-		GameCore.interactiveObjectLocked = false;
+		if ( player ) {
+			player.controller.SetLadder ( this );
+		}
 	}
 
 }

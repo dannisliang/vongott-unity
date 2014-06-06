@@ -247,6 +247,7 @@ public class CameraController extends MonoBehaviour {
 		// Don't do anything if target is not defined
 		if ( target == null ) {
 			target = GameCore.GetPlayerObject ();
+			return;
 		
 		} else if ( !player ) {
 			player = target.GetComponent.<Player>();
@@ -254,6 +255,7 @@ public class CameraController extends MonoBehaviour {
 		
 		} else if ( !player.controller ) {
 			player.controller = player.GetComponent.< PlayerController > ();
+			return;
 
 		}
 

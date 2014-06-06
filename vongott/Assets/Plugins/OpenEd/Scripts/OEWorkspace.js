@@ -174,6 +174,8 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// File I/O
 	private function LoadMap ( json : JSONObject ) : IEnumerator {
+		yield WaitForEndOfFrame ();
+		
 		OGRoot.GetInstance().GoToPage ( "Loading" );
 		
 		yield WaitForEndOfFrame ();
@@ -218,10 +220,10 @@ public class OEWorkspace extends MonoBehaviour {
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
 		fileBrowser.filter = ".map";
 		fileBrowser.callback = function ( file : FileInfo ) {
-			var json : JSONObject = OFReader.LoadFile ( file.FullName );
-			
 			currentSavePath = file.FullName;
-
+			PlayerPrefs.SetString ( "OEWorkspace.currentSavePath", currentSavePath );
+			PlayerPrefs.Save ();
+			var json : JSONObject = OFReader.LoadFile ( currentSavePath );
 			StartCoroutine ( LoadMap ( json ) );
 		};
 		fileBrowser.sender = "Home";
@@ -578,6 +580,13 @@ public class OEWorkspace extends MonoBehaviour {
 	// Init
 	public function Start () {
 		instance = this;
+	
+		currentSavePath = PlayerPrefs.GetString ( "OEWorkspace.currentSavePath" );
+
+		if ( !String.IsNullOrEmpty ( currentSavePath ) ) {
+			var json : JSONObject = OFReader.LoadFile ( currentSavePath );
+			StartCoroutine ( LoadMap ( json ) );
+		}
 	}
 
 	// Update

@@ -59,6 +59,10 @@ function Start () {
 }
  
 function UpdateFirstPerson ( inputX : float, inputY : float ) {
+	if ( !myTransform ) {
+		myTransform = transform;
+	}
+
 	transform.rotation = Quaternion.Euler ( 0, Camera.main.transform.eulerAngles.y, 0 );
 	
 	// If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed

@@ -41,34 +41,20 @@ public class PlayerController extends MonoBehaviour {
 	private var ladderBottomY : float;
 	private var player : Player;
 	private var character : CharacterController;
+	private var ladder : Ladder;
 
 	public function SetControlMode ( mode : ePlayerControlMode ) {
 		controlMode = mode;
 	}
 
-	public function SetClimbing ( state : boolean ) {
-		SetClimbing ( state, null );
-	}
-
-	public function SetClimbing ( state : boolean, ladder : Ladder ) {
-		isClimbing = state;
-		isRotationLocked = state;
-		useForcedPoint = state;
-		
-		if ( state ) {
+	public function SetLadder ( ladder : Ladder ) {
+		if ( ladder != null ) {
 			GameCore.GetPlayer().HolsterItem();
 		} else {
 			GameCore.GetPlayer().UnholsterItem();
 		}
 
-		if ( ladder ) {
-			lockedRotationVector = -ladder.transform.forward;
-			forcedPointVector = ladder.transform.position + lockedRotationVector * 0.05;
-			ladderBottomY = ladder.GetLowestPoint();
-			ladderTopY = ladder.GetHighestPoint();
-		}
-
-		GameCore.Print ( "PlayerController | " + ( isClimbing ? "Started climbing" : "Stopped climbing" ) );
+		this.ladder = ladder;
 	}
 
 	public function Start () {
@@ -77,20 +63,20 @@ public class PlayerController extends MonoBehaviour {
 	}
 	
 	public function UpdateThirdPerson () {
-		if ( deltaVertical != 0 || deltaHorizontal != 0 ) {
-			var targetRotation : float = Camera.main.transform.eulerAngles.y;
-			var angle = Mathf.Atan2 ( deltaVertical, -deltaHorizontal ) * Mathf.Rad2Deg;
-			targetRotation += angle - 90;
+		if ( isRotationLocked ) {
+			player.transform.rotation = Quaternion.Euler ( lockedRotationVector );
+		
+		} else {
+			if ( deltaVertical != 0 || deltaHorizontal != 0 ) {
+				var targetRotation : float = Camera.main.transform.eulerAngles.y;
+				var angle = Mathf.Atan2 ( deltaVertical, -deltaHorizontal ) * Mathf.Rad2Deg;
+				targetRotation += angle - 90;
 
-			var rotationQuaternion : Quaternion = Quaternion.Euler ( 0, targetRotation, 0 );
-				
-			player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, rotationQuaternion, 5 * Time.deltaTime );
+				var rotationQuaternion : Quaternion = Quaternion.Euler ( 0, targetRotation, 0 );
+					
+				player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, rotationQuaternion, 5 * Time.deltaTime );
+			}
 		}
-	}
-
-	// For locked rotation
-	public function UpdateThirdPerson ( lockedRotation : Vector3 ) {
-		player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, Quaternion.Euler ( lockedRotation ), 5 * Time.deltaTime );
 	}
 
 	public function Update () {
@@ -101,18 +87,31 @@ public class PlayerController extends MonoBehaviour {
 		if ( !player ) {
 			player = this.GetComponent(Player);
 		}
-		
+	
+		isClimbing = ladder != null;	
 		isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1); 
 		inCrawlspace = bodyState == ePlayerBodyState.Crouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
 		
 		// Climbing
 		if ( isClimbing ) {
 			bodyState = ePlayerBodyState.Climbing;
+		
+			isRotationLocked = true;
+			lockedRotationVector = ladder.transform.eulerAngles;
+
+		} else {
+			bodyState = ePlayerBodyState.Idle;
+			
+			isRotationLocked = false;
+
 		}
 
 		// Jumping
 		if ( Input.GetKeyDown ( KeyCode.Space ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
-			if ( isGrounded ) {
+			if ( isClimbing ) {
+				ladder = null;
+
+			} else if ( isGrounded ) {
 				bodyState = ePlayerBodyState.Jumping;
 
 				SFXManager.GetInstance().Play ( "sfx_actor_jump_" + Random.Range ( 1, 3 ), this.audio );
@@ -140,7 +139,7 @@ public class PlayerController extends MonoBehaviour {
 		}
 				
 		// Shoot
-		if ( Input.GetMouseButton ( 0 ) ) {
+		if ( Input.GetMouseButton ( 0 ) && !isClimbing ) {
 			actionState = ePlayerActionState.Shooting;
 		
 		// Interact
@@ -151,7 +150,7 @@ public class PlayerController extends MonoBehaviour {
 			}
 			
 		// Idle
-		} else {
+		} else if ( !isClimbing ) {
 			actionState = ePlayerActionState.Idle;
 		
 		}
@@ -170,11 +169,6 @@ public class PlayerController extends MonoBehaviour {
 		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
 			// Climbing
 			if ( isClimbing ) {
-				if ( player.transform.position.y <= ladderBottomY ) {
-					deltaVertical = Mathf.Clamp ( deltaVertical, 0, 1 );
-				} else if ( player.transform.position.y + 1.8 >= ladderTopY ) {
-					deltaVertical = Mathf.Clamp ( deltaVertical, -1, 0 );
-				}
 
 			// Sprint
 			} else if ( Input.GetKey ( KeyCode.LeftShift ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
@@ -195,15 +189,16 @@ public class PlayerController extends MonoBehaviour {
 		
 		// Direction
 		if ( controlMode == ePlayerControlMode.ThirdPerson ) {
-			if ( isRotationLocked ) {
-				UpdateThirdPerson ();
-
-			} else {
-				UpdateThirdPerson ( lockedRotationVector );
-			}
+			UpdateThirdPerson ();
 		
 		} else {
-			this.GetComponent.<FirstPersonController>().UpdateFirstPerson ( deltaHorizontal, deltaVertical );
+			if ( isClimbing ) {
+				transform.localPosition.y += deltaVertical * 0.01;	
+
+			} else {
+				this.GetComponent.<FirstPersonController>().UpdateFirstPerson ( deltaHorizontal, deltaVertical );
+			
+			}
 		}
 			
 		
