@@ -1,44 +1,69 @@
 ﻿#pragma strict
 
 public class Ladder extends MonoBehaviour {
-	private var adjacentLadders : Ladder [];
+	public var segs : int = 10;
+	
+	private var unset : boolean = true;
 
-	public function GetHighestPoint () : float {
-		var point : float = this.transform.position.y + collider.bounds.max.y;
-		
-		for ( var i : int = 0; i < adjacentLadders.Length; i++ ) {
-			if ( adjacentLadders[i].collider.bounds.max.y > point ) {
-				point = adjacentLadders[i].collider.bounds.max.y;
-			}
-		}	
-
-		return point;
+	public function Start () {
+		segments = segs;
 	}
 
-	public function GetLowestPoint () : float {
-		var point : float = this.transform.position.y;
+	public function Update () {
 		
-		for ( var i : int = 0; i < adjacentLadders.Length; i++ ) {
-			if ( adjacentLadders[i].transform.position.y < point ) {
-				point = adjacentLadders[i].transform.position.y;
-			}
-		}	
-
-		return point;
+	}
+	
+	public function get segments () : int {
+		return segs;
 	}
 
-	function Start () {
-		var tempList : List.< Ladder > = new List.< Ladder > ();
+	public function set segments ( value : int ) {
+		if ( value == segs && !unset ) { return; }
 
-		for ( var l : Ladder in GameObject.FindObjectsOfType(typeof(Ladder)) ) {
-			if ( l.transform.position.x == this.transform.position.x && l.transform.position.z == this.transform.position.z && l.transform.localEulerAngles == this.transform.localEulerAngles ) {
-				tempList.Add ( l );
+		unset = false;
+		segs = value;
+
+		var template : MeshFilter = this.GetComponentInChildren.< MeshFilter > ();;
+		var filters : MeshFilter [] = this.GetComponentsInChildren.< MeshFilter > ();
+		var colliders : BoxCollider [] = this.GetComponentsInChildren.< BoxCollider > ();
+		var i : int = 0;
+		var height : float = template.mesh.bounds.size.y;
+
+		if ( value > filters.Length ) {
+			for ( i = 1; i < value; i++ ) {
+				if ( i >= filters.Length ) {
+					var newFilter : MeshFilter = Instantiate ( template );
+					newFilter.transform.parent = this.transform;
+					newFilter.transform.localPosition = new Vector3 ( 0, height * i, 0 );
+					newFilter.transform.localEulerAngles = Vector3.zero;
+					newFilter.gameObject.name = newFilter.gameObject.name.Replace ( "(Clone)", "" );
+				
+				} else {
+					filters[i].transform.localPosition = new Vector3 ( 0, height * i, 0 );
+					filters[i].transform.localEulerAngles = Vector3.zero;
+				
+				}
+			}
+		
+		} else if ( value < filters.Length ) {
+			for ( i = filters.Length - 1; i > 1; i-- ) {
+				if ( i > value ) {
+					Destroy ( filters[i].gameObject );
+				
+				} else {
+					filters[i].transform.localPosition = new Vector3 ( 0, height * i, 0 );
+					filters[i].transform.localEulerAngles = Vector3.zero;
+				
+				}
 			}
 		}
 
-		adjacentLadders = tempList.ToArray();
+		for ( i = 0; i < colliders.Length; i++ ) {
+			colliders[i].size.y = value * height;
+			colliders[i].center.y = value * height / 2;
+		}
 	}
-	
+
 	public function OnTriggerEnter ( c : Collider ) {
 		var player : Player = c.gameObject.GetComponent.< Player > ();
 

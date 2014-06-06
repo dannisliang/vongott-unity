@@ -53,10 +53,10 @@ public class OECamera extends MonoBehaviour {
 
 		for ( var i : int = 0; i < OEWorkspace.GetInstance().selection.Count; i++ ) {
 			var go : GameObject = OEWorkspace.GetInstance().selection[i].gameObject;
-			var renderer : Renderer = go.GetComponentInChildren.< Renderer > ();
+			var collider : Collider = go.GetComponentInChildren.< Collider > ();
 
 			if ( renderer ) {
-				var b : Bounds = renderer.bounds;
+				var b : Bounds = collider.bounds;
 				
 				var bbl : Vector3 = b.min;
 				var btl : Vector3 = bbl + Vector3.up * b.size.y;
