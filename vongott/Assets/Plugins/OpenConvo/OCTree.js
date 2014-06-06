@@ -19,21 +19,7 @@ public class OCTree extends MonoBehaviour {
 	public static function CreateID () : int {
 		return random.Next ( 10000, 99999 );
 	}
-/*
-	public function Update () {
-		for ( var root : OCRootNode in rootNodes ) {
-			for ( var node in root.nodes ) {
-				if ( node.type == OCNodeType.Event && node.event.object && node.event.object.activeInHierarchy ) {
-					Debug.Log ( "-------------------------" );
-					Debug.Log ( "Object: " + node.event.object );
-				       	Debug.Log ( "Message: " + node.event.message );
-					Debug.Log ( "Event to target: " + node.event.eventToTarget );
-					Debug.Log ( "Owner: " + this.gameObject );
-				}
-			}
-		}
-	}
-*/
+	
 	public function MoveRoot ( from : int, to : int ) {
 		if ( to >= 0 && to < rootNodes.Length ) {
 			var fromRootNode : OCRootNode = rootNodes[from];
@@ -347,6 +333,8 @@ public class OCEvent {
 	public var message : String;
 	public var argument : String;
 	public var object : GameObject;
+	public var objectPath : String;
+	public var objectId : String;
 	public var eventToTarget : boolean = false;
 }
 

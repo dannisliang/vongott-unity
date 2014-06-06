@@ -69,22 +69,26 @@ public class SerializeOpenConvo extends OFPlugin {
 						event.AddField ( "argument", node.event.argument );
 						event.AddField ( "eventToTarget", node.event.eventToTarget );
 						
-						var objectString : String = "";	
 						var so : OFSerializedObject;
+						
+						if ( !String.IsNullOrEmpty ( node.event.objectId ) ) {
+							event.AddField ( "objectId", node.event.objectId );
+						
+						} else if ( !String.IsNullOrEmpty ( node.event.objectPath ) ) {
+							event.AddField ( "objectPath", node.event.objectPath );
 
-						if ( node.event.object ) {
+						} else if ( node.event.object ) {
 							so = node.event.object.GetComponent.< OFSerializedObject > ();
 							
 							if ( so ) {
 								if ( so.gameObject.activeInHierarchy ) {
-									objectString = so.id;
+									event.AddField ( "objectId", so.id );
+								
 								} else {
-									objectString = so.prefabPath;
+									event.AddField ( "objectPath", so.prefabPath );
 								}
 							}
 						}
-
-						event.AddField ( "object", objectString );
 
 						n.AddField ( "event", event );
 
@@ -207,20 +211,15 @@ public class SerializeOpenConvo extends OFPlugin {
 						event.argument = node.GetField ( "event" ).GetField ( "argument" ).str;
 						event.eventToTarget = node.GetField ( "event" ).GetField ( "eventToTarget" ).b;
 						
-						var objectString : String = node.GetField ( "event" ).GetField ( "object" ).str;
-
-						if ( !String.IsNullOrEmpty ( objectString ) ) {
-							// This is an asset path
-							if ( objectString.Contains ( "/" ) ) {
-								event.object = Resources.Load ( objectString ) as GameObject;
+						if ( node.GetField ( "event" ).HasField ( "objectPath" ) ) {
+							event.objectPath = node.GetField ( "event" ).GetField ( "objectPath" ).str;
+							event.object = Resources.Load ( event.objectPath ) as GameObject;
 							
-							// This is an id
-							} else {
-								OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject, indices : int [] ) {
-									tree.rootNodes [ indices[0] ].nodes [ indices[1] ].event.object = so.gameObject;
-								}, objectString, [ i, i1 ] );
-
-							}
+						} else if ( node.GetField ( "event" ).HasField ( "objectId" ) ) {
+							event.objectId = node.GetField ( "event" ).GetField ( "objectId" ).str;
+							OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject, indices : int [] ) {
+								tree.rootNodes [ indices[0] ].nodes [ indices[1] ].event.object = so.gameObject;
+							}, event.objectId, [ i, i1 ] );
 						}
 
 						n.event = event;

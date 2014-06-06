@@ -108,6 +108,7 @@ public class PlayerController extends MonoBehaviour {
 		if ( Input.GetKeyDown ( KeyCode.Space ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
 			if ( isClimbing ) {
 				ladder = null;
+				bodyState = ePlayerBodyState.Falling;
 
 			} else if ( isGrounded ) {
 				bodyState = ePlayerBodyState.Jumping;

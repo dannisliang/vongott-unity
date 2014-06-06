@@ -84,6 +84,8 @@ public class OEWorkspace extends MonoBehaviour {
 
 	private var undoBuffer : List.< OEUndoAction > = new List.< OEUndoAction > ();
 	private var lastUndo : int = -1;
+	private var initCamPos : Vector3;
+	private var initCamRot : Quaternion;
 
 	public static var instance : OEWorkspace;
 
@@ -215,6 +217,16 @@ public class OEWorkspace extends MonoBehaviour {
 		yield WaitForEndOfFrame ();
 		
 		OGRoot.GetInstance().GoToPage ( "Home" );
+	}
+
+	public function NewFile () {
+		ClearScene ();
+
+		cam.transform.position = initCamPos;
+		cam.transform.rotation = initCamRot;
+		focusPoint = Vector3.zero;
+
+		currentSavePath = "";
 	}
 
 	public function OpenFile () {
@@ -582,6 +594,9 @@ public class OEWorkspace extends MonoBehaviour {
 	public function Start () {
 		instance = this;
 	
+		initCamPos = cam.transform.position;
+		initCamRot = cam.transform.rotation;
+
 		currentSavePath = PlayerPrefs.GetString ( "OEWorkspace.currentSavePath" );
 
 		if ( !String.IsNullOrEmpty ( currentSavePath ) ) {
