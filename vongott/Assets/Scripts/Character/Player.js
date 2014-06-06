@@ -94,6 +94,8 @@ class Player extends MonoBehaviour {
 		
 		item.PlaySound ( "equip" );
 
+		equippedObject.SendMessage ( "SetInventory", GameCore.GetInventory(), SendMessageOptions.DontRequireReceiver );
+
 		if ( item.category == "Weapon" && ( item.subcategory == "OneHanded" || item.subcategory == "TwoHanded" ) ) {
 			ResetFire();
 		

@@ -409,8 +409,6 @@ public class OSInventory extends MonoBehaviour {
 	
 		item.definitions = this.definitions;
 	
-		item.gameObject.SendMessage ( "SetInventory", this, SendMessageOptions.DontRequireReceiver );
-
 		// Check if similar item is already in the inventory
 		for ( var i : int = 0; i < slots.Count; i++ ) {
 			if ( slots[i].item.id == item.id ) {
@@ -430,18 +428,6 @@ public class OSInventory extends MonoBehaviour {
 
 		availableCell = grid.GetAvailableCell ( item );
 		
-		// Set up reference for item behaviours
-		var grenade : OSGrenade = item.GetComponent.< OSGrenade > ();
-		var firearm : OSFirearm = item.GetComponent.< OSFirearm > ();
-
-		if ( grenade ) {
-			grenade.SetInventory ( this );
-		
-		} else if ( firearm ) {
-			firearm.SetInventory ( this );
-		
-		}
-
 		if ( OSPoint.IsNullOrNegative ( availableCell ) ) {
 			return false;
 

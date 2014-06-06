@@ -48,10 +48,11 @@ public class OSGrenade extends MonoBehaviour {
 
 	public function SetInventory ( inventory : OSInventory ) {
 		this.inventory = inventory;
+		Debug.Log ( inventory );
 	}
 
 	public function Throw () {
-		if ( !bezier ) { return; }
+		if ( !bezier || thrown ) { return; }
 		
 		this.transform.parent = this.transform.root.parent;
 		
@@ -67,7 +68,9 @@ public class OSGrenade extends MonoBehaviour {
 			lineRenderer.enabled = false;
 		}
 
-		inventory.DecreaseItem ( this as OSItem );
+		if ( inventory ) {
+			inventory.DecreaseItem ( this.GetComponent.< OSItem > () );
+		}
 	}
 
 	public function Aim ( pos : Vector3, dir : Vector3 ) {
