@@ -69,13 +69,22 @@ public class SerializeOpenConvo extends OFPlugin {
 						event.AddField ( "argument", node.event.argument );
 						event.AddField ( "eventToTarget", node.event.eventToTarget );
 						
-						var prefabPath : String = "";
-						
-						if ( node.event.object && node.event.object.GetComponent.< OFSerializedObject > () ) {
-							prefabPath = node.event.object.GetComponent.< OFSerializedObject > ().prefabPath;
+						var objectString : String = "";	
+						var so : OFSerializedObject;
+
+						if ( node.event.object ) {
+							so = node.event.object.GetComponent.< OFSerializedObject > ();
+							
+							if ( so ) {
+								if ( so.gameObject.activeInHierarchy ) {
+									objectString = so.id;
+								} else {
+									objectString = so.prefabPath;
+								}
+							}
 						}
 
-						event.AddField ( "object", prefabPath );
+						event.AddField ( "object", objectString );
 
 						n.AddField ( "event", event );
 
@@ -139,17 +148,20 @@ public class SerializeOpenConvo extends OFPlugin {
 	
 	override function Deserialize ( input : JSONObject, component : Component ) {
 		var tree : OCTree = component as OCTree;
+		var i : int = 0;
+		var i1 : int = 0;
 
 		if ( !tree && !input ) { return; }
 		
 		var rootNodes : List.< OCRootNode > = new List.< OCRootNode > ();
 		var speakers : List.< String > = new List.< String > ();
 
-		for ( var speaker : JSONObject in input.GetField ( "speakers" ).list ) {
-			speakers.Add ( speaker.str );
+		for ( i = 0; i < input.GetField ( "speakers" ).list.Count; i++ ) {
+			speakers.Add ( input.GetField ( "speakers" ).list[i].str );
 		}
 
-		for ( var root : JSONObject in input.GetField ( "rootNodes" ).list ) {
+		for ( i = 0; i < input.GetField ( "rootNodes" ).list.Count; i++ ) {
+			var root : JSONObject = input.GetField ( "rootNodes" ).list[i];
 			var r : OCRootNode = new OCRootNode ();
 			var tags : List.< String > = new List.< String >();
 
@@ -159,7 +171,8 @@ public class SerializeOpenConvo extends OFPlugin {
 
 			var nodes : List.< OCNode > = new List.< OCNode > ();
 
-			for ( var node : JSONObject in root.GetField ( "nodes" ).list ) {
+			for ( i1 = 0; i1 < root.GetField ( "nodes" ).list.Count; i1++ ) {
+				var node : JSONObject = root.GetField ( "nodes" ).list[i1];
 				var n : OCNode = new OCNode ();
 				var connectedTo : List.< int > = new List.< int > ();
 
@@ -194,18 +207,18 @@ public class SerializeOpenConvo extends OFPlugin {
 						event.argument = node.GetField ( "event" ).GetField ( "argument" ).str;
 						event.eventToTarget = node.GetField ( "event" ).GetField ( "eventToTarget" ).b;
 						
-						var object : String = node.GetField ( "event" ).GetField ( "object" ).str;
+						var objectString : String = node.GetField ( "event" ).GetField ( "object" ).str;
 
-						// This is an asset path
-						if ( !String.IsNullOrEmpty ( object ) ) {
-							if ( object.Contains ( "/" ) ) {
-								event.object = Resources.Load ( object ) as GameObject;
+						if ( !String.IsNullOrEmpty ( objectString ) ) {
+							// This is an asset path
+							if ( objectString.Contains ( "/" ) ) {
+								event.object = Resources.Load ( objectString ) as GameObject;
 							
 							// This is an id
 							} else {
-								OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject ) {
-									event.object = so.gameObject;
-								}, object );
+								OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject, indices : int [] ) {
+									tree.rootNodes [ indices[0] ].nodes [ indices[1] ].event.object = so.gameObject;
+								}, objectString, [ i, i1 ] );
 
 							}
 						}

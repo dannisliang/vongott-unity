@@ -102,6 +102,17 @@ public class OACharacter extends MonoBehaviour {
 		behaviour = OABehaviour.GoToGoal;
 		speed = 0.25;
 	}
+	
+	public function NextPathGoalRun () {
+		if ( currentPathGoal + 1 < pathGoals.Length ) {
+			currentPathGoal++;
+		} else {
+			currentPathGoal = 0;
+		}
+
+		behaviour = OABehaviour.GoToGoal;
+		speed = 1;
+	}
 
 	public function TakeDamage ( damage : float ) {
 		health -= damage;

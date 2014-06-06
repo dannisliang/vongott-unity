@@ -300,7 +300,10 @@ public class OCTreeEditor extends OGPage {
 				case OCNodeType.Speak:
 					btnSelect.tint = instance.speakerColors[node.speak.speaker];
 
-					if ( !node.speak.lines[0] || String.IsNullOrEmpty ( node.speak.lines[0].text ) ) {
+					if ( node.speak.lines.Length > 1 ) {
+						btnSelect.text = "(choice)";
+
+					} else if ( !node.speak.lines[0] || String.IsNullOrEmpty ( node.speak.lines[0].text ) ) {
 						btnSelect.text = "...";
 
 					} else if ( node.speak.lines[0].text.Length > 13 ) {
@@ -359,6 +362,7 @@ public class OCTreeEditor extends OGPage {
 	public var treeContainer : Transform;
 	public var fldSpeakerNames : OGTextField;
 	public var fldRootTags :  OGTextField;
+	public var lblTreeTitle : OGLabel;
 	public var inspectorContainer : Transform;
 	public var distance : Vector2 = new Vector2 ( 200, 200 );
 	public var speakerColors : Color [];
@@ -519,6 +523,22 @@ public class OCTreeEditor extends OGPage {
 		};
 
 		rootNodeContainer.output.nodLine.AddConnection ( firstNodeContainer.input.nodLine, [ new Vector3 ( 0, -40, 0 ), new Vector3 ( middle - ( rootNodeContainer.gameObject.transform.localPosition.x + currentRoot * 20 ), -40, 0 ) ] );
+	
+		treeContainer.GetComponent.< OGScrollView >().UpdateWidget ();
+
+		if ( !String.IsNullOrEmpty ( savePath ) ) {
+			var string : String = savePath.Replace ( "\\", "/" ).Replace ( Application.dataPath, "" );
+
+			if ( string.Length > 50 ) {
+				var strings : String [] = string.Split ( "/"[0] );
+				
+				string = ".../" + strings [ strings.Length - 1 ];
+			}
+			
+			lblTreeTitle.text = "Tree Editor (" + string + ")";
+		} else {
+			lblTreeTitle.text = "Tree Editor";
+		}
 	}
 
 	public function Open () {
@@ -653,10 +673,6 @@ public class OCTreeEditor extends OGPage {
 
 			}
 		}
-	}
-
-	override function ExitPage () {
-		savePath = "";
 	}
 
 	override function StartPage () {

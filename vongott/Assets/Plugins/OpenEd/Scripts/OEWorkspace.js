@@ -258,12 +258,14 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Pick things
 	public function PickPoint ( callback : Function ) {
+		picker.sender = OGRoot.GetInstance().currentPage.pageName;
 		picker.callback = callback;
 		picker.getPoint = true;	
 		OGRoot.GetInstance().GoToPage ( "Picker" );
 	}
 	
 	public function PickObject ( callback : Function, type : System.Type ) {
+		picker.sender = OGRoot.GetInstance().currentPage.pageName;
 		picker.callback = callback;
 		picker.type = type;
 		OGRoot.GetInstance().GoToPage ( "Picker" );
@@ -273,7 +275,7 @@ public class OEWorkspace extends MonoBehaviour {
 		var drawer : OEPrefabsDrawer = toolbar.OpenDrawer ( "Prefabs" ) as OEPrefabsDrawer;
 
 		if ( drawer ) {
-			drawer.SetPicker ( callback, type );
+			drawer.SetPicker ( callback, type, OGRoot.GetInstance().currentPage.pageName );
 		}
 	}
 	

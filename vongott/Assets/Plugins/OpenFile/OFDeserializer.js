@@ -114,8 +114,11 @@ public class OFDeserializer {
 		}
 		
 		var components : JSONObject = input.GetField ( "components" );
-		output.gameObject.name = input.GetField ( "name" ).str;
 		
+		if ( !String.IsNullOrEmpty ( input.GetField ( "name" ).str ) ) {
+			output.gameObject.name = input.GetField ( "name" ).str;
+		}
+
 		if ( String.IsNullOrEmpty ( output.id ) ) {
 			output.id = input.GetField ( "id" ).str;
 		}
