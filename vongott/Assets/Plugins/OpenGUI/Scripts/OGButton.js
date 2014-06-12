@@ -7,8 +7,8 @@ class OGButton extends OGWidget {
 	public var message : String;
 	public var argument : String;
 	public var func : Function;
-	public var action : Action;
-	public var actionWithArgument : Action.< String >;
+	public var action : System.Action;
+	public var actionWithArgument : System.Action.< String >;
 	public var argumentSource : MonoBehaviour;
 	public var argumentSourceField : String = "";
 	public var enableImage : boolean = false;

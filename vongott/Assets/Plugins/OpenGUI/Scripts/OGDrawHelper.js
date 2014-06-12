@@ -42,25 +42,12 @@ public class OGDrawHelper {
 		GL.Vertex ( end + new Vector3 ( 0, 0, depth ) );
 	}
 	
-	public static function DrawCurve ( start : Vector3, startDir : Vector3, end : Vector3, endDir : Vector3, segments : int ) {
-		/*var q0 : Vector3 = CalculateBezierPoint ( 0, start, startDir, end, endDir );
-
-		for ( var i : int = 0; i < segments; i++ ) {
-			var t : float = i / ( segments * 1.0 );
-			var q1 : Vector3 = CalculateBezierPoint ( t, start, startDir, end, endDir );
-			
-			GL.Vertex ( q0 );
-			GL.Vertex ( q1 );
-
-			q0 = q1;
-		}*/
-
-		var bezier : Bezier = new Bezier ( start, startDir, endDir, end );
-		var lastPoint : Vector3;
+	public static function DrawCurve ( start : Vector3, startDir : Vector3, endDir : Vector3, end : Vector3, segments : int ) {
+		var lastPoint : Vector3; 
 
 		for ( var i : int = 0; i < segments; i++ ) {
 			var time : float = ( i * 1.0 ) * ( 1.0 / segments );
-			var p : Vector3 = bezier.GetPointAtTime ( time );
+			var p : Vector3 = CalculateBezierPoint ( time, start, startDir, endDir, end );
 		
 			if ( i > 0 ) {
 				GL.Vertex ( lastPoint );
