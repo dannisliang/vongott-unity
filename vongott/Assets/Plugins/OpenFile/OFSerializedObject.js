@@ -1,5 +1,61 @@
 ﻿#pragma strict
 
+public class OFAssetLink {
+	public var resourcePath : String;
+	public var filePath : String;
+
+	private var texture : Texture2D;
+	private var audioClip : AudioClip;
+	
+	public function GetAudioClip () : AudioClip {
+		if ( audioClip == null && !String.IsNullOrEmpty ( resourcePath ) ) {
+			audioClip = Resources.Load ( resourcePath ) as AudioClip;
+		}
+
+		return audioClip;
+	}
+
+	public function GetTexture ( callback : System.Action.< AudioClip > ) : IEnumerator {
+		if ( audioClip == null && !String.IsNullOrEmpty ( filePath ) ) {
+			var www : WWW = new WWW ( filePath );
+
+			yield www;
+
+			audioClip = www.audioClip;
+
+			callback ( audioClip );
+		
+		} else {
+			callback ( audioClip );
+
+		}
+	}
+	
+	public function GetTexture () : Texture2D {
+		if ( texture == null && !String.IsNullOrEmpty ( resourcePath ) ) {
+			texture = Resources.Load ( resourcePath ) as Texture2D;
+		}
+
+		return texture;
+	}
+
+	public function GetTexture ( callback : System.Action.< Texture2D > ) : IEnumerator {
+		if ( texture == null && !String.IsNullOrEmpty ( filePath ) ) {
+			var www : WWW = new WWW ( filePath );
+
+			yield www;
+
+			texture = www.texture;
+
+			callback ( texture );
+		
+		} else {
+			callback ( texture );
+
+		}
+	}
+}
+
 public class OFField {
 	public var typeIndex : int;
 	public var name : String = "";
