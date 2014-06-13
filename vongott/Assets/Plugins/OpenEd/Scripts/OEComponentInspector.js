@@ -397,7 +397,6 @@ public class OEPointField extends OEField {
 
 public class OEObjectField extends OEField {
 	public enum Target {
-		Asset,
 		Prefab,
 		Scene
 	}
@@ -537,13 +536,6 @@ public class OEObjectField extends OEField {
 						obj = picked;
 						canSet = true;
 						OEWorkspace.GetInstance().toolbar.Clear ();
-					}, sysType );
-					break;
-				
-				case Target.Asset:
-					OEWorkspace.GetInstance().PickAsset ( function ( picked : Object ) {
-						obj = picked;
-						canSet = true;
 					}, sysType );
 					break;
 			}

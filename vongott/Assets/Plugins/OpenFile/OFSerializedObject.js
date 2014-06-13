@@ -1,6 +1,13 @@
 ﻿#pragma strict
 
 public class OFAssetLink {
+	public enum Type {
+		Resource,
+		File
+	}
+
+	public var type : Type;
+	public var name : String;
 	public var resourcePath : String;
 	public var filePath : String;
 
@@ -59,7 +66,6 @@ public class OFAssetLink {
 public class OFField {
 	public var typeIndex : int;
 	public var name : String = "";
-
 	public var component : Component;
 
 	private static var plugins : OFPlugin [];
@@ -158,7 +164,8 @@ public class OFField {
 }
 
 public class OFSerializedObject extends MonoBehaviour {
-	public var fields : OFField [] = new OFField[0];	
+	public var fields : OFField [] = new OFField[0];
+	public var assetLinks : OFAssetLink [] = new OFAssetLink[0];
 	public var id : String = "";
 	public var prefabPath : String = "";
 	public var exportPath : String = "";
@@ -172,6 +179,56 @@ public class OFSerializedObject extends MonoBehaviour {
 			RenewId ();
 		}
 	}
+
+	public function ClearAssetLinks () {
+		assetLinks = new OFAssetLink[0];
+	}
+
+	public function AddAssetLink ( name : String, path : String, asFile : boolean ) {
+		var tmp : List.< OFAssetLink > = new List.< OFAssetLink > ();
+
+		var link : OFAssetLink = new OFAssetLink ();
+		
+		link.name = name;
+
+		if ( asFile ) {
+			link.filePath = path;
+		} else {
+			link.resourcePath = path;
+		}
+
+		tmp.Add ( link );
+
+		assetLinks = tmp.ToArray ();
+	}
+
+	public function GetAssetLink ( name : String ) : OFAssetLink {
+		for ( var i : int = 0; i < assetLinks.Length; i++ ) {
+			if ( assetLinks[i].name == name ) {
+				return assetLinks[i];
+			}
+		}
+		
+		return null;
+	}
+
+	public function SetAssetLink ( name : String, path : String, asFile : boolean ) {
+		for ( var i : int = 0; i < assetLinks.Length; i++ ) {
+			if ( assetLinks[i].name == name ) {
+				if ( asFile ) {
+					assetLinks[i].filePath = path;
+				
+				} else {
+					assetLinks[i].resourcePath = path;
+
+				}
+
+				return;
+			}
+		}
+
+		AddAssetLink ( name, path, asFile );
+	}	
 
 	public function SetField ( name : String, value : Component ) {
 		var tmpFields : List.< OFField > = new List.< OFField > ( fields );

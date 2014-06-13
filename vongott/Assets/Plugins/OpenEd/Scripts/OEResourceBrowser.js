@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public class OEAssetBrowser extends OGPage {
+public class OEResourceBrowser extends OGPage {
 	public var callback : Function;
 	public var sender : String;
 	public var filter : System.Type;
@@ -9,9 +9,10 @@ public class OEAssetBrowser extends OGPage {
 	public var parentDirButton : OGButton;
 	public var pathLabel : OGLabel;
 	public var path : String;
+	public var getPath : boolean = false;
 	
 	private var currentFolder : OEFolder;
-	private var selectedAsset : String;
+	private var selectedResource : String;
 
 	public function Clear () {
 		scrollview.GetComponent.< OGScrollView > ().position = Vector2.zero;
@@ -53,8 +54,8 @@ public class OEAssetBrowser extends OGPage {
 		Populate ();
 	}
 
-	public function SelectAsset ( file : String ) {
-		selectedAsset = file;
+	public function SelectResource ( file : String ) {
+		selectedResource = file;
 	}
 
 	private function AddListItem ( text : String, message : String, offset : float ) {
@@ -98,7 +99,7 @@ public class OEAssetBrowser extends OGPage {
 			
 			for ( i = 0; i < objects.Length; i++ ) {
 				if ( filter == null || objects[i].GetType() == filter ) {
-					AddListItem ( ( objects[i] as UnityEngine.Object ).name, "SelectAsset", offset );
+					AddListItem ( ( objects[i] as UnityEngine.Object ).name, "SelectResource", offset );
 				
 				}
 
@@ -111,13 +112,18 @@ public class OEAssetBrowser extends OGPage {
 	}
 
 	public function Load () {
-		if ( callback && selectedAsset && !String.IsNullOrEmpty ( sender ) ) {
-			callback ( Resources.Load ( path + "/" + selectedAsset ) );
+		if ( callback && selectedResource && !String.IsNullOrEmpty ( sender ) ) {
+			if ( getPath ) {
+				callback ( path + "/" + selectedResource );
+			} else {
+				callback ( Resources.Load ( path + "/" + selectedResource ) );
+			}
+				
 			OGRoot.GetInstance().GoToPage ( sender );
 		
 		} else {
 		
-			Debug.LogError ( "OEAssetBrowser | Missing callback or sender" );
+			Debug.LogError ( "OEResourceBrowser | Missing callback or sender" );
 		}
 	}
 
@@ -126,10 +132,11 @@ public class OEAssetBrowser extends OGPage {
 	}
 
 	override function ExitPage () {
-		selectedAsset = null;
+		selectedResource = null;
 		callback = null;
 		sender  = "";
 		filter = null;
+		getPath = false;
 	}
 
 	override function StartPage () {
