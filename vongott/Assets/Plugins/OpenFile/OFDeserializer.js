@@ -113,8 +113,6 @@ public class OFDeserializer {
 			plugins = OFReflector.GetPlugins ();
 		}
 		
-		var components : JSONObject = input.GetField ( "components" );
-		
 		if ( !String.IsNullOrEmpty ( input.GetField ( "name" ).str ) ) {
 			output.gameObject.name = input.GetField ( "name" ).str;
 		}
@@ -123,7 +121,29 @@ public class OFDeserializer {
 			output.id = input.GetField ( "id" ).str;
 		}
 		
-		for ( var i : int = 0; i < components.list.Count; i++ ) {
+		var assetLinks : JSONObject = input.GetField ( "assetLinks" );
+
+		if ( assetLinks != null ) {
+			for ( var i : int = 0; i < assetLinks.list.Count; i++ ) {
+				var asFile : boolean = false;
+				var path : String;
+
+				if ( assetLinks.list[i].HasField ( "filePath" ) ) {
+					path = assetLinks[i].GetField ( "filePath" ).str;
+					asFile = true;
+				
+				} else {
+					path = assetLinks[i].GetField ( "resourcePath" ).str;
+						
+				}
+				
+				output.AddAssetLink ( assetLinks[i].GetField ( "name" ).str, path, asFile );
+			}
+		}
+
+		var components : JSONObject = input.GetField ( "components" );
+		
+		for ( i = 0; i < components.list.Count; i++ ) {
 			var c : Component;
 			var typeString : String = components.list[i].GetField ( "_TYPE_" ).str;
 

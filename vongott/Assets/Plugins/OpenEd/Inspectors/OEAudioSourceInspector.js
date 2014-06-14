@@ -10,7 +10,19 @@ public class OEAudioSourceInspector extends OEComponentInspector {
 
 		LabelField ( "Clip" );
 
-		if ( Button ( audio.clip == null ? "None" : audio.clip.name, new Rect ( width / 2, offset.y, width / 2, 16 ) ) ) {
+		var buttonString : String = "None";
+
+		if ( audio.clip != null ) {
+			if ( audio.clip.name.Length > 15 ) {
+				buttonString = audio.clip.name.Substring ( 0, 15 ) + "..."; 
+			
+			} else {
+				buttonString = audio.clip.name;
+			
+			}
+		}
+
+		if ( Button ( buttonString, new Rect ( width / 2, offset.y, width / 2, 16 ) ) ) {
 			if ( audioClipTarget == OFAssetLink.Type.Resource ) {
 				OEWorkspace.GetInstance().PickResource ( function ( path : String ) {
 					target.SetAssetLink ( "clip", path, false );
