@@ -137,6 +137,12 @@ public class OEWorkspace extends MonoBehaviour {
 				l.gameObject.AddComponent.< SphereCollider > ();
 			}
 		}
+		
+		for ( var a : AudioSource in this.GetComponentsInChildren.< AudioSource > () ) {
+			if ( !a.gameObject.GetComponent.< SphereCollider > () ) {
+				a.gameObject.AddComponent.< SphereCollider > ();
+			}
+		}
 
 		for ( var rb : Rigidbody in this.GetComponentsInChildren.< Rigidbody > () ) {
 			rb.isKinematic = true;
