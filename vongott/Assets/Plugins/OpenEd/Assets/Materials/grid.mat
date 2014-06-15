@@ -37,6 +37,10 @@ Material:
     m_Floats:
       data:
         first:
+          name: _InvFade
+        second: 1
+      data:
+        first:
           name: _LineWidth
         second: .100000001
       data:
@@ -47,10 +51,6 @@ Material:
         first:
           name: _Glossiness
         second: .430051804
-      data:
-        first:
-          name: _InvFade
-        second: 1
       data:
         first:
           name: _FadeDistance
@@ -90,9 +90,9 @@ Material:
         second: {r: .5, g: .5, b: .5, a: .5}
       data:
         first:
-          name: _EmisColor
-        second: {r: .200000003, g: .200000003, b: .200000003, a: .270588249}
+          name: _Focus
+        second: {r: -18.9440899, g: 7.12182384e-07, b: 14.3628302, a: 0}
       data:
         first:
-          name: _Focus
-        second: {r: 0, g: 0, b: 0, a: 0}
+          name: _EmisColor
+        second: {r: .200000003, g: .200000003, b: .200000003, a: .270588249}

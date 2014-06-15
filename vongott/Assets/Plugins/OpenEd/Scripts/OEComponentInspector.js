@@ -24,7 +24,10 @@ public class OEField {
 	public static function New ( type : System.Type, transform : Transform ) : OEField {
 		if ( type == typeof ( OEToggle ) ) {
 			return new OEToggle ( transform );
-		
+			
+		} else if ( type == typeof ( OEAssetLinkField ) ) {
+			return new OEAssetLinkField ( transform );
+
 		} else if ( type == typeof ( OEFloatField ) ) {
 			return new OEFloatField ( transform );
 		
@@ -392,6 +395,117 @@ public class OEPointField extends OEField {
 		button.text = pos.x + "," + pos.y + "," + pos.x;
 		
 		return pos;
+	}
+}
+
+public class OEAssetLinkField extends OEField {
+	public var title : OGLabel;
+	public var popup : OGPopUp;
+
+	private var target : OFSerializedObject;
+	private var object : Object;
+
+	function OEAssetLinkField ( parent : Transform ) {
+		title = new GameObject ( "lbl_AssetLink" ).AddComponent.< OGLabel > ();
+		popup = new GameObject ( "btn_AssetLink" ).AddComponent.< OGPopUp > ();
+
+		title.transform.parent = parent;
+		popup.transform.parent = parent;
+		
+		title.ApplyDefaultStyles ();
+		popup.ApplyDefaultStyles ();
+	}
+
+	override function Destroy () {
+		MonoBehaviour.Destroy ( title.gameObject );
+		MonoBehaviour.Destroy ( popup.gameObject );
+	}
+	
+	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
+		title.text = text;
+
+		title.tint.a = enabled ? 1.0 : 0.5;
+		popup.tint.a = enabled ? 1.0 : 0.5;
+		popup.isDisabled = !enabled;
+
+		if ( !String.IsNullOrEmpty ( text ) ) {
+			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			popup.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			popup.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+		
+		} else {
+			popup.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			popup.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+		}
+	}
+
+	public function Set ( linkName : String, target : OFSerializedObject, type : System.Type ) : Object {
+		return Set ( linkName, target, type, "" );
+	}
+
+	public function Set ( linkName : String, target : OFSerializedObject, sysType : System.Type, strType : String ) : Object {
+		this.target = target;
+	
+		var assetLink : OFAssetLink = this.target.GetAssetLink ( linkName );
+
+		if ( assetLink ) {
+			if ( sysType == typeof ( Texture2D ) ) {
+				object = assetLink.GetTexture ();
+			
+			} else if ( sysType == typeof ( AudioClip ) ) {
+				object = assetLink.GetAudioClip ();
+
+			}
+		
+		} else {
+			object = null;
+
+		}
+
+		var uObject : UnityEngine.Object = object as UnityEngine.Object;
+		var objectName : String = "None";
+
+		if ( uObject != null ) {
+			if ( uObject.name.Length > 15 ) {
+				objectName = uObject.name.Substring ( 0, 15 ) + "..."; 
+			
+			} else {
+				objectName = uObject.name;
+			
+			}
+		}
+		
+		popup.title = objectName;
+		popup.options = [ "Load resource...", "Load file...", "(None)" ];
+
+		if ( popup.selectedOption == "Load resource..." ) {
+			popup.selectedOption = "";
+			OEWorkspace.GetInstance().PickResource ( function ( path : String ) {
+				this.target.SetAssetLink ( linkName, path, path.Contains ( ">" ) ? OFAssetLink.Type.Bundle : OFAssetLink.Type.Resource );
+			}, sysType, true );
+		
+		} else if ( popup.selectedOption == "Load file..." ) {
+			popup.selectedOption = "";
+			OEWorkspace.GetInstance().PickFile ( function ( path : String ) {
+				this.target.SetAssetLink ( linkName, path, OFAssetLink.Type.File );
+			}, strType );
+
+		} else if ( popup.selectedOption == "(None)" ) {
+			popup.selectedOption = "";
+			object == null;
+
+			if ( assetLink ) {
+				assetLink.Reset ();
+			}
+				
+		}
+		
+		return Out ();
+	}
+
+	public function Out () : Object {
+		return object;
 	}
 }
 
@@ -1113,6 +1227,30 @@ public class OEComponentInspector {
 		texture.enabled = !disabled;
 		fieldCounter++;
 	}
+
+	// OEAssetLinkField
+	public function AssetLinkField ( text : String, linkName : String, target : OFSerializedObject, sysType : System.Type ) : Object {
+		offset.y += 20;
+		return AssetLinkField ( text, linkName, target, sysType, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+	}
+	
+	public function AssetLinkField ( text : String, linkName : String, target : OFSerializedObject, sysType : System.Type, strType : String ) : Object {
+		offset.y += 20;
+		return AssetLinkField ( text, linkName, target, sysType, strType, new Rect ( offset.x, offset.y, width - offset.x, 16 ) );
+	}
+	
+	public function AssetLinkField ( text : String, linkName : String, target : OFSerializedObject, sysType : System.Type, rect : Rect ) : Object {
+		return AssetLinkField ( text, linkName, target, sysType, "" );
+	}
+	
+	public function AssetLinkField ( text : String, linkName : String, target : OFSerializedObject, sysType : System.Type, strType : String, rect : Rect ) : Object {
+		var assetLinkField : OEAssetLinkField = CheckField ( typeof ( OEAssetLinkField ) ) as OEAssetLinkField;
+		assetLinkField.Update ( text, new Vector2 ( rect.x, rect.y ), new Vector2 ( rect.width, rect.height ) );
+		assetLinkField.enabled = !disabled;
+		fieldCounter++;
+		return assetLinkField.Set ( linkName, target, sysType, strType );
+	}
+	
 
 	// OEObjectField
 	public function ObjectField ( text : String, input : Object, sysType : System.Type, strType : String ) : Object {

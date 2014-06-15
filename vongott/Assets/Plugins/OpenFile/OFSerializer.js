@@ -83,6 +83,9 @@ public class OFSerializer extends MonoBehaviour {
 			} else if ( !String.IsNullOrEmpty ( input.assetLinks[i].resourcePath ) ) {
 				assetLink.AddField ( "resourcePath", input.assetLinks[i].resourcePath );
 			
+			} else if ( !String.IsNullOrEmpty ( input.assetLinks[i].bundlePath ) ) {
+				assetLink.AddField ( "bundlePath", input.assetLinks[i].bundlePath );
+			
 			}
 
 			assetLinks.Add ( assetLink );

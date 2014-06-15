@@ -2,21 +2,55 @@
 
 public class OFAssetLink {
 	public enum Type {
+		Bundle,
+		File,
 		Resource,
-		File
 	}
 
-	public var type : Type;
+	public var type : Type = Type.Resource;
 	public var name : String;
 	public var resourcePath : String;
 	public var filePath : String;
+	public var bundlePath : String;
 
 	private var texture : Texture2D;
 	private var audioClip : AudioClip;
-	
+
+	public function Reset () {
+		texture = null;
+		audioClip = null;
+		resourcePath = "";
+		filePath = "";
+		bundlePath = "";
+	}
+
+	public function GetLinkType () : Type {
+		if ( !String.IsNullOrEmpty ( filePath ) ) {
+			return Type.File;
+		
+		} else if ( !String.IsNullOrEmpty ( resourcePath ) ) {
+			return Type.Resource;
+
+		} else if ( !String.IsNullOrEmpty ( bundlePath ) ) {
+			return Type.Bundle;
+
+		} else {
+			return -1;
+
+		}
+	}
+
 	public function GetAudioClip () : AudioClip {
 		if ( audioClip == null && !String.IsNullOrEmpty ( resourcePath ) ) {
 			audioClip = Resources.Load ( resourcePath ) as AudioClip;
+		
+		} else if ( audioClip == null && !String.IsNullOrEmpty ( bundlePath ) ) {
+			var strings : String [] = bundlePath.Split ( ">"[0] );
+			var bundle : OFBundle = OFBundleManager.instance.GetBundle ( strings [0] );
+			
+			if ( bundle ) {
+				audioClip = bundle.GetAudioClip ( strings[1] );
+			}
 		}
 
 		return audioClip;
@@ -41,6 +75,14 @@ public class OFAssetLink {
 	public function GetTexture () : Texture2D {
 		if ( texture == null && !String.IsNullOrEmpty ( resourcePath ) ) {
 			texture = Resources.Load ( resourcePath ) as Texture2D;
+		
+		} else if ( texture == null && !String.IsNullOrEmpty ( bundlePath ) ) {
+			var strings : String [] = bundlePath.Split ( ">"[0] );
+			var bundle : OFBundle = OFBundleManager.instance.GetBundle ( strings [0] );
+			
+			if ( bundle ) {
+				texture = bundle.GetTexture ( strings[1] );
+			}
 		}
 
 		return texture;
@@ -184,17 +226,25 @@ public class OFSerializedObject extends MonoBehaviour {
 		assetLinks = new OFAssetLink[0];
 	}
 
-	public function AddAssetLink ( name : String, path : String, asFile : boolean ) {
+	public function AddAssetLink ( name : String, path : String, type : OFAssetLink.Type ) {
 		var tmp : List.< OFAssetLink > = new List.< OFAssetLink > ();
 
 		var link : OFAssetLink = new OFAssetLink ();
 		
 		link.name = name;
 
-		if ( asFile ) {
-			link.filePath = path;
-		} else {
-			link.resourcePath = path;
+		switch ( type ) {
+			case OFAssetLink.Type.File:
+				link.filePath = path;
+				break;
+		
+			case OFAssetLink.Type.Resource:
+				link.resourcePath = path;
+				break;
+		
+			case OFAssetLink.Type.Bundle:
+				link.bundlePath = path;
+				break;
 		}
 
 		tmp.Add ( link );
@@ -211,23 +261,43 @@ public class OFSerializedObject extends MonoBehaviour {
 		
 		return null;
 	}
+	
+	public function RemoveAssetLink ( name : String ) {
+		var tmp : List.< OFAssetLink > = new List.< OFAssetLink > ( assetLinks );
+		
+		for ( var i : int = tmp.Count - 1; i >= 0; i-- ) {
+			if ( tmp[i].name == name ) {
+				tmp.RemoveAt ( i );
+			}
+		}
+		
+		assetLinks = tmp.ToArray ();
+	}
 
-	public function SetAssetLink ( name : String, path : String, asFile : boolean ) {
+	public function SetAssetLink ( name : String, path : String, type : OFAssetLink.Type ) {
 		for ( var i : int = 0; i < assetLinks.Length; i++ ) {
 			if ( assetLinks[i].name == name ) {
-				if ( asFile ) {
-					assetLinks[i].filePath = path;
+				assetLinks[i].Reset ();
 				
-				} else {
-					assetLinks[i].resourcePath = path;
-
+				switch ( type ) {
+					case OFAssetLink.Type.File:
+						assetLinks[i].filePath = path;
+						break;
+				
+					case OFAssetLink.Type.Bundle:
+						assetLinks[i].bundlePath = path;
+						break;
+						
+					case OFAssetLink.Type.Resource:
+						assetLinks[i].resourcePath = path;
+						break;
 				}
 
 				return;
 			}
 		}
 
-		AddAssetLink ( name, path, asFile );
+		AddAssetLink ( name, path, type );
 	}	
 
 	public function SetField ( name : String, value : Component ) {

@@ -105,7 +105,7 @@ public class OGDrawHelper {
 		
 		// Bounds
 		var left : float = style.padding.left;
-		var right : float = rect.width - style.padding.right;
+		var right : float = rect.width - style.padding.right - style.padding.left;
 		var top : float = rect.height - style.padding.top;
 		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.lineSpacing * size ) / 2 );
 		var center : float = left + right / 2;
@@ -213,7 +213,7 @@ public class OGDrawHelper {
 
 				// The line width has exceeded the border
 				if ( lineWidth >= right ) {
-					nextLineStart = lastSpace + 1;
+					nextLineStart = lastSpace == 0 ? c : lastSpace + 1;
 					break;
 				}
 			}

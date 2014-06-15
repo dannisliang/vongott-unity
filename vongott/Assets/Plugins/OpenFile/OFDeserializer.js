@@ -127,17 +127,23 @@ public class OFDeserializer {
 			for ( var i : int = 0; i < assetLinks.list.Count; i++ ) {
 				var asFile : boolean = false;
 				var path : String;
+				var type : OFAssetLink.Type;
 
 				if ( assetLinks.list[i].HasField ( "filePath" ) ) {
 					path = assetLinks[i].GetField ( "filePath" ).str;
-					asFile = true;
-				
-				} else {
+					type = OFAssetLink.Type.File;
+
+				} else if ( assetLinks.list[i].HasField ( "resourcePath" ) ) {
 					path = assetLinks[i].GetField ( "resourcePath" ).str;
+					type = OFAssetLink.Type.Resource;
+						
+				} else if ( assetLinks.list[i].HasField ( "bundlePath" ) ) {
+					path = assetLinks[i].GetField ( "bundlePath" ).str;
+					type = OFAssetLink.Type.Bundle;
 						
 				}
-				
-				output.AddAssetLink ( assetLinks[i].GetField ( "name" ).str, path, asFile );
+
+				output.AddAssetLink ( assetLinks[i].GetField ( "name" ).str, path, type );
 			}
 		}
 
