@@ -2,9 +2,11 @@
 
 import System.Text;
 import System.IO;
+import Ionic.Zip;
 
 public class OFBundleManager extends MonoBehaviour {
 	public var bundleFolder : String = "Libraries";
+	public var bundleExtension : String = "lib";
 	public var loadOnAwake : boolean = true;
 	public var loadedBundles : List.< OFBundle > = new List.< OFBundle > ();
 
@@ -91,13 +93,39 @@ public class OFBundleManager extends MonoBehaviour {
 	}
 
 	public function LoadAllBundles () {
-		for ( var bundlePath : String in System.IO.Directory.GetDirectories ( Application.dataPath + "/Libraries" ) ) {
-			LoadBundle ( GetName ( bundlePath ) );
+		for ( var dirPath : String in System.IO.Directory.GetDirectories ( Application.dataPath + "/" + bundleFolder ) ) {
+			LoadBundle ( GetName ( dirPath ), false );
+		}
+		
+		for ( var zipPath : String in System.IO.Directory.GetFiles ( Application.dataPath + "/" + bundleFolder ) ) {
+			if ( zipPath.Contains ( "." + bundleExtension ) ) {
+				LoadBundle ( GetName ( zipPath ), true );
+			}
 		}
 	}
 
-	public function LoadBundle ( name : String ) {
-		var path : String = Application.dataPath + "/Libraries/" + name;
+	public function LoadBundle ( name : String, compressed : boolean ) {
+		var path : String;
+		
+		if ( compressed ) {
+			path = Application.temporaryCachePath + "/OpenFile/Bundles/" + bundleFolder + "/" + name.Split ( "."[0] )[0];
+			
+			var zip : ZipFile = ZipFile.Read ( Application.dataPath + "/" + bundleFolder + "/" + name );
+			
+			name = name.Split ( "."[0] )[0];
+
+			zip.Dispose ();
+
+			for ( var e : ZipEntry in zip ) {
+				e.Extract ( path, ExtractExistingFileAction.OverwriteSilently );
+			}
+		
+
+		} else {
+			path = Application.dataPath + "/" + bundleFolder + "/" + name;
+		
+		}
+			
 		var newBundle : OFBundle = new OFBundle ();
 
 		newBundle.name = name;
