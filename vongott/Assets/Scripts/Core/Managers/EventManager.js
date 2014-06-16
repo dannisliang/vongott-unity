@@ -36,12 +36,6 @@ class EventManager extends MonoBehaviour {
 		
 			}
 
-			if ( lines[0].audio ) {
-				speaker.gameObject.audio.clip = lines[0].audio;
-				speaker.gameObject.audio.Play ();
-			}
-			
-
 			choiceConvo = false;
 
 		} else {

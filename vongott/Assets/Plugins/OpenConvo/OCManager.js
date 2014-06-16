@@ -149,13 +149,34 @@ public class OCManager extends MonoBehaviour {
 		} else if ( node && node.speak ) {
 			DoCallback ( eventHandler, "OnSetSpeaker", speaker );
 			DoCallback ( eventHandler, "OnSetLines", node.speak.lines );
-		
+			
+			if ( node.speak.lines.Length == 1 && speaker.gameObject.audio && node.speak.lines[0].audio ) {
+				speaker.gameObject.audio.clip = node.speak.lines[0].audio;
+				speaker.gameObject.audio.loop = false;
+				speaker.gameObject.audio.Play ();
+			}
 		}
 	}
 
 	public function SelectOption ( i : int ) {
-		currentNode = tree.rootNodes[tree.currentRoot].GetNode(currentNode).connectedTo[i];
-		DisplayNode ();
+		DoCallback ( eventHandler, "OnSelectOption", i );
+		
+		var node : OCNode = tree.rootNodes[tree.currentRoot].GetNode ( currentNode );
+		
+		StartCoroutine ( function () : IEnumerator {
+			if ( speaker.gameObject.audio && node.speak.lines[i].audio ) {
+				speaker.gameObject.audio.clip = node.speak.lines[i].audio;
+				speaker.gameObject.audio.loop = false;
+				speaker.gameObject.audio.Play ();
+				
+				while ( speaker.gameObject.audio.isPlaying ) {
+					yield null;
+				}
+			}
+				
+			currentNode = tree.rootNodes[tree.currentRoot].GetNode(currentNode).connectedTo[i];
+			DisplayNode ();
+		} () );
 	}
 
 	public function NextNode () {
