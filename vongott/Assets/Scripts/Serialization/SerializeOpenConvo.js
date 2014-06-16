@@ -45,12 +45,12 @@ public class SerializeOpenConvo extends OFPlugin {
 						var speak : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 						var lines : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 
-						for ( var l : OCSpeak.Line in node.speak.lines ) {
+						for ( var l : int = 0; l < node.speak.lines.Length; l++ ) {
 							var line : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 
-							line.AddField ( "text", l.text.Replace ( "\"", "\\\"" ) );
-							line.AddField ( "audio", l.audio == null ? "" : l.audio.name );
-							line.AddField ( "animation", l.animation );
+							line.AddField ( "text", node.speak.lines[l].text.Replace ( "\"", "\\\"" ) );
+							line.AddField ( "audio", node.id + ">" + l );
+							line.AddField ( "animation", node.speak.lines[l].animation );
 							
 							lines.Add ( line );
 						}
@@ -194,7 +194,8 @@ public class SerializeOpenConvo extends OFPlugin {
 						var lines : List.< OCSpeak.Line > = new List.< OCSpeak.Line > ();
 
 						for ( var l : JSONObject in node.GetField ( "speak" ).GetField ( "lines" ).list ) {
-							lines.Add ( new OCSpeak.Line ( l.GetField ( "text" ).str.Replace ( "\\\"", "\"" ), null, l.GetField ( "animation" ).str ) ); // FIXME: No audio
+							var assetLink : OFAssetLink = tree.GetComponent.< OFSerializedObject > ().GetAssetLink ( n.id + ">" + l );
+							lines.Add ( new OCSpeak.Line ( l.GetField ( "text" ).str.Replace ( "\\\"", "\"" ), assetLink == null ? null : assetLink.GetAudioClip (), l.GetField ( "animation" ).str ) );
 						}
 
 						speak.speaker = node.GetField ( "speak" ).GetField ( "speaker" ).n;

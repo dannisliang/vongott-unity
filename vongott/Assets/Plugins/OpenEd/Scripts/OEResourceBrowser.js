@@ -198,7 +198,7 @@ public class OEResourceBrowser extends OGPage {
 						AddListItem ( objects[i] as UnityEngine.Object, "SelectResource", offset );
 					}
 
-					if ( offset.x + 150 > scrollview.GetComponent.< OGScrollView > ().size.x ) {
+					if ( offset.x + 150 >= scrollview.GetComponent.< OGScrollView > ().size.x - 2 * scrollview.GetComponent.< OGScrollView > ().padding.x ) {
 						offset.x = 0;
 						offset.y += 150;
 					

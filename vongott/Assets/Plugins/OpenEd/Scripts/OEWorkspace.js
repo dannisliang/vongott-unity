@@ -139,6 +139,10 @@ public class OEWorkspace extends MonoBehaviour {
 		}
 		
 		for ( var a : AudioSource in this.GetComponentsInChildren.< AudioSource > () ) {
+			if ( a.isPlaying ) {
+				a.Stop ();
+			}
+			
 			if ( !a.gameObject.GetComponent.< SphereCollider > () ) {
 				a.gameObject.AddComponent.< SphereCollider > ();
 			}
@@ -303,7 +307,7 @@ public class OEWorkspace extends MonoBehaviour {
 	public function PickResource ( callback : Function, type : System.Type, getPath : boolean ) {
 		resourceBrowser.callback = callback;
 		resourceBrowser.filter = type;
-		resourceBrowser.sender = "Home";
+		resourceBrowser.sender = OGRoot.GetInstance().currentPage.pageName;
 		resourceBrowser.getPath = getPath;
 		OGRoot.GetInstance().GoToPage ( "ResourceBrowser" );
 	}
@@ -312,7 +316,7 @@ public class OEWorkspace extends MonoBehaviour {
 		fileBrowser.callback = callback;
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
 		fileBrowser.filter = filterString;
-		fileBrowser.sender = "Home";
+		resourceBrowser.sender = OGRoot.GetInstance().currentPage.pageName;
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 

@@ -4,6 +4,7 @@ class EventManager extends MonoBehaviour {
 	// Conversation
 	private var passiveConvo : boolean = false;
 	private var choiceConvo : boolean = false;
+	private var speaker : OCSpeaker;
 
 	public function OnConversationStart ( tree : OCTree ) {
 	/*	passiveConvo = false;
@@ -35,6 +36,16 @@ class EventManager extends MonoBehaviour {
 		
 			}
 
+			if ( speaker && lines[0].audio ) {
+				if ( !speaker.gameObject.GetComponent.< AudioSource > () ) {
+					speaker.gameObject.AddComponent.< AudioSource > ();
+				}
+
+				speaker.gameObject.audio.clip = lines[0].audio;
+				speaker.gameObject.audio.Play ();
+			}
+			
+
 			choiceConvo = false;
 
 		} else {
@@ -47,6 +58,7 @@ class EventManager extends MonoBehaviour {
 	}
 
 	public function OnSetSpeaker ( speaker : OCSpeaker ) {
+		this.speaker = speaker;
 		GameCamera.GetInstance().ConvoFocus ( speaker.gameObject, !GameCamera.GetInstance().inConvo || choiceConvo );
 		UIConversation.SetName ( speaker.name );
 		GameCamera.GetInstance().inConvo = true;

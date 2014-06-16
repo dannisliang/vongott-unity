@@ -3973,6 +3973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bundleFolder: Libraries
+  bundleExtension: lib
   loadOnAwake: 1
   loadedBundles: []
 --- !u!1 &353206098
@@ -20674,6 +20675,8 @@ MonoBehaviour:
         subfolders: []
       - name: SFX
         subfolders:
+        - name: Ambiance
+          subfolders: []
         - name: Actor
           subfolders: []
         - name: Environmental

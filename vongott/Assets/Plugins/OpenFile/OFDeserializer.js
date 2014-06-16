@@ -221,6 +221,10 @@ public class OFDeserializer {
 		audio.rolloffMode = Mathf.RoundToInt ( input.GetField ( "rolloffMode" ).n );
 		audio.spread = input.GetField ( "spread" ).n;
 		audio.volume = input.GetField ( "volume" ).n;
+
+		if ( audio.playOnAwake ) {
+			audio.Play ();
+		}
 	}
 
 

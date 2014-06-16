@@ -48,10 +48,11 @@ public class OCNodeInspector extends OEComponentInspector {
 					LabelField ( i.ToString () ); 
 					node.speak.lines[i].text = TextField ( "", node.speak.lines[i].text, new Rect ( 40, offset.y, width - 40, 60 ) );
 					offset.y += 50;
+					node.speak.lines[i].audio = AssetLinkField ( "Audio", node.id + ">" + i, tree.gameObject.GetComponent.< OFSerializedObject > (), typeof ( AudioClip ), "ogg" ) as AudioClip;
 				}
 
 				offset.y += 20;
-
+				
 				if ( Button ( "-", new Rect ( 0, offset.y, 24, 16 ) ) ) {
 					node.speak.RemoveLine ( node.speak.lines.Length - 1 );
 					node.SetOutputAmount ( node.speak.lines.Length );
