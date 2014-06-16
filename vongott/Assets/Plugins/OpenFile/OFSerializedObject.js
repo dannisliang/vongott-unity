@@ -56,7 +56,7 @@ public class OFAssetLink {
 		return audioClip;
 	}
 
-	public function GetTexture ( callback : System.Action.< AudioClip > ) : IEnumerator {
+	public function GetAudioClip ( callback : System.Action.< AudioClip > ) : IEnumerator {
 		if ( audioClip == null && !String.IsNullOrEmpty ( filePath ) ) {
 			var www : WWW = new WWW ( filePath );
 
@@ -227,7 +227,7 @@ public class OFSerializedObject extends MonoBehaviour {
 	}
 
 	public function AddAssetLink ( name : String, path : String, type : OFAssetLink.Type ) {
-		var tmp : List.< OFAssetLink > = new List.< OFAssetLink > ();
+		var tmp : List.< OFAssetLink > = new List.< OFAssetLink > ( assetLinks );
 
 		var link : OFAssetLink = new OFAssetLink ();
 		

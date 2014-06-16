@@ -147,8 +147,8 @@ public class OCManager extends MonoBehaviour {
 			DisplayNode ();
 		
 		} else if ( node && node.speak ) {
-			DoCallback ( eventHandler, "OnSetLines", node.speak.lines );
 			DoCallback ( eventHandler, "OnSetSpeaker", speaker );
+			DoCallback ( eventHandler, "OnSetLines", node.speak.lines );
 		
 		}
 	}

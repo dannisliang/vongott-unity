@@ -193,9 +193,12 @@ public class SerializeOpenConvo extends OFPlugin {
 						var speak : OCSpeak = new OCSpeak ();
 						var lines : List.< OCSpeak.Line > = new List.< OCSpeak.Line > ();
 
-						for ( var l : JSONObject in node.GetField ( "speak" ).GetField ( "lines" ).list ) {
+						var linesJSON : List.< JSONObject > = node.GetField ( "speak" ).GetField ( "lines" ).list;
+
+						for ( var l : int = 0; l < linesJSON.Count; l++ ) {
 							var assetLink : OFAssetLink = tree.GetComponent.< OFSerializedObject > ().GetAssetLink ( n.id + ">" + l );
-							lines.Add ( new OCSpeak.Line ( l.GetField ( "text" ).str.Replace ( "\\\"", "\"" ), assetLink == null ? null : assetLink.GetAudioClip (), l.GetField ( "animation" ).str ) );
+						
+							lines.Add ( new OCSpeak.Line ( linesJSON[l].GetField ( "text" ).str.Replace ( "\\\"", "\"" ), assetLink == null ? null : assetLink.GetAudioClip (), linesJSON[l].GetField ( "animation" ).str ) );
 						}
 
 						speak.speaker = node.GetField ( "speak" ).GetField ( "speaker" ).n;
