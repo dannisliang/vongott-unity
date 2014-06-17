@@ -100,7 +100,14 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
 				
-				if ( w == null ) { continue; }
+				if ( w == null ) {
+					continue;
+				
+				} else if ( w.drawRct == null || ( w.drawRct.x == 0 && w.drawRct.y == 0 && w.drawRct.height == 0 && w.drawRct.width == 0 ) ) {
+					w.Recalculate ();
+					continue;
+				}
+					
 				
 				if ( w.gameObject.activeSelf && w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
 					w.DrawSkin ();
@@ -210,12 +217,6 @@ class OGRoot extends MonoBehaviour {
 		this.transform.localPosition = Vector3.zero;
 		this.transform.localEulerAngles = Vector3.zero;
 
-		if(dirtyCounter <= 0)	
-		{
-			UpdateWidgets ( true );
-		}
-
-
 		// Only update these when playing
 		if ( Application.isPlaying && currentPage != null ) {
 			// Current page
@@ -231,12 +232,7 @@ class OGRoot extends MonoBehaviour {
 		}
 
 		// Dirty
-		// Update positions
-		if ( dirtyCounter > 0 ) 
-		{
-			UpdateWidgets ( false );
-			dirtyCounter--;
-		} 
+		UpdateWidgets ();
 		
 		// Force OGPage transformation
 		if ( currentPage ) {
@@ -458,7 +454,7 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	// Widget management
 	//////////////////
-	public function UpdateWidgets ( onlyPositions : boolean ) {
+	public function UpdateWidgets () {
 		screenRect = new Rect ( 0, Screen.width, 0, Screen.height );
 
 		if ( currentPage == null ) { return; }

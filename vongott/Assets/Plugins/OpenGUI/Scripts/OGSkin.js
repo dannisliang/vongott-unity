@@ -79,11 +79,32 @@ public class OGStyleSet {
 	public function Refresh ( skin : OGSkin ) {
 		if ( !skin ) { return; }
 		
-		if ( basic ) { basic = skin.GetStyle ( basic.name ); }
-		if ( hover ) { hover = skin.GetStyle ( hover.name ); }
-		if ( active ) { active = skin.GetStyle ( active.name ); }
-		if ( ticked ) { ticked = skin.GetStyle ( ticked.name ); }
-		if ( thumb ) { thumb = skin.GetStyle ( thumb.name ); }
+		var newStyle : OGStyle;
+		       
+		if ( basic ) {
+			newStyle = skin.GetStyle ( basic.name );
+			if ( newStyle ) { basic = newStyle; }
+		}
+		
+		if ( hover ) {
+			newStyle = skin.GetStyle ( hover.name );
+			if ( newStyle ) { hover = newStyle; }
+		}
+		
+		if ( active ) {
+			newStyle = skin.GetStyle ( active.name );
+			if ( newStyle ) { active = newStyle; }
+		}
+
+		if ( ticked ) {
+			newStyle = skin.GetStyle ( ticked.name );
+			if ( newStyle ) { ticked = newStyle; }
+		}
+		
+		if ( thumb ) {
+			newStyle = skin.GetStyle ( thumb.name );
+			if ( newStyle ) { thumb = newStyle; }
+		}
 	}
 
 	public function GetStyle ( typ : OGStyleType ) {
@@ -246,16 +267,18 @@ public class OGSkin extends MonoBehaviour {
 
 	public function ApplyDefaultStyles ( w : OGWidget ) {
 		for ( var d : OGDefault in GetAllDefaults() ) {
-			if ( d.widgetType == w.ToEnum() ) {
+			if ( d.widgetType == w.ToEnum () ) {
 				if ( w.styles == null ) {
 					w.styles = new OGStyleSet ();
 				}
-				
+			
 				w.styles.basic = d.styleSet.basic;
 				w.styles.active = d.styleSet.active;
 				w.styles.hover = d.styleSet.hover;
 				w.styles.thumb = d.styleSet.thumb;
 				w.styles.ticked = d.styleSet.ticked;
+
+				w.styles.Refresh ( this );
 			
 				return;
 			}

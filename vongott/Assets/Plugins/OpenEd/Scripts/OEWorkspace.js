@@ -56,6 +56,7 @@ public class OEWorkspace extends MonoBehaviour {
 		public var parent : Transform;
 	}
 	
+	public var autoLoadLast : boolean = true;
 	public var cam : OECamera;
 	public var fileBrowser : OEFileBrowser;
 	public var resourceBrowser : OEResourceBrowser;
@@ -608,11 +609,13 @@ public class OEWorkspace extends MonoBehaviour {
 		initCamPos = cam.transform.position;
 		initCamRot = cam.transform.rotation;
 
-		currentSavePath = PlayerPrefs.GetString ( "OEWorkspace.currentSavePath" );
+		if ( autoLoadLast ) {
+			currentSavePath = PlayerPrefs.GetString ( "OEWorkspace.currentSavePath" );
 
-		if ( !String.IsNullOrEmpty ( currentSavePath ) ) {
-			var json : JSONObject = OFReader.LoadFile ( currentSavePath );
-			StartCoroutine ( LoadMap ( json ) );
+			if ( !String.IsNullOrEmpty ( currentSavePath ) ) {
+				var json : JSONObject = OFReader.LoadFile ( currentSavePath );
+				StartCoroutine ( LoadMap ( json ) );
+			}
 		}
 	}
 
