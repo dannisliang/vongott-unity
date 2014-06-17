@@ -86,9 +86,7 @@ public class OGTextField extends OGWidget {
 		isAlwaysOnTop = listening;
 
 		// Styles
-		if ( isDisabled ) {
-			currentStyle = styles.disabled;
-		} else if ( listening ) {
+		if ( listening ) {
 			currentStyle = styles.active;
 		} else {
 			currentStyle = styles.basic;

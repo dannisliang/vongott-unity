@@ -4,16 +4,11 @@ public class OEToolbar extends MonoBehaviour {
 	public var collapsed : boolean = true;
 	public var stretched : boolean = true;
 	public var background : Transform;
-	public var drawerTypes : OEDrawer[];
 	public var drawerContainer : Transform;
 
 	private var currentDrawer : String;
 
 	public function Clear () {
-		for ( var i : int = 0; i < drawerContainer.childCount; i++ ) {
-			Destroy ( drawerContainer.GetChild ( i ).gameObject );
-		}
-		
 		currentDrawer = "";
 
 		collapsed = true;
@@ -21,13 +16,20 @@ public class OEToolbar extends MonoBehaviour {
 	}
 
 	public function GetDrawer ( name : String ) : OEDrawer {
-		for ( var i : int = 0; i < drawerTypes.Length; i++ ) {
-			if ( drawerTypes[i].id == name ) {
-				return drawerTypes[i];
+		var result : OEDrawer;
+		
+		for ( var drawer : OEDrawer in drawerContainer.GetComponentsInChildren.< OEDrawer > ( true ) ) {
+			if ( drawer.id == name ) {
+				result = drawer;
+				drawer.gameObject.SetActive ( true );
+			
+			} else {
+				drawer.gameObject.SetActive ( false );
+
 			}
 		}
 
-		return null;
+		return result;
 	}
 
 	public function OpenDrawer ( name : String ) : OEDrawer {
@@ -39,13 +41,6 @@ public class OEToolbar extends MonoBehaviour {
 			var drawer : OEDrawer = GetDrawer ( name );
 
 			if ( drawer ) {
-				drawer = Instantiate ( drawer ) as OEDrawer;
-
-				drawer.transform.parent = drawerContainer;
-				drawer.transform.localPosition = Vector3.zero;
-				drawer.transform.localScale = Vector3.one;
-				drawer.transform.localEulerAngles = Vector3.zero;
-
 				stretched = drawer.stretch;
 			}
 
@@ -73,7 +68,7 @@ public class OEToolbar extends MonoBehaviour {
 	public function Update () {
 		if ( collapsed ) {
 			background.GetComponent.< OGSlicedSprite > ().stretch.width = ScreenSize.None;
-			background.localScale = new Vector3 ( 60, background.transform.localScale.y, 1 );
+			background.localScale = new Vector3 ( 52, background.transform.localScale.y, 1 );
 			drawerContainer.gameObject.SetActive ( false );
 
 		} else {

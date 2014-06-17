@@ -70,10 +70,6 @@ public class OGSlider extends OGWidget {
 		OGDrawHelper.DrawSprite ( GetBackgroundRect(), styles.basic, drawDepth, tint, clipTo );
 	
 		// Thumb
-		if ( isDisabled ) {
-			OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.disabled, drawDepth, tint, clipTo );
-		} else {
-			OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.thumb, drawDepth, tint, clipTo );
-		}
+		OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.thumb, drawDepth, tint, clipTo );
 	}		
 }

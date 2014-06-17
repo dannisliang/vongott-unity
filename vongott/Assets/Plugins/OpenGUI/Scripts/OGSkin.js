@@ -5,7 +5,6 @@ public enum OGStyleType {
 	Active,
 	Ticked,
 	Thumb,
-	Disabled
 }
 
 public enum OGWidgetType {
@@ -76,7 +75,6 @@ public class OGStyleSet {
 	public var active : OGStyle;
 	public var ticked : OGStyle;
 	public var thumb : OGStyle;
-	public var disabled : OGStyle;
 
 	public function Refresh ( skin : OGSkin ) {
 		if ( !skin ) { return; }
@@ -86,7 +84,6 @@ public class OGStyleSet {
 		if ( active ) { active = skin.GetStyle ( active.name ); }
 		if ( ticked ) { ticked = skin.GetStyle ( ticked.name ); }
 		if ( thumb ) { thumb = skin.GetStyle ( thumb.name ); }
-		if ( disabled ) { disabled = skin.GetStyle ( disabled.name ); }
 	}
 
 	public function GetStyle ( typ : OGStyleType ) {
@@ -112,10 +109,6 @@ public class OGStyleSet {
 			case OGStyleType.Thumb:
 				result = thumb;
 				break;
-
-			case OGStyleType.Disabled:
-				result = disabled;
-				break;	
 		}
 
 		return result;
@@ -142,10 +135,6 @@ public class OGStyleSet {
 			case OGStyleType.Thumb:
 				thumb = stl;
 				break;
-			
-			case OGStyleType.Disabled:
-				disabled = stl;
-				break;	
 		}
 	}
 }
@@ -206,18 +195,17 @@ public class OGSkin extends MonoBehaviour {
 			var s : OGStyleType[];
 
 			switch ( widgetType ) {
-				case OGWidgetType.Button: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover, OGStyleType.Thumb ]; break;
+				case OGWidgetType.Button: s = [ OGStyleType.Active, OGStyleType.Hover, OGStyleType.Thumb ]; break;
 				case OGWidgetType.DropContainer: s = [ OGStyleType.Hover ]; break;
-				case OGWidgetType.DropDown: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover, OGStyleType.Ticked ]; break;
-				case OGWidgetType.Label: s = [ OGStyleType.Disabled ]; break;
-				case OGWidgetType.ListItem: s = [ OGStyleType.Disabled, OGStyleType.Hover, OGStyleType.Ticked ]; break;
-				case OGWidgetType.PopUp: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover ]; break;
+				case OGWidgetType.DropDown: s = [ OGStyleType.Active, OGStyleType.Hover, OGStyleType.Ticked ]; break;
+				case OGWidgetType.ListItem: s = [ OGStyleType.Hover, OGStyleType.Ticked ]; break;
+				case OGWidgetType.PopUp: s = [ OGStyleType.Active, OGStyleType.Hover, OGStyleType.Thumb ]; break;
 				case OGWidgetType.ProgressBar: s = [ OGStyleType.Thumb ]; break;
-				case OGWidgetType.Slider: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
+				case OGWidgetType.Slider: s = [ OGStyleType.Thumb ]; break;
 				case OGWidgetType.ScrollView: s = [ OGStyleType.Thumb ]; break;
-				case OGWidgetType.Tabs: s = [ OGStyleType.Disabled, OGStyleType.Active ]; break;
-				case OGWidgetType.TextField: s = [ OGStyleType.Active, OGStyleType.Disabled ]; break;
-				case OGWidgetType.TickBox: s = [ OGStyleType.Disabled, OGStyleType.Hover, OGStyleType.Ticked ]; break;
+				case OGWidgetType.Tabs: s = [ OGStyleType.Active ]; break;
+				case OGWidgetType.TextField: s = [ OGStyleType.Active ]; break;
+				case OGWidgetType.TickBox: s = [ OGStyleType.Active, OGStyleType.Ticked ]; break;
 				default: return false;
 			}
 
@@ -267,7 +255,6 @@ public class OGSkin extends MonoBehaviour {
 				w.styles.active = d.styleSet.active;
 				w.styles.hover = d.styleSet.hover;
 				w.styles.thumb = d.styleSet.thumb;
-				w.styles.disabled = d.styleSet.disabled;
 				w.styles.ticked = d.styleSet.ticked;
 			
 				return;
