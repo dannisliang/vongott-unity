@@ -4,7 +4,7 @@ public class OEInspector extends MonoBehaviour {
 	public var objectName : OGTextField;
 	public var transformContainer : Transform;
 	public var componentContainer : Transform;
-	public var componentSwitch : OGPopUp;
+	public var componentSwitch : OGTabs;
 	
 	@HideInInspector public var selection : OFSerializedObject[];
 
@@ -31,6 +31,10 @@ public class OEInspector extends MonoBehaviour {
 		}
 
 		return false;
+	}
+
+	public function SelectComponent ( index : int ) {
+		SelectComponent ( componentSwitch.tabs[index].title );
 	}
 
 	public function SelectComponent ( name : String ) {
@@ -90,22 +94,20 @@ public class OEInspector extends MonoBehaviour {
 			transformInspector.Init ( selection[0], transformContainer );
 			objectName.text = selection[0].gameObject.name;
 
-			var tmpStrings : List.< String > = new List.< String > ();
+			componentSwitch.tabs.Clear ();
 
 			var obj : OFSerializedObject = selection[0];
 			
 			for ( var f : int = 0; f < obj.fields.Length; f++ ) {
 				if ( obj.fields[f].component && obj.fields[f].name != "Transform" && IsComponentSupported ( obj.fields[f].name ) ) {
-					tmpStrings.Add ( obj.fields[f].name );
+					componentSwitch.tabs.Add ( new OGTabs.Tab ( obj.fields[f].name, null ) );
 				}
 			}
 
-			componentSwitch.options = tmpStrings.ToArray ();
-
-			if ( componentSwitch.options.Length > 0 ) {
+			if ( componentSwitch.tabs.Count > 0 ) {
 				componentSwitch.gameObject.SetActive ( true );
-				componentSwitch.selectedOption = componentSwitch.options[0];
-				SelectComponent ( componentSwitch.selectedOption );
+				componentSwitch.activeTab = 0;
+				SelectComponent ( componentSwitch.tabs[0].title );
 			
 			} else {
 				componentSwitch.gameObject.SetActive ( false );
@@ -113,7 +115,7 @@ public class OEInspector extends MonoBehaviour {
 			}
 		
 		} else {
-			componentSwitch.selectedOption = "";
+			componentSwitch.activeTab = 0;
 
 		}
 	}

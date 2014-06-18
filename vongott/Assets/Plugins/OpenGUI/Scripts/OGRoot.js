@@ -26,9 +26,8 @@ class OGRoot extends MonoBehaviour {
 	public var skin : OGSkin;
 	public var currentPage : OGPage;
 	public var lineMaterial : Material;
-
-	@HideInInspector public var downWidget : OGWidget;	
-	@HideInInspector public var isMouseOver : boolean = false;
+	public var downWidget : OGWidget;	
+	public var isMouseOver : boolean = false;
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
@@ -272,7 +271,7 @@ class OGRoot extends MonoBehaviour {
 				w = mouseOver[i];
 				
 				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable ) {
-				        if ( w.GetType == typeof ( OGScrollView ) ) {
+				        if ( w.GetType() == typeof ( OGScrollView ) ) {
 						if ( Input.GetMouseButton ( 2 ) || ( w as OGScrollView ).touchControl ) {	
 							topWidget = w;
 						}
