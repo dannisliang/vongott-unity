@@ -46,6 +46,8 @@ public class OEToolbar extends MonoBehaviour {
 
 			currentDrawer = name;
 
+			drawer.Refresh ();
+
 			return drawer;
 		
 		} else {

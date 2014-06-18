@@ -328,12 +328,12 @@ public class OGScrollView extends OGWidget {
 		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic, drawDepth - 10, tint );
 	
 		if ( scrollbarVisibility == ScrollbarVisibility.Auto ) {
-			if ( bounds.x < 0 ) {
-				if ( !IsInfiniteX() ) { OGDrawHelper.DrawSlicedSprite ( GetScrollbarXRect(), styles.thumb, drawDepth - 9, tint ); }
+			if ( bounds.x < 0 && !IsInfiniteX() && lockAxis != ScrollDirection.Y ) {
+				OGDrawHelper.DrawSlicedSprite ( GetScrollbarXRect(), styles.thumb, drawDepth - 9, tint );
 			}
 
-			if ( bounds.y < 0 ) {
-				if ( !IsInfiniteY() ) { OGDrawHelper.DrawSlicedSprite ( GetScrollbarYRect(), styles.thumb, drawDepth - 9, tint ); }
+			if ( bounds.y < 0 && !IsInfiniteY() && lockAxis != ScrollDirection.X ) {
+				OGDrawHelper.DrawSlicedSprite ( GetScrollbarYRect(), styles.thumb, drawDepth - 9, tint );
 			}
 		}
 	}

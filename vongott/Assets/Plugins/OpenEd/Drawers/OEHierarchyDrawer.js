@@ -7,6 +7,15 @@ public class OEHierarchyDrawer extends OEDrawer {
 	private var yOffset : float;
 	private var updateNames : Dictionary.< GameObject, OGListItem > = new Dictionary.< GameObject, OGListItem > ();
 
+	public function Clear () {
+		yOffset = 0;
+		for ( var i : int = 0; i < scrollview.childCount; i++ ) {
+			Destroy ( scrollview.GetChild ( i ).gameObject );
+		}
+
+		updateNames.Clear ();
+	}
+
 	public function Traverse ( node : Transform, depth : int ) {
 		if ( depth <= maxDepth ) {
 			var xOffset : float = depth * 20;
@@ -51,9 +60,14 @@ public class OEHierarchyDrawer extends OEDrawer {
 		}
 	}
 
-	public function Start () {
-		var root : Transform = OEWorkspace.GetInstance().transform;
+	override function Refresh () {
+		OEWorkspace.GetInstance().StartCoroutine ( function () : IEnumerator {
+			Clear ();
+		
+			yield WaitForEndOfFrame ();
 
-		Traverse ( root, 0 );
+			var root : Transform = OEWorkspace.GetInstance().transform;
+			Traverse ( root, 0 );
+		} () );
 	}
 }
