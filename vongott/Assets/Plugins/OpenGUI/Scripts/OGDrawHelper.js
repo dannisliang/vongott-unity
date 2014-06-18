@@ -62,6 +62,28 @@ public class OGDrawHelper {
 	//////////////////
 	// Label
 	//////////////////
+	// Get width
+	public static function GetLabelWidth ( string : String, style : OGTextStyle ) : float {
+		var width : float = style.padding.left + style.padding.right;
+		
+		var size : float = ( style.fontSize * 1.0 ) / 72;
+		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size );
+		
+		for ( var c : int = 0; c < string.Length; c++ ) {
+			if ( string[c] == " "[0] ) {
+				width += space;
+
+			} else {
+				var info : OGCharacterInfo = style.font.GetCharacterInfo ( string[c] );
+
+				width += info.width * size;
+			
+			}
+		}
+
+		return width;
+	}
+	
 	// Draw
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color ) {
 		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, null );

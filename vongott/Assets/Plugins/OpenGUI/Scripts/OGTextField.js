@@ -10,9 +10,9 @@ public class OGTextField extends OGWidget {
 	}
 	
 	public var locked : boolean = false;
-	public var stealReturnKey : boolean = true;
+	public var fitToText : boolean = false;
 	public var text : String = "";
-	public var maxLength : int = 30;
+	public var maxLength : int = 200;
 	public var regex : String;
 	public var regexPreset : RegExPreset;
 
@@ -84,6 +84,11 @@ public class OGTextField extends OGWidget {
 		// Update data
 		mouseRct = drawRct;
 		isAlwaysOnTop = listening;
+		
+		if ( fitToText ) {
+			this.transform.localScale.x = OGDrawHelper.GetLabelWidth ( text, currentStyle.text );
+		
+		}
 
 		// Styles
 		if ( listening ) {
@@ -126,6 +131,7 @@ public class OGTextField extends OGWidget {
 	override function DrawText () {
 		if ( !listening ) {
 			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this );
+		
 		}
 	}
 }
