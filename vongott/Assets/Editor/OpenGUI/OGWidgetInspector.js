@@ -29,8 +29,6 @@ public class OGWidgetInspector extends Editor {
 	}
 	
 	override function OnInspectorGUI () {		
-		serializedObject.Update ();
-		
 		var widget : OGWidget = target as OGWidget;
 				
 		if ( !widget || !widget.GetRoot() ) { return; }
