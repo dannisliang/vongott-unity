@@ -40,8 +40,14 @@ public class OGTabs extends OGWidget {
 			}
 		}
 
-		maxTabs = Mathf.Clamp ( Mathf.Floor ( drawRct.width / widestTab ), 1, tabs.Count );
+		if ( width > drawRct.width ) {
+			maxTabs = Mathf.Clamp ( Mathf.Floor ( drawRct.width / widestTab ), 1, tabs.Count );
 		
+		} else {
+			maxTabs = tabs.Count;
+
+		}
+
 		return width;
 	}
 	
@@ -68,7 +74,7 @@ public class OGTabs extends OGWidget {
 		
 		var rect : Rect = new Rect ( drawRct.x + tabWidth * ( i - focusTab ), drawRct.y, tabWidth, drawRct.height );
 		
-		if ( activeTab > 0 ) {
+		if ( activeTab > 0 && overflow ) {
 			rect.x += drawRct.height;
 		}
 
@@ -204,19 +210,16 @@ public class OGTabs extends OGWidget {
 			SetActiveTab ( tabs.Count - 1 );
 	 	}
 
-		if ( activeTab < focusTab ) {
+		if ( !overflow ) {
+			focusTab = 0;
+
+		} else if ( activeTab < focusTab ) {
 			focusTab--;
 		
 		} else if ( activeTab >= focusTab + maxTabs ) {
 			focusTab++;
 
 		}
-
-		if ( !Application.isPlaying && activeTab != prevActiveTab ) {
-			SetActiveTab ( activeTab );
-		}
-
-		prevActiveTab = activeTab;
 	}
 
 	
