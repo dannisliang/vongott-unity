@@ -166,6 +166,18 @@ public class OFDeserializer {
 				case "AudioSource":
 					Deserialize ( components.list[i], CheckComponent ( output, typeof ( AudioSource ) ) as AudioSource );
 					break;
+				
+				case "MeshFilter":
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( MeshFilter ) ) as MeshFilter );
+					break;
+				
+				case "MeshRenderer":
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( MeshRenderer ) ) as MeshRenderer );
+					break;
+				
+				case "SphereCollider":
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( SphereCollider ) ) as SphereCollider );
+					break;
 			}
 
 			// Plugins
@@ -192,12 +204,48 @@ public class OFDeserializer {
 		light.intensity = input.GetField ( "intensity" ).n;
 		light.shadows = ParseEnum ( typeof ( LightShadows ), input.GetField ( "shadows" ).str );
 	}
+	
+	// SphereCollider
+	public static function Deserialize ( input : JSONObject, sphereCollider : SphereCollider ) {
+		sphereCollider.center = DeserializeVector3 ( input.GetField ( "center" ) );
+		sphereCollider.radius = input.GetField ( "radius" ).n;
+	}
 
 	// Transform
 	public static function Deserialize ( input : JSONObject, transform : Transform ) {
 		transform.eulerAngles = DeserializeVector3 ( input.GetField ( "eulerAngles" ) );
 		transform.position = DeserializeVector3 ( input.GetField ( "position" ) );
 		transform.localScale = DeserializeVector3 ( input.GetField ( "localScale" ) );
+	}
+	
+	// MeshFilter
+	public static function Deserialize ( input : JSONObject, meshFilter : MeshFilter ) {
+		var assetLink : OFAssetLink = meshFilter.GetComponent.< OFSerializedObject >().GetAssetLink( "mesh" );
+
+		if ( assetLink != null ) {
+			meshFilter.mesh = assetLink.GetMesh ();
+		}
+	}
+	
+	// MeshRenderer
+	public static function Deserialize ( input : JSONObject, meshRenderer : MeshRenderer ) {
+		if ( !meshRenderer.material ) {
+			meshRenderer.material = new Material ( Shader.Find ( "Bumped Diffuse" ) );
+		}
+		
+		for ( var i : int = 0; i < meshRenderer.materials.Length; i++ ) {
+			var mainTex : OFAssetLink = meshRenderer.GetComponent.< OFSerializedObject >().GetAssetLink( "materials_" + i + "_MainTex" );
+
+			if ( mainTex != null ) {
+				meshRenderer.materials[i].SetTexture ( "_MainTex", mainTex.GetTexture () );
+			}
+			
+			var bumpMap : OFAssetLink = meshRenderer.GetComponent.< OFSerializedObject >().GetAssetLink( "materials_" + i + "_BumpMap" );
+
+			if ( bumpMap != null ) {
+				meshRenderer.materials[i].SetTexture ( "_BumpMap", bumpMap.GetTexture () );
+			}
+		}
 	}
 	
 	// AudioSource

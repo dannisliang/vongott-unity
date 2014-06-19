@@ -456,6 +456,9 @@ public class OEAssetLinkField extends OEField {
 			} else if ( sysType == typeof ( AudioClip ) ) {
 				object = assetLink.GetAudioClip ();
 
+			} else if ( sysType == typeof ( Mesh ) ) {
+				object = assetLink.GetMesh ();
+
 			}
 		
 		} else {

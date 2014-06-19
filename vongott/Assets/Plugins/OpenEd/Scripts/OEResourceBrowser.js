@@ -78,7 +78,7 @@ public class OEResourceBrowser extends OGPage {
 		if ( currentBundle ) {
 			currentBundleFolder = currentBundleFolder.GetFolder ( folder );
 
-			path = currentBundleFolder.path.Replace ( Application.dataPath + "/" + OFBundleManager.instance.bundleFolder + "/" + currentBundle.name + "/", "" );
+			path = currentBundleFolder.path.Replace ( Application.temporaryCachePath + "/OpenFile/Bundles/" + OFBundleManager.instance.bundleFolder + "/" + currentBundle.name + "/", "" );
 
 			Populate ();
 

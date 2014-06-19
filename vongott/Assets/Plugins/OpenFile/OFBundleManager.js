@@ -42,6 +42,15 @@ public class OFBundleManager extends MonoBehaviour {
 				folder.AddTexture ( newTex );
 			} () );
 		}
+		
+		for ( var meshPath : String in Directory.GetFiles ( folder.path, "*.obj" ) ) {
+			meshPath = meshPath.Replace ( "\\", "/" );
+			
+			var newMesh : Mesh = ObjImporter.Importer.ImportFile ( meshPath );
+			newMesh.name = GetName ( meshPath );
+
+			folder.AddMesh ( newMesh );
+		}
 
 		for ( var audioPath : String in Directory.GetFiles ( folder.path, "*.ogg" ) ) {
 			audioPath = audioPath.Replace ( "\\", "/" );

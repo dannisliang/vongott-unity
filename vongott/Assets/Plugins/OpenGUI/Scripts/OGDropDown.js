@@ -147,7 +147,7 @@ class OGDropDown extends OGWidget {
 	}
 
 	private function GetNestedBackgroundRect () {
-		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( activeNestedMenu + submenu[activeNestedMenu].nestedMenu.Length ) * drawRct.height, drawRct.width, drawRct.height * submenu[activeNestedMenu].nestedMenu.Length );
+		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( activeNestedMenu + submenu[activeNestedMenu].nestedMenu.Length ) * drawRct.height - styles.active.text.padding.top - styles.active.text.padding.bottom, drawRct.width, drawRct.height * submenu[activeNestedMenu].nestedMenu.Length + styles.active.text.padding.bottom + styles.active.text.padding.top );
 	}
 
 	private function GetRootItemRect ( i : int ) {
@@ -155,7 +155,7 @@ class OGDropDown extends OGWidget {
 	}
 
 	private function GetNestedItemRect ( i : int ) {
-		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( 1 + activeNestedMenu + i ) * drawRct.height, drawRct.width, drawRct.height );
+		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( 1 + activeNestedMenu + i ) * drawRct.height - styles.active.text.padding.top, drawRct.width, drawRct.height );
 	}
 
 	private function GetTickRect ( i : int, isRoot : boolean ) : Rect {
@@ -215,17 +215,13 @@ class OGDropDown extends OGWidget {
 		if ( isDown ) {
 			OGDrawHelper.DrawSlicedSprite ( GetRootBackgroundRect (), styles.active, drawDepth, tint, clipTo );
 		
-			if ( activeNestedMenu != -1 ) {
-				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.active, drawDepth, tint, clipTo );
-			}
-		
 			// Draw item graphics
 			for ( var s : int = 0; s < submenu.Length; s++ ) {
 				if ( submenu[s].isTicked ) {
 					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked, drawDepth, tint, clipTo );
 				
 				} else if ( submenu[s].nestedMenu.Length > 0 ) {
-					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.active, drawDepth, tint, clipTo );
+					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.thumb, drawDepth, tint, clipTo );
 
 				}
 
@@ -235,12 +231,19 @@ class OGDropDown extends OGWidget {
 			}
 
 			if ( activeNestedMenu != -1 ) {
+				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.active, drawDepth, tint, clipTo );
+				
 				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
 					if ( submenu[activeNestedMenu].nestedMenu[n].isTicked ) {
 						OGDrawHelper.DrawSprite ( GetTickRect ( n, false ), styles.ticked, drawDepth, tint, clipTo );
 					}
+					
+					if ( GetNestedItemStyle ( n ) == styles.hover ) {
+						OGDrawHelper.DrawSprite ( GetNestedItemRect ( n ), styles.hover, drawDepth, tint, clipTo );
+					}
 				}
 			}
+		
 		}
 	}	
 

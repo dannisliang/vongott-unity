@@ -121,6 +121,15 @@ public class OFSerializer extends MonoBehaviour {
 		} else if ( input.GetType() == typeof ( AudioSource ) ) {
 			output = Serialize ( input as AudioSource );
 		
+		} else if ( input.GetType() == typeof ( MeshFilter ) ) {
+			output = Serialize ( input as MeshFilter );
+		
+		} else if ( input.GetType() == typeof ( MeshRenderer ) ) {
+			output = Serialize ( input as MeshRenderer );
+		
+		} else if ( input.GetType() == typeof ( SphereCollider ) ) {
+			output = Serialize ( input as SphereCollider );
+		
 		// Plugins
 		} else {
 	       		for ( var i : int = 0; i < plugins.Length; i++ ) {
@@ -151,6 +160,36 @@ public class OFSerializer extends MonoBehaviour {
 		output.AddField ( "intensity", input.intensity );
 		output.AddField ( "shadows", input.shadows.ToString () );
 	
+		return output;
+	}
+
+	// SphereCollider
+	public static function Serialize ( input : SphereCollider ) : JSONObject {
+		if ( !input ) { return null; }
+		
+		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+
+		output.AddField ( "center", Serialize ( input.center ) );
+		output.AddField ( "radius", input.radius );
+
+		return output;
+	}
+
+	// MeshFilter
+	public static function Serialize ( input : MeshFilter ) : JSONObject {
+		if ( !input ) { return null; }
+		
+		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+
+		return output;
+	}
+
+	// MeshRenderer
+	public static function Serialize ( input : MeshRenderer ) : JSONObject {
+		if ( !input ) { return null; }
+		
+		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
+
 		return output;
 	}
 	
