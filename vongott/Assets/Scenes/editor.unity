@@ -2354,6 +2354,12 @@ MonoBehaviour:
     tickable: 0
     isTicked: 0
     nestedMenu: []
+  - name: Mesh
+    message: AddMesh
+    argument: 
+    tickable: 0
+    isTicked: 0
+    nestedMenu: []
   isDown: 0
 --- !u!1 &175011159
 GameObject:
@@ -3935,7 +3941,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5354721905c7740e7aababc14eb8e338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoLoadLast: 0
+  settings:
+    autoLoadLastMap: 1
+    shaderNames:
+    - Bumped Diffuse
+    - Bumped Specular
+    - Decal
+    - DepthMask
+    - Diffuse
+    - Diffuse Detail
+    - Parallax Diffuse
+    - Parallax Specular
+    - Specular
+    - VertexLit
+    shaderProperties:
+    - _MainTex
+    - _BumpMap
   cam: {fileID: 139346422}
   fileBrowser: {fileID: 373355343}
   resourceBrowser: {fileID: 1305970718}
@@ -32738,7 +32759,7 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 11400000, guid: 64a60312765b7e94eb2ee545b9e013a0, type: 2}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0

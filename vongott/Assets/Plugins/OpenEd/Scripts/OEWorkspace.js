@@ -196,10 +196,6 @@ public class OEWorkspace extends MonoBehaviour {
 		
 		ClearScene ();
 		
-		yield WaitForEndOfFrame ();
-		
-		OFDeserializer.DeserializeChildren ( json, this.transform );
-		
 		if ( json.HasField ( "info" ) ) {
 			var info : JSONObject = json.GetField ( "info" );
 
@@ -219,7 +215,11 @@ public class OEWorkspace extends MonoBehaviour {
 				focusPoint = OFDeserializer.DeserializeVector3 ( info.GetField ( "editorFocus" ) );
 			}
 		}
-
+		
+		yield WaitForEndOfFrame ();
+		
+		OFDeserializer.DeserializeChildren ( json, this.transform );
+		
 		yield WaitForEndOfFrame ();
 
 		StripComponents ();
@@ -629,13 +629,15 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 
 	// Init
-	public function Start () {
+	public function Start () : IEnumerator {
 		instance = this;
 	
 		initCamPos = cam.transform.position;
 		initCamRot = cam.transform.rotation;
 
 		if ( settings.autoLoadLastMap ) {
+			yield WaitForEndOfFrame ();
+
 			currentSavePath = PlayerPrefs.GetString ( "OEWorkspace.currentSavePath" );
 
 			if ( !String.IsNullOrEmpty ( currentSavePath ) ) {

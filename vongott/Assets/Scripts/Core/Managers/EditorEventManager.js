@@ -3,6 +3,8 @@
 public class EditorEventManager extends MonoBehaviour {
 	public function Play ( btn : OGButton ) {
 		if ( !String.IsNullOrEmpty ( OEWorkspace.GetInstance().currentSavePath ) ) {
+			GameCore.OverrideSpawnpoint ( OEWorkspace.GetInstance().GetFocus(), Camera.main.transform.eulerAngles );
+
 			GameCore.nextLevel = OEWorkspace.GetInstance().currentSavePath;
 			
 			OGRoot.GetInstance().GoToPage ( "Loading" );
