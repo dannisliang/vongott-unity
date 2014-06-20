@@ -144,7 +144,7 @@ public class OEWorkspace extends MonoBehaviour {
 				a.Stop ();
 			}
 			
-			if ( !a.gameObject.GetComponent.< SphereCollider > () ) {
+			if ( !a.gameObject.GetComponentInChildren.< Collider > () ) {
 				a.gameObject.AddComponent.< SphereCollider > ();
 			}
 		}
