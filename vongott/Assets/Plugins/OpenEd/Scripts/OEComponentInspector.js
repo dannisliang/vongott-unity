@@ -814,13 +814,7 @@ public class OEPopup extends OEField {
 	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
 		title.text = text;
 		
-		if ( !String.IsNullOrEmpty ( text ) ) {
-			popup.title = "< " + text.ToLower() + " >";
-		
-		} else {
-			popup.title = "...";
-		
-		}
+		popup.title = "...";
 
 		title.tint.a = enabled ? 1.0 : 0.5;
 		popup.tint.a = enabled ? 1.0 : 0.5;
@@ -886,7 +880,7 @@ public class OEToggle extends OEField {
 		
 		tickbox.text = text;
 		tickbox.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
-		tickbox.transform.localScale = new Vector3 ( scale.x / 2 + scale.y * 0.75, scale.y, 1 );
+		tickbox.transform.localScale = new Vector3 ( scale.x / 2 + scale.y, scale.y, 1 );
 	}
 
 	public function Set ( isTicked : boolean ) : boolean {

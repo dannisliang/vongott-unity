@@ -56,7 +56,7 @@ public class OEWorkspace extends MonoBehaviour {
 		public var parent : Transform;
 	}
 	
-	public var autoLoadLast : boolean = true;
+	public var settings : OESettings;
 	public var cam : OECamera;
 	public var fileBrowser : OEFileBrowser;
 	public var resourceBrowser : OEResourceBrowser;
@@ -317,7 +317,7 @@ public class OEWorkspace extends MonoBehaviour {
 		fileBrowser.callback = callback;
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
 		fileBrowser.filter = filterString;
-		resourceBrowser.sender = OGRoot.GetInstance().currentPage.pageName;
+		fileBrowser.sender = OGRoot.GetInstance().currentPage.pageName;
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
 	}
 
@@ -391,6 +391,13 @@ public class OEWorkspace extends MonoBehaviour {
 	public function ClearSelection () {
 		instance.selection.Clear ();
 
+		// Check for MeshFilters with null mesh
+		for ( var mf : MeshFilter in this.GetComponentsInChildren.< MeshFilter > () ) {
+			if ( !IsSelected ( mf.GetComponent.< OFSerializedObject > () ) && mf.mesh == null || mf.mesh.vertices.Length < 3 ) {
+				Destroy ( mf.gameObject );
+			}
+		}
+		
 		RefreshAll ();
 	}
 
@@ -471,6 +478,25 @@ public class OEWorkspace extends MonoBehaviour {
 		RefreshAll ();
 	}
 	
+	public function AddMesh () {
+		var obj : OFSerializedObject = new GameObject ( "Mesh", MeshFilter, MeshRenderer, BoxCollider ).AddComponent.< OFSerializedObject > ();
+	
+		obj.GetComponent.< MeshRenderer > ().material = new Material ( Shader.Find ( "Diffuse" ) );
+		obj.GetComponent.< MeshRenderer > ().material.name = "New Material";
+
+		obj.GetComponent.< BoxCollider > ().size = Vector3.one;
+
+		obj.SetField ( "Transform", obj.GetComponent.< Transform > () );
+		obj.SetField ( "MeshFilter", obj.GetComponent.< MeshFilter > () );
+		obj.SetField ( "MeshRenderer", obj.GetComponent.< MeshRenderer > () );
+		obj.SetField ( "BoxCollider", obj.GetComponent.< BoxCollider > () );
+		PlaceAtCursor ( obj );
+
+		SelectObject ( obj );
+
+		RefreshAll ();
+	}
+
 	public function AddAudioSource () {
 		var obj : OFSerializedObject = new GameObject ( "AudioSource", AudioSource, SphereCollider ).AddComponent.< OFSerializedObject > ();
 		
@@ -609,7 +635,7 @@ public class OEWorkspace extends MonoBehaviour {
 		initCamPos = cam.transform.position;
 		initCamRot = cam.transform.rotation;
 
-		if ( autoLoadLast ) {
+		if ( settings.autoLoadLastMap ) {
 			currentSavePath = PlayerPrefs.GetString ( "OEWorkspace.currentSavePath" );
 
 			if ( !String.IsNullOrEmpty ( currentSavePath ) ) {

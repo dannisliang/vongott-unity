@@ -580,7 +580,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      font: {fileID: 0}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -609,7 +609,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      font: {fileID: 0}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -667,7 +667,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      font: {fileID: 0}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -696,7 +696,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      font: {fileID: 0}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -725,7 +725,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      font: {fileID: 0}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -754,7 +754,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      font: {fileID: 0}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -783,7 +783,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      font: {fileID: 0}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -1004,29 +1004,29 @@ MonoBehaviour:
     coordinates:
       serializedVersion: 2
       x: 128
-      y: 0
-      width: 64
+      y: 96
+      width: 32
       height: 32
     border:
-      top: 4
-      bottom: 4
-      left: 4
-      right: 4
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
       font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
       fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
+      fontColor: {r: .235294119, g: .235294119, b: .235294119, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 3
+      alignment: 0
       wordWrap: 1
       padding:
         m_Left: 8
-        m_Right: 8
-        m_Top: 0
-        m_Bottom: 0
+        m_Right: 2
+        m_Top: 4
+        m_Bottom: 4
       lineHeight: 1.25
       spacing: 1
   - name: PopUpThumb

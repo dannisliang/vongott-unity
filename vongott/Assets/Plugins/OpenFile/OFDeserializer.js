@@ -178,6 +178,10 @@ public class OFDeserializer {
 				case "SphereCollider":
 					Deserialize ( components.list[i], CheckComponent ( output, typeof ( SphereCollider ) ) as SphereCollider );
 					break;
+				
+				case "BoxCollider":
+					Deserialize ( components.list[i], CheckComponent ( output, typeof ( BoxCollider ) ) as BoxCollider );
+					break;
 			}
 
 			// Plugins
@@ -211,6 +215,12 @@ public class OFDeserializer {
 		sphereCollider.radius = input.GetField ( "radius" ).n;
 	}
 
+	// BoxCollider
+	public static function Deserialize ( input : JSONObject, boxCollider : BoxCollider ) {
+		boxCollider.center = DeserializeVector3 ( input.GetField ( "center" ) );
+		boxCollider.size = DeserializeVector3 ( input.GetField ( "size" ) );
+	}
+
 	// Transform
 	public static function Deserialize ( input : JSONObject, transform : Transform ) {
 		transform.eulerAngles = DeserializeVector3 ( input.GetField ( "eulerAngles" ) );
@@ -229,21 +239,21 @@ public class OFDeserializer {
 	
 	// MeshRenderer
 	public static function Deserialize ( input : JSONObject, meshRenderer : MeshRenderer ) {
-		if ( !meshRenderer.material ) {
-			meshRenderer.material = new Material ( Shader.Find ( "Bumped Diffuse" ) );
-		}
-		
-		for ( var i : int = 0; i < meshRenderer.materials.Length; i++ ) {
-			var mainTex : OFAssetLink = meshRenderer.GetComponent.< OFSerializedObject >().GetAssetLink( "materials_" + i + "_MainTex" );
+		var materials : List.< JSONObject > = input.GetField ( "materials" ).list;
 
-			if ( mainTex != null ) {
-				meshRenderer.materials[i].SetTexture ( "_MainTex", mainTex.GetTexture () );
-			}
+		for ( var i : int = 0; i < materials.Count; i++ ) {
+			var assetLinks : OFAssetLink[] = meshRenderer.GetComponent.< OFSerializedObject >().assetLinks;
 			
-			var bumpMap : OFAssetLink = meshRenderer.GetComponent.< OFSerializedObject >().GetAssetLink( "materials_" + i + "_BumpMap" );
+			var shader : Shader = Shader.Find ( materials[i].GetField ( "shader" ).str );
+			meshRenderer.materials[i] = new Material ( shader );
+			meshRenderer.materials[i].shader = shader;
+			meshRenderer.materials[i].name = materials[i].GetField ( "name" ).str;
 
-			if ( bumpMap != null ) {
-				meshRenderer.materials[i].SetTexture ( "_BumpMap", bumpMap.GetTexture () );
+			for ( var a : int = 0; a < assetLinks.Length; a++ ) {
+				if ( assetLinks[a] && assetLinks[a].name.Contains ( "materials_" + i ) ) {
+					var fieldName : String = assetLinks[a].name.Replace ( "materials_" + i, "" );
+					meshRenderer.materials[i].SetTexture ( fieldName, assetLinks[a].GetTexture () );
+				}
 			}
 		}
 	}

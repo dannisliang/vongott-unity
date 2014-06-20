@@ -59,7 +59,7 @@ class OGPopUp extends OGWidget {
 	}
 
 	private function GetExpandedRect () : Rect {
-		var totalHeight : float = drawRct.height + options.Length * drawRct.height;
+		var totalHeight : float = styles.active.text.padding.bottom + styles.active.text.padding.top + drawRct.height + options.Length * drawRct.height;
 		var bottom : float = drawRct.y - totalHeight + drawRct.height;
 		
 		if ( bottom < 0 || clipTo && bottom < clipTo.drawRct.y ) {
@@ -145,6 +145,13 @@ class OGPopUp extends OGWidget {
 	override function DrawSkin () {
 		if ( isUp ) {
 			OGDrawHelper.DrawSlicedSprite ( GetExpandedRect(), currentStyle, drawDepth, tint, clipTo );
+			
+			for ( var i : int = 0; i < options.Length; i++ ) {
+				if ( GetOptionStyle ( i ) == styles.hover ) {
+					OGDrawHelper.DrawSprite ( GetOptionRect ( i ), styles.hover, drawDepth, tint, clipTo );
+				}
+			}
+
 		} else {
 			OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, tint, clipTo );
 			OGDrawHelper.DrawSprite ( GetThumbRect (), styles.thumb, drawDepth, tint, clipTo );

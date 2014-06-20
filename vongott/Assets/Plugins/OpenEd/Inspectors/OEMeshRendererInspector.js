@@ -17,25 +17,24 @@ public class OEMeshRendererInspector extends OEComponentInspector {
 
 		for ( var i : int = 0; i < meshRenderer.materials.Length; i++ ) {
 			var m : Material = meshRenderer.materials[i];
-			var shaders : String [] = [ "Diffuse", "Bumped Diffuse", "Bumped Diffuse Specular" ];
+			var shaderNames : String [] = OEWorkspace.GetInstance().settings.shaderNames;
+			var shaderProperties : String [] = OEWorkspace.GetInstance().settings.shaderProperties;
 			var shaderIndex : int = 0;
 
-			m.name = TextField ( "Name", m.name );
-
-			for ( var s : int = 0; s < shaders.Length; s++ ) {
-				if ( shaders[s] == m.shader.name ) {
+			for ( var s : int = 0; s < shaderNames.Length; s++ ) {
+				if ( shaderNames[s] == m.shader.name ) {
 					shaderIndex = s;
 				}
 			}
 
-			m.shader = Shader.Find ( shaders [ Popup ( "Shader", shaderIndex, shaders ) ] );
+			m.name = TextField ( "Name", m.name );
 
-			if ( m.HasProperty ( "_MainTex" ) ) {
-				m.SetTexture ( "_MainTex", AssetLinkField ( "_MainTex", "materials_" + i + "_MainTex", target, typeof ( Texture2D ), "png" ) as Texture2D );
-			}
+			m.shader = Shader.Find ( shaderNames [ Popup ( "Shader", shaderIndex, shaderNames ) ] );
 
-			if ( m.HasProperty ( "_BumpMap" ) ) {
-				m.SetTexture ( "_BumpMap", AssetLinkField ( "_BumpMap", "materials_" + i + "_BumpMap", target, typeof ( Texture2D ), "png" ) as Texture2D );
+			for ( s = 0; s < shaderProperties.Length; s++ ) {
+				if ( m.HasProperty ( shaderProperties [ s ] ) ) {
+					m.SetTexture ( shaderProperties [ s ], AssetLinkField ( shaderProperties [ s ], "materials_" + i + shaderProperties [ s ], target, typeof ( Texture2D ), "png" ) as Texture2D );
+				}
 			}
 
 			offset.y += 20;

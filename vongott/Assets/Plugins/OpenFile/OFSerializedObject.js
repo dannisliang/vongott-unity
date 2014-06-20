@@ -191,6 +191,7 @@ public class OFField {
 			types.Add ( typeof ( MeshFilter ) );
 			types.Add ( typeof ( MeshRenderer ) );
 			types.Add ( typeof ( SphereCollider ) );
+			types.Add ( typeof ( BoxCollider ) );
 			types.Add ( typeof ( Transform ) );
 
 			for ( var i : int = 0; i < plugins.Length; i++ ) {
