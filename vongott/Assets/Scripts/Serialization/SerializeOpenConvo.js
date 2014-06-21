@@ -156,7 +156,13 @@ public class SerializeOpenConvo extends OFPlugin {
 		var i1 : int = 0;
 
 		if ( !tree && !input ) { return; }
-		
+	
+		var manager : OCManager = OCManager.GetInstance();
+
+		if ( manager ) {
+			manager.flags.Clear ();
+		}
+
 		var rootNodes : List.< OCRootNode > = new List.< OCRootNode > ();
 		var speakers : List.< String > = new List.< String > ();
 
@@ -223,6 +229,7 @@ public class SerializeOpenConvo extends OFPlugin {
 							event.objectId = node.GetField ( "event" ).GetField ( "objectId" ).str;
 							OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject, indices : int [] ) {
 								tree.rootNodes [ indices[0] ].nodes [ indices[1] ].event.object = so.gameObject;
+								Debug.Log ( so.gameObject );
 							}, event.objectId, [ i, i1 ] );
 						}
 
@@ -247,6 +254,10 @@ public class SerializeOpenConvo extends OFPlugin {
 
 						n.setFlag = setFlag;
 
+						if ( manager ) {
+							manager.flags.Set ( setFlag.flag, false );
+						}
+
 						break;
 					
 					case OCNodeType.GetFlag:
@@ -255,6 +266,10 @@ public class SerializeOpenConvo extends OFPlugin {
 						getFlag.flag = node.GetField ( "getFlag" ).GetField ( "flag" ).str;
 
 						n.getFlag = getFlag;
+						
+						if ( manager ) {
+							manager.flags.Set ( getFlag.flag, false );
+						}
 
 						break;
 

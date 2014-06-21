@@ -233,6 +233,10 @@ public class Console extends MonoBehaviour {
 					// TODO: check for toggle
 					output += Set ( "player immortal" );
 					break;
+
+				case "legend":
+					OGRoot.GetInstance().GoToPage ( "DeveloperMenu" );
+					break;
 				
 				case "allweapons":
 					output += Give ( "weapon all" );

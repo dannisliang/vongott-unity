@@ -863,10 +863,10 @@ MonoBehaviour:
       width: 32
       height: 32
     border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
+      top: 4
+      bottom: 4
+      left: 4
+      right: 4
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
@@ -884,10 +884,10 @@ MonoBehaviour:
         m_Bottom: 0
       lineHeight: 1.25
       spacing: 1
-  - name: TickBoxHover
+  - name: TickBoxActive
     coordinates:
       serializedVersion: 2
-      x: 0
+      x: 192
       y: 0
       width: 32
       height: 32
@@ -963,7 +963,7 @@ MonoBehaviour:
           fontIndex: 0
           font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
           fontSize: 18
-          fontColor: {r: .507352948, g: .734016895, b: 1, a: 1}
+          fontColor: {r: 1, g: .862745106, b: .431372553, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
           alignment: 4
@@ -974,7 +974,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.45000005
+          spacing: 1
       hover:
         name: ButtonHover
         coordinates:
@@ -988,10 +988,10 @@ MonoBehaviour:
           bottom: 10
           left: 20
           right: 20
-        color: {r: .507352948, g: .734016895, b: 1, a: 1}
+        color: {r: 1, g: .764705896, b: 0, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
           fontSize: 18
           fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
           shadowSize: 0
@@ -1004,7 +1004,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.45000005
+          spacing: 1
       active:
         name: ButtonActive
         coordinates:
@@ -1021,7 +1021,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
           fontSize: 18
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1034,7 +1034,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.45000005
+          spacing: 1
       ticked:
         name: New Style
         coordinates:
@@ -1064,29 +1064,29 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
-        name: ButtonIO
+        name: ButtonHover
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 128
-          width: 16
-          height: 16
+          x: 0
+          y: 0
+          width: 64
+          height: 64
         border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
-        color: {r: 1, g: 1, b: 1, a: 1}
+          top: 10
+          bottom: 10
+          left: 20
+          right: 20
+        color: {r: 1, g: .764705896, b: 0, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
+          fontSize: 18
+          fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
+          alignment: 4
           wordWrap: 1
           padding:
             m_Left: 0
@@ -1094,45 +1094,15 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
-      disabled:
-        name: ButtonIO
-        coordinates:
-          serializedVersion: 2
-          x: 32
-          y: 128
-          width: 16
-          height: 16
-        border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 2
+          spacing: 1
+  - widgetType: 3
     styleSet:
       basic:
-        name: DropDown
+        name: Background
         coordinates:
           serializedVersion: 2
-          x: 96
-          y: 32
+          x: 32
+          y: 64
           width: 32
           height: 32
         border:
@@ -1143,56 +1113,208 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
           fontSize: 12
-          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 3
-          wordWrap: 0
+          alignment: 0
+          wordWrap: 1
           padding:
-            m_Left: 4
+            m_Left: 0
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       hover:
-        name: DropDownHover
+        name: Background
         coordinates:
           serializedVersion: 2
-          x: 128
-          y: 96
+          x: 32
+          y: 64
           width: 32
           height: 32
         border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
+          top: 4
+          bottom: 4
+          left: 4
+          right: 4
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
           fontSize: 12
-          fontColor: {r: .392156869, g: .392156869, b: .392156869, a: 1}
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 3
+          alignment: 0
           wordWrap: 1
           padding:
-            m_Left: 4
+            m_Left: 0
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       active:
-        name: DropDownActive
+        name: Background
         coordinates:
           serializedVersion: 2
-          x: 128
-          y: 32
+          x: 32
+          y: 64
+          width: 32
+          height: 32
+        border:
+          top: 4
+          bottom: 4
+          left: 4
+          right: 4
+        color: {r: 1, g: 1, b: 1, a: 1}
+        text:
+          fontIndex: 0
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
+          fontSize: 12
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          shadowSize: 0
+          shadowColor: {r: 0, g: 0, b: 0, a: 1}
+          alignment: 0
+          wordWrap: 1
+          padding:
+            m_Left: 0
+            m_Right: 0
+            m_Top: 0
+            m_Bottom: 0
+          lineHeight: 1.25
+          spacing: 1
+      ticked:
+        name: Background
+        coordinates:
+          serializedVersion: 2
+          x: 32
+          y: 64
+          width: 32
+          height: 32
+        border:
+          top: 4
+          bottom: 4
+          left: 4
+          right: 4
+        color: {r: 1, g: 1, b: 1, a: 1}
+        text:
+          fontIndex: 0
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
+          fontSize: 12
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          shadowSize: 0
+          shadowColor: {r: 0, g: 0, b: 0, a: 1}
+          alignment: 0
+          wordWrap: 1
+          padding:
+            m_Left: 0
+            m_Right: 0
+            m_Top: 0
+            m_Bottom: 0
+          lineHeight: 1.25
+          spacing: 1
+      thumb:
+        name: Background
+        coordinates:
+          serializedVersion: 2
+          x: 32
+          y: 64
+          width: 32
+          height: 32
+        border:
+          top: 4
+          bottom: 4
+          left: 4
+          right: 4
+        color: {r: 1, g: 1, b: 1, a: 1}
+        text:
+          fontIndex: 0
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
+          fontSize: 12
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          shadowSize: 0
+          shadowColor: {r: 0, g: 0, b: 0, a: 1}
+          alignment: 0
+          wordWrap: 1
+          padding:
+            m_Left: 0
+            m_Right: 0
+            m_Top: 0
+            m_Bottom: 0
+          lineHeight: 1.25
+          spacing: 1
+  - widgetType: 2
+    styleSet:
+      basic:
+        name: Background
+        coordinates:
+          serializedVersion: 2
+          x: 32
+          y: 64
+          width: 32
+          height: 32
+        border:
+          top: 4
+          bottom: 4
+          left: 4
+          right: 4
+        color: {r: 1, g: 1, b: 1, a: 1}
+        text:
+          fontIndex: 0
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
+          fontSize: 12
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          shadowSize: 0
+          shadowColor: {r: 0, g: 0, b: 0, a: 1}
+          alignment: 0
+          wordWrap: 1
+          padding:
+            m_Left: 0
+            m_Right: 0
+            m_Top: 0
+            m_Bottom: 0
+          lineHeight: 1.25
+          spacing: 1
+      hover:
+        name: Background
+        coordinates:
+          serializedVersion: 2
+          x: 32
+          y: 64
+          width: 32
+          height: 32
+        border:
+          top: 4
+          bottom: 4
+          left: 4
+          right: 4
+        color: {r: 1, g: 1, b: 1, a: 1}
+        text:
+          fontIndex: 0
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
+          fontSize: 12
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          shadowSize: 0
+          shadowColor: {r: 0, g: 0, b: 0, a: 1}
+          alignment: 0
+          wordWrap: 1
+          padding:
+            m_Left: 0
+            m_Right: 0
+            m_Top: 0
+            m_Bottom: 0
+          lineHeight: 1.25
+          spacing: 1
+      active:
+        name: New Style
+        coordinates:
+          serializedVersion: 2
+          x: 0
+          y: 0
           width: 32
           height: 32
         border:
@@ -1205,26 +1327,26 @@ MonoBehaviour:
           fontIndex: 0
           font: {fileID: 0}
           fontSize: 12
-          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 3
+          alignment: 0
           wordWrap: 1
           padding:
-            m_Left: 4
+            m_Left: 0
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       ticked:
-        name: DropDownTicked
+        name: New Style
         coordinates:
           serializedVersion: 2
-          x: 40
-          y: 70
-          width: 20
-          height: 20
+          x: 0
+          y: 0
+          width: 32
+          height: 32
         border:
           top: 0
           bottom: 0
@@ -1235,18 +1357,18 @@ MonoBehaviour:
           fontIndex: 0
           font: {fileID: 0}
           fontSize: 12
-          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 3
+          alignment: 0
           wordWrap: 1
           padding:
-            m_Left: 4
+            m_Left: 0
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
         name: New Style
         coordinates:
@@ -1276,38 +1398,8 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
-      disabled:
-        name: DropDownTicked
-        coordinates:
-          serializedVersion: 2
-          x: 40
-          y: 70
-          width: 20
-          height: 20
-        border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 3
-          wordWrap: 1
-          padding:
-            m_Left: 4
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 3
+          spacing: 1
+  - widgetType: 4
     styleSet:
       basic:
         name: Label
@@ -1325,8 +1417,8 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
+          fontSize: 16
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 2
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
@@ -1338,7 +1430,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       hover:
         name: New Style
         coordinates:
@@ -1368,7 +1460,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       active:
         name: New Style
         coordinates:
@@ -1398,7 +1490,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       ticked:
         name: New Style
         coordinates:
@@ -1428,7 +1520,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
         name: New Style
         coordinates:
@@ -1458,38 +1550,8 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
-      disabled:
-        name: Label
-        coordinates:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 32
-          height: 32
-        border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-          shadowSize: 2
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 4
+          spacing: 1
+  - widgetType: 5
     styleSet:
       basic:
         name: ListItem
@@ -1507,7 +1569,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
           fontSize: 16
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1520,7 +1582,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       hover:
         name: ListItemHover
         coordinates:
@@ -1537,7 +1599,7 @@ MonoBehaviour:
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
           fontSize: 16
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1550,7 +1612,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       active:
         name: New Style
         coordinates:
@@ -1580,7 +1642,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       ticked:
         name: ListItemTicked
         coordinates:
@@ -1610,7 +1672,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
         name: New Style
         coordinates:
@@ -1640,38 +1702,8 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
-      disabled:
-        name: ListItemDisabled
-        coordinates:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 64
-          height: 64
-        border:
-          top: 10
-          bottom: 10
-          left: 20
-          right: 20
-        color: {r: 1, g: 1, b: 1, a: .435294122}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 16
-          fontColor: {r: 1, g: 1, b: 1, a: .43921569}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 4
-          wordWrap: 0
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 5
+          spacing: 1
+  - widgetType: 6
     styleSet:
       basic:
         name: PopUp
@@ -1702,7 +1734,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       hover:
         name: PopUpActive
         coordinates:
@@ -1732,7 +1764,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       active:
         name: PopUpActive
         coordinates:
@@ -1762,7 +1794,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       ticked:
         name: New Style
         coordinates:
@@ -1792,38 +1824,8 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
-        name: Box
-        coordinates:
-          serializedVersion: 2
-          x: 32
-          y: 64
-          width: 32
-          height: 32
-        border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-      disabled:
         name: PopUpActive
         coordinates:
           serializedVersion: 2
@@ -1852,8 +1854,8 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 6
+          spacing: 1
+  - widgetType: 7
     styleSet:
       basic:
         name: ProgressBar
@@ -1884,7 +1886,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       hover:
         name: New Style
         coordinates:
@@ -1914,7 +1916,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       active:
         name: New Style
         coordinates:
@@ -1944,7 +1946,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       ticked:
         name: New Style
         coordinates:
@@ -1974,7 +1976,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
         name: ProgressBarThumb
         coordinates:
@@ -2004,38 +2006,8 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
-      disabled:
-        name: ProgressBarThumb
-        coordinates:
-          serializedVersion: 2
-          x: 130
-          y: 100
-          width: 20
-          height: 20
-        border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 7
+          spacing: 1
+  - widgetType: 8
     styleSet:
       basic:
         name: ScrollView
@@ -2095,7 +2067,7 @@ MonoBehaviour:
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
-          lineHeight: 1.5
+          lineHeight: 1.25
           spacing: 1
       active:
         name: New Style
@@ -2125,7 +2097,7 @@ MonoBehaviour:
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
-          lineHeight: 1.5
+          lineHeight: 1.25
           spacing: 1
       ticked:
         name: New Style
@@ -2155,7 +2127,7 @@ MonoBehaviour:
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
-          lineHeight: 1.5
+          lineHeight: 1.25
           spacing: 1
       thumb:
         name: ScrollView
@@ -2187,37 +2159,7 @@ MonoBehaviour:
             m_Bottom: 0
           lineHeight: 1.25
           spacing: 1.25
-      disabled:
-        name: Box
-        coordinates:
-          serializedVersion: 2
-          x: 32
-          y: 64
-          width: 32
-          height: 32
-        border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.5
-          spacing: 1
-  - widgetType: 8
+  - widgetType: 9
     styleSet:
       basic:
         name: Slider
@@ -2278,7 +2220,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       active:
         name: New Style
         coordinates:
@@ -2308,7 +2250,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       ticked:
         name: New Style
         coordinates:
@@ -2338,7 +2280,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
         name: SliderThumb
         coordinates:
@@ -2369,37 +2311,7 @@ MonoBehaviour:
             m_Bottom: 0
           lineHeight: 1.25
           spacing: 1.25
-      disabled:
-        name: SliderThumb
-        coordinates:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 32
-          height: 32
-        border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 11
+  - widgetType: 12
     styleSet:
       basic:
         name: Tabs
@@ -2430,7 +2342,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       hover:
         name: New Style
         coordinates:
@@ -2460,7 +2372,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       active:
         name: TabsActive
         coordinates:
@@ -2490,7 +2402,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       ticked:
         name: New Style
         coordinates:
@@ -2520,7 +2432,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
         name: New Style
         coordinates:
@@ -2550,38 +2462,8 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
-      disabled:
-        name: TabsActive
-        coordinates:
-          serializedVersion: 2
-          x: 64
-          y: 96
-          width: 32
-          height: 32
-        border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 4
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 12
+          spacing: 1
+  - widgetType: 13
     styleSet:
       basic:
         name: TextField
@@ -2600,7 +2482,7 @@ MonoBehaviour:
         text:
           fontIndex: 0
           font: {fileID: 0}
-          fontSize: 12
+          fontSize: 14
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
@@ -2612,7 +2494,7 @@ MonoBehaviour:
             m_Top: 4
             m_Bottom: 4
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       hover:
         name: New Style
         coordinates:
@@ -2642,37 +2524,37 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       active:
-        name: New Style
+        name: TextField
         coordinates:
           serializedVersion: 2
           x: 0
-          y: 0
+          y: 96
           width: 32
           height: 32
         border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
+          top: 4
+          bottom: 4
+          left: 4
+          right: 4
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
           font: {fileID: 0}
-          fontSize: 12
+          fontSize: 14
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
           alignment: 0
           wordWrap: 1
           padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
+            m_Left: 4
+            m_Right: 4
+            m_Top: 4
+            m_Bottom: 4
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       ticked:
         name: New Style
         coordinates:
@@ -2702,20 +2584,20 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
-        name: TextField
+        name: New Style
         coordinates:
           serializedVersion: 2
           x: 0
-          y: 96
+          y: 0
           width: 32
           height: 32
         border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
@@ -2727,43 +2609,13 @@ MonoBehaviour:
           alignment: 0
           wordWrap: 1
           padding:
-            m_Left: 4
-            m_Right: 4
-            m_Top: 4
-            m_Bottom: 4
+            m_Left: 0
+            m_Right: 0
+            m_Top: 0
+            m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
-      disabled:
-        name: TextField
-        coordinates:
-          serializedVersion: 2
-          x: 0
-          y: 96
-          width: 32
-          height: 32
-        border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
-          wordWrap: 1
-          padding:
-            m_Left: 4
-            m_Right: 4
-            m_Top: 4
-            m_Bottom: 4
-          lineHeight: 1.25
-          spacing: 1.25
-  - widgetType: 13
+          spacing: 1
+  - widgetType: 14
     styleSet:
       basic:
         name: TickBox
@@ -2774,10 +2626,10 @@ MonoBehaviour:
           width: 32
           height: 32
         border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
+          top: 4
+          bottom: 4
+          left: 4
+          right: 4
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
@@ -2794,38 +2646,8 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       hover:
-        name: TickBoxHover
-        coordinates:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 32
-          height: 32
-        border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 3
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
-          lineHeight: 1.25
-          spacing: 1.25
-      active:
         name: New Style
         coordinates:
           serializedVersion: 2
@@ -2853,7 +2675,37 @@ MonoBehaviour:
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
-          lineHeight: 1.5
+          lineHeight: 1.25
+          spacing: 1
+      active:
+        name: TickBoxActive
+        coordinates:
+          serializedVersion: 2
+          x: 192
+          y: 0
+          width: 32
+          height: 32
+        border:
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
+        color: {r: 1, g: 1, b: 1, a: 1}
+        text:
+          fontIndex: 0
+          font: {fileID: 0}
+          fontSize: 12
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          shadowSize: 0
+          shadowColor: {r: 0, g: 0, b: 0, a: 1}
+          alignment: 3
+          wordWrap: 1
+          padding:
+            m_Left: 0
+            m_Right: 0
+            m_Top: 0
+            m_Bottom: 0
+          lineHeight: 1.25
           spacing: 1
       ticked:
         name: TickBoxTicked
@@ -2884,7 +2736,7 @@ MonoBehaviour:
             m_Top: 0
             m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
       thumb:
         name: New Style
         coordinates:
@@ -2913,38 +2765,8 @@ MonoBehaviour:
             m_Right: 0
             m_Top: 0
             m_Bottom: 0
-          lineHeight: 1.5
-          spacing: 1
-      disabled:
-        name: TickBoxTicked
-        coordinates:
-          serializedVersion: 2
-          x: 192
-          y: 0
-          width: 32
-          height: 32
-        border:
-          top: 0
-          bottom: 0
-          left: 0
-          right: 0
-        color: {r: 1, g: 1, b: 1, a: 1}
-        text:
-          fontIndex: 0
-          font: {fileID: 0}
-          fontSize: 12
-          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-          shadowSize: 0
-          shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 3
-          wordWrap: 1
-          padding:
-            m_Left: 0
-            m_Right: 0
-            m_Top: 0
-            m_Bottom: 0
           lineHeight: 1.25
-          spacing: 1.25
+          spacing: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

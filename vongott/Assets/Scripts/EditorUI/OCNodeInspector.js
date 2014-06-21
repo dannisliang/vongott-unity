@@ -17,10 +17,15 @@ public class OCNodeInspector extends OEComponentInspector {
 		if ( !node ) { return; }
 
 		width = 284;
-		
-		var newType : int = Popup ( "", node.type, System.Enum.GetNames ( OCNodeType ), new Rect ( width / 4, 0, width / 2, 16 ) );
+	
+		LabelField ( "ID", new Rect ( 0, 0, width / 2, 16 ) );
+		LabelField ( node.id.ToString(), new Rect ( width / 2, 0, width / 2, 16 ) );
 
-		offset.y += 30;
+		offset.y += 20;
+
+		var newType : int = Popup ( "Type", node.type, System.Enum.GetNames ( OCNodeType ) );
+
+		offset.y += 10;
 
 		if ( newType != node.type ) {
 			node.SetType ( newType );
@@ -80,10 +85,7 @@ public class OCNodeInspector extends OEComponentInspector {
 			
 				var buttonTitle : String = "None";
 
-				if ( node.event.object ) {
-					buttonTitle = node.event.object.name;
-
-				} else if ( !String.IsNullOrEmpty ( node.event.objectId ) ) {
+				if ( !String.IsNullOrEmpty ( node.event.objectId ) ) {
 					buttonTitle = "(scene object)";
 				
 				} else if ( !String.IsNullOrEmpty ( node.event.objectPath ) ) {
@@ -123,8 +125,8 @@ public class OCNodeInspector extends OEComponentInspector {
 					node.event.objectPath = "";
 				}
 
-				if ( !String.IsNullOrEmpty ( node.event.objectId ) && !String.IsNullOrEmpty ( node.event.objectPath ) ) {
-					node.event.eventToTarget = Toggle ( "Event to target", node.event.eventToTarget );
+				if ( !String.IsNullOrEmpty ( node.event.objectId ) ) {
+					node.event.eventToTarget = Toggle ( "Event to object", node.event.eventToTarget );
 				
 				} else {
 					node.event.eventToTarget = false;
