@@ -388,6 +388,16 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 
 	// Selection
+	public function GetSelectedObject () : OFSerializedObject {
+		if ( selection.Count == 1 ) {
+			return selection[0];
+		
+		} else {
+
+			return null;
+		}
+	}
+	
 	public function ClearSelection () {
 		instance.selection.Clear ();
 
