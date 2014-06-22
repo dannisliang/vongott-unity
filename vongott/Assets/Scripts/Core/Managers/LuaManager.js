@@ -21,4 +21,17 @@ public class LuaManager extends MonoBehaviour {
 
 		return null;
 	}
+
+	// Get by id
+	public function getObject ( id : String ) : LuaScriptableObject {
+		var go : GameObject = GameCore.GetInstance().GetObjectFromGUID ( id );
+
+		if ( go ) {
+			return go.GetComponent.< LuaScriptableObject > ();
+		
+		} else {
+			return null;
+		
+		}
+	}
 }

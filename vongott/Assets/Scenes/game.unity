@@ -2721,6 +2721,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &106685383
 GameObject:
   m_ObjectHideFlags: 0
@@ -37582,6 +37583,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &1010167828
 GameObject:
   m_ObjectHideFlags: 0
@@ -40464,6 +40466,7 @@ GameObject:
   - 114: {fileID: 1082207476}
   - 114: {fileID: 1082207475}
   - 114: {fileID: 1082207469}
+  - 114: {fileID: 1082207477}
   m_Layer: 0
   m_Name: GameCore
   m_TagString: Untagged
@@ -40622,6 +40625,18 @@ MonoBehaviour:
   currentNode: 0
   eventHandler: {fileID: 1082207467}
   speakers: []
+--- !u!114 &1082207477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1082207467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc63f007c7b7c346a2091d91b24fac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultParent: {fileID: 1905375002}
 --- !u!1 &1084910430
 GameObject:
   m_ObjectHideFlags: 0
@@ -42007,6 +42022,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &1134034480
 GameObject:
   m_ObjectHideFlags: 0
@@ -42290,6 +42306,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &1142245055
 GameObject:
   m_ObjectHideFlags: 0

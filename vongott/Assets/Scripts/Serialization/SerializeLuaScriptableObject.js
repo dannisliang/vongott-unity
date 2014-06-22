@@ -9,7 +9,7 @@ public class SerializeLuaScriptableObject extends OFPlugin {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 		var input : LuaScriptableObject = component as LuaScriptableObject;
 
-		output.AddField ( "luaString", input.luaString.Replace ( "\n", "@" ) );
+		output.AddField ( "luaString", input.luaString.Replace ( "\n", "@" ).Replace ( "\"", "'" ) );
 
 		return output;
 	}

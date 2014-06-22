@@ -1264,7 +1264,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 86000037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 628, y: 648, z: 0}
+  m_LocalPosition: {x: 630, y: 650, z: 0}
   m_LocalScale: {x: 140, y: 30, z: 1}
   m_Children: []
   m_Father: {fileID: 860713648}
@@ -1490,7 +1490,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 568
+    x: 570
     y: 30
     width: 140
     height: 30
@@ -2636,6 +2636,36 @@ MonoBehaviour:
     tickable: 0
     isTicked: 0
     nestedMenu: []
+  - name: Primitive
+    message: 
+    argument: 
+    tickable: 0
+    isTicked: 0
+    nestedMenu:
+    - name: Cube
+      message: AddCube
+      argument: 
+      tickable: 0
+      isTicked: 0
+      tickOverrides: 0
+    - name: Cylinder
+      message: AddCylinder
+      argument: 
+      tickable: 0
+      isTicked: 0
+      tickOverrides: 0
+    - name: Sphere
+      message: AddSphere
+      argument: 
+      tickable: 0
+      isTicked: 0
+      tickOverrides: 0
+    - name: Quad
+      message: AddQuad
+      argument: 
+      tickable: 0
+      isTicked: 0
+      tickOverrides: 0
   isDown: 0
 --- !u!1 &175011159
 GameObject:
@@ -2983,7 +3013,7 @@ GameObject:
   - 4: {fileID: 233749389}
   - 114: {fileID: 233749390}
   m_Layer: 0
-  m_Name: lbl_Description
+  m_Name: lbl_NoneSelected
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2996,8 +3026,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 233749388}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 30, z: 0}
-  m_LocalScale: {x: 140, y: 16, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalScale: {x: 580, y: 350, z: 1}
   m_Children: []
   m_Father: {fileID: 289204656}
 --- !u!114 &233749390
@@ -3223,16 +3253,16 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 348
-    y: 481
-    width: 140
-    height: 16
+    y: 177
+    width: 580
+    height: 350
   mouseRct:
     serializedVersion: 2
     x: 348
-    y: 481
-    width: 140
-    height: 16
-  drawDepth: -5
+    y: 177
+    width: 580
+    height: 350
+  drawDepth: -10
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
   dragOrigPos: {x: 0, y: 0, z: 0}
@@ -3242,11 +3272,11 @@ MonoBehaviour:
   isDirty: 0
   isAlwaysOnTop: 0
   root: {fileID: 1088966305}
-  text: Description
+  text: No object selected.
   overrideFontSize: 0
   fontSize: 12
   overrideAlignment: 1
-  alignment: 3
+  alignment: 4
   lineWidth: 0
 --- !u!1 &255455609
 GameObject:
@@ -3831,6 +3861,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &263087388
 GameObject:
   m_ObjectHideFlags: 0
@@ -4113,6 +4144,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &273476641
 GameObject:
   m_ObjectHideFlags: 0
@@ -4164,6 +4196,9 @@ Transform:
   m_LocalPosition: {x: 10, y: 40, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 867823798}
+  - {fileID: 1565489045}
+  - {fileID: 835620852}
   - {fileID: 736195024}
   - {fileID: 233749389}
   m_Father: {fileID: 1973542937}
@@ -4492,6 +4527,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &351795168
 GameObject:
   m_ObjectHideFlags: 0
@@ -4948,6 +4984,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!4 &388090996
 Transform:
   m_ObjectHideFlags: 0
@@ -5261,7 +5298,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 414153279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1232, y: 5, z: 0}
+  m_LocalPosition: {x: 1235, y: 5, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 860713648}
@@ -5487,8 +5524,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 1242
-    y: 683
+    x: 1245
+    y: 685
     width: 20
     height: 20
   mouseRct:
@@ -7867,7 +7904,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 20
-    y: 648
+    y: 650
     width: 170
     height: 20
   mouseRct:
@@ -8175,6 +8212,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &569503329
 GameObject:
   m_ObjectHideFlags: 0
@@ -8782,6 +8820,286 @@ Transform:
   m_LocalScale: {x: 1270, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 517434035}
+--- !u!1 &595824151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 595824152}
+  - 114: {fileID: 595824153}
+  m_Layer: 0
+  m_Name: ddn_File
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &595824152
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 595824151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: 5, z: 0}
+  m_LocalScale: {x: 140, y: 20, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1973542937}
+--- !u!114 &595824153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 595824151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a395b1f620fb364f87750580b8f0672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDrawn: 1
+  isDisabled: 0
+  isSelectable: 1
+  isDraggable: 0
+  resetAfterDrag: 0
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  pivot:
+    x: 0
+    y: 0
+  anchor:
+    x: 0
+    xOffset: 0
+    y: 0
+    yOffset: 0
+  stretch:
+    width: 0
+    widthFactor: 1
+    widthOffset: 0
+    height: 0
+    heightFactor: 1
+    heightOffset: 0
+  clipTo: {fileID: 0}
+  styles:
+    basic:
+      name: DropDown
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 3
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    hover:
+      name: DropDownHover
+      coordinates:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: .235294119, g: .235294119, b: .235294119, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 3
+        wordWrap: 1
+        padding:
+          m_Left: 8
+          m_Right: 8
+          m_Top: 6
+          m_Bottom: 6
+        lineHeight: 1.25
+        spacing: 1
+    active:
+      name: DropDownActive
+      coordinates:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 3
+        wordWrap: 1
+        padding:
+          m_Left: 8
+          m_Right: 8
+          m_Top: 6
+          m_Bottom: 6
+        lineHeight: 1.25
+        spacing: 1
+    ticked:
+      name: DropDownTicked
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 0
+        wordWrap: 1
+        padding:
+          m_Left: 8
+          m_Right: 8
+          m_Top: 6
+          m_Bottom: 6
+        lineHeight: 1.25
+        spacing: 1
+    thumb:
+      name: Button
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+  currentStyle:
+    name: DropDown
+    coordinates:
+      serializedVersion: 2
+      x: 96
+      y: 0
+      width: 32
+      height: 32
+    border:
+      top: 4
+      bottom: 4
+      left: 4
+      right: 4
+    color: {r: 1, g: 1, b: 1, a: 1}
+    text:
+      fontIndex: 0
+      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      fontSize: 12
+      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+      shadowSize: 0
+      shadowColor: {r: 0, g: 0, b: 0, a: 1}
+      alignment: 3
+      wordWrap: 0
+      padding:
+        m_Left: 10
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 0
+      lineHeight: 1.25
+      spacing: 1
+  drawCrd:
+    serializedVersion: 2
+    x: 96
+    y: 0
+    width: 32
+    height: 32
+  drawRct:
+    serializedVersion: 2
+    x: 348
+    y: 542
+    width: 140
+    height: 20
+  mouseRct:
+    serializedVersion: 2
+    x: 348
+    y: 542
+    width: 70
+    height: 20
+  drawDepth: -0
+  scrollOffset: {x: 0, y: 0, z: 0}
+  dragOffset: {x: 0, y: 0, z: 0}
+  dragOrigPos: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  hidden: 0
+  outOfBounds: 0
+  isDirty: 0
+  isAlwaysOnTop: 0
+  root: {fileID: 1088966305}
+  title: Edit
+  target: {fileID: 2070496479}
+  nestedOffset: -10
+  submenu:
+  - name: Paste ID
+    message: PasteId
+    argument: 
+    tickable: 0
+    isTicked: 0
+    nestedMenu: []
+  isDown: 0
 --- !u!1 &612219827
 GameObject:
   m_ObjectHideFlags: 0
@@ -9229,6 +9547,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!4 &661441366
 Transform:
   m_ObjectHideFlags: 0
@@ -10737,7 +11056,7 @@ GameObject:
   - 4: {fileID: 736195024}
   - 114: {fileID: 736195025}
   m_Layer: 0
-  m_Name: fld_Description
+  m_Name: fld_Editor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10751,7 +11070,7 @@ Transform:
   m_GameObject: {fileID: 736195023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 580, y: 350, z: 1}
+  m_LocalScale: {x: 580, y: 310, z: 1}
   m_Children: []
   m_Father: {fileID: 289204656}
 --- !u!114 &736195025
@@ -10977,15 +11296,15 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 348
-    y: 177
+    y: 217
     width: 580
-    height: 350
+    height: 310
   mouseRct:
     serializedVersion: 2
     x: 348
-    y: 177
+    y: 217
     width: 580
-    height: 350
+    height: 310
   drawDepth: -5
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -10997,7 +11316,7 @@ MonoBehaviour:
   isAlwaysOnTop: 0
   root: {fileID: 1088966305}
   text: 
-  maxLength: 30
+  maxLength: 0
   regex: 
   regexPreset: 0
   locked: 0
@@ -11009,6 +11328,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &736775720
 GameObject:
   m_ObjectHideFlags: 0
@@ -11078,7 +11398,7 @@ Transform:
   m_GameObject: {fileID: 742813549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 25}
-  m_LocalScale: {x: 1257, y: 30, z: 1}
+  m_LocalScale: {x: 1260, y: 30, z: 1}
   m_Children: []
   m_Father: {fileID: 860713648}
 --- !u!114 &742813551
@@ -11304,8 +11624,8 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 678
-    width: 1257
+    y: 680
+    width: 1260
     height: 30
   mouseRct:
     serializedVersion: 2
@@ -11575,8 +11895,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 12
     y: 80
-    width: 1253
-    height: 558
+    width: 1256
+    height: 560
   mouseRct:
     serializedVersion: 2
     x: 12
@@ -11597,7 +11917,7 @@ MonoBehaviour:
   infiniteScrolling: 0
   lockAxis: 0
   scrollbarVisibility: 1
-  size: {x: 1253, y: 558}
+  size: {x: 1256, y: 560}
   position: {x: 0, y: 0}
   padding: {x: 10, y: 10}
   elasticity: 2
@@ -12811,6 +13131,285 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .5, y: .5, z: .5}
   m_Center: {x: 1.25, y: 0, z: 0}
+--- !u!1 &835620851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 835620852}
+  - 114: {fileID: 835620853}
+  m_Layer: 0
+  m_Name: btn_New
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &835620852
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 835620851}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 235, y: 150, z: 0}
+  m_LocalScale: {x: 100, y: 30, z: 1}
+  m_Children: []
+  m_Father: {fileID: 289204656}
+--- !u!114 &835620853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 835620851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b939f26117da42740bc71b621d68273d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDrawn: 1
+  isDisabled: 0
+  isSelectable: 1
+  isDraggable: 0
+  resetAfterDrag: 0
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  pivot:
+    x: 0
+    y: 0
+  anchor:
+    x: 0
+    xOffset: 0
+    y: 0
+    yOffset: 0
+  stretch:
+    width: 0
+    widthFactor: 1
+    widthOffset: 0
+    height: 0
+    heightFactor: 1
+    heightOffset: 0
+  clipTo: {fileID: 0}
+  styles:
+    basic:
+      name: Button
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    hover:
+      name: ButtonHover
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    active:
+      name: ButtonActive
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    ticked:
+      name: New Style
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 0}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 0
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    thumb:
+      name: ButtonHover
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+  currentStyle:
+    name: Button
+    coordinates:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 32
+      height: 32
+    border:
+      top: 4
+      bottom: 4
+      left: 4
+      right: 4
+    color: {r: 1, g: 1, b: 1, a: 1}
+    text:
+      fontIndex: 0
+      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      fontSize: 12
+      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+      shadowSize: 0
+      shadowColor: {r: 0, g: 0, b: 0, a: 1}
+      alignment: 4
+      wordWrap: 1
+      padding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 0
+      lineHeight: 1.25
+      spacing: 1
+  drawCrd:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 32
+    height: 32
+  drawRct:
+    serializedVersion: 2
+    x: 583
+    y: 347
+    width: 100
+    height: 30
+  mouseRct:
+    serializedVersion: 2
+    x: 583
+    y: 347
+    width: 100
+    height: 30
+  drawDepth: -5
+  scrollOffset: {x: 0, y: 0, z: 0}
+  dragOffset: {x: 0, y: 0, z: 0}
+  dragOrigPos: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  hidden: 0
+  outOfBounds: 0
+  isDirty: 0
+  isAlwaysOnTop: 0
+  root: {fileID: 1088966305}
+  hiddenString: 
+  text: New
+  target: {fileID: 2070496479}
+  message: NewScript
+  argument: 
+  argumentSource: {fileID: 0}
+  argumentSourceField: 
+  enableImage: 0
+  imageScale: {x: 1, y: 1}
+  imageOffset: {x: 0, y: 0}
 --- !u!1 &840058926
 GameObject:
   m_ObjectHideFlags: 0
@@ -13429,6 +14028,285 @@ Transform:
   - {fileID: 748631647}
   - {fileID: 1959176258}
   m_Father: {fileID: 1305970719}
+--- !u!1 &867823797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 867823798}
+  - 114: {fileID: 867823799}
+  m_Layer: 0
+  m_Name: btn_Save
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &867823798
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 867823797}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 295, y: 320, z: 0}
+  m_LocalScale: {x: 100, y: 30, z: 1}
+  m_Children: []
+  m_Father: {fileID: 289204656}
+--- !u!114 &867823799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 867823797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b939f26117da42740bc71b621d68273d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDrawn: 1
+  isDisabled: 0
+  isSelectable: 1
+  isDraggable: 0
+  resetAfterDrag: 0
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  pivot:
+    x: 0
+    y: 0
+  anchor:
+    x: 0
+    xOffset: 0
+    y: 0
+    yOffset: 0
+  stretch:
+    width: 0
+    widthFactor: 1
+    widthOffset: 0
+    height: 0
+    heightFactor: 1
+    heightOffset: 0
+  clipTo: {fileID: 0}
+  styles:
+    basic:
+      name: Button
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    hover:
+      name: ButtonHover
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    active:
+      name: ButtonActive
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    ticked:
+      name: New Style
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 0}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 0
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    thumb:
+      name: ButtonHover
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+  currentStyle:
+    name: Button
+    coordinates:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 32
+      height: 32
+    border:
+      top: 4
+      bottom: 4
+      left: 4
+      right: 4
+    color: {r: 1, g: 1, b: 1, a: 1}
+    text:
+      fontIndex: 0
+      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      fontSize: 12
+      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+      shadowSize: 0
+      shadowColor: {r: 0, g: 0, b: 0, a: 1}
+      alignment: 4
+      wordWrap: 1
+      padding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 0
+      lineHeight: 1.25
+      spacing: 1
+  drawCrd:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 32
+    height: 32
+  drawRct:
+    serializedVersion: 2
+    x: 643
+    y: 177
+    width: 100
+    height: 30
+  mouseRct:
+    serializedVersion: 2
+    x: 643
+    y: 177
+    width: 100
+    height: 30
+  drawDepth: -5
+  scrollOffset: {x: 0, y: 0, z: 0}
+  dragOffset: {x: 0, y: 0, z: 0}
+  dragOrigPos: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  hidden: 0
+  outOfBounds: 0
+  isDirty: 0
+  isAlwaysOnTop: 0
+  root: {fileID: 1088966305}
+  hiddenString: 
+  text: Save
+  target: {fileID: 2070496479}
+  message: SaveScript
+  argument: 
+  argumentSource: {fileID: 736195025}
+  argumentSourceField: text
+  enableImage: 0
+  imageScale: {x: 1, y: 1}
+  imageOffset: {x: 0, y: 0}
 --- !u!1 &871505243
 GameObject:
   m_ObjectHideFlags: 0
@@ -16322,7 +17200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &978572959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16913,7 +17791,7 @@ Transform:
   m_GameObject: {fileID: 1023490972}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 30}
-  m_LocalScale: {x: 1257, y: 698, z: 1}
+  m_LocalScale: {x: 1260, y: 700, z: 1}
   m_Children: []
   m_Father: {fileID: 860713648}
 --- !u!114 &1023490974
@@ -17140,8 +18018,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 10
     y: 10
-    width: 1257
-    height: 698
+    width: 1260
+    height: 700
   mouseRct:
     serializedVersion: 2
     x: 10
@@ -18736,7 +19614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skin: {fileID: 11400000, guid: 8db56b7a0d73e774ca26d2e2c923e673, type: 2}
-  currentPage: {fileID: 2070496481}
+  currentPage: {fileID: 978572959}
   lineMaterial: {fileID: 2100000, guid: bc148260939374bf18c0c4a9e5ccb860, type: 2}
   downWidget: {fileID: 0}
   isMouseOver: 0
@@ -22314,7 +23192,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1248231491}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 628, y: 5, z: 0}
+  m_LocalPosition: {x: 630, y: 5, z: 0}
   m_LocalScale: {x: 140, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 860713648}
@@ -22540,8 +23418,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 568
-    y: 683
+    x: 570
+    y: 685
     width: 140
     height: 20
   mouseRct:
@@ -25060,6 +25938,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &1413609549
 GameObject:
   m_ObjectHideFlags: 0
@@ -26861,6 +27740,285 @@ MonoBehaviour:
   enableImage: 1
   imageScale: {x: 1, y: 1}
   imageOffset: {x: 0, y: 0}
+--- !u!1 &1565489044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1565489045}
+  - 114: {fileID: 1565489046}
+  m_Layer: 0
+  m_Name: btn_Remove
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1565489045
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1565489044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 185, y: 320, z: 0}
+  m_LocalScale: {x: 100, y: 30, z: 1}
+  m_Children: []
+  m_Father: {fileID: 289204656}
+--- !u!114 &1565489046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1565489044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b939f26117da42740bc71b621d68273d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDrawn: 1
+  isDisabled: 0
+  isSelectable: 1
+  isDraggable: 0
+  resetAfterDrag: 0
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  pivot:
+    x: 0
+    y: 0
+  anchor:
+    x: 0
+    xOffset: 0
+    y: 0
+    yOffset: 0
+  stretch:
+    width: 0
+    widthFactor: 1
+    widthOffset: 0
+    height: 0
+    heightFactor: 1
+    heightOffset: 0
+  clipTo: {fileID: 0}
+  styles:
+    basic:
+      name: Button
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    hover:
+      name: ButtonHover
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    active:
+      name: ButtonActive
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    ticked:
+      name: New Style
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 0}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 0
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+    thumb:
+      name: ButtonHover
+      coordinates:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
+      color: {r: 1, g: 1, b: 1, a: 1}
+      text:
+        fontIndex: 0
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 4
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1
+  currentStyle:
+    name: Button
+    coordinates:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 32
+      height: 32
+    border:
+      top: 4
+      bottom: 4
+      left: 4
+      right: 4
+    color: {r: 1, g: 1, b: 1, a: 1}
+    text:
+      fontIndex: 0
+      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
+      fontSize: 12
+      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+      shadowSize: 0
+      shadowColor: {r: 0, g: 0, b: 0, a: 1}
+      alignment: 4
+      wordWrap: 1
+      padding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 0
+      lineHeight: 1.25
+      spacing: 1
+  drawCrd:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 32
+    height: 32
+  drawRct:
+    serializedVersion: 2
+    x: 533
+    y: 177
+    width: 100
+    height: 30
+  mouseRct:
+    serializedVersion: 2
+    x: 533
+    y: 177
+    width: 100
+    height: 30
+  drawDepth: -5
+  scrollOffset: {x: 0, y: 0, z: 0}
+  dragOffset: {x: 0, y: 0, z: 0}
+  dragOrigPos: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  hidden: 0
+  outOfBounds: 0
+  isDirty: 0
+  isAlwaysOnTop: 0
+  root: {fileID: 1088966305}
+  hiddenString: 
+  text: Remove
+  target: {fileID: 2070496479}
+  message: RemoveScript
+  argument: 
+  argumentSource: {fileID: 0}
+  argumentSourceField: 
+  enableImage: 0
+  imageScale: {x: 1, y: 1}
+  imageOffset: {x: 0, y: 0}
 --- !u!1 &1581351431
 GameObject:
   m_ObjectHideFlags: 0
@@ -27447,6 +28605,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   listening: 0
+  cursorPos: 0
 --- !u!1 &1609676017
 GameObject:
   m_ObjectHideFlags: 0
@@ -28751,7 +29910,7 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 11400000, guid: 64a60312765b7e94eb2ee545b9e013a0, type: 2}
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
         fontSize: 12
         fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
@@ -28856,7 +30015,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1
     thumb:
-      name: New Style
+      name: Button
       coordinates:
         serializedVersion: 2
         x: 0
@@ -28864,19 +30023,19 @@ MonoBehaviour:
         width: 32
         height: 32
       border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -30901,7 +32060,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 200
-    y: 648
+    y: 650
     width: 40
     height: 20
   mouseRct:
@@ -34062,7 +35221,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 250
-    y: 648
+    y: 650
     width: 480
     height: 20
   mouseRct:
@@ -34679,6 +35838,7 @@ Transform:
   m_Children:
   - {fileID: 1651716294}
   - {fileID: 289204656}
+  - {fileID: 595824152}
   - {fileID: 2075301901}
   - {fileID: 32052803}
   - {fileID: 691697689}
@@ -35839,12 +36999,12 @@ GameObject:
   - 4: {fileID: 2070496480}
   - 114: {fileID: 2070496481}
   m_Layer: 0
-  m_Name: ScripEditor
+  m_Name: ScriptEditor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2070496480
 Transform:
   m_ObjectHideFlags: 0
@@ -35868,11 +37028,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c216350e1d2ed94db50eed5d57ed102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pageName: QuestEditor
-  btnRemoveScript: {fileID: 0}
-  btnNewScript: {fileID: 0}
-  fldEditor: {fileID: 0}
-  lblNoneSelected: {fileID: 0}
+  pageName: ScriptEditor
+  fldEditor: {fileID: 736195025}
+  noneSelectedObjects:
+  - {fileID: 233749388}
+  noScriptObjects:
+  - {fileID: 835620851}
+  editObjects:
+  - {fileID: 736195023}
+  - {fileID: 867823797}
+  - {fileID: 1565489044}
 --- !u!1 &2075301900
 GameObject:
   m_ObjectHideFlags: 0

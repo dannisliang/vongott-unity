@@ -19,6 +19,7 @@ public class OGTextField extends OGWidget {
 	public var fitPadding : RectOffset = new RectOffset ();
 
 	@HideInInspector public var listening : boolean = false;
+	@HideInInspector public var cursorPos : int = 0;
 	
 	private var currentPreset : RegExPreset = RegExPreset.None;
 
@@ -79,7 +80,10 @@ public class OGTextField extends OGWidget {
 				text = Regex.Replace ( text, "[" + regex + "]", "" );
 			}
 
+			cursorPos = editor.pos;
+
 			GUI.FocusControl ( "ActiveTextField" );
+		
 		}	
 	}
 

@@ -8,11 +8,26 @@ public class ScriptEditor extends OGPage {
 
 	private var target : LuaScriptableObject;
 
+	public function GetObjectId () {
+		OEWorkspace.GetInstance().PickObject ( function ( obj : Object ) {
+			var so : OFSerializedObject = ( obj as GameObject ).GetComponent.< OFSerializedObject > ();
+
+			if ( so ) {
+				var before : String = target.luaString.Substring ( 0, fldEditor.cursorPos );
+				var after : String = target.luaString.Substring ( fldEditor.cursorPos );
+
+				target.luaString = before + "'" + so.id + "'" + after;
+			}
+		}, typeof ( OFSerializedObject ) );
+	}
+
 	public function NewScript () {
 		var selected : OFSerializedObject = OEWorkspace.GetInstance().GetSelectedObject ();
 		
 		target = selected.gameObject.AddComponent.< LuaScriptableObject > ();
 		selected.SetField ( target );
+
+		target.luaString = "local self\nlocal vg\n\nfunction start ( object, engine )\n   self = object\n   vg = engine\nend\n\nfunction update ( dt )\n\nend";
 
 		StartPage ();
 	}
@@ -60,6 +75,5 @@ public class ScriptEditor extends OGPage {
 	}
 
 	override function ExitPage () {
-		fldEditor.text = "";
 	}
 }

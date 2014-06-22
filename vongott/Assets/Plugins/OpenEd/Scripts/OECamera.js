@@ -239,7 +239,7 @@ public class OECamera extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage.name == "Home" ) {
+		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage.name == "Home" || OGRoot.GetInstance().currentPage.name == "picker" ) {
 			var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
 			
 			if ( flyMode ) {

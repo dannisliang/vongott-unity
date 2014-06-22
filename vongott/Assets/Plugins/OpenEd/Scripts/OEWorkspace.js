@@ -220,9 +220,10 @@ public class OEWorkspace extends MonoBehaviour {
 		
 		OFDeserializer.DeserializeChildren ( json, this.transform );
 		
+		StripComponents ();
+		
 		yield WaitForEndOfFrame ();
 
-		StripComponents ();
 		RefreshAll ();
 
 		yield WaitForEndOfFrame ();
