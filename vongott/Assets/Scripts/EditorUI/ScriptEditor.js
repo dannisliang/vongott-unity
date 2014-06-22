@@ -1,10 +1,10 @@
 ﻿#pragma strict
 
 public class ScriptEditor extends OGPage {
-	public var btnRemoveScript : OGButton;
-	public var btnNewScript : OGButton;
 	public var fldEditor : OGTextField;
-	public var lblNoneSelected : OGLabel;
+	public var noneSelectedObjects : GameObject [];
+	public var noScriptObjects : GameObject [];
+	public var editObjects : GameObject [];
 
 	private var target : LuaScriptableObject;
 
@@ -12,12 +12,27 @@ public class ScriptEditor extends OGPage {
 		var selected : OFSerializedObject = OEWorkspace.GetInstance().GetSelectedObject ();
 		
 		target = selected.gameObject.AddComponent.< LuaScriptableObject > ();
+		selected.SetField ( target );
+
+		StartPage ();
 	}
 
 	public function RemoveScript () {
 		var selected : OFSerializedObject = OEWorkspace.GetInstance().GetSelectedObject ();
 
-		Destroy ( selected.GetComponent.< LuaScriptableObject > () );
+		StartCoroutine ( function () : IEnumerator {
+			selected.RemoveField ( "LuaScriptableObject" );
+
+			Destroy ( selected.GetComponent.< LuaScriptableObject > () );
+			
+			yield WaitForEndOfFrame ();
+
+			StartPage ();
+		} () );
+	}
+
+	public function SaveScript ( str : String ) {
+		target.luaString = str;
 	}
 
 	override function StartPage () {
@@ -26,15 +41,25 @@ public class ScriptEditor extends OGPage {
 		if ( selected ) {
 			target = selected.GetComponent.< LuaScriptableObject > ();
 		}	
+	
+		for ( var go : GameObject in noneSelectedObjects ) {
+			go.SetActive ( selected == null );
+		}
 		
-		fldEditor.gameObject.SetActive ( selected != null && target == null );
-		btnRemoveScript.gameObject.SetActive ( selected != null && target == null );
-		btnNewScript.gameObject.SetActive ( selected != null && target != null );
-			
-		lblNoneSelected.gameObject.SetActive ( selected == null );
+		for ( go in noScriptObjects ) {
+			go.SetActive ( target == null );
+		}
+
+		for ( go in editObjects ) {
+			go.SetActive ( target != null );
+		}
+
+		if ( target ) {
+			fldEditor.text = target.luaString;
+		}
 	}
 
-	override function UpdatePage () {
-
+	override function ExitPage () {
+		fldEditor.text = "";
 	}
 }

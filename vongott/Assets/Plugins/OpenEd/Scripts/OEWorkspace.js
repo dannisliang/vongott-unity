@@ -559,7 +559,7 @@ public class OEWorkspace extends MonoBehaviour {
 				}
 			
 			} else {
-				var go = GameObject ( "nanmesh", MeshRenderer, MeshFilter );
+				var go = GameObject ( "navmesh", MeshRenderer, MeshFilter );
 				go.renderer.material = cam.materials.navmesh;
 				go.transform.parent = navmeshParent;
 				go.transform.position = Vector3.zero;
@@ -610,6 +610,42 @@ public class OEWorkspace extends MonoBehaviour {
 			}
 		
 		}
+
+		return obj;
+	}
+
+	public function AddCube () : OFSerializedObject {
+		var obj : OFSerializedObject = GameObject.CreatePrimitive ( PrimitiveType.Cube ).AddComponent.< OFSerializedObject > ();
+	
+		PlaceAtCursor ( obj );
+		SelectObject ( obj );
+
+		return obj;
+	}
+	
+	public function AddCylinder () : OFSerializedObject {
+		var obj : OFSerializedObject = GameObject.CreatePrimitive ( PrimitiveType.Cylinder ).AddComponent.< OFSerializedObject > ();
+	
+		PlaceAtCursor ( obj );
+		SelectObject ( obj );
+
+		return obj;
+	}
+	
+	public function AddSphere () : OFSerializedObject {
+		var obj : OFSerializedObject = GameObject.CreatePrimitive ( PrimitiveType.Sphere ).AddComponent.< OFSerializedObject > ();
+	
+		PlaceAtCursor ( obj );
+		SelectObject ( obj );
+
+		return obj;
+	}
+
+	public function AddQuad () : OFSerializedObject {
+		var obj : OFSerializedObject = GameObject.CreatePrimitive ( PrimitiveType.Quad ).AddComponent.< OFSerializedObject > ();
+	
+		PlaceAtCursor ( obj );
+		SelectObject ( obj );
 
 		return obj;
 	}

@@ -19,13 +19,13 @@ public class LuaScriptableObject extends MonoBehaviour {
 		update = lua.GetFunction ( "update" );
 		onTrigger = lua.GetFunction ( "onTrigger" );
 
-		if ( start ) {
+		if ( start && !OEWorkspace.GetInstance() ) {
 			start.Call ( this, GameObject.FindObjectOfType.< LuaManager >() );
 		}
 	}
 
 	public function Update () {
-		if ( update ) {
+		if ( update && !OEWorkspace.GetInstance() ) {
 			update.Call ( Time.deltaTime );
 		}
 	}
@@ -36,6 +36,8 @@ public class LuaScriptableObject extends MonoBehaviour {
 	}
 
 	public function OnTriggerEnter ( col : Collider ) {
+		if ( OEWorkspace.GetInstance() ) { return; }
+		
 		var p : Player = col.gameObject.GetComponent.< Player > ();
 		var c : OACharacter = col.gameObject.GetComponent.< OACharacter > ();
 

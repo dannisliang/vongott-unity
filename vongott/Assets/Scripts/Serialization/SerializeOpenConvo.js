@@ -229,7 +229,6 @@ public class SerializeOpenConvo extends OFPlugin {
 							event.objectId = node.GetField ( "event" ).GetField ( "objectId" ).str;
 							OFDeserializer.planner.DeferConnection ( function ( so : OFSerializedObject, indices : int [] ) {
 								tree.rootNodes [ indices[0] ].nodes [ indices[1] ].event.object = so.gameObject;
-								Debug.Log ( so.gameObject );
 							}, event.objectId, [ i, i1 ] );
 						}
 

@@ -334,6 +334,10 @@ public class OFSerializedObject extends MonoBehaviour {
 		AddAssetLink ( name, path, type );
 	}	
 
+	public function SetField ( value : Component ) {
+		SetField ( value.GetType().ToString(), value );
+	}
+
 	public function SetField ( name : String, value : Component ) {
 		var tmpFields : List.< OFField > = new List.< OFField > ( fields );
 		var found : boolean = false;
