@@ -47,7 +47,7 @@ public class ScriptEditor extends OGPage {
 		}
 		
 		for ( go in noScriptObjects ) {
-			go.SetActive ( target == null );
+			go.SetActive ( selected != null && target == null );
 		}
 
 		for ( go in editObjects ) {
