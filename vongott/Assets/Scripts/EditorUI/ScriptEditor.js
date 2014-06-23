@@ -46,8 +46,12 @@ public class ScriptEditor extends OGPage {
 		} () );
 	}
 
-	public function SaveScript ( str : String ) {
-		target.luaString = str;
+	override function UpdatePage () {
+		if ( target ) {
+			fldEditor.text = fldEditor.text.Replace ( "\"", "'" );
+
+			target.luaString = fldEditor.text;
+		}
 	}
 
 	override function StartPage () {

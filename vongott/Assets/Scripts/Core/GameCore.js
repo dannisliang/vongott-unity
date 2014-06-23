@@ -258,6 +258,10 @@ class GameCore extends MonoBehaviour {
 		return instance.GetComponent.< OCManager > ();
 	}
 	
+	public static function GetLuaManager () : LuaManager {
+		return instance.GetComponent.< LuaManager > ();
+	}
+	
 	public static function GetEventManager () : EventManager {
 		return instance.GetComponent.< EventManager > ();
 	}

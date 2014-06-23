@@ -300,7 +300,10 @@ public class OCTreeEditor extends OGPage {
 				case OCNodeType.Speak:
 					btnSelect.tint = instance.speakerColors[node.speak.speaker];
 
-					if ( node.speak.lines.Length > 1 ) {
+					if ( node.speak.smalltalk ) {
+						btnSelect.text = "(smalltalk)";
+
+					} else if ( node.speak.lines.Length > 1 ) {
 						btnSelect.text = "(choice)";
 
 					} else if ( !node.speak.lines[0] || String.IsNullOrEmpty ( node.speak.lines[0].text ) ) {
@@ -314,6 +317,10 @@ public class OCTreeEditor extends OGPage {
 
 					}
 					
+					if ( node.speak.smalltalk && node.connectedTo.Length != 1 ) {
+						node.SetOutputAmount ( 1 );
+					}
+
 					for ( var i : int = 0; i < node.connectedTo.Length; i++ ) {
 						var xPos : float = 0;
 						if ( node.connectedTo.Length > 1 ) {
@@ -612,7 +619,7 @@ public class OCTreeEditor extends OGPage {
 		if ( mouseNode ) {
 			Destroy ( mouseNode.gameObject ); 
 		}
-
+		
 		connectToId = 0;
 		connectToOutput = 0;
 
@@ -664,8 +671,14 @@ public class OCTreeEditor extends OGPage {
 		
 		if ( mouseNode ) {
 			if ( UnityEngine.Input.GetMouseButtonDown ( 1 ) ) {
+				var node : OCNode = tree.rootNodes[currentRoot].GetNode ( connectToId );
+				node.SetConnection ( connectToOutput, 0 );
+
 				CancelConnect ();
 			
+			} else if ( UnityEngine.Input.GetKeyDown ( KeyCode.Escape ) ) {
+				CancelConnect ();
+
 			} else {
 				var mousePos : Vector3 = UnityEngine.Input.mousePosition;
 				mousePos.y = Screen.height - mousePos.y;

@@ -13,6 +13,26 @@ public class EditorEventManager extends MonoBehaviour {
 		}
 	}
 
+	public function AddTrigger () {
+		var go : GameObject = Instantiate ( Resources.Load ( "Prefabs/Meta/trigger" ) ) as GameObject;
+		var so : OFSerializedObject = go.GetComponent.< OFSerializedObject > ();
+		var workspace : OEWorkspace = OEWorkspace.GetInstance();
+
+		workspace.PlaceAtCursor ( so );
+		workspace.SelectObject ( so );
+		workspace.RefreshAll ();
+	}
+	
+	public function AddSpawnpoint () {
+		var go : GameObject = Instantiate ( Resources.Load ( "Prefabs/Meta/spawnpoint" ) ) as GameObject;
+		var so : OFSerializedObject = go.GetComponent.< OFSerializedObject > ();
+		var workspace : OEWorkspace = OEWorkspace.GetInstance();
+
+		workspace.PlaceAtCursor ( so );
+		workspace.SelectObject ( so );
+		workspace.RefreshAll ();
+	}
+
 	public function Exit () {
 		Application.LoadLevel ( "main_menu" );
 	}

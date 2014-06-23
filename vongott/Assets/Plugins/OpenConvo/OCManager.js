@@ -14,9 +14,10 @@ public class OCManager extends MonoBehaviour {
 	public var flags : OCFlags = new OCFlags ();
 	public var tree : OCTree;
 	public var currentNode : int;
-	public var eventHandler : GameObject;
+	public var eventHandler : OCEventHandler;
 	public var speakers : OCSpeaker [] = new OCSpeaker [0];
 
+	private var currentAudioSource : AudioSource;
 	private var speaker : OCSpeaker;
 
 	public static var instance : OCManager;
@@ -25,18 +26,6 @@ public class OCManager extends MonoBehaviour {
 		return instance;
 	}
 
-	private function DoCallback ( target : GameObject, message : String, object : Object ) {	
-		if ( target ) {
-			target.SendMessage ( message, object, SendMessageOptions.DontRequireReceiver );
-		}
-	}
-	
-	private function DoCallback ( target : GameObject, message : String, argument : String ) {
-		if ( target ) {
-			target.SendMessage ( message, argument, SendMessageOptions.DontRequireReceiver );
-		}
-	}
-	
 	public function get optionCount () : int {
 		var node : OCNode = tree.rootNodes[tree.currentRoot].GetNode ( currentNode );
 		
@@ -68,12 +57,52 @@ public class OCManager extends MonoBehaviour {
 	}
 
 	public function EndConversation () {
-		tree = null;
+		if ( currentAudioSource ) {
+			currentAudioSource.Stop ();
+		}
 		
-		DoCallback ( eventHandler, "OnConversationEnd", speaker );
+		tree = null;
+		currentAudioSource = null;
+		
+		if ( eventHandler ) {
+			eventHandler.OnConversationEnd ();
+		}
 	}
 
-	public function DisplayNode () {
+	private function PlayLineAudio ( node : OCNode  ) : IEnumerator {
+		if ( currentAudioSource ) {
+			currentAudioSource.Stop ();
+		}
+
+		if ( speaker.gameObject.audio && node.speak.lines[node.speak.index].audio ) {
+			speaker.gameObject.audio.clip = node.speak.lines[node.speak.index].audio;
+			speaker.gameObject.audio.loop = false;
+			speaker.gameObject.audio.Play ();
+			currentAudioSource = speaker.gameObject.audio;
+			
+			if ( !node.speak.smalltalk ) {
+				while ( currentAudioSource && currentAudioSource.isPlaying ) {
+					yield null;	
+				}
+
+				// If we already skipped the node, don't do it automatically
+				if ( node.id == currentNode ) {
+					yield WaitForSeconds ( 0.5 );
+					NextNode ( node.speak.index );
+				}
+			
+			} else {
+				NextNode ();
+
+			}
+		
+		} else if ( node.speak.lines.Length > 1 ) {
+			NextNode ( node.speak.index );
+
+		}
+	}
+
+	public function DisplayNode () : void {
 		var node : OCNode = tree.rootNodes[tree.currentRoot].GetNode ( currentNode );
 		var wait : boolean = false;
 		var exit : boolean = false;
@@ -93,22 +122,22 @@ public class OCManager extends MonoBehaviour {
 			case OCNodeType.Event:
 				if ( node.event.object != null && node.event.eventToTarget ) {
 					if ( !String.IsNullOrEmpty ( node.event.argument ) ) {
-						DoCallback ( node.event.object, node.event.message, node.event.argument );
+						node.event.object.SendMessage ( node.event.message, node.event.argument, SendMessageOptions.DontRequireReceiver );
 
 					} else {
-						DoCallback ( node.event.object, node.event.message, tree );
+						node.event.object.SendMessage ( node.event.message, tree, SendMessageOptions.DontRequireReceiver );
 					
 					}
 
-				} else {
+				} else if ( eventHandler ) {
 					if ( !String.IsNullOrEmpty ( node.event.argument ) ) {
-						DoCallback ( eventHandler, node.event.message, node.event.argument );
+						eventHandler.Event ( node.event.message, node.event.argument );
 
 					} else if ( node.event.object != null ) {
-						DoCallback ( eventHandler, node.event.message, node.event.object );
+						eventHandler.Event ( node.event.message, node.event.object );
 
 					} else {
-						DoCallback ( eventHandler, node.event.message, tree );
+						eventHandler.Event ( node.event.message, tree );
 					
 					}
 
@@ -147,40 +176,42 @@ public class OCManager extends MonoBehaviour {
 			DisplayNode ();
 		
 		} else if ( node && node.speak ) {
-			DoCallback ( eventHandler, "OnSetSpeaker", speaker );
-			DoCallback ( eventHandler, "OnSetLines", node.speak.lines );
+			eventHandler.OnSetSpeaker ( speaker, node.speak );
 			
-			if ( node.speak.lines.Length == 1 && speaker.gameObject.audio && node.speak.lines[0].audio ) {
-				speaker.gameObject.audio.clip = node.speak.lines[0].audio;
-				speaker.gameObject.audio.loop = false;
-				speaker.gameObject.audio.Play ();
+			if ( node.speak.lines.Length == 1 ) {
+				StartCoroutine ( PlayLineAudio ( node ) );
+				
+				if ( node.speak.smalltalk ) {
+					if ( node.speak.index < node.speak.lines.Length - 1 ) {
+						node.speak.index++;
+					
+					} else {
+						node.speak.index = 0;
+
+					}
+				}
 			}
 		}
 	}
 
 	public function SelectOption ( i : int ) {
-		DoCallback ( eventHandler, "OnSelectOption", i );
+		eventHandler.OnSelectOption ( i );
 		
 		var node : OCNode = tree.rootNodes[tree.currentRoot].GetNode ( currentNode );
-		
-		StartCoroutine ( function () : IEnumerator {
-			if ( speaker.gameObject.audio && node.speak.lines[i].audio ) {
-				speaker.gameObject.audio.clip = node.speak.lines[i].audio;
-				speaker.gameObject.audio.loop = false;
-				speaker.gameObject.audio.Play ();
-				
-				while ( speaker.gameObject.audio.isPlaying ) {
-					yield null;
-				}
-			}
-				
-			currentNode = tree.rootNodes[tree.currentRoot].GetNode(currentNode).connectedTo[i];
-			DisplayNode ();
-		} () );
+		node.speak.index = i;
+
+		StartCoroutine ( PlayLineAudio ( node ) );
 	}
 
 	public function NextNode () {
-		currentNode = tree.rootNodes[tree.currentRoot].GetNode(currentNode).connectedTo[0];
+		NextNode ( 0 );
+	}
+
+	public function NextNode ( i : int ) {
+		var rootNode : OCRootNode = tree.rootNodes[tree.currentRoot];
+		var node : OCNode = rootNode.GetNode ( currentNode );
+
+		currentNode = node.connectedTo[i];
 		DisplayNode ();
 	}
 
@@ -190,7 +221,7 @@ public class OCManager extends MonoBehaviour {
 
 			currentNode = tree.rootNodes[tree.currentRoot].firstNode;
 			
-			DoCallback ( eventHandler, "OnConversationStart", tree );
+			eventHandler.OnConversationStart ( tree );
 
 			DisplayNode ();
 		}

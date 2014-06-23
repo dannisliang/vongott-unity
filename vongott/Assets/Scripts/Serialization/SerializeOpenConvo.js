@@ -57,6 +57,7 @@ public class SerializeOpenConvo extends OFPlugin {
 						
 						speak.AddField ( "speaker", node.speak.speaker );
 						speak.AddField ( "lines", lines );
+						speak.AddField ( "smalltalk", node.speak.smalltalk );
 
 						n.AddField ( "speak", speak );
 						
@@ -209,6 +210,10 @@ public class SerializeOpenConvo extends OFPlugin {
 
 						speak.speaker = node.GetField ( "speak" ).GetField ( "speaker" ).n;
 						speak.lines = lines.ToArray ();
+						
+						if ( node.GetField ( "speak" ).HasField ( "smalltalk" ) ) {
+							speak.smalltalk = node.GetField ( "speak" ).GetField ( "smalltalk" ).b;
+						}
 						
 						n.speak = speak;
 

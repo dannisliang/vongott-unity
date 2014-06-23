@@ -20,7 +20,7 @@ public class LuaScriptableObject extends MonoBehaviour {
 		onTrigger = lua.GetFunction ( "onTrigger" );
 
 		if ( start && !OEWorkspace.GetInstance() ) {
-			start.Call ( this, GameObject.FindObjectOfType.< LuaManager >() );
+			start.Call ( this, GameCore.GetLuaManager () );
 		}
 	}
 
@@ -76,17 +76,17 @@ public class LuaScriptableObject extends MonoBehaviour {
 	}
 	
 	public function setRotation ( x : float, y : float, z : float ) {
-		this.transform.rotation = Quaternion.Euler ( new Vector3 ( x, y, z ) );
+		this.transform.localRotation = Quaternion.Euler ( new Vector3 ( x, y, z ) );
 	}
 
 	public function rotate ( x : float, y : float, z : float ) {
-		var newRot : Vector3 = this.transform.eulerAngles + new Vector3 ( x, y, z );
+		var newRot : Vector3 = this.transform.localEulerAngles + new Vector3 ( x, y, z );
 
-		this.transform.rotation = Quaternion.Euler ( newRot );
+		this.transform.localRotation = Quaternion.Euler ( newRot );
 	}
 	
 	public function getRotation () : Vector3 {
-		return this.transform.eulerAngles;
+		return this.transform.localEulerAngles;
 	}
 	
 	public function setScale ( x : float, y : float, z : float ) {
@@ -141,22 +141,17 @@ public class LuaScriptableObject extends MonoBehaviour {
 
 	// Rigidbody
 	public function setWeight ( weight : float ) {
-		if ( weight > 0 ) {
-			if ( !rigidbody ) {
-				this.gameObject.AddComponent.< Rigidbody > ();
-			}
-
-			rigidbody.mass = weight;
-
-		} else if ( rigidbody ) {
-			Destroy ( rigidbody );
-
+		if ( !rigidbody ) {
+			this.gameObject.AddComponent.< Rigidbody > ();
 		}
-	}
-
-	public function useGravity ( use : boolean ) {
-		if ( rigidbody ) {
-			rigidbody.useGravity = use;
+		
+		if ( weight > 0 ) {
+			rigidbody.mass = weight;
+			rigidbody.useGravity = true;
+		
+		} else { 
+			rigidbody.useGravity = false;
+		
 		}
 	}
 

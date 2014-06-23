@@ -306,6 +306,8 @@ public class OCSpeak {
 	
 	public var speaker : int;
 	public var lines : Line[] = new Line[0];
+	public var smalltalk : boolean = false;
+	public var index : int = 0;
 
 	function OCSpeak () {
 		lines = [ new Line ( "", null, "" ) ];

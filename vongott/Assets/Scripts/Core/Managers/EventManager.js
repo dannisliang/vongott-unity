@@ -1,64 +1,61 @@
 ﻿#pragma strict
 
-class EventManager extends MonoBehaviour {
+class EventManager extends OCEventHandler {
 	// Conversation
-	private var passiveConvo : boolean = false;
 	private var choiceConvo : boolean = false;
 	private var speaker : OCSpeaker;
 
-	public function OnConversationStart ( tree : OCTree ) {
-	/*	passiveConvo = false;
-	
-		if ( tree.CurrentRootHasTag ( "passive" ) ) {
-			passiveConvo = true;	
-		
-		} else {*/
-			GameCamera.GetInstance().StorePosRot();
-			GameCore.GetInstance().SetControlsActive ( false );
-			OGRoot.GetInstance().GoToPage ( "Conversation" );
-		
-		//}
+	private function InitConvoCam () {
+		GameCamera.GetInstance().StorePosRot();
+		GameCore.GetInstance().SetControlsActive ( false );
+		OGRoot.GetInstance().GoToPage ( "Conversation" );
 	}
 
-	public function OnSetLines ( lines : OCSpeak.Line [] ) {
-		var strings : String [] = new String [ lines.Length ];
+	public function OnConversationStart ( tree : OCTree ) {
+	}
+
+	public function OnSetSpeaker ( speaker : OCSpeaker, node : OCSpeak ) {
+		this.speaker = speaker;
+		var strings : String [] = new String [ node.lines.Length ];
 
 		for ( var s : int = 0; s < strings.Length; s++ ) {
-			strings[s] = lines[s].text;
+			strings[s] = node.lines[s].text;
 		}
 		
-		if ( strings.Length == 1 ) {
-			if ( passiveConvo ) {
-				UIHUD.GetInstance().ShowNotification ( strings[0] );
-
-			} else {
-				UIConversation.SetLine ( strings[0] );
-		
-			}
-
-			choiceConvo = false;
+		if ( node.smalltalk ) {
+			UIHUD.GetInstance().ShowNotification ( strings[node.index] );
 
 		} else {
-			for ( var i : int = 0; i < strings.Length; i++ ) {
-				UIConversation.SetOption ( i, strings[i] );
+			if ( OGRoot.GetInstance().currentPage.pageName != "Conversation" ) {
+				InitConvoCam ();
 			}
+			
+			GameCamera.GetInstance().ConvoFocus ( speaker.gameObject, !GameCamera.GetInstance().inConvo || choiceConvo );
+			UIConversation.SetName ( speaker.name );
+			GameCamera.GetInstance().inConvo = true;
+			
+			if ( strings.Length == 1 ) {
+				UIConversation.SetLine ( strings[0] );
 
-			choiceConvo = true;
+				choiceConvo = false;
+
+			} else {
+				for ( var i : int = 0; i < strings.Length; i++ ) {
+					UIConversation.SetOption ( i, strings[i] );
+				}
+
+				choiceConvo = true;
+			}
 		}
-	}
-
-	public function OnSetSpeaker ( speaker : OCSpeaker ) {
-		this.speaker = speaker;
-		GameCamera.GetInstance().ConvoFocus ( speaker.gameObject, !GameCamera.GetInstance().inConvo || choiceConvo );
-		UIConversation.SetName ( speaker.name );
-		GameCamera.GetInstance().inConvo = true;
 	}
 
 	public function OnConversationEnd () {
-		OGRoot.GetInstance().GoToPage ( "HUD" );
-		GameCore.GetInstance().SetControlsActive ( true );
-		GameCamera.GetInstance().RestorePosRot ( 1 );
-		GameCamera.GetInstance().inConvo = false;
+		if ( OGRoot.GetInstance().currentPage.pageName == "Conversation" ) {
+			OGRoot.GetInstance().GoToPage ( "HUD" );
+			GameCore.GetInstance().SetControlsActive ( true );
+			GameCamera.GetInstance().RestorePosRot ( 1 );
+			GameCamera.GetInstance().inConvo = false;
+		}
 	}
 
 	// Character

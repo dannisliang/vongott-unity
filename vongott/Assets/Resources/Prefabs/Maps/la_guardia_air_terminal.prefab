@@ -557,8 +557,9 @@ Renderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: baeb0b6875a944edb8ddc7eab84584f1, type: 2}
-  - {fileID: 2100000, guid: 3ab88366d6545c84f8750b0284ce9d55, type: 2}
   - {fileID: 2100000, guid: 7600d53762327448a92463a0a373551b, type: 2}
+  - {fileID: 2100000, guid: 3ab88366d6545c84f8750b0284ce9d55, type: 2}
+  - {fileID: 2100000, guid: 3ab88366d6545c84f8750b0284ce9d55, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -871,9 +872,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 2
+  - typeIndex: 6
     name: Transform
     component: {fileID: 400026}
+  assetLinks: []
   id: 
   prefabPath: Prefabs/Maps/la_guardia_air_terminal
   exportPath: 

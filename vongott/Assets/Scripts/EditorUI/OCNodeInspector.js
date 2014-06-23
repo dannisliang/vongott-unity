@@ -16,7 +16,7 @@ public class OCNodeInspector extends OEComponentInspector {
 	override function Inspector () {
 		if ( !node ) { return; }
 
-		width = 284;
+		width = 264;
 	
 		LabelField ( "ID", new Rect ( 0, 0, width / 2, 16 ) );
 		LabelField ( node.id.ToString(), new Rect ( width / 2, 0, width / 2, 16 ) );
@@ -47,6 +47,13 @@ public class OCNodeInspector extends OEComponentInspector {
 					OCTreeEditor.Refresh ();
 				}
 
+				var newSmalltalk : boolean = Toggle ( "Smalltalk", node.speak.smalltalk );
+				
+				if ( newSmalltalk != node.speak.smalltalk ) {
+					node.speak.smalltalk = newSmalltalk;
+					OCTreeEditor.Refresh ();
+				}
+
 				offset.y += 20;
 
 				for ( i = 0; i < node.speak.lines.Length; i++ ) {
@@ -54,10 +61,11 @@ public class OCNodeInspector extends OEComponentInspector {
 					node.speak.lines[i].text = TextField ( "", node.speak.lines[i].text, new Rect ( 40, offset.y, width - 40, 60 ) );
 					offset.y += 50;
 					node.speak.lines[i].audio = AssetLinkField ( "Audio", node.id + ">" + i, tree.gameObject.GetComponent.< OFSerializedObject > (), typeof ( AudioClip ), "ogg" ) as AudioClip;
+					offset.y += 20;
 				}
-
+					
 				offset.y += 20;
-				
+
 				if ( Button ( "-", new Rect ( 0, offset.y, 24, 16 ) ) ) {
 					node.speak.RemoveLine ( node.speak.lines.Length - 1 );
 					node.SetOutputAmount ( node.speak.lines.Length );

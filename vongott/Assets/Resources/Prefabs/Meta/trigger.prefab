@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.01299858, y: -.0328786373, z: .989814758}
+  m_LocalPosition: {x: -17.0030003, y: .626999974, z: 13.0690002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,7 +87,9 @@ MonoBehaviour:
   message: 
   argument: 
   object: {fileID: 0}
+  isActive: 1
   fireOnce: 1
+  eventToTarget: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,12 +102,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 5
+  - typeIndex: 6
     name: Transform
     component: {fileID: 400000}
-  - typeIndex: 1
+  - typeIndex: 13
     name: OATrigger
     component: {fileID: 11400000}
+  assetLinks: []
   id: 
   prefabPath: Prefabs/Meta/trigger
   exportPath: 
