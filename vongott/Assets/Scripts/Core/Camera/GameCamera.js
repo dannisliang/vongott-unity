@@ -268,10 +268,10 @@ class GameCamera extends MonoBehaviour {
 		convoFocus = GetConvoFocus ( random, speaker.transform );
 		convoPosition = GetConvoPosition ( random, speaker.transform );
 
-		if ( !smooth ) {
+		//if ( !smooth ) {
 			this.transform.position = convoPosition;
 			this.transform.LookAt ( convoFocus );
-		}
+		//}
 	}
 	
 	private function GetConvoCenter () : Vector3 { 

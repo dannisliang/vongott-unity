@@ -101,21 +101,16 @@ public class OCManager extends MonoBehaviour {
 			}
 		
 		// No audio
-		// ^ If it's grouped smalltalk or a choice, continue immediately
-		} else if ( node.speak.lines.Length > 1 ) {
-			if ( node.speak.smalltalk ) {
-				NextNode ();
-
-			} else {
-				NextNode ( node.speak.index );
-			
-			}
-
-		// ^ If it's a single small talk node, estimate the amount of time it would take to say the line and then continue
-		} else if ( node.speak.smalltalk ) {
+		// ^ If it's smalltalk, estimate the amount of time it would take to say the line and then continue
+		} if ( node.speak.smalltalk ) {
 			yield WaitForSeconds ( node.speak.lines[node.speak.index].text.Length / 10 );
 			
 			NextNode ();
+
+		// ^ If it's a choice, continue immediately
+		} else if ( node.speak.lines.Length > 1 ) {
+			NextNode ( node.speak.index );
+
 		}
 	}
 
