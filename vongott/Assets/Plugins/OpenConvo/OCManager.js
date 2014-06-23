@@ -69,7 +69,7 @@ public class OCManager extends MonoBehaviour {
 		}
 	}
 
-	private function PlayLineAudio ( node : OCNode  ) : IEnumerator {
+	private function PlayLineAudio ( node : OCNode ) : IEnumerator {
 		if ( currentAudioSource ) {
 			currentAudioSource.Stop ();
 		}

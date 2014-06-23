@@ -51,6 +51,16 @@ class UIConversation extends OGPage {
 		lines[index].text = line;
 	}
 	
+	static function OnSelectOption ( index : int ) {
+		highlight.SetActive ( false );
+
+		for ( var i : int = 0; i < lines.Length; i++ ) {
+			if ( i != index ) {
+				lines[i].text = "";
+			}
+		}
+	}
+
 	// Set line
 	static function SetLine ( line : String ) {
 		lines[0].text = line;
