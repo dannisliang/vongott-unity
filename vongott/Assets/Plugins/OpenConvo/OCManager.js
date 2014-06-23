@@ -178,7 +178,7 @@ public class OCManager extends MonoBehaviour {
 		} else if ( node && node.speak ) {
 			eventHandler.OnSetSpeaker ( speaker, node.speak );
 			
-			if ( node.speak.lines.Length == 1 ) {
+			if ( node.speak.lines.Length == 1 || node.speak.smalltalk ) {
 				StartCoroutine ( PlayLineAudio ( node ) );
 				
 				if ( node.speak.smalltalk ) {

@@ -143,7 +143,7 @@ public class OFDeserializer {
 						
 				}
 
-				output.AddAssetLink ( assetLinks[i].GetField ( "name" ).str, path, type );
+				output.SetAssetLink ( assetLinks[i].GetField ( "name" ).str, path, type );
 			}
 		}
 
