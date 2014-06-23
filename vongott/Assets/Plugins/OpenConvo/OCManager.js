@@ -57,7 +57,11 @@ public class OCManager extends MonoBehaviour {
 	}
 
 	public function EndConversation () {
-		if ( currentAudioSource ) {
+		EndConversation ( true );
+	}
+
+	public function EndConversation ( stopAudio : boolean ) {
+		if ( stopAudio && currentAudioSource ) {
 			currentAudioSource.Stop ();
 		}
 		
@@ -90,13 +94,9 @@ public class OCManager extends MonoBehaviour {
 					yield WaitForSeconds ( 0.5 );
 					NextNode ( node.speak.index );
 				}
-			
-			} else {
-				NextNode ();
-
 			}
 		
-		} else if ( node.speak.lines.Length > 1 ) {
+		} else if ( node.speak.lines.Length > 1 && !node.speak.smalltalk ) {
 			NextNode ( node.speak.index );
 
 		}
@@ -189,6 +189,8 @@ public class OCManager extends MonoBehaviour {
 						node.speak.index = 0;
 
 					}
+		
+					EndConversation ( false );	
 				}
 			}
 		}
@@ -211,8 +213,15 @@ public class OCManager extends MonoBehaviour {
 		var rootNode : OCRootNode = tree.rootNodes[tree.currentRoot];
 		var node : OCNode = rootNode.GetNode ( currentNode );
 
-		currentNode = node.connectedTo[i];
-		DisplayNode ();
+		if ( i < node.connectedTo.Length ) {
+			currentNode = node.connectedTo[i];
+			DisplayNode ();
+		
+		} else {
+			Debug.LogError ( "OCManager | Node index '" + i + "' out of range (0-" + ( node.connectedTo.Length - 1 ) + ")" );
+			EndConversation ();
+				
+		}
 	}
 
 	public function StartConversation ( tree : OCTree ) {
