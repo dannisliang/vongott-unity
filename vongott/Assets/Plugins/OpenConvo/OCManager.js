@@ -74,31 +74,48 @@ public class OCManager extends MonoBehaviour {
 	}
 
 	private function PlayLineAudio ( node : OCNode ) : IEnumerator {
+		// Make sure no other conversation audio is playing
 		if ( currentAudioSource ) {
 			currentAudioSource.Stop ();
 		}
 
+		// With audio
+		// ^ Play
 		if ( speaker.gameObject.audio && node.speak.lines[node.speak.index].audio ) {
 			speaker.gameObject.audio.clip = node.speak.lines[node.speak.index].audio;
 			speaker.gameObject.audio.loop = false;
 			speaker.gameObject.audio.Play ();
 			currentAudioSource = speaker.gameObject.audio;
 			
-			if ( !node.speak.smalltalk ) {
+			// If it's a choice or a single smalltalk node, automatically continue after the audio has finished
+			if ( node.speak.lines.Length > 1 || node.speak.smalltalk ) {
 				while ( currentAudioSource && currentAudioSource.isPlaying ) {
 					yield null;	
 				}
 
-				// If we already skipped the node, don't do it automatically
+				// If we already continued manually, abort
 				if ( node.id == currentNode ) {
 					yield WaitForSeconds ( 0.5 );
 					NextNode ( node.speak.index );
 				}
 			}
 		
-		} else if ( node.speak.lines.Length > 1 && !node.speak.smalltalk ) {
-			NextNode ( node.speak.index );
+		// No audio
+		// ^ If it's grouped smalltalk or a choice, continue immediately
+		} else if ( node.speak.lines.Length > 1 ) {
+			if ( node.speak.smalltalk ) {
+				NextNode ();
 
+			} else {
+				NextNode ( node.speak.index );
+			
+			}
+
+		// ^ If it's a single small talk node, estimate the amount of time it would take to say the line and then continue
+		} else if ( node.speak.smalltalk ) {
+			yield WaitForSeconds ( node.speak.lines[node.speak.index].text.Length / 10 );
+			
+			NextNode ();
 		}
 	}
 
@@ -189,8 +206,6 @@ public class OCManager extends MonoBehaviour {
 						node.speak.index = 0;
 
 					}
-		
-					EndConversation ( false );	
 				}
 			}
 		}

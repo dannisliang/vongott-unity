@@ -300,7 +300,7 @@ public class OCTreeEditor extends OGPage {
 				case OCNodeType.Speak:
 					btnSelect.tint = instance.speakerColors[node.speak.speaker];
 
-					if ( node.speak.smalltalk ) {
+					if ( node.speak.smalltalk && node.speak.lines.Length > 1 ) {
 						btnSelect.text = "(smalltalk)";
 
 					} else if ( node.speak.lines.Length > 1 ) {

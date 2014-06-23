@@ -221,10 +221,10 @@ public class CameraController extends MonoBehaviour {
 		storedPreference = eCameraState.None;	
 	}
 
-	function Start () {      
+	function Start () : IEnumerator {
 		var angles : Vector3 = transform.eulerAngles;
-		xDeg = angles.x;
-		yDeg = angles.y;
+		xDeg = angles.y;
+		yDeg = 0;//angles.y;
 		currentDistance = distance;
 		desiredDistance = distance;
 		correctedDistance = distance;

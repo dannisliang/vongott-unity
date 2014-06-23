@@ -353,7 +353,7 @@ class GameCamera extends MonoBehaviour {
 	// Render
 	////////////////////
 	function OnPostRender () {
-		if ( GameCore.GetInteractiveObject() && !GameCore.interactiveObjectLocked ) {
+		if ( !inConvo && GameCore.GetInteractiveObject() && !GameCore.interactiveObjectLocked ) {
 			DrawBoundingBox ( GameCore.GetInteractiveObject().gameObject );
 		}
 	}	
