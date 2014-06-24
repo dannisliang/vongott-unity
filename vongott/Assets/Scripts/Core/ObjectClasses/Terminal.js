@@ -37,7 +37,7 @@ class Terminal extends InteractiveObject {
 	public function Exit () : IEnumerator {
 		inSession = false;
 		
-		GameCamera.GetInstance().RestorePosRot ( 1 );
+		GameCamera.GetInstance().RestorePosRot ();
 			
 		yield WaitForSeconds ( 1 );
 	

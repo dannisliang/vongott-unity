@@ -60,17 +60,15 @@ class LiftPanel extends InteractiveObject {
 		GameCore.GetPlayerObject().transform.parent = GameCore.levelContainer;
 	}
 	
-	public function Exit ( i : int ) : IEnumerator {
+	public function Exit ( i : int ) {
 		OGRoot.GetInstance().GoToPage ( "HUD" );
 		
 		inSession = false;
 		
 		MoveDoors ( 0 );
 		
-		GameCamera.GetInstance().RestorePosRot ( 1 );
+		GameCamera.GetInstance().RestorePosRot ();
 			
-		yield WaitForSeconds ( 1 );
-	
 		UIHUD.GetInstance().ToggleCrosshair ();
 	
 		GameCore.interactiveObjectLocked = false;
@@ -90,7 +88,7 @@ class LiftPanel extends InteractiveObject {
 			StartCoroutine ( Enter () );
 		
 			InputManager.escFunction = function () {
-				StartCoroutine ( Exit ( -1 ) );
+				Exit ( -1 );
 			};
 		}
 	}

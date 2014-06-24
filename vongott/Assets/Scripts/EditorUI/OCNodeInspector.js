@@ -193,7 +193,7 @@ public class OCNodeInspector extends OEComponentInspector {
 						offset.y += 20;
 					}
 					
-					node.setQuest.state = Popup ( "State", node.setQuest.state, System.Enum.GetNames ( OCQuests.Quest.State ) );
+					node.setQuest.completed = Toggle ( "Is completed", node.setQuest.completed );
 				
 				} else {
 					LabelField ( "You need to load a set of quests in the quest editor first." );
@@ -223,7 +223,7 @@ public class OCNodeInspector extends OEComponentInspector {
 						offset.y += 20;
 					}
 
-					node.getQuest.completed = Toggle ( "Completed", node.getQuest.completed );
+					node.getQuest.completed = Toggle ( "Must be completed", node.getQuest.completed );
 				
 				} else {
 					LabelField ( "You need to load a set of quests in the quest editor first." );

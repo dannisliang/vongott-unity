@@ -15,9 +15,9 @@ public class LuaScriptableObject extends MonoBehaviour {
 	public function Start () {
 		lua.DoString ( luaString );
 
-		start = lua.GetFunction ( "start" );
-		update = lua.GetFunction ( "update" );
-		onTrigger = lua.GetFunction ( "onTrigger" );
+		start = lua.GetFunction ( "Start" );
+		update = lua.GetFunction ( "Update" );
+		onTrigger = lua.GetFunction ( "OnTrigger" );
 
 		if ( start && !OEWorkspace.GetInstance() ) {
 			start.Call ( this, GameCore.GetLuaManager () );
@@ -31,7 +31,7 @@ public class LuaScriptableObject extends MonoBehaviour {
 	}
 
 	// Trigger
-	public function triggerBy ( by : String ) {
+	public function TriggerBy ( by : String ) {
 		triggerId = by;
 	}
 
@@ -61,50 +61,50 @@ public class LuaScriptableObject extends MonoBehaviour {
 	}
 
 	// Transform
-	public function setPosition ( x : float, y : float, z : float ) {
+	public function SetPosition ( x : float, y : float, z : float ) {
 		this.transform.position = new Vector3 ( x, y, z );
 	}
 
-	public function translate ( x : float, y : float, z : float ) {
+	public function Translate ( x : float, y : float, z : float ) {
 		var newPos : Vector3 = this.transform.position + new Vector3 ( x, y, z );
 
 		this.transform.position = newPos;
 	}
 	
-	public function getPosition () : Vector3 {
+	public function GetPosition () : Vector3 {
 		return this.transform.position;
 	}
 	
-	public function setRotation ( x : float, y : float, z : float ) {
+	public function SetRotation ( x : float, y : float, z : float ) {
 		this.transform.localRotation = Quaternion.Euler ( new Vector3 ( x, y, z ) );
 	}
 
-	public function rotate ( x : float, y : float, z : float ) {
+	public function Rotate ( x : float, y : float, z : float ) {
 		var newRot : Vector3 = this.transform.localEulerAngles + new Vector3 ( x, y, z );
 
 		this.transform.localRotation = Quaternion.Euler ( newRot );
 	}
 	
-	public function getRotation () : Vector3 {
+	public function GetRotation () : Vector3 {
 		return this.transform.localEulerAngles;
 	}
 	
-	public function setScale ( x : float, y : float, z : float ) {
+	public function SetScale ( x : float, y : float, z : float ) {
 		this.transform.localScale = new Vector3 ( x, y, z );
 	}
 
-	public function scale ( x : float, y : float, z : float ) {
+	public function Scale ( x : float, y : float, z : float ) {
 		var newScl : Vector3 = this.transform.localScale + new Vector3 ( x, y, z );
 
 		this.transform.localScale = newScl;
 	}
 	
-	public function getScale () : Vector3 {
+	public function GetScale () : Vector3 {
 		return this.transform.localScale;
 	}
 	
 	// Collider
-	public function setCollider ( type : String ) {
+	public function SetCollider ( type : String ) {
 		if ( type != "none" ) {
 			if ( collider ) {
 				Destroy ( collider );
@@ -140,7 +140,7 @@ public class LuaScriptableObject extends MonoBehaviour {
 	}
 
 	// Rigidbody
-	public function setWeight ( weight : float ) {
+	public function SetWeight ( weight : float ) {
 		if ( !rigidbody ) {
 			this.gameObject.AddComponent.< Rigidbody > ();
 		}
@@ -155,13 +155,13 @@ public class LuaScriptableObject extends MonoBehaviour {
 		}
 	}
 
-	public function push ( x : float, y : float, z : float ) {
+	public function Push ( x : float, y : float, z : float ) {
 		if ( rigidbody ) {
 			rigidbody.AddForce ( new Vector3 ( x, y, z ) );
 		}
 	}
 
-	public function setVelocity ( x : float, y : float, z : float ) {
+	public function SetVelocity ( x : float, y : float, z : float ) {
 		if ( rigidbody ) {
 			rigidbody.velocity = new Vector3 ( x, y, z );
 		}

@@ -184,7 +184,7 @@ public class OCManager extends MonoBehaviour {
 				}
 
 				var objective : OCQuests.Objective = quest.objectives [ node.setQuest.objective ];
-				objective.completed = node.setQuest.state == OCQuests.Quest.State.Ended;
+				objective.completed = node.setQuest.completed;
 			
 				nextNode = node.connectedTo[0];
 				break;

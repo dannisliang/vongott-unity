@@ -52,9 +52,9 @@ class GameCamera extends MonoBehaviour {
 		storedRot = this.transform.eulerAngles;
 	}
 	
-	function RestorePosRot ( t : float ) {
-		iTween.MoveTo ( this.gameObject, iTween.Hash ( "position", storedPos, "time", t, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
-		iTween.RotateTo ( this.gameObject, iTween.Hash ( "rotation", storedRot, "time", t, "easetype", iTween.EaseType.easeInOutQuad, "space", "world", "ignoretimescale", true ) );
+	function RestorePosRot () {
+		this.transform.position = storedPos;
+		this.transform.eulerAngles = storedRot;
 	}
 	
 	function TweenLook ( v : Vector3, t : float ) {
@@ -139,21 +139,10 @@ class GameCamera extends MonoBehaviour {
 	private function FocusCamera ( point : Vector3, position : Vector3, rotation : Vector3, time : float) {
 		point.y = position.y;
 							    
-	 	transform.position = position;//= Vector3.Slerp(transform.position, position, time * Time.fixedDeltaTime );
-		transform.eulerAngles = rotation;// ( point );//= Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( point - transform.position ), time * Time.fixedDeltaTime );
+	 	transform.position = position;
+		transform.eulerAngles = rotation;
 	}
 
-	function FocusOn ( target : Transform, moveCam : boolean ) {
-		if ( moveCam ) {
-			iTween.MoveTo ( this.gameObject, iTween.Hash ( "easetype", iTween.EaseType.easeInOutQuad, "position", target.position + target.forward * 2, "time", 0.5, "ignoretimescale", true ) );
-			iTween.RotateTo ( this.gameObject, iTween.Hash ( "easetype", iTween.EaseType.easeInOutQuad, "rotation", target.eulerAngles + new Vector3 ( 0, 180, 0 ), "time", 0.5, "ignoretimescale", true ) );
-		
-		} else {
-			iTween.LookTo ( this.gameObject, iTween.Hash ( "easetype", iTween.EaseType.easeInOutQuad, "looktarget", target.position, "time", 0.5, "ignoretimescale", true ) );
-		
-		}
-	}
-	
 	
 	////////////////////
 	// Effects
@@ -370,8 +359,8 @@ class GameCamera extends MonoBehaviour {
 	
 		// Check for conversation cam
 		if ( inConvo ) {
-			this.transform.position = Vector3.Slerp ( this.transform.position, convoPosition, Time.deltaTime * 2 );
-			this.transform.rotation = Quaternion.Lerp ( this.transform.rotation, Quaternion.LookRotation ( convoFocus - this.transform.position ), Time.deltaTime * 5 );
+			this.transform.position = convoPosition;
+			this.transform.rotation = Quaternion.LookRotation ( convoFocus - this.transform.position );
 		}
 
 		// Check for interaction

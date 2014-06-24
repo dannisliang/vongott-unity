@@ -48,7 +48,6 @@ public class OSGrenade extends MonoBehaviour {
 
 	public function SetInventory ( inventory : OSInventory ) {
 		this.inventory = inventory;
-		Debug.Log ( inventory );
 	}
 
 	public function Throw () {

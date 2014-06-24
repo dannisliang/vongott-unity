@@ -36,4 +36,8 @@ public class EditorEventManager extends MonoBehaviour {
 	public function Exit () {
 		Application.LoadLevel ( "main_menu" );
 	}
+
+	public function OnMapLoaded () {
+		OCQuestEditor.GetInstance().LoadLinkedQuests();
+	}
 }

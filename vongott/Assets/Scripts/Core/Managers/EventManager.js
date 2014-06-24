@@ -57,7 +57,7 @@ class EventManager extends OCEventHandler {
 		if ( OGRoot.GetInstance().currentPage.pageName == "Conversation" ) {
 			OGRoot.GetInstance().GoToPage ( "HUD" );
 			GameCore.GetInstance().SetControlsActive ( true );
-			GameCamera.GetInstance().RestorePosRot ( 1 );
+			GameCamera.GetInstance().RestorePosRot ();
 			GameCamera.GetInstance().inConvo = false;
 		}
 	}

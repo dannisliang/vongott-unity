@@ -59,18 +59,23 @@ public class OCQuestEditor extends OGPage {
 	private static var instance : OCQuestEditor;
 
 	public static function GetInstance () : OCQuestEditor {
+		if ( !instance ) {
+			for ( var qe : OCQuestEditor in OGRoot.GetInstance().transform.GetComponentsInChildren.< OCQuestEditor > ( true ) ) {
+				instance = qe;
+			}
+		}
+		
 		return instance;
 	}
 
-	public function Init () {
-		instance = this;
-	
-		if ( OEWorkspace.GetInstance().settings.autoLoadLastMap ) {
-			savePath = PlayerPrefs.GetString ( "OCQuestEditor.savePath" );
+	public function LoadLinkedQuests () {
+		var pData : JSONObject = OEWorkspace.GetInstance().properties.data;
 
-			if ( !String.IsNullOrEmpty ( savePath ) ) {
-				var json : JSONObject = OFReader.LoadFile ( savePath );
-			
+		if ( pData.HasField ( "quests" ) && !String.IsNullOrEmpty ( pData.GetField ( "quests" ).str ) ) {
+			savePath = pData.GetField ( "quests" ).str;
+			var json : JSONObject = OFReader.LoadFile ( savePath );
+	
+			if ( json ) {	
 				loadedQuests = LoadQuestsFromJSON ( json );
 
 				SelectQuest ( 0 );
@@ -152,6 +157,17 @@ public class OCQuestEditor extends OGPage {
 			loadedQuests = LoadQuestsFromJSON ( json );
 
 			SelectQuest ( 0 );
+			
+			var pData : JSONObject = OEWorkspace.GetInstance().properties.data;
+			var trimmedPath : String = savePath.Replace ( "\\", "/" ).Replace ( Application.dataPath, "" );
+
+			if ( !pData.HasField ( "quests" ) ) {
+				pData.AddField ( "quests", trimmedPath );
+			
+			} else {
+				pData.GetField ( "quests" ).str = trimmedPath;
+
+			}
 		};
 		fileBrowser.sender = "QuestEditor";
 		OGRoot.GetInstance().GoToPage ( "FileBrowser" );
@@ -262,7 +278,7 @@ public class OCQuestEditor extends OGPage {
 		var quest : OCQuests.Quest = loadedQuests [ editingQuest ];
 		var tmp : List.< OCQuests.Objective > = new List.< OCQuests.Objective > ( quest.objectives );
 		
-		tmp.Add ( new OCQuests.Objective ( "Do stuff", 3 ) );
+		tmp.Add ( new OCQuests.Objective ( "Do stuff", 1 ) );
 		
 		quest.objectives = tmp.ToArray ();
 

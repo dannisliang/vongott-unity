@@ -128,7 +128,7 @@ public class SerializeOpenConvo extends OFPlugin {
 						
 						setQuest.AddField ( "quest", node.setQuest.quest );
 						setQuest.AddField ( "objective", node.setQuest.objective );
-						setQuest.AddField ( "state", node.setQuest.state == OCQuests.Quest.State.Ended ? 0 : 1 );
+						setQuest.AddField ( "completed", node.setQuest.completed );
 
 						n.AddField ( "setQuest", setQuest );
 						
@@ -304,8 +304,7 @@ public class SerializeOpenConvo extends OFPlugin {
 
 						setQuest.quest = node.GetField ( "setQuest" ).GetField ( "quest" ).str;
 						setQuest.objective = node.GetField ( "setQuest" ).GetField ( "objective" ).n;
-						var state : int = node.GetField ( "setQuest" ).GetField ( "state" ).n;
-						setQuest.state = state;
+						setQuest.completed = node.GetField ( "setQuest" ).GetField ( "completed" ).b;
 
 						n.setQuest = setQuest;
 

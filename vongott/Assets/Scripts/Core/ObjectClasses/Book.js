@@ -22,13 +22,11 @@ class Book extends InteractiveObject {
 		OGRoot.GetInstance().GoToPage ( "TextDisplay" );
 	}
 	
-	public function Exit () : IEnumerator {
+	public function Exit () {
 		inSession = false;
 		
-		GameCamera.GetInstance().RestorePosRot ( 1 );
+		GameCamera.GetInstance().RestorePosRot ();
 			
-		yield WaitForSeconds ( 1 );
-	
 		UIHUD.GetInstance().ToggleCrosshair ();
 	
 		GameCore.GetInstance().SetControlsActive ( true );
@@ -43,7 +41,7 @@ class Book extends InteractiveObject {
 			InputManager.escFunction = function () {
 				OGRoot.GetInstance().GoToPage ( "HUD" );
 				
-				StartCoroutine ( Exit () );
+				Exit ();
 				
 				GameCore.interactiveObjectLocked = false;
 			};
