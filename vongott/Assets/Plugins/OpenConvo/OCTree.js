@@ -285,6 +285,11 @@ public class OCNode {
 					getFlag = new OCGetFlag ();
 					SetOutputAmount ( 2 );
 					break;
+				
+				case OCNodeType.SetQuest:
+					setQuest = new OCSetQuest ();
+					SetOutputAmount ( 1 );
+					break;
 
 				case OCNodeType.GetQuest:
 					getQuest = new OCGetQuest ();
@@ -366,13 +371,8 @@ public class OCGetFlag {
 }
 
 public class OCSetQuest {
-	public enum QuestAction {
-		End,
-		Begin
-	}
-
 	public var quest : String;
-	public var action : QuestAction;
+	public var state : OCQuests.Quest.State;
 }
 
 public class OCGetQuest {

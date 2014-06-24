@@ -171,6 +171,22 @@ public class OCManager extends MonoBehaviour {
 
 				}
 				break;
+			
+			case OCNodeType.SetQuest:
+				quests.SetQuestState ( node.setQuest.quest, node.setQuest.state );
+			
+				nextNode = node.connectedTo[0];
+				break;
+			
+			case OCNodeType.GetQuest:
+				if ( quests.IsQuestCompleted ( node.getQuest.quest ) ) {
+					nextNode = node.connectedTo[1];
+
+				} else {
+					nextNode = node.connectedTo[0];
+
+				}
+				break;
 
 			case OCNodeType.End:
 				tree.currentRoot = node.end.rootNode;

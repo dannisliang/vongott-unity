@@ -160,7 +160,7 @@ public class OCNodeInspector extends OEComponentInspector {
 			
 			case OCNodeType.SetQuest:
 				node.setQuest.quest = TextField ( "Quest", node.setQuest.quest );
-				node.setQuest.action = Popup ( "Action", node.setQuest.action, System.Enum.GetNames ( OCSetQuest.QuestAction ) );
+				node.setQuest.state = Popup ( "State", node.setQuest.state, System.Enum.GetNames ( OCQuests.Quest.State ) );
 				break;
 			
 			case OCNodeType.GetQuest:

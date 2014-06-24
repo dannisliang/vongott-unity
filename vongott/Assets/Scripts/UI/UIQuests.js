@@ -22,16 +22,16 @@ class UIQuests extends OGPage {
 
 		var manager : OCQuests = GameCore.GetQuestManager ();
 
-		for ( var i : int = 0; i < manager.quests.Length; i++) {
-			var li : OGListItem = new GameObject ( "li_" + manager.quests[i].title ).AddComponent.< OGListItem > ();
+		for ( var i : int = 0; i < manager.userQuests.Length; i++) {
+			var li : OGListItem = new GameObject ( "li_" + manager.userQuests[i].title ).AddComponent.< OGListItem > ();
 			
 			li.transform.parent = list.transform;
 			li.transform.localScale = new Vector3 ( 450, 20, 1 );
 			li.transform.localPosition = new Vector3 ( 0, i * 20, 0 );
 
-			li.text = manager.quests[i].title;
+			li.text = manager.userQuests[i].title;
 
-			if ( manager.quests[i].completed ) {
+			if ( manager.userQuests[i].completed ) {
 				li.text += " (completed)";
 			}
 
@@ -55,8 +55,8 @@ class UIQuests extends OGPage {
 	public function SelectQuest ( i : int ) {
 		var manager : OCQuests = GameCore.GetQuestManager ();
 	
-		if ( i > 0  && i < manager.quests.Length ) {
-			var quest : OCQuests.Quest = manager.quests[i];
+		if ( i > 0  && i < manager.userQuests.Length ) {
+			var quest : OCQuests.Quest = manager.userQuests[i];
 			
 			title.text = quest.title;
 			description.text = quest.description;

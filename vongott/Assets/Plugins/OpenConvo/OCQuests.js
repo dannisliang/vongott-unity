@@ -37,7 +37,11 @@ public class OCQuests {
 	}
 	
 	public class Quest {
-		public var id : String;
+		public enum State {
+			Ended,
+			Begun
+		}
+		
 		public var title : String;
 		public var description : String;
 		public var objectives : Objective[] = new Objective[0];
@@ -45,8 +49,10 @@ public class OCQuests {
 		public var giver : Giver;
 		public var image : Texture2D;
 		public var side : boolean;
-		public var hidden : boolean;
-		
+
+		function Quest () {
+		}
+
 		function Quest ( title : String, description : String, objectives : Objective[] ) {
 			Quest ( title, description, objectives, 0, false, null, null );
 		}
@@ -107,12 +113,13 @@ public class OCQuests {
 		}
 	}
 
-	public var quests : Quest[] = new Quest[0];
+	public var userQuests : Quest[] = new Quest[0];
+	public var potentialQuests : Quest[] = new Quest[0];
 	public var activeQuest : int = -1;
 	
 	public function SetActiveQuest ( quest : Quest ) {
-		for ( var i : int = 0; i < quests.Length; i++ ) {
-			if ( quests[i] == quest ) {
+		for ( var i : int = 0; i < userQuests.Length; i++ ) {
+			if ( userQuests[i] == quest ) {
 				activeQuest = i;
 				return;
 			}
@@ -122,41 +129,86 @@ public class OCQuests {
 	}
 
 	public function GetActiveQuest () : Quest {
-		if ( activeQuest > 0 && activeQuest < quests.Length ) {
-			return quests[activeQuest];
+		if ( activeQuest > 0 && activeQuest < userQuests.Length ) {
+			return userQuests[activeQuest];
 		}
 
 		return null;
 	}
 
-	public function AddQuest ( quest : Quest ) {
-		var tmp : List.< Quest > = new List.< Quest > ( quests );
+	public function AddUserQuest ( quest : Quest ) {
+		var tmp : List.< Quest > = new List.< Quest > ( userQuests );
 
 		tmp.Add ( quest );
 
-		quests = tmp.ToArray ();
+		userQuests = tmp.ToArray ();
 	}
 
-	public function RemoveQuest ( quest : Quest ) {
-		var tmp : List.< Quest > = new List.< Quest > ( quests );
+	public function RemoveUserQuest ( quest : Quest ) {
+		var tmp : List.< Quest > = new List.< Quest > ( userQuests );
 
 		tmp.Remove ( quest );
 
-		quests = tmp.ToArray ();
+		userQuests = tmp.ToArray ();
+	}
+	
+	public function AddPotentialQuest ( quest : Quest ) {
+		var tmp : List.< Quest > = new List.< Quest > ( potentialQuests );
+
+		tmp.Add ( quest );
+
+		potentialQuests = tmp.ToArray ();
 	}
 
-	public function GetQuest ( title : String ) : Quest {
-		for ( var i : int = 0; i < quests.Length; i++ ) {
-			if ( quests[i].title == title ) {
-				return quests[i];
+	public function RemovePotentialQuest ( quest : Quest ) {
+		var tmp : List.< Quest > = new List.< Quest > ( potentialQuests );
+
+		tmp.Remove ( quest );
+
+		potentialQuests = tmp.ToArray ();
+	}
+
+	public function GetUserQuest ( title : String ) : Quest {
+		for ( var i : int = 0; i < userQuests.Length; i++ ) {
+			if ( userQuests[i].title == title ) {
+				return userQuests[i];
+			}
+		}
+
+		return null;
+	}
+	
+	public function GetPotentialQuest ( title : String ) : Quest {
+		for ( var i : int = 0; i < potentialQuests.Length; i++ ) {
+			if ( potentialQuests[i].title == title ) {
+				return potentialQuests[i];
 			}
 		}
 
 		return null;
 	}
 
+	public function SetQuestState ( title : String, state : Quest.State ) {
+		var quest : Quest;
+		
+		if ( state == Quest.State.Begun ) {
+			quest = GetPotentialQuest ( title );
+
+			if ( quest ) {
+				AddUserQuest ( quest );
+			}	
+		
+		} else {
+			quest = GetUserQuest ( title );
+
+			if ( quest ) {
+				quest.completed = true;
+			}
+		}
+	}
+
 	public function IsQuestCompleted ( title : String ) : boolean {
-		var quest : Quest = GetQuest ( title );
+		var quest : Quest = GetUserQuest ( title );
 
 		if ( quest ) {
 			return quest.completed;
