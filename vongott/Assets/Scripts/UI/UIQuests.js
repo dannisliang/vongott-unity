@@ -1,59 +1,89 @@
 #pragma strict
 
 class UIQuests extends OGPage {
-	////////////////////
-	// Prerequisites
-	////////////////////
-	// Inspector items
-	var mainList : OGLabel;
-	var sideList : OGLabel;
-	
-	
-	////////////////////
-	// Quest log functions
-	////////////////////
-	// Get active quests
-	function GetActiveQuests () {
-		mainList.text = "";
-		sideList.text = "";
-		
-		
-		// Main quests
-		if ( QuestManager.GetMainQuests().Count <= 0 ) {
-			mainList.text = "( no active quests )";
+	public var list : OGScrollView;
+	public var title : OGLabel;
+	public var description : OGLabel;
+	public var objectives : OGLabel;
+	public var image : OGTexture;
+
+	private function Clear () {
+		list.position = Vector2.zero;
+
+		for ( var i : int = 0; i < list.transform.childCount; i++ ) {
+			Destroy ( list.transform.GetChild ( i ).gameObject );
+		}
+	}
+
+	private function Populate () : IEnumerator {
+		Clear ();
+
+		yield WaitForEndOfFrame ();
+
+		var manager : OCQuests = GameCore.GetQuestManager ();
+
+		for ( var i : int = 0; i < manager.quests.Length; i++) {
+			var li : OGListItem = new GameObject ( "li_" + manager.quests[i].title ).AddComponent.< OGListItem > ();
 			
-		} else {
-			for ( var q : Quest in QuestManager.GetMainQuests() ) {
-				mainList.text += "- " + q.title + ": " + q.desc + "\n";
+			li.transform.parent = list.transform;
+			li.transform.localScale = new Vector3 ( 450, 20, 1 );
+			li.transform.localPosition = new Vector3 ( 0, i * 20, 0 );
+
+			li.text = manager.quests[i].title;
+
+			if ( manager.quests[i].completed ) {
+				li.text += " (completed)";
 			}
-		
-		}
-		
-		
-		// Side quests
-		if ( QuestManager.GetSideQuests().Count <= 0 ) {
-			sideList.text = "( no active quests )";
-		
-		} else {
-			for ( var q : Quest in QuestManager.GetSideQuests() ) {
-				sideList.text += "- " + q.title + ": " + q.desc + "\n";
-			}
-		
+
+			li.target = this.gameObject;
+			li.message = "SelectQuest";
+			li.argument = i.ToString ();
+			
+			li.ApplyDefaultStyles ();
+
 		}
 	}
+
+	public function SelectActiveQuest () {
+		SelectQuest ( GameCore.GetQuestManager ().activeQuest );
+	}
+
+	public function SelectQuest ( n : String ) {
+		SelectQuest ( int.Parse ( n ) );
+	}
+
+	public function SelectQuest ( i : int ) {
+		var manager : OCQuests = GameCore.GetQuestManager ();
 	
-	
-	////////////////////
-	// Init
-	////////////////////
+		if ( i > 0  && i < manager.quests.Length ) {
+			var quest : OCQuests.Quest = manager.quests[i];
+			
+			title.text = quest.title;
+			description.text = quest.description;
+			objectives.text = "";
+			image.mainTexture = quest.image;
+
+			for ( var o : int = 0; o < quest.objectives.Length; o++ ) {
+				var objective : OCQuests.Objective = quest.objectives[o];
+				
+				objectives.text += objective.description;
+			       	
+				if ( objective.goal > 0 ) {
+					objectives.text += " (" + objective.progress + "/" + objective.goal + ")";
+				}
+
+				objectives.text += "\n";
+			}
+		}
+	}
+
 	override function StartPage () {
-		GetActiveQuests();
+		StartCoroutine ( Populate () );
+		SelectActiveQuest ();
 		GameCore.GetInstance().SetPause ( true );
+		GameCore.GetInstance().SetControlsActive ( false );
 	}
 	
-	////////////////////
-	// Update
-	////////////////////
 	override function UpdatePage () {
 		if ( Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q) ) {
 			OGRoot.GetInstance().GoToPage ( "HUD" );

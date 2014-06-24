@@ -6,6 +6,8 @@ public enum OCNodeType {
 	Jump,
 	SetFlag,
 	GetFlag,
+	SetQuest,
+	GetQuest,
 	End
 }
 
@@ -186,6 +188,8 @@ public class OCNode {
 	public var jump : OCJump;
 	public var setFlag : OCSetFlag;
 	public var getFlag : OCGetFlag;
+	public var setQuest : OCSetQuest;
+	public var getQuest : OCGetQuest;
 	public var end : OCEnd;
 
 	function OCNode () {
@@ -282,6 +286,11 @@ public class OCNode {
 					SetOutputAmount ( 2 );
 					break;
 
+				case OCNodeType.GetQuest:
+					getQuest = new OCGetQuest ();
+					SetOutputAmount ( 2 );
+					break;
+
 				case OCNodeType.End:
 					end = new OCEnd ();
 					SetOutputAmount ( 0 );	
@@ -354,4 +363,18 @@ public class OCSetFlag {
 
 public class OCGetFlag {
 	public var flag : String;
+}
+
+public class OCSetQuest {
+	public enum QuestAction {
+		End,
+		Begin
+	}
+
+	public var quest : String;
+	public var action : QuestAction;
+}
+
+public class OCGetQuest {
+	public var quest : String;
 }

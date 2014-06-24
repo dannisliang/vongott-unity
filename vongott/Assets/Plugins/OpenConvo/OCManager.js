@@ -12,6 +12,7 @@ public class OCSpeaker {
 	
 public class OCManager extends MonoBehaviour {
 	public var flags : OCFlags = new OCFlags ();
+	public var quests : OCQuests = new OCQuests ();
 	public var tree : OCTree;
 	public var currentNode : int;
 	public var eventHandler : OCEventHandler;
@@ -74,9 +75,12 @@ public class OCManager extends MonoBehaviour {
 	}
 
 	private function PlayLineAudio ( node : OCNode ) : IEnumerator {
+		var duration : float = 0;
+		
 		// Make sure no other conversation audio is playing
 		if ( currentAudioSource ) {
 			currentAudioSource.Stop ();
+			currentAudioSource = null;
 		}
 
 		// With audio
@@ -86,31 +90,23 @@ public class OCManager extends MonoBehaviour {
 			speaker.gameObject.audio.loop = false;
 			speaker.gameObject.audio.Play ();
 			currentAudioSource = speaker.gameObject.audio;
-			
-			// If it's a choice or a single smalltalk node, automatically continue after the audio has finished
-			if ( node.speak.lines.Length > 1 || node.speak.smalltalk ) {
-				while ( currentAudioSource && currentAudioSource.isPlaying ) {
-					yield null;	
-				}
+	
+			duration = speaker.gameObject.audio.clip.length;
 
-				// If we already continued manually, abort
-				if ( node.id == currentNode ) {
-					yield WaitForSeconds ( 0.5 );
-					NextNode ( node.speak.index );
-				}
-			}
-		
 		// No audio
-		// ^ If it's smalltalk, estimate the amount of time it would take to say the line and then continue
-		} if ( node.speak.smalltalk ) {
-			yield WaitForSeconds ( node.speak.lines[node.speak.index].text.Length / 10 );
-			
-			NextNode ();
-
-		// ^ If it's a choice, continue immediately
-		} else if ( node.speak.lines.Length > 1 ) {
+		} else {
+			// Estimate duration
+			duration = node.speak.lines[node.speak.index].text.Length / 10;
+		
+		}
+		
+		// Wait for speech duration
+		yield WaitForSeconds ( duration );
+		
+		// If we already continued manually, or the conversation has ended, abort
+		if ( node.id == currentNode && tree != null ) {
+			yield WaitForSeconds ( 0.5 );
 			NextNode ( node.speak.index );
-
 		}
 	}
 
@@ -132,6 +128,7 @@ public class OCManager extends MonoBehaviour {
 				break;
 
 			case OCNodeType.Event:
+				// Send the event message to the target object
 				if ( node.event.object != null && node.event.eventToTarget ) {
 					if ( !String.IsNullOrEmpty ( node.event.argument ) ) {
 						node.event.object.SendMessage ( node.event.message, node.event.argument, SendMessageOptions.DontRequireReceiver );
@@ -141,6 +138,7 @@ public class OCManager extends MonoBehaviour {
 					
 					}
 
+				// Send the message to the event handler
 				} else if ( eventHandler ) {
 					if ( !String.IsNullOrEmpty ( node.event.argument ) ) {
 						eventHandler.Event ( node.event.message, node.event.argument );
@@ -180,6 +178,7 @@ public class OCManager extends MonoBehaviour {
 				break;
 		}
 
+		// Meta nodes
 		if ( exit ) {
 			EndConversation ();
 
@@ -187,6 +186,7 @@ public class OCManager extends MonoBehaviour {
 			currentNode = nextNode;
 			DisplayNode ();
 		
+		// OCSpeak nodes
 		} else if ( node && node.speak ) {
 			eventHandler.OnSetSpeaker ( speaker, node.speak );
 			
@@ -220,9 +220,17 @@ public class OCManager extends MonoBehaviour {
 	}
 
 	public function NextNode ( i : int ) {
+		if ( tree == null ) { return; }
+
 		var rootNode : OCRootNode = tree.rootNodes[tree.currentRoot];
 		var node : OCNode = rootNode.GetNode ( currentNode );
 
+		// Force output 0 on smalltalk nodes, just in case
+		if ( node.speak.smalltalk ) {
+			i = 0;
+		}
+
+		// Check for range
 		if ( i < node.connectedTo.Length ) {
 			currentNode = node.connectedTo[i];
 			DisplayNode ();

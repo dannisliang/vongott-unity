@@ -258,6 +258,10 @@ class GameCore extends MonoBehaviour {
 		return instance.GetComponent.< OCManager > ();
 	}
 	
+	public static function GetQuestManager () : OCQuests {
+		return instance.GetComponent.< OCManager > ().quests;
+	}
+	
 	public static function GetLuaManager () : LuaManager {
 		return instance.GetComponent.< LuaManager > ();
 	}
@@ -345,11 +349,6 @@ class GameCore extends MonoBehaviour {
 	}
 	
 	function Start () {	
-		if ( !running ) {
-			// Quests
-			QuestManager.Init();
-		}
-		
 		// Level container
 		levelContainer = _levelContainer;
 		
@@ -383,9 +382,6 @@ class GameCore extends MonoBehaviour {
 	}
 	
 	static function Stop () {	
-		// Quests
-		QuestManager.Clear();
-		
 		// Upgrades
 		GetUpgradeManager().Clear();
 	

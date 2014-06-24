@@ -158,6 +158,15 @@ public class OCNodeInspector extends OEComponentInspector {
 				node.getFlag.flag = TextField ( "Flag", node.getFlag.flag );
 				break;
 			
+			case OCNodeType.SetQuest:
+				node.setQuest.quest = TextField ( "Quest", node.setQuest.quest );
+				node.setQuest.action = Popup ( "Action", node.setQuest.action, System.Enum.GetNames ( OCSetQuest.QuestAction ) );
+				break;
+			
+			case OCNodeType.GetQuest:
+				node.getQuest.quest = TextField ( "Quest", node.getQuest.quest );
+				break;
+						
 			case OCNodeType.End:
 				node.end.rootNode = Popup ( "Next root", node.end.rootNode, rootNodeStrings );
 				break;

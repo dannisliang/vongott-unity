@@ -342,6 +342,17 @@ public class OCTreeEditor extends OGPage {
 					outputs [0] = new Output ( "", new Vector3 ( 0, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
 					break;
 				
+				case OCNodeType.GetQuest:
+					btnSelect.text = "(get quest)";
+					outputs [0] = new Output ( "false", new Vector3 ( -width / 2, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
+					outputs [1] = new Output ( "true", new Vector3 ( width / 2, height, 0 ), node.connectedTo[1] == 0, gameObject.transform );
+					break;
+				
+				case OCNodeType.SetQuest:
+					btnSelect.text = "(set quest)";
+					outputs [0] = new Output ( "", new Vector3 ( 0, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
+					break;
+				
 				case OCNodeType.Event:
 					btnSelect.text = "(event)";
 					outputs [0] = new Output ( "", new Vector3 ( 0, height, 0 ), node.connectedTo[0] == 0, gameObject.transform );
