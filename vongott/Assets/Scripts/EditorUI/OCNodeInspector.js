@@ -179,15 +179,21 @@ public class OCNodeInspector extends OEComponentInspector {
 						}
 					}
 
-					node.setQuest.quest = loadedQuests [ Popup ( "Quest", questIndex, loadedQuests ) ];
+					LabelField ( "Quest" );
+					node.setQuest.quest = loadedQuests [ Popup ( "", questIndex, loadedQuests ) ];
 					
+					offset.y += 20;
+
 					var quest : OCQuests.Quest = questEditor.loadedQuests[questIndex];
 
 					if ( quest.objectives.Length > 0 ) {
-						node.setQuest.objective = Popup ( "Objective", node.setQuest.objective, quest.GetObjectiveStrings ( 15 ) );
+						LabelField ( "Objective" );
+						node.setQuest.objective = Popup ( "", node.setQuest.objective, quest.GetObjectiveStrings ( 40 ) );
+						
+						offset.y += 20;
 					}
 					
-					node.setQuest.state = Popup ( "Quest state", node.setQuest.state, System.Enum.GetNames ( OCQuests.Quest.State ) );
+					node.setQuest.state = Popup ( "State", node.setQuest.state, System.Enum.GetNames ( OCQuests.Quest.State ) );
 				
 				} else {
 					LabelField ( "You need to load a set of quests in the quest editor first." );
@@ -203,12 +209,18 @@ public class OCNodeInspector extends OEComponentInspector {
 						}
 					}
 					
-					node.getQuest.quest = loadedQuests [ Popup ( "Quest", questIndex, loadedQuests ) ];
+					LabelField ( "Quest" );
+					node.getQuest.quest = loadedQuests [ Popup ( "", questIndex, loadedQuests ) ];
+					
+					offset.y += 20;
 					
 					quest = questEditor.loadedQuests[questIndex];
 
 					if ( quest.objectives.Length > 0 ) {
-						node.getQuest.objective = Popup ( "Objective", node.getQuest.objective, quest.GetObjectiveStrings ( 15 ) );
+						LabelField ( "Objective" );
+						node.getQuest.objective = Popup ( "", node.getQuest.objective, quest.GetObjectiveStrings ( 40 ) );
+						
+						offset.y += 20;
 					}
 
 					node.getQuest.completed = Toggle ( "Completed", node.getQuest.completed );
