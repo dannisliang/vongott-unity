@@ -9630,7 +9630,7 @@ GameObject:
   - 4: {fileID: 595824152}
   - 114: {fileID: 595824153}
   m_Layer: 0
-  m_Name: ddn_File
+  m_Name: ddn_Insert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9889,11 +9889,11 @@ MonoBehaviour:
   isDirty: 0
   isAlwaysOnTop: 0
   root: {fileID: 1088966305}
-  title: Edit
+  title: Insert
   target: {fileID: 2070496479}
   nestedOffset: -10
   submenu:
-  - name: Get object ID
+  - name: Object ID
     message: GetObjectId
     argument: 
     tickable: 0
