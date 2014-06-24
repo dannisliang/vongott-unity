@@ -173,13 +173,26 @@ public class OCManager extends MonoBehaviour {
 				break;
 			
 			case OCNodeType.SetQuest:
-				quests.SetQuestState ( node.setQuest.quest, node.setQuest.state );
+				var quest : OCQuests.Quest = quests.GetUserQuest ( node.setQuest.quest );
+			       	
+				if ( !quest ) {
+					quest = quests.GetPotentialQuest ( node.setQuest.quest );
+
+					if ( quest ) {
+						quests.AddUserQuest ( quest );
+					}
+				}
+
+				var objective : OCQuests.Objective = quest.objectives [ node.setQuest.objective ];
+				objective.completed = node.setQuest.state == OCQuests.Quest.State.Ended;
 			
 				nextNode = node.connectedTo[0];
 				break;
 			
 			case OCNodeType.GetQuest:
-				if ( quests.IsQuestCompleted ( node.getQuest.quest ) ) {
+				quest = quests.GetUserQuest ( node.getQuest.quest );
+				
+				if ( ( !node.getQuest.completed && quest ) || ( quest && node.getQuest.objective < quest.objectives.Length && quest.objectives[node.getQuest.objective].completed ) ) {
 					nextNode = node.connectedTo[1];
 
 				} else {

@@ -2,7 +2,7 @@
 
 public class UIDeveloperMenu extends OGPage {
 	public var flagContainer : OGScrollView;
-	
+
 	private var flagManager : OCFlags;
 
 	override function StartPage () {

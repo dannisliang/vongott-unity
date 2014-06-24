@@ -16,9 +16,13 @@ public class OCQuests {
 	public class Objective {
 		public var description : String;
 		public var progress : int = 0;
-		public var goal : int = 0;
+		public var goal : int = 1;
 
 		function Objective ( description : String, goal : int ) {
+			if ( goal < 1 ) {
+				goal = 1;
+			}
+			
 			this.description = description;
 			this.goal = goal;
 		}	
@@ -49,6 +53,7 @@ public class OCQuests {
 		public var giver : Giver;
 		public var image : Texture2D;
 		public var side : boolean;
+		public var state : State;
 
 		function Quest () {
 		}
@@ -88,12 +93,22 @@ public class OCQuests {
 				}
 			}
 
-			return completedObjectives == objectives.Length;
+			if ( objectives.Length > 0 && completedObjectives == objectives.Length ) {
+				state = State.Ended;
+			}
+			
+			return state == State.Ended;
 		}
 
 		public function set completed ( value : boolean ) {
 			for ( var i : int = 0; i < objectives.Length; i++ ) {
 				objectives[i].completed = value;
+			}
+
+			if ( value == true ) {
+				state = State.Ended;
+			} else {
+				state = State.Begun;
 			}
 		}
 
@@ -110,6 +125,20 @@ public class OCQuests {
 			if ( i > 0 && i < objectives.Length ) {
 				objectives[i].progress += amount;
 			}			
+		}
+
+		public function GetObjectiveStrings ( maxLength : int ) : String [] {
+			var strings : String [] = new String [ objectives.Length ];
+
+			for ( var i : int = 0; i < objectives.Length; i++ ) {
+				strings[i] = objectives[i].description;
+
+				if ( strings[i].Length > maxLength ) {
+					strings[i] = strings[i].Substring ( 0, maxLength ) + "...";
+				}
+			}
+
+			return strings;
 		}
 	}
 

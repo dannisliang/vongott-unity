@@ -127,6 +127,7 @@ public class SerializeOpenConvo extends OFPlugin {
 						var setQuest : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 						
 						setQuest.AddField ( "quest", node.setQuest.quest );
+						setQuest.AddField ( "objective", node.setQuest.objective );
 						setQuest.AddField ( "state", node.setQuest.state == OCQuests.Quest.State.Ended ? 0 : 1 );
 
 						n.AddField ( "setQuest", setQuest );
@@ -137,6 +138,8 @@ public class SerializeOpenConvo extends OFPlugin {
 						var getQuest : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 						
 						getQuest.AddField ( "quest", node.getQuest.quest );
+						getQuest.AddField ( "objective", node.getQuest.objective );
+						getQuest.AddField ( "completed", node.getQuest.completed );
 
 						n.AddField ( "getQuest", getQuest );
 						
@@ -300,6 +303,7 @@ public class SerializeOpenConvo extends OFPlugin {
 						var setQuest : OCSetQuest = new OCSetQuest ();
 
 						setQuest.quest = node.GetField ( "setQuest" ).GetField ( "quest" ).str;
+						setQuest.objective = node.GetField ( "setQuest" ).GetField ( "objective" ).n;
 						var state : int = node.GetField ( "setQuest" ).GetField ( "state" ).n;
 						setQuest.state = state;
 
@@ -311,6 +315,8 @@ public class SerializeOpenConvo extends OFPlugin {
 						var getQuest : OCGetQuest = new OCGetQuest ();
 
 						getQuest.quest = node.GetField ( "getQuest" ).GetField ( "quest" ).str;
+						getQuest.objective = node.GetField ( "getQuest" ).GetField ( "objective" ).n;
+						getQuest.completed = node.GetField ( "getQuest" ).GetField ( "completed" ).b;
 
 						n.getQuest = getQuest;
 

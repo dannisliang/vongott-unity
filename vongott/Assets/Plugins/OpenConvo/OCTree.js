@@ -372,9 +372,12 @@ public class OCGetFlag {
 
 public class OCSetQuest {
 	public var quest : String;
+	public var objective : int;
 	public var state : OCQuests.Quest.State;
 }
 
 public class OCGetQuest {
 	public var quest : String;
+	public var objective : int;
+	public var completed : boolean;
 }

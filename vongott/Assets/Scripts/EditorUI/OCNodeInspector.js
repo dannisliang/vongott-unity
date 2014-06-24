@@ -16,6 +16,17 @@ public class OCNodeInspector extends OEComponentInspector {
 	override function Inspector () {
 		if ( !node ) { return; }
 
+		var loadedQuests : String[] = new String[0];
+		var questEditor : OCQuestEditor = OCQuestEditor.GetInstance ();
+
+		if ( questEditor ) {
+			loadedQuests = new String [questEditor.loadedQuests.Count];
+			
+			for ( var i : int = 0; i < loadedQuests.Length; i++ ) {
+				loadedQuests[i] = questEditor.loadedQuests[i].title;
+			}
+		}
+
 		width = 264;
 	
 		LabelField ( "ID", new Rect ( 0, 0, width / 2, 16 ) );
@@ -34,7 +45,7 @@ public class OCNodeInspector extends OEComponentInspector {
 
 		var rootNodeStrings : String [] = new String [ tree.rootNodes.Length ];
 
-		for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
+		for ( i = 0; i < rootNodeStrings.Length; i++ ) {
 			rootNodeStrings[i] = i.ToString ();
 		}
 
@@ -159,12 +170,54 @@ public class OCNodeInspector extends OEComponentInspector {
 				break;
 			
 			case OCNodeType.SetQuest:
-				node.setQuest.quest = TextField ( "Quest", node.setQuest.quest );
-				node.setQuest.state = Popup ( "State", node.setQuest.state, System.Enum.GetNames ( OCQuests.Quest.State ) );
+				if ( loadedQuests.Length > 0 ) {
+					var questIndex : int = 0;
+
+					for ( questIndex = loadedQuests.Length - 1; questIndex > 0; questIndex-- ) {
+						if ( node.setQuest.quest == loadedQuests[questIndex] ) {
+							break;
+						}
+					}
+
+					node.setQuest.quest = loadedQuests [ Popup ( "Quest", questIndex, loadedQuests ) ];
+					
+					var quest : OCQuests.Quest = questEditor.loadedQuests[questIndex];
+
+					if ( quest.objectives.Length > 0 ) {
+						node.setQuest.objective = Popup ( "Objective", node.setQuest.objective, quest.GetObjectiveStrings ( 15 ) );
+					}
+					
+					node.setQuest.state = Popup ( "Quest state", node.setQuest.state, System.Enum.GetNames ( OCQuests.Quest.State ) );
+				
+				} else {
+					LabelField ( "You need to load a set of quests in the quest editor first." );
+
+				}
 				break;
 			
 			case OCNodeType.GetQuest:
-				node.getQuest.quest = TextField ( "Quest", node.getQuest.quest );
+				if ( loadedQuests.Length > 0 ) {
+					for ( questIndex = loadedQuests.Length - 1; questIndex > 0; questIndex-- ) {
+						if ( node.getQuest.quest == loadedQuests[questIndex] ) {
+							break;
+						}
+					}
+					
+					node.getQuest.quest = loadedQuests [ Popup ( "Quest", questIndex, loadedQuests ) ];
+					
+					quest = questEditor.loadedQuests[questIndex];
+
+					if ( quest.objectives.Length > 0 ) {
+						node.getQuest.objective = Popup ( "Objective", node.getQuest.objective, quest.GetObjectiveStrings ( 15 ) );
+					}
+
+					node.getQuest.completed = Toggle ( "Completed", node.getQuest.completed );
+				
+				} else {
+					LabelField ( "You need to load a set of quests in the quest editor first." );
+
+				}
+
 				break;
 						
 			case OCNodeType.End:

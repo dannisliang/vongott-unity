@@ -1,6 +1,6 @@
 #pragma strict
 
-public class QuestEditor extends OGPage {
+public class OCQuestEditor extends OGPage {
 	private class ObjectiveContainer {
 		public var fldDescription : OGTextField;
 		public var fldGoal : OGTextField;
@@ -50,11 +50,21 @@ public class QuestEditor extends OGPage {
 	public var tbxSide : OGTickBox;
 	public var fldXP : OGTextField;
 	public var objectives : OGScrollView;
+	public var loadedQuests : List.< OCQuests.Quest > = new List.< OCQuests.Quest > ();
 
 	private var savePath : String;
-	private var loadedQuests : List.< OCQuests.Quest > = new List.< OCQuests.Quest > ();
 	private var editingQuest : int = 0;
 	private var objectiveContainers : List.< ObjectiveContainer > = new List.< ObjectiveContainer > ();
+
+	private static var instance : OCQuestEditor;
+
+	public static function GetInstance () : OCQuestEditor {
+		return instance;
+	}
+
+	public function Awake () {
+		instance = this;
+	}
 
 	override function UpdatePage () {
 		if ( editingQuest >= 0 && editingQuest < loadedQuests.Count ) {
@@ -74,6 +84,10 @@ public class QuestEditor extends OGPage {
 
 			for ( var i : int = 0; i < objectiveContainers.Count; i++ ) {
 				var container : ObjectiveContainer = objectiveContainers[i];
+
+				if ( container.goal < 1 ) {
+					container.fldGoal.text = "1";
+				}
 
 				var objective : OCQuests.Objective = new OCQuests.Objective ( container.description, container.goal );
 

@@ -179,7 +179,7 @@ class GameCore extends MonoBehaviour {
 			if ( properties.HasField ( "quests" ) ) {
 				var jsonQuests : JSONObject = OFReader.LoadFile ( Application.dataPath + "/Story/Quests/" + properties.GetField ( "quests" ).str + ".quests" );
 
-				GetQuestManager().potentialQuests = QuestEditor.LoadQuestsFromJSON ( jsonQuests ).ToArray ();		
+				GetQuestManager().potentialQuests = OCQuestEditor.LoadQuestsFromJSON ( jsonQuests ).ToArray ();		
 			}
 		}
 

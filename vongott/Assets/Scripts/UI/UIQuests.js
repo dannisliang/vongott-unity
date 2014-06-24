@@ -80,7 +80,6 @@ class UIQuests extends OGPage {
 	override function StartPage () {
 		StartCoroutine ( Populate () );
 		SelectActiveQuest ();
-		GameCore.GetInstance().SetPause ( true );
 		GameCore.GetInstance().SetControlsActive ( false );
 	}
 	
