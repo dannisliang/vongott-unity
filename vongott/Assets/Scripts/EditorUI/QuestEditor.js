@@ -84,6 +84,34 @@ public class QuestEditor extends OGPage {
 		}
 	}
 
+	public static function LoadQuestsFromJSON ( json : JSONObject ) : List.< OCQuests.Quest > {
+		var quests : List.< OCQuests.Quest > = new List.< OCQuests.Quest > ();
+
+		for ( var i : int = 0; i < json.list.Count; i++ ) {
+			var q : JSONObject = json.list[i];
+
+			var quest : OCQuests.Quest = new OCQuests.Quest ();
+			quest.title = q.GetField ( "title" ).str;
+			quest.description = q.GetField ( "description" ).str;
+			quest.xp = q.GetField ( "xp" ).n;
+			quest.side = q.GetField ( "side" ).b;
+
+			var tmp : List.< OCQuests.Objective > = new List.< OCQuests.Objective > ();
+
+			for ( var o : int = 0; o < q.GetField ( "objectives" ).list.Count; o++ ) {
+				var objective : JSONObject = q.GetField ( "objectives" ).list[o];
+
+				tmp.Add ( new OCQuests.Objective ( objective.GetField ( "description" ).str, objective.GetField ( "goal" ).n ) );
+			}
+
+			quest.objectives = tmp.ToArray ();
+
+			quests.Add ( quest );
+		}
+
+		return quests;
+	}
+
 	public function Open () {
 		var fileBrowser : OEFileBrowser = OEWorkspace.GetInstance().fileBrowser;
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
@@ -95,29 +123,7 @@ public class QuestEditor extends OGPage {
 			
 			var json : JSONObject = OFReader.LoadFile ( savePath );
 
-			popSwitch.options = new String [json.list.Count];
-
-			for ( var i : int = 0; i < json.list.Count; i++ ) {
-				var q : JSONObject = json.list[i];
-
-				var quest : OCQuests.Quest = new OCQuests.Quest ();
-				quest.title = q.GetField ( "title" ).str;
-				quest.description = q.GetField ( "description" ).str;
-				quest.xp = q.GetField ( "xp" ).n;
-				quest.side = q.GetField ( "side" ).b;
-
-				var tmp : List.< OCQuests.Objective > = new List.< OCQuests.Objective > ();
-
-				for ( var o : int = 0; o < q.GetField ( "objectives" ).list.Count; o++ ) {
-					var objective : JSONObject = q.GetField ( "objectives" ).list[o];
-
-					tmp.Add ( new OCQuests.Objective ( objective.GetField ( "description" ).str, objective.GetField ( "goal" ).n ) );
-				}
-
-				quest.objectives = tmp.ToArray ();
-
-				loadedQuests.Add ( quest );
-			}
+			loadedQuests = LoadQuestsFromJSON ( json );
 
 			SelectQuest ( 0 );
 		};
