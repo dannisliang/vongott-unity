@@ -62,8 +62,20 @@ public class OCQuestEditor extends OGPage {
 		return instance;
 	}
 
-	public function Awake () {
+	public function Init () {
 		instance = this;
+	
+		if ( OEWorkspace.GetInstance().settings.autoLoadLastMap ) {
+			savePath = PlayerPrefs.GetString ( "OCQuestEditor.savePath" );
+
+			if ( !String.IsNullOrEmpty ( savePath ) ) {
+				var json : JSONObject = OFReader.LoadFile ( savePath );
+			
+				loadedQuests = LoadQuestsFromJSON ( json );
+
+				SelectQuest ( 0 );
+			}
+		}
 	}
 
 	override function UpdatePage () {
@@ -173,6 +185,8 @@ public class OCQuestEditor extends OGPage {
 			}
 
 			OFWriter.SaveFile ( json, savePath );
+
+			PlayerPrefs.SetString ( "OCQuestEditor.savePath", savePath );
 
 		} else {
 			SaveAs ();

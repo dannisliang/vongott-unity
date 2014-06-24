@@ -69,7 +69,8 @@ public class OEWorkspace extends MonoBehaviour {
 	public var currentMap : String = "";
 	public var currentSavePath : String;
 	public var eventHandler : GameObject;
-	
+	public var initObjects : GameObject [];
+
 	@HideInInspector public var preferredParents : PreferredParent[];
 	public var metaParent : Transform;
 	public var skydomeParent : Transform;
@@ -681,6 +682,22 @@ public class OEWorkspace extends MonoBehaviour {
 	
 		initCamPos = cam.transform.position;
 		initCamRot = cam.transform.rotation;
+
+		for ( var go : GameObject in initObjects ) {
+			if ( go ) {
+				var wasInactive : boolean = !go.activeSelf;
+
+				if ( wasInactive ) {
+					go.SetActive ( true );
+				}
+
+				go.SendMessage ( "Init", SendMessageOptions.DontRequireReceiver );
+			
+				if ( wasInactive ) {
+					go.SetActive ( false );
+				}
+			}
+		}
 
 		if ( settings.autoLoadLastMap ) {
 			yield WaitForEndOfFrame ();
