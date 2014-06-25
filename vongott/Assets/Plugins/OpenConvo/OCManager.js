@@ -84,7 +84,6 @@ public class OCManager extends MonoBehaviour {
 		}
 
 		// With audio
-		// ^ Play
 		if ( speaker.gameObject.audio && node.speak.lines[node.speak.index].audio ) {
 			speaker.gameObject.audio.clip = node.speak.lines[node.speak.index].audio;
 			speaker.gameObject.audio.loop = false;
@@ -93,7 +92,7 @@ public class OCManager extends MonoBehaviour {
 	
 			duration = speaker.gameObject.audio.clip.length;
 
-		// No audio
+		// Without audio
 		} else {
 			// Estimate duration
 			duration = node.speak.lines[node.speak.index].text.Length / 10;
@@ -219,7 +218,7 @@ public class OCManager extends MonoBehaviour {
 		} else if ( node && node.speak ) {
 			eventHandler.OnSetSpeaker ( speaker, node.speak );
 			
-			if ( node.speak.lines.Length == 1 || node.speak.smalltalk ) {
+			if ( !node.speak.choice ) {
 				StartCoroutine ( PlayLineAudio ( node ) );
 				
 				if ( node.speak.smalltalk ) {
@@ -245,7 +244,16 @@ public class OCManager extends MonoBehaviour {
 	}
 
 	public function NextNode () {
-		NextNode ( 0 );
+		var rootNode : OCRootNode = tree.rootNodes[tree.currentRoot];
+		var node : OCNode = rootNode.GetNode ( currentNode );
+		
+		if ( node.speak && node.speak.choice ) {
+			NextNode ( node.speak.index );
+		
+		} else {
+			NextNode ( 0 );
+
+		}
 	}
 
 	public function NextNode ( i : int ) {
@@ -255,7 +263,7 @@ public class OCManager extends MonoBehaviour {
 		var node : OCNode = rootNode.GetNode ( currentNode );
 
 		// Force output 0 on smalltalk nodes, just in case
-		if ( node.speak.smalltalk ) {
+		if ( node.speak && node.speak.smalltalk ) {
 			i = 0;
 		}
 

@@ -327,6 +327,10 @@ public class OCSpeak {
 		lines = [ new Line ( "", null, "" ) ];
 	}
 
+	public function get choice () : boolean {
+		return !smalltalk && lines.Length > 1;
+	}
+
 	public function RemoveLine ( i : int ) {
 		var tmp : List.< Line > = new List.< Line > ( lines );
 
