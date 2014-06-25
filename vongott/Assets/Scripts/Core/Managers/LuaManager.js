@@ -36,23 +36,23 @@ public class LuaManager extends MonoBehaviour {
 	}
 
 	// Quests
-	public function CompleteQuest ( title : String ) {
+	public function ProgressObjective ( title : String, i : int, amount : int ) {
 		var quest : OCQuests.Quest = GameCore.GetQuestManager ().GetUserQuest ( title );
 
+		i--;
+
 		if ( quest ) {
-			quest.completed = true;
+			quest.ProgressObjective ( i, amount );
 		}
 	}
-
+	
 	public function CompleteObjective ( title : String, i : int ) {
 		var quest : OCQuests.Quest = GameCore.GetQuestManager ().GetUserQuest ( title );
 
 		i--;
 
 		if ( quest ) {
-			if ( i >= 0 && i < quest.objectives.Length ) {
-				quest.objectives[i].completed = true;
-			}
+			quest.CompleteObjective ( i );
 		}
 	}
 }

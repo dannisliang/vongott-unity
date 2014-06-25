@@ -3,6 +3,7 @@
 public class OCEventHandler extends MonoBehaviour {
 	public function OnConversationEnd () {}
 	public function OnConversationStart ( tree : OCTree ) {}
+	public function OnObjectiveCompleted ( quest : OCQuests.Quest, i : int ) {}
 	public function OnSetSpeaker ( speaker : OCSpeaker, node : OCSpeak ) {}
 	public function OnSelectOption ( i : int ) {}
 	

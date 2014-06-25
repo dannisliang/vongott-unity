@@ -200,7 +200,7 @@ public class OCQuestEditor extends OGPage {
 				json.Add ( q );
 			}
 
-			OFWriter.SaveFile ( json, savePath );
+			OFWriter.SaveFile ( json, Application.dataPath + savePath );
 
 			PlayerPrefs.SetString ( "OCQuestEditor.savePath", savePath );
 

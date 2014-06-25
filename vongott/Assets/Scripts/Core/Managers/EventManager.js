@@ -18,6 +18,10 @@ class EventManager extends OCEventHandler {
 		UIConversation.OnSelectOption ( i );
 	}
 
+	public function OnObjectiveCompleted ( quest : OCQuests.Quest, i : int ) {
+		
+	}
+
 	public function OnSetSpeaker ( speaker : OCSpeaker, node : OCSpeak ) {
 		this.speaker = speaker;
 		var strings : String [] = new String [ node.lines.Length ];

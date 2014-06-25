@@ -124,7 +124,23 @@ public class OCQuests {
 		public function ProgressObjective ( i : int, amount : int ) {
 			if ( i > 0 && i < objectives.Length ) {
 				objectives[i].progress += amount;
+
+				if ( objectives[i].progress >= objectives[i].goal ) {
+					CompleteObjective ( i );
+				}
 			}			
+		}
+
+		public function CompleteObjective ( i : int ) {
+			if ( i > 0 && i < objectives.Length ) {
+				objectives[i].completed = true;
+
+				var manager : OCManager = OCManager.GetInstance();
+
+				if ( manager ) {
+					manager.eventHandler.OnObjectiveCompleted ( this, i );
+				}
+			}
 		}
 
 		public function GetObjectiveStrings ( maxLength : int ) : String [] {
