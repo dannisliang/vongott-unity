@@ -12,7 +12,7 @@ class OESkydome extends MonoBehaviour {
 			cam = new GameObject ( "SkyboxCamera" ).AddComponent.< Camera > ();
 			cam.transform.parent = this.transform;
 		
-		} else {
+		} else if ( Camera.main ) {
 			cam.transform.rotation = Camera.main.transform.rotation;
 
 			if ( target ) {

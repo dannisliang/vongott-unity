@@ -27,7 +27,7 @@ public class ScriptEditor extends OGPage {
 		target = selected.gameObject.AddComponent.< LuaScriptableObject > ();
 		selected.SetField ( target );
 
-		target.luaString = "local self\nlocal vg\n\nfunction start ( object, engine )\n   self = object\n   vg = engine\nend\n\nfunction update ( dt )\n\nend";
+		target.luaString = "local self\nlocal vg\n\nfunction Start ( object, engine )\n   self = object\n   vg = engine\nend\n\nfunction Update ( dt )\n\nend";
 
 		StartPage ();
 	}

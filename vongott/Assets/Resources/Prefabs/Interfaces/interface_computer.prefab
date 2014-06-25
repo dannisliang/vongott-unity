@@ -84,12 +84,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 2
+  - typeIndex: 6
     name: Transform
     component: {fileID: 400000}
-  - typeIndex: 5
+  - typeIndex: 7
     name: Computer
     component: {fileID: 11400004}
+  assetLinks: []
   id: 
   prefabPath: Prefabs/Interfaces/interface_computer
   exportPath: 
@@ -105,24 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domain: mj12subnet
-  validAccounts:
-  - username: jmanderley
-    password: knight_killer
-    messages: "00:15 - somedude:\r\nHey there!\r\n\r\n00:17 - jmanderley:\r\nWhy hello!\r\n\r\n00:18
-      - somedude:\r\nYou wanna see my penis?\r\n\r\n00:18 - jmanderley:\r\nYou bet!\r\n\r\n00:19
-      - somedude:\r\nHere 8====D\r\n\r\n00:19 - jmanderley:\r\nWow! Good stuff, man!\r\n\r\n00:21
-      - somedude:\r\nIt's yours for 600 credits\r\n\r\n00:21 - jmanderley:\r\nThat's
-      a friggin' deal! I'll transfer 600 of government money to whoever this is..\r\n\r\n00:22
-      - jmanderley:\r\nNohing like some good old-fashioned cock\r\n\r\n00:23 - somedude:\r\nBelieve
-      it!\r\n\r\n00:24 - jmanderley:\r\nWaitaminute.. This is Alex, isn't it?\r\n\r\n00:25
-      - somedude:\r\n...\r\n\r\n00:25 - somedude:\r\nNo\r\n\r\n00:26 - jmanderley:\r\nFuck
-      you, Alex. This will be reflected in your salary.\r\n\r\n00:27 - somedude:\r\nIt
-      was worth it."
-    todoList: '- do stuff'
-    openFile: yaaay!
-    openFileName: thisfile.txt
-    wallpaper: wallpaper_debian
-    operations: []
+  validAccounts: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -1,43 +1,44 @@
 ﻿#pragma strict
 
 class Computer extends InteractiveObject {
-	public class Operation {
-		public var title : String = "Operation";
-		public var message : String = "";
-		public var object : GameObject;
-	}
-
 	public class Account {
 		public var username : String = "dude";
 		public var password : String = "sweet";
 		public var messages : String = "";
 		public var todoList : String = "";
-		public var openFile : String = "";
-		public var openFileName : String = "filename.txt";
 		public var wallpaper : String = "wallpaper_debian";
-		public var operations : List.< Operation > = new List.< Operation > ();
+		public var events : String[] = new String[0];
 	}
 	
 	public var domain : String = "domainname";
 	public var validAccounts : List.< Account > = new List.< Account > ();
-	
+
 	private var tempPos : Vector3;
 	private var tempRot : Vector3;
 	
 	private var inSession : boolean = false;
 	
-	public function ExecuteOperation ( o : Operation ) {
-		GameCore.GetInstance().SendMessage ( o.message, this, SendMessageOptions.DontRequireReceiver );
+	public function ExecuteEvent ( msg : String ) {
+		this.gameObject.SendMessage ( "Event", msg, SendMessageOptions.DontRequireReceiver );
 	}
 
-	public function AddAccount () {
-		validAccounts.Add ( new Account () );
+	public function AddAccount () : Account {
+		var acc : Account = new Account ();
+		validAccounts.Add ( acc );
+
+		return acc;
+	}
+	
+	public function RemoveAccount ( i : int ) {
+		if ( validAccounts.Count > 1 ) {
+			validAccounts.RemoveAt ( i );
+		}
 	}
 	
 	public function RemoveAccount ( str : String ) {
-		for ( var acc : Account in validAccounts ) {
-			if ( str == acc.username ) {
-				validAccounts.Remove ( acc );
+		for ( var i : int = 0; i < validAccounts.Count; i++ ) {
+			if ( str == validAccounts[i].username ) {
+				RemoveAccount ( i );
 				return;
 			}	
 		}

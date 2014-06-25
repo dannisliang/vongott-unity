@@ -9,6 +9,7 @@ public class LuaScriptableObject extends MonoBehaviour {
 	private var start : LuaFunction;
 	private var update : LuaFunction;
 	private var onTrigger : LuaFunction;
+	private var onEvent : LuaFunction;
 
 	private var triggerId : String = "player";
 
@@ -18,6 +19,7 @@ public class LuaScriptableObject extends MonoBehaviour {
 		start = lua.GetFunction ( "Start" );
 		update = lua.GetFunction ( "Update" );
 		onTrigger = lua.GetFunction ( "OnTrigger" );
+		onEvent = lua.GetFunction ( "OnEvent" );
 
 		if ( start && !OEWorkspace.GetInstance() ) {
 			start.Call ( this, GameCore.GetLuaManager () );
@@ -27,6 +29,13 @@ public class LuaScriptableObject extends MonoBehaviour {
 	public function Update () {
 		if ( update && !OEWorkspace.GetInstance() ) {
 			update.Call ( Time.deltaTime );
+		}
+	}
+
+	// Event
+	public function Event ( msg : String ) {
+		if ( onEvent ) {
+			onEvent.Call ( msg );
 		}
 	}
 

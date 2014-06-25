@@ -17,16 +17,36 @@ public class ComputerInspector extends OEComponentInspector {
 		}
 
 		expandedAccount = Popup ( "Account", expandedAccount, accountNames );
+		
+		offset.y += 20;
+		
+		if ( Button ( "+", new Rect ( 0, offset.y, 24, 16 ) ) ) {
+			computer.AddAccount ();
+
+			expandedAccount = computer.validAccounts.Count - 1;
+		}
+		
+		offset.y += 20;
 
 		var acc : Computer.Account = computer.validAccounts [ expandedAccount ];
 
 		acc.username = TextField ( "Username", acc.username );
 		acc.password = TextField ( "Password", acc.password );
-		acc.messages = TextField ( "Messages", acc.messages );
-		acc.todoList = TextField ( "To-do list", acc.todoList );
-		acc.openFile = TextField ( "Open file", acc.openFile );
-		acc.openFileName = TextField ( "Open file name", acc.openFileName );
+
+		offset.y += 20;
 		
+		LabelField ( "Messages" );
+		offset.y += 20;
+		acc.messages = TextField ( "", acc.messages, new Rect ( 0, offset.y, width, 100 ) );
+		
+		offset.y += 100;
+		
+		LabelField ( "To-do list" );
+		offset.y += 20;
+		acc.todoList = TextField ( "", acc.todoList, new Rect ( 0, offset.y, width, 100 ) );
+		
+		offset.y += 120;
+
 		var wallpapers : String [] = [ "wallpaper_debian" ]; 
 		var currentWallpaper : int = 0;
 
@@ -39,12 +59,38 @@ public class ComputerInspector extends OEComponentInspector {
 
 		acc.wallpaper = wallpapers [ Popup ( "Wallpaper", currentWallpaper, wallpapers ) ];
 
-		Offset ( 0, 20 );
+		offset.y += 20;
 
-		for ( i = 0; i < acc.operations.Count; i++ ) {
-			acc.operations[i].title = TextField ( "Title", acc.operations[i].title );
-			acc.operations[i].message = TextField ( "Message", acc.operations[i].message );
-			acc.operations[i].object = ObjectField ( "Object", acc.operations[i].object, typeof ( GameObject ), OEObjectField.Target.Scene ) as GameObject;
+		LabelField ( "Events" );
+		
+		for ( i = 0; i < acc.events.Length; i++ ) {
+			acc.events[i] = TextField ( "", acc.events[i] );
+		}
+		
+		offset.y += 20;
+
+		if ( Button ( "+", new Rect ( 0, offset.y, 24, 16 ) ) ) {
+			var tmp : List.< String > = new List.< String > ( acc.events );
+			
+			tmp.Add ( "New Event" );
+
+			acc.events = tmp.ToArray ();
+		}
+		
+		if ( Button ( "-", new Rect ( 30, offset.y, 24, 16 ) ) ) {
+			tmp = new List.< String > ( acc.events );
+			
+			tmp.RemoveAt ( tmp.Count - 1 );
+
+			acc.events = tmp.ToArray ();
+		}
+		
+		offset.y += 20;
+
+		if ( Button ( "Remove account" ) ) {
+			computer.RemoveAccount ( expandedAccount );
+
+			expandedAccount = 0;
 		}
 	}
 }
