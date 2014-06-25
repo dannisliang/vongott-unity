@@ -15,16 +15,18 @@ public class LuaScriptableObject extends MonoBehaviour {
 	private var triggerId : String = "player";
 
 	public function Start () {
-		lua.DoString ( luaString );
+		if ( GameCore.running ) {
+			lua.DoString ( luaString );
 
-		start = lua.GetFunction ( "Start" );
-		update = lua.GetFunction ( "Update" );
-		onTrigger = lua.GetFunction ( "OnTrigger" );
-		onEvent = lua.GetFunction ( "OnEvent" );
-		onDestroy = lua.GetFunction ( "OnDestroy" );
+			start = lua.GetFunction ( "Start" );
+			update = lua.GetFunction ( "Update" );
+			onTrigger = lua.GetFunction ( "OnTrigger" );
+			onEvent = lua.GetFunction ( "OnEvent" );
+			onDestroy = lua.GetFunction ( "OnDestroy" );
 
-		if ( start && !OEWorkspace.GetInstance() ) {
-			start.Call ( this, GameCore.GetLuaManager () );
+			if ( start && !OEWorkspace.GetInstance() ) {
+				start.Call ( this, GameCore.GetLuaManager () );
+			}
 		}
 	}
 

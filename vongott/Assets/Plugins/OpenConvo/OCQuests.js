@@ -41,11 +41,6 @@ public class OCQuests {
 	}
 	
 	public class Quest {
-		public enum State {
-			Ended,
-			Begun
-		}
-		
 		public var title : String;
 		public var description : String;
 		public var objectives : Objective[] = new Objective[0];
@@ -53,7 +48,6 @@ public class OCQuests {
 		public var giver : Giver;
 		public var image : Texture2D;
 		public var side : boolean;
-		public var state : State;
 
 		function Quest () {
 		}
@@ -94,21 +88,16 @@ public class OCQuests {
 			}
 
 			if ( objectives.Length > 0 && completedObjectives == objectives.Length ) {
-				state = State.Ended;
+				return true;
+		
+			} else {
+				return false;
 			}
-			
-			return state == State.Ended;
 		}
 
 		public function set completed ( value : boolean ) {
 			for ( var i : int = 0; i < objectives.Length; i++ ) {
 				objectives[i].completed = value;
-			}
-
-			if ( value == true ) {
-				state = State.Ended;
-			} else {
-				state = State.Begun;
 			}
 		}
 
@@ -231,25 +220,6 @@ public class OCQuests {
 		}
 
 		return null;
-	}
-
-	public function SetQuestState ( title : String, state : Quest.State ) {
-		var quest : Quest;
-		
-		if ( state == Quest.State.Begun ) {
-			quest = GetPotentialQuest ( title );
-
-			if ( quest ) {
-				AddUserQuest ( quest );
-			}	
-		
-		} else {
-			quest = GetUserQuest ( title );
-
-			if ( quest ) {
-				quest.completed = true;
-			}
-		}
 	}
 
 	public function IsQuestCompleted ( title : String ) : boolean {

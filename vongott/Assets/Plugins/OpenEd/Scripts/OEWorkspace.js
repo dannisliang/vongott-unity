@@ -463,20 +463,22 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Add
 	public function GetPreferredParent ( obj : OFSerializedObject ) : Transform {
-		for ( var i : int = 0; i < preferredParents.Length; i++ ) {
-			if ( obj.GetComponent.< OESkydome > () ) {
-				return skydomeParent;
+		if ( obj.GetComponent.< OESkydome > () ) {
+			return skydomeParent;
 
-			} else if ( obj.prefabPath.Contains ( "Meta" ) ) {
-				return metaParent;
+		} else if ( obj.prefabPath.Contains ( "Meta" ) ) {
+			return metaParent;
 		
-			} else if ( obj.HasFieldType ( preferredParents[i].type ) ) {
-				return preferredParents[i].parent;
-			
+		} else {
+			for ( var i : int = 0; i < preferredParents.Length; i++ ) {
+				if ( obj.HasFieldType ( preferredParents[i].type ) ) {
+					return preferredParents[i].parent;
+				}
 			}
-		}
 
-		return miscParent;
+			return miscParent;
+
+		}
 	}
 	
 	public function AddLight () {

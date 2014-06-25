@@ -11,6 +11,7 @@ public enum OABehaviour {
 
 public class OACharacter extends MonoBehaviour {
 	public var isEnemy : boolean = false;
+	public var destroyOnDeath : boolean = false;
 	public var player : GameObject;
 	public var health : float = 100;
 	public var behaviour : OABehaviour = OABehaviour.Idle;
@@ -116,6 +117,10 @@ public class OACharacter extends MonoBehaviour {
 
 	public function TakeDamage ( damage : float ) {
 		health -= damage;
+
+		if ( health >= 0 ) {
+			Die ();
+		}
 	}
 
 	public function OnProjectileHit ( damage : float ) {
@@ -123,7 +128,9 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function Die () {
-		
+		if ( destroyOnDeath ) {
+			Destroy ( this.gameObject );
+		}
 	}
 
 	public function UpdateSpeakers () {

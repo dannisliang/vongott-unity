@@ -19,7 +19,7 @@ class EventManager extends OCEventHandler {
 	}
 
 	public function OnObjectiveCompleted ( quest : OCQuests.Quest, i : int ) {
-		
+		GameCore.Print ( "Objective completed: " + quest.title + " - " + i );
 	}
 
 	public function OnSetSpeaker ( speaker : OCSpeaker, node : OCSpeak ) {

@@ -55,7 +55,7 @@ class UIQuests extends OGPage {
 	public function SelectQuest ( i : int ) {
 		var manager : OCQuests = GameCore.GetQuestManager ();
 	
-		if ( i > 0  && i < manager.userQuests.Length ) {
+		if ( i >= 0  && i < manager.userQuests.Length ) {
 			var quest : OCQuests.Quest = manager.userQuests[i];
 			
 			title.text = quest.title;
