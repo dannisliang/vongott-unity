@@ -423,7 +423,7 @@ public class OEAssetLinkField extends OEField {
 	override function Destroy () {
 		MonoBehaviour.Destroy ( title.gameObject );
 		MonoBehaviour.Destroy ( button.gameObject );
-		MonoBehaviour.Destroy ( button.gameObject );
+		MonoBehaviour.Destroy ( clear.gameObject );
 	}
 	
 	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
