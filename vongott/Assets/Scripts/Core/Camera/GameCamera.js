@@ -337,7 +337,11 @@ class GameCamera extends MonoBehaviour {
 		return result;
 	}
 
+	public function ToggleFlashlight () {
+		this.GetComponent.< Light > ().enabled = !this.GetComponent.< Light > ().enabled;
+	}
 	
+
 	////////////////////
 	// Render
 	////////////////////

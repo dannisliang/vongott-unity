@@ -182,9 +182,15 @@ public class OCManager extends MonoBehaviour {
 					}
 				}
 
-				var objective : OCQuests.Objective = quest.objectives [ node.setQuest.objective ];
-				objective.completed = node.setQuest.completed;
-			
+				if ( quest ) {
+					var objective : OCQuests.Objective = quest.objectives [ node.setQuest.objective ];
+					objective.completed = node.setQuest.completed;
+				
+				} else {
+					Debug.LogWarning ( "OCManager | Quest is null!" );
+
+				}
+
 				nextNode = node.connectedTo[0];
 				break;
 			

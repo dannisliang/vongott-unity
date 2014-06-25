@@ -31,6 +31,10 @@ class EventManager extends OCEventHandler {
 		}
 		
 		if ( node.smalltalk ) {
+			if ( OGRoot.GetInstance().currentPage.pageName == "Conversation" ) {
+				OnConversationEnd ();
+			}
+
 			UIHUD.GetInstance().ShowNotification ( strings[node.index] );
 
 		} else {

@@ -45,6 +45,10 @@ class InputManager extends MonoBehaviour {
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha0 ) ) { 
 			//	InventoryManager.GetInstance().ToggleStash ( 9 );
 
+			// Flashlight
+			} else if ( Input.GetKeyDown ( KeyCode.F ) ) {
+				GameCamera.GetInstance().ToggleFlashlight ();
+
 			// Menu shortcuts
 			} else if ( Input.GetKeyDown(KeyCode.I) ) {
 				OGRoot.GetInstance().GoToPage ( "Inventory" );

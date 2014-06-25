@@ -15930,7 +15930,8 @@ GameObject:
   - 114: {fileID: 459494432}
   - 82: {fileID: 459494435}
   - 114: {fileID: 459494434}
-  - 82: {fileID: 459494433}
+  - 108: {fileID: 459494433}
+  - 82: {fileID: 459494436}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: MainCamera
@@ -15944,8 +15945,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 100f22971a4bfab42a343b897d339f6e, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 459494425}
-  m_LocalRotation: {x: 0, y: .97223419, z: 0, w: .234010354}
-  m_LocalPosition: {x: -21.2739029, y: 1.55085945, z: 18.8648891}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -16064,20 +16065,70 @@ MonoBehaviour:
   allowMouseInputX: 1
   allowMouseInputY: 1
   shakeOffset: {x: 0, y: 0, z: 0}
---- !u!82 &459494433
+--- !u!108 &459494433
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 459494425}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 60
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
+--- !u!114 &459494434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: 100f22971a4bfab42a343b897d339f6e,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 459494425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8a39445c66e4bf2af929518705ebd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  channel1: {fileID: 459494436}
+  channel2: {fileID: 459494435}
+  fadeDelta: .25
+--- !u!82 &459494435
 AudioSource:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8200000, guid: 100f22971a4bfab42a343b897d339f6e,
+  m_PrefabParentObject: {fileID: 8200002, guid: 100f22971a4bfab42a343b897d339f6e,
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 459494425}
   m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Priority: 128
   DopplerLevel: 1
@@ -16123,35 +16174,19 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!114 &459494434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: 100f22971a4bfab42a343b897d339f6e,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 459494425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e8a39445c66e4bf2af929518705ebd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  channel1: {fileID: 459494433}
-  channel2: {fileID: 459494435}
-  fadeDelta: .25
---- !u!82 &459494435
+--- !u!82 &459494436
 AudioSource:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8200002, guid: 100f22971a4bfab42a343b897d339f6e,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 459494425}
   m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Priority: 128
   DopplerLevel: 1

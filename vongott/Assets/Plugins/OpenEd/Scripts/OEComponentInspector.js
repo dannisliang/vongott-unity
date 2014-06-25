@@ -400,43 +400,56 @@ public class OEPointField extends OEField {
 
 public class OEAssetLinkField extends OEField {
 	public var title : OGLabel;
-	public var popup : OGPopUp;
+	public var button : OGButton;
+	public var clear : OGButton; 
 
 	private var target : OFSerializedObject;
 	private var object : Object;
 
 	function OEAssetLinkField ( parent : Transform ) {
 		title = new GameObject ( "lbl_AssetLink" ).AddComponent.< OGLabel > ();
-		popup = new GameObject ( "btn_AssetLink" ).AddComponent.< OGPopUp > ();
+		button = new GameObject ( "btn_AssetLink" ).AddComponent.< OGButton > ();
+		clear = new GameObject ( "btn_AssetLink" ).AddComponent.< OGButton > ();
 
 		title.transform.parent = parent;
-		popup.transform.parent = parent;
+		button.transform.parent = parent;
+		clear.transform.parent = parent;
 		
 		title.ApplyDefaultStyles ();
-		popup.ApplyDefaultStyles ();
+		button.ApplyDefaultStyles ();
+		clear.ApplyDefaultStyles ();
 	}
 
 	override function Destroy () {
 		MonoBehaviour.Destroy ( title.gameObject );
-		MonoBehaviour.Destroy ( popup.gameObject );
+		MonoBehaviour.Destroy ( button.gameObject );
+		MonoBehaviour.Destroy ( button.gameObject );
 	}
 	
 	override function Update ( text : String, pos : Vector2, scale : Vector2 ) {
 		title.text = text;
+		clear.text = "x";
+		clear.tint = Color.red;
 
 		title.tint.a = enabled ? 1.0 : 0.5;
-		popup.tint.a = enabled ? 1.0 : 0.5;
-		popup.isDisabled = !enabled;
+		button.tint.a = enabled ? 1.0 : 0.5;
+		button.isDisabled = !enabled;
+		clear.tint.a = enabled ? 1.0 : 0.5;
+		clear.isDisabled = !enabled;
 
 		if ( !String.IsNullOrEmpty ( text ) ) {
 			title.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
 			title.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
-			popup.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
-			popup.transform.localScale = new Vector3 ( scale.x / 2, scale.y, 1 );
+			button.transform.localPosition = new Vector3 ( pos.x + scale.x / 2, pos.y, 0 );
+			button.transform.localScale = new Vector3 ( scale.x / 2 - ( scale.y + 5 ), scale.y, 1 );
+			clear.transform.localPosition = new Vector3 ( pos.x + scale.x - scale.y, pos.y, 0 );
+			clear.transform.localScale = new Vector3 ( scale.y, scale.y, 1 );
 		
 		} else {
-			popup.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
-			popup.transform.localScale = new Vector3 ( scale.x, scale.y, 1 );
+			button.transform.localPosition = new Vector3 ( pos.x, pos.y, 0 );
+			button.transform.localScale = new Vector3 ( scale.x - ( scale.y + 5 ), scale.y, 1 );
+			clear.transform.localPosition = new Vector3 ( pos.x + scale.x - scale.y, pos.y, 0 );
+			clear.transform.localScale = new Vector3 ( scale.y, scale.y, 1 );
 		}
 	}
 
@@ -479,30 +492,20 @@ public class OEAssetLinkField extends OEField {
 			}
 		}
 		
-		popup.title = objectName;
-		popup.options = [ "Load resource...", "Load file...", "(None)" ];
-
-		if ( popup.selectedOption == "Load resource..." ) {
-			popup.selectedOption = "";
+		button.text = objectName;	
+		button.func = function () {
 			OEWorkspace.GetInstance().PickResource ( function ( path : String ) {
 				this.target.SetAssetLink ( linkName, path, path.Contains ( ">" ) ? OFAssetLink.Type.Bundle : OFAssetLink.Type.Resource );
 			}, sysType, true );
-		
-		} else if ( popup.selectedOption == "Load file..." ) {
-			popup.selectedOption = "";
-			OEWorkspace.GetInstance().PickFile ( function ( path : String ) {
-				this.target.SetAssetLink ( linkName, path, OFAssetLink.Type.File );
-			}, strType );
+		};
 
-		} else if ( popup.selectedOption == "(None)" ) {
-			popup.selectedOption = "";
+		clear.func = function () {
 			object == null;
 
 			if ( assetLink ) {
 				assetLink.Reset ();
 			}
-				
-		}
+		};
 		
 		return Out ();
 	}
