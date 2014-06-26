@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 public class VongottMenuItems extends MonoBehaviour {
+	#if UNITY_EDITOR
 	// Scenes
 	@MenuItem ( "Vongott/Scenes/Editor" )
 	static public function GoToEditor () {
@@ -16,4 +17,5 @@ public class VongottMenuItems extends MonoBehaviour {
 	static public function GoToMainMenu () {
 		EditorApplication.OpenScene ( "Assets/Scenes/main_menu.unity" );
 	}
+	#endif
 }

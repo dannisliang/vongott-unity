@@ -247,10 +247,10 @@ public class OEWorkspace extends MonoBehaviour {
 		fileBrowser.browseMode = OEFileBrowser.BrowseMode.Open;
 		fileBrowser.filter = ".map";
 		fileBrowser.callback = function ( file : FileInfo ) {
-			currentSavePath = file.FullName;
+			currentSavePath = file.FullName.Replace ( "\\", "/" ).Replace ( Application.dataPath, "" );
 			PlayerPrefs.SetString ( "OEWorkspace.currentSavePath", currentSavePath );
 			PlayerPrefs.Save ();
-			var json : JSONObject = OFReader.LoadFile ( currentSavePath );
+			var json : JSONObject = OFReader.LoadFile ( Application.dataPath + currentSavePath );
 			StartCoroutine ( LoadMap ( json ) );
 		};
 		fileBrowser.sender = "Home";
@@ -273,7 +273,7 @@ public class OEWorkspace extends MonoBehaviour {
 			
 			json.AddField ( "info", info );
 
-			OFWriter.SaveFile ( json, currentSavePath );
+			OFWriter.SaveFile ( json, Application.dataPath + currentSavePath );
 		
 		}
 	}
