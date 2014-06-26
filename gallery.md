@@ -28,7 +28,7 @@ galleries:
     - name: "editor"
       text: "Vongott Editor"
     - name: "main_menu"
-      text: "Actor properties"
+      text: "Main menu"
     - name: "properties_interfaces"
       text: "Interface properties"
     - name: "shield"
