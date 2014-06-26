@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog-post
 title: "Conversations"
 author: "mrzapp"
 author_url: "http://jeppezapp.com"

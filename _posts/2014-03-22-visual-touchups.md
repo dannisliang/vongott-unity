@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog-post
 title: "Visual touchups"
 author: "mrzapp"
 author_url: "http://jeppezapp.com"

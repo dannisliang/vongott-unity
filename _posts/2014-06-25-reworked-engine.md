@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog-post
 title: "Reworked Engine"
 author: "mrzapp"
 author_url: "http://jeppezapp.com"

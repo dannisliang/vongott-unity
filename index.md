@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog-post
 title: News
 index: 0
 postlist: true

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% include head.html %}
+	<body>
+		{% include nav.html %}
+    		<div class="container">
+        		<div class="row">
+            			<div class="col-lg-8">
+					{{ content }}
+            			</div>
+
+				<div class="col-lg-4">
+					<div class="well">
+						{% for post in site.posts %}
+							<p>
+								{{ post.date | date_to_string }}
+								<br / >
+								<a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
+							</p>
+						{% endfor %}
+					</div>
+				</div>
+        		</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>	
+	</body>
+</html>

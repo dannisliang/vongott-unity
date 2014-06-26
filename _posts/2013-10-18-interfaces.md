@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog-post
 title: "Interfaces, game events and upgrade effects"
 author: "mrzapp"
 author_url: "http://jeppezapp.com"

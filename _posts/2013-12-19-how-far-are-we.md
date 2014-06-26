@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog-post
 title: "How far are we?"
 author: "mrzapp"
 author_url: "http://jeppezapp.com"

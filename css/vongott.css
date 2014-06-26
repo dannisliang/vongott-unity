@@ -1,70 +1,81 @@
-a, a:hover, h1, h2, h3, h4, h5, h6 {
-	color: #fff;	
-}
-
 body {
-	background-image: none;
-	background-color: #000000;
-	color: #c8c8c8;
+	background-color: #000;
+	color: #efefef;
 }
 
-body > .container {
-	padding: 0px;
-	max-width: 1000px;
-	background: #000000;
+footer {
+	margin: 50px 0;
 }
 
-.content {
-	padding: 10px;
-	display: inline-block;
-	border-left: 1px solid #000000;
+.well {
+	background-color: #222;
+	border-color: #111;
+	-webkit-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75);
 }
 
-.postlist {
-	padding: 10px;
-	width: 20%;
-	float: left;
-	overflow: auto;
-	border-right: 1px solid #222;
+.container > .row > .col-lg-8 img {
+	max-width: 100%;
+	margin: 1em auto;
 }
 
-.navigation {
-	max-width: 1000px;
-	height: 128px;
-	padding-top: 100px;
-	margin: 50px auto 10px auto;
-	text-align: center;
+.navbar > .container {
 	background-image: url('../images/site/header.jpg');
+	background-position: top center;
 	background-repeat: no-repeat;
-	background-position: center top;
+
+	height: 160px;
+	margin-top: 20px;
 }
 
-.nav-pills {
-	width: auto;
-	display: inline-block;
+.navbar > .container .nav {
+	width: 100%;
+	display: flex;
+	position: relative;
+	top: 100px;
 }
 
-.nav-pills > li > a {
-	font-size: 16px;
-	font-family: "Titillium Web", Helvetica, Arial, sans-serif;
-	margin: 5px;
-	width: auto;
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover {
+	background-color: transparent;
+}
+
+.navbar > .container li {
+	flex: 1;
+	text-align: center;
+}
+
+.navbar > .container li > a {
 	text-transform: uppercase;
-	color: #CCC;
-	text-shadow: 2px 2px 0px #000;
 }
 
-@media (min-width: 768px) {
-  .nav-pills > li > a {
-    width: 80px;
-  }
+.navbar-inverse {
+	background-color: transparent;
 }
 
-.nav-pills > li > a:hover, .nav-pills > li.active > a:hover {
-	background: none;
-	color: #FFFFFF;
+.modal-body > img {
+	max-width: 100%;
+	max-height: 100%;
 }
 
-.nav-pills > li.active > a {
-    background: none;
+.modal-content {
+	background-color: #222;
+}
+
+.modal-body {
+	text-align: center;
+}
+
+.modal-dialog {
+	width: 80%;
+}
+
+.close {
+	color: #fff;
+}
+
+.modal-footer > .btn-default {
+	color: #efefef;
+	border-color: #111;
+	background-color: #111;
 }

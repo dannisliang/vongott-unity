@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog-post
 title: "UI paradigm and upgrades"
 author: "mrzapp"
 author_url: "http://jeppezapp.com"
