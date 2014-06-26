@@ -26,7 +26,7 @@ It is now also possible to add scripts to objects in the editor. The scripting l
 
 ![]({{ site.url }}{{ img }}script_editor.jpg)
 
-Creating custom inspectors for all the dirrent object classes is very easy now, even moreso than the ones built into Unity.
+Creating custom inspectors for all the different object classes is very easy now, even moreso than the ones built into Unity.
 
 ![]({{ site.url }}{{ img }}custom_inspectors.jpg)
 
