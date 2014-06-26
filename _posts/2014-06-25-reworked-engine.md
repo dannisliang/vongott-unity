@@ -42,7 +42,7 @@ Since the focus has been on reworking the engine lately, the terminal map has on
 
 ### Gameplay
 
-Computers can now use evens based on Lua scripting.
+Computers can now use events based on Lua scripting.
 
 ![]({{ site.url }}{{ img }}computer_events.jpg)
 
