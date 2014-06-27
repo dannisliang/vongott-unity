@@ -1,5 +1,51 @@
 ﻿#pragma strict
 
+public class OEWidget {
+	public var type : String;
+	public var material : Material;
+	@NonSerialized public var transforms : Transform [] = new Transform [0];
+
+	public function Refresh ( allObjects : OFSerializedObject [] ) {
+		var tmp : List.< Transform > = new List.< Transform > ();
+
+		for ( var i : int = 0; i < allObjects.Length; i++ ) {
+			if ( allObjects[i].GetComponent ( type ) ) {
+				tmp.Add ( allObjects[i].transform );
+			}
+		}
+
+		transforms = tmp.ToArray ();
+	}
+
+	public function Draw ( cam : Transform ) {
+		GL.Begin ( GL.QUADS );
+		material.SetPass ( 0 );
+		
+		for ( var i : int = 0; i < transforms.Length; i++ ) {
+			if ( transforms[i] ) {
+				var t : Transform = transforms[i];
+				var right : Vector3 = cam.right * 0.25;
+				var left : Vector3  = -right;
+				var up : Vector3 = cam.up * 0.25;
+				var down : Vector3 = -up;
+
+				if ( t != cam ) {
+					GL.TexCoord2 ( 0, 0 );
+					GL.Vertex ( t.position + left + down );
+					GL.TexCoord2 ( 0, 1 );
+					GL.Vertex ( t.position + left + up );
+					GL.TexCoord2 ( 1, 1 );
+					GL.Vertex ( t.position + right + up );
+					GL.TexCoord2 ( 1, 0 );
+					GL.Vertex ( t.position + right + down );
+				}
+			}
+		}
+
+		GL.End ();
+	}
+}
+
 public class OECamera extends MonoBehaviour {
 	private class Materials {
 		public var grid : Material;
@@ -14,15 +60,14 @@ public class OECamera extends MonoBehaviour {
 	public var rotateSensitivity : Vector2 = new Vector2 ( 5, 5 );
 	public var panSensitivity : Vector2 = new Vector2 ( 0.2, 0.2 );
 	public var materials : Materials;
-	public var lights : Light [] = new Light [0];
-	public var audioSources : AudioSource [] = new AudioSource [0];
 	public var wireframe : boolean = false;
-	public var showGizmos : boolean = true;
+	public var showWidgets : boolean = true;
 	public var defaultAmbientLight : Color = new Color ( 0.2, 0.2, 0.2, 1.0 );
 	public var dynamicLights : boolean = false;
 	public var nearClipSlider : OGSlider;
 	public var flyMode : boolean = false;
-	
+	public var widgets : OEWidget [];
+
 	@NonSerialized public var currentInspector : OEComponentInspector;
 
 	private function CombineBounds ( colliders : Collider [] ) : Bounds {
@@ -142,64 +187,10 @@ public class OECamera extends MonoBehaviour {
 		GL.End ();
 	}
 	
-	private function DrawAudioSources () {
-		GL.Begin ( GL.QUADS );
-		materials.audioSource.SetPass ( 0 );
-		
-		for ( var i : int = 0; i < audioSources.Length; i++ ) {
-			if ( audioSources[i] ) {
-				var t : Transform = audioSources[i].transform;
-				var right : Vector3 = this.transform.right * 0.25;
-				var left : Vector3  = -right;
-				var up : Vector3 = this.transform.up * 0.25;
-				var down : Vector3 = -up;
-
-				if ( t != this.transform ) {
-					GL.TexCoord2 ( 0, 0 );
-					GL.Vertex ( t.position + left + down );
-					GL.TexCoord2 ( 0, 1 );
-					GL.Vertex ( t.position + left + up );
-					GL.TexCoord2 ( 1, 1 );
-					GL.Vertex ( t.position + right + up );
-					GL.TexCoord2 ( 1, 0 );
-					GL.Vertex ( t.position + right + down );
-				}
-			}
+	private function DrawWidgets () {
+		for ( var c : int = 0; c < widgets.Length; c++ ) {
+			widgets[c].Draw ( this.transform );
 		}
-
-		GL.End ();
-	}
-
-	private function DrawLights () {
-		GL.Begin ( GL.QUADS );
-		materials.light.SetPass ( 0 );
-		
-		for ( var i : int = 0; i < lights.Length; i++ ) {
-			if ( lights[i] ) {
-				var t : Transform = lights[i].transform;
-				var right : Vector3 = this.transform.right * 0.25;
-				var left : Vector3  = -right;
-				var up : Vector3 = this.transform.up * 0.25;
-				var down : Vector3 = -up;
-
-				if ( t != this.transform ) {
-					GL.Color ( lights[i].color );
-					
-					GL.TexCoord2 ( 0, 0 );
-					GL.Vertex ( t.position + left + down );
-					GL.TexCoord2 ( 0, 1 );
-					GL.Vertex ( t.position + left + up );
-					GL.TexCoord2 ( 1, 1 );
-					GL.Vertex ( t.position + right + up );
-					GL.TexCoord2 ( 1, 0 );
-					GL.Vertex ( t.position + right + down );
-
-					GL.Color ( Color.white );
-				}
-			}
-		}
-
-		GL.End ();
 	}
 
 	public function OnPreRender () {
@@ -225,17 +216,17 @@ public class OECamera extends MonoBehaviour {
 			}
 		}
 
-		if ( showGizmos ) {
-		       	if ( lights.Length > 0 ) {
-				DrawLights ();
-			}
-				
-			if ( audioSources.Length > 0 ) {
-				DrawAudioSources ();
-			}
+		if ( showWidgets ) {
+			DrawWidgets ();
 		}
 
 		GL.PopMatrix ();
+	}
+
+	public function RefreshWidgets ( allObjects : OFSerializedObject [] ) {
+		for ( var i : int = 0; i < widgets.Length; i++ ) {
+			widgets[i].Refresh ( allObjects );
+		}
 	}
 
 	public function Update () {

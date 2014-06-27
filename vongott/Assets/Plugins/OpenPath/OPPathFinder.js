@@ -38,7 +38,13 @@ class OPPathFinder extends MonoBehaviour {
 	}
 	
 	public function GetCurrentNode () : Vector3 {
-		return nodes[currentNode].position;
+		if ( currentNode < nodes.Length ) {
+			return nodes[currentNode].position;
+		
+		} else {
+			return goal;
+
+		}
 	}
 
 	public function GetCurrentGoal () : Vector3 {
@@ -98,10 +104,10 @@ class OPPathFinder extends MonoBehaviour {
 		if ( scanner ) {
 			// If there are nodes to follow		
 			if ( nodes && nodes.Length > 0 ) {
-				if ( ( transform.position - ( nodes[currentNode] as OPNode ).position ).magnitude < nodeDistance && currentNode < nodes.Length - 1 ) {
+				if ( ( transform.position - nodes[currentNode].position ).magnitude < nodeDistance && currentNode < nodes.Length - 1 ) {
 					currentNode++;
 				}
-				
+
 				if ( autoChase ) {
 					var lookPos : Vector3 = ( nodes[currentNode] as OPNode ).position - transform.position;
 					lookPos.y = 0;

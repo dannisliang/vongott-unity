@@ -51,6 +51,8 @@ class InteractiveObject extends MonoBehaviour {
 	function OnCollisionEnter ( collision : Collision ) {
 		var other : GameObject = collision.gameObject;
 
+		Debug.Log ( other ) ;
+
 		if ( other.GetComponent.< OACharacter > () ) {
 			NPCCollide ( other.GetComponent.< OACharacter > () );
 		}

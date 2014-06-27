@@ -32,6 +32,18 @@ public class EditorEventManager extends MonoBehaviour {
 		workspace.SelectObject ( so );
 		workspace.RefreshAll ();
 	}
+	
+	public function AddWaypoint () {
+		var go : GameObject = Instantiate ( Resources.Load ( "Prefabs/Meta/waypoint" ) ) as GameObject;
+		var so : OFSerializedObject = go.GetComponent.< OFSerializedObject > ();
+		var workspace : OEWorkspace = OEWorkspace.GetInstance();
+
+		workspace.PlaceAtCursor ( so );
+		workspace.SelectObject ( so );
+		workspace.RefreshAll ();
+
+		go.transform.position += Vector3.up / 4;
+	}
 
 	public function Exit () {
 		Application.LoadLevel ( "main_menu" );

@@ -38,13 +38,17 @@ class Player extends MonoBehaviour {
 	////////////////////
 	// Picking up / dropping objects
 	function PickUpObject ( obj : LiftableItem ) {
-		liftedObject = obj;
-		liftedObject.OnPickup ();
+		if ( !liftedObject ) {
+			liftedObject = obj;
+			liftedObject.OnPickup ();
+		}
 	}
 	
 	function DropObject () {
-		liftedObject.OnDrop ();
-		liftedObject = null;
+		if ( liftedObject ) {
+			liftedObject.OnDrop ();
+			liftedObject = null;
+		}
 	}
 	
 	// Checks
@@ -261,7 +265,7 @@ class Player extends MonoBehaviour {
 		// Lifting object
 		if ( liftedObject ) {
 			liftedObject.transform.rotation = this.transform.rotation;
-			liftedObject.transform.position = head.position + this.transform.forward;
+			liftedObject.transform.position = this.transform.position + new Vector3 ( 0, 0.8, 0 ) + this.transform.forward;
 		}
 		
 		// Shoot timer

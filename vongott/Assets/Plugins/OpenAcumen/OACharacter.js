@@ -17,6 +17,7 @@ public class OACharacter extends MonoBehaviour {
 	public var behaviour : OABehaviour = OABehaviour.Idle;
 	public var speed : float = 0;
 	private var animator : Animator;
+	private var prevBehaviour : OABehaviour;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -33,7 +34,8 @@ public class OACharacter extends MonoBehaviour {
 	// Path
 	public var pathFinder : OPPathFinder;
 	public var pathGoals : Vector3 [] = new Vector3[0];
-	public var updatePathInterval : float = 5;
+	public var turningSpeed : float = 4;
+	public var updatePathInterval : float = 10;
 	private var updatePathTimer : float = 0;
 	private var currentPathGoal : int = -1;
 
@@ -145,11 +147,14 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function Update () {
+		var changed : boolean = behaviour != prevBehaviour;
+		
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
 				if ( player && pathFinder && updatePathTimer <= 0 ) {
 					pathFinder.SetGoal ( player.transform.position );
 				}
+				speed = 1;
 				break;
 			
 			case OABehaviour.Idle:
@@ -183,8 +188,15 @@ public class OACharacter extends MonoBehaviour {
 
 		}
 
-		if ( updatePathTimer > 0 ) {
+		if ( changed ) {
+			updatePathTimer = 0;
+
+		} else if ( updatePathTimer > 0 ) {
 			updatePathTimer -= Time.deltaTime;
+		
+		} else {
+			updatePathTimer = updatePathInterval;
+
 		}
 
 		if ( health <= 0 ) {
@@ -199,7 +211,9 @@ public class OACharacter extends MonoBehaviour {
 			var lookPos : Vector3 = pathFinder.GetCurrentGoal() - this.transform.position;
 			lookPos.y = 0;
 			
-			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 4 * Time.deltaTime );
+			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), turningSpeed * Time.deltaTime );
 		}
+
+		prevBehaviour = behaviour;
 	}
 }

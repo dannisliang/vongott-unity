@@ -6,10 +6,14 @@ class LiftableItem extends InteractiveObject {
 	// Handle lifting
 	public function OnPickup () {
 		this.GetComponent ( Rigidbody ).useGravity = false;
+
+		this.GetComponent.< MeshRenderer >().material.SetColor ( "_Color", new Color ( 1, 1, 1, 0.5 ) );
 	}
 	
 	public function OnDrop () {
 		this.GetComponent ( Rigidbody ).useGravity = true;
+		
+		this.GetComponent.< MeshRenderer >().material.SetColor ( "_Color", new Color ( 1, 1, 1, 1 ) );
 	}
 	
 	// Interact

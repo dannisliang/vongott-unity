@@ -295,6 +295,8 @@ class GameCore extends MonoBehaviour {
 					}
 				}
 			}
+
+			a.player = player.gameObject;
 		}
 	}
 

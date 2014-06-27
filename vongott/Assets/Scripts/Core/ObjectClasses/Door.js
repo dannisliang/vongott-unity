@@ -10,6 +10,7 @@ class Door extends InteractiveObject {
 	public var lockLevel : int = 1;
 	public var keyId : String = "";
 	public var closed : boolean = true;
+	public var push : boolean = true;
 	public var type : eDoorType = eDoorType.Swing;
 	public var leftDoor : GameObject;
 	public var rightDoor : GameObject;
@@ -102,9 +103,9 @@ class Door extends InteractiveObject {
 			targetRot = startRot;
 			
 			if ( Vector3.Distance ( t.position, backPos ) < Vector3.Distance ( t.position, frontPos ) ) {
-				targetRot.y += 90;
+				targetRot.y += push ? 90 : -90;
 			} else {
-				targetRot.y -= 90;
+				targetRot.y += push ? -90 : 90;
 			}
 			
 			// Slide

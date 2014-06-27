@@ -134,8 +134,8 @@ public class OEWorkspace extends MonoBehaviour {
 	// Strip components
 	public function StripComponents () {
 		for ( var l : Light in this.GetComponentsInChildren.< Light > () ) {
-			if ( !l.gameObject.GetComponent.< SphereCollider > () ) {
-				l.gameObject.AddComponent.< SphereCollider > ();
+			if ( !l.gameObject.GetComponent.< BoxCollider > () ) {
+				l.gameObject.AddComponent.< BoxCollider > ().size = new Vector3 ( 0.5, 0.5, 0.5 );
 			}
 		}
 		
@@ -145,7 +145,7 @@ public class OEWorkspace extends MonoBehaviour {
 			}
 			
 			if ( !a.gameObject.GetComponentInChildren.< Collider > () ) {
-				a.gameObject.AddComponent.< SphereCollider > ();
+				a.gameObject.AddComponent.< BoxCollider > ().size = new Vector3 ( 0.5, 0.5, 0.5 );
 			}
 		}
 
@@ -171,8 +171,7 @@ public class OEWorkspace extends MonoBehaviour {
 
 	// Refresh data
 	public function RefreshAll () {
-		cam.lights = this.GetComponentsInChildren.< Light >();
-		cam.audioSources = this.GetComponentsInChildren.< AudioSource >();
+		cam.RefreshWidgets ( this.GetComponentsInChildren.< OFSerializedObject > () );
 		inspector.Refresh ( selection );
 		toolbar.Refresh ();
 		navmesh = this.GetComponentInChildren.< OPNavMesh > ();
@@ -481,8 +480,9 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 	
 	public function AddLight () {
-		var obj : OFSerializedObject = new GameObject ( "Light", Light, SphereCollider ).AddComponent.< OFSerializedObject > ();
+		var obj : OFSerializedObject = new GameObject ( "Light", Light ).AddComponent.< OFSerializedObject > ();
 		
+		obj.gameObject.AddComponent.< BoxCollider > ().size = new Vector3 ( 0.5, 0.5, 0.5 );
 		obj.SetField ( "Transform", obj.GetComponent.< Transform > () );
 		obj.SetField ( "Light", obj.GetComponent.< Light > () );
 		PlaceAtCursor ( obj );
@@ -512,8 +512,9 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 
 	public function AddAudioSource () {
-		var obj : OFSerializedObject = new GameObject ( "AudioSource", AudioSource, SphereCollider ).AddComponent.< OFSerializedObject > ();
+		var obj : OFSerializedObject = new GameObject ( "AudioSource", AudioSource ).AddComponent.< OFSerializedObject > ();
 		
+		obj.gameObject.AddComponent.< BoxCollider > ().size = new Vector3 ( 0.5, 0.5, 0.5 );
 		obj.SetField ( "Transform", obj.GetComponent.< Transform > () );
 		obj.SetField ( "AudioSource", obj.GetComponent.< AudioSource > () );
 		PlaceAtCursor ( obj );
@@ -551,28 +552,10 @@ public class OEWorkspace extends MonoBehaviour {
 		}
 	}
 
-	public function ToggleGizmos () {
-		cam.showGizmos = !cam.showGizmos;
+	public function ToggleWidgets () {
+		cam.showWidgets = !cam.showWidgets;
 	}
 	
-	public function ToggleNavmesh () {
-		if ( navmesh ) {
-			if ( navmeshParent.childCount > 0 ) {
-				for ( var i : int = 0; i < navmeshParent.childCount; i++ ) {
-					Destroy ( navmeshParent.GetChild ( i ).gameObject );
-				}
-			
-			} else {
-				var go = GameObject ( "navmesh", MeshRenderer, MeshFilter );
-				go.renderer.material = cam.materials.navmesh;
-				go.transform.parent = navmeshParent;
-				go.transform.position = Vector3.zero;
-				go.GetComponent.< MeshFilter > ().mesh = navmesh.GetComponent.< MeshFilter > ().mesh;
-				
-			}
-		}
-	}
-
 	// Instatiate
 	public function AddPrefab ( path : String ) : OFSerializedObject {
 		var go : GameObject = Instantiate ( Resources.Load ( path ) ) as GameObject;

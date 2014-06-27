@@ -2190,14 +2190,19 @@ MonoBehaviour:
     audioSource: {fileID: 2100000, guid: 4a29648e64f8b452f8c6dc8d44f2be11, type: 2}
     highlight: {fileID: 2100000, guid: bc148260939374bf18c0c4a9e5ccb860, type: 2}
     navmesh: {fileID: 2100000, guid: a09f0da0c23804125befa92975f6a455, type: 2}
-  lights: []
-  audioSources: []
   wireframe: 0
-  showGizmos: 1
+  showWidgets: 1
   defaultAmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
   dynamicLights: 1
   nearClipSlider: {fileID: 1419705824}
   flyMode: 0
+  widgets:
+  - type: UnityEngine.Light
+    material: {fileID: 2100000, guid: 8e6aaec074cac46a5a819686e7e80d77, type: 2}
+  - type: UnityEngine.AudioSource
+    material: {fileID: 2100000, guid: 4a29648e64f8b452f8c6dc8d44f2be11, type: 2}
+  - type: OPWayPoint
+    material: {fileID: 2100000, guid: 76e2c0e1e49c6e44ebba3183f627335d, type: 2}
 --- !u!1 &148379951
 GameObject:
   m_ObjectHideFlags: 0
@@ -2648,36 +2653,12 @@ MonoBehaviour:
     tickable: 0
     isTicked: 0
     nestedMenu: []
-  - name: Primitive
-    message: 
-    argument: 
+  - name: Waypoint
+    message: Event
+    argument: AddWaypoint
     tickable: 0
     isTicked: 0
-    nestedMenu:
-    - name: Cube
-      message: AddCube
-      argument: 
-      tickable: 0
-      isTicked: 0
-      tickOverrides: 0
-    - name: Cylinder
-      message: AddCylinder
-      argument: 
-      tickable: 0
-      isTicked: 0
-      tickOverrides: 0
-    - name: Sphere
-      message: AddSphere
-      argument: 
-      tickable: 0
-      isTicked: 0
-      tickOverrides: 0
-    - name: Quad
-      message: AddQuad
-      argument: 
-      tickable: 0
-      isTicked: 0
-      tickOverrides: 0
+    nestedMenu: []
   isDown: 0
 --- !u!1 &175011159
 GameObject:
@@ -17386,17 +17367,11 @@ MonoBehaviour:
     tickable: 1
     isTicked: 0
     nestedMenu: []
-  - name: Show Gizmos
-    message: ToggleGizmos
+  - name: Show Widgets
+    message: ToggleWidgets
     argument: 
     tickable: 1
     isTicked: 1
-    nestedMenu: []
-  - name: Show Navmesh
-    message: ToggleNavmesh
-    argument: 
-    tickable: 1
-    isTicked: 0
     nestedMenu: []
   isDown: 0
 --- !u!1 &958692697
