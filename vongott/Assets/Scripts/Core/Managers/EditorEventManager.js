@@ -1,6 +1,8 @@
 ﻿#pragma strict
 
 public class EditorEventManager extends MonoBehaviour {
+	public var navmeshMaterial : Material;
+	
 	public function Play ( btn : OGButton ) {
 		if ( !String.IsNullOrEmpty ( OEWorkspace.GetInstance().currentSavePath ) ) {
 			GameCore.OverrideSpawnpoint ( OEWorkspace.GetInstance().GetFocus(), Camera.main.transform.eulerAngles );
@@ -43,6 +45,22 @@ public class EditorEventManager extends MonoBehaviour {
 		workspace.RefreshAll ();
 
 		go.transform.position += Vector3.up / 4;
+	}
+
+	public function ToggleNavmesh () {
+		var workspace : OEWorkspace = OEWorkspace.GetInstance();
+		var navmesh : OPNavMesh = workspace.GetComponentInChildren.< OPNavMesh > ();
+
+		if ( navmesh ) {
+			if ( navmesh.GetComponent.< MeshRenderer > () ) {
+				Destroy ( navmesh.GetComponent.< MeshRenderer > () );
+			
+			} else {
+				navmesh.gameObject.AddComponent.< MeshRenderer > ();
+				navmesh.gameObject.GetComponent.< MeshRenderer > ().material = navmeshMaterial;
+			
+			}
+		}
 	}
 
 	public function Exit () {
