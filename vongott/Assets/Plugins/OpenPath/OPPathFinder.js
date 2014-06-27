@@ -89,15 +89,17 @@ class OPPathFinder extends MonoBehaviour {
 	}
 		
 	public function UpdatePosition () {
-		var start : Vector3 = this.transform.position;
-					
-		nodes = scanner.FindPath ( start, goal );
-								
-		for ( var i : int = 0; i < nodes.Length; i++ ) {
-			nodes[i].active = true;
+		if ( scanner ) {
+			var start : Vector3 = this.transform.position;
+						
+			nodes = scanner.FindPath ( start, goal );
+									
+			for ( var i : int = 0; i < nodes.Length; i++ ) {
+				nodes[i].active = true;
+			}
+			
+			currentNode = 0;
 		}
-		
-		currentNode = 0;
 	}
 
 	function Update () {

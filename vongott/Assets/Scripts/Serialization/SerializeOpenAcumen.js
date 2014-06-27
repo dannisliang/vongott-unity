@@ -8,6 +8,8 @@ public class SerializeOpenAcumen extends OFPlugin {
 	private function SerializeCharacter ( input : OACharacter ) : JSONObject {
 		var output : JSONObject = new JSONObject ( JSONObject.Type.OBJECT );
 	
+		var behaviour : int = input.behaviour;
+		output.AddField ( "behaviour", behaviour );
 		output.AddField ( "health", input.health );
 
 		// Inventory
@@ -89,6 +91,8 @@ public class SerializeOpenAcumen extends OFPlugin {
 	}
 	
 	private function DeserializeCharacter ( input : JSONObject, output : OACharacter ) {
+		var behaviour : int = input.GetField ( "behaviour" ).n;
+		output.behaviour = behaviour;
 		output.health = input.GetField ( "health" ).n;
 		output.usingWeapons = input.GetField ( "usingWeapons" ).b;
 

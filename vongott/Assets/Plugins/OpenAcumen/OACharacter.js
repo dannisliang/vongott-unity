@@ -82,6 +82,22 @@ public class OACharacter extends MonoBehaviour {
 		return null;
 	}
 
+	public function GetNearestPathGoal () : int {
+		var nearest : float = Mathf.Infinity;
+		var result : int = 0;
+
+		for ( var i : int = 0; i < pathGoals.Length; i++ ) {
+			var dist : float = Vector3.Distance ( this.transform.position, pathGoals[i] );
+
+			if ( dist < nearest ) {
+				nearest = dist;
+				result = i;
+			}
+		}
+
+		return result;
+	}
+
 	public function TeleportToNextPathGoal () {
 		if ( currentPathGoal + 1 < pathGoals.Length ) {
 			currentPathGoal++;
@@ -162,16 +178,22 @@ public class OACharacter extends MonoBehaviour {
 				break;
 
 			case OABehaviour.RoamingPath:
-				if ( pathGoals.Length > 0 && pathFinder ) {
+				if ( currentPathGoal >= 0 && currentPathGoal < pathGoals.Length && pathFinder ) {
 					if ( Vector3.Distance ( this.transform.position, pathGoals[currentPathGoal] ) < 0.5 ) {
-						NextPathGoal ();
-						behaviour = OABehaviour.RoamingPath;
+						if ( currentPathGoal < pathGoals.Length - 1 ) {
+							currentPathGoal++;
+						
+						} else {
+							currentPathGoal = 0;
+
+						}	
 
 					} else {
 						pathFinder.SetGoal ( pathGoals[currentPathGoal] );
 					
 					}
 				}
+				speed = 0.25;
 				break;
 
 			case OABehaviour.GoToGoal:
@@ -189,6 +211,7 @@ public class OACharacter extends MonoBehaviour {
 		}
 
 		if ( changed ) {
+			currentPathGoal = GetNearestPathGoal ();
 			updatePathTimer = 0;
 
 		} else if ( updatePathTimer > 0 ) {
