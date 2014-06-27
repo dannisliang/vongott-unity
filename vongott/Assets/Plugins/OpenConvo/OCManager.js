@@ -230,10 +230,6 @@ public class OCManager extends MonoBehaviour {
 				if ( node.speak.smalltalk ) {
 					if ( node.speak.index < node.speak.lines.Length - 1 ) {
 						node.speak.index++;
-					
-					} else {
-						node.speak.index = 0;
-
 					}
 				}
 			}

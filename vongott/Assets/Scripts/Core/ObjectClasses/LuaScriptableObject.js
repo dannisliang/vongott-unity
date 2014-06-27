@@ -11,6 +11,8 @@ public class LuaScriptableObject extends MonoBehaviour {
 	private var onTrigger : LuaFunction;
 	private var onEvent : LuaFunction;
 	private var onDestroy : LuaFunction;
+	private var onDeath : LuaFunction;
+	private var onPickUp : LuaFunction;
 
 	private var triggerId : String = "player";
 
@@ -23,6 +25,8 @@ public class LuaScriptableObject extends MonoBehaviour {
 			onTrigger = lua.GetFunction ( "OnTrigger" );
 			onEvent = lua.GetFunction ( "OnEvent" );
 			onDestroy = lua.GetFunction ( "OnDestroy" );
+			onDeath = lua.GetFunction ( "OnDeath" );
+			onPickUp = lua.GetFunction ( "OnPickUp" );
 
 			if ( start && !OEWorkspace.GetInstance() ) {
 				start.Call ( this, GameCore.GetLuaManager () );
@@ -33,6 +37,13 @@ public class LuaScriptableObject extends MonoBehaviour {
 	public function Update () {
 		if ( update && !OEWorkspace.GetInstance() ) {
 			update.Call ( Time.deltaTime );
+		}
+	}
+
+	// Item
+	public function OnPickUp () {
+		if ( onPickUp ) {
+			onPickUp.Call ();
 		}
 	}
 

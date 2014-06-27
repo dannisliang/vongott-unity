@@ -100,7 +100,14 @@ public class OFDeserializer {
 		
 		if ( !output ) {
 			if ( input.HasField ( "prefabPath" ) && !String.IsNullOrEmpty ( input.GetField ( "prefabPath" ).str ) ) {	
-				var newGO : GameObject = MonoBehaviour.Instantiate ( Resources.Load ( input.GetField ( "prefabPath" ).str ) ) as GameObject;
+				var obj : UnityEngine.Object = Resources.Load ( input.GetField ( "prefabPath" ).str );
+				
+				if ( !obj ) {
+					Debug.LogError ( "'" + input.GetField ( "prefabPath" ).str + "' doesn't exist!" );
+					return null;
+				}
+					
+				var newGO : GameObject = MonoBehaviour.Instantiate ( obj ) as GameObject;
 				output = newGO.GetComponent.< OFSerializedObject > ();
 			
 			} else {

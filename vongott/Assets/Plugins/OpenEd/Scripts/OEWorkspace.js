@@ -164,10 +164,9 @@ public class OEWorkspace extends MonoBehaviour {
 			cc.enabled = false;
 		}
 		
-		// FIXME: This causes strange decapitation bugs
-		//for ( var a : Animator in this.GetComponentsInChildren.< Animator > () ) {
-		//	a.enabled = false;
-		//}
+		for ( var a : Animator in this.GetComponentsInChildren.< Animator > () ) {
+			a.enabled = false;
+		}
 	}
 
 	// Refresh data

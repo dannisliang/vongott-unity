@@ -399,6 +399,7 @@ public class OSInventory extends MonoBehaviour {
 		
 		var go : GameObject = Resources.Load ( sceneItem.prefabPath ) as GameObject;
 
+		sceneItem.gameObject.SendMessage ( "OnPickUp", SendMessageOptions.DontRequireReceiver );
 		Destroy ( sceneItem.gameObject );
 
 		return AddItem ( go.GetComponent.< OSItem > () );

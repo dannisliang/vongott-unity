@@ -111,7 +111,7 @@ public class OCQuests {
 		}
 
 		public function ProgressObjective ( i : int, amount : int ) {
-			if ( i > 0 && i < objectives.Length ) {
+			if ( i >= 0 && i < objectives.Length ) {
 				objectives[i].progress += amount;
 
 				if ( objectives[i].progress >= objectives[i].goal ) {
@@ -121,13 +121,17 @@ public class OCQuests {
 		}
 
 		public function CompleteObjective ( i : int ) {
-			if ( i > 0 && i < objectives.Length ) {
+			if ( i >= 0 && i < objectives.Length ) {
 				objectives[i].completed = true;
 
 				var manager : OCManager = OCManager.GetInstance();
 
 				if ( manager ) {
 					manager.eventHandler.OnObjectiveCompleted ( this, i );
+				
+				} else {
+					Debug.LogError ( "OCManager not in scene!" );
+
 				}
 			}
 		}
