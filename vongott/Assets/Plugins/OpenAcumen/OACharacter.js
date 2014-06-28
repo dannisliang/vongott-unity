@@ -93,6 +93,24 @@ public class OACharacter extends MonoBehaviour {
 		return null;
 	}
 
+	public function get playerFocus () : Vector3 {
+		var result : Vector3;
+		
+		if ( player ) {
+			result = player.transform.position;
+
+			if ( player.GetComponent.< CharacterController > () ) {
+				result.y += player.GetComponent.< CharacterController > ().height / 2;
+			
+			} else {
+				result.y += 1.8;
+			
+			}
+		}
+
+		return result;
+	}
+
 	public function get distanceToPlayer () : float {
 		if ( player ) {
 			return Vector3.Distance ( this.transform.position, player.transform.position );
@@ -107,7 +125,7 @@ public class OACharacter extends MonoBehaviour {
 		if ( player ) {
 			var hit : RaycastHit;
 			var here : Vector3 = this.transform.position;
-			var there : Vector3 = player.transform.position;
+			var there : Vector3 = playerFocus;
 
 			if ( controller ) {
 				here.y += controller.height;
@@ -117,15 +135,6 @@ public class OACharacter extends MonoBehaviour {
 			
 			}
 			
-			if ( player.GetComponent.< CharacterController > () ) {
-				there.y += player.GetComponent.< CharacterController > ().height / 2;
-			
-			} else {
-				there.y += 1;
-			
-			}
-
-
 			var direction : Vector3 = there - here;
 
 			if ( ( Vector3.Angle ( direction, this.transform.forward ) ) < fieldOfView ) {
@@ -219,8 +228,8 @@ public class OACharacter extends MonoBehaviour {
 
 			if ( equippedObject ) {
 				equippedObject.transform.parent = equippingHand;
-				equippedObject.transform.localPosition = Vector3.zero;
-				equippedObject.transform.localEulerAngles = Vector3.zero;
+				equippedObject.transform.localPosition = new Vector3 ( equippedObject.collider.bounds.size.z, 0, 0 );
+				equippedObject.transform.localEulerAngles = new Vector3 ( 0, 90, 270 );
 			
 				if ( equippedObject.rigidbody ) {
 					Destroy ( equippedObject.rigidbody ) ;
@@ -283,10 +292,9 @@ public class OACharacter extends MonoBehaviour {
 				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 				
 				if ( firearm ) {
+					firearm.aimWithMainCamera = false;
 					firearm.Fire ();
 				}
-			
-				firearm.transform.rotation = equippingHand.rotation;
 			}
 		}
 
