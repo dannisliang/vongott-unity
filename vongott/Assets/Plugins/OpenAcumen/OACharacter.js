@@ -21,7 +21,7 @@ public class OACharacter extends MonoBehaviour {
 	private var animator : Animator;
 	private var controller : CharacterController;
 	private var prevBehaviour : OABehaviour;
-	private var target : Transform;
+	private var aiming : boolean = false;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -286,6 +286,7 @@ public class OACharacter extends MonoBehaviour {
 					firearm.Fire ();
 				}
 			
+				firearm.transform.rotation = equippingHand.rotation;
 			}
 		}
 
@@ -310,6 +311,7 @@ public class OACharacter extends MonoBehaviour {
 		if ( !alive ) { return; }
 
 		var changed : boolean = behaviour != prevBehaviour;
+		aiming = false;
 
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
@@ -325,8 +327,9 @@ public class OACharacter extends MonoBehaviour {
 				
 				}
 
-				if ( isEnemy && canSeePlayer ) {
+				if ( isEnemy && canSeePlayer && distanceToPlayer <= stoppingDistance ) {
 					ShootAtPlayer ();
+					aiming = true;
 				}
 
 				break;
@@ -386,6 +389,7 @@ public class OACharacter extends MonoBehaviour {
 
 		if ( animator ) {
 			animator.SetFloat ( "Speed", speed );
+			animator.SetBool ( "Aiming", aiming );
 		}
 
 		if ( speed > 0 && pathFinder ) {
