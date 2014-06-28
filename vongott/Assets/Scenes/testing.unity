@@ -4032,13 +4032,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 910
+    x: 590
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 910
+    x: 590
     y: 10
     width: 90
     height: 90
@@ -4531,13 +4531,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 640
+    y: 400
     width: 210
     height: 70
   mouseRct:
     serializedVersion: 2
     x: 10
-    y: 640
+    y: 400
     width: 210
     height: 70
   drawDepth: -20
@@ -4801,13 +4801,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 550
+    x: 230
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 550
+    x: 230
     y: 10
     width: 90
     height: 90
@@ -11528,13 +11528,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 370
+    x: 50
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 370
+    x: 50
     y: 10
     width: 90
     height: 90
@@ -19493,7 +19493,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 470562417}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 640, y: 540, z: 0}
+  m_LocalPosition: {x: 320, y: 300, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 710518749}
@@ -19722,7 +19722,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 640
+    x: 320
     y: 179
     width: 1
     height: 1
@@ -21416,13 +21416,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 550
+    x: 230
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 550
+    x: 230
     y: 10
     width: 90
     height: 90
@@ -24070,13 +24070,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 280
+    x: -40
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 280
+    x: -40
     y: 10
     width: 90
     height: 90
@@ -28488,6 +28488,8 @@ MonoBehaviour:
   speed: 0
   fieldOfView: 130
   lineOfSight: 20
+  shootingDistance: 10
+  stoppingDistance: 3
   inventory: {fileID: 671739671}
   usingWeapons: 1
   weaponCategoryPreference: 1
@@ -28501,7 +28503,6 @@ MonoBehaviour:
   pathGoals: []
   turningSpeed: 4
   updatePathInterval: 1
-  stoppingDistance: 5
 --- !u!143 &671739673
 CharacterController:
   m_ObjectHideFlags: 0
@@ -29461,13 +29462,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 420
+    x: 100
     y: 130
     width: 440
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 420
+    x: 100
     y: 130
     width: 440
     height: 50
@@ -31016,13 +31017,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 1000
+    x: 680
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 1000
+    x: 680
     y: 10
     width: 90
     height: 90
@@ -38005,13 +38006,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 190
+    x: -130
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 190
+    x: -130
     y: 10
     width: 90
     height: 90
@@ -48609,7 +48610,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 680
+    y: 440
     width: 170
     height: 20
   mouseRct:
@@ -48879,13 +48880,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 1000
+    x: 680
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 1000
+    x: 680
     y: 10
     width: 90
     height: 90
@@ -53918,13 +53919,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 460
+    x: 140
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 460
+    x: 140
     y: 10
     width: 90
     height: 90
@@ -54511,13 +54512,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 640
+    x: 320
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 640
+    x: 320
     y: 10
     width: 90
     height: 90
@@ -54693,6 +54694,8 @@ MonoBehaviour:
   speed: 0
   fieldOfView: 130
   lineOfSight: 20
+  shootingDistance: 10
+  stoppingDistance: 3
   inventory: {fileID: 1258159613}
   usingWeapons: 1
   weaponCategoryPreference: 1
@@ -54706,7 +54709,6 @@ MonoBehaviour:
   pathGoals: []
   turningSpeed: 4
   updatePathInterval: 1
-  stoppingDistance: 5
 --- !u!143 &1258159615
 CharacterController:
   m_ObjectHideFlags: 0
@@ -55615,13 +55617,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 280
+    x: -40
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 280
+    x: -40
     y: 10
     width: 90
     height: 90
@@ -59750,6 +59752,8 @@ MonoBehaviour:
   speed: 0
   fieldOfView: 130
   lineOfSight: 20
+  shootingDistance: 10
+  stoppingDistance: 3
   inventory: {fileID: 1369051234}
   usingWeapons: 1
   weaponCategoryPreference: 1
@@ -59763,7 +59767,6 @@ MonoBehaviour:
   pathGoals: []
   turningSpeed: 4
   updatePathInterval: 1
-  stoppingDistance: 5
 --- !u!143 &1369051236
 CharacterController:
   m_ObjectHideFlags: 0
@@ -62240,13 +62243,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 820
+    x: 500
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 820
+    x: 500
     y: 10
     width: 90
     height: 90
@@ -62936,7 +62939,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1448615667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 640, y: 360, z: 0}
+  m_LocalPosition: {x: 320, y: 240, z: 0}
   m_LocalScale: {x: 64, y: 64, z: 1}
   m_Children: []
   m_Father: {fileID: 338398393}
@@ -63163,14 +63166,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 608
-    y: 328
+    x: 288
+    y: 208
     width: 64
     height: 64
   mouseRct:
     serializedVersion: 2
-    x: 608
-    y: 328
+    x: 288
+    y: 208
     width: 64
     height: 64
   drawDepth: -0
@@ -65054,13 +65057,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 910
+    x: 590
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 910
+    x: 590
     y: 10
     width: 90
     height: 90
@@ -66274,7 +66277,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1517059393}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 190, y: 620, z: 0}
+  m_LocalPosition: {x: -130, y: 380, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 592807376}
@@ -66511,7 +66514,7 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 190
+    x: -130
     y: 99
     width: 1
     height: 1
@@ -68967,13 +68970,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 730
+    x: 410
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 730
+    x: 410
     y: 10
     width: 90
     height: 90
@@ -69643,13 +69646,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 460
+    x: 140
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 460
+    x: 140
     y: 10
     width: 90
     height: 90
@@ -72714,7 +72717,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 650
+    y: 410
     width: 170
     height: 20
   mouseRct:
@@ -72984,13 +72987,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 730
+    x: 410
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 730
+    x: 410
     y: 10
     width: 90
     height: 90
@@ -75081,13 +75084,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 640
+    x: 320
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 640
+    x: 320
     y: 10
     width: 90
     height: 90
@@ -78346,13 +78349,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 370
+    x: 50
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 370
+    x: 50
     y: 10
     width: 90
     height: 90
@@ -81835,13 +81838,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 440
+    x: 120
     y: 130
     width: 400
     height: 50
   mouseRct:
     serializedVersion: 2
-    x: 440
+    x: 120
     y: 130
     width: 400
     height: 50
@@ -86886,6 +86889,8 @@ MonoBehaviour:
   speed: 0
   fieldOfView: 130
   lineOfSight: 20
+  shootingDistance: 10
+  stoppingDistance: 3
   inventory: {fileID: 2055227482}
   usingWeapons: 1
   weaponCategoryPreference: 1
@@ -86899,7 +86904,6 @@ MonoBehaviour:
   pathGoals: []
   turningSpeed: 4
   updatePathInterval: 1
-  stoppingDistance: 5
 --- !u!143 &2055227485
 CharacterController:
   m_ObjectHideFlags: 0
@@ -89274,13 +89278,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 820
+    x: 500
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 820
+    x: 500
     y: 10
     width: 90
     height: 90
@@ -89608,13 +89612,13 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 190
+    x: -130
     y: 10
     width: 90
     height: 90
   mouseRct:
     serializedVersion: 2
-    x: 190
+    x: -130
     y: 10
     width: 90
     height: 90

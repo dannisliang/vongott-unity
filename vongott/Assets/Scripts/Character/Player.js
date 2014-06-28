@@ -184,7 +184,7 @@ class Player extends MonoBehaviour {
 						break;
 
 					// Bullets
-					case "OneHanded":
+					case "OneHanded": case "TwoHanded":
 						var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 
 						if ( firearm ) {

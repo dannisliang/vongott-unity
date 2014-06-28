@@ -89,7 +89,7 @@ public class OSFirearm extends MonoBehaviour {
 			if ( projectileType == OSProjectileType.Prefab && bullet ) {
 				OSProjectile.Fire ( bullet, range, damage, pos, ray );
 			
-			} else {
+			} else if ( projectileType == OSProjectileType.Raycast ) {
 				var hit : RaycastHit;
 
 				if ( Physics.Raycast ( ray, hit, range ) ) {

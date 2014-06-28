@@ -18,6 +18,8 @@ public class OACharacter extends MonoBehaviour {
 	public var speed : float = 0;
 	public var fieldOfView : float = 130;
 	public var lineOfSight : float = 20;
+	public var shootingDistance : float = 10;
+	public var stoppingDistance : float = 2;
 	private var animator : Animator;
 	private var controller : CharacterController;
 	private var prevBehaviour : OABehaviour;
@@ -42,7 +44,6 @@ public class OACharacter extends MonoBehaviour {
 	public var pathGoals : Vector3 [] = new Vector3[0];
 	public var turningSpeed : float = 4;
 	public var updatePathInterval : float = 10;
-	public var stoppingDistance : float = 2;
 	private var updatePathTimer : float = 0;
 	private var currentPathGoal : int = -1;
 
@@ -256,6 +257,8 @@ public class OACharacter extends MonoBehaviour {
 			SetRagdoll ( true );
 		
 		}
+
+		health = 0;
 	}
 
 	public function SetRagdoll ( state : boolean ) {
@@ -327,15 +330,21 @@ public class OACharacter extends MonoBehaviour {
 					pathFinder.SetGoal ( player.transform.position );
 				}
 				
-				if ( Vector3.Distance ( this.transform.position, player.transform.position ) > stoppingDistance ) {
-					speed = 1;
+				if ( distanceToPlayer > stoppingDistance ) {
+					if ( distanceToPlayer <= shootingDistance ) {
+						speed = 0.5;
+					
+					} else {
+						speed = 1;
+				
+					}
 				
 				} else {
-					speed = 0;
-				
+					speed= 0;
+
 				}
 
-				if ( isEnemy && canSeePlayer && distanceToPlayer <= stoppingDistance ) {
+				if ( isEnemy && canSeePlayer && distanceToPlayer <= shootingDistance ) {
 					ShootAtPlayer ();
 					aiming = true;
 				}
