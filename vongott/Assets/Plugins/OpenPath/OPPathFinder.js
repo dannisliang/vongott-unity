@@ -88,6 +88,7 @@ class OPPathFinder extends MonoBehaviour {
 		
 	public function UpdatePosition () {
 		if ( scanner ) {
+			
 			var start : Vector3 = this.transform.position;
 						
 			nodes = scanner.FindPath ( start, goal );

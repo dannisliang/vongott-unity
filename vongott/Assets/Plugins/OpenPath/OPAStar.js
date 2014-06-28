@@ -12,8 +12,6 @@ class OPAStar {
 			return;
 		}
 		
-	//	Debug.Log ( "OPAstar | Searching for best route from " + start.position + " to " + goal.position );
-		
 		// Add the starting node to the open list
 		openList = new OPPriorityQueue ();
 		openList.Push ( start );
@@ -82,13 +80,11 @@ class OPAStar {
 		}
 		
 		if ( !currentNode.Equals ( goal ) ) {
-			//Debug.LogError ( "OpenPath | Path not found!" );
 			// Return the empty array			
 			return new OPNode[0];
 		
 		} else {
 			// Path complete			
-			//Debug.Log ( "OPAStar | Path found!" );	
 			return GetPath ( currentNode );
 
 		}

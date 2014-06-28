@@ -51,8 +51,6 @@ class OPScanner extends MonoBehaviour {
 		generated = false;
 
 		this.transform.position = Vector3.zero;
-
-		//Debug.Log ( "OPScanner | Cleared nodes" );
 	}
 
 	public function Scan () {
@@ -63,12 +61,8 @@ class OPScanner extends MonoBehaviour {
 			generated = true;
 		}
 
-		//Debug.Log ( "OPScanner | Scanning for navigation nodes as " + mapType + "..." );
-		
 		GenerateBounds ();
 		GenerateMap ();
-		
-		//Debug.Log ( "OPScanner | ...scan completed" );
 	}
 	
 	function Start () {

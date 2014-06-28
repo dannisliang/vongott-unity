@@ -382,15 +382,11 @@ class GameCore extends MonoBehaviour {
 		running = true;
 
 		if ( testing ) {
-			this.GetComponent.< OPScanner > ().Clear ();
-			
 			SetPlayerSpeaker ();
 
 			for ( var t : OATrigger in levelContainer.GetComponentsInChildren.< OATrigger > () ) {
 				t.eventHandler = this.gameObject;
 			}
-			
-			this.GetComponent.< OPScanner > ().Scan ();
 		}
 	}
 	
