@@ -93,7 +93,7 @@ public class OSFirearm extends MonoBehaviour {
 				var hit : RaycastHit;
 
 				if ( Physics.Raycast ( ray, hit, range ) ) {
-					hit.collider.gameObject.SendMessage ( "OnProjectileHit", damage );
+					hit.collider.gameObject.SendMessage ( "OnProjectileHit", damage, SendMessageOptions.DontRequireReceiver );
 				}
 
 			}
@@ -128,6 +128,14 @@ public class OSFirearm extends MonoBehaviour {
 
 		if ( muzzleFlash ) {
 			muzzleFlash.SetActive ( flashTimer > 0 );
+		}
+
+		if ( Time.timeScale >= 1 ) {
+			projectileType = OSProjectileType.Raycast;
+		
+		} else if ( bullet ) {
+			projectileType = OSProjectileType.Prefab;
+		
 		}
 	}	
 }

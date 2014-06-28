@@ -52,8 +52,6 @@ class OPPathFinder extends MonoBehaviour {
 		var there : Vector3 = goal + Vector3.up * 0.1;
 		var hits : RaycastHit [] = Physics.RaycastAll ( here, there - here, Vector3.Distance ( here, there ) );
 	       
-		Debug.DrawRay ( here, ( there - here ) * Vector3.Distance ( here, there ) );
-
 		if ( hits.Length > 0 ) {
 			for ( var i : int = 0; i < hits.Length; i++ ) {
 				if ( hits[i].collider.gameObject != this.gameObject ) {

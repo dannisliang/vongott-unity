@@ -11,8 +11,8 @@ public enum eGameState {
 
 class GameCore extends MonoBehaviour {
 	// Public vars
-	var _levelContainer : Transform;
-	
+	public var _levelContainer : Transform;
+	public var testing : boolean = false;
 	public var selectedOutlineColor : Color;
 	public var deselectedOutlineColor : Color;
 	public var player : Player;
@@ -380,6 +380,18 @@ class GameCore extends MonoBehaviour {
 		// Signal
 		Print ("GameCore | Started");
 		running = true;
+
+		if ( testing ) {
+			this.GetComponent.< OPScanner > ().Clear ();
+			
+			SetPlayerSpeaker ();
+
+			for ( var t : OATrigger in levelContainer.GetComponentsInChildren.< OATrigger > () ) {
+				t.eventHandler = this.gameObject;
+			}
+			
+			this.GetComponent.< OPScanner > ().Scan ();
+		}
 	}
 	
 	

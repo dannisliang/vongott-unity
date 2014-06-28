@@ -77,7 +77,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 46f04592ff81e184580a61fab5cf7598, type: 2}
+  - {fileID: 2100000, guid: 0da75dbb06951404ab7bf4c0d8df8684, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -243,12 +243,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 2
+  - typeIndex: 6
     name: Transform
     component: {fileID: 400000}
-  - typeIndex: 10
+  - typeIndex: 16
     name: OSItem
     component: {fileID: 11400010}
+  assetLinks: []
   id: 
   prefabPath: Prefabs/Items/Weapons/weapon_smg_stupid
   exportPath: 

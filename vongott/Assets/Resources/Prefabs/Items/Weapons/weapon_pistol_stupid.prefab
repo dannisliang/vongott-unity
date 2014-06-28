@@ -229,7 +229,7 @@ MonoBehaviour:
   holsteringSoundIndex: 2
   muzzleFlash: {fileID: 100002}
   muzzleFlashDuration: .25
-  projectileType: 1
+  projectileType: 0
   aimWithMainCamera: 1
 --- !u!114 &11400002
 MonoBehaviour:
@@ -243,38 +243,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - type: 203
+  - typeIndex: 6
     name: Transform
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 400000}
-  - type: 304
+  - typeIndex: 16
     name: OSItem
-    b: 0
-    str: 
-    i: 0
-    f: 0
-    vector3: {x: 0, y: 0, z: 0}
-    vector2: {x: 0, y: 0}
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
     component: {fileID: 11400010}
+  assetLinks: []
   id: 
   prefabPath: Prefabs/Items/Weapons/weapon_pistol_stupid
   exportPath: 

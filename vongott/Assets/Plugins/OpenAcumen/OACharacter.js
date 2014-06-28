@@ -16,14 +16,20 @@ public class OACharacter extends MonoBehaviour {
 	public var health : float = 100;
 	public var behaviour : OABehaviour = OABehaviour.Idle;
 	public var speed : float = 0;
+	public var fieldOfView : float = 130;
+	public var lineOfSight : float = 20;
 	private var animator : Animator;
+	private var controller : CharacterController;
 	private var prevBehaviour : OABehaviour;
+	private var target : Transform;
 
 	// Inventory
 	public var inventory : OSInventory;
 	public var usingWeapons : boolean = true;
 	public var weaponCategoryPreference : int = 0;
 	public var weaponSubcategoryPreference : int = 0;
+	public var equippingHand : Transform;
+	private var equippedObject : OSItem;
 	
 	// Conversation
 	public var conversationTreePath : String = "";
@@ -36,6 +42,7 @@ public class OACharacter extends MonoBehaviour {
 	public var pathGoals : Vector3 [] = new Vector3[0];
 	public var turningSpeed : float = 4;
 	public var updatePathInterval : float = 10;
+	public var stoppingDistance : float = 2;
 	private var updatePathTimer : float = 0;
 	private var currentPathGoal : int = -1;
 
@@ -70,6 +77,10 @@ public class OACharacter extends MonoBehaviour {
 		return speed >= 0.5;
 	}
 
+	public function get alive () : boolean { 
+		return health > 0;
+	}
+
 	public function get convoSpeakers () : GameObject [] {
 		if ( conversationTree ) {
 			if ( convoSpeakerObjects.Length != conversationTree.speakers.Length ) {
@@ -80,6 +91,59 @@ public class OACharacter extends MonoBehaviour {
 		}
 		
 		return null;
+	}
+
+	public function get distanceToPlayer () : float {
+		if ( player ) {
+			return Vector3.Distance ( this.transform.position, player.transform.position );
+
+		} else {
+			return Mathf.Infinity;
+
+		}
+	}
+
+	public function get canSeePlayer () : boolean {
+		if ( player ) {
+			var hit : RaycastHit;
+			var here : Vector3 = this.transform.position;
+			var there : Vector3 = player.transform.position;
+
+			if ( controller ) {
+				here.y += controller.height;
+			
+			} else {
+				here.y += 1;
+			
+			}
+			
+			if ( player.GetComponent.< CharacterController > () ) {
+				there.y += player.GetComponent.< CharacterController > ().height / 2;
+			
+			} else {
+				there.y += 1;
+			
+			}
+
+
+			var direction : Vector3 = there - here;
+
+			if ( ( Vector3.Angle ( direction, this.transform.forward ) ) < fieldOfView ) {
+				if ( Physics.Raycast ( here, direction, hit, lineOfSight ) ) {
+					if ( hit.transform == player.transform ) {
+						Debug.DrawLine ( here, hit.point );
+						return true;
+					
+					} else {
+						return false;
+
+					}
+				}
+			}
+
+		}
+
+		return false;
 	}
 
 	public function GetNearestPathGoal () : int {
@@ -136,7 +200,7 @@ public class OACharacter extends MonoBehaviour {
 	public function TakeDamage ( damage : float ) {
 		health -= damage;
 
-		if ( health >= 0 ) {
+		if ( health <= 0 ) {
 			Die ();
 		}
 	}
@@ -145,10 +209,87 @@ public class OACharacter extends MonoBehaviour {
 		TakeDamage ( damage );
 	}
 
+	public function EquipPreferredWeapon () {
+		if ( preferredWeapon ) {
+			if ( equippedObject ) {
+				Destroy ( equippedObject );
+			}
+
+			equippedObject = Instantiate ( preferredWeapon ) as OSItem;
+
+			if ( equippedObject ) {
+				equippedObject.transform.parent = equippingHand;
+				equippedObject.transform.localPosition = Vector3.zero;
+				equippedObject.transform.localEulerAngles = Vector3.zero;
+			
+				if ( equippedObject.rigidbody ) {
+					Destroy ( equippedObject.rigidbody ) ;
+				}
+
+				if ( equippedObject.collider ) {
+					equippedObject.collider.enabled = false;
+				}
+			}
+		}
+	}
+
+	public function Unequip () {
+		if ( equippedObject ) {
+			Destroy ( equippedObject );
+		}
+	}
+
 	public function Die () {
 		if ( destroyOnDeath ) {
 			Destroy ( this.gameObject );
+		
+		} else {
+			SetRagdoll ( true );
+		
 		}
+	}
+
+	public function SetRagdoll ( state : boolean ) {
+		for ( var c : Collider in this.GetComponentsInChildren.< Collider > () ) {
+			c.enabled = state;
+
+			if ( c.rigidbody ) {
+				c.rigidbody.isKinematic = !state;
+			}
+		}
+
+		if ( controller ) {
+			controller.enabled = !state;
+		}
+
+		if ( animator ) {
+			animator.enabled = !state;
+		}
+	}
+
+	function TurnTowards ( v : Vector3 ) {
+		var lookPos : Vector3 = v - transform.position;
+		lookPos.y = 0;
+		
+		this.transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation ( lookPos ), turningSpeed * Time.deltaTime );
+	}
+	
+	public function ShootAtPlayer () {
+		if ( usingWeapons ) {
+			if ( !equippedObject ) {
+				EquipPreferredWeapon ();
+
+			} else {
+				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
+				
+				if ( firearm ) {
+					firearm.Fire ();
+				}
+			
+			}
+		}
+
+		TurnTowards ( player.transform.position );
 	}
 
 	public function UpdateSpeakers () {
@@ -160,17 +301,34 @@ public class OACharacter extends MonoBehaviour {
 	public function Start () {
 		UpdateSpeakers ();
 		animator = this.GetComponent.< Animator > ();
+		controller = this.GetComponent.< CharacterController > ();
+
+		SetRagdoll ( !alive );
 	}
 
 	public function Update () {
+		if ( !alive ) { return; }
+
 		var changed : boolean = behaviour != prevBehaviour;
-		
+
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
 				if ( player && pathFinder && updatePathTimer <= 0 ) {
 					pathFinder.SetGoal ( player.transform.position );
 				}
-				speed = 1;
+				
+				if ( Vector3.Distance ( this.transform.position, player.transform.position ) > stoppingDistance ) {
+					speed = 1;
+				
+				} else {
+					speed = 0;
+				
+				}
+
+				if ( isEnemy && canSeePlayer ) {
+					ShootAtPlayer ();
+				}
+
 				break;
 			
 			case OABehaviour.Idle:
