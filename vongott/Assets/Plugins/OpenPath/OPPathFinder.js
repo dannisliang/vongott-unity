@@ -9,6 +9,7 @@ class OPPathFinder extends MonoBehaviour {
 	public var target : Transform;
 	public var autoChase : boolean = false;
 	public var raycastToGoal : boolean = true;
+	public var raycastDistance : float = 5;
 	
 	@NonSerialized public var nodes : OPNode[] = new OPNode[0];
 	
@@ -50,17 +51,39 @@ class OPPathFinder extends MonoBehaviour {
 	public function GetCurrentGoal () : Vector3 {
 		var here : Vector3 = this.transform.position + Vector3.up * 0.1;
 		var there : Vector3 = goal + Vector3.up * 0.1;
-		var hits : RaycastHit [] = Physics.RaycastAll ( here, there - here, Vector3.Distance ( here, there ) );
+		var realDistance : float = Vector3.Distance ( here, there );
+		var rayDistance : float = Mathf.Clamp ( 0, raycastDistance, realDistance );
+		var hit : RaycastHit;
 	       
-		if ( hits.Length > 0 ) {
-			for ( var i : int = 0; i < hits.Length; i++ ) {
-				if ( hits[i].collider.gameObject != this.gameObject ) {
-					return GetCurrentNode ();
+		// Only consider hits within a certain range
+		if ( realDistance <= rayDistance ) {
+			// We hit something
+			if ( Physics.Raycast ( here, there - here, hit, rayDistance ) ) {
+				// If the hit is this object, try again
+				if ( hit.collider.gameObject == this.gameObject ) {
+					here = hit.point;
 				}
-			}
-		}
 
-		return goal;
+				// If we hit something (again), return the current node
+				if ( Physics.Raycast ( here, there - here, hit, rayDistance ) ) {
+					return GetCurrentNode ();			
+
+				// If not, then the goal is in plain sight
+				} else {
+					return goal;
+
+				}
+
+			// We hit nothing, the goal is in plain sight
+			} else {
+				return goal;	
+			
+			}
+		
+		} else {
+			return GetCurrentNode ();
+		
+		}	
 	}
 
 	public function SetGoal ( t : Transform ) {

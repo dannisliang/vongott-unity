@@ -24,6 +24,7 @@ public class OACharacter extends MonoBehaviour {
 	private var controller : CharacterController;
 	private var prevBehaviour : OABehaviour;
 	private var aiming : boolean = false;
+	private var aimDegrees : float = 0;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -111,7 +112,7 @@ public class OACharacter extends MonoBehaviour {
 
 		return result;
 	}
-
+	
 	public function get distanceToPlayer () : float {
 		if ( player ) {
 			return Vector3.Distance ( this.transform.position, player.transform.position );
@@ -317,7 +318,16 @@ public class OACharacter extends MonoBehaviour {
 
 		SetRagdoll ( !alive );
 	}
+	
+	private function GetAngleBetween ( a : Vector3, b : Vector3, n : Vector3 ) : float {
+    		var angle : float = Vector3.Angle ( a, b );
+    		var sign : float = Mathf.Sign ( Vector3.Dot ( n, Vector3.Cross ( a, b ) ) );
+    		var signed_angle : float = angle * sign;
+    		var angle360 : float = ( ( signed_angle ) + 360 ) % 360;
 
+    		return angle360;
+	}
+	
 	public function Update () {
 		if ( !alive ) { return; }
 
@@ -340,7 +350,7 @@ public class OACharacter extends MonoBehaviour {
 					}
 				
 				} else {
-					speed= 0;
+					speed = 0;
 
 				}
 
@@ -407,13 +417,26 @@ public class OACharacter extends MonoBehaviour {
 		if ( animator ) {
 			animator.SetFloat ( "Speed", speed );
 			animator.SetBool ( "Aiming", aiming );
+			animator.SetFloat ( "AimDegrees", aimDegrees );
 		}
 
 		if ( speed > 0 && pathFinder ) {
-			var lookPos : Vector3 = pathFinder.GetCurrentGoal() - this.transform.position;
+			var goal : Vector3 = pathFinder.GetCurrentGoal ();
+			var lookPos : Vector3 = goal - this.transform.position;
 			lookPos.y = 0;
 			
-			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), turningSpeed * Time.deltaTime );
+			if ( aiming ) {
+				aimDegrees = GetAngleBetween ( this.transform.forward, pathFinder.GetCurrentNode () - this.transform.position, Vector3.up );
+			
+			} else {
+				aimDegrees = 0;
+				transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), turningSpeed * Time.deltaTime );
+			
+			}
+		
+		} else {
+			aimDegrees = 0;
+		
 		}
 
 		prevBehaviour = behaviour;

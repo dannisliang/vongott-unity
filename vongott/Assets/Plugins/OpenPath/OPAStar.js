@@ -119,6 +119,12 @@ class OPAStar {
 		
 		// Reverse it
 		path.Reverse();
+		
+		// Remove the first node (as we don't want the OPPathFinder to return to it by accident)
+		if ( path.Count > 0 ) {
+			path.RemoveAt ( 0 );
+		}
+
 		return path.ToArray();
 	}
 	
