@@ -94,6 +94,10 @@ public class OSFirearm extends MonoBehaviour {
 
 				if ( Physics.Raycast ( ray, hit, range ) ) {
 					hit.collider.gameObject.SendMessage ( "OnProjectileHit", damage, SendMessageOptions.DontRequireReceiver );
+					
+					if ( hit.collider.rigidbody ) {
+						hit.collider.rigidbody.AddForce ( ray.direction.normalized * damage * 100 );
+					}
 				}
 
 			}
