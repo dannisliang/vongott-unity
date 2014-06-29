@@ -9,8 +9,6 @@ public class OSProjectile extends MonoBehaviour {
 	public var layerMask : LayerMask;
 	public var raycastDistance : float = 0.25;
 	public var speed : float = 1;
-	public var visibilityByTimeScale : boolean = false;
-	public var maxTimeScale : float = 0.9;
 	public var renderers : Renderer [] = new Renderer [0];
 
 	@HideInInspector public var lifetime : float = 2;
@@ -23,12 +21,6 @@ public class OSProjectile extends MonoBehaviour {
 			Destroy ( this.gameObject );
 		
 		} else {
-			if ( visibilityByTimeScale ) {
-				for ( var i : int = 0; i < renderers.Length; i++ ) {
-					renderers[i].enabled = Time.timeScale <= maxTimeScale;
-				}
-			}
-
 			this.transform.position += ( this.transform.forward * speed ) * Time.deltaTime;
 			
 			var hit : RaycastHit;

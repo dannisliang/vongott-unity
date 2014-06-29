@@ -15,6 +15,7 @@ public class OSFirearm extends MonoBehaviour {
 	public var muzzleFlash : GameObject;
 	public var muzzleFlashDuration : float = 0.05;
 	public var projectileType : OSProjectileType;
+	public var raycastTypeThreshold : float = 1.0;
 	public var aimWithMainCamera : boolean = true;
 
 	private var fireTimer : float = 0;
@@ -140,12 +141,14 @@ public class OSFirearm extends MonoBehaviour {
 			}
 		}
 
-		if ( Time.timeScale >= 1 ) {
-			projectileType = OSProjectileType.Raycast;
-		
-		} else if ( bullet ) {
-			projectileType = OSProjectileType.Prefab;
-		
+		if ( raycastTypeThreshold > 0 ) {
+			if ( Time.timeScale >= raycastTypeThreshold ) {
+				projectileType = OSProjectileType.Raycast;
+			
+			} else if ( bullet ) {
+				projectileType = OSProjectileType.Prefab;
+			
+			}
 		}
 	}	
 }
