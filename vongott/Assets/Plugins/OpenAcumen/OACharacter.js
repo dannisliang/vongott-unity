@@ -137,7 +137,7 @@ public class OACharacter extends MonoBehaviour {
 			
 			var direction : Vector3 = there - here;
 
-			if ( ( Vector3.Angle ( direction, this.transform.forward ) ) < fieldOfView ) {
+			if ( ( Vector3.Angle ( direction, this.transform.forward ) ) < fieldOfView / 2 ) {
 				if ( Physics.Raycast ( here, direction, hit, lineOfSight ) ) {
 					if ( hit.transform == player.transform ) {
 						Debug.DrawLine ( here, hit.point );
@@ -394,6 +394,12 @@ public class OACharacter extends MonoBehaviour {
 				}
 				break;
 
+		}
+
+		if ( isEnemy ) {
+			if ( behaviour != OABehaviour.ChasePlayer && canSeePlayer ) {
+				behaviour = OABehaviour.ChasePlayer;
+			}
 		}
 
 		if ( changed ) {
