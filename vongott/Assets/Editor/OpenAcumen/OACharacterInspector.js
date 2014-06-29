@@ -35,11 +35,6 @@ public class OACharacterInspector extends Editor {
 
 		character.behaviour = EditorGUILayout.Popup ( "Behaviour", character.behaviour, System.Enum.GetNames ( OABehaviour ) );
 
-		EditorGUILayout.BeginHorizontal ();
-		character.updatePathInterval = EditorGUILayout.FloatField ( "Update path every", character.updatePathInterval );
-		EditorGUILayout.LabelField ( "seconds", GUILayout.Width ( 50 ) );
-		EditorGUILayout.EndHorizontal ();
-		
 		EditorGUILayout.Space ();
 		EditorGUILayout.LabelField ( "Inventory", EditorStyles.boldLabel );
 			

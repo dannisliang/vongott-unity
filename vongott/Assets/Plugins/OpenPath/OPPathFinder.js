@@ -10,11 +10,13 @@ class OPPathFinder extends MonoBehaviour {
 	public var autoChase : boolean = false;
 	public var raycastToGoal : boolean = true;
 	public var raycastDistance : float = 5;
-	
+	public var minUpdateTime : float = 1;
+		
 	@NonSerialized public var nodes : OPNode[] = new OPNode[0];
 	
 	private var goal : Vector3;
-	
+	private var updateTimer : float = 0;
+
 	public function SetGoalAfterSeconds ( s : float ) : IEnumerator {
 		yield WaitForSeconds ( s );
 				
@@ -100,7 +102,6 @@ class OPPathFinder extends MonoBehaviour {
 	public function SetGoal ( v : Vector3 ) {
 		if ( goal == v ) { return; }
 				
-		ClearNodes ();
 		goal = v;
 		UpdatePosition ();
 	}
@@ -110,21 +111,34 @@ class OPPathFinder extends MonoBehaviour {
 	}
 		
 	public function UpdatePosition () {
-		if ( scanner ) {
+		if ( scanner && !scanner.searching && updateTimer <= 0 ) {
+			ClearNodes ();
 			
-			var start : Vector3 = this.transform.position;
-						
-			nodes = scanner.FindPath ( start, goal );
-									
-			for ( var i : int = 0; i < nodes.Length; i++ ) {
-				nodes[i].active = true;
-			}
+			StartCoroutine ( function () : IEnumerator {
+				var start : Vector3 = this.transform.position;
 			
-			currentNode = 0;
+				var tempNodes : List.< OPNode > = new List.< OPNode > ();
+				
+				yield scanner.FindPath ( start, goal, tempNodes );
+				
+				nodes = tempNodes.ToArray ();
+
+				for ( var i : int = 0; i < nodes.Length; i++ ) {
+					nodes[i].active = true;
+				}
+				
+				currentNode = 0;
+
+				updateTimer = minUpdateTime;
+			} () );
 		}
 	}
 
 	function Update () {
+		if ( updateTimer > 0 ) {
+			updateTimer -= Time.deltaTime;
+		}
+		
 		if ( scanner ) {
 			// If there are nodes to follow		
 			if ( nodes && nodes.Length > 0 ) {

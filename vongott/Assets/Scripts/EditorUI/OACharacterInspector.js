@@ -52,8 +52,6 @@ public class OACharacterInspector extends OEComponentInspector {
 		// Path
 		Offset ( 0, 20 );
 
-		character.updatePathInterval = FloatField ( "Path update interval", character.updatePathInterval );
-
 		for ( i = 0; i < character.pathGoals.Length; i++ ) {
 			character.pathGoals[i] = PointField ( "Goal #" + i.ToString(), character.pathGoals[i] );
 		}

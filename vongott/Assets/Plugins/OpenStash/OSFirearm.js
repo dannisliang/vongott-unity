@@ -13,7 +13,7 @@ public class OSFirearm extends MonoBehaviour {
 	@HideInInspector public var holsteringSoundIndex : int;
 	
 	public var muzzleFlash : GameObject;
-	public var muzzleFlashDuration : float = 0.25;
+	public var muzzleFlashDuration : float = 0.05;
 	public var projectileType : OSProjectileType;
 	public var aimWithMainCamera : boolean = true;
 
@@ -127,7 +127,13 @@ public class OSFirearm extends MonoBehaviour {
 		}
 
 		if ( muzzleFlash ) {
-			muzzleFlash.SetActive ( flashTimer > 0 );
+			if ( flashTimer > 0 && !muzzleFlash.activeSelf ) {
+				muzzleFlash.SetActive ( true );
+			
+			} else if ( flashTimer <= 0 && muzzleFlash.activeSelf ) {
+				muzzleFlash.SetActive ( false );
+
+			}
 		}
 
 		if ( Time.timeScale >= 1 ) {

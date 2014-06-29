@@ -32,9 +32,6 @@ public class SerializeOpenAcumen extends OFPlugin {
 
 		output.AddField ( "convoSpeakerObjects", speakerObjects );
 
-		// Path
-		output.AddField ( "updatePathInterval", input.updatePathInterval );
-		
 		var pathGoals : JSONObject = new JSONObject ( JSONObject.Type.ARRAY );
 		
 		for ( i = 0; i < input.pathGoals.Length; i++ ) {
@@ -128,8 +125,6 @@ public class SerializeOpenAcumen extends OFPlugin {
 		}
 
 		// Path
-		output.updatePathInterval = input.GetField ( "updatePathInterval" ).n;
-
 		var goalList : List.< JSONObject > = input.GetField ( "pathGoals" ).list;
 
 		output.pathGoals = new Vector3 [ goalList.Count ];

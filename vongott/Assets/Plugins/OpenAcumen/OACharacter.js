@@ -44,8 +44,6 @@ public class OACharacter extends MonoBehaviour {
 	public var pathFinder : OPPathFinder;
 	public var pathGoals : Vector3 [] = new Vector3[0];
 	public var turningSpeed : float = 4;
-	public var updatePathInterval : float = 10;
-	private var updatePathTimer : float = 0;
 	private var currentPathGoal : int = -1;
 
 	public function get preferredWeapon () : OSItem {
@@ -336,7 +334,7 @@ public class OACharacter extends MonoBehaviour {
 
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
-				if ( player && pathFinder && updatePathTimer <= 0 ) {
+				if ( player && pathFinder ) {
 					pathFinder.SetGoal ( player.transform.position );
 				}
 				
@@ -400,14 +398,6 @@ public class OACharacter extends MonoBehaviour {
 
 		if ( changed ) {
 			currentPathGoal = GetNearestPathGoal ();
-			updatePathTimer = 0;
-
-		} else if ( updatePathTimer > 0 ) {
-			updatePathTimer -= Time.deltaTime;
-		
-		} else {
-			updatePathTimer = updatePathInterval;
-
 		}
 
 		if ( health <= 0 ) {
