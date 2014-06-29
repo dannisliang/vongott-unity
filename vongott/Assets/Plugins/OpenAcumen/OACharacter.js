@@ -382,9 +382,7 @@ public class OACharacter extends MonoBehaviour {
 			case OABehaviour.ChasePlayer:
 				Debug.DrawLine ( this.transform.position, lastKnownPosition );
 				
-				if ( player && pathFinder ) {
-					pathFinder.SetGoal ( lastKnownPosition );
-				}
+				pathFinder.SetGoal ( lastKnownPosition );
 				
 				if ( distanceToPlayer > stoppingDistance ) {
 					if ( distanceToPlayer <= shootingDistance ) {
@@ -406,7 +404,7 @@ public class OACharacter extends MonoBehaviour {
 					if ( isEnemy ) {
 						attentionTimer = attentionSpan;
 					
-						if ( distanceToPlayer <= shootingDistance ) {
+						if ( hesitationTimer <= 0 && distanceToPlayer <= shootingDistance ) {
 							ShootAtPlayer ();
 							aiming = true;
 						}
