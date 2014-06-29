@@ -21,7 +21,6 @@ public class OACharacter extends MonoBehaviour {
 	public var shootingDistance : float = 10;
 	public var stoppingDistance : float = 2;
 	public var attentionSpan : float = 10;
-	public var switchRoamingGoal : float = 10;
 	public var roamingRadius : float = 10;
 	
 	private var animator : Animator;
@@ -32,9 +31,9 @@ public class OACharacter extends MonoBehaviour {
 	private var initialBehaviour : OABehaviour = OABehaviour.Idle;
 	private var lastKnownPosition : Vector3;
 	private var attentionTimer : float = 0;
-	private var roamingTimer : float = 0;
 	private var initialPosition : Vector3;
 	private var initialRotation : Quaternion;
+	private var roamingGoal : Vector3;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -343,7 +342,33 @@ public class OACharacter extends MonoBehaviour {
 
     		return angle360;
 	}
-	
+
+	public function DoRaycast ( target : Vector3 ) : GameObject {
+		var here : Vector3 = this.transform.position + new Vector3 ( 0, 0.05, 0 );
+		var there : Vector3 = target + new Vector3 ( 0, 0.05, 0 );
+		
+		var hit : RaycastHit;
+		var distance : float = Vector3.Distance ( here, there );
+
+		if ( Physics.Raycast ( here, there - here, hit, distance ) ) {
+			if ( hit.collider.gameObject == this.gameObject ) {
+				distance = Vector3.Distance ( hit.point, there );
+
+				if ( Physics.Raycast ( hit.point, there - hit.point, hit, distance ) ) {
+					return hit.collider.gameObject;
+				
+				} else {
+					return null;
+
+				}
+			}
+		
+		} else {
+			return null;
+
+		}
+	}
+
 	public function Update () {
 		if ( !alive ) { return; }
 
@@ -392,12 +417,17 @@ public class OACharacter extends MonoBehaviour {
 					
 					}
 
+					if ( Vector3.Distance ( this.transform.position, lastKnownPosition ) < stoppingDistance ) {
+						speed = 0;
+					}
 				}
 
 				break;
 			
 			case OABehaviour.Idle:
-				if ( Vector3.Distance ( this.transform.position, initialPosition ) > 0.5 ) {
+				var distance : float = Vector3.Distance ( this.transform.position, initialPosition );
+
+			       	if ( distance > 0.5 ) {
 					if ( pathFinder ) {
 						pathFinder.SetGoal ( initialPosition );
 					}
@@ -414,22 +444,20 @@ public class OACharacter extends MonoBehaviour {
 
 			case OABehaviour.RoamingRandom:
 				speed = 0.5;
-
-				if ( roamingTimer > 0 ) {
-					roamingTimer -= Time.deltaTime;
-				
-				} else {
-					if ( pathFinder ) {
+					
+				if ( pathFinder ) {
+					if ( roamingGoal == Vector3.zero || Vector3.Distance ( this.transform.position, roamingGoal ) < 0.5 ) {
 						var roamingCenter : Vector3 = initialPosition;
 
 						if ( isEnemy && attentionTimer > 0 ) {
 							roamingCenter = lastKnownPosition;
 						}
+						
+						roamingGoal = pathFinder.scanner.GetClosestNode ( roamingCenter + new Vector3 ( Random.Range ( 0, roamingRadius ), 0, Random.Range ( 0, roamingRadius ) ) ).position;
 
-						pathFinder.SetGoal ( roamingCenter + new Vector3 ( Random.Range ( 0, roamingRadius ), 0, Random.Range ( 0, roamingRadius ) ) );
+						pathFinder.SetGoal ( roamingGoal );
 					}
-
-					roamingTimer = switchRoamingGoal;
+					
 				}
 
 				if ( isEnemy ) {
@@ -472,7 +500,12 @@ public class OACharacter extends MonoBehaviour {
 						pathFinder.SetGoal ( pathGoals[currentPathGoal] );
 				
 					}
+				
+				} else {
+					behaviour = OABehaviour.RoamingRandom;
+				
 				}
+				
 				break;
 
 		}
@@ -499,6 +532,15 @@ public class OACharacter extends MonoBehaviour {
 
 		if ( speed > 0 && pathFinder ) {
 			var goal : Vector3 = pathFinder.GetCurrentGoal ();
+			
+			if ( behaviour == OABehaviour.Idle && Mathf.Abs ( this.transform.position.y - initialPosition.y ) < 1 && DoRaycast ( initialPosition ) == null ) {
+				goal = initialPosition;
+		
+			} else if ( behaviour == OABehaviour.RoamingPath && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
+				goal = pathGoals[currentPathGoal];
+
+			}
+			
 			var lookPos : Vector3 = goal - this.transform.position;
 			lookPos.y = 0;
 			
@@ -507,7 +549,7 @@ public class OACharacter extends MonoBehaviour {
 			
 			} else {
 				aimDegrees = 0;
-				transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), turningSpeed * Time.deltaTime );
+				transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.LookRotation ( lookPos ), turningSpeed * Time.deltaTime );
 			
 			}
 		
