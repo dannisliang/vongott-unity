@@ -7,6 +7,7 @@ public enum OABehaviour {
 	RoamingRandom,
 	SearchForPlayer,
 	GoToGoal,
+	GoHome,
 }
 
 public class OACharacter extends MonoBehaviour {
@@ -22,6 +23,7 @@ public class OACharacter extends MonoBehaviour {
 	public var stoppingDistance : float = 2;
 	public var attentionSpan : float = 10;
 	public var roamingRadius : float = 10;
+	public var hesitation : float = 2;
 	
 	private var animator : Animator;
 	private var controller : CharacterController;
@@ -34,6 +36,7 @@ public class OACharacter extends MonoBehaviour {
 	private var initialPosition : Vector3;
 	private var initialRotation : Quaternion;
 	private var roamingGoal : Vector3;
+	private var hesitationTimer : float = 0;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -377,6 +380,8 @@ public class OACharacter extends MonoBehaviour {
 
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
+				Debug.DrawLine ( this.transform.position, lastKnownPosition );
+				
 				if ( player && pathFinder ) {
 					pathFinder.SetGoal ( lastKnownPosition );
 				}
@@ -408,64 +413,67 @@ public class OACharacter extends MonoBehaviour {
 					}
 				
 				} else if ( isEnemy ) {
-					if ( attentionTimer > 0 ) {
-						attentionTimer -= Time.deltaTime;
-					
-					} else {
+					lastKnownPosition = pathFinder.scanner.GetClosestNode ( lastKnownPosition ).position;
+						
+					if ( attentionTimer <= 0 || Vector3.Distance ( this.transform.position, lastKnownPosition ) < stoppingDistance ) {
+						hesitationTimer = hesitation;
+						
 						behaviour = OABehaviour.RoamingRandom;
-						attentionTimer = attentionSpan;
+						attentionTimer = attentionTimer + attentionSpan;
 					
-					}
+					} else if ( attentionTimer > 0 ) {
+						attentionTimer -= Time.deltaTime;
 
-					if ( Vector3.Distance ( this.transform.position, lastKnownPosition ) < stoppingDistance ) {
-						speed = 0;
 					}
 				}
 
 				break;
 			
-			case OABehaviour.Idle:
+			case OABehaviour.GoHome:
 				var distance : float = Vector3.Distance ( this.transform.position, initialPosition );
-
-			       	if ( distance > 0.5 ) {
-					if ( pathFinder ) {
-						pathFinder.SetGoal ( initialPosition );
-					}
-
-					speed = 0.5;
+				speed = 0.5;
+			       	
+				if ( distance < stoppingDistance ) {
+					behaviour = initialBehaviour;
 				
 				} else {
-					speed = 0;
-					this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, initialRotation, Time.deltaTime * turningSpeed );
+					pathFinder.SetGoal ( initialPosition );
 
 				}
+
+				break;
+
+			case OABehaviour.Idle:
+				speed = 0;
+				this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, initialRotation, Time.deltaTime * turningSpeed );
 				
 				break;
 
 			case OABehaviour.RoamingRandom:
 				speed = 0.5;
 					
-				if ( pathFinder ) {
-					if ( roamingGoal == Vector3.zero || Vector3.Distance ( this.transform.position, roamingGoal ) < 0.5 ) {
-						var roamingCenter : Vector3 = initialPosition;
+				if ( roamingGoal == Vector3.zero || Vector3.Distance ( this.transform.position, roamingGoal ) < 0.5 ) {
+					var roamingCenter : Vector3 = initialPosition;
 
-						if ( isEnemy && attentionTimer > 0 ) {
-							roamingCenter = lastKnownPosition;
-						}
-						
-						roamingGoal = pathFinder.scanner.GetClosestNode ( roamingCenter + new Vector3 ( Random.Range ( 0, roamingRadius ), 0, Random.Range ( 0, roamingRadius ) ) ).position;
-
-						pathFinder.SetGoal ( roamingGoal );
+					if ( isEnemy && attentionTimer > 0 ) {
+						roamingCenter = lastKnownPosition;
 					}
 					
-				}
+					roamingGoal = pathFinder.scanner.GetClosestNode ( roamingCenter + new Vector3 ( Random.Range ( roamingRadius / 2, roamingRadius ), 0, Random.Range ( roamingRadius / 2, roamingRadius ) ) ).position;
 
+					pathFinder.SetGoal ( roamingGoal );
+					
+					hesitationTimer = hesitation;
+				}
+					
 				if ( isEnemy ) {
 					if ( attentionTimer > 0 ) {
 						attentionTimer -= Time.deltaTime;
 					
 					} else if ( behaviour != initialBehaviour ) {
-						behaviour = initialBehaviour;
+						behaviour = OABehaviour.GoHome;
+
+						hesitationTimer = hesitation;
 					
 					}
 				}
@@ -482,13 +490,15 @@ public class OACharacter extends MonoBehaviour {
 							currentPathGoal = 0;
 
 						}	
+				
+						hesitationTimer = hesitation;
 
 					} else {
 						pathFinder.SetGoal ( pathGoals[currentPathGoal] );
 					
 					}
 				}
-				speed = 0.25;
+				speed = 0.5;
 				break;
 
 			case OABehaviour.GoToGoal:
@@ -513,6 +523,9 @@ public class OACharacter extends MonoBehaviour {
 		if ( isEnemy && canSeePlayer ) {
 			if ( behaviour != OABehaviour.ChasePlayer ) {
 				behaviour = OABehaviour.ChasePlayer;
+				hesitationTimer = hesitation;
+
+				EquipPreferredWeapon ();
 			}
 		}
 
@@ -524,6 +537,15 @@ public class OACharacter extends MonoBehaviour {
 			Die ();
 		}
 
+		if ( hesitationTimer > 0 ) {
+			hesitationTimer -= Time.deltaTime;
+			speed = 0;
+
+			if ( behaviour == OABehaviour.ChasePlayer ) {
+				TurnTowards ( player.transform.position );
+			}			
+		}
+
 		if ( animator ) {
 			animator.SetFloat ( "Speed", speed );
 			animator.SetBool ( "Aiming", aiming );
@@ -533,7 +555,7 @@ public class OACharacter extends MonoBehaviour {
 		if ( speed > 0 && pathFinder ) {
 			var goal : Vector3 = pathFinder.GetCurrentGoal ();
 			
-			if ( behaviour == OABehaviour.Idle && Mathf.Abs ( this.transform.position.y - initialPosition.y ) < 1 && DoRaycast ( initialPosition ) == null ) {
+			if ( behaviour == OABehaviour.GoHome && Mathf.Abs ( this.transform.position.y - initialPosition.y ) < 1 && DoRaycast ( initialPosition ) == null ) {
 				goal = initialPosition;
 		
 			} else if ( behaviour == OABehaviour.RoamingPath && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
@@ -549,7 +571,7 @@ public class OACharacter extends MonoBehaviour {
 			
 			} else {
 				aimDegrees = 0;
-				transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.LookRotation ( lookPos ), turningSpeed * Time.deltaTime );
+				TurnTowards ( goal );
 			
 			}
 		
