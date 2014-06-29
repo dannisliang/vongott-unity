@@ -120,11 +120,6 @@ public class OPAStar {
 		
 		// Reverse it
 		list.Reverse();
-		
-		// Remove the first node (as we don't want the OPPathFinder to return to it by accident)
-		if ( list.Count > 0 ) {
-			list.RemoveAt ( 0 );
-		}
 	}
 	
 	// Get straight line distance between two points

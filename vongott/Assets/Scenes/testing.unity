@@ -82258,7 +82258,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2055227478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: -11.5317869}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1465851364}
@@ -82386,14 +82386,14 @@ MonoBehaviour:
   destroyOnDeath: 0
   player: {fileID: 0}
   health: 100
-  behaviour: 2
+  behaviour: 3
   speed: 0
   fieldOfView: 130
   lineOfSight: 30
   shootingDistance: 10
   stoppingDistance: 3
   attentionSpan: 30
-  roamingRadius: 5
+  roamingRadius: 10
   hesitation: 2
   inventory: {fileID: 2055227482}
   usingWeapons: 1
@@ -82405,11 +82405,7 @@ MonoBehaviour:
   convoSpeakerObjects: []
   convoRootNode: 0
   pathFinder: {fileID: 2055227487}
-  pathGoals:
-  - {x: 0, y: 0, z: -20}
-  - {x: 10, y: 0, z: -20}
-  - {x: 10, y: 0, z: -10}
-  - {x: 0, y: 0, z: -10}
+  pathGoals: []
   turningSpeed: 4
 --- !u!143 &2055227485
 CharacterController:

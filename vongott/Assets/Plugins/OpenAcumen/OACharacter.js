@@ -37,6 +37,7 @@ public class OACharacter extends MonoBehaviour {
 	private var initialRotation : Quaternion;
 	private var roamingGoal : Vector3;
 	private var hesitationTimer : float = 0;
+	private var roamingTimer : float = 0;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -449,8 +450,12 @@ public class OACharacter extends MonoBehaviour {
 
 			case OABehaviour.RoamingRandom:
 				speed = 0.5;
+
+				if ( roamingTimer > 0 ) {
+					roamingTimer -= Time.deltaTime;
+				}
 					
-				if ( roamingGoal == Vector3.zero || Vector3.Distance ( this.transform.position, roamingGoal ) < 0.5 ) {
+				if ( roamingTimer <= 0 || Vector3.Distance ( this.transform.position, roamingGoal ) < 0.5 ) {
 					var roamingCenter : Vector3 = initialPosition;
 
 					if ( isEnemy && attentionTimer > 0 ) {
@@ -462,6 +467,8 @@ public class OACharacter extends MonoBehaviour {
 					pathFinder.SetGoal ( roamingGoal );
 					
 					hesitationTimer = hesitation;
+
+					roamingTimer = roamingRadius;
 				}
 					
 				if ( isEnemy ) {
