@@ -46,7 +46,6 @@ class GameCore extends MonoBehaviour {
 	
 	public var timeScale : float = 1.0;
 	public var ignoreTimeScale : float = 0.0;
-	public var tempTimeScale : float = 1.0;
 	public var timeScaleGoal : float = 1.0;
 	
 	
@@ -205,23 +204,7 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Regular
 	function SetPause ( state : boolean ) {
-		if ( state ) {		
-			tempTimeScale = timeScale;
-			
-			iTween.StopByName ( "TimeScaleTween" );
-			SetTimeScale ( 0 );
-	
-		} else {		
-			iTween.StopByName ( "TimeScaleTween" );
-			
-			if ( tempTimeScale != timeScaleGoal ) {
-				TweenTimeScale ( tempTimeScale, timeScaleGoal, 1.0 );
-			
-			} else {
-				SetTimeScale ( tempTimeScale );
-			
-			}
-		}
+		Time.timeScale = state ? 0 : timeScale;
 	}
 	
 	// Timescale
@@ -229,22 +212,8 @@ class GameCore extends MonoBehaviour {
 		timeScaleGoal = goal;
 	}
 	
-	function TweenTimeScale ( start : float, goal : float, time : float ) {
-		iTween.ValueTo ( this.gameObject, iTween.Hash (
-			"name", "TimeScaleTween",
-			"from", start,
-			"to", goal,
-			"onupdate", "SetTimeScale",
-			"ignoretimescale", true,
-			"time", time
-		) );
-		
-		SetTimeScaleGoal ( goal );
-	}
-	
 	function SetTimeScale ( time : float ) {
-		timeScale = time;
-		timeScaleGoal = timeScale;
+		timeScaleGoal = time;
 	}
 	
 	
@@ -456,7 +425,6 @@ class GameCore extends MonoBehaviour {
 		
 		ignoreTimeScale = Time.deltaTime * Mathf.Pow ( timeScale, -1.0 );
 	
-	
 		if ( timeCounter < refreshTime ) {
 			timeCounter += Time.deltaTime;
 			frameCounter++;
@@ -467,6 +435,12 @@ class GameCore extends MonoBehaviour {
 			timeCounter = 0.0f;
 		}
 
-		timeScale = Mathf.Lerp ( timeScale, timeScaleGoal, Time.deltaTime * 10 );
+		if ( Mathf.Abs ( timeScale - timeScaleGoal ) < 0.05 ) {
+			timeScale = timeScaleGoal;
+		
+		} else {
+			timeScale = Mathf.Lerp ( timeScale, timeScaleGoal, Time.deltaTime * 10 );
+		
+		}
 	}
 }

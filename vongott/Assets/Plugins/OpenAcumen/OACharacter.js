@@ -331,14 +331,7 @@ public class OACharacter extends MonoBehaviour {
 		
 		var scanner : OPScanner = GameObject.FindObjectOfType.< OPScanner > ();
 
-		if ( scanner ) {
-			initialPosition = scanner.GetClosestNode ( this.transform.position ).position;
-		
-		} else {
-			initialPosition = this.transform.position;
-
-		}
-
+		initialPosition = this.transform.position;
 		initialRotation = this.transform.rotation;
 	}
 	
