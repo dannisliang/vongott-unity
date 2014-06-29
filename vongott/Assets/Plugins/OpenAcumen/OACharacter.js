@@ -20,11 +20,21 @@ public class OACharacter extends MonoBehaviour {
 	public var lineOfSight : float = 20;
 	public var shootingDistance : float = 10;
 	public var stoppingDistance : float = 2;
+	public var attentionSpan : float = 10;
+	public var switchRoamingGoal : float = 10;
+	public var roamingRadius : float = 10;
+	
 	private var animator : Animator;
 	private var controller : CharacterController;
 	private var prevBehaviour : OABehaviour;
 	private var aiming : boolean = false;
 	private var aimDegrees : float = 0;
+	private var initialBehaviour : OABehaviour = OABehaviour.Idle;
+	private var lastKnownPosition : Vector3;
+	private var attentionTimer : float = 0;
+	private var roamingTimer : float = 0;
+	private var initialPosition : Vector3;
+	private var initialRotation : Quaternion;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -32,6 +42,7 @@ public class OACharacter extends MonoBehaviour {
 	public var weaponCategoryPreference : int = 0;
 	public var weaponSubcategoryPreference : int = 0;
 	public var equippingHand : Transform;
+	
 	private var equippedObject : OSItem;
 	
 	// Conversation
@@ -44,6 +55,7 @@ public class OACharacter extends MonoBehaviour {
 	public var pathFinder : OPPathFinder;
 	public var pathGoals : Vector3 [] = new Vector3[0];
 	public var turningSpeed : float = 4;
+	
 	private var currentPathGoal : int = -1;
 
 	public function get preferredWeapon () : OSItem {
@@ -315,6 +327,19 @@ public class OACharacter extends MonoBehaviour {
 		controller = this.GetComponent.< CharacterController > ();
 
 		SetRagdoll ( !alive );
+		initialBehaviour = behaviour;
+		
+		var scanner : OPScanner = GameObject.FindObjectOfType.< OPScanner > ();
+
+		if ( scanner ) {
+			initialPosition = scanner.GetClosestNode ( this.transform.position ).position;
+		
+		} else {
+			initialPosition = this.transform.position;
+
+		}
+
+		initialRotation = this.transform.rotation;
 	}
 	
 	private function GetAngleBetween ( a : Vector3, b : Vector3, n : Vector3 ) : float {
@@ -335,7 +360,7 @@ public class OACharacter extends MonoBehaviour {
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
 				if ( player && pathFinder ) {
-					pathFinder.SetGoal ( player.transform.position );
+					pathFinder.SetGoal ( lastKnownPosition );
 				}
 				
 				if ( distanceToPlayer > stoppingDistance ) {
@@ -352,15 +377,78 @@ public class OACharacter extends MonoBehaviour {
 
 				}
 
-				if ( isEnemy && canSeePlayer && distanceToPlayer <= shootingDistance ) {
-					ShootAtPlayer ();
-					aiming = true;
+				if ( canSeePlayer ) {
+					lastKnownPosition = player.transform.position;
+				
+					if ( isEnemy ) {
+						attentionTimer = attentionSpan;
+					
+						if ( distanceToPlayer <= shootingDistance ) {
+							ShootAtPlayer ();
+							aiming = true;
+						}
+					}
+				
+				} else if ( isEnemy ) {
+					if ( attentionTimer > 0 ) {
+						attentionTimer -= Time.deltaTime;
+					
+					} else {
+						behaviour = OABehaviour.RoamingRandom;
+						attentionTimer = attentionSpan;
+					
+					}
+
 				}
 
 				break;
 			
 			case OABehaviour.Idle:
-				speed = 0;
+				if ( Vector3.Distance ( this.transform.position, initialPosition ) > 0.5 ) {
+					if ( pathFinder ) {
+						pathFinder.SetGoal ( initialPosition );
+					}
+
+					speed = 0.5;
+				
+				} else {
+					speed = 0;
+					this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, initialRotation, Time.deltaTime * turningSpeed );
+
+				}
+				
+				break;
+
+			case OABehaviour.RoamingRandom:
+				speed = 0.5;
+
+				if ( roamingTimer > 0 ) {
+					roamingTimer -= Time.deltaTime;
+				
+				} else {
+					if ( pathFinder ) {
+						var roamingCenter : Vector3 = initialPosition;
+
+						if ( isEnemy && attentionTimer > 0 ) {
+							roamingCenter = lastKnownPosition;
+						}
+
+						pathFinder.SetGoal ( roamingCenter + new Vector3 ( Random.Range ( 0, roamingRadius ), 0, Random.Range ( 0, roamingRadius ) ) );
+					}
+
+					roamingTimer = switchRoamingGoal;
+				}
+
+				if ( isEnemy ) {
+					if ( attentionTimer > 0 ) {
+						attentionTimer -= Time.deltaTime;
+					
+					} else if ( behaviour != initialBehaviour ) {
+						behaviour = initialBehaviour;
+					
+					}
+				}
+
 				break;
 
 			case OABehaviour.RoamingPath:
@@ -396,8 +484,8 @@ public class OACharacter extends MonoBehaviour {
 
 		}
 
-		if ( isEnemy ) {
-			if ( behaviour != OABehaviour.ChasePlayer && canSeePlayer ) {
+		if ( isEnemy && canSeePlayer ) {
+			if ( behaviour != OABehaviour.ChasePlayer ) {
 				behaviour = OABehaviour.ChasePlayer;
 			}
 		}
