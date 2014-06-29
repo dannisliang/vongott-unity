@@ -127,18 +127,23 @@ class OPScanner extends MonoBehaviour {
 	}
 	
 	public function GetClosestNode ( pos : Vector3 ) : OPNode {
-		var shortestDistance : float = 100;
+		var shortestDistance : float = Mathf.Infinity;
 		var node : OPNode;
 		
-		for ( var n : OPNode in map.nodes ) {
+		for ( var i : int = 0; i < map.nodes.Length; i++ ) {
+			var n : OPNode = map.nodes[i];
+
 			if ( n == null ) { continue; }
 			
-			var currentDistance : float = ( pos - (n as OPNode).position ).magnitude;
+			var currentDistance : float = Vector3.Distance ( pos, n.position );
 			
-			if ( currentDistance < shortestDistance ) {
+			if ( currentDistance < 0.5 ) {
+				node = n;
+				break;
+		  	
+			} else if ( currentDistance < shortestDistance ) {
 				shortestDistance = currentDistance;
-				node = n as OPNode;
-				
+				node = n;
 			}
 		}
 		

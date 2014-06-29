@@ -3,8 +3,8 @@
 public enum OABehaviour {
 	ChasePlayer,
 	Idle,
-	RoamingPath,
-	RoamingRandom,
+	Patrolling,
+	Seeking,
 	SearchForPlayer,
 	GoToGoal,
 	GoHome,
@@ -35,9 +35,8 @@ public class OACharacter extends MonoBehaviour {
 	private var attentionTimer : float = 0;
 	private var initialPosition : Vector3;
 	private var initialRotation : Quaternion;
-	private var roamingGoal : Vector3;
+	private var seekingGoal : Vector3;
 	private var hesitationTimer : float = 0;
-	private var roamingTimer : float = 0;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -378,12 +377,11 @@ public class OACharacter extends MonoBehaviour {
 
 		var changed : boolean = behaviour != prevBehaviour;
 		aiming = false;
-
+			
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
-				Debug.DrawLine ( this.transform.position, lastKnownPosition );
-				
 				pathFinder.SetGoal ( lastKnownPosition );
+				Debug.DrawLine ( this.transform.position, lastKnownPosition );
 				
 				if ( distanceToPlayer > stoppingDistance ) {
 					if ( distanceToPlayer <= shootingDistance ) {
@@ -412,12 +410,10 @@ public class OACharacter extends MonoBehaviour {
 					}
 				
 				} else if ( isEnemy ) {
-					lastKnownPosition = pathFinder.scanner.GetClosestNode ( lastKnownPosition ).position;
-						
-					if ( attentionTimer <= 0 || Vector3.Distance ( this.transform.position, lastKnownPosition ) < stoppingDistance ) {
+					if ( pathFinder.atEndOfPath || attentionTimer <= 0 || Vector3.Distance ( this.transform.position, lastKnownPosition ) < stoppingDistance ) {
 						hesitationTimer = hesitation;
 						
-						behaviour = OABehaviour.RoamingRandom;
+						behaviour = OABehaviour.Seeking;
 						attentionTimer = attentionTimer + attentionSpan;
 					
 					} else if ( attentionTimer > 0 ) {
@@ -429,16 +425,13 @@ public class OACharacter extends MonoBehaviour {
 				break;
 			
 			case OABehaviour.GoHome:
-				var distance : float = Vector3.Distance ( this.transform.position, initialPosition );
 				speed = 0.5;
-			       	
-				if ( distance < stoppingDistance ) {
-					behaviour = initialBehaviour;
-				
-				} else {
-					pathFinder.SetGoal ( initialPosition );
 
-				}
+				pathFinder.SetGoal ( initialPosition );
+			       	
+				if ( pathFinder.atEndOfPath ) {
+					behaviour = initialBehaviour;
+				}	
 
 				break;
 
@@ -448,44 +441,34 @@ public class OACharacter extends MonoBehaviour {
 				
 				break;
 
-			case OABehaviour.RoamingRandom:
+			case OABehaviour.Seeking:
 				speed = 0.5;
+				
+				Debug.DrawLine ( this.transform.position, seekingGoal );
 
-				if ( roamingTimer > 0 ) {
-					roamingTimer -= Time.deltaTime;
-				}
+				if ( pathFinder.atEndOfPath ) {
+					var seekingCenter : Vector3 = lastKnownPosition;
 					
-				if ( roamingTimer <= 0 || Vector3.Distance ( this.transform.position, roamingGoal ) < 0.5 ) {
-					var roamingCenter : Vector3 = initialPosition;
+					seekingGoal = seekingCenter + new Vector3 ( Random.Range ( roamingRadius / 2, roamingRadius ), 0, Random.Range ( roamingRadius / 2, roamingRadius ) );
 
-					if ( isEnemy && attentionTimer > 0 ) {
-						roamingCenter = lastKnownPosition;
-					}
-					
-					roamingGoal = pathFinder.scanner.GetClosestNode ( roamingCenter + new Vector3 ( Random.Range ( roamingRadius / 2, roamingRadius ), 0, Random.Range ( roamingRadius / 2, roamingRadius ) ) ).position;
-
-					pathFinder.SetGoal ( roamingGoal );
+					pathFinder.SetGoal ( seekingGoal );
 					
 					hesitationTimer = hesitation;
-
-					roamingTimer = roamingRadius;
 				}
 					
-				if ( isEnemy ) {
-					if ( attentionTimer > 0 ) {
-						attentionTimer -= Time.deltaTime;
-					
-					} else if ( behaviour != initialBehaviour ) {
-						behaviour = OABehaviour.GoHome;
+				if ( attentionTimer > 0 ) {
+					attentionTimer -= Time.deltaTime;
+				
+				} else {
+					behaviour = OABehaviour.GoHome;
 
-						hesitationTimer = hesitation;
-					
-					}
+					hesitationTimer = hesitation;
+				
 				}
 
 				break;
 
-			case OABehaviour.RoamingPath:
+			case OABehaviour.Patrolling:
 				if ( currentPathGoal >= 0 && currentPathGoal < pathGoals.Length && pathFinder ) {
 					if ( Vector3.Distance ( this.transform.position, pathGoals[currentPathGoal] ) < 0.5 ) {
 						if ( currentPathGoal < pathGoals.Length - 1 ) {
@@ -517,7 +500,7 @@ public class OACharacter extends MonoBehaviour {
 					}
 				
 				} else {
-					behaviour = OABehaviour.RoamingRandom;
+					behaviour = OABehaviour.Seeking;
 				
 				}
 				
@@ -558,13 +541,14 @@ public class OACharacter extends MonoBehaviour {
 		}
 
 		if ( speed > 0 && pathFinder ) {
-			var goal : Vector3 = pathFinder.GetCurrentGoal ();
-			
-			if ( behaviour == OABehaviour.GoHome && Mathf.Abs ( this.transform.position.y - initialPosition.y ) < 1 && DoRaycast ( initialPosition ) == null ) {
-				goal = initialPosition;
+			var goal : Vector3 = pathFinder.GetCurrentNode ();
 		
-			} else if ( behaviour == OABehaviour.RoamingPath && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
+			// Override immediate goal	
+			if ( behaviour == OABehaviour.Patrolling && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
 				goal = pathGoals[currentPathGoal];
+
+			} else if ( behaviour == OABehaviour.ChasePlayer && canSeePlayer ) {
+				goal = lastKnownPosition;
 
 			}
 			

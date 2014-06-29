@@ -4,7 +4,7 @@ class OPPathFinder extends MonoBehaviour {
 	public var currentNode : int = 0;
 	public var scanner : OPScanner;
 	public var speed : float = 4.0;
-	public var stoppingDistance : float = 0.1;
+	public var stoppingDistance : float = 0.5;
 	public var nodeDistance : float = 1.0;
 	public var target : Transform;
 	public var autoChase : boolean = false;
@@ -16,6 +16,10 @@ class OPPathFinder extends MonoBehaviour {
 	
 	private var goal : Vector3;
 	private var updateTimer : float = 0;
+
+	public function get atEndOfPath () : boolean {
+		return nodes.Length == 0 || currentNode >= nodes.Length;
+	}
 
 	public function SetGoalAfterSeconds ( s : float ) : IEnumerator {
 		yield WaitForSeconds ( s );
@@ -127,7 +131,13 @@ class OPPathFinder extends MonoBehaviour {
 					nodes[i].active = true;
 				}
 				
-				currentNode = 0;
+				if ( nodes.Length > 1 ) {
+					currentNode = 1;
+				
+				} else {
+					currentNode = 0;
+
+				}
 
 				updateTimer = minUpdateTime;
 			} () );
@@ -141,8 +151,8 @@ class OPPathFinder extends MonoBehaviour {
 		
 		if ( scanner ) {
 			// If there are nodes to follow		
-			if ( nodes && nodes.Length > 0 ) {
-				if ( ( transform.position - nodes[currentNode].position ).magnitude < nodeDistance && currentNode < nodes.Length - 1 ) {
+			if ( nodes && nodes.Length > 0 && currentNode < nodes.Length ) {
+				if ( ( transform.position - nodes[currentNode].position ).magnitude <= stoppingDistance ) {
 					currentNode++;
 				}
 
