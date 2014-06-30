@@ -195,7 +195,8 @@ public class OACharacter extends MonoBehaviour {
 		this.transform.position = pathGoals [ currentPathGoal ];
 
 		behaviour = OABehaviour.Idle;
-		speed = 0;
+
+		NewInitialPosition ();
 	}
 
 	public function NextPathGoal () {
@@ -206,7 +207,6 @@ public class OACharacter extends MonoBehaviour {
 		}
 
 		behaviour = OABehaviour.GoToGoal;
-		speed = 0.25;
 	}
 	
 	public function NextPathGoalRun () {
@@ -228,6 +228,11 @@ public class OACharacter extends MonoBehaviour {
 		}
 	}
 
+	public function NewInitialPosition () {
+		initialPosition = this.transform.position;
+		initialRotation = this.transform.rotation;
+	}
+		
 	public function OnProjectileHit ( damage : float ) {
 		TakeDamage ( damage );
 	}
@@ -428,6 +433,10 @@ public class OACharacter extends MonoBehaviour {
 
 				if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
 					behaviour = initialBehaviour;
+					
+					if ( behaviour == OABehaviour.Patrolling ) {
+						currentPathGoal = 0;
+					}
 				}	
 
 				break;
@@ -485,8 +494,8 @@ public class OACharacter extends MonoBehaviour {
 				break;
 
 			case OABehaviour.GoToGoal:
-				if ( pathGoals.Length > 0 && pathFinder ) {
-					if ( Vector3.Distance ( this.transform.position, pathGoals[currentPathGoal] ) < 0.5 ) {
+				if ( pathGoals.Length > 0 ) {
+					if ( pathFinder.atEndOfPath ) {
 						behaviour = OABehaviour.Idle;
 
 					} else {
@@ -495,7 +504,7 @@ public class OACharacter extends MonoBehaviour {
 					}
 				
 				} else {
-					behaviour = OABehaviour.Seeking;
+					behaviour = OABehaviour.Idle;
 				
 				}
 				
