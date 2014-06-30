@@ -1,11 +1,16 @@
 #pragma strict
 
 class UIUpgrades extends OGPage {
-	var upgName : OGLabel;
+	public var btnSkull : OGButton;
+	public var btnEyes : OGButton;
+	public var btnBack : OGButton;
+	public var btnArms : OGButton;
+	public var btnChest : OGButton;
+	public var btnAbdomen : OGButton;
+	public var btnLegs : OGButton;
 	
 	override function StartPage () {
 		GameCore.GetInstance().SetPause ( true );
-		upgName.text = "";
 	}
 	
 	

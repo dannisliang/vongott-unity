@@ -33,7 +33,6 @@ public class OSProjectile extends MonoBehaviour {
 				
 				if ( hit.collider.rigidbody ) {
 					hit.collider.rigidbody.AddForce ( this.transform.forward.normalized * damage * 100 );
-					Debug.Log ( this.transform.forward.normalized * damage * 100 );
 				}
 			}
 		

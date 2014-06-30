@@ -221,6 +221,10 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function TakeDamage ( damage : float ) {
+		if ( DoRaycast ( player.transform.position ) == null ) {
+			behaviour = OABehaviour.ChasePlayer;
+		}	
+		
 		health -= damage;
 
 		if ( health <= 0 ) {
@@ -414,7 +418,7 @@ public class OACharacter extends MonoBehaviour {
 					}
 				
 				} else if ( isEnemy ) {
-					if ( pathFinder.atEndOfPath || attentionTimer <= 0 || Vector3.Distance ( this.transform.position, lastKnownPosition ) < stoppingDistance ) {
+					if ( ( pathFinder.hasPath && pathFinder.atEndOfPath ) || attentionTimer <= 0 ) {
 						hesitationTimer = hesitation;
 						
 						behaviour = OABehaviour.Seeking;
@@ -532,10 +536,6 @@ public class OACharacter extends MonoBehaviour {
 		if ( hesitationTimer > 0 ) {
 			hesitationTimer -= Time.deltaTime;
 			speed = 0;
-
-			if ( behaviour == OABehaviour.ChasePlayer ) {
-				TurnTowards ( player.transform.position );
-			}			
 		}
 
 		// Id there is no path, stop moving
@@ -561,9 +561,6 @@ public class OACharacter extends MonoBehaviour {
 
 			}
 			
-			var lookPos : Vector3 = goal - this.transform.position;
-			lookPos.y = 0;
-			
 			if ( aiming ) {
 				aimDegrees = GetAngleBetween ( this.transform.forward, pathFinder.GetCurrentNode () - this.transform.position, Vector3.up );
 			
@@ -575,6 +572,10 @@ public class OACharacter extends MonoBehaviour {
 		
 		} else {
 			aimDegrees = 0;
+
+			if ( behaviour == OABehaviour.ChasePlayer ) {
+				TurnTowards ( player.transform.position );
+			}			
 		
 		}
 
