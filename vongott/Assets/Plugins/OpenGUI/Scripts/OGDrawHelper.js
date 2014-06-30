@@ -5,7 +5,6 @@ import System.Collections.Generic;
 public class OGDrawHelper {
 	private static var texSize : Vector2;
 
-
 	//////////////////
 	// Core
 	//////////////////

@@ -64,7 +64,7 @@ public class OATrigger extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( isActive && character && character.health >= 0 && type == OATriggerType.OnDeath ) {
+		if ( isActive && character && character.stats.hp >= 0 && type == OATriggerType.OnDeath ) {
 			Fire ();
 		}
 	}

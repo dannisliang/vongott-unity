@@ -10,9 +10,9 @@ class Player extends MonoBehaviour {
 	
 	public var controller : PlayerController;
 
-	public var energy : float = 100;
-	public var health : int = 100;
-	
+	public var stats : OSStats;
+	public var skillTree : OSSkillTree;
+
 	public var automaticHeal : int = 0;
 	public var shieldPrefab : GameObject;
 	public var inventory : OSInventory;
@@ -140,13 +140,11 @@ class Player extends MonoBehaviour {
 	}
 	
 	function CanHeal ( amount : int ) : boolean {
-		return health + amount <= GameCore.GetUpgradeManager().GetAbility ( "Max Health" );
+		return stats.hp + amount <= stats.maxHp;
 	}
 	
 	function TakeDamage ( amount : int ) {
-		health -= amount;
-	
-		GameCore.Print ( "Player | Damage taken: " + amount );
+		stats.hp -= amount;
 	}
 	
 	public function Shoot () {
@@ -231,23 +229,21 @@ class Player extends MonoBehaviour {
 	}
 	
 	function HasFullHealth () : boolean {		
-		return health == GameCore.GetUpgradeManager().GetAbility ( "Max Health" );
+		return stats.hp >= stats.maxHp;
 	}
 	
 	function Heal ( amount : int ) {
 		if ( CanHeal ( amount ) ) {
-			health += amount;
+			stats.hp += amount;
 		
-		} else if ( !HasFullHealth() ) {
-			health = GameCore.GetUpgradeManager().GetAbility ( "Max Health" );
+		} else if ( !HasFullHealth () ) {
+			stats.hp = stats.maxHp;
 		
 		} else {
-			GameCore.GetUpgradeManager().Deactivate ( "Chest" );
+			skillTree.SetActive ( "Chest", "Heal", false );
 			return;
 			
 		}
-	
-		GameCore.Print ( "Player | Healing: " + health );
 	}
 	
 	
@@ -310,11 +306,11 @@ class Player extends MonoBehaviour {
 		}
 
 		// Calculate energy cost
-		energy -= GameCore.GetUpgradeManager().CalculateEnergyCost() * Time.deltaTime;
+		stats.mp -= skillTree.GetTotalMPCost () * Time.deltaTime;
 	
-		if ( energy <= 0 ) {
-			energy = 0;
-			GameCore.GetUpgradeManager().DeactivateAll ();
+		if ( stats.mp <= 0 ) {
+			stats.mp = 0;
+			skillTree.SetActiveAll ( false );
 		}
 
 		// Check if aiming

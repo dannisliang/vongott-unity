@@ -26,22 +26,18 @@ public class OSAmmunitionAmount {
 public class OSAttribute {
 	public var index : int = 0;
 	public var value : float = 0;
-	public var item : OSItem;
+	public var definitions : OSDefinitions;
 
-	function OSAttribute ( item : OSItem ) {
-		this.item = item;
-	}
-
-	public function get id () : String {
-		return item.definitions.attributes[index].id;
+	function OSAttribute ( definitions : OSDefinitions ) {
+		this.definitions = definitions;
 	}
 
 	public function get name () : String {
-		return item.definitions.attributes[index].name;
+		return definitions.attributes[index].name;
 	}
 	
 	public function get suffix () : String {
-		return item.definitions.attributes[index].suffix;
+		return definitions.attributes[index].suffix;
 	}
 }
 
@@ -114,9 +110,9 @@ public class OSItem extends MonoBehaviour {
 		ammunition.value = value;
 	}
 
-	public function GetAttribute ( id : String ) : float {
+	public function GetAttribute ( name : String ) : float {
 		for ( var i : int = 0; i < attributes.Length; i++ ) {
-			if ( attributes[i].id == id ) {
+			if ( attributes[i].name == name ) {
 				return attributes[i].value;
 			}
 		}
@@ -128,7 +124,7 @@ public class OSItem extends MonoBehaviour {
 		var output : String [] = new String [ attributes.Length ];
 
 		for ( var i : int = 0; i < attributes.Length; i++ ) {
-			output[i] = attributes[i].id; 
+			output[i] = attributes[i].name; 
 		}
 
 		return output;

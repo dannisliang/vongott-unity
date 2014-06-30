@@ -360,6 +360,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400006}
+  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: bug_hand
   m_TagString: Untagged
@@ -702,6 +703,25 @@ MonoBehaviour:
   target: {fileID: 0}
   autoChase: 0
   raycastToGoal: 1
+  raycastDistance: 5
+  updateDelay: 1
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe1f7bbe08897a47812d740c658382e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Bug Hand
+  hp: 100
+  maxHp: 100
+  mp: 100
+  maxMp: 100
+  attributes: []
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -713,23 +733,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8a5dbf8f4cd9e48862d1efe9560849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  skillTree: {fileID: 0}
   isEnemy: 1
   destroyOnDeath: 1
   player: {fileID: 0}
-  health: 25
   behaviour: 1
   speed: 0
+  fieldOfView: 130
+  lineOfSight: 20
+  shootingDistance: 10
+  stoppingDistance: 2
+  attentionSpan: 10
+  roamingRadius: 10
+  hesitation: 2
   inventory: {fileID: 0}
   usingWeapons: 1
   weaponCategoryPreference: 0
   weaponSubcategoryPreference: 0
+  equippingHand: {fileID: 0}
   conversationTreePath: 
   conversationTree: {fileID: 0}
   convoSpeakerObjects: []
   convoRootNode: 0
   pathFinder: {fileID: 11400000}
   pathGoals: []
-  updatePathInterval: 5
+  turningSpeed: 4
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

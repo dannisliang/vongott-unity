@@ -54,8 +54,8 @@ class UIHUD extends OGPage {
 			ShowNotification ( "" );
 		}
 		
-		statusBar.health.SetValue ( ( GameCore.GetPlayer().health * 1.0 / GameCore.GetUpgradeManager().GetAbility ( "Max Health" ) * 1.0 ) );
-		statusBar.energy.SetValue ( GameCore.GetPlayer().energy / 100 );
+		statusBar.health.SetValue ( ( GameCore.GetPlayer().stats.hp * 1.0 / GameCore.GetPlayer().stats.maxHp * 1.0 ) );
+		statusBar.energy.SetValue ( GameCore.GetPlayer().stats.mp * 1.0 / GameCore.GetPlayer().stats.maxMp * 1.0 );
 
 		var delta : float = Time.deltaTime * 4;
 

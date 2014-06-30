@@ -25,8 +25,8 @@ class Door extends InteractiveObject {
 	private var backPos : Vector3;
 
 	// Lock picking
-	private function PickLock ( p : Player ) {
-	 	if ( GameCore.GetUpgradeManager().GetAbility ( "Lockpicking" ) >= lockLevel ) {
+	private function PickLock ( stats : OSStats ) {
+	 	if ( stats.GetValue ( "Lockpicking" ) >= lockLevel ) {
 	  		Unlock ();
 	  		UIHUD.GetInstance().ShowNotification ( "Door unlocked" ); 	
 		
@@ -183,7 +183,7 @@ class Door extends InteractiveObject {
 				CloseDoor ();
 			
 			} else if ( GameCore.GetPlayer().IsEquippedLockpick() ) {
-				PickLock ( GameCore.GetPlayer() );				
+				PickLock ( GameCore.GetPlayer().stats );				
 			
 			} else {
 				UIHUD.GetInstance().ShowNotification ( "This door is locked" );

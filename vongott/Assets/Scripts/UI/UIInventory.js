@@ -395,7 +395,7 @@ class UIInventory extends OGPage {
 	
 		inspector.Clear ();
 		
-		GameCore.GetInstance().SetControlsActive ( false );
+		GameCore.GetInstance().SetPause ( true );
 
 		InitCells ();
 		UpdateCells ();
@@ -417,7 +417,7 @@ class UIInventory extends OGPage {
 
 		if ( Input.GetKeyDown(KeyCode.Escape) ) {
 			OGRoot.GetInstance().GoToPage ( "HUD" );
-			GameCore.GetInstance().SetControlsActive ( true );
+			GameCore.GetInstance().SetPause ( false );
 		}
 	}
 

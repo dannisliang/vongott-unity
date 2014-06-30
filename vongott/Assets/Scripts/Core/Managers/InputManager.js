@@ -57,7 +57,7 @@ class InputManager extends MonoBehaviour {
 				OGRoot.GetInstance().GoToPage ( "Quests" );
 			
 			} else if ( Input.GetKeyDown(KeyCode.U) ) {
-				OGRoot.GetInstance().GoToPage ( "Upgrades" );
+				OGRoot.GetInstance().GoToPage ( "SkillTree" );
 			
 			} else if ( Input.GetKeyDown(KeyCode.Tab) ) {
 				UIHUD.GetInstance().ToggleConsole();

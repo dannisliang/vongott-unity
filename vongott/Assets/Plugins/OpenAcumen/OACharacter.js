@@ -11,10 +11,11 @@ public enum OABehaviour {
 }
 
 public class OACharacter extends MonoBehaviour {
+	public var stats : OSStats;
+	public var skillTree : OSSkillTree;
 	public var isEnemy : boolean = false;
 	public var destroyOnDeath : boolean = false;
 	public var player : GameObject;
-	public var health : float = 100;
 	public var behaviour : OABehaviour = OABehaviour.Idle;
 	public var speed : float = 0;
 	public var fieldOfView : float = 130;
@@ -92,7 +93,7 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function get alive () : boolean { 
-		return health > 0;
+		return stats.hp > 0;
 	}
 
 	public function get convoSpeakers () : GameObject [] {
@@ -220,14 +221,18 @@ public class OACharacter extends MonoBehaviour {
 		speed = 1;
 	}
 
+	public function GiveHP ( points : float ) {
+		stats.hp = Mathf.Clamp ( 0, stats.maxHp, stats.hp + points );
+	}
+
 	public function TakeDamage ( damage : float ) {
 		if ( DoRaycast ( player.transform.position ) == null ) {
 			behaviour = OABehaviour.ChasePlayer;
 		}	
 		
-		health -= damage;
+		stats.hp -= damage;
 
-		if ( health <= 0 ) {
+		if ( stats.hp <= 0 ) {
 			Die ();
 		}
 	}
@@ -280,7 +285,7 @@ public class OACharacter extends MonoBehaviour {
 		
 		}
 
-		health = 0;
+		stats.hp = 0;
 	}
 
 	public function SetRagdoll ( state : boolean ) {
@@ -336,12 +341,11 @@ public class OACharacter extends MonoBehaviour {
 		UpdateSpeakers ();
 		animator = this.GetComponent.< Animator > ();
 		controller = this.GetComponent.< CharacterController > ();
+		stats = this.GetComponent.< OSStats > ();
 
 		SetRagdoll ( !alive );
 		initialBehaviour = behaviour;
 		
-		var scanner : OPScanner = GameObject.FindObjectOfType.< OPScanner > ();
-
 		initialPosition = this.transform.position;
 		initialRotation = this.transform.rotation;
 	}
@@ -529,7 +533,7 @@ public class OACharacter extends MonoBehaviour {
 			currentPathGoal = GetNearestPathGoal ();
 		}
 
-		if ( health <= 0 ) {
+		if ( stats.hp <= 0 ) {
 			Die ();
 		}
 

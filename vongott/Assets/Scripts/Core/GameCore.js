@@ -16,6 +16,7 @@ class GameCore extends MonoBehaviour {
 	public var selectedOutlineColor : Color;
 	public var deselectedOutlineColor : Color;
 	public var player : Player;
+	public var paused : boolean = false;
 
 	// Private vars
 	private var tempCamPos : Vector3;
@@ -204,7 +205,9 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Regular
 	function SetPause ( state : boolean ) {
+		paused = state;
 		Time.timeScale = state ? 0 : timeScale;
+		SetControlsActive ( !state );
 	}
 	
 	// Timescale
@@ -249,8 +252,8 @@ class GameCore extends MonoBehaviour {
 		return instance.GetComponent.< ODManager > ();
 	}
 	
-	public static function GetUpgradeManager () : UpgradeManager {
-		return instance.GetComponent.< UpgradeManager > ();
+	public static function GetSkillTree () : OSSkillTree {
+		return instance.GetComponent.< OSSkillTree > ();
 	}
 
 	// Set player as "player" speaker
@@ -361,21 +364,6 @@ class GameCore extends MonoBehaviour {
 	
 	
 	////////////////////
-	// Clear
-	////////////////////
-	function OnDisable () {
-		Stop ();
-	}
-	
-	static function Stop () {	
-		// Upgrades
-		GetUpgradeManager().Clear();
-	
-		running = false;
-	}
-	
-	
-	////////////////////
 	// Debug
 	////////////////////
 	static var debugString : String = "";
@@ -417,7 +405,15 @@ class GameCore extends MonoBehaviour {
 	}
 	
 	function Update () {
-		Time.timeScale = timeScale;
+		if ( !paused ) {
+			Time.timeScale = timeScale;
+			Screen.lockCursor = true;
+		
+		} else {
+			Screen.lockCursor = false;
+			Time.timeScale = 0;
+
+		}
 		
 		if ( timeScale > 0 ) {
 			Time.fixedDeltaTime = 0.02 * timeScale;
@@ -443,15 +439,5 @@ class GameCore extends MonoBehaviour {
 		
 		}
 
-		var ui : OGRoot = OGRoot.GetInstance ();
-
-		if ( ui && ui.currentPage && ui.currentPage.pageName == "HUD" ) {
-			Screen.lockCursor = true;
-		
-		} else {
-			Screen.lockCursor = false;
-		
-		}
-				
 	}
 }

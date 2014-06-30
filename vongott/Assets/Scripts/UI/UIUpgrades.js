@@ -32,7 +32,7 @@ class UIUpgrades extends OGPage {
 		OGRoot.GetInstance().GoToPage ( "HUD" );
 	}
 	
-	function Pick ( b : OGButton ) {		
+	/*function Pick ( b : OGButton ) {		
 		var slot : int = 0;
 		var eStrings : String[] = System.Enum.GetNames ( eUpgradeRegion );
 
@@ -48,7 +48,7 @@ class UIUpgrades extends OGPage {
 		}
 		
 		GameCore.GetUpgradeManager().Activate ( slot );
-	}
+	}*/
 	
 	override function UpdatePage () {
 		if ( Input.GetKeyDown( KeyCode.Escape ) ) {

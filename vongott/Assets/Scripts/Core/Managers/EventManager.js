@@ -136,4 +136,30 @@ class EventManager extends OCEventHandler {
 
 		GameCore.Print ( "Flag '" + flag + "' set to " + bool );
 	}
+
+	// Skills
+	public function OnActivateSkill ( skill : OSSkillTree.Skill ) {
+		SFXManager.GetInstance().Play ( "sfx_actor_aug_off", GameCore.GetPlayer().audio );
+
+		switch ( skill.name ) {
+			case "Reflexes":
+				GameCore.GetInstance().SetTimeScaleGoal ( skill.GetAttributeValue ( "Time scale" ) / 100 );
+				break;
+		}
+	
+	}
+	
+	public function OnDeactivateSkill ( skill : OSSkillTree.Skill ) {
+		SFXManager.GetInstance().Play ( "sfx_actor_aug_off", GameCore.GetPlayer().audio );
+
+		switch ( skill.name ) {
+			case "Reflexes":
+				GameCore.GetInstance().SetTimeScaleGoal ( 1.0 );
+				break;
+		}
+	}
+
+	public function OnDeactivateAllSkills () {
+		GameCore.GetInstance().SetTimeScaleGoal ( 1.0 );
+	}
 }

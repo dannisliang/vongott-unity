@@ -602,6 +602,7 @@ GameObject:
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400000}
   - 82: {fileID: 8200000}
+  - 114: {fileID: 11400010}
   m_Layer: 0
   m_Name: nsf_medic
   m_TagString: Untagged
@@ -1513,16 +1514,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8a5dbf8f4cd9e48862d1efe9560849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  skillTree: {fileID: 0}
   isEnemy: 0
   destroyOnDeath: 0
   player: {fileID: 0}
-  health: 100
   behaviour: 1
   speed: 0
+  fieldOfView: 130
+  lineOfSight: 20
+  shootingDistance: 10
+  stoppingDistance: 2
+  attentionSpan: 10
+  roamingRadius: 10
+  hesitation: 2
   inventory: {fileID: 11400008}
   usingWeapons: 1
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 0
+  equippingHand: {fileID: 0}
   conversationTreePath: 
   conversationTree: {fileID: 0}
   convoSpeakerObjects: []
@@ -1530,7 +1540,6 @@ MonoBehaviour:
   pathFinder: {fileID: 11400006}
   pathGoals: []
   turningSpeed: 4
-  updatePathInterval: 5
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1550,6 +1559,8 @@ MonoBehaviour:
   target: {fileID: 0}
   autoChase: 0
   raycastToGoal: 1
+  raycastDistance: 5
+  updateDelay: 1
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1578,6 +1589,23 @@ MonoBehaviour:
   - index: 0
     amount: 200
   eventHandler: {fileID: 0}
+--- !u!114 &11400010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe1f7bbe08897a47812d740c658382e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Medic
+  hp: 100
+  maxHp: 100
+  mp: 100
+  maxMp: 100
+  attributes: []
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
