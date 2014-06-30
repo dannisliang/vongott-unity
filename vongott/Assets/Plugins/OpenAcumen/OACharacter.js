@@ -381,7 +381,6 @@ public class OACharacter extends MonoBehaviour {
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
 				pathFinder.SetGoal ( lastKnownPosition );
-				Debug.DrawLine ( this.transform.position, lastKnownPosition );
 				
 				if ( distanceToPlayer > stoppingDistance ) {
 					if ( distanceToPlayer <= shootingDistance ) {
@@ -427,9 +426,7 @@ public class OACharacter extends MonoBehaviour {
 			case OABehaviour.GoHome:
 				speed = 0.5;
 
-				pathFinder.SetGoal ( initialPosition );
-			       	
-				if ( pathFinder.atEndOfPath ) {
+				if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
 					behaviour = initialBehaviour;
 				}	
 
@@ -444,12 +441,10 @@ public class OACharacter extends MonoBehaviour {
 			case OABehaviour.Seeking:
 				speed = 0.5;
 				
-				Debug.DrawLine ( this.transform.position, seekingGoal );
-
 				if ( pathFinder.atEndOfPath ) {
 					var seekingCenter : Vector3 = lastKnownPosition;
 					
-					seekingGoal = seekingCenter + new Vector3 ( Random.Range ( roamingRadius / 2, roamingRadius ), 0, Random.Range ( roamingRadius / 2, roamingRadius ) );
+					seekingGoal = seekingCenter + new Vector3 ( Random.Range ( -roamingRadius, roamingRadius ), 0, Random.Range ( -roamingRadius, roamingRadius ) );
 
 					pathFinder.SetGoal ( seekingGoal );
 					
@@ -461,7 +456,7 @@ public class OACharacter extends MonoBehaviour {
 				
 				} else {
 					behaviour = OABehaviour.GoHome;
-
+					pathFinder.SetGoal ( initialPosition, true );
 					hesitationTimer = hesitation;
 				
 				}
@@ -534,13 +529,18 @@ public class OACharacter extends MonoBehaviour {
 			}			
 		}
 
+		// Id there is no path, stop moving
+		if ( !pathFinder.hasPath ) {
+			speed = 0;
+		}
+
 		if ( animator ) {
 			animator.SetFloat ( "Speed", speed );
 			animator.SetBool ( "Aiming", aiming );
 			animator.SetFloat ( "AimDegrees", aimDegrees );
 		}
 
-		if ( speed > 0 && pathFinder ) {
+		if ( speed > 0 ) {
 			var goal : Vector3 = pathFinder.GetCurrentNode ();
 		
 			// Override immediate goal	

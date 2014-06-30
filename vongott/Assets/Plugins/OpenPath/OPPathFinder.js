@@ -10,7 +10,7 @@ class OPPathFinder extends MonoBehaviour {
 	public var autoChase : boolean = false;
 	public var raycastToGoal : boolean = true;
 	public var raycastDistance : float = 5;
-	public var minUpdateTime : float = 1;
+	public var updateDelay : float = 1;
 		
 	@NonSerialized public var nodes : OPNode[] = new OPNode[0];
 	
@@ -18,21 +18,15 @@ class OPPathFinder extends MonoBehaviour {
 	private var updateTimer : float = 0;
 
 	public function get atEndOfPath () : boolean {
-		return nodes.Length == 0 || currentNode >= nodes.Length;
+		return currentNode >= nodes.Length;
 	}
 
-	public function SetGoalAfterSeconds ( s : float ) : IEnumerator {
-		yield WaitForSeconds ( s );
-				
-		SetGoal ( target );
+	public function get hasPath () : boolean { 
+		return nodes.Length > 0;
 	}
-	
+
 	function Start () {
 		scanner = GameObject.FindObjectOfType(OPScanner);
-		
-		if ( target != null ) {
-			StartCoroutine ( SetGoalAfterSeconds ( 2 ) );
-		}
 	}
 	
 	public function ClearNodes () {
@@ -49,7 +43,7 @@ class OPPathFinder extends MonoBehaviour {
 			return nodes[currentNode].position;
 		
 		} else {
-			return goal;
+			return this.transform.position;
 
 		}
 	}
@@ -104,21 +98,37 @@ class OPPathFinder extends MonoBehaviour {
 	}
 	
 	public function SetGoal ( v : Vector3 ) {
+		SetGoal ( v, false );
+	}
+	
+	public function SetGoal ( v : Vector3, persist : boolean ) {
 		if ( goal == v ) { return; }
 				
 		goal = v;
-		UpdatePosition ();
+		UpdatePosition ( persist );
 	}
 	
 	public function GetGoal () : Vector3 {
 		return goal;
 	}
 		
-	public function UpdatePosition () {
-		if ( scanner && !scanner.searching && updateTimer <= 0 ) {
-			ClearNodes ();
+	public function UpdatePosition ( persist : boolean ) {
+		if ( !scanner ) { return; }
+
+		StartCoroutine ( function () : IEnumerator {
+			if ( persist ) {
+				while ( updateTimer > 0 ) {
+					yield null;
+				}
+
+				while ( scanner.searching ) {
+					yield null;
+				}
+			}
 			
-			StartCoroutine ( function () : IEnumerator {
+			if ( !scanner.searching && updateTimer <= 0 ) {
+				ClearNodes ();
+			
 				var start : Vector3 = this.transform.position;
 			
 				var tempNodes : List.< OPNode > = new List.< OPNode > ();
@@ -139,9 +149,9 @@ class OPPathFinder extends MonoBehaviour {
 
 				}
 
-				updateTimer = minUpdateTime;
-			} () );
-		}
+				updateTimer = updateDelay;
+			}
+		} () );
 	}
 
 	function Update () {

@@ -2,8 +2,8 @@
 
 public class OPAStar {
 	// Lists
-	private var openList : OPPriorityQueue;
-	private var closedList : OPPriorityQueue;
+	@NonSerialized private var openList : OPPriorityQueue;
+	@NonSerialized private var closedList : OPPriorityQueue;
 			
 	// Find a path and return a list of each step
 	public function Search ( start : OPNode, goal : OPNode, map : OPMap, heuristicWeight : float, list : List.< OPNode >, maxCycles : int ) : IEnumerator {
@@ -79,7 +79,7 @@ public class OPAStar {
 
 			if ( cycles > maxCycles ) {
 				cycles = 0;
-				yield WaitForEndOfFrame ();
+				yield null;
 			
 			} else {
 				cycles++;

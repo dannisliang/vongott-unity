@@ -442,5 +442,16 @@ class GameCore extends MonoBehaviour {
 			timeScale = Mathf.Lerp ( timeScale, timeScaleGoal, Time.deltaTime * 10 );
 		
 		}
+
+		var ui : OGRoot = OGRoot.GetInstance ();
+
+		if ( ui && ui.currentPage && ui.currentPage.pageName == "HUD" ) {
+			Screen.lockCursor = true;
+		
+		} else {
+			Screen.lockCursor = false;
+		
+		}
+				
 	}
 }
