@@ -51,17 +51,17 @@ class ODManager extends MonoBehaviour {
 		var colliders : Collider[] = Physics.OverlapSphere ( target, radius );
 
 		for ( var hit : Collider in colliders ) {
-			/*if ( hit.rigidbody != null ) {
+			if ( hit.rigidbody != null ) {
 				hit.rigidbody.AddExplosionForce ( damage, target, radius, 3 );
 			
 				// Is it an actor?
 				var a : OACharacter = hit.GetComponent(OACharacter);
 
-				if ( a != null && a.health > 0 ) {
+				if ( a != null && a.stats.hp > 0 ) {
 					var dist : float = (a.transform.position-target).sqrMagnitude;
 					a.TakeDamage ( damage / dist );
 
-					if ( a.health <= 0 ) {
+					if ( a.stats.hp <= 0 ) {
 						for ( var col : Collider in a.GetComponentsInChildren.< Collider > () ) {
 							if ( col != hit ) {
 								col.rigidbody.AddExplosionForce ( damage * 20, target, radius * 2, 1 );
@@ -76,7 +76,7 @@ class ODManager extends MonoBehaviour {
 				if ( m != null ) {
 					m.Explode ();
 				}
-			}*/
+			}
 
 			// Is it a destructible object?
 			var destructible : ODDestructibleObject = hit.GetComponent.< ODDestructibleObject >();

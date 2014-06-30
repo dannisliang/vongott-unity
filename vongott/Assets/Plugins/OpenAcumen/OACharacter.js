@@ -14,6 +14,7 @@ public class OACharacter extends MonoBehaviour {
 	public var stats : OSStats;
 	public var skillTree : OSSkillTree;
 	public var isEnemy : boolean = false;
+	public var unconcious : boolean = false;
 	public var destroyOnDeath : boolean = false;
 	public var player : GameObject;
 	public var behaviour : OABehaviour = OABehaviour.Idle;
@@ -288,6 +289,18 @@ public class OACharacter extends MonoBehaviour {
 		stats.hp = 0;
 	}
 
+	public function KnockUnconcious () {
+		SetRagdoll ( true );
+		unconcious = true;
+	}
+
+	public function WakeUp () {
+		if ( stats.hp > 0 ) {
+			unconcious = false;
+			SetRagdoll ( false );
+		}
+	}
+
 	public function SetRagdoll ( state : boolean ) {
 		for ( var c : Collider in this.GetComponentsInChildren.< Collider > () ) {
 			c.enabled = state;
@@ -386,7 +399,7 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( !alive ) { return; }
+		if ( !alive || unconcious ) { return; }
 
 		var changed : boolean = behaviour != prevBehaviour;
 		aiming = false;

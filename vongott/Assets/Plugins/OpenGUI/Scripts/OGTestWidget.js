@@ -2,10 +2,7 @@
 
 public class OGTestWidget extends OGWidget {
 	public var mainTexture : Texture2D;
-	public var translation : Vector3;
-	public var rotation : Vector3;
-	public var scale : Vector3;
-
+	
 	private var material : Material;
 
 	private var matrix : Matrix4x4;
@@ -63,7 +60,7 @@ public class OGTestWidget extends OGWidget {
 		matrix.SetTRS ( new Vector3 ( this.transform.position.x, Screen.height - this.transform.position.y, drawDepth ), Quaternion.Euler ( 0, 0, -this.transform.eulerAngles.z ), Vector3.one );
 
 		var displayRct : Rect = drawRct;
-		var uvRct : Rect = drawCrd;
+		var uvRct : Rect = new Rect ( 0, 0, 1, 1 );
 
 		if ( clipTo ) {
 			if ( clipTo.drawRct.xMin > displayRct.xMin ) {
@@ -97,22 +94,18 @@ public class OGTestWidget extends OGWidget {
 
 		// Bottom Left
 		GL.TexCoord2 ( uvRct.x, uvRct.y );
-		//GL.Vertex ( GetVector ( displayRct.x, displayRct.y ) );
 		GL.Vertex ( GetVector ( 0, 0 ) );
 		
 		// Top left
 		GL.TexCoord2 ( uvRct.x, uvRct.y + uvRct.height );
-		//GL.Vertex ( GetVector ( displayRct.x, displayRct.y + displayRct.height ) );
 		GL.Vertex ( GetVector ( 0, 1 ) );
 		
 		// Top right
 		GL.TexCoord2 ( uvRct.x + uvRct.width, uvRct.y + uvRct.height );
-		//GL.Vertex ( GetVector ( displayRct.x + displayRct.width, displayRct.y + displayRct.height ) );
 		GL.Vertex ( GetVector ( 1, 1 ) );
 		
 		// Bottom right
 		GL.TexCoord2 ( uvRct.x + uvRct.width, uvRct.y );
-		//GL.Vertex ( GetVector ( displayRct.x + displayRct.width, displayRct.y ) );
 		GL.Vertex ( GetVector ( 1, 0 ) );
 		
 		GL.Color ( Color.white );

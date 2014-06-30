@@ -4,7 +4,7 @@ public class OSSkillTree extends MonoBehaviour {
 	public class Skill { 
 		public var name : String = "";
 		public var description : String  = "";
-		public var level : int = 0;
+		public var level : int = 1;
 		public var mpCost : float = 0;
 		public var active : boolean = false;
 		public var enabled : boolean = false;
@@ -46,16 +46,7 @@ public class OSSkillTree extends MonoBehaviour {
 		for ( var root : Root in roots ) {
 			for ( var skill : Skill in root.skills ) {
 				if ( skill.name == skillName ) {
-					skill.active = skillState;
-					
-					if ( skill.active ) {
-						DoCallback ( "OnActivateSkill", skill );
-					
-					} else {
-						DoCallback ( "OnDeactivateSkill", skill );
-
-					}
-
+					SetActive ( skill, skillState );
 					return;
 				}
 			}
@@ -67,16 +58,7 @@ public class OSSkillTree extends MonoBehaviour {
 			if ( root.name == rootName ) {
 				for ( var skill : Skill in root.skills ) {
 					if ( skill.name == skillName ) {
-						skill.active = skillState;
-						
-						if ( skill.active ) {
-							DoCallback ( "OnActivateSkill", skill );
-						
-						} else {
-							DoCallback ( "OnDeactivateSkill", skill );
-
-						}
-
+						SetActive ( skill, skillState );
 						return;
 					}
 				}
@@ -84,6 +66,19 @@ public class OSSkillTree extends MonoBehaviour {
 		}
 	}
 	
+	public function SetActive ( skill : Skill, state : boolean ) {
+		skill.active = state;
+		
+		if ( skill.active ) {
+			DoCallback ( "OnActivateSkill", skill );
+		
+		} else {
+			DoCallback ( "OnDeactivateSkill", skill );
+
+		}
+
+	}
+
 	public function SetActiveAll ( skillState : boolean ) {
 		for ( var root : Root in roots ) {
 			for ( var skill : Skill in root.skills ) {

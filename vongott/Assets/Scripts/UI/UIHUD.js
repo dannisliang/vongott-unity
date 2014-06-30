@@ -154,5 +154,5 @@ class UIHUD extends OGPage {
 				showingNotification = false;
 			}
 		}
-	}		
+	}
 }

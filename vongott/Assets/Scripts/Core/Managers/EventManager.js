@@ -139,11 +139,39 @@ class EventManager extends OCEventHandler {
 
 	// Skills
 	public function OnActivateSkill ( skill : OSSkillTree.Skill ) {
-		SFXManager.GetInstance().Play ( "sfx_actor_aug_off", GameCore.GetPlayer().audio );
+		SFXManager.GetInstance().Play ( "sfx_actor_aug_on", GameCore.GetPlayer().audio );
 
 		switch ( skill.name ) {
 			case "Reflexes":
 				GameCore.GetInstance().SetTimeScaleGoal ( skill.GetAttributeValue ( "Time scale" ) / 100 );
+				break;
+		
+			case "Repulse":
+				var center : Vector3 = GameCore.GetPlayer().transform.position;
+				var radius : float = 10;
+				var up : float = 1;
+				var dt : float = 1 / GameCore.GetInstance().timeScale;
+				var force : float = 1000 * dt;
+
+				var colliders : Collider[] = Physics.OverlapSphere ( center, 10 );
+
+				for ( var c : Collider in colliders ) {
+					var a : OACharacter = c.GetComponent.< OACharacter > ();
+					
+					if ( a ) {
+						a.KnockUnconcious ();
+
+						for ( var rb : Rigidbody in a.GetComponentsInChildren.< Rigidbody > () ) {
+							rb.AddExplosionForce ( force, center, radius, up );
+						}
+					}
+				}
+
+				GameCore.GetPlayer().stats.mp -= skill.mpCost;
+				skill.active = false;
+				OGRoot.GetInstance().GoToPage ( "HUD" );
+				GameCore.GetInstance().SetPause ( false );
+
 				break;
 		}
 	
