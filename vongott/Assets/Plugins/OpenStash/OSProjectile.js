@@ -32,7 +32,7 @@ public class OSProjectile extends MonoBehaviour {
 				hit.collider.gameObject.SendMessage ( "OnProjectileHit", damage, SendMessageOptions.DontRequireReceiver );
 				
 				if ( hit.collider.rigidbody ) {
-					hit.collider.rigidbody.AddForce ( this.transform.forward.normalized * damage * 100 );
+					hit.collider.rigidbody.AddForce ( ( this.transform.forward.normalized * damage ) * ( 1 / Time.timeScale ) );
 				}
 			}
 		

@@ -73,7 +73,7 @@ class Terminal extends InteractiveObject {
 		
 		for ( var i = 0; i < 3; i++ ) {
 			if ( cameraGUIDs[i] != "" && cameras[i] == null ) {
-				var obj : GameObject = GameCore.GetObjectFromGUID ( cameraGUIDs[i] );
+				var obj : GameObject = GameCore.GetInstance().GetObjectFromGUID ( cameraGUIDs[i] );
 				
 				if ( obj ) {
 					cameras[i] = obj.GetComponent ( SurveillanceCamera );

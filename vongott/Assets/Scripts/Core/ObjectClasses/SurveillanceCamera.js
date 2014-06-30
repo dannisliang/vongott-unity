@@ -42,7 +42,7 @@ class SurveillanceCamera extends MonoBehaviour {
 		}
 		
 		if ( !door && doorGUID != "" ) {
-			var obj : GameObject = GameCore.GetObjectFromGUID ( doorGUID );
+			var obj : GameObject = GameCore.GetInstance().GetObjectFromGUID ( doorGUID );
 			
 			if ( obj ) {
 				door = obj.GetComponent(Door);

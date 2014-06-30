@@ -29,7 +29,17 @@ public class OSSkillTree extends MonoBehaviour {
 	public var definitions : OSDefinitions;
 	public var roots : Root[] = new Root[0];
 	public var eventHandler : GameObject;
-	
+
+	private function SetDefinitions () {
+		for ( var root : Root in roots ) {
+			for ( var skill : Skill in root.skills ) {
+				for ( var attr : OSAttribute in skill.attributes ) {
+					attr.definitions = definitions;
+				}
+			}
+		}
+	}
+
 	private function DoCallback ( message : String ) {
 		if ( eventHandler ) {
 			eventHandler.SendMessage ( message, SendMessageOptions.DontRequireReceiver );
@@ -117,5 +127,9 @@ public class OSSkillTree extends MonoBehaviour {
 		}
 
 		return result;
+	}
+
+	public function Start () {
+		SetDefinitions ();
 	}
 }

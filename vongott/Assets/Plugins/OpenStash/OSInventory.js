@@ -185,6 +185,19 @@ public class OSInventory extends MonoBehaviour {
 	public var wallet : OSCurrencyAmount[] = new OSCurrencyAmount[0];
 	public var eventHandler : GameObject;
 
+	// Make sure definitions are set
+	public function SetDefinitions () {
+		for ( var slot : OSSlot in slots ) {
+			if ( slot.item ) {
+				slot.item.definitions = definitions;
+
+				for ( var attr : OSAttribute in slot.item.attributes ) {
+					attr.definitions = definitions;
+				}
+			}
+		}
+	}
+
 	// Equipped info
 	public function GetEquippedItems () : OSItem[] {
 		var tmpItems : List.< OSItem > = new List.< OSItem > ();
@@ -458,5 +471,10 @@ public class OSInventory extends MonoBehaviour {
 		}
 
 		return null;
+	}
+
+	// Behaviour
+	function Start () {
+		SetDefinitions ();
 	}
 }

@@ -11,10 +11,9 @@ public enum eGameState {
 
 class GameCore extends MonoBehaviour {
 	// Public vars
-	public var _levelContainer : Transform;
+	public var levelContainer : Transform;
+	public var highlightColor : Color;
 	public var testing : boolean = false;
-	public var selectedOutlineColor : Color;
-	public var deselectedOutlineColor : Color;
 	public var player : Player;
 	public var paused : boolean = false;
 
@@ -40,8 +39,6 @@ class GameCore extends MonoBehaviour {
 	static var currentLevel : GameObject;
 	static var nextLevel : String = "";
 	static var nextSpawnPoint : String = "";
-	
-	static var levelContainer : Transform;
 	
 	static var instance : GameCore;
 	
@@ -72,7 +69,7 @@ class GameCore extends MonoBehaviour {
 	// Actors
 	////////////////////
 	public static function GetActors () : OACharacter[] { 
-		return levelContainer.GetComponentsInChildren.<OACharacter>();
+		return instance.levelContainer.GetComponentsInChildren.<OACharacter>();
 	}
 
 
@@ -108,6 +105,11 @@ class GameCore extends MonoBehaviour {
 	// Load level
 	////////////////////
 	public function LoadLevel ( path : String, spawnPoint : String ) : IEnumerator {
+		// Player
+		if ( !player.gameObject.activeInHierarchy ) {
+			player = Instantiate ( player );
+		}	
+
 		// Clear the OpenPath scanner
 		this.GetComponent.< OPScanner > ().Clear ();
 
@@ -284,7 +286,7 @@ class GameCore extends MonoBehaviour {
 			
 			Debug.Log ( "GameCore | Searching for SpawnPoint '" + sName + "'..." );
 						
-			for ( var s : SpawnPoint in GameCore.levelContainer.GetComponentsInChildren.< SpawnPoint >() ) {
+			for ( var s : SpawnPoint in levelContainer.GetComponentsInChildren.< SpawnPoint >() ) {
 				currentSpawnPoint = s;
 				
 				if ( currentSpawnPoint.gameObject.name == sName ) {
@@ -310,7 +312,7 @@ class GameCore extends MonoBehaviour {
 	}
 	
 	// Find object from GUID
-	public static function GetObjectFromGUID ( id : String ) : GameObject {
+	public function GetObjectFromGUID ( id : String ) : GameObject {
 		if ( !running ) { return null; }
 		
 		for ( var c : Component in levelContainer.GetComponentsInChildren(OFSerializedObject) ) {
@@ -329,17 +331,9 @@ class GameCore extends MonoBehaviour {
 	}
 	
 	function Start () {	
-		// Level container
-		levelContainer = _levelContainer;
-		
 		// AStar scanner
 		scanner = this.GetComponent(OPScanner);
 		
-		// Player
-		if ( !player.gameObject.activeInHierarchy ) {
-			player = Instantiate ( player );
-		}	
-
 		// Load level
 		if ( nextLevel != "" ) {
 			StartCoroutine ( LoadLevel ( nextLevel, nextSpawnPoint ) );

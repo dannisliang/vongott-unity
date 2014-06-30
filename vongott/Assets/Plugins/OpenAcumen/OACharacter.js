@@ -156,7 +156,6 @@ public class OACharacter extends MonoBehaviour {
 			if ( ( Vector3.Angle ( direction, this.transform.forward ) ) < fieldOfView / 2 ) {
 				if ( Physics.Raycast ( here, direction, hit, lineOfSight ) ) {
 					if ( hit.transform == player.transform ) {
-						Debug.DrawLine ( here, hit.point );
 						return true;
 					
 					} else {

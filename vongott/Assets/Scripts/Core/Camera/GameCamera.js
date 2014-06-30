@@ -14,8 +14,6 @@ class GameCamera extends MonoBehaviour {
 
 	public var firstPersonLayerMask : LayerMask;
 	public var thirdPersonLayerMask : LayerMask;
-	public var xRayShader : Shader;
-	public var regularShader : Shader;
 	public var boundingBoxMaterial : Material;
 	public var firstPerson : boolean = false;	
 	public var inConvo : boolean = false;
@@ -218,22 +216,6 @@ class GameCamera extends MonoBehaviour {
 		GL.End ();
 	}
 	
-	public function SetXRay ( isActive : boolean, meters : int ) {
-		for ( var c : Component in GameObject.FindObjectsOfType ( OACharacter ) ) {
-			var go : GameObject = c.gameObject;
-			
-			var smr : SkinnedMeshRenderer = go.GetComponentInChildren ( SkinnedMeshRenderer );
-			
-			for ( var i : int = 0; i < smr.materials.Length; i++ ) {
-				if ( isActive ) {
-					smr.materials[i].shader = xRayShader;
-				} else {
-					smr.materials[i].shader = regularShader;
-				}
-			}
-		}
-	}
-		
 	public function ConvoFocus ( speaker : GameObject, smooth : boolean ) {
 		if ( currentSpeaker == speaker ) {
 			return;
@@ -360,7 +342,7 @@ class GameCamera extends MonoBehaviour {
 		if ( !player ) {
 			player = GameCore.GetPlayer ();
 		}
-	
+
 		// Check for conversation cam
 		if ( inConvo ) {
 			this.transform.position = convoPosition;
@@ -368,7 +350,7 @@ class GameCamera extends MonoBehaviour {
 		}
 
 		// Check for interaction
-		if ( !GameCore.interactiveObjectLocked ) {
+		if ( !GameCore.interactiveObjectLocked && player.stats.hp > 0 ) {
 			var hit : RaycastHit;
 
 			Debug.DrawRay ( transform.position, transform.forward * 4, Color.yellow );

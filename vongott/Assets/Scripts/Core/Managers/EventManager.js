@@ -70,6 +70,14 @@ class EventManager extends OCEventHandler {
 		}
 	}
 
+	// Player
+	public function OnDeath () {
+		GameCamera.GetInstance ().controller.state = eCameraState.ThirdPerson;
+		GameCamera.GetInstance ().controller.distance = 5;
+
+		OGRoot.GetInstance().GoToPage ( "Dead" );
+	}
+
 	// Character
 	public function NextPathGoal ( t : OCTree ) {
 		var c : OACharacter = t.gameObject.GetComponent.< OACharacter > ();
@@ -138,6 +146,39 @@ class EventManager extends OCEventHandler {
 	}
 
 	// Skills
+	private var savedShaders : Dictionary.< Material, Shader > = new Dictionary.< Material, Shader > ();
+	
+	private function ChangeAllCharacterShaders () {
+		savedShaders.Clear ();
+
+		var newShader : Shader = Shader.Find ( "Vongott/XRay No Z" );
+
+		for ( a in GameCore.GetInstance().levelContainer.GetComponentsInChildren.< OACharacter > () ) {
+			var renderer : SkinnedMeshRenderer = a.GetComponentInChildren.< SkinnedMeshRenderer > ();
+
+			for ( var m : Material in renderer.materials ) {
+				savedShaders.Add ( m, m.shader );
+				m.shader = newShader;
+				m.SetColor ( "_Color", GameCore.GetInstance().highlightColor );
+			}
+		}
+	}
+
+	private function RestoreAllCharacterShaders () {
+		if ( savedShaders.Count < 1 ) { return; }
+		
+		for ( a in GameCore.GetInstance().levelContainer.GetComponentsInChildren.< OACharacter > () ) {
+			var renderer : SkinnedMeshRenderer = a.GetComponentInChildren.< SkinnedMeshRenderer > ();
+
+			for ( var m : Material in renderer.materials ) {
+				m.SetColor ( "_Color", Color.white );
+				m.shader = savedShaders [ m ];
+			}
+		}
+
+		savedShaders.Clear ();
+	}
+
 	public function OnActivateSkill ( skill : OSSkillTree.Skill ) {
 		SFXManager.GetInstance().Play ( "sfx_actor_aug_on", GameCore.GetPlayer().audio );
 
@@ -151,7 +192,7 @@ class EventManager extends OCEventHandler {
 				var radius : float = 10;
 				var up : float = 1;
 				var dt : float = 1 / GameCore.GetInstance().timeScale;
-				var force : float = 1000 * dt;
+				var force : float = skill.GetAttributeValue ( "Force" ) * dt;
 
 				var colliders : Collider[] = Physics.OverlapSphere ( center, 10 );
 
@@ -173,6 +214,22 @@ class EventManager extends OCEventHandler {
 				GameCore.GetInstance().SetPause ( false );
 
 				break;
+
+			case "X-Ray":
+				ChangeAllCharacterShaders ();
+				break;
+
+			case "Cloak":
+				GameCore.GetPlayer().SetInvisible ( true );
+				break;
+			
+			case "Shield":
+				GameCore.GetPlayer().StartShield ();
+				break;
+			
+			case "Health":
+				GameCore.GetPlayer().StartAutoHeal ( skill.GetAttributeValue ( "Recharge" ) );
+				break;
 		}
 	
 	}
@@ -184,10 +241,30 @@ class EventManager extends OCEventHandler {
 			case "Reflexes":
 				GameCore.GetInstance().SetTimeScaleGoal ( 1.0 );
 				break;
+
+			case "X-Ray":
+				RestoreAllCharacterShaders ();
+				break;
+			
+			case "Cloak":
+				GameCore.GetPlayer().SetInvisible ( false );
+				break;
+			
+			case "Shield":
+				GameCore.GetPlayer().StopShield ();
+				break;
+			
+			case "Health":
+				GameCore.GetPlayer().StopAutoHeal ();
+				break;
 		}
 	}
 
 	public function OnDeactivateAllSkills () {
 		GameCore.GetInstance().SetTimeScaleGoal ( 1.0 );
+		RestoreAllCharacterShaders ();
+		GameCore.GetPlayer().SetInvisible ( false );
+		GameCore.GetPlayer().StopShield ();
+		GameCore.GetPlayer().StopAutoHeal ();
 	}
 }

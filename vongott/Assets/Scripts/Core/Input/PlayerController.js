@@ -88,6 +88,10 @@ public class PlayerController extends MonoBehaviour {
 			player = this.GetComponent(Player);
 		}
 	
+		if ( player.stats.hp <= 0 ) { 
+			return;
+		}
+
 		isClimbing = ladder != null;	
 		isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1); 
 		inCrawlspace = bodyState == ePlayerBodyState.Crouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );

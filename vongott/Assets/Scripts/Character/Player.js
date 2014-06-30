@@ -135,16 +135,39 @@ class Player extends MonoBehaviour {
 		shootTimer = 0;
 	}
 	
-	function Die () {
-	
+	private function SetRagdoll ( state : boolean ) {
+		for ( var c : Collider in this.GetComponentsInChildren.< Collider > () ) {
+			c.enabled = state;
+
+			if ( c.rigidbody ) {
+				c.rigidbody.isKinematic = !state;
+			}
+		}
+
+		if ( this.GetComponent.< CharacterController > () ) {
+			this.GetComponent.< CharacterController > ().enabled = !state;
+		}
+
+		if ( this.GetComponent.< Animator > () ) {
+			this.GetComponent.< Animator > ().enabled = !state;
+		}
 	}
-	
-	function CanHeal ( amount : int ) : boolean {
-		return stats.hp + amount <= stats.maxHp;
+
+	function Die () {
+		stats.hp = 0;
+
+		GameCore.GetEventManager().OnDeath ();
+		this.gameObject.layer = 2;
+
+		SetRagdoll ( true );
 	}
 	
 	function TakeDamage ( amount : int ) {
 		stats.hp -= amount;
+	
+		if ( stats.hp <= 0 ) {
+			Die ();
+		}
 	}
 	
 	public function Shoot () {
@@ -200,21 +223,41 @@ class Player extends MonoBehaviour {
 	////////////////////
 	// Upgrades
 	////////////////////
+	// Cloak
+	public function SetInvisible ( state : boolean ) {
+		var renderer : SkinnedMeshRenderer = this.GetComponentInChildren.< SkinnedMeshRenderer > ();
+
+		if ( state ) {
+			this.gameObject.layer = 2;
+			
+			var shader : Shader = Shader.Find ( "Vongott/XRay" );
+
+			for ( var m : Material in renderer.materials ) {
+				m.shader = shader;
+				m.SetFloat ( "_Rim", 0.1 );
+			}		
+
+		} else {
+			this.gameObject.layer = 0;
+			
+			shader = Shader.Find ( "Bumped Diffuse" );
+
+			for ( m in renderer.materials ) {
+				m.shader = shader;
+			}		
+
+		}
+	}
+	
 	// Shield
-	function StartShield ( level : int ) {
+	public function StartShield () {
 		shield = Instantiate ( shieldPrefab ) as GameObject;
 		shield.transform.parent = this.transform;
 		shield.transform.localPosition = new Vector3 ( 0, 1, 0 );
-		shield.transform.localScale = new Vector3 ( 0.1, 0.1, 0.1 );
-		
-		iTween.ScaleTo ( shield, iTween.Hash ( "scale", Vector3.one, "easetype", iTween.EaseType.easeInQuad, "time", 0.5, "ignoretimescale", true ) );
+		shield.transform.localScale = new Vector3 ( 0.5, 0.5, 0.5 );
 	}
 	
-	function StopShield () {
-		iTween.ScaleTo ( shield, iTween.Hash ( "scale", Vector3.one / 100, "easetype", iTween.EaseType.easeInQuad, "time", 0.5, "ignoretimescale", true, "oncompletetarget", this.gameObject, "oncomplete", "DestroyShield" ) );
-	}
-	
-	function DestroyShield () {
+	public function StopShield () {
 		Destroy ( shield );
 	}
 	
@@ -228,29 +271,29 @@ class Player extends MonoBehaviour {
 		automaticHeal = 0;
 	}
 	
-	function HasFullHealth () : boolean {		
-		return stats.hp >= stats.maxHp;
-	}
-	
 	function Heal ( amount : int ) {
-		if ( CanHeal ( amount ) ) {
+		if ( stats.hp < stats.maxHp ) {
 			stats.hp += amount;
+		}
 		
-		} else if ( !HasFullHealth () ) {
+		if ( stats.hp >= stats.maxHp ) {
 			stats.hp = stats.maxHp;
-		
-		} else {
-			skillTree.SetActive ( "Chest", "Heal", false );
-			return;
-			
+
+			skillTree.SetActive ( "Chest", "Health", false );
 		}
 	}
 	
-	
+	public function OnProjectileHit ( damage : float ) {
+		TakeDamage ( damage );
+	}
+
+
 	////////////////////
 	// Init
 	////////////////////	
 	public function Start () {
+		SetRagdoll ( false );
+
 		inventory.eventHandler = this.gameObject;
 	}
 
@@ -258,6 +301,8 @@ class Player extends MonoBehaviour {
 	// Update
 	////////////////////	
 	function Update () {
+		if ( stats.hp <= 0 ) { return; }
+		
 		// Lifting object
 		if ( liftedObject ) {
 			liftedObject.transform.rotation = this.transform.rotation;

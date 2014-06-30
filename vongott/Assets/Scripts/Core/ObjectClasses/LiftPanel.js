@@ -57,7 +57,7 @@ class LiftPanel extends InteractiveObject {
 		locked = false;
 		MoveDoors ( 0.9 );
 		
-		GameCore.GetPlayerObject().transform.parent = GameCore.levelContainer;
+		GameCore.GetPlayerObject().transform.parent = GameCore.GetInstance().levelContainer;
 	}
 	
 	public function Exit ( i : int ) {
