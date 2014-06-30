@@ -142,7 +142,7 @@ public class OEFileBrowser extends OGPage {
 
 	public function Save () {
 		if ( callback && !String.IsNullOrEmpty ( filenameInput.text ) ) {
-			callback ( savePath + "/" + filenameInput.text );
+			callback ( savePath.Replace ( "\\", "/" ).Replace ( Application.dataPath, "" ) + "/" + filenameInput.text );
 			OGRoot.GetInstance().GoToPage ( sender );
 		}
 	}
