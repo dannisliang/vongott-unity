@@ -354,6 +354,7 @@ public class OACharacter extends MonoBehaviour {
 		animator = this.GetComponent.< Animator > ();
 		controller = this.GetComponent.< CharacterController > ();
 		stats = this.GetComponent.< OSStats > ();
+		player = GameObject.FindWithTag ( "Player" );
 
 		SetRagdoll ( !alive );
 		initialBehaviour = behaviour;

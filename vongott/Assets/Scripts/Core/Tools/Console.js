@@ -254,6 +254,10 @@ public class Console extends MonoBehaviour {
 					output += Kill ( "player" );
 					break;
 
+				case "exit":
+					GameCore.GetInstance().GoToMainMenu ();
+					break;
+
 				default:
 					output += "[ERROR] Invalid command";
 					break;

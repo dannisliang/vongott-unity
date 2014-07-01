@@ -13,8 +13,8 @@ class GameCore extends MonoBehaviour {
 	// Public vars
 	public var levelContainer : Transform;
 	public var highlightColor : Color;
-	public var testing : boolean = false;
 	public var player : Player;
+	public var testing : boolean = false;
 	public var paused : boolean = false;
 
 	// Private vars
@@ -27,7 +27,6 @@ class GameCore extends MonoBehaviour {
 	static var overrideRotation : Vector3;
 	
 	static var debuggingEnabled = true;
-	static var playerName = "Nameless";
 	static var interactiveObject : InteractiveObject;
 	static var interactiveObjectLocked : boolean = false;
 	
@@ -45,7 +44,10 @@ class GameCore extends MonoBehaviour {
 	public var timeScale : float = 1.0;
 	public var ignoreTimeScale : float = 0.0;
 	public var timeScaleGoal : float = 1.0;
-	
+
+	private var currentPath : String;
+	private var currentSpawnpoint : String;
+
 	
 	////////////////////
 	// Player
@@ -104,11 +106,26 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Load level
 	////////////////////
-	public function LoadLevel ( path : String, spawnPoint : String ) : IEnumerator {
+	public function GoToMainMenu () {
+		Application.LoadLevel ( "main_menu" );
+	}
+	
+	public function ReloadLevel () {
+		OGRoot.GetInstance().GoToPage ( "HUD" );
+		StartCoroutine ( LoadLevel ( currentPath, currentSpawnpoint ) );
+	}
+
+	public function LoadLevel ( path : String, spawnpoint : String ) : IEnumerator {
+		// Remember reload data
+		currentPath = path;
+		currentSpawnpoint = spawnpoint;
+
 		// Player
 		if ( !player.gameObject.activeInHierarchy ) {
 			player = Instantiate ( player );
-		}	
+		}
+
+		player.skillTree.eventHandler = this.gameObject;	
 
 		// Clear the OpenPath scanner
 		this.GetComponent.< OPScanner > ().Clear ();
@@ -143,7 +160,7 @@ class GameCore extends MonoBehaviour {
 		yield WaitForEndOfFrame ();
 		
 		// Set necessary init values
-		GoToSpawnPoint ( spawnPoint );
+		GoToSpawnPoint ( spawnpoint );
 		
 		SetPlayerSpeaker ();
 		
@@ -401,7 +418,7 @@ class GameCore extends MonoBehaviour {
 	function Update () {
 		if ( !paused ) {
 			Time.timeScale = timeScale;
-			Screen.lockCursor = true;
+			Screen.lockCursor = OGRoot.GetInstance().currentPage.pageName != "Dead";
 		
 		} else {
 			Screen.lockCursor = false;
