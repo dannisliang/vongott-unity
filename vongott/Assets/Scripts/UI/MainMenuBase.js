@@ -12,6 +12,8 @@ class MainMenuBase extends OGPage {
 		background.localScale = v;
 		
 		Transition ( 0.7, 5, 1, 0, 0.2, "ShowContent", false );
+
+		Screen.lockCursor = false;
 	}
 
 	override function UpdatePage () {

@@ -108,7 +108,6 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	public function GoToMainMenu () {
 		Application.LoadLevel ( "main_menu" );
-		Screen.lockCursor = false;
 	}
 	
 	public function ReloadLevel () {
