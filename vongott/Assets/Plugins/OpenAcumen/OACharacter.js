@@ -54,6 +54,7 @@ public class OACharacter extends MonoBehaviour {
 	public var conversationTree : OCTree;
 	public var convoSpeakerObjects : GameObject [] = new GameObject [0];
 	public var convoRootNode : int = 0;
+	public var inConversation : boolean = false;
 
 	// Path
 	public var pathFinder : OPPathFinder;
@@ -201,7 +202,7 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function NextPathGoal () {
-		if ( currentPathGoal + 1 < pathGoals.Length ) {
+		if ( currentPathGoal < pathGoals.Length - 1 ) {
 			currentPathGoal++;
 		} else {
 			currentPathGoal = 0;
@@ -211,14 +212,13 @@ public class OACharacter extends MonoBehaviour {
 	}
 	
 	public function NextPathGoalRun () {
-		if ( currentPathGoal + 1 < pathGoals.Length ) {
+		if ( currentPathGoal < pathGoals.Length - 1 ) {
 			currentPathGoal++;
 		} else {
 			currentPathGoal = 0;
 		}
 
 		behaviour = OABehaviour.GoToGoal;
-		speed = 1;
 	}
 
 	public function GiveHP ( points : float ) {
@@ -227,6 +227,7 @@ public class OACharacter extends MonoBehaviour {
 
 	public function TakeDamage ( damage : float ) {
 		if ( DoRaycast ( player.transform.position ) == null ) {
+			isEnemy = true;
 			behaviour = OABehaviour.ChasePlayer;
 		}	
 		
@@ -464,8 +465,11 @@ public class OACharacter extends MonoBehaviour {
 
 			case OABehaviour.Idle:
 				speed = 0;
-				this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, initialRotation, Time.deltaTime * turningSpeed );
 				
+				if ( !inConversation ) {
+					this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, initialRotation, Time.deltaTime * turningSpeed );
+				}
+
 				break;
 
 			case OABehaviour.Seeking:
@@ -515,8 +519,11 @@ public class OACharacter extends MonoBehaviour {
 				break;
 
 			case OABehaviour.GoToGoal:
+				speed = 0.5;
+				
 				if ( pathGoals.Length > 0 ) {
-					if ( pathFinder.atEndOfPath ) {
+					if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
+						NewInitialPosition ();
 						behaviour = OABehaviour.Idle;
 
 					} else {
@@ -570,7 +577,7 @@ public class OACharacter extends MonoBehaviour {
 			var goal : Vector3 = pathFinder.GetCurrentNode ();
 		
 			// Override immediate goal	
-			if ( behaviour == OABehaviour.Patrolling && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
+			if ( ( behaviour == OABehaviour.Patrolling || behaviour == OABehaviour.GoToGoal ) && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
 				goal = pathGoals[currentPathGoal];
 
 			} else if ( behaviour == OABehaviour.ChasePlayer && canSeePlayer ) {

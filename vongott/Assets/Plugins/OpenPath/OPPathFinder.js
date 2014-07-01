@@ -18,7 +18,7 @@ class OPPathFinder extends MonoBehaviour {
 	private var updateTimer : float = 0;
 
 	public function get atEndOfPath () : boolean {
-		return currentNode >= nodes.Length;
+		return currentNode >= nodes.Length || ( transform.position - goal ).magnitude <= stoppingDistance;
 	}
 
 	public function get hasPath () : boolean { 

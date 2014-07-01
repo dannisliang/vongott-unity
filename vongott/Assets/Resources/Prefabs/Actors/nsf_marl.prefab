@@ -1517,7 +1517,7 @@ MonoBehaviour:
   currentNode: 0
   scanner: {fileID: 0}
   speed: 4
-  stoppingDistance: .100000001
+  stoppingDistance: .5
   nodeDistance: 1
   target: {fileID: 0}
   autoChase: 0
@@ -1538,6 +1538,7 @@ MonoBehaviour:
   stats: {fileID: 0}
   skillTree: {fileID: 0}
   isEnemy: 0
+  unconcious: 0
   destroyOnDeath: 0
   player: {fileID: 0}
   behaviour: 1
@@ -1558,6 +1559,7 @@ MonoBehaviour:
   conversationTree: {fileID: 0}
   convoSpeakerObjects: []
   convoRootNode: 0
+  inConversation: 0
   pathFinder: {fileID: 11400004}
   pathGoals: []
   turningSpeed: 4

@@ -12,6 +12,18 @@ class EventManager extends OCEventHandler {
 	}
 
 	public function OnConversationStart ( tree : OCTree ) {
+		var speakers : OCSpeaker[] = GameCore.GetConversationManager().speakers;
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			var go : GameObject = speakers[i].gameObject;
+			
+			if ( go ) {
+				var a : OACharacter = go.GetComponent.< OACharacter > ();
+
+				if ( a ) {
+					a.inConversation = true;
+				}
+			}
+		}
 	}
 
 	public function OnSelectOption ( i : int ) {
@@ -62,6 +74,19 @@ class EventManager extends OCEventHandler {
 	}
 
 	public function OnConversationEnd () {
+		var speakers : OCSpeaker[] = GameCore.GetConversationManager().speakers;
+		for ( var i : int = 0; i < speakers.Length; i++ ) {
+			var go : GameObject = speakers[i].gameObject;
+			
+			if ( go ) {
+				var a : OACharacter = go.GetComponent.< OACharacter > ();
+
+				if ( a ) {
+					a.inConversation = false;
+				}
+			}
+		}
+		
 		if ( OGRoot.GetInstance().currentPage.pageName == "Conversation" ) {
 			OGRoot.GetInstance().GoToPage ( "HUD" );
 			GameCore.GetInstance().SetControlsActive ( true );
