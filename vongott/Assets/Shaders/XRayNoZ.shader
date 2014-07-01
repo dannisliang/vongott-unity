@@ -1,4 +1,4 @@
-﻿Shader "Vongott/XRay No Z" {
+﻿Shader "Vongott/XRayNoZ" {
 	Properties {
 		_Color("_Color", Color) = (0,1,0,1)
 	    _Inside("_Inside", Range(0,1) ) = 0

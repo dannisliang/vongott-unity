@@ -21,9 +21,14 @@ class InteractiveObject extends MonoBehaviour {
 	
 	function InvokePrompt () {
 		var character : OACharacter = this.GetComponent.< OACharacter > ();
+		var item : OSItem = this.GetComponent.< OSItem > ();
 
 		if ( character ) {
 			UIHUD.GetInstance().ShowNotification ( "Talk" );
+		
+		} else if ( item ) {
+			UIHUD.GetInstance().ShowNotification ( "Take" );
+		
 		}
 	}
 	

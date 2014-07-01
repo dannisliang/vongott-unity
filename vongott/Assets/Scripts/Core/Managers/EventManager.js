@@ -176,9 +176,9 @@ class EventManager extends OCEventHandler {
 	private function ChangeAllCharacterShaders () {
 		savedShaders.Clear ();
 
-		var newShader : Shader = Shader.Find ( "Vongott/XRay No Z" );
+		var newShader : Shader = Shader.Find ( "Vongott/XRayNoZ" );
 
-		for ( a in GameCore.GetInstance().levelContainer.GetComponentsInChildren.< OACharacter > () ) {
+		for ( var a : OACharacter in GameCore.GetInstance().levelContainer.GetComponentsInChildren.< OACharacter > () ) {
 			var renderer : SkinnedMeshRenderer = a.GetComponentInChildren.< SkinnedMeshRenderer > ();
 
 			for ( var m : Material in renderer.materials ) {
@@ -192,7 +192,7 @@ class EventManager extends OCEventHandler {
 	private function RestoreAllCharacterShaders () {
 		if ( savedShaders.Count < 1 ) { return; }
 		
-		for ( a in GameCore.GetInstance().levelContainer.GetComponentsInChildren.< OACharacter > () ) {
+		for ( var a : OACharacter in GameCore.GetInstance().levelContainer.GetComponentsInChildren.< OACharacter > () ) {
 			var renderer : SkinnedMeshRenderer = a.GetComponentInChildren.< SkinnedMeshRenderer > ();
 
 			for ( var m : Material in renderer.materials ) {
