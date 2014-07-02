@@ -1,5 +1,5 @@
 ---
-published: false
+layout: blog-post
 ---
 
 We did a feature rundown of The Vongott Chronicles at its current stage of development. The awesome background music can be found [here](http://ocremix.org/album/44/deus-ex-sonic-augmentation).
