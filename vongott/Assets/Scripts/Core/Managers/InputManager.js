@@ -14,36 +14,38 @@ class InputManager extends MonoBehaviour {
 
 		// In-game
 		} else {
+			var inventory : OSInventory = GameCore.GetInventory ();
+
 			// Stash
 			if ( Input.GetKeyDown ( KeyCode.Alpha1 ) ) {
-			//	InventoryManager.GetInstance().ToggleStash ( 0 );
+				inventory.SetQuickSlotEquipped ( 0 );
 
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha2 ) ) { 
-			//	InventoryManager.GetInstance().ToggleStash ( 1 );
+				inventory.SetQuickSlotEquipped ( 1 );
 
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha3 ) ) { 
-			//	InventoryManager.GetInstance().ToggleStash ( 2 );
+				inventory.SetQuickSlotEquipped ( 2 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha4 ) ) { 
-			//	InventoryManager.GetInstance().ToggleStash ( 3 );
+				inventory.SetQuickSlotEquipped ( 3 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha5 ) ) { 
-			//	InventoryManager.GetInstance().ToggleStash ( 4 );
+				inventory.SetQuickSlotEquipped ( 4 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha6 ) ) { 
-			//	InventoryManager.GetInstance().ToggleStash ( 5 );
+				inventory.SetQuickSlotEquipped ( 5 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha7 ) ) { 
-			//	InventoryManager.GetInstance().ToggleStash ( 6 );
+				inventory.SetQuickSlotEquipped ( 6 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha8 ) ) { 
-			///	InventoryManager.GetInstance().ToggleStash ( 7 );
+				inventory.SetQuickSlotEquipped ( 7 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha9 ) ) { 
-			//	InventoryManager.GetInstance().ToggleStash ( 8 );
+				inventory.SetQuickSlotEquipped ( 8 );
 			
 			} else if ( Input.GetKeyDown ( KeyCode.Alpha0 ) ) { 
-			//	InventoryManager.GetInstance().ToggleStash ( 9 );
+				inventory.SetQuickSlotEquipped ( 9 );
 
 			// Flashlight
 			} else if ( Input.GetKeyDown ( KeyCode.F ) ) {

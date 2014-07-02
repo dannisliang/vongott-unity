@@ -125,8 +125,6 @@ class GameCore extends MonoBehaviour {
 			player = Instantiate ( player );
 		}
 
-		player.skillTree.eventHandler = this.gameObject;	
-
 		// Clear the OpenPath scanner
 		this.GetComponent.< OPScanner > ().Clear ();
 

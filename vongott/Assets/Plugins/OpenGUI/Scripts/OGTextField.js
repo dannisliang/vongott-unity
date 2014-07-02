@@ -19,8 +19,8 @@ public class OGTextField extends OGWidget {
 	public var fitPadding : RectOffset = new RectOffset ();
 
 	@HideInInspector public var listening : boolean = false;
-	@HideInInspector public var cursorPos : int = 0;
-	
+	@HideInInspector public var cursorPos : int;
+
 	private var currentPreset : RegExPreset = RegExPreset.None;
 
 
@@ -76,14 +76,13 @@ public class OGTextField extends OGWidget {
 			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);
 			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;
 	
+			cursorPos = editor.pos;
+
 			if ( !String.IsNullOrEmpty ( regex ) && regex != "\\" && regexPreset != RegExPreset.None ) {
 				text = Regex.Replace ( text, "[" + regex + "]", "" );
 			}
 
-			cursorPos = editor.pos;
-
 			GUI.FocusControl ( "ActiveTextField" );
-		
 		}	
 	}
 

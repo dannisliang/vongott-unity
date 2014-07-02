@@ -55,6 +55,14 @@ public class OCManager extends MonoBehaviour {
 
 	public function Start () {
 		instance = this;
+	
+		if ( !eventHandler ) {
+			var go : GameObject = GameObject.FindWithTag ( "EventHandler" );
+
+			if ( go ) {
+				eventHandler = go.GetComponentInChildren.< OCEventHandler > ();
+			}
+		}
 	}
 
 	public function EndConversation () {
@@ -75,8 +83,6 @@ public class OCManager extends MonoBehaviour {
 	}
 
 	private function PlayLineAudio ( node : OCNode ) : IEnumerator {
-		var duration : float = 0;
-		
 		// Make sure no other conversation audio is playing
 		if ( currentAudioSource ) {
 			currentAudioSource.Stop ();
@@ -90,23 +96,22 @@ public class OCManager extends MonoBehaviour {
 			speaker.gameObject.audio.Play ();
 			currentAudioSource = speaker.gameObject.audio;
 	
-			duration = speaker.gameObject.audio.clip.length;
+			// Wait for speech duration
+			var duration : float = speaker.gameObject.audio.clip.length;
+			yield WaitForSeconds ( duration );
+			
+			// If we already continued manually, or the conversation has ended, abort
+			if ( node.id == currentNode && tree != null ) {
+				yield WaitForSeconds ( 0.5 );
+				NextNode ( node.speak.index );
+			}
 
-		// Without audio
+		// Without audio, allow the user to continue on their own initiative
 		} else {
-			// Estimate duration
-			duration = node.speak.lines[node.speak.index].text.Length / 10;
-		
+			yield null;
+
 		}
 		
-		// Wait for speech duration
-		yield WaitForSeconds ( duration );
-		
-		// If we already continued manually, or the conversation has ended, abort
-		if ( node.id == currentNode && tree != null ) {
-			yield WaitForSeconds ( 0.5 );
-			NextNode ( node.speak.index );
-		}
 	}
 
 	public function DisplayNode () : void {

@@ -260,6 +260,7 @@ MonoBehaviour:
   reloadSpeedIndex: 2
   rangeIndex: 4
   firingSoundIndex: 0
+  emptySoundIndex: 0
   reloadSoundIndex: 1
   equippingSoundIndex: 1
   holsteringSoundIndex: 2
@@ -331,7 +332,7 @@ MonoBehaviour:
   catIndex: 1
   subcatIndex: 1
   slotSize:
-    x: 3
+    x: 2
     y: 1
   attributes:
   - index: 0
@@ -352,10 +353,11 @@ MonoBehaviour:
   ammunition:
     enabled: 1
     index: 0
-    value: 40
+    value: 300
+    max: 300
     item: {fileID: 11400010}
-  thumbnail: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
-  preview: {fileID: 2800000, guid: 479ca3b1056a540a98442a996d8b2a97, type: 3}
+  thumbnail: {fileID: 2800000, guid: cca80669f1f457049b35973dc3d5e18a, type: 3}
+  preview: {fileID: 2800000, guid: 9f64fc0c80bd6a8458b3faee7d4ffcf6, type: 3}
   prefabPath: Prefabs/Items/Weapons/weapon_smg_stupid
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   sounds:

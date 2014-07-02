@@ -63,6 +63,10 @@ public class OATrigger extends MonoBehaviour {
 
 	public function Start () {
 		character = this.GetComponent.< OACharacter > ();
+	
+		if ( !eventHandler ) {
+			eventHandler = GameObject.FindWithTag ( "EventHandler" );
+		}
 	}
 
 	public function Update () {

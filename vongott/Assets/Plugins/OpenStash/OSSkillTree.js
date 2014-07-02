@@ -131,5 +131,9 @@ public class OSSkillTree extends MonoBehaviour {
 
 	public function Start () {
 		SetDefinitions ();
+
+		if ( !eventHandler ) {
+			eventHandler = GameObject.FindWithTag ( "EventHandler" );
+		}
 	}
 }

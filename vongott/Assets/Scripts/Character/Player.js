@@ -7,6 +7,7 @@ class Player extends MonoBehaviour {
 	// Public vars
 	public var head : Transform;
 	public var hand : Transform;
+	public var equippedObject : OSItem;
 	
 	public var controller : PlayerController;
 
@@ -20,7 +21,6 @@ class Player extends MonoBehaviour {
 	// Private vars	
 	private var shield : GameObject;
 	private var liftedObject : LiftableItem;
-	private var equippedObject : OSItem;
 	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
 				
@@ -54,11 +54,17 @@ class Player extends MonoBehaviour {
 	// Checks
 	public function CheckWeaponPosition () {
 		if ( equippedObject ) {
+			if ( equippedObject.rigidbody ) {
+				equippedObject.rigidbody.isKinematic = true;
+			}
+			
 			if ( GameCamera.controller.state == eCameraState.FirstPerson ) {
+				equippedObject.layer = 15;
 				equippedObject.transform.parent = Camera.main.transform;
 				equippedObject.transform.localPosition = new Vector3 ( 0.27, -0.17, 1 );
 				equippedObject.transform.localEulerAngles = Camera.main.transform.forward;
-			} else {
+			} else { 
+				equippedObject.layer = this.gameObject.layer;
 				equippedObject.transform.parent = hand;
 				equippedObject.transform.localPosition = Vector3.zero;;
 				equippedObject.transform.localEulerAngles = hand.forward;;
@@ -158,8 +164,22 @@ class Player extends MonoBehaviour {
 
 		GameCore.GetEventManager().OnDeath ();
 		this.gameObject.layer = 2;
-
+		
+		GameCamera.controller.state = eCameraState.ThirdPerson;
 		SetRagdoll ( true );
+	
+		if ( equippedObject ) {
+			equippedObject.transform.parent = this.transform.parent;
+			
+			if ( equippedObject.collider ) {
+				equippedObject.collider.enabled = true;
+			}
+
+			if ( equippedObject.rigidbody ) {
+				equippedObject.rigidbody.isKinematic = false;
+				equippedObject.rigidbody.useGravity = true;
+			}
+		}
 	}
 	
 	function TakeDamage ( amount : int ) {

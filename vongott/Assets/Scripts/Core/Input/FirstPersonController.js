@@ -2,7 +2,8 @@
 
 var walkSpeed = 6.0;
 var runSpeed = 11.0;
- 
+var modifier : Vector2 = new Vector2 ( 1, 1 );
+
 // If true, diagonal speed (when strafing + moving forward or back) can't exceed normal move speed; otherwise it's about 1.4 times faster
 var limitDiagonalSpeed = true;
  
@@ -93,7 +94,7 @@ function UpdateFirstPerson ( inputX : float, inputY : float ) {
  
 		// If running isn't on a toggle, then use the appropriate speed depending on whether the run button is down
 		if (!toggleRun) 
-			speed = Input.GetKeyDown(KeyCode.LeftShift)? runSpeed : walkSpeed;
+			speed = Input.GetKey(KeyCode.LeftShift)? runSpeed : walkSpeed;
  
 		// If sliding (and it's allowed), or if we're on an object tagged "Slide", get a vector pointing down the slope we're on
 		if ( (sliding && slideWhenOverSlopeLimit) || (slideOnTaggedObjects && hit.collider.tag == "Slide") ) {
@@ -105,7 +106,7 @@ function UpdateFirstPerson ( inputX : float, inputY : float ) {
 		}
 		// Otherwise recalculate moveDirection directly from axes, adding a bit of -y to avoid bumping down inclines
 		else {
-			moveDirection = Vector3(inputX * inputModifyFactor, -antiBumpFactor, inputY * inputModifyFactor);
+			moveDirection = Vector3(inputX * inputModifyFactor * modifier.x, -antiBumpFactor, inputY * inputModifyFactor * modifier.y);
 			moveDirection = myTransform.TransformDirection(moveDirection) * speed;
 			playerControl = true;
 		}
@@ -127,8 +128,8 @@ function UpdateFirstPerson ( inputX : float, inputY : float ) {
  
 		// If air control is allowed, check movement but don't touch the y component
 		if (airControl && playerControl) {
-			moveDirection.x = inputX * speed * inputModifyFactor;
-			moveDirection.z = inputY * speed * inputModifyFactor;
+			moveDirection.x = inputX * speed * inputModifyFactor * modifier.x;
+			moveDirection.z = inputY * speed * inputModifyFactor * modifier.y;
 			moveDirection = myTransform.TransformDirection(moveDirection);
 		}
 	}

@@ -4,6 +4,7 @@ public class OSAmmunitionAmount {
 	public var enabled : boolean = false;
 	public var index : int = 0;
 	public var value : int = 0;
+	public var max : int = 100;
 	public var item : OSItem;
 
 	function OSAmmunitionAmount ( item : OSItem ) {
@@ -65,6 +66,18 @@ public class OSItem extends MonoBehaviour {
 		return definitions.categories [ catIndex ].subcategories [ subcatIndex ];
 	}
 
+	public function get layer () : int {
+		return this.gameObject.layer;
+	}
+
+	public function set layer ( value : int ) {
+		this.gameObject.layer = value;
+
+		for ( var t : Transform in this.gameObject.GetComponentsInChildren.< Transform > () ) {
+			t.gameObject.layer = value;
+		}	
+	}
+
 	public function GetSound ( id : String ) : AudioClip {
 		for ( var i : int = 0; i < sounds.Length; i++ ) {
 			if ( sounds[i] && sounds[i].name == id ) {
@@ -103,11 +116,11 @@ public class OSItem extends MonoBehaviour {
 	}
 
 	public function ChangeAmmunition ( value : int ) {
-		ammunition.value += value;
+		ammunition.value = Mathf.Clamp ( 0, ammunition.max, ammunition.value + value );
 	}
 
 	public function SetAmunition ( value : int ) {
-		ammunition.value = value;
+		ammunition.value = Mathf.Clamp ( 0, ammunition.max, value );
 	}
 
 	public function GetAttribute ( name : String ) : float {

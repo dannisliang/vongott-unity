@@ -8,6 +8,7 @@ public enum OABehaviour {
 	SearchForPlayer,
 	GoToGoal,
 	GoHome,
+	Talking,
 }
 
 public class OACharacter extends MonoBehaviour {
@@ -25,6 +26,7 @@ public class OACharacter extends MonoBehaviour {
 	public var stoppingDistance : float = 2;
 	public var attentionSpan : float = 10;
 	public var roamingRadius : float = 10;
+	public var earshotRadius : float = 10;
 	public var hesitation : float = 2;
 	
 	private var animator : Animator;
@@ -54,7 +56,6 @@ public class OACharacter extends MonoBehaviour {
 	public var conversationTree : OCTree;
 	public var convoSpeakerObjects : GameObject [] = new GameObject [0];
 	public var convoRootNode : int = 0;
-	public var inConversation : boolean = false;
 
 	// Path
 	public var pathFinder : OPPathFinder;
@@ -62,6 +63,14 @@ public class OACharacter extends MonoBehaviour {
 	public var turningSpeed : float = 4;
 	
 	private var currentPathGoal : int = -1;
+
+	public function get inConversation () : boolean {
+		return behaviour == OABehaviour.Talking;
+	}
+
+	public function set inConversation ( value : boolean ) {
+		behaviour = OABehaviour.Talking;
+	}
 
 	public function get preferredWeapon () : OSItem {
 		if ( inventory && inventory.definitions ) {
@@ -261,7 +270,7 @@ public class OACharacter extends MonoBehaviour {
 				equippedObject.transform.localEulerAngles = new Vector3 ( 0, 90, 270 );
 			
 				if ( equippedObject.rigidbody ) {
-					Destroy ( equippedObject.rigidbody ) ;
+					equippedObject.rigidbody.isKinematic = true;
 				}
 
 				if ( equippedObject.collider ) {
@@ -287,6 +296,19 @@ public class OACharacter extends MonoBehaviour {
 		}
 
 		stats.hp = 0;
+
+		if ( equippedObject ) {
+			equippedObject.transform.parent = this.transform.parent;
+		
+			if ( equippedObject.collider ) {
+				equippedObject.collider.enabled = true;
+			}
+
+			if ( equippedObject.rigidbody ) {
+				equippedObject.rigidbody.isKinematic = false;
+				equippedObject.rigidbody.useGravity = true;
+			}
+		}
 	}
 
 	public function KnockUnconcious () {
@@ -399,6 +421,13 @@ public class OACharacter extends MonoBehaviour {
 		}
 	}
 
+	public function DetectPlayer () {
+		behaviour = OABehaviour.ChasePlayer;
+		hesitationTimer = hesitation;
+
+		EquipPreferredWeapon ();
+	}
+
 	public function Update () {
 		if ( !alive || unconcious ) { return; }
 
@@ -421,7 +450,13 @@ public class OACharacter extends MonoBehaviour {
 
 				}
 
-				if ( canSeePlayer ) {
+				var playerStats : OSStats = player.GetComponent.< OSStats > ();
+
+				if ( playerStats && playerStats.hp <= 0 ) {
+					behaviour = OABehaviour.Seeking;
+					attentionTimer = attentionTimer + attentionSpan;
+
+				} else if ( canSeePlayer ) {
 					lastKnownPosition = player.transform.position;
 					pathFinder.SetGoal ( lastKnownPosition );
 				
@@ -465,9 +500,14 @@ public class OACharacter extends MonoBehaviour {
 			case OABehaviour.Idle:
 				speed = 0;
 				
-				if ( !inConversation ) {
-					this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, initialRotation, Time.deltaTime * turningSpeed );
-				}
+				this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, initialRotation, Time.deltaTime * turningSpeed );
+
+				break;
+
+			case OABehaviour.Talking:
+				speed = 0;
+				
+				TurnTowards ( player.transform.position );
 
 				break;
 
@@ -541,10 +581,18 @@ public class OACharacter extends MonoBehaviour {
 
 		if ( isEnemy && canSeePlayer ) {
 			if ( behaviour != OABehaviour.ChasePlayer ) {
-				behaviour = OABehaviour.ChasePlayer;
-				hesitationTimer = hesitation;
+				DetectPlayer ();
 
-				EquipPreferredWeapon ();
+				var radius : float = earshotRadius;
+				var colliders : Collider[] = Physics.OverlapSphere ( this.transform.position, 10 );
+
+				for ( var c : Collider in colliders ) {
+					var a : OACharacter = c.GetComponent.< OACharacter > ();
+
+					if ( a && a != this ) {
+						a.DetectPlayer ();
+					}
+				}
 			}
 		}
 

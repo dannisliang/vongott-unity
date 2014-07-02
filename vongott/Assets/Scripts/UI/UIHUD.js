@@ -5,6 +5,12 @@ private class StatusBar {
 	var energy : OGProgressBar;
 }
 
+private class Ammo {
+	var bar : OGProgressBar;
+	var lbl : OGLabel;
+	var gameObject : GameObject;
+}
+
 private class NotificationBox {
 	var parent : OGWidget;
 	var background : OGSlicedSprite;
@@ -12,11 +18,12 @@ private class NotificationBox {
 }
 
 private class StashSlot {
-	var background : OGSprite;
+	var background : OGSlicedSprite;
 	var icon : OGTexture;
 }
 
 class UIHUD extends OGPage {
+	public var ammo : Ammo;
 	public var statusBar : StatusBar;
 	public var notificationBox : NotificationBox;
 	public var crosshair : GameObject;
@@ -24,11 +31,11 @@ class UIHUD extends OGPage {
 	public var stash : Transform;
 	public var stashActiveColor : Color;
 	public var stashInactiveColor : Color;
+	public var stashSlots : StashSlot[];
 
 	private var notificationTimer : float = 0.0;
 	private var notificationIndefinite : boolean = true;
 	private var showingNotification : boolean = false;
-	private var stashSlots : StashSlot[];
 
 	// Instance
 	public static var instance : UIHUD;
@@ -54,8 +61,28 @@ class UIHUD extends OGPage {
 			ShowNotification ( "" );
 		}
 		
-		statusBar.health.SetValue ( ( GameCore.GetPlayer().stats.hp * 1.0 / GameCore.GetPlayer().stats.maxHp * 1.0 ) );
-		statusBar.energy.SetValue ( GameCore.GetPlayer().stats.mp * 1.0 / GameCore.GetPlayer().stats.maxMp * 1.0 );
+		var p : Player = GameCore.GetPlayer ();
+
+		statusBar.health.SetValue ( p.stats.hp * 1.0 / p.stats.maxHp * 1.0 );
+		statusBar.energy.SetValue ( p.stats.mp * 1.0 / p.stats.maxMp * 1.0 );
+		
+		if ( p.equippedObject ) {
+			var itm : OSItem = p.equippedObject;
+
+			if ( itm.ammunition.max <= 0 ) {
+				ammo.lbl.text = "--";
+				ammo.bar.SetValue ( 1 );
+			} else {
+				ammo.lbl.text = itm.ammunition.value.ToString ();
+				ammo.bar.SetValue ( itm.ammunition.value * 1.0 / itm.ammunition.max * 1.0 );
+			}
+
+			ammo.gameObject.SetActive ( true );
+		
+		} else {
+			ammo.gameObject.SetActive ( false );
+
+		}
 
 		var delta : float = Time.deltaTime * 4;
 
@@ -90,36 +117,46 @@ class UIHUD extends OGPage {
 		}
 
 		// Update stash
-		/*if ( stashSlots == null ) {
-			stashSlots = new StashSlot[stash.childCount];
-			
-			for ( var i : int = 0; i < stash.childCount; i++ ) {
-				stashSlots[i] = new StashSlot();
-				stashSlots[i].background = stash.GetChild(i).gameObject.GetComponentInChildren.<OGSprite>();
-				stashSlots[i].icon = stash.GetChild(i).gameObject.GetComponentInChildren.<OGTexture>();
-			}	
-		
-		} else {
-			var activeSlot : int = InventoryManager.GetInstance().GetActiveStash();
+		var stash : List.< int > = GameCore.GetInventory().quickSlots;
 
-			for ( i = 0; i < stashSlots.Length; i++ ) {
-				stashSlots[i].background.tint = ( i == activeSlot ) ? stashActiveColor : stashInactiveColor;
-				stashSlots[i].icon.tint.a = stashSlots[i].background.tint.a;
-			       	
-				var entry : InventoryEntry = InventoryManager.GetInstance().GetEntry ( i );
-			
-				if ( entry ) {
-					stashSlots[i].icon.mainTexture = entry.item.image;
+		for ( var i : int = 0; i < stashSlots.Length; i++ ) {
+			if ( i < stash.Count ) {
+				var slot : OSSlot = GameCore.GetInventory().slots [ stash[i] ];
+
+				if ( slot.item ) {
+					stashSlots[i].icon.mainTexture = slot.item.thumbnail;
+
+					if ( slot.equipped ) {
+						stashSlots[i].background.tint = stashActiveColor;
+						stashSlots[i].icon.tint.a = stashSlots[i].background.tint.a;
+
+					} else {
+						stashSlots[i].background.tint = stashInactiveColor;
+						stashSlots[i].icon.tint.a = stashSlots[i].background.tint.a;
+
+					}
+				
 				} else {
 					stashSlots[i].icon.mainTexture = null;
+					stashSlots[i].background.tint = stashInactiveColor;
+					stashSlots[i].icon.tint.a = stashSlots[i].background.tint.a;
+
 				}
+			
+			} else {
+				stashSlots[i].icon.mainTexture = null;
+				stashSlots[i].background.tint = stashInactiveColor;
+				stashSlots[i].icon.tint.a = stashSlots[i].background.tint.a;
+
 			}
-		
-		}*/
+			
+		}
 	}
 	
 	// Console
 	public function ToggleConsole () {
+		if ( !console ) { return; }
+
 		console.SetActive ( !console.activeSelf );
 
 		if ( console.activeSelf ) {	

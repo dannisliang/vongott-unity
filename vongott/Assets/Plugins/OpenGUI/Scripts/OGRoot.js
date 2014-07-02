@@ -87,15 +87,6 @@ class OGRoot extends MonoBehaviour {
 			GL.PushMatrix();
 			GL.LoadPixelMatrix ();
 
-			// Draw textures
-			for ( i = 0; i < widgets.Length; i++ ) {	
-				w = widgets[i];
-				
-				if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
-					w.DrawGL();
-				}
-			}
-
 			// Draw skin
 			GL.Begin(GL.QUADS);
 			OGDrawHelper.SetPass(skin.atlas);
@@ -174,6 +165,16 @@ class OGRoot extends MonoBehaviour {
 				GL.End();
 			}
 			
+			// Draw textures
+			for ( i = 0; i < widgets.Length; i++ ) {	
+				w = widgets[i];
+				
+				if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
+					w.DrawGL();
+				}
+			}
+
+
 			GL.PopMatrix();
 		}
 	}

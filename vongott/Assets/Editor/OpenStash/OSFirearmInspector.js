@@ -35,6 +35,7 @@ public class OSFirearmInspector extends Editor {
 		EditorGUILayout.LabelField ( "Inherited sounds", EditorStyles.boldLabel );
 
 		firearm.firingSoundIndex = EditorGUILayout.Popup ( "Fire", firearm.firingSoundIndex, firearm.item.GetSoundStrings () );
+		firearm.emptySoundIndex = EditorGUILayout.Popup ( "Empty", firearm.emptySoundIndex, firearm.item.GetSoundStrings () );
 		firearm.reloadSoundIndex = EditorGUILayout.Popup ( "Reload", firearm.reloadSoundIndex, firearm.item.GetSoundStrings () );
 		firearm.equippingSoundIndex = EditorGUILayout.Popup ( "Equip", firearm.equippingSoundIndex, firearm.item.GetSoundStrings () );
 		firearm.holsteringSoundIndex = EditorGUILayout.Popup ( "Holster", firearm.holsteringSoundIndex, firearm.item.GetSoundStrings () );

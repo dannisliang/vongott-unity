@@ -431,7 +431,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 203735805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 640, y: 280, z: 0}
+  m_LocalPosition: {x: 631, y: 275, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1473087455}
@@ -662,8 +662,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 640
-    y: 439
+    x: 631
+    y: 434
     width: 1
     height: 1
   mouseRct:
@@ -1240,14 +1240,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 651
-    y: 400
+    x: 642
+    y: 395
     width: 140
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 651
-    y: 400
+    x: 642
+    y: 395
     width: 140
     height: 40
   drawDepth: -0
@@ -2016,14 +2016,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 490
-    y: 280
+    x: 481
+    y: 275
     width: 180
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 490
-    y: 280
+    x: 481
+    y: 275
     width: 180
     height: 40
   drawDepth: -0
@@ -2703,14 +2703,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 690
-    y: 280
+    x: 681
+    y: 275
     width: 100
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 690
-    y: 280
+    x: 681
+    y: 275
     width: 100
     height: 40
   drawDepth: -0
@@ -2779,7 +2779,7 @@ MonoBehaviour:
   currentPage: {fileID: 1777841193}
   lineMaterial: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}
   downWidget: {fileID: 0}
-  isMouseOver: 0
+  isMouseOver: 1
 --- !u!20 &1224498180
 Camera:
   m_ObjectHideFlags: 0
@@ -3021,7 +3021,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1
   currentStyle:
-    name: Button
+    name: ButtonHover
     coordinates:
       serializedVersion: 2
       x: 0
@@ -3033,16 +3033,16 @@ MonoBehaviour:
       bottom: 10
       left: 20
       right: 20
-    color: {r: .107861184, g: .379624069, b: .698529422, a: 1}
+    color: {r: 1, g: .764705896, b: 0, a: 1}
     text:
       fontIndex: 0
       font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
       fontSize: 18
-      fontColor: {r: 1, g: .862745106, b: .431372553, a: 1}
+      fontColor: {r: .83088237, g: .90869236, b: 1, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
       alignment: 4
-      wordWrap: 0
+      wordWrap: 1
       padding:
         m_Left: 0
         m_Right: 0
@@ -3058,14 +3058,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 490
-    y: 340
+    x: 481
+    y: 335
     width: 300
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 490
-    y: 340
+    x: 481
+    y: 335
     width: 300
     height: 40
   drawDepth: -0
@@ -3889,14 +3889,14 @@ MonoBehaviour:
     height: 64
   drawRct:
     serializedVersion: 2
-    x: 490
-    y: 400
+    x: 481
+    y: 395
     width: 140
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 490
-    y: 400
+    x: 481
+    y: 395
     width: 140
     height: 40
   drawDepth: -0

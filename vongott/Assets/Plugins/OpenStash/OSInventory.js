@@ -231,6 +231,17 @@ public class OSInventory extends MonoBehaviour {
 		return false;
 	}
 
+	public function SetQuickSlotEquipped ( i : int ) {
+		if ( i < quickSlots.Count && quickSlots[i] < slots.Count ) {
+			var slot : OSSlot = slots [ quickSlots[i] ];
+
+			if ( slot.item ) {
+				UnequipAll ();
+				SetEquipped ( slot.item );
+			}
+		}
+	}
+
 	public function SetEquipped ( item : OSItem ) {
 		SetEquipped ( item, true );
 	}
@@ -429,11 +440,12 @@ public class OSInventory extends MonoBehaviour {
 			       	if ( item.stackable ) {
 					slots[i].quantity++;
 				
-				} else if ( item.ammunition.enabled ) {
-					slots[i].item.ChangeAmmunition ( item.ammunition.value );
+				// TODO: Find a way to store ammunition information *not* in the OSItem prefab itself
+				//} else if ( item.ammunition.enabled ) {
+				//	slots[i].item.ChangeAmmunition ( item.ammunition.value );
 				
+					return true;
 				}
-				return true;
 			}
 		}
 		
