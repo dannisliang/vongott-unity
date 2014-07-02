@@ -407,8 +407,6 @@ public class OACharacter extends MonoBehaviour {
 			
 		switch ( behaviour ) {
 			case OABehaviour.ChasePlayer:
-				pathFinder.SetGoal ( lastKnownPosition );
-				
 				if ( distanceToPlayer > stoppingDistance ) {
 					if ( distanceToPlayer <= shootingDistance ) {
 						speed = 0.5;
@@ -425,6 +423,7 @@ public class OACharacter extends MonoBehaviour {
 
 				if ( canSeePlayer ) {
 					lastKnownPosition = player.transform.position;
+					pathFinder.SetGoal ( lastKnownPosition );
 				
 					if ( isEnemy ) {
 						attentionTimer = attentionSpan;
@@ -562,7 +561,7 @@ public class OACharacter extends MonoBehaviour {
 			speed = 0;
 		}
 
-		// Id there is no path, stop moving
+		// If there is no path, stop moving
 		if ( !pathFinder.hasPath ) {
 			speed = 0;
 		}

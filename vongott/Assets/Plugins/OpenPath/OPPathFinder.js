@@ -127,14 +127,14 @@ class OPPathFinder extends MonoBehaviour {
 			}
 			
 			if ( !scanner.searching && updateTimer <= 0 ) {
-				ClearNodes ();
-			
 				var start : Vector3 = this.transform.position;
 			
 				var tempNodes : List.< OPNode > = new List.< OPNode > ();
 				
 				yield scanner.FindPath ( start, goal, tempNodes );
 				
+				ClearNodes ();
+			
 				nodes = tempNodes.ToArray ();
 
 				for ( var i : int = 0; i < nodes.Length; i++ ) {
