@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 public enum OABehaviour {
-	ChaseTarget,
+	ChasingTarget,
 	Idle,
 	Patrolling,
 	Seeking,
@@ -244,7 +244,7 @@ public class OACharacter extends MonoBehaviour {
 			Die ();
 		}
 		
-		if ( DoRaycast ( target.transform.position ) == null && behaviour != OABehaviour.ChaseTarget ) {
+		if ( DoRaycast ( target.transform.position ) == null && behaviour != OABehaviour.ChasingTarget ) {
 			DetectTarget ();
 			AlertNeighbors ();
 		}	
@@ -478,7 +478,7 @@ public class OACharacter extends MonoBehaviour {
 	public function DetectTarget () {
 		if ( usingWeapons ) {
 			attackTarget = true;
-			behaviour = OABehaviour.ChaseTarget;
+			behaviour = OABehaviour.ChasingTarget;
 			hesitationTimer = hesitation;
 
 			EquipPreferredWeapon ();
@@ -497,7 +497,7 @@ public class OACharacter extends MonoBehaviour {
 		aiming = false;
 			
 		switch ( behaviour ) {
-			case OABehaviour.ChaseTarget:
+			case OABehaviour.ChasingTarget:
 				if ( !usingWeapons ) {
 					behaviour = OABehaviour.Fleeing;
 					attentionTimer = attentionSpan;
@@ -542,20 +542,22 @@ public class OACharacter extends MonoBehaviour {
 						}
 					}
 				
-				} else if ( attackTarget ) {
+				} else {
 					if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
 					       	speed = 0;
 					}
 					
-					if ( attentionTimer <= 0 ) {
-						hesitationTimer = hesitation;
+					if ( attackTarget ) {
+						if ( attentionTimer <= 0 ) {
+							hesitationTimer = hesitation;
+							
+							behaviour = OABehaviour.Seeking;
+							attentionTimer = attentionTimer + attentionSpan;
 						
-						behaviour = OABehaviour.Seeking;
-						attentionTimer = attentionTimer + attentionSpan;
-					
-					} else if ( attentionTimer > 0 ) {
-						attentionTimer -= Time.deltaTime;
+						} else if ( attentionTimer > 0 ) {
+							attentionTimer -= Time.deltaTime;
 
+						}
 					}
 				}
 
@@ -676,7 +678,7 @@ public class OACharacter extends MonoBehaviour {
 		}
 
 		if ( attackTarget && canSeeTarget && usingWeapons ) {
-			if ( behaviour != OABehaviour.ChaseTarget ) {
+			if ( behaviour != OABehaviour.ChasingTarget ) {
 				DetectTarget ();
 				AlertNeighbors ();
 			}
@@ -717,7 +719,7 @@ public class OACharacter extends MonoBehaviour {
 			if ( ( behaviour == OABehaviour.Patrolling || behaviour == OABehaviour.GoToGoal ) && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
 				goal = pathGoals[currentPathGoal];
 
-			} else if ( behaviour == OABehaviour.ChaseTarget && canSeeTarget ) {
+			} else if ( behaviour == OABehaviour.ChasingTarget && canSeeTarget ) {
 				goal = lastKnownPosition;
 
 			}
@@ -734,7 +736,7 @@ public class OACharacter extends MonoBehaviour {
 		} else {
 			aimDegrees = 0;
 
-			if ( behaviour == OABehaviour.ChaseTarget ) {
+			if ( behaviour == OABehaviour.ChasingTarget ) {
 				TurnTowards ( target.transform.position );
 			}			
 		

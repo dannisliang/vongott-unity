@@ -174,6 +174,7 @@ class Player extends MonoBehaviour {
 	
 		if ( equippedObject ) {
 			equippedObject.transform.parent = this.transform.parent;
+			equippedObject.layer = this.gameObject.layer;
 			
 			if ( equippedObject.collider ) {
 				equippedObject.collider.enabled = true;

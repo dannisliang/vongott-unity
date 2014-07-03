@@ -858,10 +858,10 @@ MonoBehaviour:
   - name: ScrollView
     coordinates:
       serializedVersion: 2
-      x: 480
-      y: 0
-      width: 32
-      height: 32
+      x: 160
+      y: 200
+      width: 8
+      height: 8
     border:
       top: 0
       bottom: 0
@@ -870,7 +870,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -887,10 +887,10 @@ MonoBehaviour:
   - name: Slider
     coordinates:
       serializedVersion: 2
-      x: 64
-      y: 64
-      width: 32
-      height: 32
+      x: 140
+      y: 130
+      width: 8
+      height: 8
     border:
       top: 0
       bottom: 0
@@ -916,10 +916,10 @@ MonoBehaviour:
   - name: SliderThumb
     coordinates:
       serializedVersion: 2
-      x: 0
-      y: 0
-      width: 32
-      height: 32
+      x: 320
+      y: 128
+      width: 64
+      height: 64
     border:
       top: 4
       bottom: 4
@@ -928,7 +928,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -945,21 +945,21 @@ MonoBehaviour:
   - name: Tabs
     coordinates:
       serializedVersion: 2
-      x: 32
-      y: 96
-      width: 32
-      height: 32
+      x: 128
+      y: 128
+      width: 64
+      height: 64
     border:
-      top: 4
-      bottom: 4
-      left: 4
-      right: 4
+      top: 8
+      bottom: 8
+      left: 8
+      right: 8
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
       font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
-      fontSize: 12
-      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+      fontSize: 18
+      fontColor: {r: 0, g: 0, b: 0, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
       alignment: 4
@@ -974,20 +974,20 @@ MonoBehaviour:
   - name: TabsActive
     coordinates:
       serializedVersion: 2
-      x: 64
-      y: 96
-      width: 32
-      height: 32
+      x: 128
+      y: 192
+      width: 64
+      height: 64
     border:
-      top: 4
-      bottom: 4
-      left: 4
-      right: 4
+      top: 8
+      bottom: 8
+      left: 8
+      right: 8
     color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
       font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
-      fontSize: 12
+      fontSize: 18
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}

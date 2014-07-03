@@ -48,7 +48,7 @@ public class OATrigger extends MonoBehaviour {
 	}
 
 	public function OnTriggerEnter ( collider : Collider ) {
-		if ( !collider.gameObject.tag == "Player" ) { return; }
+		if ( collider.gameObject.tag != "Player" ) { return; }
 
 		if ( isActive && type == OATriggerType.OnCollision ) {
 			Fire ();

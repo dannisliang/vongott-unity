@@ -34,6 +34,10 @@ class MainMenuBase extends OGPage {
 	public function GoToLoadGame () {
 		OGRoot.GetInstance().GoToPage ( "LoadGame" );
 	}
+	
+	public function GoToOptions () {
+		OGRoot.GetInstance().GoToPage ( "Options" );
+	}
 
 	public function HideContent () {
 		this.transform.GetChild(0).gameObject.SetActive ( false );

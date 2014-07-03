@@ -1531,10 +1531,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   skillTree: {fileID: 0}
-  isEnemy: 0
+  attackTarget: 0
   unconcious: 0
   destroyOnDeath: 0
-  player: {fileID: 0}
+  hasInfiniteAmmo: 1
+  team: 1
+  target: {fileID: 0}
+  targetTag: Player
   behaviour: 1
   speed: 0
   fieldOfView: 130
@@ -1543,17 +1546,17 @@ MonoBehaviour:
   stoppingDistance: 2
   attentionSpan: 10
   roamingRadius: 10
+  earshotRadius: 10
   hesitation: 2
   inventory: {fileID: 11400002}
   usingWeapons: 1
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 0
-  equippingHand: {fileID: 0}
+  equippingHand: {fileID: 400098}
   conversationTreePath: 
   conversationTree: {fileID: 0}
   convoSpeakerObjects: []
   convoRootNode: 0
-  inConversation: 0
   pathFinder: {fileID: 11400004}
   pathGoals: []
   turningSpeed: 4
