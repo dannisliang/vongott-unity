@@ -16,6 +16,7 @@ public class OACharacter extends MonoBehaviour {
 	public var attackTarget : boolean = false;
 	public var unconcious : boolean = false;
 	public var destroyOnDeath : boolean = false;
+	public var team : int = 1;
 	public var target : GameObject;
 	public var targetTag : String = "Player";
 	public var behaviour : OABehaviour = OABehaviour.Idle;
@@ -241,9 +242,9 @@ public class OACharacter extends MonoBehaviour {
 			Die ();
 		}
 		
-		if ( DoRaycast ( target.transform.position ) == null ) {
-			attackTarget = true;
-			behaviour = OABehaviour.ChaseTarget;
+		if ( DoRaycast ( target.transform.position ) == null && behaviour != OABehaviour.ChaseTarget ) {
+			DetectTarget ();
+			AlertNeighbors ();
 		}	
 	}
 
@@ -253,6 +254,10 @@ public class OACharacter extends MonoBehaviour {
 	}
 		
 	public function OnProjectileHit ( firearm : OSFirearm ) {
+		if ( firearm.wielder == this.gameObject ) {
+			return;
+		}
+		
 		if ( target != firearm.wielder ) {
 			target = firearm.wielder;
 		}
@@ -440,7 +445,27 @@ public class OACharacter extends MonoBehaviour {
 		}
 	}
 
+	public function AlertNeighbors () {
+		var radius : float = earshotRadius;
+		var characters : OACharacter[] = this.transform.parent.GetComponentsInChildren.< OACharacter > ();
+
+		for ( var a : OACharacter in characters ) {
+			var distance : float = Vector3.Distance ( a.transform.position, this.transform.position ); 
+
+			if ( a != this && distance <= radius && a.team == team ) {
+				a.DetectTarget ( target );
+			}
+		}
+	}
+
+	public function DetectTarget ( newTarget : GameObject ) {
+		target = newTarget;
+
+		DetectTarget ();
+	}
+
 	public function DetectTarget () {
+		attackTarget = true;
 		behaviour = OABehaviour.ChaseTarget;
 		hesitationTimer = hesitation;
 
@@ -610,17 +635,7 @@ public class OACharacter extends MonoBehaviour {
 		if ( attackTarget && canSeeTarget ) {
 			if ( behaviour != OABehaviour.ChaseTarget ) {
 				DetectTarget ();
-
-				var radius : float = earshotRadius;
-				var colliders : Collider[] = Physics.OverlapSphere ( this.transform.position, 10 );
-
-				for ( var c : Collider in colliders ) {
-					var a : OACharacter = c.GetComponent.< OACharacter > ();
-
-					if ( a && a != this ) {
-						a.DetectTarget ();
-					}
-				}
+				AlertNeighbors ();
 			}
 		}
 

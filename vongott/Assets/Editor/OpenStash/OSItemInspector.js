@@ -176,6 +176,7 @@ public class OSItemInspector extends Editor {
 				item.ammunition.index = EditorGUILayout.Popup ( "Type", item.ammunition.index, item.definitions.GetAmmunitionStrings() );
 				item.ammunition.value = EditorGUILayout.IntField ( "Amount", item.ammunition.value );
 				item.ammunition.max = EditorGUILayout.IntField ( "Maximum", item.ammunition.max );
+				item.ammunition.spread = EditorGUILayout.IntField ( "Spread", item.ammunition.spread );
 				item.ammunition.item = item;
 			}
 

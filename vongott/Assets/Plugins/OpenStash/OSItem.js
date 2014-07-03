@@ -5,6 +5,7 @@ public class OSAmmunitionAmount {
 	public var index : int = 0;
 	public var value : int = 0;
 	public var max : int = 100;
+	public var spread : int = 1;
 	public var item : OSItem;
 
 	function OSAmmunitionAmount ( item : OSItem ) {

@@ -19,7 +19,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400006}
   m_Layer: 11
-  m_Name: weapon_pistol_stupid
+  m_Name: rem870
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 46f04592ff81e184580a61fab5cf7598, type: 2}
+  - {fileID: 2100000, guid: 25098f8971530f2478bbdf5d6ac7fd59, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -114,7 +114,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 4300000, guid: 9b9b86dccf1c34140b02d33cb9ff53a4, type: 3}
+  m_Mesh: {fileID: 4300006, guid: 9b9b86dccf1c34140b02d33cb9ff53a4, type: 3}
 --- !u!33 &3300002
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -147,8 +147,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .0500000007, y: .150000006, z: .25}
-  m_Center: {x: 0, y: -.0599999987, z: -.119999997}
+  m_Size: {x: .0399999991, y: .219999999, z: .600000024}
+  m_Center: {x: 0, y: -.0700000003, z: -.300000012}
 --- !u!82 &8200000
 AudioSource:
   m_ObjectHideFlags: 1
@@ -216,9 +216,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 3
   m_Type: 2
-  m_Color: {r: 1, g: .835294127, b: .176470593, a: 1}
+  m_Color: {r: 1, g: .78039211, b: .203921556, a: 1}
   m_Intensity: 5
-  m_Range: .800000012
+  m_Range: 1
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -265,10 +265,11 @@ MonoBehaviour:
   equippingSoundIndex: 1
   holsteringSoundIndex: 2
   muzzleFlash: {fileID: 100002}
-  muzzleFlashDuration: .0500000007
-  projectileType: 0
+  muzzleFlashDuration: .0250000004
+  projectileType: 1
   projectileTypeThreshold: 1
   aimWithMainCamera: 1
+  wielder: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -289,7 +290,7 @@ MonoBehaviour:
     component: {fileID: 11400010}
   assetLinks: []
   id: 
-  prefabPath: Prefabs/Items/Weapons/weapon_pistol_stupid
+  prefabPath: Prefabs/Items/Weapons/weapon_smg_stupid
   exportPath: 
 --- !u!114 &11400004
 MonoBehaviour:
@@ -324,22 +325,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e2f180d32c6fc45a8b08fa6abfa821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Stupid Pistol
-  description: This tool is supposedly designed to embed bullets into faces, but does
-    a very poor job of it.
+  id: REM870
+  description: Kablah!
   stackable: 0
   canDrop: 1
   catIndex: 1
-  subcatIndex: 0
+  subcatIndex: 1
   slotSize:
-    x: 1
+    x: 3
     y: 1
   attributes:
   - index: 0
-    value: 2
+    value: 1
     definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   - index: 2
-    value: 25
+    value: 20
     definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   - index: 4
     value: 2
@@ -348,17 +348,18 @@ MonoBehaviour:
     value: 50
     definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   - index: 12
-    value: 50
+    value: 20
     definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   ammunition:
     enabled: 1
     index: 0
-    value: 50
-    max: 50
+    value: 30
+    max: 30
+    spread: 5
     item: {fileID: 11400010}
-  thumbnail: {fileID: 2800000, guid: 3f60549ed84dce9428f63daea9c0cc8a, type: 3}
-  preview: {fileID: 2800000, guid: 5439757fad89bb24f91ed990d88eba78, type: 3}
-  prefabPath: Prefabs/Items/Weapons/weapon_pistol_stupid
+  thumbnail: {fileID: 2800000, guid: 1ec950aaca6bf44419e55c6cbd229084, type: 3}
+  preview: {fileID: 2800000, guid: 176db7f4ddfe30f45ac0ef3eda8c9049, type: 3}
+  prefabPath: Prefabs/Items/Weapons/rem870
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   sounds:
   - {fileID: 8300000, guid: 04b5c466d964a664b8f318c905d8b065, type: 3}

@@ -184,6 +184,8 @@ class Player extends MonoBehaviour {
 				equippedObject.rigidbody.useGravity = true;
 			}
 		}
+
+		this.GetComponent.< OSSkillTree >().SetActiveAll ( false );
 	}
 	
 	function TakeDamage ( amount : int ) {
@@ -308,6 +310,10 @@ class Player extends MonoBehaviour {
 	}
 	
 	public function OnProjectileHit ( firearm : OSFirearm ) {
+		if ( firearm.wielder == this.gameObject ) {
+			return;
+		}
+		
 		TakeDamage ( firearm.damage );
 	}
 

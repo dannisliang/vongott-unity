@@ -69,6 +69,12 @@ public class OSFirearm extends MonoBehaviour {
 		return item.sounds[holsteringSoundIndex];
 	}
 
+	private function ScatterDirection ( dir : Vector3, acc : float ) : Vector3 {
+		var y : float = Random.Range ( acc - 100, 100 - acc ) * 0.1;
+		var x : float = Random.Range ( acc - 100, 100 - acc ) * 0.1;
+		return Quaternion.Euler ( 0, y, x ) * dir;
+	}
+
 	public function Fire () {
 		if ( fireTimer > 0 ) { return; }
 
@@ -95,17 +101,28 @@ public class OSFirearm extends MonoBehaviour {
 
 			}
 
+			var perfectDir : Vector3 = ray.direction;
+			var acc : float = accuracy;
+			
 			if ( projectileType == OSProjectileType.Prefab && bullet ) {
-				OSProjectile.Fire ( bullet, range, pos, ray, this );
+				for ( var i : int = 0; i < item.ammunition.spread; i++ ) {
+					ray.direction = ScatterDirection ( perfectDir, acc );
+
+					OSProjectile.Fire ( bullet, range, pos, ray, this );
+				}
 			
 			} else if ( projectileType == OSProjectileType.Raycast ) {
 				var hit : RaycastHit;
 
-				if ( Physics.Raycast ( ray, hit, range ) ) {
-					hit.collider.gameObject.SendMessage ( "OnProjectileHit", this, SendMessageOptions.DontRequireReceiver );
-					
-					if ( hit.collider.rigidbody ) {
-						hit.collider.rigidbody.AddForce ( ray.direction.normalized * damage * 100 );
+				for ( i = 0; i < item.ammunition.spread; i++ ) {
+					if ( Physics.Raycast ( ray, hit, range ) ) {
+						ray.direction = ScatterDirection ( perfectDir, acc );
+
+						hit.collider.gameObject.SendMessage ( "OnProjectileHit", this, SendMessageOptions.DontRequireReceiver );
+						
+						if ( hit.collider.rigidbody ) {
+							hit.collider.rigidbody.AddForce ( ray.direction.normalized * damage * 100 );
+						}
 					}
 				}
 
@@ -113,7 +130,7 @@ public class OSFirearm extends MonoBehaviour {
 
 			item.PlaySound ( firingSoundIndex );
 
-			item.ammunition.value--;
+			item.ammunition.value -= item.ammunition.spread;
 		
 		} else {
 			item.PlaySound ( emptySoundIndex );

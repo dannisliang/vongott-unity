@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: itm_eq_pistol
+  m_Name: rem870
   m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
@@ -29,13 +29,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _BumpTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 5a8fa0fbd7d8c7740b147f1745d84238, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _Ramp
         second:
           m_Texture: {fileID: 2800000, guid: 0522cf7aae117664bb2797def44685e4, type: 3}
@@ -46,6 +39,13 @@ Material:
           name: _Bump
         second:
           m_Texture: {fileID: 2800000, guid: 4e8a6f072fd65c043b205014ae505283, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 5a8fa0fbd7d8c7740b147f1745d84238, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
