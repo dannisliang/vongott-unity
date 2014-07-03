@@ -8,6 +8,7 @@ public enum OABehaviour {
 	GoToGoal,
 	GoHome,
 	Talking,
+	Fleeing,
 }
 
 public class OACharacter extends MonoBehaviour {
@@ -16,6 +17,7 @@ public class OACharacter extends MonoBehaviour {
 	public var attackTarget : boolean = false;
 	public var unconcious : boolean = false;
 	public var destroyOnDeath : boolean = false;
+	public var hasInfiniteAmmo : boolean = true;
 	public var team : int = 1;
 	public var target : GameObject;
 	public var targetTag : String = "Player";
@@ -266,7 +268,7 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function EquipPreferredWeapon () {
-		if ( preferredWeapon ) {
+		if ( usingWeapons && preferredWeapon ) {
 			if ( equippedObject ) {
 				Destroy ( equippedObject );
 			}
@@ -385,6 +387,15 @@ public class OACharacter extends MonoBehaviour {
 					firearm.aimWithMainCamera = false;
 					firearm.Fire ();
 				}
+
+				if ( hasInfiniteAmmo ) {
+					equippedObject.ammunition.value = equippedObject.ammunition.max;
+				
+				} else if ( equippedObject.ammunition.value <= 0 ) {
+					behaviour = OABehaviour.Fleeing;
+					attentionTimer = attentionSpan;
+
+				}
 			}
 		}
 
@@ -465,11 +476,18 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function DetectTarget () {
-		attackTarget = true;
-		behaviour = OABehaviour.ChaseTarget;
-		hesitationTimer = hesitation;
+		if ( usingWeapons ) {
+			attackTarget = true;
+			behaviour = OABehaviour.ChaseTarget;
+			hesitationTimer = hesitation;
 
-		EquipPreferredWeapon ();
+			EquipPreferredWeapon ();
+	
+		} else {
+			behaviour = OABehaviour.Fleeing;
+			attentionTimer = attentionSpan;
+
+		}
 	}
 
 	public function Update () {
@@ -480,6 +498,12 @@ public class OACharacter extends MonoBehaviour {
 			
 		switch ( behaviour ) {
 			case OABehaviour.ChaseTarget:
+				if ( !usingWeapons ) {
+					behaviour = OABehaviour.Fleeing;
+					attentionTimer = attentionSpan;
+					break;
+				}
+				
 				if ( !target ) {
 					behaviour = OABehaviour.Idle;
 					break;
@@ -564,13 +588,32 @@ public class OACharacter extends MonoBehaviour {
 
 				break;
 
+			case OABehaviour.Fleeing:
+				speed = 1.0;
+
+				if ( pathFinder.atEndOfPath ) {
+					seekingGoal = this.transform.position + new Vector3 ( Random.Range ( -roamingRadius, roamingRadius ), 0, Random.Range ( -roamingRadius, roamingRadius ) );
+
+					pathFinder.SetGoal ( seekingGoal );
+				}
+				
+				if ( attentionTimer > 0 ) {
+					attentionTimer -= Time.deltaTime;
+				
+				} else {
+					behaviour = OABehaviour.GoHome;
+					pathFinder.SetGoal ( initialPosition, true );
+					hesitationTimer = hesitation;
+				
+				}
+
+				break;
+
 			case OABehaviour.Seeking:
 				speed = 0.5;
 				
 				if ( pathFinder.atEndOfPath ) {
-					var seekingCenter : Vector3 = lastKnownPosition;
-					
-					seekingGoal = seekingCenter + new Vector3 ( Random.Range ( -roamingRadius, roamingRadius ), 0, Random.Range ( -roamingRadius, roamingRadius ) );
+					seekingGoal = lastKnownPosition + new Vector3 ( Random.Range ( -roamingRadius, roamingRadius ), 0, Random.Range ( -roamingRadius, roamingRadius ) );
 
 					pathFinder.SetGoal ( seekingGoal );
 					
@@ -632,7 +675,7 @@ public class OACharacter extends MonoBehaviour {
 
 		}
 
-		if ( attackTarget && canSeeTarget ) {
+		if ( attackTarget && canSeeTarget && usingWeapons ) {
 			if ( behaviour != OABehaviour.ChaseTarget ) {
 				DetectTarget ();
 				AlertNeighbors ();

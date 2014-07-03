@@ -338,7 +338,7 @@ class GameCamera extends MonoBehaviour {
 	// Render
 	////////////////////
 	function OnPostRender () {
-		if ( !inConvo && GameCore.GetInteractiveObject() && !GameCore.interactiveObjectLocked ) {
+		if ( player && player.stats.hp > 0 && !inConvo && GameCore.GetInteractiveObject() && !GameCore.interactiveObjectLocked ) {
 			DrawBoundingBox ( GameCore.GetInteractiveObject().gameObject );
 		}
 	}	
@@ -353,71 +353,82 @@ class GameCamera extends MonoBehaviour {
 			player = GameCore.GetPlayer ();
 		}
 
-		// Check for conversation cam
-		if ( inConvo ) {
-			this.transform.position = convoPosition;
-			this.transform.rotation = Quaternion.LookRotation ( convoFocus - this.transform.position );
-		}
-
-		// Check for interaction
-		if ( !GameCore.interactiveObjectLocked && player.stats.hp > 0 ) {
-			var hit : RaycastHit;
-
-			Debug.DrawRay ( transform.position, transform.forward * 4, Color.yellow );
-
-			if ( Physics.Raycast ( transform.position, transform.forward, hit, 4 ) ) {
-				var thisObject : InteractiveObject = hit.collider.GetComponent.< InteractiveObject > ();
-			
-				if ( thisObject && GameCore.GetInteractiveObject() != thisObject ) {
-					thisObject.Focus ();
-					focusSleep = 1;
-				}
-					
-			} else if ( GameCore.GetInteractiveObject() && focusSleep <= 0 ) {
-				GameCore.GetInteractiveObject().Unfocus ();
-			
-			}
-			
-			// Bounding box modifier
-			if ( boundingBoxModifier < 1 ) {
-				boundingBoxDelta = 0.1;
-			
-			} else {
-				boundingBoxDelta -= 0.3 * Time.deltaTime;
-			 
-			} 
-			
-			boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
-		}
-
-		// Shake
-		if ( shakeAmount > 0 ) {
-			shakeAmount -= shakeFadeOut;
-
-			controller.shakeOffset.x = Random.Range ( -shakeAmount, shakeAmount );
-			controller.shakeOffset.y = Random.Range ( -shakeAmount, shakeAmount );
+		// Death cam
+		if ( player.stats.hp <= 0 ) {
+			this.transform.position = Vector3.Slerp ( this.transform.position, player.transform.position + new Vector3 ( 0, 6, 0 ), Time.deltaTime * 0.5 );
+			this.transform.rotation = Quaternion.LookRotation ( player.transform.position - this.transform.position );
+			this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
 		
 		} else {
-			controller.shakeOffset = Vector2.zero;
-		
-		}
-
-		// Camera controller state
-		switch ( controller.state ) {
-			case eCameraState.ThirdPerson:
-				player.controller.controlMode = ePlayerControlMode.ThirdPerson;
+			// Check for conversation cam
+			if ( inConvo ) {
+				this.transform.position = convoPosition;
+				this.transform.rotation = Quaternion.LookRotation ( convoFocus - this.transform.position );
 				this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
-				break;
+			}
 
-			case eCameraState.FirstPerson:
-				player.controller.controlMode = ePlayerControlMode.FirstPerson;
-				this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
-				break;
-		}
+			// Check for interaction
+			if ( !GameCore.interactiveObjectLocked ) {
+				var hit : RaycastHit;
 
-		// Focus sleep
-		if ( focusSleep > 0 ) {
-			focusSleep -= GameCore.GetInstance().ignoreTimeScale;
+				Debug.DrawRay ( transform.position, transform.forward * 4, Color.yellow );
+
+				if ( Physics.Raycast ( transform.position, transform.forward, hit, 4 ) ) {
+					var thisObject : InteractiveObject = hit.collider.GetComponent.< InteractiveObject > ();
+				
+					if ( thisObject && GameCore.GetInteractiveObject() != thisObject ) {
+						thisObject.Focus ();
+						focusSleep = 1;
+					}
+						
+				} else if ( GameCore.GetInteractiveObject() && focusSleep <= 0 ) {
+					GameCore.GetInteractiveObject().Unfocus ();
+				
+				}
+				
+				// Bounding box modifier
+				if ( boundingBoxModifier < 1 ) {
+					boundingBoxDelta = 0.1;
+				
+				} else {
+					boundingBoxDelta -= 0.3 * Time.deltaTime;
+				 
+				} 
+				
+				boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
+			}
+
+			// Shake
+			if ( shakeAmount > 0 ) {
+				shakeAmount -= shakeFadeOut;
+
+				controller.shakeOffset.x = Random.Range ( -shakeAmount, shakeAmount );
+				controller.shakeOffset.y = Random.Range ( -shakeAmount, shakeAmount );
+			
+			} else {
+				controller.shakeOffset = Vector2.zero;
+			
+			}
+
+			// Camera controller state
+			switch ( controller.state ) {
+				case eCameraState.ThirdPerson:
+					player.controller.controlMode = ePlayerControlMode.ThirdPerson;
+					this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
+					break;
+
+				case eCameraState.FirstPerson:
+					player.controller.controlMode = ePlayerControlMode.FirstPerson;
+					if ( !inConvo ) {
+						this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
+					}
+					break;
+			}
+
+			// Focus sleep
+			if ( focusSleep > 0 ) {
+				focusSleep -= GameCore.GetInstance().ignoreTimeScale;
+			}
 		}
 	}
 }

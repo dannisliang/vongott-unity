@@ -186,6 +186,7 @@ class Player extends MonoBehaviour {
 		}
 
 		this.GetComponent.< OSSkillTree >().SetActiveAll ( false );
+		GameCore.GetInstance().SetControlsActive ( false );
 	}
 	
 	function TakeDamage ( amount : int ) {
