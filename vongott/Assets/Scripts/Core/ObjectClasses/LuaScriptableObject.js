@@ -76,7 +76,7 @@ public class LuaScriptableObject extends MonoBehaviour {
 			if ( triggerId == "player" && p ) {
 				onTrigger.Call ( p );
 			
-			} else if ( ( triggerId == "enemy" && c && c.isEnemy ) || ( triggerId == "ally" && c && !c.isEnemy ) ) {
+			} else if ( ( triggerId == "enemy" && c && c.target == GameCore.GetPlayer().gameObject ) || ( triggerId == "ally" && c && c.target != GameCore.GetPlayer().gameObject ) ) {
 				onTrigger.Call ( c );
 
 			} else if ( triggerId == "all" ) {

@@ -10,7 +10,7 @@ public class SerializeOpenAcumen extends OFPlugin {
 	
 		var behaviour : int = input.behaviour;
 		output.AddField ( "behaviour", behaviour );
-		output.AddField ( "isEnemy", input.isEnemy );
+		output.AddField ( "attackTarget", input.attackTarget );
 		output.AddField ( "unconcious", input.unconcious );
 
 		// Inventory
@@ -91,7 +91,7 @@ public class SerializeOpenAcumen extends OFPlugin {
 	private function DeserializeCharacter ( input : JSONObject, output : OACharacter ) {
 		var behaviour : int = input.GetField ( "behaviour" ).n;
 		output.behaviour = behaviour;
-		output.isEnemy = input.GetField ( "isEnemy" ).b;
+		output.attackTarget = input.GetField ( "attackTarget" ).b;
 		output.unconcious = input.GetField ( "unconcious" ).b;
 
 		// Inventory

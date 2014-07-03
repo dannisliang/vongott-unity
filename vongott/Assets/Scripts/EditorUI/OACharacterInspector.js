@@ -6,7 +6,7 @@ public class OACharacterInspector extends OEComponentInspector {
 	override function Inspector () {
 		var character : OACharacter = target.GetComponent.< OACharacter >();
 	
-		character.isEnemy = Toggle ( "Is enemy", character.isEnemy );
+		character.attackTarget = Toggle ( "Attack target", character.attackTarget );
 		character.behaviour = Popup ( "Behaviour", character.behaviour, System.Enum.GetNames ( typeof ( OABehaviour ) ) );
 		
 		// Inventory

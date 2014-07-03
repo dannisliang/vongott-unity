@@ -37,7 +37,7 @@ class InteractiveObject extends MonoBehaviour {
 		var item : OSItem = this.GetComponent.< OSItem > ();
 
 		if ( character ) {
-			if ( !character.isEnemy ) {
+			if ( !character.attackTarget ) {
 				GameCore.GetConversationManager().SetSpeakers ( character.conversationTree.speakers, character.convoSpeakerObjects );
 				GameCore.GetConversationManager().StartConversation ( character.conversationTree );
 			}

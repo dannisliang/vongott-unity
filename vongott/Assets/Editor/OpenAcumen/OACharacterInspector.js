@@ -30,7 +30,7 @@ public class OACharacterInspector extends Editor {
 			EditorGUILayout.Space ();
 		}
 		
-		character.isEnemy = EditorGUILayout.Toggle ( "Is enemy", character.isEnemy );
+		character.attackTarget = EditorGUILayout.Toggle ( "Attack target", character.attackTarget );
 		character.destroyOnDeath = EditorGUILayout.Toggle ( "Destroy on death", character.destroyOnDeath );
 
 		character.behaviour = EditorGUILayout.Popup ( "Behaviour", character.behaviour, System.Enum.GetNames ( OABehaviour ) );

@@ -1,11 +1,10 @@
 ﻿#pragma strict
 
 public enum OABehaviour {
-	ChasePlayer,
+	ChaseTarget,
 	Idle,
 	Patrolling,
 	Seeking,
-	SearchForPlayer,
 	GoToGoal,
 	GoHome,
 	Talking,
@@ -14,10 +13,11 @@ public enum OABehaviour {
 public class OACharacter extends MonoBehaviour {
 	public var stats : OSStats;
 	public var skillTree : OSSkillTree;
-	public var isEnemy : boolean = false;
+	public var attackTarget : boolean = false;
 	public var unconcious : boolean = false;
 	public var destroyOnDeath : boolean = false;
-	public var player : GameObject;
+	public var target : GameObject;
+	public var targetTag : String = "Player";
 	public var behaviour : OABehaviour = OABehaviour.Idle;
 	public var speed : float = 0;
 	public var fieldOfView : float = 130;
@@ -119,14 +119,14 @@ public class OACharacter extends MonoBehaviour {
 		return null;
 	}
 
-	public function get playerFocus () : Vector3 {
+	public function get targetFocus () : Vector3 {
 		var result : Vector3;
 		
-		if ( player ) {
-			result = player.transform.position;
+		if ( target ) {
+			result = target.transform.position;
 
-			if ( player.GetComponent.< CharacterController > () ) {
-				result.y += player.GetComponent.< CharacterController > ().height / 2;
+			if ( target.GetComponent.< CharacterController > () ) {
+				result.y += target.GetComponent.< CharacterController > ().height / 2;
 			
 			} else {
 				result.y += 1.8;
@@ -137,9 +137,9 @@ public class OACharacter extends MonoBehaviour {
 		return result;
 	}
 	
-	public function get distanceToPlayer () : float {
-		if ( player ) {
-			return Vector3.Distance ( this.transform.position, player.transform.position );
+	public function get distanceToTarget () : float {
+		if ( target ) {
+			return Vector3.Distance ( this.transform.position, target.transform.position );
 
 		} else {
 			return Mathf.Infinity;
@@ -147,11 +147,11 @@ public class OACharacter extends MonoBehaviour {
 		}
 	}
 
-	public function get canSeePlayer () : boolean {
-		if ( player ) {
+	public function get canSeeTarget () : boolean {
+		if ( target ) {
 			var hit : RaycastHit;
 			var here : Vector3 = this.transform.position;
-			var there : Vector3 = playerFocus;
+			var there : Vector3 = targetFocus;
 
 			if ( controller ) {
 				here.y += controller.height;
@@ -165,7 +165,7 @@ public class OACharacter extends MonoBehaviour {
 
 			if ( ( Vector3.Angle ( direction, this.transform.forward ) ) < fieldOfView / 2 ) {
 				if ( Physics.Raycast ( here, direction, hit, lineOfSight ) ) {
-					if ( hit.transform == player.transform ) {
+					if ( hit.transform == target.transform ) {
 						return true;
 					
 					} else {
@@ -235,16 +235,16 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function TakeDamage ( damage : float ) {
-		if ( DoRaycast ( player.transform.position ) == null ) {
-			isEnemy = true;
-			behaviour = OABehaviour.ChasePlayer;
-		}	
-		
 		stats.hp -= damage;
 
 		if ( stats.hp <= 0 ) {
 			Die ();
 		}
+		
+		if ( DoRaycast ( target.transform.position ) == null ) {
+			attackTarget = true;
+			behaviour = OABehaviour.ChaseTarget;
+		}	
 	}
 
 	public function NewInitialPosition () {
@@ -252,8 +252,12 @@ public class OACharacter extends MonoBehaviour {
 		initialRotation = this.transform.rotation;
 	}
 		
-	public function OnProjectileHit ( damage : float ) {
-		TakeDamage ( damage );
+	public function OnProjectileHit ( firearm : OSFirearm ) {
+		if ( target != firearm.wielder ) {
+			target = firearm.wielder;
+		}
+
+		TakeDamage ( firearm.damage );
 	}
 
 	public function EquipPreferredWeapon () {
@@ -275,6 +279,12 @@ public class OACharacter extends MonoBehaviour {
 
 				if ( equippedObject.collider ) {
 					equippedObject.collider.enabled = false;
+				}
+
+				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
+
+				if ( firearm ) {
+					firearm.wielder = this.gameObject;
 				}
 			}
 		}
@@ -324,11 +334,21 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function SetRagdoll ( state : boolean ) {
+		var characterControllers : CharacterController[] = this.transform.root.GetComponentsInChildren.< CharacterController > ();
+		
 		for ( var c : Collider in this.GetComponentsInChildren.< Collider > () ) {
 			c.enabled = state;
 
 			if ( c.rigidbody ) {
 				c.rigidbody.isKinematic = !state;
+			}
+
+			if ( c.enabled ) {
+				for ( var cc : CharacterController in this.transform.root.GetComponentsInChildren.< CharacterController > () ) {
+					if ( cc.collider && cc.collider != c && cc.collider.enabled && c.enabled ) {
+						Physics.IgnoreCollision ( c, cc.collider );
+					}
+				}
 			}
 		}
 
@@ -348,7 +368,7 @@ public class OACharacter extends MonoBehaviour {
 		this.transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation ( lookPos ), turningSpeed * Time.deltaTime );
 	}
 	
-	public function ShootAtPlayer () {
+	public function ShootAtTarget () {
 		if ( usingWeapons ) {
 			if ( !equippedObject ) {
 				EquipPreferredWeapon ();
@@ -363,7 +383,7 @@ public class OACharacter extends MonoBehaviour {
 			}
 		}
 
-		TurnTowards ( player.transform.position );
+		TurnTowards ( target.transform.position );
 	}
 
 	public function UpdateSpeakers () {
@@ -377,8 +397,7 @@ public class OACharacter extends MonoBehaviour {
 		animator = this.GetComponent.< Animator > ();
 		controller = this.GetComponent.< CharacterController > ();
 		stats = this.GetComponent.< OSStats > ();
-		player = GameObject.FindWithTag ( "Player" );
-
+		
 		SetRagdoll ( !alive );
 		initialBehaviour = behaviour;
 		
@@ -421,8 +440,8 @@ public class OACharacter extends MonoBehaviour {
 		}
 	}
 
-	public function DetectPlayer () {
-		behaviour = OABehaviour.ChasePlayer;
+	public function DetectTarget () {
+		behaviour = OABehaviour.ChaseTarget;
 		hesitationTimer = hesitation;
 
 		EquipPreferredWeapon ();
@@ -435,9 +454,14 @@ public class OACharacter extends MonoBehaviour {
 		aiming = false;
 			
 		switch ( behaviour ) {
-			case OABehaviour.ChasePlayer:
-				if ( distanceToPlayer > stoppingDistance ) {
-					if ( distanceToPlayer <= shootingDistance ) {
+			case OABehaviour.ChaseTarget:
+				if ( !target ) {
+					behaviour = OABehaviour.Idle;
+					break;
+				}
+				
+				if ( distanceToTarget > stoppingDistance ) {
+					if ( distanceToTarget <= shootingDistance ) {
 						speed = 0.5;
 					
 					} else {
@@ -450,27 +474,31 @@ public class OACharacter extends MonoBehaviour {
 
 				}
 
-				var playerStats : OSStats = player.GetComponent.< OSStats > ();
+				var targetStats : OSStats = target.GetComponent.< OSStats > ();
 
-				if ( playerStats && playerStats.hp <= 0 ) {
+				if ( targetStats && targetStats.hp <= 0 ) {
 					behaviour = OABehaviour.Seeking;
 					attentionTimer = attentionTimer + attentionSpan;
 
-				} else if ( canSeePlayer ) {
-					lastKnownPosition = player.transform.position;
+				} else if ( canSeeTarget || distanceToTarget <= shootingDistance ) {
+					lastKnownPosition = target.transform.position;
 					pathFinder.SetGoal ( lastKnownPosition );
 				
-					if ( isEnemy ) {
+					if ( attackTarget ) {
 						attentionTimer = attentionSpan;
 					
-						if ( hesitationTimer <= 0 && distanceToPlayer <= shootingDistance ) {
-							ShootAtPlayer ();
+						if ( hesitationTimer <= 0 && distanceToTarget <= shootingDistance ) {
+							ShootAtTarget ();
 							aiming = true;
 						}
 					}
 				
-				} else if ( isEnemy ) {
-					if ( ( pathFinder.hasPath && pathFinder.atEndOfPath ) || attentionTimer <= 0 ) {
+				} else if ( attackTarget ) {
+					if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
+					       	speed = 0;
+					}
+					
+					if ( attentionTimer <= 0 ) {
 						hesitationTimer = hesitation;
 						
 						behaviour = OABehaviour.Seeking;
@@ -507,7 +535,7 @@ public class OACharacter extends MonoBehaviour {
 			case OABehaviour.Talking:
 				speed = 0;
 				
-				TurnTowards ( player.transform.position );
+				TurnTowards ( target.transform.position );
 
 				break;
 
@@ -579,9 +607,9 @@ public class OACharacter extends MonoBehaviour {
 
 		}
 
-		if ( isEnemy && canSeePlayer ) {
-			if ( behaviour != OABehaviour.ChasePlayer ) {
-				DetectPlayer ();
+		if ( attackTarget && canSeeTarget ) {
+			if ( behaviour != OABehaviour.ChaseTarget ) {
+				DetectTarget ();
 
 				var radius : float = earshotRadius;
 				var colliders : Collider[] = Physics.OverlapSphere ( this.transform.position, 10 );
@@ -590,7 +618,7 @@ public class OACharacter extends MonoBehaviour {
 					var a : OACharacter = c.GetComponent.< OACharacter > ();
 
 					if ( a && a != this ) {
-						a.DetectPlayer ();
+						a.DetectTarget ();
 					}
 				}
 			}
@@ -619,6 +647,10 @@ public class OACharacter extends MonoBehaviour {
 			animator.SetBool ( "Aiming", aiming );
 			animator.SetFloat ( "AimDegrees", aimDegrees );
 		}
+		
+		if ( !target && !String.IsNullOrEmpty ( targetTag ) ) {
+			target = GameObject.FindWithTag ( targetTag );
+		}
 
 		if ( speed > 0 ) {
 			var goal : Vector3 = pathFinder.GetCurrentNode ();
@@ -627,7 +659,7 @@ public class OACharacter extends MonoBehaviour {
 			if ( ( behaviour == OABehaviour.Patrolling || behaviour == OABehaviour.GoToGoal ) && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
 				goal = pathGoals[currentPathGoal];
 
-			} else if ( behaviour == OABehaviour.ChasePlayer && canSeePlayer ) {
+			} else if ( behaviour == OABehaviour.ChaseTarget && canSeeTarget ) {
 				goal = lastKnownPosition;
 
 			}
@@ -644,8 +676,8 @@ public class OACharacter extends MonoBehaviour {
 		} else {
 			aimDegrees = 0;
 
-			if ( behaviour == OABehaviour.ChasePlayer ) {
-				TurnTowards ( player.transform.position );
+			if ( behaviour == OABehaviour.ChaseTarget ) {
+				TurnTowards ( target.transform.position );
 			}			
 		
 		}

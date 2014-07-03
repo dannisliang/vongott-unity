@@ -106,7 +106,11 @@ class Player extends MonoBehaviour {
 
 		equippedObject.SendMessage ( "SetInventory", GameCore.GetInventory(), SendMessageOptions.DontRequireReceiver );
 
-		if ( item.category == "Weapon" && ( item.subcategory == "OneHanded" || item.subcategory == "TwoHanded" ) ) {
+		var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
+
+		if ( firearm ) {
+			firearm.wielder = this.gameObject;
+
 			ResetFire();
 		
 			GameCamera.GetInstance().controller.LockFirstPerson ();
@@ -303,8 +307,8 @@ class Player extends MonoBehaviour {
 		}
 	}
 	
-	public function OnProjectileHit ( damage : float ) {
-		TakeDamage ( damage );
+	public function OnProjectileHit ( firearm : OSFirearm ) {
+		TakeDamage ( firearm.damage );
 	}
 
 

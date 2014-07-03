@@ -10,9 +10,9 @@ public class OSProjectile extends MonoBehaviour {
 	public var raycastDistance : float = 0.25;
 	public var speed : float = 1;
 	public var renderers : Renderer [] = new Renderer [0];
-
+	
+	@HideInInspector public var firearm : OSFirearm;
 	@HideInInspector public var lifetime : float = 2;
-	@HideInInspector public var damage : float = 0;
 
 	public function Update () {
 		lifetime -= Time.deltaTime;
@@ -29,22 +29,22 @@ public class OSProjectile extends MonoBehaviour {
 				this.transform.position = hit.point;
 				lifetime = 0;
 
-				hit.collider.gameObject.SendMessage ( "OnProjectileHit", damage, SendMessageOptions.DontRequireReceiver );
+				hit.collider.gameObject.SendMessage ( "OnProjectileHit", this.firearm, SendMessageOptions.DontRequireReceiver );
 				
 				if ( hit.collider.rigidbody ) {
-					hit.collider.rigidbody.AddForce ( ( this.transform.forward.normalized * damage ) * ( 1 / Time.timeScale ) );
+					hit.collider.rigidbody.AddForce ( ( this.transform.forward.normalized * firearm.damage ) * ( 1 / Time.timeScale ) );
 				}
 			}
 		
 		}
 	}
 
-	public static function Fire ( p : OSProjectile, range : float, damage : float, position : Vector3, ray : Ray ) {
+	public static function Fire ( p : OSProjectile, range : float, position : Vector3, ray : Ray, firearm : OSFirearm ) {
 		var projectile : OSProjectile = Instantiate ( p );
 
 		projectile.lifetime = range / projectile.speed;
-		projectile.damage = damage;
 		projectile.transform.position = position;
+		projectile.firearm = firearm;
 		
 		var hit : RaycastHit;
 

@@ -18,6 +18,7 @@ public class OSFirearm extends MonoBehaviour {
 	public var projectileType : OSProjectileType;
 	public var projectileTypeThreshold : float = 1.0;
 	public var aimWithMainCamera : boolean = true;
+	public var wielder : GameObject;
 
 	private var fireTimer : float = 0;
 	private var flashTimer : float = 0;
@@ -95,13 +96,13 @@ public class OSFirearm extends MonoBehaviour {
 			}
 
 			if ( projectileType == OSProjectileType.Prefab && bullet ) {
-				OSProjectile.Fire ( bullet, range, damage, pos, ray );
+				OSProjectile.Fire ( bullet, range, pos, ray, this );
 			
 			} else if ( projectileType == OSProjectileType.Raycast ) {
 				var hit : RaycastHit;
 
 				if ( Physics.Raycast ( ray, hit, range ) ) {
-					hit.collider.gameObject.SendMessage ( "OnProjectileHit", damage, SendMessageOptions.DontRequireReceiver );
+					hit.collider.gameObject.SendMessage ( "OnProjectileHit", this, SendMessageOptions.DontRequireReceiver );
 					
 					if ( hit.collider.rigidbody ) {
 						hit.collider.rigidbody.AddForce ( ray.direction.normalized * damage * 100 );
