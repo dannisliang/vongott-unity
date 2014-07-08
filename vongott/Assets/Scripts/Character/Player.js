@@ -186,7 +186,7 @@ class Player extends MonoBehaviour {
 			}
 		}
 
-		this.GetComponent.< OSSkillTree >().SetActiveAll ( false );
+		skillTree.SetActiveAll ( false );
 		GameCore.GetInstance().SetControlsActive ( false );
 	}
 	

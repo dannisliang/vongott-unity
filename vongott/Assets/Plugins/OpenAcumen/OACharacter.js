@@ -267,26 +267,47 @@ public class OACharacter extends MonoBehaviour {
 		TakeDamage ( firearm.damage );
 	}
 
+	public function OnConversationEnd () {
+		if ( behaviour == OABehaviour.Talking ) {
+			behaviour = initialBehaviour;
+		}
+	}
+
+	public function PositionEquippedObject () {
+		if ( equippedObject.rigidbody ) {
+			equippedObject.rigidbody.isKinematic = true;
+		}
+
+		var offset : Vector3;
+
+		if ( equippedObject.collider ) {
+			offset = equippedObject.collider.bounds.size;
+
+			equippedObject.collider.enabled = false;
+		}
+
+		equippedObject.transform.parent = equippingHand;
+		equippedObject.transform.localPosition = new Vector3 ( offset.z, 0, 0 );
+		equippedObject.transform.localEulerAngles = new Vector3 ( 0, 90, 270 );
+	}
+
 	public function EquipPreferredWeapon () {
 		if ( usingWeapons && preferredWeapon ) {
 			if ( equippedObject ) {
-				Destroy ( equippedObject );
+				if ( equippedObject.prefabPath == preferredWeapon.prefabPath ) {
+					return;
+				
+				} else {
+					Destroy ( equippedObject );
+					equippedObject = null;
+				
+				}
 			}
 
 			equippedObject = Instantiate ( preferredWeapon ) as OSItem;
 
 			if ( equippedObject ) {
-				equippedObject.transform.parent = equippingHand;
-				equippedObject.transform.localPosition = new Vector3 ( equippedObject.collider.bounds.size.z, 0, 0 );
-				equippedObject.transform.localEulerAngles = new Vector3 ( 0, 90, 270 );
-			
-				if ( equippedObject.rigidbody ) {
-					equippedObject.rigidbody.isKinematic = true;
-				}
-
-				if ( equippedObject.collider ) {
-					equippedObject.collider.enabled = false;
-				}
+				PositionEquippedObject ();
 
 				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 
@@ -458,7 +479,7 @@ public class OACharacter extends MonoBehaviour {
 
 	public function AlertNeighbors () {
 		var radius : float = earshotRadius;
-		var characters : OACharacter[] = this.transform.parent.GetComponentsInChildren.< OACharacter > ();
+		var characters : OACharacter[] = this.transform.root.GetComponentsInChildren.< OACharacter > ();
 
 		for ( var a : OACharacter in characters ) {
 			var distance : float = Vector3.Distance ( a.transform.position, this.transform.position ); 
@@ -470,6 +491,8 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function DetectTarget ( newTarget : GameObject ) {
+		if ( target == newTarget && behaviour == OABehaviour.ChasingTarget ) { return; }
+		
 		target = newTarget;
 
 		DetectTarget ();
@@ -480,8 +503,6 @@ public class OACharacter extends MonoBehaviour {
 			attackTarget = true;
 			behaviour = OABehaviour.ChasingTarget;
 			hesitationTimer = hesitation;
-
-			EquipPreferredWeapon ();
 	
 		} else {
 			behaviour = OABehaviour.Fleeing;
@@ -495,7 +516,12 @@ public class OACharacter extends MonoBehaviour {
 
 		var changed : boolean = behaviour != prevBehaviour;
 		aiming = false;
-			
+		
+		// Workaround for equipped item disappearance
+		if ( equippedObject && equippedObject.transform.parent != equippingHand ) {
+			PositionEquippedObject ();
+		}
+
 		switch ( behaviour ) {
 			case OABehaviour.ChasingTarget:
 				if ( !usingWeapons ) {
@@ -566,6 +592,10 @@ public class OACharacter extends MonoBehaviour {
 			case OABehaviour.GoHome:
 				speed = 0.5;
 
+				if ( equippedObject ) {
+					Unequip ();
+				}
+
 				if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
 					behaviour = initialBehaviour;
 					
@@ -579,6 +609,10 @@ public class OACharacter extends MonoBehaviour {
 			case OABehaviour.Idle:
 				speed = 0;
 				
+				if ( equippedObject ) {
+					Unequip ();
+				}
+				
 				this.transform.rotation = Quaternion.Slerp ( this.transform.rotation, initialRotation, Time.deltaTime * turningSpeed );
 
 				break;
@@ -586,8 +620,6 @@ public class OACharacter extends MonoBehaviour {
 			case OABehaviour.Talking:
 				speed = 0;
 				
-				TurnTowards ( target.transform.position );
-
 				break;
 
 			case OABehaviour.Fleeing:

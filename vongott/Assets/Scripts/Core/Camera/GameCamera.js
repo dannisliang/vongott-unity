@@ -216,7 +216,7 @@ class GameCamera extends MonoBehaviour {
 		GL.End ();
 	}
 	
-	public function ConvoFocus ( speaker : GameObject, smooth : boolean ) {
+	public function ConvoFocus ( speaker : GameObject ) {
 		if ( currentSpeaker == speaker ) {
 			return;
 		} else {
@@ -249,10 +249,8 @@ class GameCamera extends MonoBehaviour {
 		convoFocus = GetConvoFocus ( random, speaker.transform );
 		convoPosition = GetConvoPosition ( random, speaker.transform );
 
-		//if ( !smooth ) {
-			this.transform.position = convoPosition;
-			this.transform.LookAt ( convoFocus );
-		//}
+		this.transform.position = convoPosition;
+		this.transform.LookAt ( convoFocus );
 	}
 	
 	private function GetConvoCenter () : Vector3 { 

@@ -73,7 +73,13 @@ public class OCManager extends MonoBehaviour {
 		if ( stopAudio && currentAudioSource ) {
 			currentAudioSource.Stop ();
 		}
-		
+	
+		for ( var s : OCSpeaker in speakers ) {
+			if ( s.gameObject ) {
+				s.gameObject.SendMessage ( "OnConversationEnd", SendMessageOptions.DontRequireReceiver );
+			}
+		}
+
 		tree = null;
 		currentAudioSource = null;
 		
@@ -106,9 +112,19 @@ public class OCManager extends MonoBehaviour {
 				NextNode ( node.speak.index );
 			}
 
-		// Without audio, allow the user to continue on their own initiative
+		// Without audio
 		} else {
-			yield null;
+			// For smalltalk, estimate the duration of the sentence
+			if ( node.speak.smalltalk ) {
+				var words : float = node.speak.lines[node.speak.index].text.Split ( " "[0] ).Length;
+				var wordsPerMinute : float = 130;
+				yield WaitForSeconds ( ( words / wordsPerMinute ) * 60 );
+				NextNode ();
+
+			} else {
+				yield null;
+			
+			}
 
 		}
 		
