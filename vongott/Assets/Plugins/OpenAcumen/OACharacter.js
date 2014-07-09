@@ -58,6 +58,7 @@ public class OACharacter extends MonoBehaviour {
 	public var conversationTreePath : String = "";
 	public var conversationTree : OCTree;
 	public var convoSpeakerObjects : GameObject [] = new GameObject [0];
+	public var convoFacing : int = 0;
 	public var convoRootNode : int = 0;
 
 	// Path
@@ -66,6 +67,14 @@ public class OACharacter extends MonoBehaviour {
 	public var turningSpeed : float = 4;
 	
 	private var currentPathGoal : int = -1;
+
+	public function get facingObject () : GameObject {
+		if ( convoFacing < convoSpeakerObjects.Length ) {
+			return convoSpeakerObjects [ convoFacing ];
+		}
+
+		return null;
+	}
 
 	public function get inConversation () : boolean {
 		return behaviour == OABehaviour.Talking;
@@ -619,7 +628,11 @@ public class OACharacter extends MonoBehaviour {
 
 			case OABehaviour.Talking:
 				speed = 0;
-				
+			
+				if ( convoSpeakerObjects.Length > convoFacing && convoSpeakerObjects [ convoFacing ] ) {
+					TurnTowards ( convoSpeakerObjects [ convoFacing ].transform.position );
+				}
+
 				break;
 
 			case OABehaviour.Fleeing:

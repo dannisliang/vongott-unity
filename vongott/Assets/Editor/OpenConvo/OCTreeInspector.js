@@ -350,7 +350,7 @@ public class OCTreeInspector extends Editor {
 							GUI.backgroundColor = Color.green;
 							if ( GUI.Button ( new Rect ( 10 + node.speak.lines.Length * ( lineWidth + 10 ), 42, 28, 14 ), "+" ) ) {
 								tmpLines = new List.<OCSpeak.Line>(node.speak.lines);
-								tmpLines.Add ( new OCSpeak.Line ( "", null, "" ) );
+								tmpLines.Add ( new OCSpeak.Line ( "", null, "", 0 ) );
 								node.speak.lines = tmpLines.ToArray ();
 							}
 							GUI.backgroundColor = Color.white;

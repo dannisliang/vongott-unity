@@ -4,7 +4,37 @@ public class OFDeserializer {
 	public static var planner : OFPlanner;
 	
 	private static var plugins : OFPlugin[];
+
+	public static function GetNumber ( object : JSONObject, fieldName : String ) : float {
+		if ( object && object.HasField ( fieldName ) ) {
+			return object.GetField ( fieldName ).n;
+
+		} else {
+			return 0;
+
+		}
+	}
 	
+	public static function GetString ( object : JSONObject, fieldName : String ) : String {
+		if ( object && object.HasField ( fieldName ) ) {
+			return object.GetField ( fieldName ).str;
+
+		} else {
+			return "";
+
+		}
+	}
+	
+	public static function GetBool ( object : JSONObject, fieldName : String ) : boolean {
+		if ( object && object.HasField ( fieldName ) ) {
+			return object.GetField ( fieldName ).b;
+
+		} else {
+			return false;
+
+		}
+	}
+
 	public static function ParseEnum ( e : System.Type, s : String ) : int {
 		var strings : String[] = System.Enum.GetNames ( e );
 		

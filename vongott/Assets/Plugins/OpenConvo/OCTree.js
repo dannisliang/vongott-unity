@@ -310,11 +310,13 @@ public class OCSpeak {
 		public var text : String;
 		public var audio : AudioClip;
 		public var animation : String;
-	
-		function Line ( text : String, audio : AudioClip, animation : String ) {
+		public var facing : int = 0;
+		
+		function Line ( text : String, audio : AudioClip, animation : String, facing : int ) {
 			this.text = text;
 			this.audio = audio;
 			this.animation = animation;
+			this.facing = facing;
 		}
 	}
 	
@@ -324,7 +326,7 @@ public class OCSpeak {
 	public var index : int = 0;
 
 	function OCSpeak () {
-		lines = [ new Line ( "", null, "" ) ];
+		lines = [ new Line ( "", null, "", 0 ) ];
 	}
 
 	public function get choice () : boolean {
@@ -342,7 +344,7 @@ public class OCSpeak {
 	public function AddLine () {
 		var tmp : List.< Line > = new List.< Line > ( lines );
 
-		tmp.Add ( new Line ( "", null, "" ) );
+		tmp.Add ( new Line ( "", null, "", 0 ) );
 
 		lines = tmp.ToArray ();
 	}

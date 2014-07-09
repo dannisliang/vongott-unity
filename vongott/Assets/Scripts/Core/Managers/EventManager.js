@@ -57,14 +57,33 @@ class EventManager extends OCEventHandler {
 			GameCamera.GetInstance().ConvoFocus ( speaker.gameObject );
 			UIConversation.SetName ( speaker.name );
 			GameCamera.GetInstance().inConvo = true;
+
+			var c : OACharacter = speaker.gameObject.GetComponent.< OACharacter > ();
 			
 			if ( strings.Length == 1 ) {
 				UIConversation.SetLine ( strings[0] );
+			
+				c.convoFacing = node.lines[0].facing;
+
+				var go : GameObject = c.facingObject;
+				var ch : OACharacter = go.GetComponent.< OACharacter > ();
+				var p : Player = go.GetComponent.< Player > ();
+
+				if ( p ) {
+
+				} else if ( ch ) {
+					for ( var i : int = 0; i < ch.convoSpeakerObjects.Length; i++ ) {
+						if ( c.gameObject == ch.convoSpeakerObjects [ i ] ) {
+							ch.convoFacing = i;
+						}
+					}
+
+				}
 
 				choiceConvo = false;
 
 			} else {
-				for ( var i : int = 0; i < strings.Length; i++ ) {
+				for ( i = 0; i < strings.Length; i++ ) {
 					UIConversation.SetOption ( i, strings[i] );
 				}
 

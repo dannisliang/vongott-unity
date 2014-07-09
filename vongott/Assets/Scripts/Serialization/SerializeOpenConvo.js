@@ -51,6 +51,7 @@ public class SerializeOpenConvo extends OFPlugin {
 							line.AddField ( "text", node.speak.lines[l].text.Replace ( "\"", "\\\"" ) );
 							line.AddField ( "audio", node.id + ">" + l );
 							line.AddField ( "animation", node.speak.lines[l].animation );
+							line.AddField ( "facing", node.speak.lines[l].facing );
 							
 							lines.Add ( line );
 						}
@@ -227,7 +228,12 @@ public class SerializeOpenConvo extends OFPlugin {
 						for ( var l : int = 0; l < linesJSON.Count; l++ ) {
 							var assetLink : OFAssetLink = tree.GetComponent.< OFSerializedObject > ().GetAssetLink ( n.id + ">" + l );
 						
-							lines.Add ( new OCSpeak.Line ( linesJSON[l].GetField ( "text" ).str.Replace ( "\\\"", "\"" ), assetLink == null ? null : assetLink.GetAudioClip (), linesJSON[l].GetField ( "animation" ).str ) );
+							lines.Add ( new OCSpeak.Line (
+								linesJSON[l].GetField ( "text" ).str.Replace ( "\\\"", "\"" ),
+								assetLink == null ? null : assetLink.GetAudioClip (),
+								linesJSON[l].GetField ( "animation" ).str,
+								OFDeserializer.GetNumber ( linesJSON[l], "facing" )
+							) );
 						}
 
 						speak.speaker = node.GetField ( "speak" ).GetField ( "speaker" ).n;

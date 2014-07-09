@@ -72,6 +72,7 @@ public class OCNodeInspector extends OEComponentInspector {
 					node.speak.lines[i].text = TextField ( "", node.speak.lines[i].text, new Rect ( 40, offset.y, width - 40, 60 ) );
 					offset.y += 50;
 					node.speak.lines[i].audio = AssetLinkField ( "Audio", node.id + ">" + i, tree.gameObject.GetComponent.< OFSerializedObject > (), typeof ( AudioClip ), "ogg" ) as AudioClip;
+					node.speak.lines[i].facing = Popup ( "Facing", node.speak.lines[i].facing, tree.speakers  );
 					offset.y += 20;
 				}
 					
