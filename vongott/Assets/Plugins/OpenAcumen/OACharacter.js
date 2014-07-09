@@ -292,7 +292,7 @@ public class OACharacter extends MonoBehaviour {
 		if ( equippedObject.collider ) {
 			offset = equippedObject.collider.bounds.size;
 
-			equippedObject.collider.enabled = false;
+			equippedObject.collider.enabled = true;
 		}
 
 		equippedObject.transform.parent = equippingHand;

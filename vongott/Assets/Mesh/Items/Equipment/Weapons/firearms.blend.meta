@@ -1,32 +1,38 @@
 fileFormatVersion: 2
 guid: 9b9b86dccf1c34140b02d33cb9ff53a4
 ModelImporter:
-  serializedVersion: 16
+  serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
     100002: glock
     100004: MAG
     100006: m16_mini
     100008: rem870
+    100010: knife
     400000: //RootNode
     400002: glock
     400004: MAG
     400006: m16_mini
     400008: rem870
+    400010: knife
     2300000: glock
     2300002: MAG
     2300004: m16_mini
     2300006: rem870
+    2300008: knife
     3300000: glock
     3300002: MAG
     3300004: m16_mini
     3300006: rem870
+    3300008: knife
     4300000: glock
     4300002: MAG
     4300004: m16_mini
     4300006: rem870
-    7400000: Default Take
+    4300008: knife
+    7400000: knife_fire
     9500000: //RootNode
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -41,7 +47,43 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: knife_fire
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 9
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: glock
+        weight: 1
+      - path: knife
+        weight: 1
+      - path: m16_mini
+        weight: 1
+      - path: rem870
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -77,6 +119,5 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
-  additionalBone: 0
+  animationType: 1
   userData: 

@@ -107,6 +107,7 @@ class Player extends MonoBehaviour {
 		equippedObject.SendMessage ( "SetInventory", GameCore.GetInventory(), SendMessageOptions.DontRequireReceiver );
 
 		var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
+		var melee : OSMelee = equippedObject.GetComponent.< OSMelee > ();
 
 		if ( firearm ) {
 			firearm.wielder = this.gameObject;
@@ -115,6 +116,11 @@ class Player extends MonoBehaviour {
 		
 			GameCamera.GetInstance().controller.LockFirstPerson ();
 		
+		} else if ( melee ) {
+			melee.wielder = this.gameObject;
+
+			ResetFire();
+
 		} else {
 
 			GameCamera.GetInstance().controller.Unlock ();
@@ -235,9 +241,14 @@ class Player extends MonoBehaviour {
 					// Bullets
 					case "OneHanded": case "TwoHanded":
 						var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
+						var melee : OSMelee = equippedObject.GetComponent.< OSMelee > ();
 
 						if ( firearm ) {
 							firearm.Fire ();
+						
+						} else if ( melee ) {
+							melee.Fire ();
+
 						}
 
 						break;

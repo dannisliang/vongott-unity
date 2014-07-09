@@ -4207,7 +4207,7 @@ MonoBehaviour:
   currentPage: {fileID: 1777841193}
   lineMaterial: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}
   downWidget: {fileID: 0}
-  isMouseOver: 1
+  isMouseOver: 0
 --- !u!20 &1224498180
 Camera:
   m_ObjectHideFlags: 0
@@ -4752,7 +4752,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1
   currentStyle:
-    name: ButtonHover
+    name: Button
     coordinates:
       serializedVersion: 2
       x: 0
@@ -4764,7 +4764,7 @@ MonoBehaviour:
       bottom: 10
       left: 20
       right: 20
-    color: {r: 1, g: .764705896, b: 0, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
     text:
       fontIndex: 0
       font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
@@ -4773,7 +4773,7 @@ MonoBehaviour:
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
       alignment: 4
-      wordWrap: 1
+      wordWrap: 0
       padding:
         m_Left: 0
         m_Right: 0
