@@ -117,7 +117,7 @@ public class PlayerController extends MonoBehaviour {
 			} else if ( isGrounded ) {
 				bodyState = ePlayerBodyState.Jumping;
 
-				SFXManager.GetInstance().Play ( "sfx_actor_jump_" + Random.Range ( 1, 3 ), this.audio );
+				SFXManager.GetInstance().Play ( "jump_" + Random.Range ( 1, 3 ), this.audio );
 			}
 
 			if ( InputManager.jumpFunction ) {
@@ -130,12 +130,12 @@ public class PlayerController extends MonoBehaviour {
 			if ( bodyState == ePlayerBodyState.Crouching && !inCrawlspace ) {
 				bodyState = ePlayerBodyState.Idle;
 
-				SFXManager.GetInstance().Play ( "sfx_actor_crouch_up_1", this.audio );
+				SFXManager.GetInstance().Play ( "crouch_up_1", this.audio );
 			
 			} else {
 				bodyState = ePlayerBodyState.Crouching;
 				
-				SFXManager.GetInstance().Play ( "sfx_actor_crouch_down_1", this.audio );
+				SFXManager.GetInstance().Play ( "crouch_down_1", this.audio );
 			
 			}
 	
@@ -230,18 +230,18 @@ public class PlayerController extends MonoBehaviour {
 	
 		if ( isGrounded ) {
 			if ( deltaCombined > 0.5 ) {
-				SFXManager.GetInstance().Play ( "sfx_actor_footsteps_run_1", this.audio, true );
+				SFXManager.GetInstance().Play ( "footsteps_run_1", this.audio, true );
 
 			} else if ( deltaCombined > 0.1 && bodyState != ePlayerBodyState.Crouching ) {
-				SFXManager.GetInstance().Play ( "sfx_actor_footsteps_walk_1", this.audio, true );
+				SFXManager.GetInstance().Play ( "footsteps_walk_1", this.audio, true );
 
 			} else {
-				SFXManager.GetInstance().Stop ( [ "sfx_actor_footsteps_walk_1", "sfx_actor_footsteps_run_1" ], this.audio );
+				SFXManager.GetInstance().Stop ( [ "footsteps_walk_1", "footsteps_run_1" ], this.audio );
 			
 			}
 
 		} else {
-			SFXManager.GetInstance().Stop ( [ "sfx_actor_footsteps_walk_1", "sfx_actor_footsteps_run_1" ], this.audio );
+			SFXManager.GetInstance().Stop ( [ "footsteps_walk_1", "footsteps_run_1" ], this.audio );
 
 		}
 		

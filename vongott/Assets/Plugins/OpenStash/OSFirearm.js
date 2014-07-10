@@ -7,6 +7,7 @@ public class OSFirearm extends MonoBehaviour {
 	@HideInInspector public var firingRateIndex : int;
 	@HideInInspector public var reloadSpeedIndex : int;
 	@HideInInspector public var rangeIndex : int;
+	@HideInInspector public var capacityIndex : int;
 	@HideInInspector public var firingSoundIndex : int;
 	@HideInInspector public var emptySoundIndex : int;
 	@HideInInspector public var reloadSoundIndex : int;
@@ -49,6 +50,10 @@ public class OSFirearm extends MonoBehaviour {
 		return item.attributes[rangeIndex].value;
 	}
 	
+	public function get capacity () : float {
+		return item.attributes[capacityIndex].value;
+	}
+
 	public function get firingSound () : AudioClip {
 		return item.sounds[firingSoundIndex];
 	}
@@ -79,12 +84,31 @@ public class OSFirearm extends MonoBehaviour {
 		return Quaternion.Euler ( 0, y, x ) * dir;
 	}
 
+	public function Reload () {
+		var amount : float = 0;
+		
+		if ( item.ammunition.value >= capacity ) {
+			amount = capacity;
+		
+		} else {
+			amount = item.ammunition.value;
+
+		}
+
+		if ( item.ammunition.clip > 0 ) {
+			amount -= item.ammunition.clip;
+		}
+
+		item.ammunition.clip = amount;
+		item.ammunition.value -= amount;
+	}
+
 	public function Fire () {
 		if ( fireTimer > 0 ) { return; }
 
 		fireTimer = 1 / firingRate;
 		
-		if ( item.ammunition.value > 0 || item.ammunition.max <= 0 ) {
+		if ( item.ammunition.clip > 0 || item.ammunition.max <= 0 ) {
 			flashTimer = muzzleFlashDuration;
 
 			var ray : Ray;
@@ -137,7 +161,14 @@ public class OSFirearm extends MonoBehaviour {
 
 			item.PlaySound ( firingSoundIndex );
 
-			item.ammunition.value -= item.ammunition.spread;
+			item.ammunition.clip -= 1;
+
+			if ( item.ammunition.clip <= 0 ) {
+				Reload ();
+			}
+		
+		} else if ( item.ammunition.value > 0 ) {
+		       Reload ();
 		
 		} else {
 			item.PlaySound ( emptySoundIndex );

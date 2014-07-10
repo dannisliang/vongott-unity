@@ -211,7 +211,7 @@ class EventManager extends OCEventHandler {
 	}
 
 	public function OnActivateSkill ( skill : OSSkillTree.Skill ) {
-		SFXManager.GetInstance().Play ( "sfx_actor_aug_on", GameCore.GetPlayer().audio );
+		SFXManager.GetInstance().Play ( "aug_on", GameCore.GetPlayer().audio );
 
 		switch ( skill.name ) {
 			case "Reflexes":
@@ -266,7 +266,7 @@ class EventManager extends OCEventHandler {
 	}
 	
 	public function OnDeactivateSkill ( skill : OSSkillTree.Skill ) {
-		SFXManager.GetInstance().Play ( "sfx_actor_aug_off", GameCore.GetPlayer().audio );
+		SFXManager.GetInstance().Play ( "aug_off", GameCore.GetPlayer().audio );
 
 		switch ( skill.name ) {
 			case "Reflexes":

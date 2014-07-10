@@ -7,6 +7,7 @@ private class StatusBar {
 
 private class Ammo {
 	var bar : OGProgressBar;
+	var clip : OGProgressBar;
 	var lbl : OGLabel;
 	var gameObject : GameObject;
 }
@@ -69,15 +70,23 @@ class UIHUD extends OGPage {
 		if ( p.equippedObject ) {
 			var itm : OSItem = p.equippedObject;
 
-			if ( itm.ammunition.max <= 0 ) {
-				ammo.lbl.text = "--";
-				ammo.bar.SetValue ( 1 );
-			} else {
-				ammo.lbl.text = itm.ammunition.value.ToString ();
-				ammo.bar.SetValue ( itm.ammunition.value * 1.0 / itm.ammunition.max * 1.0 );
-			}
+			if ( itm.ammunition.enabled ) {
+				if ( itm.ammunition.max <= 0 ) {
+					ammo.lbl.text = "--";
+					ammo.bar.SetValue ( 1 );
+					ammo.clip.SetValue ( 1 );
+				} else {
+					ammo.lbl.text = itm.ammunition.clip + " / " + itm.ammunition.value;
+					ammo.bar.SetValue ( itm.ammunition.value * 1.0 / itm.ammunition.max * 1.0 );
+					ammo.clip.SetValue ( itm.ammunition.clip * 1.0 / itm.GetAttribute ( "Capacity" ) * 1.0 );
+				}
 
-			ammo.gameObject.SetActive ( true );
+				ammo.gameObject.SetActive ( true );
+			
+			} else {
+				ammo.gameObject.SetActive ( false );
+
+			}
 		
 		} else {
 			ammo.gameObject.SetActive ( false );

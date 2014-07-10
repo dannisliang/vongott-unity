@@ -59,48 +59,34 @@ MonoBehaviour:
   - id: Wallet
     subcategories: []
   attributes:
-  - id: fireRate
-    name: Fire Rate
+  - name: Fire Rate
     suffix: rds / second
-  - id: heal
-    name: Heal
+  - name: Heal
     suffix: points
-  - id: damage
-    name: Damage
+  - name: Damage
     suffix: points
-  - id: recharge
-    name: Recharge
+  - name: Recharge
     suffix: points
-  - id: reloadSpeed
-    name: Reload Speed
+  - name: Reload Speed
     suffix: seconds
-  - id: accuracy
-    name: Accuracy
+  - name: Accuracy
     suffix: '%'
-  - id: maxHealth
-    name: Max Health
+  - name: Max Health
     suffix: points
-  - id: drain
-    name: Drain
+  - name: Drain
     suffix: pts / second
-  - id: timeScale
-    name: Time Scale
+  - name: Time Scale
     suffix: '%'
-  - id: damageReduction
-    name: Damage Reduction
+  - name: Damage Reduction
     suffix: '%'
-  - id: speed
-    name: Speed
+  - name: Speed
     suffix: '%'
-  - id: strength
-    name: Strength
+  - name: Strength
     suffix: '%'
-  - id: distance
-    name: Distance
+  - name: Distance
     suffix: meters
-  - id: creditAmount
-    name: Credit amount
-    suffix: 
+  - name: Capacity
+    suffix: rounds
   currencies:
   - name: Credits
     image: {fileID: 0}

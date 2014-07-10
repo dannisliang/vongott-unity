@@ -32,9 +32,10 @@ public class OSInventoryInspector extends OEComponentInspector {
 
 		var size : float = width / inventory.grid.width;
 		var skip : boolean [ , ] = inventory.grid.GetSkippedSlots();
-		
-		for ( var x : int = 0; x < inventory.grid.width; x++ ) {
-			for ( var y : int = 0; y < inventory.grid.height; y++ ) {
+		var addButtonPlaced : boolean = false;
+
+		for ( var y : int = 0; y < inventory.grid.height; y++ ) {
+			for ( var x : int = 0; x < inventory.grid.height; x++ ) {
 				var slot : OSSlot = inventory.GetSlot ( x, y ); 
 					
 				if ( skip [ x, y ] == true ) {
@@ -50,11 +51,19 @@ public class OSInventoryInspector extends OEComponentInspector {
 						Texture ( slot.item.preview, new Rect ( x * size, offset.y + y * size, size * slot.scale.x, size * slot.scale.y ) );
 					}
 				
-				} else {
-					if ( Button ( "", new Rect ( x * size, offset.y + y * size, size, size ) ) ) {
-						xSelected = x;
-						ySelected = y;
+				} else if ( !addButtonPlaced ) {
+					if ( Button ( "Add item", new Rect ( x * size, offset.y + y * size, size, size ) ) ) {
+						OEWorkspace.GetInstance().PickPrefab ( function ( picked : GameObject ) {
+							var item : OSItem = picked.GetComponent.< OSItem > ();
+
+							if ( item ) {
+								inventory.AddItem ( item );
+							}
+
+							OEWorkspace.GetInstance().toolbar.Clear ();
+						}, typeof ( OSItem ) );
 					}
+					addButtonPlaced = true;
 
 				}
 			}
@@ -66,24 +75,14 @@ public class OSInventoryInspector extends OEComponentInspector {
 	
 		if ( slot && slot.item ) {
 			LabelField ( slot.item.id );
+			slot.item.ammunition.value = IntField ( "Ammunition", slot.item.ammunition.value );
 
-			if ( Button ( "Remove", new Rect ( width / 2, offset.y, width / 2, 16 ) ) ) {
+			if ( Button ( "Remove" ) ) {
 				inventory.RemoveItem ( slot.item );
 			}
 		
 			offset.y += 20;
 		}
 
-		if ( Button ( "Add item" ) ) {
-			OEWorkspace.GetInstance().PickPrefab ( function ( picked : GameObject ) {
-				var item : OSItem = picked.GetComponent.< OSItem > ();
-
-				if ( item ) {
-					inventory.AddItem ( item );
-				}
-
-				OEWorkspace.GetInstance().toolbar.Clear ();
-			}, typeof ( OSItem ) );
-		}
 	}	
 }

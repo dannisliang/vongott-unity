@@ -12,6 +12,20 @@ public enum OABehaviour {
 }
 
 public class OACharacter extends MonoBehaviour {
+	public class Bark {
+		public enum Type {
+			Die,
+			Faint,
+			GoHome,
+			Chase,
+			Flee,
+			TakeDamage
+		}
+
+		public var type : Type;
+		public var clip : AudioClip;
+	}
+	
 	public var stats : OSStats;
 	public var skillTree : OSSkillTree;
 	public var attackTarget : boolean = false;
@@ -21,6 +35,7 @@ public class OACharacter extends MonoBehaviour {
 	public var team : int = 1;
 	public var target : GameObject;
 	public var targetTag : String = "Player";
+	public var barks : Bark[] = new Bark [0];
 	public var behaviour : OABehaviour = OABehaviour.Idle;
 	public var speed : float = 0;
 	public var fieldOfView : float = 130;
@@ -193,6 +208,24 @@ public class OACharacter extends MonoBehaviour {
 		return false;
 	}
 
+	public function PlayBark ( bark : String ) {
+		for ( var i : int = 0; i < barks.Length; i++ ) {
+			if ( barks[i].clip && barks[i].clip.name == bark && audio ) {
+				audio.clip = barks[i].clip;
+				audio.Play ();
+			}
+		}
+	}
+	
+	public function PlayBark ( bark : Bark.Type ) {
+		for ( var i : int = 0; i < barks.Length; i++ ) {
+			if ( barks[i].clip && barks[i].type == bark && audio ) {
+				audio.clip = barks[i].clip;
+				audio.Play ();
+			}
+		}
+	}
+
 	public function GetNearestPathGoal () : int {
 		var nearest : float = Mathf.Infinity;
 		var result : int = 0;
@@ -250,6 +283,8 @@ public class OACharacter extends MonoBehaviour {
 	public function TakeDamage ( damage : float ) {
 		stats.hp -= damage;
 
+		PlayBark ( Bark.Type.TakeDamage );
+
 		if ( stats.hp <= 0 ) {
 			Die ();
 		}
@@ -301,7 +336,7 @@ public class OACharacter extends MonoBehaviour {
 		}
 
 		if ( equippedObject.collider ) {
-			equippedObject.collider.enabled = true;
+			equippedObject.collider.enabled = false;
 		}
 
 		if ( !equippingContainer ) {
@@ -352,8 +387,22 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function Die () {
+		PlayBark ( Bark.Type.Die );
+		
 		if ( destroyOnDeath ) {
-			Destroy ( this.gameObject );
+			StartCoroutine ( function () : IEnumerator {
+				if ( audio ) {
+					while ( audio.isPlaying ) {
+						yield null;
+					}
+				
+				} else {
+					yield null;
+
+				}
+				
+				Destroy ( this.gameObject );
+			} () );
 		
 		} else {
 			SetRagdoll ( true );
@@ -377,6 +426,8 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function KnockUnconcious () {
+		PlayBark ( Bark.Type.Faint );
+		
 		SetRagdoll ( true );
 		unconcious = true;
 	}
@@ -526,22 +577,27 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function DetectTarget ( newTarget : GameObject ) {
-		if ( target == newTarget && behaviour == OABehaviour.ChasingTarget ) { return; }
-		
-		target = newTarget;
-
-		DetectTarget ();
+		if ( target != newTarget ) {
+		 	target = newTarget;
+			DetectTarget ();
+		}
 	}
 
 	public function DetectTarget () {
+		if ( behaviour == OABehaviour.ChasingTarget || behaviour == OABehaviour.Fleeing ) { return; }
+		
 		if ( usingWeapons ) {
 			attackTarget = true;
 			behaviour = OABehaviour.ChasingTarget;
 			hesitationTimer = hesitation;
+		
+			PlayBark ( Bark.Type.Chase );
 	
 		} else {
 			behaviour = OABehaviour.Fleeing;
 			attentionTimer = attentionSpan;
+			
+			PlayBark ( Bark.Type.Flee );
 
 		}
 	}

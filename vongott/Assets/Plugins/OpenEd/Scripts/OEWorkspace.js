@@ -711,7 +711,7 @@ public class OEWorkspace extends MonoBehaviour {
 		} else if ( Input.GetKeyDown ( KeyCode.S ) && ctrlOrCmd ) {
 			Save ();
 
-		} else if ( Input.GetKeyDown ( KeyCode.Delete ) || Input.GetKeyDown ( KeyCode.Backspace ) ) {
+		} else if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) && ( Input.GetKeyDown ( KeyCode.Delete ) || Input.GetKeyDown ( KeyCode.Backspace ) ) ) {
 			DeleteSelection ();
 
 		}

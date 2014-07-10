@@ -23,6 +23,7 @@ public class OACharacterInspector extends Editor {
 	
 	override function OnInspectorGUI () {
 		var character : OACharacter = target as OACharacter;
+		var i : int = 0;
 
 		if ( !character.pathFinder ) {
 			character.pathFinder = character.GetComponent.< OPPathFinder > ();
@@ -34,6 +35,43 @@ public class OACharacterInspector extends Editor {
 		character.destroyOnDeath = EditorGUILayout.Toggle ( "Destroy on death", character.destroyOnDeath );
 
 		character.behaviour = EditorGUILayout.Popup ( "Behaviour", character.behaviour, System.Enum.GetNames ( OABehaviour ) );
+		
+		EditorGUILayout.Space ();
+		EditorGUILayout.LabelField ( "Barks", EditorStyles.boldLabel );
+
+		var tmpBarks : List.< OACharacter.Bark >;
+
+		for ( i = 0; i < character.barks.Length; i++ ) {
+			EditorGUILayout.BeginHorizontal ();
+			
+			GUI.backgroundColor = Color.red;
+			if ( GUILayout.Button ( "x", GUILayout.Width ( 28 ), GUILayout.Height ( 14 ) ) ) {
+				tmpBarks = new List.< OACharacter.Bark > ( character.barks );
+
+				tmpBarks.RemoveAt ( i );
+
+				character.barks = tmpBarks.ToArray ();
+				return;
+			}
+			GUI.backgroundColor = Color.white;
+		
+			character.barks[i].type = EditorGUILayout.Popup ( character.barks[i].type, System.Enum.GetNames ( OACharacter.Bark.Type ) );
+			character.barks[i].clip = EditorGUILayout.ObjectField ( character.barks[i].clip, typeof ( AudioClip ), false ) as AudioClip;
+			
+			EditorGUILayout.EndHorizontal ();
+			
+		}
+		
+		GUI.backgroundColor = Color.green;
+		if ( GUILayout.Button ( "+", GUILayout.Width ( 28 ), GUILayout.Height ( 14 ) ) ) {
+			tmpBarks = new List.< OACharacter.Bark > ( character.barks );
+
+			tmpBarks.Add ( new OACharacter.Bark () );
+
+			character.barks = tmpBarks.ToArray ();
+			return;
+		}
+		GUI.backgroundColor = Color.white;
 
 		EditorGUILayout.Space ();
 		EditorGUILayout.LabelField ( "Inventory", EditorStyles.boldLabel );
@@ -62,7 +100,7 @@ public class OACharacterInspector extends Editor {
 		
 			if ( character.conversationTree != null ) {
 				var rootNodeStrings : String[] = new String[character.conversationTree.rootNodes.Length];
-				for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
+				for ( i = 0; i < rootNodeStrings.Length; i++ ) {
 					rootNodeStrings[i] = i.ToString();
 				}
 				

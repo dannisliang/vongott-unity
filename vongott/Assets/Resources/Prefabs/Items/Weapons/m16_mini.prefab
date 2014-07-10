@@ -275,6 +275,7 @@ MonoBehaviour:
   firingRateIndex: 0
   reloadSpeedIndex: 2
   rangeIndex: 4
+  capacityIndex: 5
   firingSoundIndex: 0
   emptySoundIndex: 0
   reloadSoundIndex: 1
@@ -370,10 +371,14 @@ MonoBehaviour:
   - index: 12
     value: 50
     definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
+  - index: 13
+    value: 30
+    definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   ammunition:
     enabled: 1
     index: 0
     value: 300
+    clip: 0
     max: 300
     spread: 1
     item: {fileID: 11400010}

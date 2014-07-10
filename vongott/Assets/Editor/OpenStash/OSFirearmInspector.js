@@ -29,6 +29,7 @@ public class OSFirearmInspector extends Editor {
 		firearm.firingRateIndex = EditorGUILayout.Popup ( "Firing rate", firearm.firingRateIndex, firearm.item.GetAttributeStrings () );
 		firearm.rangeIndex = EditorGUILayout.Popup ( "Range", firearm.rangeIndex, firearm.item.GetAttributeStrings () );
 		firearm.reloadSpeedIndex = EditorGUILayout.Popup ( "Reload speed", firearm.reloadSpeedIndex, firearm.item.GetAttributeStrings () );
+		firearm.capacityIndex = EditorGUILayout.Popup ( "Capacity", firearm.capacityIndex, firearm.item.GetAttributeStrings () );
 
 		EditorGUILayout.Space ();
 
