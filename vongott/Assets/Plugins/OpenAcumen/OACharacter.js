@@ -44,6 +44,7 @@ public class OACharacter extends MonoBehaviour {
 	private var initialRotation : Quaternion;
 	private var seekingGoal : Vector3;
 	private var hesitationTimer : float = 0;
+	private var equippingContainer : Transform;
 
 	// Inventory
 	public var inventory : OSInventory;
@@ -303,9 +304,18 @@ public class OACharacter extends MonoBehaviour {
 			equippedObject.collider.enabled = true;
 		}
 
-		equippedObject.transform.parent = equippingHand;
+		if ( !equippingContainer ) {
+			equippingContainer = new GameObject ( "EquippingContainer" ).transform;
+			equippingContainer.parent = equippingHand;
+			equippingContainer.localPosition = Vector3.zero;
+			equippingContainer.localEulerAngles = Vector3.zero;
+			equippingContainer.localScale = Vector3.one;
+		}
+
+		equippedObject.transform.parent = equippingContainer;
 		equippedObject.transform.localPosition = Vector3.zero;
 		equippedObject.transform.localEulerAngles = Vector3.zero;
+		equippedObject.transform.localScale = Vector3.one;
 	}
 
 	public function EquipPreferredWeapon () {
@@ -422,11 +432,7 @@ public class OACharacter extends MonoBehaviour {
 				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 				var melee : OSMelee = equippedObject.GetComponent.< OSMelee > ();
 
-				equippedObject.transform.parent = equippingHand;
-				equippedObject.transform.localPosition = Vector3.zero;
-				equippedObject.transform.localEulerAngles = Vector3.zero;
-				
-				equippingHand.LookAt ( target.transform.position );
+				equippingContainer.LookAt ( target.transform.position );
 				
 				if ( firearm ) {
 					firearm.aimWithMainCamera = false;

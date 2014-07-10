@@ -75,7 +75,7 @@ public class SerializeOpenStash extends OFPlugin {
 		if ( item ) {
 			return SerializeItem ( item );
 		
-		} else if ( item ) {
+		} else if ( inventory ) {
 			return SerializeInventory ( inventory );
 		
 		} else {
@@ -144,7 +144,7 @@ public class SerializeOpenStash extends OFPlugin {
 		if ( item ) {
 			DeserializeItem ( input, item );
 		
-		} else if ( item ) {
+		} else if ( inventory ) {
 			DeserializeInventory ( input, inventory );
 		
 		}

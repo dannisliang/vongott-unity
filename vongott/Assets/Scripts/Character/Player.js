@@ -98,7 +98,7 @@ class Player extends MonoBehaviour {
 		equippedObject.transform.parent = hand;
 		equippedObject.transform.localPosition = Vector3.zero;
 		equippedObject.transform.localEulerAngles = hand.forward;
-		equippedObject.GetComponent(BoxCollider).enabled = false;
+		equippedObject.collider.enabled = false;
 		equippedObject.rigidbody.useGravity = false;
 		equippedObject.rigidbody.isKinematic = true;
 		
