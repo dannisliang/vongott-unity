@@ -35,6 +35,6 @@ public class OGProgressBar extends OGWidget {
 		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic, drawDepth, tint, clipTo );
 
 		// Thumb
-		OGDrawHelper.DrawSlicedSprite ( GetThumbRect (), styles.thumb, drawDepth, tint, clipTo );
+		OGDrawHelper.DrawSprite ( GetThumbRect (), styles.thumb, drawDepth, tint, clipTo );
 	}
 }

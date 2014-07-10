@@ -87,18 +87,22 @@ public class OGDrawHelper {
 	
 	// Draw
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color ) {
-		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, null );
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, null, null );
+	}
+	
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color, clipping : OGWidget, editor : OGTextEditor ) {
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, clipping, editor );
 	}
 		
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color, clipping : OGWidget ) {
-		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, clipping );
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, clipping, null );
 	}
 	
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color ) {
-		DrawLabel ( rect, string, style, intSize, alignment, depth, tint, null );
+		DrawLabel ( rect, string, style, intSize, alignment, depth, tint, null, null );
 	}
 	
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color, clipping : OGWidget ) {
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color, clipping : OGWidget, editor : OGTextEditor ) {
 		// Check font
 		if ( style.font == null ) {
 			style.font = OGRoot.GetInstance().skin.fonts [ style.fontIndex ];
@@ -107,6 +111,13 @@ public class OGDrawHelper {
 
 		// Check string
 		if ( String.IsNullOrEmpty ( string ) ) {
+			if ( editor ) {
+				editor.cursorIndex = 0;
+				editor.cursorSelectIndex = 0;
+				editor.cursorPos.x = rect.xMin;
+				editor.cursorPos.y = rect.yMin - style.fontSize;
+			}
+
 			return;
 		}
 
@@ -146,10 +157,10 @@ public class OGDrawHelper {
 		var lineWidth : float = 0;
 		var lineHeight : float = style.font.info.lineSpacing * size;
 		var emergencyBrake : int = 0;
+		var closestGlyphToCursor : Vector2;
 		
 		// Temp vars
 		var info : OGCharacterInfo;
-		var cursorPos : Vector2;
 
 		// Set anchor
 		switch ( alignment ) {
@@ -206,7 +217,7 @@ public class OGDrawHelper {
 		color.b *= tint.b;
 		color.a *= tint.a;
 		GL.Color ( color );
-		
+	
 		// Draw loop
 		while ( nextLineStart < string.Length && advance.y - style.padding.top > - ( rect.height - style.padding.top - style.padding.bottom ) ) {
 			
@@ -262,11 +273,6 @@ public class OGDrawHelper {
 					continue;
 				}
 
-				if ( string[g] == " "[0] ) {
-					advance.x += space;
-					continue;
-				}
-				
 				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
 				var uv : Vector2[] = new Vector2[4];
 
@@ -287,6 +293,44 @@ public class OGDrawHelper {
 				var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
 				var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
 				var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
+	
+				// If it's a space, set appropriate corners
+				if ( string[g] == " "[0] ) {
+					gRight += space;
+				}
+
+				// Set cursor position
+				if ( editor && !String.IsNullOrEmpty ( editor.string ) ) {
+					if ( editor.cursorIndex == g ) {
+						editor.cursorPos.x = gLeft;
+						editor.cursorPos.y = gBottom;
+					
+					} else if ( editor.cursorIndex >= editor.string.Length && g == editor.string.Length - 1 ) {
+						editor.cursorPos.x = gRight;
+						editor.cursorPos.y = gBottom;
+
+					}
+					
+					
+					if ( editor.cursorSelectIndex == g ) {
+						editor.cursorSelectPos.x = gLeft;
+						editor.cursorSelectPos.y = gBottom;
+					
+					} else if ( editor.cursorSelectIndex >= editor.string.Length && g == editor.string.Length - 1 ) {
+						editor.cursorSelectPos.x = gRight;
+						editor.cursorSelectPos.y = gBottom;
+
+					}
+
+					editor.cursorSize.x = 1;
+					editor.cursorSize.y = style.fontSize;
+				}
+				
+				// If it's a space, continue the loop
+				if ( string[g] == " "[0] ) {
+					advance.x += space;
+					continue;
+				}
 			
 				// Advance regardless if the glyph is drawn or not	
 				advance.x += info.width * size;

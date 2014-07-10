@@ -263,6 +263,18 @@ public class OACharacter extends MonoBehaviour {
 		initialPosition = this.transform.position;
 		initialRotation = this.transform.rotation;
 	}
+	
+	public function OnMeleeHit ( melee : OSMelee ) {
+		if ( melee.wielder == this.gameObject ) {
+			return;
+		}
+		
+		if ( target != melee.wielder ) {
+			target = melee.wielder;
+		}
+
+		TakeDamage ( melee.damage );
+	}
 		
 	public function OnProjectileHit ( firearm : OSFirearm ) {
 		if ( firearm.wielder == this.gameObject ) {
@@ -412,10 +424,16 @@ public class OACharacter extends MonoBehaviour {
 
 			} else {
 				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
-				
+				var melee : OSMelee = equippedObject.GetComponent.< OSMelee > ();
+
 				if ( firearm ) {
 					firearm.aimWithMainCamera = false;
 					firearm.Fire ();
+				}
+				
+				if ( melee ) {
+					melee.aimWithMainCamera = false;
+					melee.Fire ();
 				}
 
 				if ( hasInfiniteAmmo ) {

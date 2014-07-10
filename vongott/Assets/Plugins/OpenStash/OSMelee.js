@@ -10,6 +10,7 @@ public class OSMelee extends MonoBehaviour {
 	@HideInInspector public var holsteringSoundIndex : int;
 	@HideInInspector public var firingAnimationIndex : int;
 	
+	public var aimWithMainCamera : boolean = true;
 	public var wielder : GameObject;
 
 	private var fireTimer : float = 0;
@@ -53,12 +54,30 @@ public class OSMelee extends MonoBehaviour {
 		}
 
 		var hit : RaycastHit;
-		var here : Vector3 = wielder.transform.position;
-		here.y = this.transform.position.y;
+		var ray : Ray;
 
-		if ( Physics.Raycast ( here, wielder.transform.forward, hit, range ) ) {
-			if ( hit.collider.gameObject != wielder ) {
+		if ( aimWithMainCamera ) {
+			ray = new Ray ( Camera.main.transform.position, Camera.main.transform.forward );
+
+		} else {
+			var here : Vector3 = wielder.transform.position;
+			here.y = this.transform.position.y;
+
+			ray = new Ray ( here, wielder.transform.forward );
+
+		}
+
+		if ( Physics.Raycast ( ray, hit, range ) ) {
+			while ( hit.collider.gameObject == wielder || hit.collider.gameObject == this.gameObject ) {
+				ray = new Ray ( hit.point, ray.direction );
+				
+				Physics.Raycast ( ray, hit, range );
+
+			}
+
+			if ( hit != null ) {
 				hit.collider.gameObject.SendMessage ( "OnMeleeHit", this, SendMessageOptions.DontRequireReceiver );
+			
 			}
 		}
 
@@ -69,8 +88,8 @@ public class OSMelee extends MonoBehaviour {
 
 	public function Awake () {
 		if ( animation ) {
-			for ( var state : AnimationState in animation ) {
-				animationStates.Add ( state );
+			for ( var state : Object in animation ) {
+				animationStates.Add ( state as AnimationState );
 			}
 		}
 	}

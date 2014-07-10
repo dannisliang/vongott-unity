@@ -121,6 +121,8 @@ class Player extends MonoBehaviour {
 
 			ResetFire();
 
+			CheckWeaponPosition ();
+
 		} else {
 
 			GameCamera.GetInstance().controller.Unlock ();
@@ -238,7 +240,7 @@ class Player extends MonoBehaviour {
 						}
 						break;
 
-					// Bullets
+					// Firearms and melee weapons
 					case "OneHanded": case "TwoHanded":
 						var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 						var melee : OSMelee = equippedObject.GetComponent.< OSMelee > ();

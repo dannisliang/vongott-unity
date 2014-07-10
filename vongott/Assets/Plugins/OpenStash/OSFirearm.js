@@ -115,9 +115,9 @@ public class OSFirearm extends MonoBehaviour {
 				var hit : RaycastHit;
 
 				for ( i = 0; i < item.ammunition.spread; i++ ) {
-					if ( Physics.Raycast ( ray, hit, range ) ) {
-						ray.direction = ScatterDirection ( perfectDir, acc );
+					ray.direction = ScatterDirection ( perfectDir, acc );
 
+					if ( Physics.Raycast ( ray, hit, range ) ) {
 						hit.collider.gameObject.SendMessage ( "OnProjectileHit", this, SendMessageOptions.DontRequireReceiver );
 						
 						if ( hit.collider.rigidbody ) {
