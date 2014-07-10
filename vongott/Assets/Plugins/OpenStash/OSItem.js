@@ -59,6 +59,8 @@ public class OSItem extends MonoBehaviour {
 	public var definitions : OSDefinitions;
 	public var sounds : AudioClip[] = new AudioClip [0];
 
+	private var animationStates : List.< AnimationState > = new List.< AnimationState > ();
+	
 	public function get category () : String {
 		return definitions.categories [ catIndex ].id;
 	}
@@ -99,6 +101,18 @@ public class OSItem extends MonoBehaviour {
 		return output;
 	}
 
+	public function PlayAnimation ( id : String ) {
+		if ( animation ) {
+			animation.Play ( id );
+		}
+	}
+	
+	public function PlayAnimation ( index : int ) {
+		if ( animation && animationStates.Count > index ) {
+			PlayAnimation ( animationStates [ index ].name );
+		}
+	}
+	
 	public function PlaySound ( id : String ) {
 		if ( !audio ) {
 			this.gameObject.AddComponent.< AudioSource > ();
@@ -154,5 +168,13 @@ public class OSItem extends MonoBehaviour {
 
 	public static function ConvertFromScene ( item : OSItem ) {
 		return Resources.Load ( item.prefabPath );
+	}
+	
+	public function Awake () {
+		if ( animation ) {
+			for ( var state : Object in animation ) {
+				animationStates.Add ( state as AnimationState );
+			}
+		}
 	}
 }

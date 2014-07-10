@@ -343,7 +343,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: ../
   target: {fileID: 1356266089}
@@ -622,7 +621,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &35211885
 GameObject:
@@ -892,7 +890,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &37685899
 GameObject:
@@ -1199,13 +1196,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 215
-    y: 692.5
+    y: 452.5
     width: 140
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 215
-    y: 692.5
+    y: 452.5
     width: 70
     height: 20
   drawDepth: -6
@@ -1217,7 +1214,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: Window
   target: {fileID: 1088966304}
   nestedOffset: -10
@@ -1509,7 +1505,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Load
   target: {fileID: 1305970717}
@@ -1796,13 +1791,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 58
-    y: 653
+    y: 413
     width: 48
     height: 32
   mouseRct:
     serializedVersion: 2
     x: 58
-    y: 653
+    y: 413
     width: 48
     height: 32
   drawDepth: -20
@@ -1814,7 +1809,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 351795168}
@@ -2093,7 +2087,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 'Orbit
 
     Pan
@@ -2601,13 +2594,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 110
-    y: 692.5
+    y: 452.5
     width: 140
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 110
-    y: 692.5
+    y: 452.5
     width: 70
     height: 20
   drawDepth: -8
@@ -2619,7 +2612,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: Add
   target: {fileID: 351795168}
   nestedOffset: -10
@@ -2958,7 +2950,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Objective
   overrideFontSize: 0
   fontSize: 12
@@ -3233,7 +3224,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 0
@@ -3511,7 +3501,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Properties
   overrideFontSize: 0
   fontSize: 14
@@ -3824,7 +3813,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: No object selected.
   overrideFontSize: 0
   fontSize: 12
@@ -4099,7 +4087,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Tags
   overrideFontSize: 0
   fontSize: 12
@@ -4374,7 +4361,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 0
@@ -4652,7 +4638,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 30
   regex: ^0-9
@@ -4660,13 +4645,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &263087388
 GameObject:
   m_ObjectHideFlags: 0
@@ -4935,7 +4932,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 30
   regex: 
@@ -4943,13 +4939,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &273476641
 GameObject:
   m_ObjectHideFlags: 0
@@ -5291,7 +5299,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 200
   regex: 
@@ -5299,13 +5306,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &351795168
 GameObject:
   m_ObjectHideFlags: 0
@@ -5748,7 +5767,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 30
   regex: 
@@ -5756,13 +5774,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!4 &388090996
 Transform:
   m_ObjectHideFlags: 0
@@ -6042,7 +6072,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Update
   target: {fileID: 447318708}
@@ -6321,7 +6350,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 1305970717}
@@ -6640,13 +6668,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 15
-    y: 598
+    y: 358
     width: 32
     height: 32
   mouseRct:
     serializedVersion: 2
     x: 15
-    y: 598
+    y: 358
     width: 32
     height: 32
   drawDepth: -20
@@ -6658,7 +6686,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 736775720}
@@ -7003,7 +7030,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &464985376
 GameObject:
   m_ObjectHideFlags: 0
@@ -7302,7 +7328,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Add
   target: {fileID: 37685899}
@@ -7581,7 +7606,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Camera
   overrideFontSize: 1
   fontSize: 14
@@ -7861,7 +7885,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &491648546
 GameObject:
   m_ObjectHideFlags: 0
@@ -7886,7 +7909,7 @@ Transform:
   m_GameObject: {fileID: 491648546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 50}
-  m_LocalScale: {x: 52, y: 635, z: 1}
+  m_LocalScale: {x: 52, y: 395, z: 1}
   m_Children: []
   m_Father: {fileID: 736775721}
 --- !u!114 &491648548
@@ -8114,13 +8137,13 @@ MonoBehaviour:
     x: 5
     y: 5
     width: 52
-    height: 635
+    height: 395
   mouseRct:
     serializedVersion: 2
     x: 5
     y: 5
     width: 52
-    height: 635
+    height: 395
   drawDepth: -70
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -8130,7 +8153,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &513431755
 GameObject:
@@ -8400,7 +8422,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &517434034
 GameObject:
@@ -8704,7 +8725,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: <root>
   options: []
   selectedOption: 
@@ -8961,14 +8981,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 985
-    y: 614
+    x: 345
+    y: 374
     width: 280
     height: 16
   mouseRct:
     serializedVersion: 2
-    x: 985
-    y: 614
+    x: 345
+    y: 374
     width: 280
     height: 16
   drawDepth: -20
@@ -8980,7 +9000,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 30
   regex: 
@@ -8988,13 +9007,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 985, y: 602}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &569503329
 GameObject:
   m_ObjectHideFlags: 0
@@ -9245,13 +9276,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 15
-    y: 518
+    y: 278
     width: 32
     height: 32
   mouseRct:
     serializedVersion: 2
     x: 15
-    y: 518
+    y: 278
     width: 32
     height: 32
   drawDepth: -20
@@ -9263,7 +9294,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 736775720}
@@ -9571,14 +9601,14 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 5
-    y: 645
-    width: 1270
+    y: 405
+    width: 630
     height: 50
   mouseRct:
     serializedVersion: 2
     x: 5
-    y: 645
-    width: 1270
+    y: 405
+    width: 630
     height: 50
   drawDepth: -30
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -9589,7 +9619,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!4 &594042674
 Transform:
@@ -9599,7 +9628,7 @@ Transform:
   m_GameObject: {fileID: 594042672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 20, z: 30}
-  m_LocalScale: {x: 1270, y: 50, z: 1}
+  m_LocalScale: {x: 630, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 517434035}
 --- !u!1 &595824151
@@ -9870,7 +9899,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: Insert
   target: {fileID: 2070496479}
   nestedOffset: -10
@@ -10315,7 +10343,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 30
   regex: 
@@ -10323,13 +10350,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!4 &661441366
 Transform:
   m_ObjectHideFlags: 0
@@ -10609,7 +10648,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Root
   overrideFontSize: 1
   fontSize: 14
@@ -10884,7 +10922,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Script Editor
   overrideFontSize: 1
   fontSize: 14
@@ -11167,13 +11204,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 10
-    y: 653
+    y: 413
     width: 48
     height: 32
   mouseRct:
     serializedVersion: 2
     x: 10
-    y: 653
+    y: 413
     width: 48
     height: 32
   drawDepth: -20
@@ -11185,7 +11222,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 351795168}
@@ -11547,7 +11583,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   lineType: 0
   connections: []
 --- !u!1 &733793658
@@ -11827,7 +11862,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &736195023
 GameObject:
   m_ObjectHideFlags: 0
@@ -12096,7 +12130,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 0
   regex: 
@@ -12104,13 +12137,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &736775720
 GameObject:
   m_ObjectHideFlags: 0
@@ -12424,7 +12469,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &748631646
 GameObject:
@@ -12694,7 +12738,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 0
@@ -12972,7 +13015,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   lineType: 0
   connections: []
 --- !u!1 &771858357
@@ -13244,7 +13286,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Add
   target: {fileID: 1356266089}
@@ -13523,7 +13564,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &796491190
 GameObject:
@@ -13774,16 +13814,16 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 977
+    x: 337
     y: 7
     width: 297
-    height: 497
+    height: 257
   mouseRct:
     serializedVersion: 2
-    x: 977
+    x: 337
     y: 7
     width: 297
-    height: 497
+    height: 257
   drawDepth: -20
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -13793,12 +13833,11 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 0
   scrollbarVisibility: 0
-  size: {x: 297, y: 497}
+  size: {x: 297, y: 257}
   position: {x: 0, y: 0}
   padding: {x: 10, y: 10}
   elasticity: 2
@@ -14071,7 +14110,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Go
   target: {fileID: 373355341}
@@ -14433,7 +14471,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: New
   target: {fileID: 2070496479}
@@ -14743,7 +14780,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 2
@@ -15026,7 +15062,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &860713647
 GameObject:
   m_ObjectHideFlags: 0
@@ -15330,7 +15365,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Goal amount
   overrideFontSize: 0
   fontSize: 12
@@ -15606,7 +15640,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Subdirectory
   overrideFontSize: 0
   fontSize: 12
@@ -15637,7 +15670,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 872717928}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 975, y: 80, z: 20}
+  m_LocalPosition: {x: 335, y: 80, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 840058927}
@@ -15881,8 +15914,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 975
-    y: 639
+    x: 335
+    y: 399
     width: 1
     height: 1
   mouseRct:
@@ -15900,7 +15933,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &877831905
 GameObject:
   m_ObjectHideFlags: 0
@@ -16169,7 +16201,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Tree Editor
   overrideFontSize: 0
   fontSize: 14
@@ -16426,13 +16457,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 106
-    y: 653
+    y: 413
     width: 48
     height: 32
   mouseRct:
     serializedVersion: 2
     x: 106
-    y: 653
+    y: 413
     width: 48
     height: 32
   drawDepth: -20
@@ -16444,7 +16475,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 351795168}
@@ -16729,7 +16759,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &931276600
 GameObject:
   m_ObjectHideFlags: 0
@@ -16998,7 +17027,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &942728568
 GameObject:
@@ -17333,13 +17361,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 160
-    y: 692.5
+    y: 452.5
     width: 140
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 160
-    y: 692.5
+    y: 452.5
     width: 70
     height: 20
   drawDepth: -7
@@ -17351,7 +17379,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: View
   target: {fileID: 351795168}
   nestedOffset: -10
@@ -17650,7 +17677,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 2
@@ -17928,7 +17954,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Save as...
   overrideFontSize: 1
   fontSize: 14
@@ -18204,7 +18229,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: ../
   target: {fileID: 37685899}
@@ -18525,7 +18549,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: +
   target: {fileID: 294115609}
@@ -18804,7 +18827,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1021897406
 GameObject:
@@ -19055,14 +19077,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 975
-    y: 505
+    x: 335
+    y: 265
     width: 300
     height: 135
   mouseRct:
     serializedVersion: 2
-    x: 975
-    y: 505
+    x: 335
+    y: 265
     width: 300
     height: 135
   drawDepth: -40
@@ -19074,7 +19096,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1023490972
 GameObject:
@@ -19344,7 +19365,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1035447462
 GameObject:
@@ -19660,7 +19680,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Open
   target: {fileID: 373355341}
@@ -20022,7 +20041,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   lineType: 0
   connections:
   - node: {fileID: 1752573271}
@@ -20295,7 +20313,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   lineType: 0
   connections:
   - node: {fileID: 754560070}
@@ -20613,7 +20630,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 1088966304}
@@ -20892,7 +20908,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1088966304
 GameObject:
@@ -20922,6 +20937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5734da34424da42a06790d50338a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetResolution: {x: 0, y: 0}
   skin: {fileID: 11400000, guid: 8db56b7a0d73e774ca26d2e2c923e673, type: 2}
   currentPage: {fileID: 978572959}
   lineMaterial: {fileID: 2100000, guid: bc148260939374bf18c0c4a9e5ccb860, type: 2}
@@ -21272,7 +21288,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Skydomes
   overrideFontSize: 1
   fontSize: 14
@@ -21547,7 +21562,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Update
   target: {fileID: 447318708}
@@ -21826,7 +21840,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1112696342
 GameObject:
@@ -22180,7 +22193,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Subdirectory
   overrideFontSize: 0
   fontSize: 12
@@ -22538,7 +22550,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1178593974
 GameObject:
@@ -22808,7 +22819,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: '...'
   options: []
   selectedOption: 
@@ -23085,7 +23095,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Object name
   overrideFontSize: 0
   fontSize: 12
@@ -23360,7 +23369,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Open file...
   overrideFontSize: 1
   fontSize: 14
@@ -23635,7 +23643,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Quest
   overrideFontSize: 0
   fontSize: 12
@@ -23665,7 +23672,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1208570002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1005, y: 40, z: 0}
+  m_LocalPosition: {x: 365, y: 40, z: 0}
   m_LocalScale: {x: 40, y: 16, z: 1}
   m_Children: []
   m_Father: {fileID: 517434035}
@@ -23891,14 +23898,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 1010
-    y: 659
+    x: 370
+    y: 419
     width: 40
     height: 16
   mouseRct:
     serializedVersion: 2
-    x: 1010
-    y: 659
+    x: 370
+    y: 419
     width: 40
     height: 16
   drawDepth: -0
@@ -23910,7 +23917,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Clip
   overrideFontSize: 0
   fontSize: 12
@@ -24185,7 +24191,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Save
   target: {fileID: 373355341}
@@ -24445,14 +24450,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 608
-    y: 653
+    x: 288
+    y: 413
     width: 64
     height: 32
   mouseRct:
     serializedVersion: 2
-    x: 608
-    y: 653
+    x: 288
+    y: 413
     width: 64
     height: 32
   drawDepth: -0
@@ -24464,7 +24469,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 148379951}
@@ -24744,7 +24748,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Hierarchy
   overrideFontSize: 1
   fontSize: 14
@@ -25054,7 +25057,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Load resource...
   overrideFontSize: 1
   fontSize: 14
@@ -25330,7 +25332,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 2
@@ -25608,7 +25609,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1298866832
 GameObject:
@@ -26034,7 +26034,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Help
   overrideFontSize: 0
   fontSize: 14
@@ -26106,7 +26105,7 @@ Transform:
   m_GameObject: {fileID: 1333509987}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 20}
-  m_LocalScale: {x: 1270, y: 25, z: 1}
+  m_LocalScale: {x: 630, y: 25, z: 1}
   m_Children: []
   m_Father: {fileID: 517434035}
 --- !u!114 &1333509989
@@ -26332,14 +26331,14 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 5
-    y: 690
-    width: 1270
+    y: 450
+    width: 630
     height: 25
   mouseRct:
     serializedVersion: 2
     x: 5
-    y: 690
-    width: 1270
+    y: 450
+    width: 630
     height: 25
   drawDepth: -20
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -26350,7 +26349,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1343154167
 GameObject:
@@ -26620,7 +26618,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: LOADING
   overrideFontSize: 0
   fontSize: 12
@@ -26994,7 +26991,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &1385770164
 GameObject:
   m_ObjectHideFlags: 0
@@ -27263,7 +27259,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: < destination >
   options:
   - Cursor
@@ -27541,7 +27536,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 200
   regex: 
@@ -27549,13 +27543,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &1413609549
 GameObject:
   m_ObjectHideFlags: 0
@@ -27795,13 +27801,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 15
-    y: 692.5
+    y: 452.5
     width: 140
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 15
-    y: 692.5
+    y: 452.5
     width: 70
     height: 20
   drawDepth: -10
@@ -27813,7 +27819,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: File
   target: {fileID: 351795168}
   nestedOffset: -10
@@ -28128,7 +28133,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 0
@@ -28161,7 +28165,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1419705822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1055, y: 40, z: 0}
+  m_LocalPosition: {x: 415, y: 40, z: 0}
   m_LocalScale: {x: 200, y: 16, z: 1}
   m_Children: []
   m_Father: {fileID: 517434035}
@@ -28387,14 +28391,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 1060
-    y: 659
+    x: 420
+    y: 419
     width: 200
     height: 16
   mouseRct:
     serializedVersion: 2
-    x: 1052
-    y: 659
+    x: 412
+    y: 419
     width: 208
     height: 16
   drawDepth: -0
@@ -28406,7 +28410,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   sliderValue: 0
   sliderLabel: {fileID: 0}
   backgroundHeight: .25
@@ -28684,7 +28687,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &1460340306
 GameObject:
   m_ObjectHideFlags: 0
@@ -29025,7 +29027,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: ../
   target: {fileID: 373355341}
@@ -29346,7 +29347,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 373355341}
@@ -29625,7 +29625,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: Remove
   target: {fileID: 2070496479}
@@ -29904,7 +29903,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Title
   overrideFontSize: 0
   fontSize: 12
@@ -30208,7 +30206,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   maxLength: 30
   regex: 
@@ -30216,13 +30213,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &1609676017
 GameObject:
   m_ObjectHideFlags: 0
@@ -30246,7 +30255,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1609676017}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1253, y: 4, z: 0}
+  m_LocalPosition: {x: 613, y: 4, z: 0}
   m_LocalScale: {x: 24, y: 16, z: 1}
   m_Children: []
   m_Father: {fileID: 517434035}
@@ -30472,14 +30481,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 1246
-    y: 695
+    x: 606
+    y: 455
     width: 24
     height: 16
   mouseRct:
     serializedVersion: 2
-    x: 1246
-    y: 695
+    x: 606
+    y: 455
     width: 24
     height: 16
   drawDepth: -0
@@ -30491,7 +30500,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: '?'
   target: {fileID: 1088966304}
@@ -30785,7 +30793,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Pick an object
   overrideFontSize: 0
   fontSize: 12
@@ -31071,7 +31078,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 1088966304}
@@ -31420,7 +31426,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: File
   target: {fileID: 294115609}
   nestedOffset: -10
@@ -31718,7 +31723,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: File
   target: {fileID: 447318708}
   nestedOffset: -10
@@ -31998,13 +32002,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 15
-    y: 558
+    y: 318
     width: 32
     height: 32
   mouseRct:
     serializedVersion: 2
     x: 15
-    y: 558
+    y: 318
     width: 32
     height: 32
   drawDepth: -20
@@ -32016,7 +32020,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 736775720}
@@ -32295,7 +32298,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Sidequest
   isTicked: 0
 --- !u!1 &1692053817
@@ -32566,7 +32568,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 'Right Mouse / Left Mouse + Alt
 
     Middle Mouse / Left Mouse + Shift + Alt
@@ -32845,7 +32846,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 1088966304}
@@ -33124,7 +33124,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1707751330
 GameObject:
@@ -33401,14 +33400,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 976
-    y: 505
+    x: 336
+    y: 265
     width: 298
     height: 20
   mouseRct:
     serializedVersion: 2
-    x: 976
-    y: 505
+    x: 336
+    y: 265
     width: 298
     height: 20
   drawDepth: -20
@@ -33420,7 +33419,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   activeTab: 0
   leftArrow: "\xAB"
   rightArrow: "\xBB"
@@ -33699,7 +33697,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 0
@@ -33966,7 +33963,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: ../
   target: {fileID: 1305970717}
@@ -34320,7 +34316,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Speaker names
   overrideFontSize: 0
   fontSize: 12
@@ -34595,7 +34590,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Quest Editor
   overrideFontSize: 1
   fontSize: 14
@@ -34870,7 +34864,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   lineType: 0
   connections: []
 --- !u!1 &1769321032
@@ -35141,7 +35134,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Description
   overrideFontSize: 0
   fontSize: 12
@@ -35445,7 +35437,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Node
   overrideFontSize: 1
   fontSize: 14
@@ -35720,7 +35711,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Image
   overrideFontSize: 0
   fontSize: 12
@@ -35750,7 +35740,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1856319039}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 635, y: 30, z: 0}
+  m_LocalPosition: {x: 315, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1223464868}
@@ -35978,8 +35968,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 639.5
-    y: 684
+    x: 319.5
+    y: 444
     width: 1
     height: 1
   mouseRct:
@@ -35997,7 +35987,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &1859461153
 GameObject:
   m_ObjectHideFlags: 0
@@ -36266,7 +36255,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: X
   target: {fileID: 294115609}
@@ -36545,7 +36533,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &1878343097
 GameObject:
@@ -36815,7 +36802,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 1088966304}
@@ -37094,7 +37080,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   hiddenString: 
   text: 
   target: {fileID: 1088966304}
@@ -37373,7 +37358,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   mainTexture: {fileID: 0}
 --- !u!1 &1918293501
 GameObject:
@@ -37689,7 +37673,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   lineType: 0
   connections:
   - node: {fileID: 721524118}
@@ -37951,7 +37934,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: 
   overrideFontSize: 0
   fontSize: 12
@@ -38237,7 +38219,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   touchControl: 0
   infiniteScrolling: 0
   lockAxis: 0
@@ -38515,7 +38496,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Tree
   overrideFontSize: 1
   fontSize: 14
@@ -38799,7 +38779,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &1996293309
 GameObject:
   m_ObjectHideFlags: 0
@@ -39068,7 +39047,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &2004850092
 GameObject:
@@ -39338,7 +39316,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: XP
   overrideFontSize: 0
   fontSize: 12
@@ -39614,7 +39591,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Object name
   overrideFontSize: 0
   fontSize: 12
@@ -40020,7 +39996,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!1 &2112519176
 GameObject:
@@ -40260,16 +40235,16 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 975
+    x: 335
     y: 5
     width: 300
-    height: 635
+    height: 395
   mouseRct:
     serializedVersion: 2
-    x: 975
+    x: 335
     y: 5
     width: 300
-    height: 635
+    height: 395
   drawDepth: -50
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -40279,7 +40254,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   tile: {x: 1, y: 1}
 --- !u!4 &2112519178
 Transform:
@@ -40289,7 +40263,7 @@ Transform:
   m_GameObject: {fileID: 2112519176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 30}
-  m_LocalScale: {x: 300, y: 635, z: 1}
+  m_LocalScale: {x: 300, y: 395, z: 1}
   m_Children: []
   m_Father: {fileID: 872717929}
 --- !u!1 &2123274838
@@ -40561,7 +40535,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   text: Prefabs
   overrideFontSize: 1
   fontSize: 14
@@ -40842,7 +40815,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
 --- !u!1 &2146384134
 GameObject:
   m_ObjectHideFlags: 0
@@ -41093,13 +41065,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 60
-    y: 692.5
+    y: 452.5
     width: 140
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 60
-    y: 692.5
+    y: 452.5
     width: 70
     height: 20
   drawDepth: -9
@@ -41111,7 +41083,6 @@ MonoBehaviour:
   outOfBounds: 0
   isDirty: 0
   isAlwaysOnTop: 0
-  root: {fileID: 1088966305}
   title: Edit
   target: {fileID: 351795168}
   nestedOffset: -10

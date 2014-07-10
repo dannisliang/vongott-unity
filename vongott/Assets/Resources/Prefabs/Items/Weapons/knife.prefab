@@ -18,6 +18,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400004}
   - 111: {fileID: 11100000}
+  - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: knife
   m_TagString: Untagged
@@ -63,7 +64,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 4300008, guid: 9b9b86dccf1c34140b02d33cb9ff53a4, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 6cd8b343787bf6249bb1d4781747dce2, type: 3}
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -157,9 +158,9 @@ Animation:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 9b9b86dccf1c34140b02d33cb9ff53a4, type: 3}
+  m_Animation: {fileID: 7400000, guid: 6cd8b343787bf6249bb1d4781747dce2, type: 3}
   m_Animations:
-  - {fileID: 7400000, guid: 9b9b86dccf1c34140b02d33cb9ff53a4, type: 3}
+  - {fileID: 7400000, guid: 6cd8b343787bf6249bb1d4781747dce2, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -212,7 +213,10 @@ MonoBehaviour:
   firingSoundIndex: 2
   equippingSoundIndex: 0
   holsteringSoundIndex: 0
+  equippingAnimationIndex: 0
+  holsteringAnimationIndex: 0
   firingAnimationIndex: 0
+  aimWithMainCamera: 1
   wielder: {fileID: 0}
 --- !u!114 &11400006
 MonoBehaviour:
@@ -242,7 +246,7 @@ MonoBehaviour:
     value: 30
     definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   - index: 12
-    value: .5
+    value: 1
     definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
   ammunition:
     enabled: 0
@@ -259,6 +263,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d78402b617dae2d489f6102b70978d9e, type: 3}
   - {fileID: 8300000, guid: 4a977804ee70c024cac8b15648fb8f20, type: 3}
   - {fileID: 8300000, guid: 9c19056d983c6d24287b81d8795667d4, type: 3}
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 850501e57ec50544491951b726cdd0e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -47,7 +47,9 @@ public class OSMeleeInspector extends Editor {
 				animationNames.Add ( ( state as AnimationState ).name );
 			}
 
-			melee.firingAnimationIndex = EditorGUILayout.Popup ( "Firing animation", melee.firingAnimationIndex, animationNames.ToArray () );
+			melee.firingAnimationIndex = EditorGUILayout.Popup ( "Equip", melee.equippingAnimationIndex, animationNames.ToArray () );
+			melee.firingAnimationIndex = EditorGUILayout.Popup ( "Holster", melee.holsteringAnimationIndex, animationNames.ToArray () );
+			melee.firingAnimationIndex = EditorGUILayout.Popup ( "Fire", melee.firingAnimationIndex, animationNames.ToArray () );
 		
 		} else {
 			EditorGUILayout.LabelField ( "No animations on this item!" );

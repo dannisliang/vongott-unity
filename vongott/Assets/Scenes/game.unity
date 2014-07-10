@@ -3113,13 +3113,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &89285433
 GameObject:
   m_ObjectHideFlags: 0
@@ -4536,6 +4548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5734da34424da42a06790d50338a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetResolution: {x: 1280, y: 720}
   skin: {fileID: 11400000, guid: 63e00211484021e49870bd3822a4c203, type: 2}
   currentPage: {fileID: 1214494677}
   lineMaterial: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}
@@ -20058,6 +20071,32 @@ MonoBehaviour:
   overrideAlignment: 0
   alignment: 0
   lineWidth: 42
+--- !u!1 &544787443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 544787444}
+  m_Layer: 0
+  m_Name: WeaponContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &544787444
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 544787443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .270000011, y: -.170000002, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1583181721}
 --- !u!1 &545487420
 GameObject:
   m_ObjectHideFlags: 0
@@ -53251,13 +53290,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &1307760404
 GameObject:
   m_ObjectHideFlags: 0
@@ -62677,6 +62728,7 @@ MonoBehaviour:
   inConvo: 0
   convoPosition: {x: 0, y: 0, z: 0}
   convoFocus: {x: 0, y: 0, z: 0}
+  weaponContainer: {fileID: 544787444}
 --- !u!81 &1583181717
 AudioListener:
   m_ObjectHideFlags: 0
@@ -62741,6 +62793,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 544787444}
   - {fileID: 360881964}
   m_Father: {fileID: 0}
 --- !u!1 &1583727086
@@ -73625,13 +73678,25 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  fitPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+  editor:
+    enabled: 1
+    string: 
+    cursorPos: {x: 0, y: 0}
+    cursorSelectPos: {x: 0, y: 0}
+    cursorSize: {x: 2, y: 12}
+    cursorRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    selectionRects: []
+    cursorIndex: 0
+    cursorSelectIndex: 0
+    delayUntilRepeat: 20
+    repeat: 10
+    exitKey: 27
   listening: 0
-  cursorPos: 0
 --- !u!1 &1882748725
 GameObject:
   m_ObjectHideFlags: 0

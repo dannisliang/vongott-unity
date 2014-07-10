@@ -39,5 +39,26 @@ public class OSFirearmInspector extends Editor {
 		firearm.reloadSoundIndex = EditorGUILayout.Popup ( "Reload", firearm.reloadSoundIndex, firearm.item.GetSoundStrings () );
 		firearm.equippingSoundIndex = EditorGUILayout.Popup ( "Equip", firearm.equippingSoundIndex, firearm.item.GetSoundStrings () );
 		firearm.holsteringSoundIndex = EditorGUILayout.Popup ( "Holster", firearm.holsteringSoundIndex, firearm.item.GetSoundStrings () );
+		
+		EditorGUILayout.Space ();
+
+		EditorGUILayout.LabelField ( "Inherited animations", EditorStyles.boldLabel );
+
+		if ( firearm.animation ) {
+			var animationNames : List.< String > = new List.< String  > ();
+
+			for ( var state : Object in firearm.animation ) {
+				animationNames.Add ( ( state as AnimationState ).name );
+			}
+
+			firearm.firingAnimationIndex = EditorGUILayout.Popup ( "Equip", firearm.equippingAnimationIndex, animationNames.ToArray () );
+			firearm.firingAnimationIndex = EditorGUILayout.Popup ( "Holster", firearm.holsteringAnimationIndex, animationNames.ToArray () );
+			firearm.firingAnimationIndex = EditorGUILayout.Popup ( "Fire", firearm.firingAnimationIndex, animationNames.ToArray () );
+			firearm.firingAnimationIndex = EditorGUILayout.Popup ( "Reload", firearm.reloadingAnimationIndex, animationNames.ToArray () );
+		
+		} else {
+			EditorGUILayout.LabelField ( "No animations on this item!" );
+		
+		}
 	}
 }

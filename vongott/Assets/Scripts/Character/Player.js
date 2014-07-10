@@ -60,8 +60,8 @@ class Player extends MonoBehaviour {
 			
 			if ( GameCamera.controller.state == eCameraState.FirstPerson ) {
 				equippedObject.layer = 15;
-				equippedObject.transform.parent = Camera.main.transform;
-				equippedObject.transform.localPosition = new Vector3 ( 0.27, -0.17, 1 );
+				equippedObject.transform.parent = GameCamera.GetInstance().weaponContainer;
+				equippedObject.transform.localPosition = Vector3.zero;
 				equippedObject.transform.localEulerAngles = Camera.main.transform.forward;
 			} else { 
 				equippedObject.layer = this.gameObject.layer;

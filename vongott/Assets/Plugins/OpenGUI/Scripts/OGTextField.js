@@ -16,7 +16,7 @@ public class OGTextField extends OGWidget {
 	public var locked : boolean = false;
 	public var singleLine : boolean = false;
 	public var fitToText : boolean = false;
-	public var editor : OGTextEditor;
+	public var editor : OGTextEditor = new OGTextEditor ();
 
 	@HideInInspector public var listening : boolean = false;
 

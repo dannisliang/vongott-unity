@@ -48,7 +48,7 @@ public class OGTestWidget extends OGWidget {
 		}
 	
 		if ( material == null ) {
-			material = new Material ( GetRoot().skin.atlas.shader );
+			material = new Material ( root.skin.atlas.shader );
 			return;
 		}
 

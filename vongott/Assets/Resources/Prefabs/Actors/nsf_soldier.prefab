@@ -1702,19 +1702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
-  slots:
-  - item: {fileID: 11400010, guid: ee392d9bd410069448895d35a35e59fe, type: 2}
-    x: 0
-    y: 0
-    quantity: 1
-    hidden: 0
-    equipped: 0
-  - item: {fileID: 11400010, guid: 25f369191caab54449f2d627995f6bce, type: 2}
-    x: 1
-    y: 0
-    quantity: 1
-    hidden: 0
-    equipped: 0
+  slots: []
   quickSlots: 
   grid:
     width: 4
@@ -1737,10 +1725,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   skillTree: {fileID: 0}
-  isEnemy: 1
+  attackTarget: 0
   unconcious: 0
   destroyOnDeath: 0
-  player: {fileID: 0}
+  hasInfiniteAmmo: 1
+  team: 1
+  target: {fileID: 0}
+  targetTag: Player
   behaviour: 1
   speed: 0
   fieldOfView: 130
@@ -1749,6 +1740,7 @@ MonoBehaviour:
   stoppingDistance: 3
   attentionSpan: 30
   roamingRadius: 10
+  earshotRadius: 10
   hesitation: 2
   inventory: {fileID: 11400002}
   usingWeapons: 1
@@ -1758,8 +1750,8 @@ MonoBehaviour:
   conversationTreePath: 
   conversationTree: {fileID: 0}
   convoSpeakerObjects: []
+  convoFacing: 0
   convoRootNode: 0
-  inConversation: 0
   pathFinder: {fileID: 11400008}
   pathGoals: []
   turningSpeed: 4

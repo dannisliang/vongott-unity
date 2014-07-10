@@ -8,6 +8,8 @@ public class OSMelee extends MonoBehaviour {
 	@HideInInspector public var firingSoundIndex : int;
 	@HideInInspector public var equippingSoundIndex : int;
 	@HideInInspector public var holsteringSoundIndex : int;
+	@HideInInspector public var equippingAnimationIndex : int;
+	@HideInInspector public var holsteringAnimationIndex : int;
 	@HideInInspector public var firingAnimationIndex : int;
 	
 	public var aimWithMainCamera : boolean = true;
@@ -15,8 +17,6 @@ public class OSMelee extends MonoBehaviour {
 
 	private var fireTimer : float = 0;
 	private var inventory : OSInventory;
-	private var bullet : OSProjectile;
-	private var animationStates : List.< AnimationState > = new List.< AnimationState > ();
 
 	public function SetInventory ( inventory : OSInventory ) {
 		this.inventory = inventory;
@@ -49,12 +49,10 @@ public class OSMelee extends MonoBehaviour {
 	public function Fire () {
 		if ( fireTimer > 0 ) { return; }
 
-		if ( animation && animationStates.Count > firingAnimationIndex ) {
-			animation.Play ( animationStates [ firingAnimationIndex ].name );
-		}
-
 		var hit : RaycastHit;
 		var ray : Ray;
+
+		item.PlayAnimation ( firingAnimationIndex );
 
 		if ( aimWithMainCamera ) {
 			ray = new Ray ( Camera.main.transform.position, Camera.main.transform.forward );
@@ -67,8 +65,12 @@ public class OSMelee extends MonoBehaviour {
 
 		}
 
+		var tempLayer : int = wielder.layer;
+
+		wielder.layer = 2;
+
 		if ( Physics.Raycast ( ray, hit, range ) ) {
-			while ( hit.collider.gameObject == wielder || hit.collider.gameObject == this.gameObject ) {
+			if ( hit.collider.gameObject == this.gameObject ) {
 				ray = new Ray ( hit.point, ray.direction );
 				
 				Physics.Raycast ( ray, hit, range );
@@ -81,17 +83,11 @@ public class OSMelee extends MonoBehaviour {
 			}
 		}
 
+		wielder.layer = tempLayer;
+		
 		fireTimer = 1 / firingRate;
 
 		item.PlaySound ( firingSoundIndex );
-	}
-
-	public function Awake () {
-		if ( animation ) {
-			for ( var state : Object in animation ) {
-				animationStates.Add ( state as AnimationState );
-			}
-		}
 	}
 
 	public function Update () {

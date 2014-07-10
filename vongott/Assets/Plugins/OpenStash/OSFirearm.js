@@ -12,6 +12,10 @@ public class OSFirearm extends MonoBehaviour {
 	@HideInInspector public var reloadSoundIndex : int;
 	@HideInInspector public var equippingSoundIndex : int;
 	@HideInInspector public var holsteringSoundIndex : int;
+	@HideInInspector public var equippingAnimationIndex : int;
+	@HideInInspector public var holsteringAnimationIndex : int;
+	@HideInInspector public var firingAnimationIndex : int;
+	@HideInInspector public var reloadingAnimationIndex : int;
 	
 	public var muzzleFlash : GameObject;
 	public var muzzleFlashDuration : float = 0.05;
@@ -78,8 +82,9 @@ public class OSFirearm extends MonoBehaviour {
 	public function Fire () {
 		if ( fireTimer > 0 ) { return; }
 
+		fireTimer = 1 / firingRate;
+		
 		if ( item.ammunition.value > 0 || item.ammunition.max <= 0 ) {
-			fireTimer = 1 / firingRate;
 			flashTimer = muzzleFlashDuration;
 
 			var ray : Ray;
@@ -92,6 +97,8 @@ public class OSFirearm extends MonoBehaviour {
 				pos = this.transform.position;
 			
 			}
+
+			item.PlayAnimation ( firingAnimationIndex );
 
 			if ( aimWithMainCamera ) {
 				ray = new Ray ( Camera.main.transform.position, Camera.main.transform.forward );
@@ -165,6 +172,10 @@ public class OSFirearm extends MonoBehaviour {
 		if ( muzzleFlash ) {
 			if ( flashTimer > 0 && !muzzleFlash.activeSelf ) {
 				muzzleFlash.SetActive ( true );
+
+				if ( muzzleFlash.particleSystem ) {
+					muzzleFlash.particleSystem.Play ();
+				}
 			
 			} else if ( flashTimer <= 0 && muzzleFlash.activeSelf ) {
 				muzzleFlash.SetActive ( false );

@@ -299,17 +299,13 @@ public class OACharacter extends MonoBehaviour {
 			equippedObject.rigidbody.isKinematic = true;
 		}
 
-		var offset : Vector3;
-
 		if ( equippedObject.collider ) {
-			offset = equippedObject.collider.bounds.size;
-
 			equippedObject.collider.enabled = true;
 		}
 
 		equippedObject.transform.parent = equippingHand;
-		equippedObject.transform.localPosition = new Vector3 ( offset.z, 0, 0 );
-		equippedObject.transform.localEulerAngles = new Vector3 ( 0, 90, 270 );
+		equippedObject.transform.localPosition = Vector3.zero;
+		equippedObject.transform.localEulerAngles = Vector3.zero;
 	}
 
 	public function EquipPreferredWeapon () {
@@ -426,6 +422,12 @@ public class OACharacter extends MonoBehaviour {
 				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 				var melee : OSMelee = equippedObject.GetComponent.< OSMelee > ();
 
+				equippedObject.transform.parent = equippingHand;
+				equippedObject.transform.localPosition = Vector3.zero;
+				equippedObject.transform.localEulerAngles = Vector3.zero;
+				
+				equippingHand.LookAt ( target.transform.position );
+				
 				if ( firearm ) {
 					firearm.aimWithMainCamera = false;
 					firearm.Fire ();

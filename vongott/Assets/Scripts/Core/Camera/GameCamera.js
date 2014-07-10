@@ -19,6 +19,7 @@ class GameCamera extends MonoBehaviour {
 	public var inConvo : boolean = false;
 	public var convoPosition : Vector3;
 	public var convoFocus : Vector3;
+	public var weaponContainer : Transform;
 
 	public static var instance : GameCamera;
 	public static var controller : CameraController;

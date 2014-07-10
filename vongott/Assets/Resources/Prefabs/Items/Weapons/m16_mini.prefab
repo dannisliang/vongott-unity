@@ -18,6 +18,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400006}
+  - 111: {fileID: 11100000}
   m_Layer: 11
   m_Name: m16_mini
   m_TagString: Untagged
@@ -62,8 +63,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: .0918756723, z: .458495021}
+  m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 400000}
 --- !u!23 &2300000
@@ -99,7 +100,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: f07374ff52beff84b83c491e2e3136e9, type: 2}
+  - {fileID: 2100000, guid: f07a910fe147cc7438e72cd98d460ada, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -114,14 +115,14 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 4300004, guid: 9b9b86dccf1c34140b02d33cb9ff53a4, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 1f6d7c1f5e947ec48b04910251d9e462, type: 3}
 --- !u!33 &3300002
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
-  m_Mesh: {fileID: 4300000, guid: d9fbf64328ea9274f89dc1c45b4cb09e, type: 3}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -242,6 +243,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!111 &11100000
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1f6d7c1f5e947ec48b04910251d9e462, type: 3}
+  m_Animations:
+  - {fileID: 7400000, guid: 1f6d7c1f5e947ec48b04910251d9e462, type: 3}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,6 +280,10 @@ MonoBehaviour:
   reloadSoundIndex: 1
   equippingSoundIndex: 1
   holsteringSoundIndex: 2
+  equippingAnimationIndex: 0
+  holsteringAnimationIndex: 0
+  firingAnimationIndex: 0
+  reloadingAnimationIndex: 0
   muzzleFlash: {fileID: 100002}
   muzzleFlashDuration: .0250000004
   projectileType: 1

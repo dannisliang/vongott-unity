@@ -57,6 +57,20 @@ class OGRoot extends MonoBehaviour {
 		return result;
 	}
 	
+	public function get reverseRatio () : Vector2 {
+		var result : Vector2 = Vector2.one;
+		
+		if ( targetResolution.x > 0 ) {
+			result.x = screenWidth / Screen.width;
+		}
+		
+		if ( targetResolution.y > 0 ) {
+			result.y = screenHeight / Screen.height;
+		}
+
+		return result;
+	}
+	
 	public function get screenWidth () : float {
 		if ( targetResolution.x > 0 ) {
 			return targetResolution.x;
@@ -399,8 +413,10 @@ class OGRoot extends MonoBehaviour {
 	public static var EditorSelectWidget : Function;
 
 	private function FindMouseOverWidget ( e : Event ) : OGWidget {
-		for ( var i : int = widgets.Length - 1; i > 0; i-- ) {
-			if ( widgets[i].drawRct.Contains ( new Vector2 ( e.mousePosition.x, screenHeight - e.mousePosition.y ) ) ) {
+		var pos : Vector2 = new Vector2 ( e.mousePosition.x * reverseRatio.x, screenHeight - e.mousePosition.y * reverseRatio.y );
+
+		for ( var i : int = widgets.Length - 1; i >= 0; i-- ) {
+			if ( widgets[i].drawRct.Contains ( pos ) ) {
 				return widgets[i];
 			}
 		}
@@ -424,19 +440,21 @@ class OGRoot extends MonoBehaviour {
 		var e : Event = Event.current;
 
 		if ( !Application.isPlaying ) {
+			var color : Color = Color.white;
+					
+			var tex : Texture2D = new Texture2D ( 1, 1 );
+			tex.SetPixel ( 0, 0, color );
+			tex.Apply ();
+
+			var style : GUIStyle = new GUIStyle();
+			style.normal.background = tex;
+					
 			for ( var i : int = 0; i < Selection.gameObjects.Length; i++ ) {
 				var w : OGWidget = Selection.gameObjects[i].GetComponent.<OGWidget>();
 
 				if ( w ) {
-					var color : Color = Color.white;
-					
-					var revRect : Rect = w.drawRct;
-					revRect.y = screenHeight - revRect.y - revRect.height;
-					
-					revRect.x *= ratio.x;
-					revRect.width *= ratio.x;
-					revRect.y *= ratio.y;
-					revRect.height *= ratio.y;
+					var revRect : Rect = w.scaledRct;
+					revRect.y = Screen.height - revRect.y - revRect.height;
 
 					var pivotRect : Rect = new Rect ( w.transform.position.x - 2, w.transform.position.y - 2, 4, 4 );
 					
@@ -445,13 +463,6 @@ class OGRoot extends MonoBehaviour {
 					pivotRect.y *= ratio.y;
 					pivotRect.height *= ratio.y;
 				
-					var tex : Texture2D = new Texture2D ( 1, 1 );
-					tex.SetPixel ( 0, 0, color );
-					tex.Apply ();
-
-					var style : GUIStyle = new GUIStyle();
-					style.normal.background = tex;
-					
 					Handles.color = color;
 
 					// Draw outline
@@ -465,6 +476,7 @@ class OGRoot extends MonoBehaviour {
 
 					// Draw pivot
 					GUI.Box ( pivotRect, "", style );
+					
 				}
 			}
 
@@ -539,7 +551,6 @@ class OGRoot extends MonoBehaviour {
 				w.scrollOffset.y = 0;
 			}
 
-			w.root = this;			
 			w.UpdateWidget ();
 			w.Recalculate ();
 
