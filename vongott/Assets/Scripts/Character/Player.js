@@ -102,7 +102,7 @@ class Player extends MonoBehaviour {
 		equippedObject.rigidbody.useGravity = false;
 		equippedObject.rigidbody.isKinematic = true;
 		
-		item.PlaySound ( "equip" );
+		equippedObject.PlaySound ( "equip" );
 
 		equippedObject.SendMessage ( "SetInventory", GameCore.GetInventory(), SendMessageOptions.DontRequireReceiver );
 
@@ -113,6 +113,10 @@ class Player extends MonoBehaviour {
 			firearm.wielder = this.gameObject;
 
 			ResetFire();
+			
+			if ( equippedObject.ammunition.clip <= 0 ) {
+				firearm.Reload ();
+			}
 		
 			GameCamera.GetInstance().controller.LockFirstPerson ();
 		

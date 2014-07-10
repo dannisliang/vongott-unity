@@ -114,12 +114,25 @@ public class OSItem extends MonoBehaviour {
 		}
 	}
 	
+	private function SignalNeighbors () {
+		var colliders : Collider[] = Physics.OverlapSphere ( transform.position, audio.maxDistance );
+
+		for ( var c : Collider in colliders ) {
+			if ( c.gameObject != this.gameObject ) {
+				c.gameObject.SendMessage ( "OnHeardSound", this.gameObject, SendMessageOptions.DontRequireReceiver );
+			}
+		}
+	}
+
 	public function PlaySound ( id : String ) {
 		if ( !audio ) {
 			this.gameObject.AddComponent.< AudioSource > ();
 		}
 
 		audio.clip = GetSound ( id );
+		audio.Play ();
+
+		SignalNeighbors ();
 	}
 
 	public function PlaySound ( index : int ) {
@@ -129,6 +142,8 @@ public class OSItem extends MonoBehaviour {
 
 		audio.clip = sounds[index];
 		audio.Play ();
+		
+		SignalNeighbors ();
 	}
 
 	public function ChangeAmmunition ( value : int ) {

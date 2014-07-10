@@ -74,13 +74,6 @@ public class OCTreeInspector extends Editor {
 	override function OnInspectorGUI () {
 		var tree : OCTree = target as OCTree;
 
-		if ( tree.gameObject.activeInHierarchy ) {
-			GUI.color = Color.red;
-			EditorGUILayout.LabelField ( "OCTree objects should be stored as prefabs, not scene objects!", EditorStyles.boldLabel );
-			GUI.color = Color.white;
-			EditorGUILayout.Space ();
-		}
-
 		var rootNodeStrings : String[] = new String[tree.rootNodes.Length];
 		for ( var i : int = 0; i < rootNodeStrings.Length; i++ ) {
 			rootNodeStrings[i] = i.ToString();

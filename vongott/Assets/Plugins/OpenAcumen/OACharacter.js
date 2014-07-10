@@ -17,7 +17,8 @@ public class OACharacter extends MonoBehaviour {
 			Die,
 			Faint,
 			GoHome,
-			Chase,
+			SeeTarget,
+			HearTarget,
 			Flee,
 			TakeDamage
 		}
@@ -299,7 +300,20 @@ public class OACharacter extends MonoBehaviour {
 		initialPosition = this.transform.position;
 		initialRotation = this.transform.rotation;
 	}
-	
+
+	public function OnHeardSound ( go : GameObject ) {
+		var firearm : OSFirearm = go.GetComponent.< OSFirearm > ();
+
+		if ( firearm && firearm.wielder ) {
+			var c : OACharacter = firearm.wielder.GetComponent.< OACharacter > ();
+
+			if ( ( c && c.team != team ) || firearm.wielder.tag == targetTag ) {
+				DetectTarget ();
+				AlertNeighbors ();
+			}
+		}
+	}
+
 	public function OnMeleeHit ( melee : OSMelee ) {
 		if ( melee.wielder == this.gameObject ) {
 			return;
@@ -591,7 +605,13 @@ public class OACharacter extends MonoBehaviour {
 			behaviour = OABehaviour.ChasingTarget;
 			hesitationTimer = hesitation;
 		
-			PlayBark ( Bark.Type.Chase );
+			if ( canSeeTarget ) {
+				PlayBark ( Bark.Type.SeeTarget );
+			
+			} else {
+				PlayBark ( Bark.Type.HearTarget );
+
+			}
 	
 		} else {
 			behaviour = OABehaviour.Fleeing;
