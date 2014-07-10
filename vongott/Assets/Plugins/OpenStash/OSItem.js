@@ -115,16 +115,24 @@ public class OSItem extends MonoBehaviour {
 	}
 	
 	private function SignalNeighbors () {
-		var colliders : Collider[] = Physics.OverlapSphere ( transform.position, audio.maxDistance );
+		StartCoroutine ( function () : IEnumerator { 
+			yield WaitForSeconds ( 0.5 );
+			
+			var colliders : Collider[] = Physics.OverlapSphere ( transform.position, audio.maxDistance );
 
-		for ( var c : Collider in colliders ) {
-			if ( c.gameObject != this.gameObject ) {
-				c.gameObject.SendMessage ( "OnHeardSound", this.gameObject, SendMessageOptions.DontRequireReceiver );
+			for ( var c : Collider in colliders ) {
+				if ( c.gameObject != this.gameObject ) {
+					c.gameObject.SendMessage ( "OnHeardSound", this.gameObject, SendMessageOptions.DontRequireReceiver );
+				}
 			}
-		}
+		} () );
 	}
 
 	public function PlaySound ( id : String ) {
+		PlaySound ( id, false );
+	}
+
+	public function PlaySound ( id : String, inaudible : boolean ) {
 		if ( !audio ) {
 			this.gameObject.AddComponent.< AudioSource > ();
 		}
@@ -132,10 +140,16 @@ public class OSItem extends MonoBehaviour {
 		audio.clip = GetSound ( id );
 		audio.Play ();
 
-		SignalNeighbors ();
+		if ( !inaudible ) {
+			SignalNeighbors ();
+		}
 	}
 
 	public function PlaySound ( index : int ) {
+		PlaySound ( index, false );
+	}
+
+	public function PlaySound ( index : int, inaudible : boolean ) {
 		if ( !audio ) {
 			this.gameObject.AddComponent.< AudioSource > ();
 		}
@@ -143,7 +157,9 @@ public class OSItem extends MonoBehaviour {
 		audio.clip = sounds[index];
 		audio.Play ();
 		
-		SignalNeighbors ();
+		if ( !inaudible ) {
+			SignalNeighbors ();
+		}
 	}
 
 	public function ChangeAmmunition ( value : int ) {

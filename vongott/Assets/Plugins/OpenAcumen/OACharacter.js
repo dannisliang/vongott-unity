@@ -304,6 +304,8 @@ public class OACharacter extends MonoBehaviour {
 	public function OnHeardSound ( go : GameObject ) {
 		var firearm : OSFirearm = go.GetComponent.< OSFirearm > ();
 
+		Debug.Log ( go );
+
 		if ( firearm && firearm.wielder ) {
 			var c : OACharacter = firearm.wielder.GetComponent.< OACharacter > ();
 

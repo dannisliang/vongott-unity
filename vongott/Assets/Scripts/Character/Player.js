@@ -102,7 +102,7 @@ class Player extends MonoBehaviour {
 		equippedObject.rigidbody.useGravity = false;
 		equippedObject.rigidbody.isKinematic = true;
 		
-		equippedObject.PlaySound ( "equip" );
+		equippedObject.PlaySound ( "equip", true );
 
 		equippedObject.SendMessage ( "SetInventory", GameCore.GetInventory(), SendMessageOptions.DontRequireReceiver );
 
