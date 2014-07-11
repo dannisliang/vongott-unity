@@ -298,4 +298,18 @@ class EventManager extends OCEventHandler {
 		GameCore.GetPlayer().StopShield ();
 		GameCore.GetPlayer().StopAutoHeal ();
 	}
+
+	// Subtitles
+	public function OnPlayBark ( bark : OACharacter.Bark ) {
+		UIHUD.GetInstance().ShowTimedNotification ( bark.subtitle, 5 );
+	}
+
+	// Music
+	public function OnChaseStart () {
+		// TODO: Play chase music
+	}
+
+	public function OnSeekingStart () {
+		// TODO: Seeking music?
+	}
 }

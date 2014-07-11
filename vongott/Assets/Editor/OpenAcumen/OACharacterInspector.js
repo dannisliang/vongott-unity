@@ -25,16 +25,13 @@ public class OACharacterInspector extends Editor {
 		var character : OACharacter = target as OACharacter;
 		var i : int = 0;
 
+		DrawDefaultInspector ();
+
 		if ( !character.pathFinder ) {
 			character.pathFinder = character.GetComponent.< OPPathFinder > ();
 			EditorGUILayout.LabelField ( "Character has no OPPathFinder component" );
 			EditorGUILayout.Space ();
 		}
-		
-		character.attackTarget = EditorGUILayout.Toggle ( "Attack target", character.attackTarget );
-		character.destroyOnDeath = EditorGUILayout.Toggle ( "Destroy on death", character.destroyOnDeath );
-
-		character.behaviour = EditorGUILayout.Popup ( "Behaviour", character.behaviour, System.Enum.GetNames ( OABehaviour ) );
 		
 		EditorGUILayout.Space ();
 		EditorGUILayout.LabelField ( "Barks", EditorStyles.boldLabel );
@@ -54,12 +51,24 @@ public class OACharacterInspector extends Editor {
 				return;
 			}
 			GUI.backgroundColor = Color.white;
+			
+			EditorGUILayout.BeginVertical ();
 		
-			character.barks[i].type = EditorGUILayout.Popup ( character.barks[i].type, System.Enum.GetNames ( OACharacter.Bark.Type ) );
+			character.barks[i].type = EditorGUILayout.Popup ( character.barks[i].type, System.Enum.GetNames ( OACharacter.Bark.Type ), GUILayout.Width ( 80 ) );
+			EditorGUILayout.LabelField ( "Subtitle:", GUILayout.Width ( 80 ) );
+
+			EditorGUILayout.EndVertical ();
+			
+			EditorGUILayout.BeginVertical ();
+			
 			character.barks[i].clip = EditorGUILayout.ObjectField ( character.barks[i].clip, typeof ( AudioClip ), false ) as AudioClip;
+			character.barks[i].subtitle = EditorGUILayout.TextField ( character.barks[i].subtitle );
+			
+			EditorGUILayout.EndVertical ();
 			
 			EditorGUILayout.EndHorizontal ();
-			
+		
+			EditorGUILayout.Space ();
 		}
 		
 		GUI.backgroundColor = Color.green;

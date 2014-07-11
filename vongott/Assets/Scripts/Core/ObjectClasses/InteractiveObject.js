@@ -23,7 +23,7 @@ class InteractiveObject extends MonoBehaviour {
 		var character : OACharacter = this.GetComponent.< OACharacter > ();
 		var item : OSItem = this.GetComponent.< OSItem > ();
 
-		if ( character ) {
+		if ( character && character.team == 0 && character.behaviour != OABehaviour.ChasingTarget ) {
 			UIHUD.GetInstance().ShowNotification ( "Talk" );
 		
 		} else if ( item ) {
@@ -36,7 +36,7 @@ class InteractiveObject extends MonoBehaviour {
 		var character : OACharacter = this.GetComponent.< OACharacter > ();
 		var item : OSItem = this.GetComponent.< OSItem > ();
 
-		if ( character ) {
+		if ( character && character.team == 0 && character.behaviour != OABehaviour.ChasingTarget ) {
 			if ( !character.attackTarget ) {
 				GameCore.GetConversationManager().SetSpeakers ( character.conversationTree.speakers, character.convoSpeakerObjects );
 				GameCore.GetConversationManager().StartConversation ( character.conversationTree );

@@ -1767,23 +1767,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   skillTree: {fileID: 0}
+  behaviour: 1
+  target: {fileID: 0}
+  targetTag: Player
   attackTarget: 0
   unconcious: 0
   destroyOnDeath: 0
   hasInfiniteAmmo: 1
-  team: 1
-  target: {fileID: 0}
-  targetTag: Player
-  behaviour: 1
-  speed: 0
+  alertNeighborRadius: 20
+  attentionSpan: 30
   fieldOfView: 130
+  hesitation: 2
   lineOfSight: 30
+  roamingRadius: 10
   shootingDistance: 10
   stoppingDistance: 3
-  attentionSpan: 30
-  roamingRadius: 10
-  earshotRadius: 10
-  hesitation: 2
+  team: 0
+  barks: []
   inventory: {fileID: 11400006}
   usingWeapons: 0
   weaponCategoryPreference: 1

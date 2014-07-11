@@ -25,28 +25,28 @@ public class OACharacter extends MonoBehaviour {
 
 		public var type : Type;
 		public var clip : AudioClip;
+		public var subtitle : String = "";
 	}
 	
 	public var stats : OSStats;
 	public var skillTree : OSSkillTree;
+	public var behaviour : OABehaviour = OABehaviour.Idle;
+	public var target : GameObject;
+	public var targetTag : String = "Player";
 	public var attackTarget : boolean = false;
 	public var unconcious : boolean = false;
 	public var destroyOnDeath : boolean = false;
 	public var hasInfiniteAmmo : boolean = true;
-	public var team : int = 1;
-	public var target : GameObject;
-	public var targetTag : String = "Player";
-	public var barks : Bark[] = new Bark [0];
-	public var behaviour : OABehaviour = OABehaviour.Idle;
-	public var speed : float = 0;
+	public var alertNeighborRadius : float = 20;
+	public var attentionSpan : float = 10;
 	public var fieldOfView : float = 130;
+	public var hesitation : float = 1;
 	public var lineOfSight : float = 20;
+	public var roamingRadius : float = 10;
 	public var shootingDistance : float = 10;
 	public var stoppingDistance : float = 2;
-	public var attentionSpan : float = 10;
-	public var roamingRadius : float = 10;
-	public var earshotRadius : float = 10;
-	public var hesitation : float = 2;
+	public var team : int = 1;
+	@HideInInspector public var barks : Bark[] = new Bark [0];
 	
 	private var animator : Animator;
 	private var controller : CharacterController;
@@ -60,28 +60,30 @@ public class OACharacter extends MonoBehaviour {
 	private var initialRotation : Quaternion;
 	private var seekingGoal : Vector3;
 	private var hesitationTimer : float = 0;
+	private var speed : float = 0;
 	private var equippingContainer : Transform;
+	private var eventHandler : OCEventHandler;
 
 	// Inventory
-	public var inventory : OSInventory;
-	public var usingWeapons : boolean = true;
-	public var weaponCategoryPreference : int = 0;
-	public var weaponSubcategoryPreference : int = 0;
-	public var equippingHand : Transform;
+	@HideInInspector public var inventory : OSInventory;
+	@HideInInspector public var usingWeapons : boolean = true;
+	@HideInInspector public var weaponCategoryPreference : int = 0;
+	@HideInInspector public var weaponSubcategoryPreference : int = 0;
+	@HideInInspector public var equippingHand : Transform;
 	
 	private var equippedObject : OSItem;
 	
 	// Conversation
-	public var conversationTreePath : String = "";
-	public var conversationTree : OCTree;
-	public var convoSpeakerObjects : GameObject [] = new GameObject [0];
-	public var convoFacing : int = 0;
-	public var convoRootNode : int = 0;
+	@HideInInspector public var conversationTreePath : String = "";
+	@HideInInspector public var conversationTree : OCTree;
+	@HideInInspector public var convoSpeakerObjects : GameObject [] = new GameObject [0];
+	@HideInInspector public var convoFacing : int = 0;
+	@HideInInspector public var convoRootNode : int = 0;
 
 	// Path
-	public var pathFinder : OPPathFinder;
-	public var pathGoals : Vector3 [] = new Vector3[0];
-	public var turningSpeed : float = 4;
+	@HideInInspector public var pathFinder : OPPathFinder;
+	@HideInInspector public var pathGoals : Vector3 [] = new Vector3[0];
+	@HideInInspector public var turningSpeed : float = 4;
 	
 	private var currentPathGoal : int = -1;
 
@@ -214,15 +216,32 @@ public class OACharacter extends MonoBehaviour {
 			if ( barks[i].clip && barks[i].clip.name == bark && audio ) {
 				audio.clip = barks[i].clip;
 				audio.Play ();
+				
+				if ( eventHandler ) {
+					eventHandler.Event ( "OnPlayBark", barks[i] );
+				}
+				
+				break;
 			}
 		}
 	}
 	
 	public function PlayBark ( bark : Bark.Type ) {
+		var candidates : List.< Bark > = new List.< Bark > ();
+		
 		for ( var i : int = 0; i < barks.Length; i++ ) {
-			if ( barks[i].clip && barks[i].type == bark && audio ) {
-				audio.clip = barks[i].clip;
-				audio.Play ();
+			if ( barks[i].clip && barks[i].type == bark ) {
+				candidates.Add ( barks[i] );
+			}
+		}
+
+		if ( audio && candidates.Count > 0 ) {
+			var b : int = Random.Range ( 0, candidates.Count - 1 );
+			audio.clip = candidates [ b ].clip;
+			audio.Play ();
+				
+			if ( eventHandler ) {
+				eventHandler.Event ( "OnPlayBark", candidates[b] );
 			}
 		}
 	}
@@ -293,6 +312,7 @@ public class OACharacter extends MonoBehaviour {
 		if ( DoRaycast ( target.transform.position ) == null && behaviour != OABehaviour.ChasingTarget ) {
 			DetectTarget ();
 			AlertNeighbors ();
+			behaviour = OABehaviour.ChasingTarget;
 		}	
 	}
 
@@ -307,8 +327,19 @@ public class OACharacter extends MonoBehaviour {
 		if ( firearm && firearm.wielder ) {
 			var c : OACharacter = firearm.wielder.GetComponent.< OACharacter > ();
 
-			if ( ( c && c.team != team ) || firearm.wielder.tag == targetTag ) {
-				DetectTarget ();
+			if ( c ) {
+				if ( c.team == team ) {
+					DetectTarget ( c.target );
+					AlertNeighbors ();
+				
+				} else {
+					DetectTarget ( c.gameObject );
+					AlertNeighbors ();
+
+				}
+
+			} else if ( firearm.wielder.tag == targetTag ) {
+				DetectTarget ( firearm.wielder );
 				AlertNeighbors ();
 			}
 		}
@@ -482,10 +513,12 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	function TurnTowards ( v : Vector3 ) {
+		if ( v == transform.position ) { return; }
+
 		var lookPos : Vector3 = v - transform.position;
 		lookPos.y = 0;
 		
-		this.transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation ( lookPos ), turningSpeed * Time.deltaTime );
+		this.transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.LookRotation ( lookPos ), turningSpeed * Time.deltaTime );
 	}
 	
 	public function ShootAtTarget () {
@@ -497,7 +530,7 @@ public class OACharacter extends MonoBehaviour {
 				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 				var melee : OSMelee = equippedObject.GetComponent.< OSMelee > ();
 
-				equippingContainer.LookAt ( target.transform.position );
+				equippingContainer.transform.rotation = this.transform.rotation;
 				
 				if ( firearm ) {
 					firearm.aimWithMainCamera = false;
@@ -534,7 +567,8 @@ public class OACharacter extends MonoBehaviour {
 		animator = this.GetComponent.< Animator > ();
 		controller = this.GetComponent.< CharacterController > ();
 		stats = this.GetComponent.< OSStats > ();
-		
+		eventHandler = GameObject.FindObjectOfType.< OCEventHandler > ();
+
 		SetRagdoll ( !alive );
 		initialBehaviour = behaviour;
 		
@@ -578,20 +612,19 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function AlertNeighbors () {
-		var radius : float = earshotRadius;
-		var characters : OACharacter[] = this.transform.root.GetComponentsInChildren.< OACharacter > ();
+		var colliders : Collider[] = Physics.OverlapSphere ( this.transform.position, alertNeighborRadius );
 
-		for ( var a : OACharacter in characters ) {
-			var distance : float = Vector3.Distance ( a.transform.position, this.transform.position ); 
+		for ( var c : Collider in colliders ) {
+			var a : OACharacter = c.gameObject.GetComponent.< OACharacter > ();
 
-			if ( a != this && distance <= radius && a.team == team ) {
+			if ( a && a != this && a.team == team ) {
 				a.DetectTarget ( target );
 			}
 		}
 	}
 
 	public function DetectTarget ( newTarget : GameObject ) {
-		if ( target != newTarget ) {
+		if ( target != this.gameObject && target != newTarget ) {
 		 	target = newTarget;
 			DetectTarget ();
 		}
@@ -602,14 +635,24 @@ public class OACharacter extends MonoBehaviour {
 		
 		if ( usingWeapons ) {
 			attackTarget = true;
-			behaviour = OABehaviour.ChasingTarget;
 			hesitationTimer = hesitation;
+			attentionTimer = attentionSpan;
 		
 			if ( canSeeTarget ) {
 				PlayBark ( Bark.Type.SeeTarget );
+				behaviour = OABehaviour.ChasingTarget;
+				
+				if ( eventHandler ) {
+					eventHandler.Event ( "OnChaseStart", this );
+				}
 			
 			} else {
 				PlayBark ( Bark.Type.HearTarget );
+				behaviour = OABehaviour.Seeking;
+				
+				if ( eventHandler ) {
+					eventHandler.Event ( "OnSeekingStart", this );
+				}
 
 			}
 	
@@ -628,11 +671,6 @@ public class OACharacter extends MonoBehaviour {
 		var changed : boolean = behaviour != prevBehaviour;
 		aiming = false;
 		
-		// Workaround for equipped item disappearance
-		if ( equippedObject && equippedObject.transform.parent != equippingHand ) {
-			PositionEquippedObject ();
-		}
-
 		switch ( behaviour ) {
 			case OABehaviour.ChasingTarget:
 				if ( !usingWeapons ) {
@@ -640,7 +678,11 @@ public class OACharacter extends MonoBehaviour {
 					attentionTimer = attentionSpan;
 					break;
 				}
-				
+			
+				if ( target == this.gameObject ) {
+					target = null;
+				}
+
 				if ( !target ) {
 					behaviour = OABehaviour.Idle;
 					break;

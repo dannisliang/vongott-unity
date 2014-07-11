@@ -87,7 +87,7 @@ public class OSMelee extends MonoBehaviour {
 		
 		fireTimer = 1 / firingRate;
 
-		item.PlaySound ( firingSoundIndex );
+		item.PlaySound ( firingSoundIndex, true );
 	}
 
 	public function Update () {

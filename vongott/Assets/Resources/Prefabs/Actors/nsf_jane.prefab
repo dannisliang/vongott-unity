@@ -1773,38 +1773,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   skillTree: {fileID: 0}
+  behaviour: 1
+  target: {fileID: 0}
+  targetTag: Player
   attackTarget: 0
   unconcious: 0
   destroyOnDeath: 0
   hasInfiniteAmmo: 1
-  team: 1
-  target: {fileID: 0}
-  targetTag: Player
+  alertNeighborRadius: 20
+  attentionSpan: 30
+  fieldOfView: 130
+  hesitation: 2
+  lineOfSight: 30
+  roamingRadius: 10
+  shootingDistance: 10
+  stoppingDistance: 3
+  team: 0
   barks:
   - type: 0
     clip: {fileID: 8300000, guid: a3e56f3190d7ffe428cc1031119caf26, type: 3}
+    subtitle: 
   - type: 1
     clip: {fileID: 8300000, guid: 2ec4c53dda9e2cb42b2fcc4cc06b9365, type: 3}
+    subtitle: 
   - type: 2
     clip: {fileID: 8300000, guid: adc8f588056826a4fbab0f2d1194ad48, type: 3}
+    subtitle: 
   - type: 3
     clip: {fileID: 8300000, guid: 0e5daff708cd22645a2a28f05eeaff6c, type: 3}
+    subtitle: 
   - type: 4
     clip: {fileID: 8300000, guid: db8668fc89df696469cbe72f93d3a1bf, type: 3}
+    subtitle: 
   - type: 5
     clip: {fileID: 8300000, guid: 48e79c92e0aca1b41b947d0408b4a1ec, type: 3}
+    subtitle: 
   - type: 6
     clip: {fileID: 8300000, guid: 6d1c6352708a9a340851cc815530ac9f, type: 3}
-  behaviour: 1
-  speed: 0
-  fieldOfView: 130
-  lineOfSight: 30
-  shootingDistance: 10
-  stoppingDistance: 3
-  attentionSpan: 30
-  roamingRadius: 10
-  earshotRadius: 10
-  hesitation: 2
+    subtitle: 
   inventory: {fileID: 11400006}
   usingWeapons: 1
   weaponCategoryPreference: 1
