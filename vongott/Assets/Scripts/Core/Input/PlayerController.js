@@ -37,11 +37,12 @@ public class PlayerController extends MonoBehaviour {
 	private var distToGround : float = float.PositiveInfinity;
 	private var forcedPointVector : Vector3;
 	private var lockedRotationVector : Vector3;
-	private var ladderTopY : float;
-	private var ladderBottomY : float;
 	private var player : Player;
 	private var character : CharacterController;
 	private var ladder : Ladder;
+	private var lerping : boolean = false;
+	private var lerpGoal : Vector3;
+	private var climbUp : boolean = false;
 
 	public function SetControlMode ( mode : ePlayerControlMode ) {
 		controlMode = mode;
@@ -89,6 +90,16 @@ public class PlayerController extends MonoBehaviour {
 		}
 	
 		if ( player.stats.hp <= 0 ) { 
+			return;
+		}
+
+		if ( lerping ) {
+			transform.position = Vector3.Lerp ( transform.position, lerpGoal, Time.deltaTime * 2 );
+
+			if ( Vector3.Distance ( transform.position, lerpGoal ) < 0.1 ) {
+				lerping = false;
+			}
+
 			return;
 		}
 
@@ -172,6 +183,23 @@ public class PlayerController extends MonoBehaviour {
 		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
 			// Climbing
 			if ( isClimbing ) {
+				if ( ladder && player.collider.bounds.max.y >= ladder.collider.bounds.max.y ) {
+					if ( ladder.blockedTop ) {
+						deltaVertical = 0;
+					
+					} else {
+						deltaVertical = 0;
+						climbUp = true;
+						ladder = null;
+						isClimbing = false;
+
+						StartCoroutine ( function () : IEnumerator {
+							yield WaitForSeconds ( 1 );
+							climbUp = false;
+						} () );
+
+					}
+				}
 
 			// Sprint
 			} else if ( Input.GetKey ( KeyCode.LeftShift ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
@@ -245,16 +273,17 @@ public class PlayerController extends MonoBehaviour {
 
 		}
 		
-		player.GetComponent(Animator).SetFloat ( "DeltaVertical", deltaVertical );
-		player.GetComponent(Animator).SetFloat ( "DeltaHorizontal", deltaHorizontal );
-		player.GetComponent(Animator).SetFloat ( "DeltaCombined", deltaCombined );
+		player.animator.SetFloat ( "DeltaVertical", deltaVertical );
+		player.animator.SetFloat ( "DeltaHorizontal", deltaHorizontal );
+		player.animator.SetFloat ( "DeltaCombined", deltaCombined );
 
-		player.GetComponent(Animator).SetBool ( "Jumping", bodyState == ePlayerBodyState.Jumping || bodyState == ePlayerBodyState.Falling );
-		player.GetComponent(Animator).SetBool ( "Crouching", bodyState == ePlayerBodyState.Crouching );
-		player.GetComponent(Animator).SetBool ( "Climbing", bodyState == ePlayerBodyState.Climbing );
-		player.GetComponent(Animator).SetBool ( "Shooting", actionState == ePlayerActionState.Shooting );
-		player.GetComponent(Animator).SetBool ( "Interacting", actionState == ePlayerActionState.Interacting );
-		player.GetComponent(Animator).SetBool ( "FirstPerson", controlMode == ePlayerControlMode.FirstPerson );
+		player.animator.SetBool ( "Jumping", bodyState == ePlayerBodyState.Jumping || bodyState == ePlayerBodyState.Falling );
+		player.animator.SetBool ( "Crouching", bodyState == ePlayerBodyState.Crouching );
+		player.animator.SetBool ( "Climbing", bodyState == ePlayerBodyState.Climbing );
+		player.animator.SetBool ( "ClimbingUp", climbUp );
+		player.animator.SetBool ( "Shooting", actionState == ePlayerActionState.Shooting );
+		player.animator.SetBool ( "Interacting", actionState == ePlayerActionState.Interacting );
+		player.animator.SetBool ( "FirstPerson", controlMode == ePlayerControlMode.FirstPerson );
 
 	}
 }

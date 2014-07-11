@@ -17,6 +17,7 @@ class Player extends MonoBehaviour {
 	public var automaticHeal : int = 0;
 	public var shieldPrefab : GameObject;
 	public var inventory : OSInventory;
+	public var animator : Animator;
 
 	// Private vars	
 	private var shield : GameObject;
@@ -344,6 +345,7 @@ class Player extends MonoBehaviour {
 		SetRagdoll ( false );
 
 		inventory.eventHandler = this.gameObject;
+		animator = this.GetComponent.< Animator > ();
 	}
 
 	////////////////////

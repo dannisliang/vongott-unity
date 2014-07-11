@@ -2,12 +2,9 @@
 
 public class Ladder extends MonoBehaviour {
 	public var segs : int = 10;
-	
-	private var unset : boolean = true;
+	public var blockedTop : boolean = true;
 
-	public function Start () {
-		segments = segs;
-	}
+	private var unset : boolean = true;
 
 	public function Update () {
 		
@@ -72,4 +69,14 @@ public class Ladder extends MonoBehaviour {
 		}
 	}
 
+	public function Start () {
+		var from : Vector3 = collider.bounds.center;
+		from -= this.transform.forward * 0.5;
+		from.y = collider.bounds.max.y - 0.5;
+
+		var hit : RaycastHit;
+
+		blockedTop = Physics.Raycast ( from, Vector3.up, hit, 1.5 );
+		segments = segs;
+	}
 }
