@@ -90,7 +90,8 @@ public class CameraController extends MonoBehaviour {
 			desiredDistance = 0.63;
 			currentDistance = 0.63;
 			state = eCameraState.ThirdPerson;
-			GameCore.GetPlayer().CheckWeaponPosition();
+			player.CheckWeaponPosition();
+			player.animator.SetTrigger ( "SwitchCamera" );
 		}
 
 		// Set camera rotation
@@ -193,7 +194,8 @@ public class CameraController extends MonoBehaviour {
 		// Go to first person mode
 		if ( desiredDistance <= 0.6 ) {
 			state = eCameraState.FirstPerson;
-			GameCore.GetPlayer().CheckWeaponPosition();
+			player.animator.SetTrigger ( "SwitchCamera" );
+			player.CheckWeaponPosition();
 		}
 
 		if ( initCorrection > 0 ) {
@@ -283,9 +285,11 @@ public class CameraController extends MonoBehaviour {
 		if ( Input.GetMouseButtonDown ( 2 ) && !locked ) {
 			if ( state == eCameraState.ThirdPerson ) {
 				state = eCameraState.FirstPerson;
+				player.animator.SetTrigger ( "SwitchCamera" );
 
 			} else {
 				state = eCameraState.ThirdPerson;
+				player.animator.SetTrigger ( "SwitchCamera" );
 			
 				if ( currentDistance < 0.63 || desiredDistance < 0.63 ) {
 					desiredDistance = 0.63;
@@ -293,7 +297,7 @@ public class CameraController extends MonoBehaviour {
 				}
 			}
 			
-			GameCore.GetPlayer().CheckWeaponPosition();
+			player.CheckWeaponPosition();
 		}
 	}
 

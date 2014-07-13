@@ -10,6 +10,17 @@ public class Ladder extends MonoBehaviour {
 		
 	}
 	
+	public function get endsInCrawlspace () : boolean {
+		return false;
+	}
+
+	public function get topPosition () : Vector3 {
+		var result : Vector3 = new Vector3 ( collider.bounds.center.x, collider.bounds.max.y, collider.bounds.center.z );
+		result += transform.forward;
+
+		return result;
+	}
+
 	public function get segments () : int {
 		return segs;
 	}

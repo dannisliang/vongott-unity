@@ -42,7 +42,6 @@ public class PlayerController extends MonoBehaviour {
 	private var ladder : Ladder;
 	private var lerping : boolean = false;
 	private var lerpGoal : Vector3;
-	private var climbUp : boolean = false;
 
 	public function SetControlMode ( mode : ePlayerControlMode ) {
 		controlMode = mode;
@@ -189,13 +188,21 @@ public class PlayerController extends MonoBehaviour {
 					
 					} else {
 						deltaVertical = 0;
-						climbUp = true;
-						ladder = null;
-						isClimbing = false;
 
+						player.transform.position = ladder.topPosition;
+
+						if ( ladder.endsInCrawlspace ) {
+							bodyState = ePlayerBodyState.Crouching;
+							player.animator.SetBool ( "Crouching", true );
+						}
+
+						player.animator.SetTrigger ( "ClimbingUp" );
+						
 						StartCoroutine ( function () : IEnumerator {
-							yield WaitForSeconds ( 1 );
-							climbUp = false;
+							yield WaitForSeconds ( 0.9 );
+							
+							ladder = null;
+							isClimbing = false;
 						} () );
 
 					}
@@ -280,7 +287,6 @@ public class PlayerController extends MonoBehaviour {
 		player.animator.SetBool ( "Jumping", bodyState == ePlayerBodyState.Jumping || bodyState == ePlayerBodyState.Falling );
 		player.animator.SetBool ( "Crouching", bodyState == ePlayerBodyState.Crouching );
 		player.animator.SetBool ( "Climbing", bodyState == ePlayerBodyState.Climbing );
-		player.animator.SetBool ( "ClimbingUp", climbUp );
 		player.animator.SetBool ( "Shooting", actionState == ePlayerActionState.Shooting );
 		player.animator.SetBool ( "Interacting", actionState == ePlayerActionState.Interacting );
 		player.animator.SetBool ( "FirstPerson", controlMode == ePlayerControlMode.FirstPerson );
