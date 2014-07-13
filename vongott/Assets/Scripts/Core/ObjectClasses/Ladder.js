@@ -3,6 +3,7 @@
 public class Ladder extends MonoBehaviour {
 	public var segs : int = 10;
 	public var blockedTop : boolean = true;
+	public var userOffset : float = 0.3;
 
 	private var unset : boolean = true;
 
@@ -10,13 +11,17 @@ public class Ladder extends MonoBehaviour {
 		
 	}
 	
+	public function get initPos () : Vector3 {
+		return this.transform.position - this.transform.forward * userOffset;
+	}
+
 	public function get endsInCrawlspace () : boolean {
 		return false;
 	}
 
 	public function get topPosition () : Vector3 {
 		var result : Vector3 = new Vector3 ( collider.bounds.center.x, collider.bounds.max.y, collider.bounds.center.z );
-		result += transform.forward;
+		result += transform.forward * 0.1;
 
 		return result;
 	}
@@ -81,6 +86,8 @@ public class Ladder extends MonoBehaviour {
 	}
 
 	public function Start () {
+		segments = segs;
+		
 		var from : Vector3 = collider.bounds.center;
 		from -= this.transform.forward * 0.5;
 		from.y = collider.bounds.max.y - 0.5;
@@ -88,6 +95,5 @@ public class Ladder extends MonoBehaviour {
 		var hit : RaycastHit;
 
 		blockedTop = Physics.Raycast ( from, Vector3.up, hit, 1.5 );
-		segments = segs;
 	}
 }

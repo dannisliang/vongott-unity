@@ -55,6 +55,11 @@ public class PlayerController extends MonoBehaviour {
 		}
 
 		this.ladder = ladder;
+
+		var newPos : Vector3 = ladder.initPos;
+		newPos.y = player.transform.position.y;
+		player.transform.position = newPos;
+
 	}
 
 	public function Start () {
@@ -181,8 +186,8 @@ public class PlayerController extends MonoBehaviour {
 
 		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
 			// Climbing
-			if ( isClimbing ) {
-				if ( ladder && player.collider.bounds.max.y >= ladder.collider.bounds.max.y ) {
+			if ( ladder && isClimbing ) {
+				if ( player.collider.bounds.max.y >= ladder.collider.bounds.max.y ) {
 					if ( ladder.blockedTop ) {
 						deltaVertical = 0;
 					
@@ -198,12 +203,8 @@ public class PlayerController extends MonoBehaviour {
 
 						player.animator.SetTrigger ( "ClimbingUp" );
 						
-						StartCoroutine ( function () : IEnumerator {
-							yield WaitForSeconds ( 0.9 );
-							
-							ladder = null;
-							isClimbing = false;
-						} () );
+						ladder = null;
+						isClimbing = false;
 
 					}
 				}
