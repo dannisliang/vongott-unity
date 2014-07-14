@@ -51,7 +51,7 @@ public class PlayerController extends MonoBehaviour {
 				if ( Vector3.Distance ( this.transform.position, ladder.endPos ) < 1 ) {
 					var startPos : Vector3 = ladder.transform.position;
 					startPos.y = ladder.topY - 2;
-					startPos -= ladder.transform.forward * 0.25;
+					startPos -= ladder.transform.forward * 0.5;
 						
 					StartCoroutine ( function () : IEnumerator {
 						isDisabled = true;
@@ -287,6 +287,8 @@ public class PlayerController extends MonoBehaviour {
 
 			if ( !isJumping && ladder == null ) {
 				isFalling = true;
+			} else {
+				isFalling = false;
 			}
 		}
 	
