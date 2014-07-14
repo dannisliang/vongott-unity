@@ -82,11 +82,4 @@ class UIQuests extends OGPage {
 		SelectActiveQuest ();
 		GameCore.GetInstance().SetPause ( true );
 	}
-	
-	override function UpdatePage () {
-		if ( Input.GetKeyDown(KeyCode.Escape) ) {
-			OGRoot.GetInstance().GoToPage ( "HUD" );
-			GameCore.GetInstance().SetPause ( false );
-		}
-	}
 }

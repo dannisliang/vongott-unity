@@ -414,18 +414,9 @@ class UIInventory extends OGPage {
 			dragTexture.mainTexture = null;
 		
 		}
-
-		if ( Input.GetKeyDown(KeyCode.Escape) ) {
-			OGRoot.GetInstance().GoToPage ( "HUD" );
-			GameCore.GetInstance().SetPause ( false );
-		}
 	}
 
 	override function ExitPage () {
 		selectedSlot = null;
-	}
-
-	public function Exit () {
-		OGRoot.GetInstance().GoToPage ( "HUD" );
 	}
 }

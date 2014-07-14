@@ -15,7 +15,7 @@ class Book extends InteractiveObject {
 		
 		GameCamera.GetInstance().StorePosRot ();
 		
-		GameCore.GetInstance().SetControlsActive ( false );
+		GameCore.GetInstance().controlsActive = false;
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
 		
@@ -23,13 +23,17 @@ class Book extends InteractiveObject {
 	}
 	
 	public function Exit () {
+		OGRoot.GetInstance().GoToPage ( "HUD" );
+		
 		inSession = false;
 		
 		GameCamera.GetInstance().RestorePosRot ();
 			
 		UIHUD.GetInstance().ToggleCrosshair ();
 	
-		GameCore.GetInstance().SetControlsActive ( true );
+		GameCore.GetInstance().controlsActive = true;
+		
+		GameCore.interactiveObjectLocked = false;
 	}
 	
 	override function Interact () {
@@ -38,13 +42,7 @@ class Book extends InteractiveObject {
 		
 			GameCore.interactiveObjectLocked = true;
 		
-			InputManager.escFunction = function () {
-				OGRoot.GetInstance().GoToPage ( "HUD" );
-				
-				Exit ();
-				
-				GameCore.interactiveObjectLocked = false;
-			};
+			InputManager.escFunction = Exit;
 		}
 	}
 	

@@ -7,7 +7,7 @@ class EventManager extends OCEventHandler {
 
 	private function InitConvoCam () {
 		GameCamera.GetInstance().StorePosRot();
-		GameCore.GetInstance().SetControlsActive ( false );
+		GameCore.GetInstance().controlsActive = false;
 		OGRoot.GetInstance().GoToPage ( "Conversation" );
 	}
 
@@ -95,7 +95,7 @@ class EventManager extends OCEventHandler {
 	public function OnConversationEnd () {
 		if ( OGRoot.GetInstance().currentPage.pageName == "Conversation" ) {
 			OGRoot.GetInstance().GoToPage ( "HUD" );
-			GameCore.GetInstance().SetControlsActive ( true );
+			GameCore.GetInstance().controlsActive = true;
 			GameCamera.GetInstance().RestorePosRot ();
 			GameCamera.GetInstance().inConvo = false;
 		}

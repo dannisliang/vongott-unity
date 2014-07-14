@@ -37,7 +37,7 @@ class Keypad extends InteractiveObject {
 	public function Enter () : IEnumerator {
 		inSession = true;
 		
-		GameCore.GetInstance().SetControlsActive ( false );
+		GameCore.GetInstance().controlsActive = false;
 		
 		yield GameCamera.GetInstance().FocusInterface ( this.transform, 0.3 );
 		
@@ -55,7 +55,7 @@ class Keypad extends InteractiveObject {
 		yield WaitForSeconds ( 1 );
 	
 	
-		GameCore.GetInstance().SetControlsActive ( true );
+		GameCore.GetInstance().controlsActive = true;
 	}
 							
 	//////////////////

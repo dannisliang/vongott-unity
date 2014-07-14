@@ -119,7 +119,7 @@ public class MotionController extends MonoBehaviour {
 	 
 			// If running isn't on a toggle, then use the appropriate speed depending on whether the run button is down
 			if (!toggleRun) 
-				speed = Input.GetKey(KeyCode.LeftShift)? runSpeed : walkSpeed;
+				speed = Input.GetButton ( "Run" ) ? runSpeed : walkSpeed;
 	 
 			// If sliding (and it's allowed), or if we're on an object tagged "Slide", get a vector pointing down the slope we're on
 			if ( (sliding && slideWhenOverSlopeLimit) || (slideOnTaggedObjects && hit.collider.tag == "Slide") ) {
@@ -137,7 +137,7 @@ public class MotionController extends MonoBehaviour {
 			}
 	 
 			// Jump! But only if the jump button has been released and player has been grounded for a given number of frames
-			if (!Input.GetKeyDown(KeyCode.Space))
+			if (!Input.GetButtonDown("Jump"))
 				jumpTimer++;
 			else if (jumpTimer >= antiBunnyHopFactor) {
 				moveDirection.y = jumpSpeed;

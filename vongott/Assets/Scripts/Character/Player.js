@@ -216,7 +216,7 @@ class Player extends MonoBehaviour {
 		}
 
 		skillTree.SetActiveAll ( false );
-		GameCore.GetInstance().SetControlsActive ( false );
+		GameCore.GetInstance().controlsActive = false;
 	}
 	
 	function TakeDamage ( amount : int ) {

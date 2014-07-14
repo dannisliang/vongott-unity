@@ -98,16 +98,12 @@ class GameCore extends MonoBehaviour {
 	////////////////////
 	// Controls
 	////////////////////
-	public function GetControlsActive () : boolean {
-		return !InputManager.isLocked && state != eGameState.Menu;
-	}
-
-	public function SetControlsActive ( state : boolean ) {
-		InputManager.isLocked = !state;
+	public function get controlsActive () : boolean {
+		return player.gameObject.GetComponent.< CharacterController > ().enabled;
 	}
 	
-	public function SetControlsActive ( state : boolean, delay : float ) {
-		StartCoroutine ( ExecuteWithDelay ( function () { SetControlsActive ( state ); }, delay ) );
+	public function set controlsActive ( value : boolean ) {
+		player.gameObject.GetComponent.< CharacterController > ().enabled = value;
 	}
 
 	
@@ -232,7 +228,7 @@ class GameCore extends MonoBehaviour {
 	function SetPause ( state : boolean ) {
 		paused = state;
 		Time.timeScale = state ? 0 : timeScale;
-		SetControlsActive ( !state );
+		controlsActive = !state;
 	}
 	
 	// Timescale

@@ -264,7 +264,7 @@ public class CameraController extends MonoBehaviour {
 		}
 
 		// Only run if not in cutscene mode and controls are enabled
-		if ( state == eCameraState.CutScene || !GameCore.GetInstance().GetControlsActive() ) {
+		if ( state == eCameraState.CutScene || !GameCore.GetInstance().controlsActive ) {
 			return;
 		}
 

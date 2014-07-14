@@ -170,7 +170,6 @@ class UIHUD extends OGPage {
 
 		if ( console.activeSelf ) {	
 			GameCore.state = eGameState.Menu;
-			InputManager.escFunction = ToggleConsole;
 		} else {
 			GameCore.state = eGameState.Game;
 		}

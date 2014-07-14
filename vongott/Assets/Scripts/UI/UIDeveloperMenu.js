@@ -4,7 +4,7 @@ public class UIDeveloperMenu extends OGPage {
 	public var inspector : UIDeveloperInspector;
 
 	override function StartPage () {
-		GameCore.GetInstance().SetControlsActive ( false );
+		GameCore.GetInstance().controlsActive = false;
 	}
 
 	function Update () {
@@ -12,7 +12,7 @@ public class UIDeveloperMenu extends OGPage {
 	
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			OGRoot.GetInstance().GoToPage ( "HUD" );
-			GameCore.GetInstance().SetControlsActive ( true );
+			GameCore.GetInstance().controlsActive = true;
 		}
 	}
 }

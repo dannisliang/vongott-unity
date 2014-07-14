@@ -92,7 +92,7 @@ public class PlayerController extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( !GameCore.GetInstance().GetControlsActive() ) {
+		if ( !GameCore.GetInstance().controlsActive ) {
 			return;
 		}
 		
@@ -119,7 +119,7 @@ public class PlayerController extends MonoBehaviour {
 		}
 
 		// ^ Jumping
-		if ( Input.GetKeyDown ( KeyCode.Space ) && !isCrouching && !isJumping && !isFalling ) {
+		if ( InputManager.GetButtonDown ( "Jump" ) && !isCrouching && !isJumping && !isFalling ) {
 			if ( ladder ) {
 				var ladderDirection : Vector3 = ladder.transform.position - this.transform.position;
 				var lookDirection : Vector3 = Camera.main.transform.forward;
@@ -139,7 +139,7 @@ public class PlayerController extends MonoBehaviour {
 			}
 
 		// ^ Crouching
-		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) && !ladder ) {
+		} else if ( InputManager.GetButtonDown ( "Crouch" ) && !ladder ) {
 			if ( isCrouching && !inCrawlspace ) {
 				isCrouching = false;
 				
@@ -155,18 +155,18 @@ public class PlayerController extends MonoBehaviour {
 		}
 				
 		// ^ Shoot
-		isShooting = Input.GetMouseButtonDown ( 0 ) && ladder == null;
+		isShooting = InputManager.GetButton ( "Fire" ) && ladder == null;
 
 		// Interact
-		if ( !isShooting && Input.GetMouseButtonDown ( 1 ) ) {
-			if ( GameCore.GetInteractiveObject() ) {
-				GameCore.GetInteractiveObject().Interact();
+		if ( !isShooting && InputManager.GetButtonDown ( "Interact" ) ) {
+			if ( GameCore.GetInteractiveObject () ) {
+				GameCore.GetInteractiveObject ().Interact ();
 			}
 		}
 		
 		// Locomotion
-		deltaVertical = Input.GetAxisRaw ( "Vertical" );
-		deltaHorizontal = Input.GetAxisRaw ( "Horizontal" );
+		deltaVertical = InputManager.GetAxis ( "Vertical" );
+		deltaHorizontal = InputManager.GetAxis ( "Horizontal" );
 		deltaCombined = 0.0;
 	
 		// ^ Forced point
@@ -220,8 +220,8 @@ public class PlayerController extends MonoBehaviour {
 				
 				}
 
-			// Sprint
-			} else if ( Input.GetKey ( KeyCode.LeftShift ) && !isCrouching && !isJumping && !isFalling ) {
+			// Run
+			} else if ( InputManager.GetButton ( "Run" ) && !isCrouching && !isJumping && !isFalling ) {
 			
 			// Walk
 			} else {				

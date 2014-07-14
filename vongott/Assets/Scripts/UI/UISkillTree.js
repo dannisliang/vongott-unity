@@ -63,11 +63,6 @@ public class UISkillTree extends OGPage {
 	}
 	
 	override function UpdatePage () {
-		if ( Input.GetKeyDown(KeyCode.Escape) ) {
-			OGRoot.GetInstance().GoToPage ( "HUD" );
-			GameCore.GetInstance().SetPause ( false );
-		}
-
 		for ( var btn : OGButton in [ btnCranium, btnBack, btnChest, btnArms, btnAbdomen, btnLegs ] ) {
 			if ( btn.CheckMouseOver () ) {
 				SelectRoot ( btn.argument );
