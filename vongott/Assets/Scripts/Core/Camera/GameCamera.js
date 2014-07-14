@@ -12,8 +12,6 @@ class GameCamera extends MonoBehaviour {
 	private var currentSpeaker : GameObject;
 	private var focusSleep : float = 0;
 
-	public var firstPersonLayerMask : LayerMask;
-	public var thirdPersonLayerMask : LayerMask;
 	public var boundingBoxMaterial : Material;
 	public var firstPerson : boolean = false;	
 	public var inConvo : boolean = false;
@@ -356,14 +354,12 @@ class GameCamera extends MonoBehaviour {
 		if ( player.stats.hp <= 0 ) {
 			this.transform.position = Vector3.Slerp ( this.transform.position, player.transform.position + new Vector3 ( 0, 6, 0 ), Time.deltaTime * 0.5 );
 			this.transform.rotation = Quaternion.LookRotation ( player.transform.position - this.transform.position );
-			this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
 		
 		} else {
 			// Check for conversation cam
 			if ( inConvo ) {
 				this.transform.position = convoPosition;
 				this.transform.rotation = Quaternion.LookRotation ( convoFocus - this.transform.position );
-				this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
 			}
 
 			// Check for interaction
@@ -413,14 +409,10 @@ class GameCamera extends MonoBehaviour {
 			switch ( controller.state ) {
 				case eCameraState.ThirdPerson:
 					player.controller.controlMode = ePlayerControlMode.ThirdPerson;
-					this.GetComponent(Camera).cullingMask = thirdPersonLayerMask;
 					break;
 
 				case eCameraState.FirstPerson:
 					player.controller.controlMode = ePlayerControlMode.FirstPerson;
-					if ( !inConvo ) {
-						this.GetComponent(Camera).cullingMask = firstPersonLayerMask;
-					}
 					break;
 			}
 

@@ -182,7 +182,7 @@ class Door extends InteractiveObject {
 			if ( !closed ) {
 				CloseDoor ();
 			
-			} else if ( GameCore.GetPlayer().IsEquippedLockpick() ) {
+			} else if ( GameCore.GetPlayer().IsEquipped ( "Lockpick" ) ) {
 				PickLock ( GameCore.GetPlayer().stats );				
 			
 			} else {

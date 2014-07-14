@@ -5,32 +5,20 @@ public enum ePlayerControlMode {
 	FirstPerson
 }
 
-public enum ePlayerBodyState {
-	Idle,
-	Jumping,
-	Falling,
-	Crouching,
-	Climbing
-}
-
-public enum ePlayerActionState {
-	Idle,
-	Shooting,
-	Interacting
-}
-
 public class PlayerController extends MonoBehaviour {
-	public var bodyState : ePlayerBodyState = ePlayerBodyState.Idle;
-	public var actionState : ePlayerActionState = ePlayerActionState.Idle;
 	public var controlMode : ePlayerControlMode = ePlayerControlMode.ThirdPerson;
 	
 	public var deltaVertical : float;
 	public var deltaHorizontal : float;
 	public var deltaCombined : float;
 
-	public var isClimbing : boolean = false;
+	public var isDisabled : boolean = false;
 	public var inCrawlspace : boolean = false;
-	public var isGrounded : boolean = true;
+	public var isGrounded : boolean = false;
+	public var isShooting : boolean = false;
+	public var isFalling : boolean = false;
+	public var isJumping : boolean = false;
+	public var isCrouching : boolean = false;
 	public var isRotationLocked : boolean = false;
 	public var useForcedPoint : boolean = false;
 	
@@ -39,27 +27,51 @@ public class PlayerController extends MonoBehaviour {
 	private var lockedRotationVector : Vector3;
 	private var player : Player;
 	private var character : CharacterController;
-	private var ladder : Ladder;
-	private var lerping : boolean = false;
-	private var lerpGoal : Vector3;
+	private var ladderObject : Ladder;
+	private var canUseLadder : boolean = true;
 
 	public function SetControlMode ( mode : ePlayerControlMode ) {
 		controlMode = mode;
 	}
 
-	public function SetLadder ( ladder : Ladder ) {
-		if ( ladder != null ) {
-			GameCore.GetPlayer().HolsterItem();
-		} else {
-			GameCore.GetPlayer().UnholsterItem();
+	public function get ladder () : Ladder {
+		return ladderObject;
+	}
+
+	public function set ladder ( value : Ladder ) {
+		if ( value ) {
+			if ( value == ladderObject ) { return; }
+			
+			var direction : Vector3 = value.transform.position - this.transform.position;
+			
+			if ( canUseLadder && ( Vector3.Angle ( direction, this.transform.forward ) ) < 90 ) {
+				player.HolsterItem();
+				ladderObject = value;
+				
+				if ( Vector3.Distance ( this.transform.position, ladder.endPos ) < 1 ) {
+					var startPos : Vector3 = ladder.transform.position;
+					startPos.y = ladder.topY - 2;
+					startPos -= ladder.transform.forward * 0.25;
+						
+					StartCoroutine ( function () : IEnumerator {
+						isDisabled = true;
+						canUseLadder = false;
+						iTween.MoveTo ( this.gameObject, iTween.Hash ( "position", startPos, "time", 0.7, "easetype", iTween.EaseType.linear ) );
+						yield WaitForSeconds ( 0.8 );
+						isDisabled = false;
+						canUseLadder = true;
+					} () );
+
+				}
+				
+				player.animator.SetTrigger ( "ClimbingBegin" );
+			}
+		
+		} else if ( ladder ) {
+			player.UnholsterItem ();
+			ladderObject = null;
+
 		}
-
-		this.ladder = ladder;
-
-		var newPos : Vector3 = ladder.initPos;
-		newPos.y = player.transform.position.y;
-		player.transform.position = newPos;
-
 	}
 
 	public function Start () {
@@ -90,31 +102,19 @@ public class PlayerController extends MonoBehaviour {
 		}
 		
 		if ( !player ) {
-			player = this.GetComponent(Player);
+			player = this.GetComponent.< Player > ();
 		}
 	
 		if ( player.stats.hp <= 0 ) { 
 			return;
 		}
 
-		if ( lerping ) {
-			transform.position = Vector3.Lerp ( transform.position, lerpGoal, Time.deltaTime * 2 );
-
-			if ( Vector3.Distance ( transform.position, lerpGoal ) < 0.1 ) {
-				lerping = false;
-			}
-
-			return;
-		}
-
-		isClimbing = ladder != null;	
-		isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1); 
-		inCrawlspace = bodyState == ePlayerBodyState.Crouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
+		// Set flags
+		isGrounded = Physics.Raycast ( transform.position, -Vector3.up, distToGround + 0.1 ); 
+		inCrawlspace = isCrouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
 		
-		// Climbing
-		if ( isClimbing ) {
-			bodyState = ePlayerBodyState.Climbing;
-		
+		// ^ Climbing
+		if ( ladder ) {
 			isRotationLocked = true;
 			lockedRotationVector = ladder.transform.eulerAngles;
 
@@ -123,32 +123,35 @@ public class PlayerController extends MonoBehaviour {
 
 		}
 
-		// Jumping
-		if ( Input.GetKeyDown ( KeyCode.Space ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
-			if ( isClimbing ) {
-				ladder = null;
-				bodyState = ePlayerBodyState.Falling;
+		// ^ Jumping
+		if ( Input.GetKeyDown ( KeyCode.Space ) && !isCrouching && !isJumping && !isFalling ) {
+			if ( ladder ) {
+				var ladderDirection : Vector3 = ladder.transform.position - this.transform.position;
+				var lookDirection : Vector3 = Camera.main.transform.forward;
+				lookDirection.y = 0;
+
+				if ( Vector3.Angle ( ladderDirection, lookDirection ) > 90 ) {
+					ladder = null;
+					canUseLadder = false;
+					isFalling = true;
+				}
 
 			} else if ( isGrounded ) {
-				bodyState = ePlayerBodyState.Jumping;
+				isJumping = true;
+				player.animator.SetTrigger ( "JumpingBegin" );
 
 				SFXManager.GetInstance().Play ( "jump_" + Random.Range ( 1, 3 ), this.audio );
 			}
 
-			if ( InputManager.jumpFunction ) {
-				InputManager.jumpFunction ();
-				InputManager.jumpFunction = null;
-			}
-
-		// Crouching
-		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) && !isClimbing ) {
-			if ( bodyState == ePlayerBodyState.Crouching && !inCrawlspace ) {
-				bodyState = ePlayerBodyState.Idle;
-
+		// ^ Crouching
+		} else if ( Input.GetKeyDown ( KeyCode.LeftControl ) && !ladder ) {
+			if ( isCrouching && !inCrawlspace ) {
+				isCrouching = false;
+				
 				SFXManager.GetInstance().Play ( "crouch_up_1", this.audio );
 			
 			} else {
-				bodyState = ePlayerBodyState.Crouching;
+				isCrouching = true;
 				
 				SFXManager.GetInstance().Play ( "crouch_down_1", this.audio );
 			
@@ -156,21 +159,14 @@ public class PlayerController extends MonoBehaviour {
 	
 		}
 				
-		// Shoot
-		if ( Input.GetMouseButton ( 0 ) && !isClimbing ) {
-			actionState = ePlayerActionState.Shooting;
-		
+		// ^ Shoot
+		isShooting = Input.GetMouseButtonDown ( 0 ) && ladder == null;
+
 		// Interact
-		} else if ( Input.GetMouseButtonDown ( 1 ) ) {
+		if ( !isShooting && Input.GetMouseButtonDown ( 1 ) ) {
 			if ( GameCore.GetInteractiveObject() ) {
-				actionState = ePlayerActionState.Interacting;
 				GameCore.GetInteractiveObject().Interact();
 			}
-			
-		// Idle
-		} else if ( !isClimbing ) {
-			actionState = ePlayerActionState.Idle;
-		
 		}
 		
 		// Locomotion
@@ -178,39 +174,59 @@ public class PlayerController extends MonoBehaviour {
 		deltaHorizontal = Input.GetAxisRaw ( "Horizontal" );
 		deltaCombined = 0.0;
 	
-		// Forced point
+		// ^ Forced point
 		if ( useForcedPoint ) {
 			player.transform.position = forcedPointVector;
 			useForcedPoint = false;
 		}
 
-		if ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) {
+		// ^ Deltas
+		if ( !isDisabled && ( deltaVertical != 0.0 || deltaHorizontal != 0.0 ) ) {
 			// Climbing
-			if ( ladder && isClimbing ) {
-				if ( player.collider.bounds.max.y >= ladder.collider.bounds.max.y ) {
-					if ( ladder.blockedTop ) {
-						deltaVertical = 0;
-					
-					} else {
-						deltaVertical = 0;
+			if ( ladder ) {
+				if ( player.transform.position.y >= ladder.topY - 2 && deltaVertical > 0.1 ) {
+					deltaVertical = 0;
+					deltaHorizontal = 0;
 
-						player.transform.position = ladder.topPosition;
-
+					if ( !ladder.blockedTop ) {
 						if ( ladder.endsInCrawlspace ) {
-							bodyState = ePlayerBodyState.Crouching;
-							player.animator.SetBool ( "Crouching", true );
+							isCrouching = true;
 						}
 
-						player.animator.SetTrigger ( "ClimbingUp" );
-						
-						ladder = null;
-						isClimbing = false;
+						player.animator.SetTrigger ( "ClimbingEnd" );
+
+						StartCoroutine ( function () : IEnumerator {	
+							isDisabled = true;
+							canUseLadder = false;
+							iTween.MoveTo ( this.gameObject, iTween.Hash ( "position", ladder.endPos, "time", 0.7, "easetype", iTween.EaseType.linear ) );
+							yield WaitForSeconds ( 0.8 );
+							ladder = null;
+							isDisabled = false;
+							canUseLadder = true;
+						} () );
 
 					}
+			
+				} else if ( player.transform.position.y <= ladder.transform.position.y + 0.25 && deltaVertical < -0.1 ) {
+					ladder = null;
+					
+					StartCoroutine ( function () : IEnumerator {
+						canUseLadder = false;
+						yield WaitForSeconds ( 1 );
+						canUseLadder = true;
+					} () );
+
+				} else {
+					var ladderPos : Vector3 = ladder.transform.position - ladder.transform.forward * 0.5;
+					ladderPos.y = this.transform.position.y;
+
+					this.transform.position = ladderPos;
+					this.transform.rotation = ladder.transform.rotation;
+				
 				}
 
 			// Sprint
-			} else if ( Input.GetKey ( KeyCode.LeftShift ) && bodyState != ePlayerBodyState.Crouching && bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling ) {
+			} else if ( Input.GetKey ( KeyCode.LeftShift ) && !isCrouching && !isJumping && !isFalling ) {
 			
 			// Walk
 			} else {				
@@ -219,25 +235,15 @@ public class PlayerController extends MonoBehaviour {
 			
 			}
 			
-		} else {
-			if ( bodyState != ePlayerBodyState.Jumping && bodyState != ePlayerBodyState.Falling && bodyState != ePlayerBodyState.Climbing && bodyState != ePlayerBodyState.Crouching ) {
-				bodyState = ePlayerBodyState.Idle;
-			}
-			
 		}
 		
-		// Direction
-		if ( controlMode == ePlayerControlMode.ThirdPerson ) {
+		// Update correct controller script
+		if ( controlMode == ePlayerControlMode.ThirdPerson || ladder != null ) {
 			UpdateThirdPerson ();
 		
 		} else {
-			if ( isClimbing ) {
-				transform.localPosition.y += deltaVertical * 0.01;	
-
-			} else {
-				this.GetComponent.<FirstPersonController>().UpdateFirstPerson ( deltaHorizontal, deltaVertical );
-			
-			}
+			this.GetComponent.<FirstPersonController>().UpdateFirstPerson ( deltaHorizontal, deltaVertical );
+		
 		}
 			
 		
@@ -249,7 +255,7 @@ public class PlayerController extends MonoBehaviour {
 		}
 		
 		// Set capsule size
-		if ( bodyState == ePlayerBodyState.Crouching ) {
+		if ( isCrouching ) {
 			character.height = 0.8;
 			character.center = new Vector3 ( 0, 0.45, 0 );
 		
@@ -259,16 +265,12 @@ public class PlayerController extends MonoBehaviour {
 		
 		}
 		
-		if ( isGrounded && ( bodyState == ePlayerBodyState.Falling || bodyState == ePlayerBodyState.Jumping ) && bodyState != ePlayerBodyState.Crouching ) {
-			bodyState = ePlayerBodyState.Idle;
-			
-		}
-	
+		// Sounds and overridden flags
 		if ( isGrounded ) {
 			if ( deltaCombined > 0.5 ) {
 				SFXManager.GetInstance().Play ( "footsteps_run_1", this.audio, true );
 
-			} else if ( deltaCombined > 0.1 && bodyState != ePlayerBodyState.Crouching ) {
+			} else if ( deltaCombined > 0.1 && !isCrouching ) {
 				SFXManager.GetInstance().Play ( "footsteps_walk_1", this.audio, true );
 
 			} else {
@@ -276,21 +278,38 @@ public class PlayerController extends MonoBehaviour {
 			
 			}
 
+			canUseLadder = true;
+			isFalling = false;
+			isJumping = false;
+
 		} else {
 			SFXManager.GetInstance().Stop ( [ "footsteps_walk_1", "footsteps_run_1" ], this.audio );
 
+			if ( !isJumping && ladder == null ) {
+				isFalling = true;
+			}
 		}
-		
+	
+		// Set animator values	
 		player.animator.SetFloat ( "DeltaVertical", deltaVertical );
 		player.animator.SetFloat ( "DeltaHorizontal", deltaHorizontal );
 		player.animator.SetFloat ( "DeltaCombined", deltaCombined );
 
-		player.animator.SetBool ( "Jumping", bodyState == ePlayerBodyState.Jumping || bodyState == ePlayerBodyState.Falling );
-		player.animator.SetBool ( "Crouching", bodyState == ePlayerBodyState.Crouching );
-		player.animator.SetBool ( "Climbing", bodyState == ePlayerBodyState.Climbing );
-		player.animator.SetBool ( "Shooting", actionState == ePlayerActionState.Shooting );
-		player.animator.SetBool ( "Interacting", actionState == ePlayerActionState.Interacting );
+		player.animator.SetBool ( "Jumping", isJumping || isFalling );
+		player.animator.SetBool ( "Crouching", isCrouching );
+		player.animator.SetBool ( "Climbing", ladder != null );
+		player.animator.SetBool ( "Shooting", isShooting );
 		player.animator.SetBool ( "FirstPerson", controlMode == ePlayerControlMode.FirstPerson );
+
+		if ( player.IsEquippedCategory ( "Weapon" ) && ladder == null ) {
+			player.animator.SetBool ( "Aiming", true );
+			player.animator.SetLayerWeight ( 1, 1 );
+		
+		} else {
+			player.animator.SetBool ( "Aiming", false );
+			player.animator.SetLayerWeight ( 1, 0 );
+	
+		}
 
 	}
 }

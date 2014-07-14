@@ -66,6 +66,14 @@ class GameCore extends MonoBehaviour {
 		overrideRotation = rot;
 	}
 
+	public static function SetLayerRecursively ( go : GameObject, layer : int ) {
+		go.layer = layer;
+
+		for ( var t : Transform in go.GetComponentsInChildren.< Transform > () ) {
+			t.gameObject.layer = layer;
+		}
+	}
+
 
 	////////////////////
 	// Actors

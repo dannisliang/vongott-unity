@@ -24,6 +24,7 @@ class Player extends MonoBehaviour {
 	private var liftedObject : LiftableItem;
 	private var shootTimer : float = 0;
 	private var healTimer : float = 0;
+	private var holsteredItem : OSItem;
 				
 	// Turn towards
 	function TurnTowards ( v : Vector3 ) {
@@ -75,27 +76,50 @@ class Player extends MonoBehaviour {
 
 	// Holster/unholster
 	public function HolsterItem () {
-
+		OnUnequipAll ( false );
 	}
 
 	public function UnholsterItem () {
-
+		EquipHolstered ();
 	}
 
 
 	////////////////////
 	// Inventory interfacing
 	////////////////////
+	public function EquipHolstered () {
+		if ( equippedObject ) {
+			OnEquipItem ( equippedObject );
+		}
+	}
+
 	public function OnUnequipAll () {
+		OnUnequipAll ( true );
+	}
+	
+	public function OnUnequipAll ( destroy : boolean ) {
 		GameCamera.GetInstance().controller.Unlock ();
 		
 		if ( equippedObject ) {
-			Destroy ( equippedObject.gameObject );
+			if ( destroy ) {
+				Destroy ( equippedObject.gameObject );
+			
+			} else {
+				equippedObject.gameObject.SetActive ( false );
+
+			}
 		}
 	}
 
 	function OnEquipItem ( item : OSItem ) {
-		equippedObject = Instantiate ( item ) as OSItem;
+		if ( item == equippedObject ) {
+			equippedObject.gameObject.SetActive ( true );
+		
+		} else {
+			equippedObject = Instantiate ( item ) as OSItem;
+		
+		}
+
 		equippedObject.transform.parent = hand;
 		equippedObject.transform.localPosition = Vector3.zero;
 		equippedObject.transform.localEulerAngles = hand.forward;
@@ -133,23 +157,15 @@ class Player extends MonoBehaviour {
 			GameCamera.GetInstance().controller.Unlock ();
 		}
 	}
-	
-	function IsEquippedWeapon () : boolean {
-		//if ( InventoryManager.GetInstance().equippedItem ) {
-	//		return InventoryManager.GetInstance().equippedItem.GetComponent(Item).type == eItemType.Weapon;
-	//	} else {
-			return false;
-	//	}
+
+	public function IsEquipped ( itemName : String ) : boolean {
+		return ( equippedObject != null && equippedObject.id == itemName );
 	}
 	
-	function IsEquippedLockpick () : boolean {
-		//if ( InventoryManager.GetInstance().equippedItem ) {
-	//		return InventoryManager.GetInstance().equippedItem.GetComponent(Item).subType == eItemSubType.Lockpick;
-	//	} else {
-			return false;
-	//	}
+	public function IsEquippedCategory ( catName : String ) : boolean {
+		return ( equippedObject != null && equippedObject.category == catName );
 	}
-	
+
 	
 	////////////////////
 	// Fighting
@@ -385,20 +401,8 @@ class Player extends MonoBehaviour {
 			controller = this.GetComponent.< PlayerController >();
 		}
 		
-		switch ( controller.actionState ) {
-			case ePlayerActionState.Shooting:
-				Shoot ();
-				break;
-		}
-
-		switch ( controller.bodyState ) {
-			case ePlayerBodyState.Crouching:
-			//	collider.height = 1;
-				break;
-			
-			default:
-			//	collider.height = 1.8;
-				break;
+		if ( controller.isShooting ) {
+			Shoot ();
 		}
 
 		// Calculate energy cost

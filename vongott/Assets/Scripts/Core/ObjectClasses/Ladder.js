@@ -3,7 +3,6 @@
 public class Ladder extends MonoBehaviour {
 	public var segs : int = 10;
 	public var blockedTop : boolean = true;
-	public var userOffset : float = 0.3;
 
 	private var unset : boolean = true;
 
@@ -12,18 +11,22 @@ public class Ladder extends MonoBehaviour {
 	}
 	
 	public function get initPos () : Vector3 {
-		return this.transform.position - this.transform.forward * userOffset;
+		return this.transform.position;
 	}
-
+	
 	public function get endsInCrawlspace () : boolean {
 		return false;
 	}
 
-	public function get topPosition () : Vector3 {
-		var result : Vector3 = new Vector3 ( collider.bounds.center.x, collider.bounds.max.y, collider.bounds.center.z );
-		result += transform.forward * 0.1;
+	public function get endPos () : Vector3 {
+		var pos : Vector3 = this.transform.position + this.transform.position.forward * 0.5;
+		pos.y = collider.bounds.max.y;
 
-		return result;
+		return pos;
+	}
+
+	public function get topY () : float {
+		return collider.bounds.max.y;
 	}
 
 	public function get segments () : int {
@@ -81,7 +84,7 @@ public class Ladder extends MonoBehaviour {
 		var player : Player = c.gameObject.GetComponent.< Player > ();
 
 		if ( player ) {
-			player.controller.SetLadder ( this );
+			player.controller.ladder = this;
 		}
 	}
 

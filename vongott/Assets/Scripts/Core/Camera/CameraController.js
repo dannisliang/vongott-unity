@@ -10,6 +10,8 @@ enum eCameraState {
 public class CameraController extends MonoBehaviour {
 	public var state : eCameraState = eCameraState.ThirdPerson;
 	public var storedPreference : eCameraState;
+	public var thirdPersonLayerMask : LayerMask;
+	public var firstPersonLayerMask : LayerMask;
 	public var target : GameObject;                   // Target to follow
 	public var distance : float = 5;                 // Default Distance
 	public var standingOffset : Vector2 = new Vector2 ( 0.4, 1.6 );
@@ -74,6 +76,8 @@ public class CameraController extends MonoBehaviour {
 	}
 
 	private function UpdateFirstPerson () {
+		camera.cullingMask = firstPersonLayerMask;
+		
 		// Check to see if mouse input is allowed on the axis
 		if ( allowMouseInputX ) {
 			xDeg += Input.GetAxis ("Mouse X") * xSpeed * 0.02;
@@ -109,6 +113,8 @@ public class CameraController extends MonoBehaviour {
 	}
 
 	private function UpdateThirdPerson () {
+		camera.cullingMask = thirdPersonLayerMask;
+		
 		// Push buffer
 		if ( pbuffer > 0 ) {
 			pbuffer -=Time.deltaTime;
@@ -263,7 +269,7 @@ public class CameraController extends MonoBehaviour {
 		}
 
 		// Get correct offset
-		if ( player.controller.bodyState == ePlayerBodyState.Crouching ) {
+		if ( player.controller.isCrouching ) {
 			targetOffset = Vector3.Slerp ( targetOffset, crouchedOffset, Time.deltaTime * 10 );
 
 		} else if ( player.controller.inCrawlspace ) {
