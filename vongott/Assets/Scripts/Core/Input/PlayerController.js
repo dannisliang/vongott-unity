@@ -29,9 +29,14 @@ public class PlayerController extends MonoBehaviour {
 	private var character : CharacterController;
 	private var ladderObject : Ladder;
 	private var canUseLadder : boolean = true;
+	private var motionController : MotionController;
 
 	public function SetControlMode ( mode : ePlayerControlMode ) {
 		controlMode = mode;
+	}
+
+	public function get isClimbing () : boolean {
+		return ladder != null;
 	}
 
 	public function get ladder () : Ladder {
@@ -75,6 +80,7 @@ public class PlayerController extends MonoBehaviour {
 	}
 
 	public function Start () {
+		motionController = this.GetComponent.< MotionController > ();
 		distToGround = collider.bounds.extents.y;
 		character = this.GetComponent.<CharacterController>();
 	}
@@ -237,16 +243,22 @@ public class PlayerController extends MonoBehaviour {
 			
 		}
 		
-		// Update correct controller script
+		// Update controller script
 		if ( controlMode == ePlayerControlMode.ThirdPerson || ladder != null ) {
 			UpdateThirdPerson ();
+			motionController.useRootMotion = true;
+			motionController.useCameraRotation = false;
 		
 		} else {
-			this.GetComponent.<FirstPersonController>().UpdateFirstPerson ( deltaHorizontal, deltaVertical );
-		
+			motionController.useRootMotion = false;
+			motionController.useCameraRotation = true;
+
 		}
-			
 		
+		if ( ladder == null ) {
+			motionController.UpdateController ( deltaHorizontal, deltaVertical );	
+		}
+
 		// ^ Combined delta
 		if ( Mathf.Abs ( deltaVertical ) > Mathf.Abs ( deltaHorizontal ) ) {
 			deltaCombined = Mathf.Abs ( deltaVertical );
@@ -285,10 +297,21 @@ public class PlayerController extends MonoBehaviour {
 		} else {
 			SFXManager.GetInstance().Stop ( [ "footsteps_walk_1", "footsteps_run_1" ], this.audio );
 
-			if ( !isJumping && ladder == null ) {
+			if ( ladder == null ) {
+				if ( !isJumping ) {
+					isFalling = true;
+				
+				} else if ( !isFalling ) {
+					isJumping = true;
+
+				}
+
 				isFalling = true;
+
 			} else {
 				isFalling = false;
+				isJumping = false;
+			
 			}
 		}
 	

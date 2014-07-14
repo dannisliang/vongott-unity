@@ -66,7 +66,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   - m_Name: ClimbingEnd
     m_Type: 9
@@ -456,6 +456,10 @@ Transition:
     m_ConditionEvent: DeltaCombined
     m_EventTreshold: .100000001
     m_ExitTime: .454545438
+  - m_ConditionMode: 1
+    m_ConditionEvent: FirstPerson
+    m_EventTreshold: .100000001
+    m_ExitTime: .454545438
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
@@ -477,6 +481,24 @@ Transition:
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
+--- !u!1101 &110115085
+Transition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 0}
+  m_DstState: {fileID: 110212541}
+  m_TransitionDuration: .100000001
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: JumpingBegin
+    m_EventTreshold: 0
+    m_ExitTime: .899999976
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
 --- !u!1101 &110123601
 Transition:
   m_ObjectHideFlags: 3
@@ -495,21 +517,29 @@ Transition:
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
---- !u!1101 &110129516
+--- !u!1101 &110125054
 Transition:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 
-  m_SrcState: {fileID: 110252290}
-  m_DstState: {fileID: 110229131}
-  m_TransitionDuration: .206896544
+  m_SrcState: {fileID: 0}
+  m_DstState: {fileID: 110204203}
+  m_TransitionDuration: .100000001
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Jumping
+    m_ConditionEvent: SwitchCamera
     m_EventTreshold: 0
-    m_ExitTime: .793103456
+    m_ExitTime: .899999976
+  - m_ConditionMode: 1
+    m_ConditionEvent: Crouching
+    m_EventTreshold: 0
+    m_ExitTime: .899999976
+  - m_ConditionMode: 2
+    m_ConditionEvent: Climbing
+    m_EventTreshold: 0
+    m_ExitTime: .899999976
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
@@ -528,24 +558,6 @@ Transition:
     m_ConditionEvent: DeltaCombined
     m_EventTreshold: .100000001
     m_ExitTime: .684210539
-  m_Atomic: 1
-  m_Solo: 0
-  m_Mute: 0
---- !u!1101 &110140845
-Transition:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_SrcState: {fileID: 110229131}
-  m_DstState: {fileID: 110252290}
-  m_TransitionDuration: 5.99999714
-  m_TransitionOffset: 0
-  m_Conditions:
-  - m_ConditionMode: 5
-    m_ConditionEvent: ClimbingEnd
-    m_EventTreshold: 0
-    m_ExitTime: 0
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
@@ -608,6 +620,24 @@ Transition:
     m_ConditionEvent: DeltaCombined
     m_EventTreshold: .100000001
     m_ExitTime: .684210539
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
+--- !u!1101 &110153181
+Transition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 110208874}
+  m_DstState: {fileID: 110267504}
+  m_TransitionDuration: .15384616
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 5
+    m_ConditionEvent: 
+    m_EventTreshold: 0
+    m_ExitTime: .846153855
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
@@ -684,6 +714,10 @@ Transition:
     m_ConditionEvent: DeltaCombined
     m_EventTreshold: .100000001
     m_ExitTime: .454545438
+  - m_ConditionMode: 2
+    m_ConditionEvent: FirstPerson
+    m_EventTreshold: .100000001
+    m_ExitTime: .454545438
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
@@ -700,6 +734,10 @@ Transition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: DeltaCombined
+    m_EventTreshold: .5
+    m_ExitTime: .589392662
+  - m_ConditionMode: 2
+    m_ConditionEvent: Jumping
     m_EventTreshold: .5
     m_ExitTime: .589392662
   m_Atomic: 1
@@ -763,6 +801,32 @@ Transition:
   - m_ConditionMode: 2
     m_ConditionEvent: Climbing
     m_EventTreshold: .100000001
+    m_ExitTime: .899999976
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
+--- !u!1101 &110174964
+Transition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 0}
+  m_DstState: {fileID: 110208874}
+  m_TransitionDuration: .100000001
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: SwitchCamera
+    m_EventTreshold: 0
+    m_ExitTime: .899999976
+  - m_ConditionMode: 2
+    m_ConditionEvent: Crouching
+    m_EventTreshold: 0
+    m_ExitTime: .899999976
+  - m_ConditionMode: 2
+    m_ConditionEvent: Climbing
+    m_EventTreshold: 0
     m_ExitTime: .899999976
   m_Atomic: 1
   m_Solo: 0
@@ -1019,22 +1083,6 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
---- !u!1102 &110229131
-State:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Jumping
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Motions:
-  - {fileID: 7400018, guid: 5c9e307a988c4f749a803589d3b8efe0, type: 3}
-  - {fileID: 0}
-  m_ParentStateMachine: {fileID: 110731449}
-  m_Position: {x: 264, y: -192, z: 0}
-  m_IKOnFeet: 0
-  m_Mirror: 0
-  m_Tag: 
 --- !u!1102 &110231932
 State:
   m_ObjectHideFlags: 3
@@ -1183,6 +1231,9 @@ StateMachine:
   - {x: 192, y: -168, z: 0}
   m_OrderedTransitions:
     data:
+      first: {fileID: 0}
+      second: []
+    data:
       first: {fileID: 110212541}
       second:
       - {fileID: 110123601}
@@ -1190,12 +1241,16 @@ StateMachine:
       first: {fileID: 0}
       second:
       - {fileID: 110104866}
+      - {fileID: 110174964}
+      - {fileID: 110125054}
+      - {fileID: 110115085}
     data:
       first: {fileID: 110208874}
       second:
       - {fileID: 110160411}
       - {fileID: 110187574}
       - {fileID: 110173566}
+      - {fileID: 110153181}
     data:
       first: {fileID: 110204203}
       second:
@@ -1224,7 +1279,6 @@ StateMachine:
     data:
       first: {fileID: 110252290}
       second:
-      - {fileID: 110129516}
       - {fileID: 110183604}
       - {fileID: 110100000}
     data:
@@ -1239,14 +1293,13 @@ StateMachine:
       - {fileID: 110165897}
       - {fileID: 110142444}
     data:
-      first: {fileID: 110229131}
-      second:
-      - {fileID: 110140845}
+      first: {fileID: 0}
+      second: []
     data:
       first: {fileID: 0}
       second: []
   m_MotionSetCount: 1
-  m_AnyStatePosition: {x: 108, y: 96, z: 0}
+  m_AnyStatePosition: {x: 108, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
 --- !u!1107 &110723952
 StateMachine:
@@ -1278,7 +1331,6 @@ StateMachine:
   m_Name: Third Person Locomotion
   m_DefaultState: {fileID: 110231932}
   m_States:
-  - {fileID: 110229131}
   - {fileID: 110252290}
   - {fileID: 110231932}
   m_ChildStateMachine: []
