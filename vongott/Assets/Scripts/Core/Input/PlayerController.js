@@ -322,7 +322,6 @@ public class PlayerController extends MonoBehaviour {
 		player.animator.SetBool ( "Jumping", isJumping || isFalling );
 		player.animator.SetBool ( "Crouching", isCrouching );
 		player.animator.SetBool ( "Climbing", ladder != null );
-		player.animator.SetBool ( "Shooting", isShooting );
 		player.animator.SetBool ( "FirstPerson", controlMode == ePlayerControlMode.FirstPerson );
 
 		if ( player.IsEquippedCategory ( "Weapon" ) && ladder == null ) {
