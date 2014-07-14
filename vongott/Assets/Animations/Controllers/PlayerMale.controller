@@ -66,7 +66,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: ClimbingEnd
     m_Type: 9
@@ -158,14 +158,14 @@ BlendTree:
   - m_Motion: {fileID: 7400002, guid: f9d2d48bfe2e0cc4aab5d4df08f3932c, type: 3}
     m_Threshold: .100000001
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
+    m_TimeScale: 1.5
     m_CycleOffset: 0
     m_IsAnim: 1
     m_Mirror: 0
   - m_Motion: {fileID: 7400000, guid: ef36ee3802498df49b1798048d396574, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
+    m_TimeScale: 2.5
     m_CycleOffset: 0
     m_IsAnim: 1
     m_Mirror: 0
@@ -634,8 +634,8 @@ Transition:
   m_TransitionDuration: .15384616
   m_TransitionOffset: 0
   m_Conditions:
-  - m_ConditionMode: 5
-    m_ConditionEvent: 
+  - m_ConditionMode: 1
+    m_ConditionEvent: Climbing
     m_EventTreshold: 0
     m_ExitTime: .846153855
   m_Atomic: 1
@@ -1063,7 +1063,7 @@ State:
   m_Motions:
   - {fileID: 7400000, guid: 727b6145b3a968d42ac06f0d3dd820fb, type: 3}
   m_ParentStateMachine: {fileID: 110700000}
-  m_Position: {x: 216, y: 204, z: 0}
+  m_Position: {x: -24, y: 192, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -1088,14 +1088,14 @@ State:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Creep
+  m_Name: Crouching
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: 94515d546a367164dab9cd1a5ef17d02, type: 3}
   - {fileID: 0}
   m_ParentStateMachine: {fileID: 110731449}
-  m_Position: {x: -216, y: -192, z: 0}
+  m_Position: {x: -96, y: -192, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -1111,7 +1111,7 @@ State:
   - {fileID: 20652290}
   - {fileID: 0}
   m_ParentStateMachine: {fileID: 110731449}
-  m_Position: {x: 24, y: -192, z: 0}
+  m_Position: {x: 144, y: -192, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -1142,7 +1142,7 @@ State:
   m_Motions:
   - {fileID: 20667504}
   m_ParentStateMachine: {fileID: 110700000}
-  m_Position: {x: 528, y: -24, z: 0}
+  m_Position: {x: 444, y: 108, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -1157,7 +1157,7 @@ State:
   m_Motions:
   - {fileID: 7400000, guid: 97062a91ca901384ab3ada33a6f0b3e5, type: 3}
   m_ParentStateMachine: {fileID: 110700000}
-  m_Position: {x: 528, y: -96, z: 0}
+  m_Position: {x: 444, y: -24, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -1299,7 +1299,7 @@ StateMachine:
       first: {fileID: 0}
       second: []
   m_MotionSetCount: 1
-  m_AnyStatePosition: {x: 108, y: 120, z: 0}
+  m_AnyStatePosition: {x: -24, y: 108, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
 --- !u!1107 &110723952
 StateMachine:

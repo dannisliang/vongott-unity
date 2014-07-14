@@ -82,24 +82,13 @@ public class PlayerController extends MonoBehaviour {
 	public function Start () {
 		motionController = this.GetComponent.< MotionController > ();
 		distToGround = collider.bounds.extents.y;
-		character = this.GetComponent.<CharacterController>();
+		character = this.GetComponent.< CharacterController > ();
 	}
 	
-	public function UpdateThirdPerson () {
-		if ( isRotationLocked ) {
-			player.transform.rotation = Quaternion.Euler ( lockedRotationVector );
-		
-		} else {
-			if ( deltaVertical != 0 || deltaHorizontal != 0 ) {
-				var targetRotation : float = Camera.main.transform.eulerAngles.y;
-				var angle = Mathf.Atan2 ( deltaVertical, -deltaHorizontal ) * Mathf.Rad2Deg;
-				targetRotation += angle - 90;
-
-				var rotationQuaternion : Quaternion = Quaternion.Euler ( 0, targetRotation, 0 );
-					
-				player.transform.rotation = Quaternion.Slerp ( player.transform.rotation, rotationQuaternion, 5 * Time.deltaTime );
-			}
-		}
+	public function CancelDeltas () {
+		deltaVertical = 0;
+		deltaHorizontal = 0;
+		deltaCombined = 0;
 	}
 
 	public function Update () {
@@ -243,11 +232,25 @@ public class PlayerController extends MonoBehaviour {
 			
 		}
 		
+		
 		// Update controller script
+		if ( ladder == null ) {
+			motionController.UpdateController ( deltaHorizontal, deltaVertical );	
+		}
+
 		if ( controlMode == ePlayerControlMode.ThirdPerson || ladder != null ) {
-			UpdateThirdPerson ();
+			if ( isRotationLocked ) {
+				player.transform.rotation = Quaternion.Euler ( lockedRotationVector );
+			}
+
 			motionController.useRootMotion = true;
 			motionController.useCameraRotation = false;
+			
+			// Wait for player to have the correct rotation
+			if ( Mathf.Abs ( transform.eulerAngles.y - Camera.main.transform.eulerAngles.y ) > 180 ) {
+				CancelDeltas ();
+				
+			}
 		
 		} else {
 			motionController.useRootMotion = false;
@@ -255,10 +258,6 @@ public class PlayerController extends MonoBehaviour {
 
 		}
 		
-		if ( ladder == null ) {
-			motionController.UpdateController ( deltaHorizontal, deltaVertical );	
-		}
-
 		// ^ Combined delta
 		if ( Mathf.Abs ( deltaVertical ) > Mathf.Abs ( deltaHorizontal ) ) {
 			deltaCombined = Mathf.Abs ( deltaVertical );

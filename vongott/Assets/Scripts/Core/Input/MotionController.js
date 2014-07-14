@@ -63,12 +63,32 @@ public class MotionController extends MonoBehaviour {
 	}
 	 
 	public function UpdateController ( inputX : float, inputY : float ) {
+		var inputCombined : float = 0;
+
+		if ( Mathf.Abs ( inputX ) > Mathf.Abs ( inputY ) ) {
+			inputCombined = Mathf.Abs ( inputX );
+		
+		} else {
+			inputCombined = Mathf.Abs ( inputY );
+
+		}
+		
 		if ( !myTransform ) {
 			myTransform = transform;
 		}
 
 		if ( useCameraRotation ) {
 			transform.rotation = Quaternion.Euler ( 0, Camera.main.transform.eulerAngles.y, 0 );
+		
+		} else if ( inputX != 0 || inputY != 0 ) {
+			var targetRotation : float = Camera.main.transform.eulerAngles.y;
+			var angle = Mathf.Atan2 ( inputY, -inputX ) * Mathf.Rad2Deg;
+			targetRotation += angle - 90;
+
+			var rotationQuaternion : Quaternion = Quaternion.Euler ( 0, targetRotation, 0 );
+				
+			transform.rotation = Quaternion.Slerp ( transform.rotation, rotationQuaternion, Time.deltaTime * 5 );
+
 		}
 
 		// If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
@@ -142,7 +162,7 @@ public class MotionController extends MonoBehaviour {
 		// Apply gravity
 		moveDirection.y -= gravity * Time.deltaTime;
 	
-		if ( useRootMotion ) {
+		if ( useRootMotion && grounded ) {
 			moveDirection.x = 0;
 			moveDirection.z = 0;
 		}
