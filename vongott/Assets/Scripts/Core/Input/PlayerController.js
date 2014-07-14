@@ -247,7 +247,7 @@ public class PlayerController extends MonoBehaviour {
 			motionController.useCameraRotation = false;
 			
 			// Wait for player to have the correct rotation
-			if ( Mathf.Abs ( transform.eulerAngles.y - Camera.main.transform.eulerAngles.y ) > 180 ) {
+			if ( !isClimbing && Mathf.Abs ( transform.eulerAngles.y - Camera.main.transform.eulerAngles.y ) > 180 ) {
 				CancelDeltas ();
 				
 			}
