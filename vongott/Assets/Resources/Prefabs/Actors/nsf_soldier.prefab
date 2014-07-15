@@ -1735,7 +1735,7 @@ MonoBehaviour:
   behaviour: 1
   target: {fileID: 0}
   targetTag: Player
-  attackTarget: 1
+  attackTarget: 0
   unconcious: 0
   destroyOnDeath: 0
   hasInfiniteAmmo: 1
@@ -1833,10 +1833,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 12
+  - typeIndex: 13
     name: OACharacter
     component: {fileID: 11400004}
-  - typeIndex: 15
+  - typeIndex: 16
     name: OSInventory
     component: {fileID: 11400002}
   - typeIndex: 6

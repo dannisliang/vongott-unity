@@ -105,7 +105,9 @@ public class PlayerController extends MonoBehaviour {
 		}
 
 		// Set flags
-		isGrounded = Physics.Raycast ( transform.position, -Vector3.up, distToGround + 0.1 ); 
+		isFalling = motionController.falling && motionController.moveDirection.y < 0;
+		isJumping = motionController.falling && motionController.moveDirection.y > 0;
+		isGrounded = motionController.grounded;
 		inCrawlspace = isCrouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
 		
 		// ^ Climbing
@@ -128,13 +130,9 @@ public class PlayerController extends MonoBehaviour {
 				if ( Vector3.Angle ( ladderDirection, lookDirection ) > 90 ) {
 					ladder = null;
 					canUseLadder = false;
-					isFalling = true;
 				}
 
 			} else if ( isGrounded ) {
-				isJumping = true;
-				player.animator.SetTrigger ( "JumpingBegin" );
-
 				SFXManager.GetInstance().Play ( "jump_" + Random.Range ( 1, 3 ), this.audio );
 			}
 
@@ -221,7 +219,7 @@ public class PlayerController extends MonoBehaviour {
 				}
 
 			// Run
-			} else if ( InputManager.GetButton ( "Run" ) && !isCrouching && !isJumping && !isFalling ) {
+			} else if ( InputManager.GetButton ( "Run" ) && !isCrouching && !isFalling ) {
 			
 			// Walk
 			} else {				
@@ -246,12 +244,6 @@ public class PlayerController extends MonoBehaviour {
 			motionController.useRootMotion = true;
 			motionController.useCameraRotation = false;
 			
-			// Wait for player to have the correct rotation
-			if ( !isClimbing && Mathf.Abs ( transform.eulerAngles.y - Camera.main.transform.eulerAngles.y ) > 180 ) {
-				CancelDeltas ();
-				
-			}
-		
 		} else {
 			motionController.useRootMotion = false;
 			motionController.useCameraRotation = true;
@@ -290,28 +282,10 @@ public class PlayerController extends MonoBehaviour {
 			}
 
 			canUseLadder = true;
-			isFalling = false;
-			isJumping = false;
 
 		} else {
 			SFXManager.GetInstance().Stop ( [ "footsteps_walk_1", "footsteps_run_1" ], this.audio );
-
-			if ( ladder == null ) {
-				if ( !isJumping ) {
-					isFalling = true;
-				
-				} else if ( !isFalling ) {
-					isJumping = true;
-
-				}
-
-				isFalling = true;
-
-			} else {
-				isFalling = false;
-				isJumping = false;
-			
-			}
+		
 		}
 	
 		// Set animator values	

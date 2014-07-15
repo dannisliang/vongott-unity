@@ -16,6 +16,7 @@ class GameCore extends MonoBehaviour {
 	public var player : Player;
 	public var testing : boolean = false;
 	public var paused : boolean = false;
+	public var serializedObjects : GameObject[] = new GameObject[0];
 
 	// Private vars
 	private var tempCamPos : Vector3;
@@ -130,7 +131,7 @@ class GameCore extends MonoBehaviour {
 		}
 
 		// Clear the OpenPath scanner
-		this.GetComponent.< OPScanner > ().Clear ();
+		scanner.Clear ();
 
 		// Check if a level is already loaded
 		if ( currentLevel != null ) {
@@ -217,7 +218,7 @@ class GameCore extends MonoBehaviour {
 		}
 
 		// Scan navmesh
-		this.GetComponent.< OPScanner > ().Scan ();
+		scanner.Scan ();
 	}
 	
 	
@@ -254,27 +255,27 @@ class GameCore extends MonoBehaviour {
 	}
 
 	public static function GetConversationManager () : OCManager {
-		return instance.GetComponent.< OCManager > ();
+		return instance.GetComponentInChildren.< OCManager > ();
 	}
 	
 	public static function GetQuestManager () : OCQuests {
-		return instance.GetComponent.< OCManager > ().quests;
+		return instance.GetComponentInChildren.< OCManager > ().quests;
 	}
 	
 	public static function GetLuaManager () : LuaManager {
-		return instance.GetComponent.< LuaManager > ();
+		return instance.GetComponentInChildren.< LuaManager > ();
 	}
 	
 	public static function GetEventManager () : EventManager {
-		return instance.GetComponent.< EventManager > ();
+		return instance.GetComponentInChildren.< EventManager > ();
 	}
 	
 	public static function GetDamageManager () : ODManager {
-		return instance.GetComponent.< ODManager > ();
+		return instance.GetComponentInChildren.< ODManager > ();
 	}
 	
 	public static function GetSkillTree () : OSSkillTree {
-		return instance.GetComponent.< OSSkillTree > ();
+		return instance.GetPlayer().skillTree;
 	}
 
 	// Set player as "player" speaker
@@ -349,7 +350,7 @@ class GameCore extends MonoBehaviour {
 	
 	function Start () {	
 		// AStar scanner
-		scanner = this.GetComponent(OPScanner);
+		scanner = this.GetComponentInChildren.< OPScanner > ();
 		
 		// Load level
 		if ( nextLevel != "" ) {
