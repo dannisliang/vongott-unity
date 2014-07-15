@@ -93,13 +93,10 @@ class UIHUD extends OGPage {
 
 		}
 
+		// Notification
 		var delta : float = Time.deltaTime * 4;
 
 		if ( showingNotification ) {
-			if ( notificationBox.parent.anchor.yOffset > -180 ) {
-				notificationBox.parent.anchor.yOffset -= delta * 40;
-			}
-
 			if ( notificationBox.text.tint.a < 1.0 ) {
 				notificationBox.text.tint.a += delta;
 			}
@@ -109,10 +106,6 @@ class UIHUD extends OGPage {
 			}
 		
 		} else {
-			if ( notificationBox.parent.anchor.yOffset < -160 ) {
-				notificationBox.parent.anchor.yOffset += delta * 20;
-			}
-
 			if ( notificationBox.text.tint.a > 0.0 ) {
 				notificationBox.text.tint.a -= delta;
 			} else {
