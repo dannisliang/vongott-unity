@@ -1,9 +1,7 @@
 ﻿#pragma strict
 
-public class ODDestructibleObject extends MonoBehaviour {
+public class OSDestructibleObject extends MonoBehaviour {
 	public var pieces : GameObject[];
-	public var event : OCEvent;
-
 	public var destroyed : boolean = false;
 
 	private function SpawnPieces () : List.< Collider > {

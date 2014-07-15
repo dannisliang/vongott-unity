@@ -111,13 +111,14 @@ public class PlayerController extends MonoBehaviour {
 		inCrawlspace = isCrouching && Physics.Raycast ( player.transform.position, player.transform.up, 1.8, 9 );
 		
 		// ^ Climbing
-		if ( ladder ) {
+		if ( ladder && !isDisabled ) {
 			isRotationLocked = true;
 			lockedRotationVector = ladder.transform.eulerAngles;
+			player.animator.speed = deltaVertical;
 
 		} else {
 			isRotationLocked = false;
-
+			player.animator.speed = 1;
 		}
 
 		// ^ Jumping

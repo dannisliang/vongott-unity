@@ -79,22 +79,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &100010
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400010}
-  - 114: {fileID: 11400008}
-  m_Layer: 0
-  m_Name: OpenDamage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100012
 GameObject:
   m_ObjectHideFlags: 1
@@ -6202,7 +6186,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400008}
-  - {fileID: 400010}
   - {fileID: 400006}
   m_Father: {fileID: 400016}
 --- !u!4 &400002
@@ -6244,17 +6227,6 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400000}
---- !u!4 &400010
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -11198,20 +11170,6 @@ MonoBehaviour:
   currentNode: 0
   eventHandler: {fileID: 0}
   speakers: []
---- !u!114 &11400008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16a16d6e16ffa0a44beddc5b2e02f9a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  expirationTime: 5
-  prefabBullet: {fileID: 100000, guid: 58bdab7c19f161342bead1a243603b9c, type: 2}
-  prefabExplosion: {fileID: 100004, guid: 25832bdc499df43aab084db84ae7d407, type: 2}
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13650,7 +13608,7 @@ MonoBehaviour:
   currentPage: {fileID: 11400302}
   lineMaterial: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}
   downWidget: {fileID: 0}
-  isMouseOver: 1
+  isMouseOver: 0
 --- !u!114 &11400042
 MonoBehaviour:
   m_ObjectHideFlags: 1

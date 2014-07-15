@@ -63,21 +63,23 @@ class EventManager extends OCEventHandler {
 			if ( strings.Length == 1 ) {
 				UIConversation.SetLine ( strings[0] );
 			
-				c.convoFacing = node.lines[0].facing;
+				if ( c ) {
+					c.convoFacing = node.lines[0].facing;
 
-				var go : GameObject = c.facingObject;
-				var ch : OACharacter = go.GetComponent.< OACharacter > ();
-				var p : Player = go.GetComponent.< Player > ();
+					var go : GameObject = c.facingObject;
+					var ch : OACharacter = go.GetComponent.< OACharacter > ();
+					var p : Player = go.GetComponent.< Player > ();
 
-				if ( p ) {
+					if ( p ) {
 
-				} else if ( ch ) {
-					for ( var i : int = 0; i < ch.convoSpeakerObjects.Length; i++ ) {
-						if ( c.gameObject == ch.convoSpeakerObjects [ i ] ) {
-							ch.convoFacing = i;
+					} else if ( ch ) {
+						for ( var i : int = 0; i < ch.convoSpeakerObjects.Length; i++ ) {
+							if ( c.gameObject == ch.convoSpeakerObjects [ i ] ) {
+								ch.convoFacing = i;
+							}
 						}
-					}
 
+					}
 				}
 
 				choiceConvo = false;
@@ -154,11 +156,6 @@ class EventManager extends OCEventHandler {
 		if ( item ) {
 			GameCore.GetInventory().AddItem ( item );
 		}
-	}
-
-	// Explosions
-	public function OnExplosion ( grenade : OSGrenade ) {
-		GameCore.GetDamageManager().ExplosionDamage ( grenade.transform.position, 2, 0.1 );	
 	}
 
 	// Flag

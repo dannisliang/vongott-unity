@@ -17,7 +17,7 @@ public class LuaScriptableObject extends MonoBehaviour {
 	private var triggerId : String = "player";
 
 	public function Start () {
-		if ( GameCore.running ) {
+		if ( OEWorkspace.GetInstance() == null ) {
 			lua.DoString ( luaString );
 
 			start = lua.GetFunction ( "Start" );
@@ -28,8 +28,10 @@ public class LuaScriptableObject extends MonoBehaviour {
 			onDeath = lua.GetFunction ( "OnDeath" );
 			onPickUp = lua.GetFunction ( "OnPickUp" );
 
-			if ( start && !OEWorkspace.GetInstance() ) {
-				start.Call ( this, GameCore.GetLuaManager () );
+			if ( start ) {
+				var manager : LuaManager = GameCore.GetLuaManager ();
+
+				start.Call ( this, manager );
 			}
 		}
 	}
@@ -54,7 +56,15 @@ public class LuaScriptableObject extends MonoBehaviour {
 		}
 	}
 
-	// Event
+	// Events
+	public function Message ( msg : String ) {
+		this.gameObject.SendMessage ( msg, SendMessageOptions.DontRequireReceiver );
+	}
+	
+	public function Message ( msg : String, arg : String ) {
+		this.gameObject.SendMessage ( msg, arg, SendMessageOptions.DontRequireReceiver );
+	}
+	
 	public function Event ( msg : String ) {
 		if ( onEvent ) {
 			onEvent.Call ( msg );

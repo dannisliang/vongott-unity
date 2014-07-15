@@ -25,7 +25,6 @@ public class OSGrenade extends MonoBehaviour {
 	public var explosion : GameObject;
 	public var explosionLifetime : float = 5;
 	public var throwingForce : float = 20;
-	public var eventHandler : GameObject;
 
 	private var thrown : boolean = false;
 	private var exploded : boolean = false;
@@ -100,8 +99,9 @@ public class OSGrenade extends MonoBehaviour {
 
 	public function Explode () {
 		if ( !exploded && explosion ) {
+			explosion.SetActive ( true );
+			
 			if ( explosion.activeInHierarchy ) {
-				explosion.SetActive ( true );
 				explosion.transform.parent = this.transform.parent;
 				explosion.transform.position = this.transform.position;
 			
@@ -110,10 +110,6 @@ public class OSGrenade extends MonoBehaviour {
 				explosion.transform.parent = this.transform.parent;
 				explosion.transform.position = this.transform.position;
 		
-			}
-			
-			if ( eventHandler ) {
-				eventHandler.SendMessage ( "OnExplosion", this, SendMessageOptions.DontRequireReceiver );
 			}
 			
 		}
@@ -129,6 +125,10 @@ public class OSGrenade extends MonoBehaviour {
 
 	public function Start () {
 		lineRenderer = this.GetComponent.< LineRenderer > ();
+
+		if ( explosion ) {
+			explosion.SetActive ( false );
+		}
 	}
 
 	public function Update () {

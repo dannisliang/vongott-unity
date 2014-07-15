@@ -303,10 +303,12 @@ public class OACharacter extends MonoBehaviour {
 	public function TakeDamage ( damage : float ) {
 		stats.hp -= damage;
 
-		PlayBark ( Bark.Type.TakeDamage );
-
 		if ( stats.hp <= 0 ) {
 			Die ();
+		
+		} else {
+			PlayBark ( Bark.Type.TakeDamage );
+
 		}
 		
 		if ( DoRaycast ( target.transform.position ) == null && behaviour != OABehaviour.ChasingTarget ) {
@@ -436,6 +438,14 @@ public class OACharacter extends MonoBehaviour {
 		
 		if ( destroyOnDeath ) {
 			StartCoroutine ( function () : IEnumerator {
+				var explosions : Component [] = this.GetComponentsInChildren ( OSExplosion, true );
+				
+				if ( explosions && explosions.Length > 0 ) {
+					explosions[0].transform.parent = this.transform.parent;
+					explosions[0].transform.position = this.transform.position;
+					explosions[0].gameObject.SetActive ( true );
+				}
+
 				if ( audio ) {
 					while ( audio.isPlaying ) {
 						yield null;

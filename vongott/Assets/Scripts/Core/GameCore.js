@@ -270,10 +270,6 @@ class GameCore extends MonoBehaviour {
 		return instance.GetComponentInChildren.< EventManager > ();
 	}
 	
-	public static function GetDamageManager () : ODManager {
-		return instance.GetComponentInChildren.< ODManager > ();
-	}
-	
 	public static function GetSkillTree () : OSSkillTree {
 		return instance.GetPlayer().skillTree;
 	}

@@ -3,6 +3,7 @@
 public class Ladder extends MonoBehaviour {
 	public var segs : int = 10;
 	public var blockedTop : boolean = true;
+	public var endNode : Transform;
 
 	private var unset : boolean = true;
 
@@ -19,10 +20,7 @@ public class Ladder extends MonoBehaviour {
 	}
 
 	public function get endPos () : Vector3 {
-		var pos : Vector3 = this.transform.position + this.transform.position.forward * 0.5;
-		pos.y = collider.bounds.max.y;
-
-		return pos;
+		return endNode.position;
 	}
 
 	public function get topY () : float {
@@ -75,6 +73,7 @@ public class Ladder extends MonoBehaviour {
 		}
 
 		for ( i = 0; i < colliders.Length; i++ ) {
+			endNode.localPosition.y = value * height;
 			colliders[i].size.y = value * height;
 			colliders[i].center.y = value * height / 2;
 		}

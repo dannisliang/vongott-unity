@@ -253,7 +253,6 @@ class Player extends MonoBehaviour {
 							var hit : RaycastHit;
 
 							var grenade : OSGrenade = equippedObject.GetComponent.< OSGrenade > ();
-							grenade.eventHandler = GameCore.GetEventManager().gameObject;
 							grenade.Throw ();
 							shootTimer = equippedObject.GetAttribute ( "fireRate" );
 

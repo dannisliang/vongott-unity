@@ -354,6 +354,7 @@ class GameCamera extends MonoBehaviour {
 		if ( player.stats.hp <= 0 ) {
 			this.transform.position = Vector3.Slerp ( this.transform.position, player.transform.position + new Vector3 ( 0, 6, 0 ), Time.deltaTime * 0.5 );
 			this.transform.rotation = Quaternion.LookRotation ( player.transform.position - this.transform.position );
+			camera.cullingMask = controller.thirdPersonLayerMask;
 		
 		} else {
 			// Check for conversation cam
