@@ -1691,10 +1691,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
-  - typeIndex: 12
+  - typeIndex: 13
     name: OACharacter
     component: {fileID: 11400008}
-  - typeIndex: 15
+  - typeIndex: 16
     name: OSInventory
     component: {fileID: 11400006}
   - typeIndex: 6
@@ -1769,11 +1769,17 @@ MonoBehaviour:
   skillTree: {fileID: 0}
   behaviour: 1
   target: {fileID: 0}
-  targetTag: Player
+  singleWeapon: {fileID: 0}
+  equippingHand: {fileID: 400046}
+  targetTag: 
   attackTarget: 0
   unconcious: 0
   destroyOnDeath: 0
+  destroyWeaponOnDeath: 0
   hasInfiniteAmmo: 1
+  usingRootMotion: 1
+  weaponAutoAim: 0
+  maxSpeed: 2
   alertNeighborRadius: 20
   attentionSpan: 30
   fieldOfView: 130
@@ -1788,7 +1794,6 @@ MonoBehaviour:
   usingWeapons: 0
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 0
-  equippingHand: {fileID: 400046}
   conversationTreePath: 
   conversationTree: {fileID: 0}
   convoSpeakerObjects: []

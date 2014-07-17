@@ -69,6 +69,7 @@ public class OACharacter extends MonoBehaviour {
 	private var speed : float = 0;
 	private var equippingContainer : Transform;
 	private var eventHandler : OCEventHandler;
+	private var frozen : boolean = false;
 
 	// Inventory
 	@HideInInspector public var inventory : OSInventory;
@@ -219,6 +220,15 @@ public class OACharacter extends MonoBehaviour {
 		return false;
 	}
 
+	public function Freeze () {
+		frozen = true;
+		animator = this.GetComponent.< Animator > ();
+		
+		if ( animator ) {
+			animator.enabled = false;
+		}
+	}
+
 	public function PlayBark ( bark : String ) {
 		for ( var i : int = 0; i < barks.Length; i++ ) {
 			if ( barks[i].clip && barks[i].clip.name == bark && audio ) {
@@ -349,6 +359,8 @@ public class OACharacter extends MonoBehaviour {
 				}
 
 			} else if ( firearm.wielder.tag == targetTag ) {
+				if ( targetTag == "Player" && team == 0 ) { return; }
+				
 				DetectTarget ( firearm.wielder );
 				AlertNeighbors ();
 			}
@@ -694,7 +706,7 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( !alive || unconcious ) { return; }
+		if ( frozen || !alive || unconcious ) { return; }
 
 		var changed : boolean = behaviour != prevBehaviour;
 		aiming = false;
@@ -876,7 +888,7 @@ public class OACharacter extends MonoBehaviour {
 				speed = 0.5;
 				
 				if ( pathGoals.Length > 0 ) {
-					if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
+					if ( pathFinder.hasPath && pathFinder.atEndOfPath || Vector3.Distance ( this.transform.position, pathGoals[currentPathGoal] ) < 0.5 ) {
 						NewInitialPosition ();
 						behaviour = OABehaviour.Idle;
 

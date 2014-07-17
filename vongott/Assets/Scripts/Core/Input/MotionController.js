@@ -41,6 +41,8 @@ public class MotionController extends MonoBehaviour {
 	}
 	 
 	public function UpdateController ( inputX : float, inputY : float ) {
+		if ( !controller || !controller.enabled ) { return; }
+		
 		var inputCombined : float = 0;
 
 		if ( Mathf.Abs ( inputX ) > Mathf.Abs ( inputY ) ) {

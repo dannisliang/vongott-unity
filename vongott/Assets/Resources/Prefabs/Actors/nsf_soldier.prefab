@@ -1734,11 +1734,17 @@ MonoBehaviour:
   skillTree: {fileID: 0}
   behaviour: 1
   target: {fileID: 0}
-  targetTag: Player
+  singleWeapon: {fileID: 0}
+  equippingHand: {fileID: 400056}
+  targetTag: 
   attackTarget: 0
   unconcious: 0
   destroyOnDeath: 0
+  destroyWeaponOnDeath: 0
   hasInfiniteAmmo: 1
+  usingRootMotion: 1
+  weaponAutoAim: 0
+  maxSpeed: 2
   alertNeighborRadius: 20
   attentionSpan: 30
   fieldOfView: 130
@@ -1747,7 +1753,7 @@ MonoBehaviour:
   roamingRadius: 10
   shootingDistance: 10
   stoppingDistance: 3
-  team: 1
+  team: 0
   barks:
   - type: 0
     clip: {fileID: 8300000, guid: a3e56f3190d7ffe428cc1031119caf26, type: 3}
@@ -1774,7 +1780,6 @@ MonoBehaviour:
   usingWeapons: 1
   weaponCategoryPreference: 1
   weaponSubcategoryPreference: 1
-  equippingHand: {fileID: 400056}
   conversationTreePath: 
   conversationTree: {fileID: 0}
   convoSpeakerObjects: []

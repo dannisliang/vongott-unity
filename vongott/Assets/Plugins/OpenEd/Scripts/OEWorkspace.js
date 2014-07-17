@@ -157,6 +157,8 @@ public class OEWorkspace extends MonoBehaviour {
 		for ( var cc : CharacterController in this.GetComponentsInChildren.< CharacterController > () ) {
 			var capsule : CapsuleCollider = cc.gameObject.AddComponent.< CapsuleCollider > ();
 
+			cc.gameObject.SendMessage ( "Freeze", SendMessageOptions.DontRequireReceiver );
+
 			capsule.center = cc.center;
 			capsule.radius = cc.radius;
 			capsule.height = cc.height;
@@ -564,6 +566,8 @@ public class OEWorkspace extends MonoBehaviour {
 		var obj : OFSerializedObject;
 		
 		if ( go ) {
+			go.SendMessage ( "Freeze", SendMessageOptions.DontRequireReceiver );
+
 			for ( var c : Component in go.GetComponentsInChildren.< Component > () ) {
 				var rb : Rigidbody = c as Rigidbody;
 				var cc : CharacterController = c as CharacterController;
