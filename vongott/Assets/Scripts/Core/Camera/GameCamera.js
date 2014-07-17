@@ -7,8 +7,6 @@ class GameCamera extends MonoBehaviour {
 	private var storedMaterials : List.< Material > = new List.< Material >();
 	private var boundingBoxModifier : float = 1.0;
 	private var boundingBoxDelta : float = 0.1;
-	private var shakeAmount : float;
-	private var shakeFadeOut : float;
 	private var currentSpeaker : GameObject;
 	private var focusSleep : float = 0;
 
@@ -39,11 +37,6 @@ class GameCamera extends MonoBehaviour {
 	////////////////////
 	// Positioning and rotation
 	////////////////////
-	public function Shake ( amount : float, fadeOut : float ) {
-		shakeAmount = amount;
-		shakeFadeOut = fadeOut;
-	}
-	
 	function StorePosRot () {
 		storedPos = this.transform.position;
 		storedRot = this.transform.eulerAngles;
@@ -79,58 +72,6 @@ class GameCamera extends MonoBehaviour {
 		iTween.RotateTo ( this.gameObject, iTween.Hash ( "time", 1, "easetype", iTween.EaseType.easeInOutQuad, "rotation", targetRot, "space", "world" ) );
 		
 		yield WaitForSeconds ( 1 );
-	}
-	
-	function FocusOnBodyPart ( n : String ) {
-		var p : Transform = GameCore.GetPlayerObject().transform;
-		
-		var position : Vector3 = p.position;
-		var rotation : Vector3 = p.eulerAngles;
-		
-		switch ( n ) {
-			case "Eyes":
-				position.y += 1.65;
-				position += p.forward * 2;
-				rotation.y += 180;
-				break;
-			
-			case "Skull":
-				position.y += 1.65;
-				position += p.forward * 2;
-				rotation.y += 180;
-				break;
-			
-			case "Legs":
-				position.y += 0.5;
-				position += p.forward * 2;
-				rotation.y += 180;
-				break;
-				
-			case "Torso":
-				position.y += 1.3;
-				position += p.forward * 2;
-				rotation.y += 180;
-				break;
-			
-			case "Abdomen":
-				position.y += 1;
-				position += p.forward * 2;
-				rotation.y += 180;
-				break;
-				
-			case "Arms":
-				position.y += 1.2;
-				position += p.forward * 2;
-				rotation.y += 180;
-				break;
-				
-			case "Back":
-				position.y += 1.4;
-				position -= p.forward * 2;
-				break;
-		}
-		
-		FocusCamera ( p.position, position, rotation, 4 );
 	}
 	
 	private function FocusCamera ( point : Vector3, position : Vector3, rotation : Vector3, time : float) {
@@ -352,13 +293,25 @@ class GameCamera extends MonoBehaviour {
 
 		// Death cam
 		if ( player.stats.hp <= 0 ) {
-			this.transform.position = Vector3.Slerp ( this.transform.position, player.transform.position + new Vector3 ( 0, 6, 0 ), Time.deltaTime * 0.5 );
-			this.transform.rotation = Quaternion.LookRotation ( player.transform.position - this.transform.position );
+			var center : Vector3;
+			var colliders : Collider[] = player.gameObject.GetComponentsInChildren.< Collider > ();
+
+			for ( var i : int = 0; i < colliders.Length; i++ ) {
+				center += colliders[i].bounds.center;
+			}
+
+			center /= colliders.Length;
+
+			this.transform.position.x = center.x;
+			this.transform.position.z = center.z;
+			this.transform.position = Vector3.Slerp ( this.transform.position, center + new Vector3 ( 0, 6, 0 ), Time.deltaTime * 0.5 );
+			this.transform.rotation = Quaternion.Euler ( new Vector3 ( 90, this.transform.eulerAngles.y + Time.deltaTime * 5, 0 ) );
 			camera.cullingMask = controller.thirdPersonLayerMask;
 		
 		} else {
 			// Check for conversation cam
 			if ( inConvo ) {
+				camera.cullingMask = controller.thirdPersonLayerMask;
 				this.transform.position = convoPosition;
 				this.transform.rotation = Quaternion.LookRotation ( convoFocus - this.transform.position );
 			}
@@ -392,18 +345,6 @@ class GameCamera extends MonoBehaviour {
 				} 
 				
 				boundingBoxModifier += boundingBoxDelta * ( Time.deltaTime * 2 );
-			}
-
-			// Shake
-			if ( shakeAmount > 0 ) {
-				shakeAmount -= shakeFadeOut;
-
-				controller.shakeOffset.x = Random.Range ( -shakeAmount, shakeAmount );
-				controller.shakeOffset.y = Random.Range ( -shakeAmount, shakeAmount );
-			
-			} else {
-				controller.shakeOffset = Vector2.zero;
-			
 			}
 
 			// Camera controller state

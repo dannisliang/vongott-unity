@@ -213,6 +213,7 @@ public class PlayerController extends MonoBehaviour {
 				} else {
 					var ladderPos : Vector3 = ladder.transform.position - ladder.transform.forward * 0.5;
 					ladderPos.y = this.transform.position.y + deltaVertical * Time.deltaTime * 2;
+					ladderPos.y -= Physics.gravity.y * Time.deltaTime;
 
 					this.transform.position = ladderPos;
 					this.transform.rotation = ladder.transform.rotation;
