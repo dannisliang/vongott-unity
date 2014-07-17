@@ -415,13 +415,13 @@ class GameCore extends MonoBehaviour {
 	function Update () {
 		if ( !paused ) {
 			Time.timeScale = timeScale;
-			Screen.lockCursor = OGRoot.GetInstance().currentPage.pageName != "Dead";
 		
 		} else {
-			Screen.lockCursor = false;
 			Time.timeScale = 0;
 
 		}
+		
+		Screen.lockCursor = OGRoot.GetInstance().currentPage.pageName == "HUD";
 		
 		if ( timeScale > 0 ) {
 			Time.fixedDeltaTime = 0.02 * timeScale;

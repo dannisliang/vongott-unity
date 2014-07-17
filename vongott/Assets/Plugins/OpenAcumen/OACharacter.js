@@ -32,11 +32,16 @@ public class OACharacter extends MonoBehaviour {
 	public var skillTree : OSSkillTree;
 	public var behaviour : OABehaviour = OABehaviour.Idle;
 	public var target : GameObject;
+	public var singleWeapon : OSItem;
+	public var equippingHand : Transform;
 	public var targetTag : String = "Player";
 	public var attackTarget : boolean = false;
 	public var unconcious : boolean = false;
 	public var destroyOnDeath : boolean = false;
 	public var hasInfiniteAmmo : boolean = true;
+	public var usingRootMotion : boolean = true;
+	public var weaponAutoAim : boolean = false;
+	public var maxSpeed : float = 2;
 	public var alertNeighborRadius : float = 20;
 	public var attentionSpan : float = 10;
 	public var fieldOfView : float = 130;
@@ -69,7 +74,6 @@ public class OACharacter extends MonoBehaviour {
 	@HideInInspector public var usingWeapons : boolean = true;
 	@HideInInspector public var weaponCategoryPreference : int = 0;
 	@HideInInspector public var weaponSubcategoryPreference : int = 0;
-	@HideInInspector public var equippingHand : Transform;
 	
 	private var equippedObject : OSItem;
 	
@@ -104,7 +108,10 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function get preferredWeapon () : OSItem {
-		if ( inventory && inventory.definitions ) {
+		if ( singleWeapon ) {
+			return singleWeapon;
+
+		} else if ( inventory && inventory.definitions ) {
 			var cat : OSCategory = inventory.definitions.categories[weaponCategoryPreference];
 			var subcat : String = cat.subcategories[weaponSubcategoryPreference];
 			
@@ -386,6 +393,10 @@ public class OACharacter extends MonoBehaviour {
 			equippedObject.collider.enabled = false;
 		}
 
+		if ( !equippingHand ) {
+			equippingHand = this.transform;
+		}
+
 		if ( !equippingContainer ) {
 			equippingContainer = new GameObject ( "EquippingContainer" ).transform;
 			equippingContainer.parent = equippingHand;
@@ -495,22 +506,16 @@ public class OACharacter extends MonoBehaviour {
 	}
 
 	public function SetRagdoll ( state : boolean ) {
-		var characterControllers : CharacterController[] = this.transform.root.GetComponentsInChildren.< CharacterController > ();
-		
 		for ( var c : Collider in this.GetComponentsInChildren.< Collider > () ) {
 			c.enabled = state;
 
-			if ( c.rigidbody ) {
+			if ( c != this.collider && c.rigidbody ) {
 				c.rigidbody.isKinematic = !state;
 			}
+		}
 
-			if ( c.enabled ) {
-				for ( var cc : CharacterController in this.transform.root.GetComponentsInChildren.< CharacterController > () ) {
-					if ( cc.collider && cc.collider != c && cc.collider.enabled && c.enabled ) {
-						Physics.IgnoreCollision ( c, cc.collider );
-					}
-				}
-			}
+		if ( this.collider ) {
+			this.collider.enabled = !state;
 		}
 
 		if ( controller ) {
@@ -539,9 +544,21 @@ public class OACharacter extends MonoBehaviour {
 			} else {
 				var firearm : OSFirearm = equippedObject.GetComponent.< OSFirearm > ();
 				var melee : OSMelee = equippedObject.GetComponent.< OSMelee > ();
+				var fireCenter : Vector3 = target.transform.position;
 
-				equippingContainer.transform.rotation = this.transform.rotation;
+				if ( target.collider ) {
+					fireCenter = target.collider.bounds.center;
+					fireCenter.y = target.collider.bounds.max.y - 0.4;
+				}
+
+				if ( weaponAutoAim ) {
+					equippingContainer.transform.LookAt ( fireCenter );
 				
+				} else {
+					equippingContainer.transform.rotation = this.transform.rotation;
+				
+				}
+
 				if ( firearm ) {
 					firearm.aimWithMainCamera = false;
 					firearm.Fire ();
@@ -941,6 +958,12 @@ public class OACharacter extends MonoBehaviour {
 		
 		}
 
+		// Apply motion if not root-based
+		if ( !usingRootMotion && controller && speed > 0 ) {
+			controller.Move ( this.transform.forward * ( speed * maxSpeed * Time.deltaTime ) );
+		}
+
+		// Register behaviour from this frame
 		prevBehaviour = behaviour;
 	}
 }

@@ -130,5 +130,21 @@ public class OACharacterInspector extends Editor {
 		if ( GUI.changed ) {
 			SavePrefab ( target );
 		}
+
+		// Warnings
+		var go : GameObject = character.gameObject;
+
+		if ( go ) {
+			if ( !go.GetComponent.< CharacterController > () ) {
+				GUI.color = Color.red;
+				EditorGUILayout.LabelField ( "WARNING", EditorStyles.boldLabel );
+				GUI.color = Color.white;
+
+				EditorGUILayout.HelpBox ( "CharacterController component missing", MessageType.Warning, true );
+				if ( GUILayout.Button ( "Fix" ) ) {
+					go.AddComponent.< CharacterController > ();
+				}
+			}
+		}
 	}
 }

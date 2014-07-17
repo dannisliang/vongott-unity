@@ -13608,7 +13608,7 @@ MonoBehaviour:
   currentPage: {fileID: 11400302}
   lineMaterial: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}
   downWidget: {fileID: 0}
-  isMouseOver: 0
+  isMouseOver: 1
 --- !u!114 &11400042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53847,22 +53847,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1
     thumb:
-      name: New Style
+      name: Background
       coordinates:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 256
+        y: 128
+        width: 64
+        height: 64
       border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
+        top: 8
+        bottom: 8
+        left: 8
+        right: 8
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -53941,9 +53941,9 @@ MonoBehaviour:
   singleLine: 0
   fitToText: 0
   editor:
-    enabled: 1
+    enabled: 0
     string: 
-    cursorPos: {x: 0, y: 0}
+    cursorPos: {x: 610, y: 328}
     cursorSelectPos: {x: 0, y: 0}
     cursorSize: {x: 2, y: 12}
     cursorRect:
@@ -61761,22 +61761,22 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1
     thumb:
-      name: New Style
+      name: Background
       coordinates:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 256
+        y: 128
+        width: 64
+        height: 64
       border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
+        top: 8
+        bottom: 8
+        left: 8
+        right: 8
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 11400000, guid: 429a5a7f6cab14e16b7acbcdc1b99e29, type: 2}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -61855,9 +61855,9 @@ MonoBehaviour:
   singleLine: 0
   fitToText: 0
   editor:
-    enabled: 1
+    enabled: 0
     string: 
-    cursorPos: {x: 0, y: 0}
+    cursorPos: {x: 610, y: 298}
     cursorSelectPos: {x: 0, y: 0}
     cursorSize: {x: 2, y: 12}
     cursorRect:

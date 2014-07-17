@@ -108,7 +108,7 @@ public class OSFirearm extends MonoBehaviour {
 
 		fireTimer = 1 / firingRate;
 		
-		if ( item.ammunition.clip > 0 || item.ammunition.max <= 0 ) {
+		if ( item.ammunition.clip > 0 || item.ammunition.max <= 0 || !item.ammunition.enabled ) {
 			flashTimer = muzzleFlashDuration;
 
 			var ray : Ray;

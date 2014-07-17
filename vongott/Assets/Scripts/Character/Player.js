@@ -123,10 +123,16 @@ class Player extends MonoBehaviour {
 		equippedObject.transform.parent = hand;
 		equippedObject.transform.localPosition = Vector3.zero;
 		equippedObject.transform.localEulerAngles = hand.forward;
-		equippedObject.collider.enabled = false;
-		equippedObject.rigidbody.useGravity = false;
-		equippedObject.rigidbody.isKinematic = true;
 		
+		if ( equippedObject.collider ) {
+			equippedObject.collider.enabled = false;
+		}
+
+		if ( equippedObject.rigidbody ) {
+			equippedObject.rigidbody.useGravity = false;
+			equippedObject.rigidbody.isKinematic = true;
+		}
+
 		equippedObject.PlaySound ( "equip", true );
 
 		equippedObject.SendMessage ( "SetInventory", GameCore.GetInventory(), SendMessageOptions.DontRequireReceiver );
