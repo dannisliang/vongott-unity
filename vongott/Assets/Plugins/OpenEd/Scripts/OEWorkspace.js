@@ -271,6 +271,8 @@ public class OEWorkspace extends MonoBehaviour {
 			
 			json.AddField ( "info", info );
 
+			currentSavePath = currentSavePath.Replace ( Application.dataPath, "" );
+
 			OFWriter.SaveFile ( json, Application.dataPath + currentSavePath );
 		
 		}
