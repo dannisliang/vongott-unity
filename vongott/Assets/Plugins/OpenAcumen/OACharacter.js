@@ -38,6 +38,7 @@ public class OACharacter extends MonoBehaviour {
 	public var attackTarget : boolean = false;
 	public var unconcious : boolean = false;
 	public var destroyOnDeath : boolean = false;
+	public var destroyWeaponOnDeath : boolean = false;
 	public var hasInfiniteAmmo : boolean = true;
 	public var usingRootMotion : boolean = true;
 	public var weaponAutoAim : boolean = false;
@@ -477,7 +478,7 @@ public class OACharacter extends MonoBehaviour {
 
 		stats.hp = 0;
 
-		if ( equippedObject ) {
+		if ( equippedObject && !destroyWeaponOnDeath ) {
 			equippedObject.transform.parent = this.transform.parent;
 		
 			if ( equippedObject.collider ) {
