@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: SpiderHand
+  m_Name: Dog
   serializedVersion: 2
   m_AnimatorParameters:
   - m_Name: Speed
@@ -45,24 +45,24 @@ BlendTree:
   m_PrefabInternal: {fileID: 0}
   m_Name: Blend Tree
   m_Childs:
-  - m_Motion: {fileID: 7400002, guid: aeba61694b8b4464d8ae502706669da7, type: 3}
+  - m_Motion: {fileID: 7400000, guid: afc87d7b5ef824db59fb0a4f4a137b58, type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_IsAnim: 1
     m_Mirror: 0
-  - m_Motion: {fileID: 7400000, guid: 5a8b054dafae8534ea720514573c5f9d, type: 3}
+  - m_Motion: {fileID: 7400000, guid: 0f7c1841cacc34483ac6409289b4c57d, type: 3}
     m_Threshold: .5
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 2
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_IsAnim: 1
     m_Mirror: 0
-  - m_Motion: {fileID: 7400000, guid: 5a8b054dafae8534ea720514573c5f9d, type: 3}
+  - m_Motion: {fileID: 7400000, guid: 9f277c4350730494e89b3356f8112948, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 8
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_IsAnim: 1
     m_Mirror: 0
