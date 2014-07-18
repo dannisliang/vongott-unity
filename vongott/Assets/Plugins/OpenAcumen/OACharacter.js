@@ -206,6 +206,7 @@ public class OACharacter extends MonoBehaviour {
 			if ( ( Vector3.Angle ( direction, this.transform.forward ) ) < fieldOfView / 2 ) {
 				if ( Physics.Raycast ( here, direction, hit, lineOfSight ) ) {
 					if ( hit.transform == target.transform ) {
+						lastKnownPosition = target.transform.position;
 						return true;
 					
 					} else {
@@ -942,17 +943,17 @@ public class OACharacter extends MonoBehaviour {
 		}
 
 		if ( speed > 0 ) {
-			var goal : Vector3 = pathFinder.GetCurrentNode ();
+			// Set immediate goal	
+			var goal : Vector3 = pathFinder.GetCurrentGoal ();
 		
-			// Override immediate goal	
-			if ( ( behaviour == OABehaviour.Patrolling || behaviour == OABehaviour.GoToGoal ) && Mathf.Abs ( this.transform.position.y - pathGoals[currentPathGoal].y ) < 1 && DoRaycast ( pathGoals[currentPathGoal] ) == null ) {
-				goal = pathGoals[currentPathGoal];
+			Debug.DrawLine ( this.transform.position, goal, Color.magenta );
 
-			} else if ( behaviour == OABehaviour.ChasingTarget && canSeeTarget ) {
+			if ( behaviour == OABehaviour.ChasingTarget && canSeeTarget ) {
 				goal = lastKnownPosition;
 
 			}
 			
+			// Aiming
 			if ( aiming ) {
 				aimDegrees = GetAngleBetween ( this.transform.forward, pathFinder.GetCurrentNode () - this.transform.position, Vector3.up );
 			

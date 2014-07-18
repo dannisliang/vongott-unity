@@ -74,13 +74,6 @@ class GameCamera extends MonoBehaviour {
 		yield WaitForSeconds ( 1 );
 	}
 	
-	private function FocusCamera ( point : Vector3, position : Vector3, rotation : Vector3, time : float) {
-		point.y = position.y;
-							    
-	 	transform.position = position;
-		transform.eulerAngles = rotation;
-	}
-
 	
 	////////////////////
 	// Effects

@@ -1388,8 +1388,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100096}
-  m_LocalRotation: {x: 0, y: .596098542, z: 0, w: .802911341}
-  m_LocalPosition: {x: -.693264186, y: 0, z: -7.70640707}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400068}
@@ -1703,13 +1703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   definitions: {fileID: 11400000, guid: 1c5905184d56b49f183aa75740f331eb, type: 2}
-  slots:
-  - item: {fileID: 11400010, guid: 25f369191caab54449f2d627995f6bce, type: 2}
-    x: 0
-    y: 0
-    quantity: 1
-    hidden: 0
-    equipped: 0
+  slots: []
   quickSlots: 
   grid:
     width: 4
@@ -1824,7 +1818,7 @@ MonoBehaviour:
   target: {fileID: 0}
   autoChase: 0
   raycastToGoal: 1
-  raycastDistance: 5
+  raycastDistance: 100
   updateDelay: 1
 --- !u!114 &11400010
 MonoBehaviour:

@@ -9,7 +9,7 @@ class OPPathFinder extends MonoBehaviour {
 	public var target : Transform;
 	public var autoChase : boolean = false;
 	public var raycastToGoal : boolean = true;
-	public var raycastDistance : float = 5;
+	public var raycastDistance : float = 100;
 	public var updateDelay : float = 1;
 		
 	@NonSerialized public var nodes : OPNode[] = new OPNode[0];
@@ -48,29 +48,54 @@ class OPPathFinder extends MonoBehaviour {
 		}
 	}
 
+	private function DoRaycast ( here : Vector3, there : Vector3, rayDistance : float, hit : RaycastHit ) : boolean {
+		if ( collider ) {
+			var top : Vector3 = collider.bounds.center + new Vector3 ( 0, collider.bounds.extents.y, 0 );
+			var bottom : Vector3 = collider.bounds.center - new Vector3 ( 0, collider.bounds.extents.y, 0 );
+
+			return Physics.CapsuleCast ( top, bottom, collider.bounds.extents.x, there - here, hit, rayDistance );
+		
+		} else {
+			return Physics.Raycast ( here, there - here, hit, rayDistance );
+
+		}
+	}
+
 	public function GetCurrentGoal () : Vector3 {
-		var here : Vector3 = this.transform.position + Vector3.up * 0.1;
-		var there : Vector3 = goal + Vector3.up * 0.1;
+		var here : Vector3 = this.transform.position + Vector3.up + this.transform.forward;
+		var there : Vector3 = goal + Vector3.up;
 		var realDistance : float = Vector3.Distance ( here, there );
-		var rayDistance : float = Mathf.Clamp ( 0, raycastDistance, realDistance );
+		var rayDistance : float = realDistance > raycastDistance ? raycastDistance : realDistance;
 		var hit : RaycastHit;
-	       
-		// Only consider hits within a certain range
-		if ( realDistance <= rayDistance ) {
+	
+		// If the goal is at a different height (>2 meters), return the current node
+		if ( Mathf.Abs ( here.y - there.y ) > 2 ) { 
+			return GetCurrentNode ();
+
+		// Limit the length of the ray to the maximum ray distance
+		} else if ( realDistance <= rayDistance ) {
 			// We hit something
-			if ( Physics.Raycast ( here, there - here, hit, rayDistance ) ) {
-				// If the hit is this object, try again
+			if ( DoRaycast ( here, there, rayDistance, hit ) ) {
+				Debug.Log ( hit.collider.gameObject );
+				Debug.DrawLine ( here, hit.point, Color.yellow );
+				
+				// The hit is this object, try again
 				if ( hit.collider.gameObject == this.gameObject ) {
 					here = hit.point;
-				}
+					
+					// We hit something (again), return the current node
+					if ( DoRaycast ( here, there, rayDistance, hit ) ) {
+						return GetCurrentNode ();			
 
-				// If we hit something (again), return the current node
-				if ( Physics.Raycast ( here, there - here, hit, rayDistance ) ) {
-					return GetCurrentNode ();			
+					// The goal is in plain sight
+					} else {
+						return goal;
 
-				// If not, then the goal is in plain sight
+					}
+				
+				// The hit is another object, return current node
 				} else {
-					return goal;
+					return GetCurrentNode ();
 
 				}
 
@@ -80,6 +105,7 @@ class OPPathFinder extends MonoBehaviour {
 			
 			}
 		
+		// Out of raycast reach, return current node
 		} else {
 			return GetCurrentNode ();
 		
