@@ -26,6 +26,25 @@ class OPPathFinder extends MonoBehaviour {
 		return nodes.Length > 0;
 	}
 
+	public function get localAvoidanceAngle () : float {
+		var result : float = 0;
+		
+		if ( controller ) {
+			var hit : RaycastHit;
+
+			if ( Physics.SphereCast ( controller.bounds.center, controller.radius, this.transform.forward, hit, 2 ) ) {
+				var localHit : Vector3 = transform.InverseTransformPoint ( hit.point );
+				if ( Mathf.Atan2 ( localHit.x, localHit.z ) * Mathf.Rad2Deg > 0 ) {
+					return -1;
+				} else {
+					return 1;
+				}
+			}
+		}
+
+		return result;
+	}
+
 	function Start () {
 		controller = this.GetComponent.< CharacterController > ();
 		scanner = GameObject.FindObjectOfType(OPScanner);
@@ -57,13 +76,7 @@ class OPPathFinder extends MonoBehaviour {
 	private function DoRaycast ( here : Vector3, there : Vector3, rayDistance : float ) : RaycastHit {
 		var hit : RaycastHit;
 		
-		if ( collider ) {
-			Physics.CapsuleCast ( here, here + new Vector3 ( 0, collider.bounds.extents.x, 0 ), collider.bounds.extents.x, there - here, hit, rayDistance );
-		
-		} else {
-			Physics.Raycast ( here, there - here, hit, rayDistance );
-
-		}
+		Physics.Raycast ( here, there - here, hit, rayDistance );
 
 		if ( hit != null && hit.collider != null ) {
 			Debug.DrawLine ( here, hit.point, Color.yellow );

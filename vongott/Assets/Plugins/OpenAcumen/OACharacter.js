@@ -542,11 +542,16 @@ public class OACharacter extends MonoBehaviour {
 		}
 	}
 
-	function TurnTowards ( v : Vector3 ) {
+	public function TurnTowards ( v : Vector3 ) {
+		TurnTowards ( v, 0 );
+	}
+
+	public function TurnTowards ( v : Vector3, extraAngle : float ) {
 		if ( v == transform.position ) { return; }
 
 		var lookPos : Vector3 = v - transform.position;
 		lookPos.y = 0;
+		lookPos.x += extraAngle;
 		
 		this.transform.rotation = Quaternion.Slerp ( transform.rotation, Quaternion.LookRotation ( lookPos ), turningSpeed * Time.deltaTime );
 	}
@@ -965,7 +970,7 @@ public class OACharacter extends MonoBehaviour {
 			
 			} else {
 				aimDegrees = 0;
-				TurnTowards ( goal );
+				TurnTowards ( goal, pathFinder.localAvoidanceAngle );
 			
 			}
 		
