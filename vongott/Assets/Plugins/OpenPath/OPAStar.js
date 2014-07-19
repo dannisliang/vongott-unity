@@ -110,7 +110,7 @@ public class OPAStar {
 		while ( node != null ) {
 			if ( counter > 100 ) {
 				Debug.LogError ( "OpenPath | Screech! Failsafe engaged." );
-				return null;
+				return;
 			}
 			
 			list.Add  ( node );

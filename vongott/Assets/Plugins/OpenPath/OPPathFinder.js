@@ -16,6 +16,7 @@ class OPPathFinder extends MonoBehaviour {
 	
 	private var goal : Vector3;
 	private var updateTimer : float = 0;
+	private var controller : CharacterController;
 
 	public function get atEndOfPath () : boolean {
 		return currentNode >= nodes.Length || ( transform.position - goal ).magnitude <= stoppingDistance;
@@ -26,7 +27,12 @@ class OPPathFinder extends MonoBehaviour {
 	}
 
 	function Start () {
+		controller = this.GetComponent.< CharacterController > ();
 		scanner = GameObject.FindObjectOfType(OPScanner);
+	
+		if ( target && autoChase ) {
+			SetGoal ( target );
+		}
 	}
 	
 	public function ClearNodes () {
@@ -204,11 +210,14 @@ class OPPathFinder extends MonoBehaviour {
 				}
 
 				if ( autoChase ) {
-					var lookPos : Vector3 = ( nodes[currentNode] as OPNode ).position - transform.position;
-					lookPos.y = 0;
+					transform.LookAt ( ( nodes[currentNode] as OPNode ).position );
 					
-					transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( lookPos ), 8 * Time.deltaTime );			
-					transform.localPosition += transform.forward * speed * Time.deltaTime;
+					if ( controller ) {
+						controller.Move ( transform.forward * speed * Time.deltaTime );
+
+					} else {
+						transform.position += transform.forward * speed * Time.deltaTime;
+					}
 				}
 			
 				if ( ( transform.position - goal ).magnitude <= stoppingDistance ) {
