@@ -48,20 +48,31 @@ class OPPathFinder extends MonoBehaviour {
 		}
 	}
 
-	private function DoRaycast ( here : Vector3, there : Vector3, rayDistance : float, hit : RaycastHit ) : boolean {
+	private function DoRaycast ( here : Vector3, there : Vector3, rayDistance : float ) : RaycastHit {
+		var hit : RaycastHit;
+		
 		if ( collider ) {
-			var top : Vector3 = collider.bounds.center + new Vector3 ( 0, collider.bounds.extents.y, 0 );
-			var bottom : Vector3 = collider.bounds.center - new Vector3 ( 0, collider.bounds.extents.y, 0 );
-
-			return Physics.CapsuleCast ( top, bottom, collider.bounds.extents.x, there - here, hit, rayDistance );
+			Physics.CapsuleCast ( here, here + new Vector3 ( 0, collider.bounds.extents.x, 0 ), collider.bounds.extents.x, there - here, hit, rayDistance );
 		
 		} else {
-			return Physics.Raycast ( here, there - here, hit, rayDistance );
+			Physics.Raycast ( here, there - here, hit, rayDistance );
 
 		}
+
+		if ( hit != null && hit.collider != null ) {
+			Debug.DrawLine ( here, hit.point, Color.yellow );
+		
+		} else {
+			Debug.DrawLine ( here, here + ( there - here ) * rayDistance, Color.yellow );
+
+		}	
+
+		return hit;
 	}
 
 	public function GetCurrentGoal () : Vector3 {
+		if ( !raycastToGoal ) { return GetCurrentNode (); }
+		
 		var here : Vector3 = this.transform.position + Vector3.up + this.transform.forward;
 		var there : Vector3 = goal + Vector3.up;
 		var realDistance : float = Vector3.Distance ( here, there );
@@ -74,17 +85,17 @@ class OPPathFinder extends MonoBehaviour {
 
 		// Limit the length of the ray to the maximum ray distance
 		} else if ( realDistance <= rayDistance ) {
+			hit = DoRaycast ( here, there, rayDistance );
+			
 			// We hit something
-			if ( DoRaycast ( here, there, rayDistance, hit ) ) {
-				Debug.Log ( hit.collider.gameObject );
-				Debug.DrawLine ( here, hit.point, Color.yellow );
-				
+			if ( hit != null && hit.collider != null ) {
 				// The hit is this object, try again
 				if ( hit.collider.gameObject == this.gameObject ) {
 					here = hit.point;
+					hit = DoRaycast ( here, there, rayDistance );
 					
 					// We hit something (again), return the current node
-					if ( DoRaycast ( here, there, rayDistance, hit ) ) {
+					if ( hit != null ) {
 						return GetCurrentNode ();			
 
 					// The goal is in plain sight

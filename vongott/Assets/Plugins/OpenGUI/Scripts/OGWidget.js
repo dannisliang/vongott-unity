@@ -50,6 +50,7 @@ public class OGWidget extends MonoBehaviour {
 		public var yOffset : float = 0.0;
 	}
 
+	public var root : OGRoot;
 	public var isDrawn : boolean = true;
 	public var isDisabled : boolean = false;
 	public var isSelectable : boolean = false;
@@ -88,17 +89,16 @@ public class OGWidget extends MonoBehaviour {
 	public function get scaledRct () : Rect {
 		var result : Rect = drawRct;
 
-		result.x *= root.ratio.x;
-		result.width *= root.ratio.x;
-		result.y *= root.ratio.y;
-		result.height *= root.ratio.y;
+		var root : OGRoot = OGRoot.GetInstance ();
+
+		if ( root ) {
+			result.x *= root.ratio.x;
+			result.width *= root.ratio.x;
+			result.y *= root.ratio.y;
+			result.height *= root.ratio.y;
+		}
 
 		return result;
-	}
-
-	// Get root
-	public function get root () : OGRoot {
-		return OGRoot.GetInstance();
 	}
 
 	// Find child
@@ -134,6 +134,10 @@ public class OGWidget extends MonoBehaviour {
 	}
 	
 	public function CheckMouseOver ( rect : Rect ) : boolean {
+		if ( !root ) {
+			root = OGRoot.GetInstance();
+		}	
+		
 		var pos : Vector2 = new Vector2 ( Input.mousePosition.x * root.reverseRatio.x, Input.mousePosition.y * root.reverseRatio.y );
 
 		if ( SystemInfo.deviceType == DeviceType.Handheld && Input.touchCount == 0 ) {
@@ -306,6 +310,10 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Init
 	//////////////////
+	public function Awake () {
+		root = OGRoot.GetInstance ();
+	}
+	
 	public function Start () {
 		Recalculate ();
 	}

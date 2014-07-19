@@ -51,6 +51,7 @@ public class OACharacter extends MonoBehaviour {
 	public var roamingRadius : float = 10;
 	public var shootingDistance : float = 10;
 	public var stoppingDistance : float = 2;
+	public var fleeThreshold : float = 25;
 	public var team : int = 1;
 	@HideInInspector public var barks : Bark[] = new Bark [0];
 	
@@ -714,7 +715,7 @@ public class OACharacter extends MonoBehaviour {
 		
 		switch ( behaviour ) {
 			case OABehaviour.ChasingTarget:
-				if ( !usingWeapons ) {
+				if ( !usingWeapons || stats.hp < fleeThreshold ) {
 					behaviour = OABehaviour.Fleeing;
 					attentionTimer = attentionSpan;
 					break;
@@ -729,8 +730,8 @@ public class OACharacter extends MonoBehaviour {
 					break;
 				}
 				
-				if ( distanceToTarget > stoppingDistance ) {
-					if ( distanceToTarget <= shootingDistance ) {
+				if ( distanceToTarget > stoppingDistance || !canSeeTarget ) {
+					if ( distanceToTarget <= shootingDistance && canSeeTarget ) {
 						speed = 0.5;
 					
 					} else {
@@ -750,7 +751,6 @@ public class OACharacter extends MonoBehaviour {
 					attentionTimer = attentionTimer + attentionSpan;
 
 				} else if ( canSeeTarget || distanceToTarget <= shootingDistance ) {
-					lastKnownPosition = target.transform.position;
 					pathFinder.SetGoal ( lastKnownPosition );
 				
 					if ( attackTarget ) {
@@ -764,7 +764,15 @@ public class OACharacter extends MonoBehaviour {
 				
 				} else {
 					if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
-					       	speed = 0;
+						if ( attentionTimer <= 0 ) {
+							behaviour = OABehaviour.Seeking;
+							attentionTimer = attentionTimer + attentionSpan;
+						
+						} else {
+							lastKnownPosition = target.transform.position;
+							pathFinder.SetGoal ( lastKnownPosition );
+
+						}
 					}
 					
 					if ( attackTarget ) {
@@ -946,8 +954,6 @@ public class OACharacter extends MonoBehaviour {
 			// Set immediate goal	
 			var goal : Vector3 = pathFinder.GetCurrentGoal ();
 		
-			Debug.DrawLine ( this.transform.position, goal, Color.magenta );
-
 			if ( behaviour == OABehaviour.ChasingTarget && canSeeTarget ) {
 				goal = lastKnownPosition;
 

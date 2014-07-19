@@ -1794,6 +1794,7 @@ MonoBehaviour:
   roamingRadius: 10
   shootingDistance: 10
   stoppingDistance: 3
+  fleeThreshold: 25
   team: 0
   barks:
   - type: 0
@@ -1843,7 +1844,7 @@ MonoBehaviour:
   currentNode: 0
   scanner: {fileID: 0}
   speed: 4
-  stoppingDistance: .5
+  stoppingDistance: 2
   nodeDistance: 1
   target: {fileID: 0}
   autoChase: 0

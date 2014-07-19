@@ -33,6 +33,7 @@ class OGRoot extends MonoBehaviour {
 	private var widgets : OGWidget[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var screenRect : Rect;
+	private var guiTex : Texture2D;
 
 
 	//////////////////
@@ -46,13 +47,8 @@ class OGRoot extends MonoBehaviour {
 	public function get ratio () : Vector2 {
 		var result : Vector2 = Vector2.one;
 		
-		if ( targetResolution.x > 0 ) {
-			result.x = Screen.width / screenWidth;
-		}
-		
-		if ( targetResolution.y > 0 ) {
-			result.y = Screen.height / screenHeight;
-		}
+		result.x = Screen.width / screenWidth;
+		result.y = Screen.height / screenHeight;
 
 		return result;
 	}
@@ -60,13 +56,8 @@ class OGRoot extends MonoBehaviour {
 	public function get reverseRatio () : Vector2 {
 		var result : Vector2 = Vector2.one;
 		
-		if ( targetResolution.x > 0 ) {
-			result.x = screenWidth / Screen.width;
-		}
-		
-		if ( targetResolution.y > 0 ) {
-			result.y = screenHeight / Screen.height;
-		}
+		result.x = screenWidth / Screen.width;
+		result.y = screenHeight / Screen.height;
 
 		return result;
 	}
@@ -75,6 +66,11 @@ class OGRoot extends MonoBehaviour {
 		if ( targetResolution.x > 0 ) {
 			return targetResolution.x;
 		
+		} else if ( targetResolution.y > 0 ) {
+			var ratio : float = targetResolution.y / Screen.height;
+			
+			return Screen.width * ratio;
+
 		} else {
 			return Screen.width;
 
@@ -85,6 +81,11 @@ class OGRoot extends MonoBehaviour {
 		if ( targetResolution.y > 0 ) {
 			return targetResolution.y;
 		
+		} else if ( targetResolution.x > 0 ) {
+			var ratio : float = targetResolution.x / Screen.width;
+			
+			return Screen.height * ratio;
+
 		} else {
 			return Screen.height;
 
@@ -135,14 +136,7 @@ class OGRoot extends MonoBehaviour {
 			var w : OGWidget;
 			
 			GL.PushMatrix();
-			
-			if ( targetResolution.x > 0 && targetResolution.y > 0 ) {  
-				GL.LoadPixelMatrix ( 0, targetResolution.x, 0, targetResolution.y );
-			
-			} else {
-				GL.LoadPixelMatrix ();
-
-			}
+			GL.LoadPixelMatrix ( 0, screenWidth, 0, screenHeight );
 
 			// Draw skin
 			GL.Begin(GL.QUADS);
@@ -240,6 +234,10 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	// Init
 	//////////////////
+	public function Awake () {
+		instance = this;
+	}
+	
 	public function Start () {
 		if ( currentPage != null && Application.isPlaying ) {
 			currentPage.StartPage ();
@@ -441,13 +439,15 @@ class OGRoot extends MonoBehaviour {
 
 		if ( !Application.isPlaying ) {
 			var color : Color = Color.white;
-					
-			var tex : Texture2D = new Texture2D ( 1, 1 );
-			tex.SetPixel ( 0, 0, color );
-			tex.Apply ();
+			
+			if ( !guiTex ) {		
+				guiTex = new Texture2D ( 1, 1 );
+				guiTex.SetPixel ( 0, 0, color );
+				guiTex.Apply ();
+			}
 
 			var style : GUIStyle = new GUIStyle();
-			style.normal.background = tex;
+			style.normal.background = guiTex;
 					
 			for ( var i : int = 0; i < Selection.gameObjects.Length; i++ ) {
 				var w : OGWidget = Selection.gameObjects[i].GetComponent.<OGWidget>();
@@ -551,6 +551,7 @@ class OGRoot extends MonoBehaviour {
 				w.scrollOffset.y = 0;
 			}
 
+			w.root = this;
 			w.UpdateWidget ();
 			w.Recalculate ();
 

@@ -57,32 +57,10 @@ public class OGTestWidget extends OGWidget {
 			return;
 		}
 
-		matrix.SetTRS ( new Vector3 ( this.transform.position.x, Screen.height - this.transform.position.y, drawDepth ), Quaternion.Euler ( 0, 0, -this.transform.eulerAngles.z ), Vector3.one );
+		matrix.SetTRS ( new Vector3 ( this.transform.position.x, root.screenHeight - this.transform.position.y, drawDepth ), Quaternion.Euler ( 0, 0, -this.transform.eulerAngles.z ), Vector3.one );
 
 		var displayRct : Rect = drawRct;
 		var uvRct : Rect = new Rect ( 0, 0, 1, 1 );
-
-		if ( clipTo ) {
-			if ( clipTo.drawRct.xMin > displayRct.xMin ) {
-				uvRct.xMin = ( clipTo.drawRct.xMin - displayRct.xMin ) / this.transform.lossyScale.x;
-				displayRct.xMin = clipTo.drawRct.xMin;
-			}
-			
-			if ( clipTo.drawRct.xMax < displayRct.xMax ) {
-				uvRct.xMax = ( displayRct.xMax - clipTo.drawRct.xMax ) / this.transform.lossyScale.x;
-				displayRct.xMax = clipTo.drawRct.xMax;
-			}
-			
-			if ( clipTo.drawRct.yMin > displayRct.yMin ) {
-				uvRct.yMin = ( clipTo.drawRct.yMin - displayRct.yMin ) / this.transform.lossyScale.y;
-				displayRct.yMin = clipTo.drawRct.yMin;
-			}
-			
-			if ( clipTo.drawRct.yMax < displayRct.yMax ) {
-				uvRct.yMax = ( displayRct.yMax - clipTo.drawRct.yMax ) / this.transform.lossyScale.y;
-				displayRct.yMax = clipTo.drawRct.yMax;
-			}
-		}
 
 		GL.Begin(GL.QUADS);
 		

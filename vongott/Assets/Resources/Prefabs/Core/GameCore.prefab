@@ -6382,7 +6382,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 640, y: 635, z: 0}
+  m_LocalPosition: {x: 640, y: 875, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400660}
@@ -8264,7 +8264,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15, y: 635, z: 0}
+  m_LocalPosition: {x: 15, y: 875, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400302}
@@ -8508,7 +8508,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100386}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1065, y: 635, z: 0}
+  m_LocalPosition: {x: 1065, y: 875, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400518}
@@ -9492,7 +9492,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100554}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 640, y: 360, z: 0}
+  m_LocalPosition: {x: 640, y: 480, z: 0}
   m_LocalScale: {x: 64, y: 64, z: 1}
   m_Children: []
   m_Father: {fileID: 400390}
@@ -9558,7 +9558,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -.000244140625, y: 0, z: 0}
   m_LocalScale: {x: 80, y: 80, z: 1}
   m_Children: []
   m_Father: {fileID: 400216}
@@ -9977,7 +9977,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4}
+  m_LocalPosition: {x: -.000244140625, y: 0, z: 4}
   m_LocalScale: {x: 80, y: 80, z: 1}
   m_Children: []
   m_Father: {fileID: 400216}
@@ -10928,8 +10928,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: .300000012
-  far clip plane: 1000
+  near clip plane: .00999999978
+  far clip plane: 20
   field of view: 40
   orthographic: 0
   orthographic size: 5
@@ -11367,7 +11367,6 @@ MonoBehaviour:
   lockToRearOfTarget: 0
   allowMouseInputX: 1
   allowMouseInputY: 1
-  shakeOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12587,7 +12586,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 640
-    y: 84
+    y: 84.0000153
     width: 1
     height: 1
   mouseRct:
@@ -13603,7 +13602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5734da34424da42a06790d50338a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetResolution: {x: 1280, y: 720}
+  targetResolution: {x: 1280, y: 0}
   skin: {fileID: 11400000, guid: 63e00211484021e49870bd3822a4c203, type: 2}
   currentPage: {fileID: 11400302}
   lineMaterial: {fileID: 2100000, guid: c6254aac8b5670a4b9f65da138812c38, type: 2}
@@ -16296,13 +16295,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 465
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 465
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -19786,13 +19785,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 825
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 825
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -21499,13 +21498,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 645
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 645
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -23965,7 +23964,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 640
-    y: 659
+    y: 899
     width: 1
     height: 1
   mouseRct:
@@ -28681,13 +28680,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 285
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 285
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -31891,13 +31890,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 555
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 555
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -36610,13 +36609,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 15
-    y: 15
+    y: 15.0000143
     width: 200
     height: 70
   mouseRct:
     serializedVersion: 2
     x: 15
-    y: 15
+    y: 15.0000143
     width: 200
     height: 70
   drawDepth: -20
@@ -38331,13 +38330,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 915
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 915
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -38573,13 +38572,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 735
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 735
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -38815,13 +38814,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 375
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 375
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -40592,13 +40591,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 375
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 375
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -42556,13 +42555,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 465
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 465
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -43780,7 +43779,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1065
-    y: 84
+    y: 84.0000153
     width: 1
     height: 1
   mouseRct:
@@ -44021,13 +44020,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 645
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 645
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -49221,13 +49220,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 825
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 825
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -54424,13 +54423,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 195
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 195
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -55168,7 +55167,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1235
-    y: 25
+    y: 25.0000153
     width: 20
     height: 50
   mouseRct:
@@ -57631,7 +57630,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1075
-    y: 25
+    y: 25.0000153
     width: 150
     height: 30
   mouseRct:
@@ -61587,13 +61586,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 608
-    y: 328
+    y: 448
     width: 64
     height: 64
   mouseRct:
     serializedVersion: 2
     x: 608
-    y: 328
+    y: 448
     width: 64
     height: 64
   drawDepth: -0
@@ -62096,13 +62095,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 240
-    y: 15
+    y: 15.0000143
     width: 800
     height: 70
   mouseRct:
     serializedVersion: 2
     x: 240
-    y: 15
+    y: 15.0000143
     width: 800
     height: 70
   drawDepth: -0
@@ -62343,13 +62342,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1075
-    y: 60
+    y: 60.0000153
     width: 150
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 1075
-    y: 60
+    y: 60.0000153
     width: 150
     height: 20
   drawDepth: -0
@@ -62841,13 +62840,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 195
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 195
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -63082,14 +63081,14 @@ MonoBehaviour:
     height: 1
   drawRct:
     serializedVersion: 2
-    x: 1005
-    y: 620
+    x: 1004.99976
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
-    x: 1005
-    y: 620
+    x: 1004.99976
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -65078,7 +65077,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 25
-    y: 25
+    y: 25.0000153
     width: 180
     height: 20
   mouseRct:
@@ -67056,7 +67055,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 25
-    y: 55
+    y: 55.0000153
     width: 180
     height: 20
   mouseRct:
@@ -68551,13 +68550,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 555
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 555
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -69770,14 +69769,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 1005
-    y: 620
+    x: 1004.99976
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
-    x: 1005
-    y: 620
+    x: 1004.99976
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -71532,13 +71531,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 230
-    y: 15
+    y: 15.0000143
     width: 820
     height: 70
   mouseRct:
     serializedVersion: 2
     x: 230
-    y: 15
+    y: 15.0000143
     width: 820
     height: 70
   drawDepth: -5
@@ -74973,13 +74972,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 1065
-    y: 15
+    y: 15.0000143
     width: 200
     height: 70
   mouseRct:
     serializedVersion: 2
     x: 1065
-    y: 15
+    y: 15.0000143
     width: 200
     height: 70
   drawDepth: -20
@@ -77191,13 +77190,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 915
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 915
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -81636,13 +81635,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 285
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 285
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -10
@@ -82376,13 +82375,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 735
-    y: 620
+    y: 860
     width: 80
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 735
-    y: 620
+    y: 860
     width: 80
     height: 80
   drawDepth: -14
@@ -83373,7 +83372,7 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 15
-    y: 84
+    y: 84.0000153
     width: 1
     height: 1
   mouseRct:
