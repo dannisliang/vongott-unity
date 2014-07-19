@@ -24,7 +24,22 @@ class OPPathFinder extends MonoBehaviour {
 	}
 
 	public function get facingDrop () : boolean {
-		return !Physics.Raycast ( this.transform.position + ( goal - this.transform.position ) * 2, Vector3.down, maxDrop );
+		var result : boolean = false;
+		var here : Vector3 = this.transform.position;
+		var there : Vector3 = goal;
+		var middle : Vector3 = ( there + here ) / 2;
+
+		// Is there a drop in between us and the target?
+		if ( !Physics.Raycast ( middle, Vector3.down, maxDrop ) ) {
+			result = true;
+
+		// If not, is there a drop between us and the middle?
+		} else if ( !Physics.Raycast ( ( here + middle ) / 2, Vector3.down, maxDrop ) ) {
+			result = true;
+
+		}
+	
+		return result;
 	}
 
 	public function get hasPath () : boolean { 
