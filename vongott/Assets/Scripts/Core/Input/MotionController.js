@@ -15,7 +15,6 @@ public class MotionController extends MonoBehaviour {
 	public var antiBumpFactor = .75;
 	public var antiBunnyHopFactor = 1;
 	public var fallingDamageThreshold = 10.0;
-	public var gravity = 20.0;
 	public var jumpSpeed = 8.0;
 	public var moveDirection = Vector3.zero;
 	public var slideSpeed = 12.0;
@@ -141,7 +140,7 @@ public class MotionController extends MonoBehaviour {
 		}
 	 
 		// Apply gravity
-		moveDirection.y -= gravity * Time.deltaTime;
+		moveDirection += Physics.gravity * Time.deltaTime;
 	
 		if ( useRootMotion && grounded ) {
 			moveDirection.x = 0;

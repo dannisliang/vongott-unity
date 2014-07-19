@@ -15,6 +15,12 @@ class OPScanner extends MonoBehaviour {
 	private var generated : boolean = false;
 	private var astar : OPAStar = new OPAStar ();
 
+	public static var instance : OPScanner;
+
+	public static function GetInstance () : OPScanner {
+		return instance;
+	}
+
 	public function GenerateBounds () {
 	    var bounds : Bounds = new Bounds ( Vector3.zero, Vector3.zero );
 	    var pos : Vector3 = Vector3.zero;
@@ -126,6 +132,10 @@ class OPScanner extends MonoBehaviour {
 		}
 	}
 	
+	public function Awake () {
+		instance = this;
+	}
+
 	public function GetClosestNode ( pos : Vector3 ) : OPNode {
 		var shortestDistance : float = Mathf.Infinity;
 		var node : OPNode;

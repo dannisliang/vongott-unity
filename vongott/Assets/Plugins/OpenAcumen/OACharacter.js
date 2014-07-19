@@ -44,7 +44,7 @@ public class OACharacter extends MonoBehaviour {
 	public var weaponAutoAim : boolean = false;
 	public var maxSpeed : float = 2;
 	public var alertNeighborRadius : float = 20;
-	public var attentionSpan : float = 10;
+	public var attentionSpan : float = 30;
 	public var fieldOfView : float = 130;
 	public var hesitation : float = 1;
 	public var lineOfSight : float = 20;
@@ -335,6 +335,7 @@ public class OACharacter extends MonoBehaviour {
 			DetectTarget ();
 			AlertNeighbors ();
 			behaviour = OABehaviour.ChasingTarget;
+			pathFinder.SetGoal ( target.transform.position );
 		}	
 	}
 
@@ -736,7 +737,7 @@ public class OACharacter extends MonoBehaviour {
 				}
 				
 				if ( distanceToTarget > stoppingDistance || !canSeeTarget ) {
-					if ( distanceToTarget <= shootingDistance && canSeeTarget ) {
+					if ( distanceToTarget <= shootingDistance && canSeeTarget && !pathFinder.facingDrop ) {
 						speed = 0.5;
 					
 					} else {
@@ -755,13 +756,13 @@ public class OACharacter extends MonoBehaviour {
 					behaviour = OABehaviour.Seeking;
 					attentionTimer = attentionTimer + attentionSpan;
 
-				} else if ( canSeeTarget || distanceToTarget <= shootingDistance ) {
+				} else if ( canSeeTarget && distanceToTarget <= shootingDistance ) {
 					pathFinder.SetGoal ( lastKnownPosition );
 				
 					if ( attackTarget ) {
 						attentionTimer = attentionSpan;
 					
-						if ( hesitationTimer <= 0 && distanceToTarget <= shootingDistance ) {
+						if ( hesitationTimer <= 0 && distanceToTarget <= shootingDistance && !pathFinder.facingDrop ) {
 							ShootAtTarget ();
 							aiming = true;
 						}
@@ -771,7 +772,7 @@ public class OACharacter extends MonoBehaviour {
 					if ( pathFinder.hasPath && pathFinder.atEndOfPath ) {
 						if ( attentionTimer <= 0 ) {
 							behaviour = OABehaviour.Seeking;
-							attentionTimer = attentionTimer + attentionSpan;
+							attentionTimer = attentionSpan;
 						
 						} else {
 							lastKnownPosition = target.transform.position;
@@ -780,17 +781,18 @@ public class OACharacter extends MonoBehaviour {
 						}
 					}
 					
-					if ( attackTarget ) {
-						if ( attentionTimer <= 0 ) {
-							hesitationTimer = hesitation;
-							
-							behaviour = OABehaviour.Seeking;
-							attentionTimer = attentionTimer + attentionSpan;
+				}
+				
+				if ( attackTarget ) {
+					if ( attentionTimer <= 0 ) {
+						hesitationTimer = hesitation;
 						
-						} else if ( attentionTimer > 0 ) {
-							attentionTimer -= Time.deltaTime;
+						behaviour = OABehaviour.Seeking;
+						attentionTimer += attentionSpan;
+					
+					} else if ( attentionTimer > 0 ) {
+						attentionTimer -= Time.deltaTime;
 
-						}
 					}
 				}
 
@@ -858,7 +860,7 @@ public class OACharacter extends MonoBehaviour {
 				speed = 0.5;
 				
 				if ( pathFinder.atEndOfPath ) {
-					seekingGoal = lastKnownPosition + new Vector3 ( Random.Range ( -roamingRadius, roamingRadius ), 0, Random.Range ( -roamingRadius, roamingRadius ) );
+					seekingGoal = OPScanner.GetInstance().GetClosestNode ( lastKnownPosition + new Vector3 ( Random.Range ( -roamingRadius, roamingRadius ), 0, Random.Range ( -roamingRadius, roamingRadius ) ) ).position;
 
 					pathFinder.SetGoal ( seekingGoal );
 					
@@ -959,11 +961,6 @@ public class OACharacter extends MonoBehaviour {
 			// Set immediate goal	
 			var goal : Vector3 = pathFinder.GetCurrentGoal ();
 		
-			if ( behaviour == OABehaviour.ChasingTarget && canSeeTarget ) {
-				goal = lastKnownPosition;
-
-			}
-			
 			// Aiming
 			if ( aiming ) {
 				aimDegrees = GetAngleBetween ( this.transform.forward, pathFinder.GetCurrentNode () - this.transform.position, Vector3.up );
@@ -983,10 +980,16 @@ public class OACharacter extends MonoBehaviour {
 		
 		}
 
-		// Apply motion if not root-based
-		if ( !usingRootMotion && controller && speed > 0 ) {
-			controller.Move ( this.transform.forward * ( speed * maxSpeed * Time.deltaTime ) );
+		// Apply motion
+		var moveDirection : Vector3;
+		
+		if ( !usingRootMotion && speed > 0 ) {
+			moveDirection = this.transform.forward * ( speed * maxSpeed * Time.deltaTime );
 		}
+
+		moveDirection += Physics.gravity * Time.deltaTime;
+
+		controller.Move ( moveDirection );
 
 		// Register behaviour from this frame
 		prevBehaviour = behaviour;

@@ -11,6 +11,7 @@ class OPPathFinder extends MonoBehaviour {
 	public var raycastToGoal : boolean = true;
 	public var raycastDistance : float = 100;
 	public var updateDelay : float = 1;
+	public var maxDrop : float = 2;
 		
 	@NonSerialized public var nodes : OPNode[] = new OPNode[0];
 	
@@ -20,6 +21,10 @@ class OPPathFinder extends MonoBehaviour {
 
 	public function get atEndOfPath () : boolean {
 		return currentNode >= nodes.Length || ( transform.position - goal ).magnitude <= stoppingDistance;
+	}
+
+	public function get facingDrop () : boolean {
+		return !Physics.Raycast ( this.transform.position + ( goal - this.transform.position ) * 2, Vector3.down, maxDrop );
 	}
 
 	public function get hasPath () : boolean { 
@@ -32,12 +37,16 @@ class OPPathFinder extends MonoBehaviour {
 		if ( controller ) {
 			var hit : RaycastHit;
 
+			// See if the object fits. If it doesn't, return an offset angle
 			if ( Physics.SphereCast ( controller.bounds.center, controller.radius, this.transform.forward, hit, 2 ) ) {
 				var localHit : Vector3 = transform.InverseTransformPoint ( hit.point );
+				
 				if ( Mathf.Atan2 ( localHit.x, localHit.z ) * Mathf.Rad2Deg > 0 ) {
-					return -1;
+					result = -1;
+				
 				} else {
-					return 1;
+					result = 1;
+				
 				}
 			}
 		}
@@ -92,15 +101,17 @@ class OPPathFinder extends MonoBehaviour {
 	public function GetCurrentGoal () : Vector3 {
 		if ( !raycastToGoal ) { return GetCurrentNode (); }
 		
+		var result : Vector3;
+
 		var here : Vector3 = this.transform.position + Vector3.up + this.transform.forward;
 		var there : Vector3 = goal + Vector3.up;
 		var realDistance : float = Vector3.Distance ( here, there );
 		var rayDistance : float = realDistance > raycastDistance ? raycastDistance : realDistance;
 		var hit : RaycastHit;
 	
-		// If the goal is at a different height (>2 meters), return the current node
-		if ( Mathf.Abs ( here.y - there.y ) > 2 ) { 
-			return GetCurrentNode ();
+		// If we are facing a drop, return the current node
+		if ( facingDrop ) { 
+			result = GetCurrentNode ();
 
 		// Limit the length of the ray to the maximum ray distance
 		} else if ( realDistance <= rayDistance ) {
@@ -113,33 +124,35 @@ class OPPathFinder extends MonoBehaviour {
 					here = hit.point;
 					hit = DoRaycast ( here, there, rayDistance );
 					
-					// We hit something (again), return the current node
+					// We hit something again, return the current node
 					if ( hit != null ) {
-						return GetCurrentNode ();			
+						result = GetCurrentNode ();			
 
 					// The goal is in plain sight
 					} else {
-						return goal;
+						result = goal;
 
 					}
 				
 				// The hit is another object, return current node
 				} else {
-					return GetCurrentNode ();
+					result = GetCurrentNode ();
 
 				}
 
 			// We hit nothing, the goal is in plain sight
 			} else {
-				return goal;	
+				result = goal;	
 			
 			}
 		
 		// Out of raycast reach, return current node
 		} else {
-			return GetCurrentNode ();
+			result = GetCurrentNode ();
 		
-		}	
+		}
+
+		return result;
 	}
 
 	public function SetGoal ( t : Transform ) {
