@@ -21,7 +21,31 @@ public class OCTree extends MonoBehaviour {
 	public static function CreateID () : int {
 		return random.Next ( 10000, 99999 );
 	}
-	
+
+	public function get rootNodeStrings () : String [] {
+		var strings : String [] = new String [ rootNodes.Length ];
+		
+		for ( var i : int = 0; i < strings.Length; i++ ) {
+			strings[i] = i.ToString ();
+		}
+
+		return strings;
+	}
+
+	public function CleanUp () {
+		for ( var i : int = 0; i < rootNodes.Length; i++ ) {
+			var tmp : List.< OCNode > = new List.< OCNode > ( rootNodes[i].nodes );
+
+			for ( var n : int = tmp.Count - 1; n >= 0; n-- ) {
+				if ( tmp[n].id < 1 ) {
+					tmp.RemoveAt ( n );
+				}
+			}
+
+			rootNodes[i].nodes = tmp.ToArray ();
+		}
+	}	
+
 	public function MoveRoot ( from : int, to : int ) {
 		if ( to >= 0 && to < rootNodes.Length ) {
 			var fromRootNode : OCRootNode = rootNodes[from];
@@ -327,6 +351,10 @@ public class OCSpeak {
 
 	function OCSpeak () {
 		lines = [ new Line ( "", null, "", 0 ) ];
+	}
+
+	public function get facing () : int {
+		return lines[index].facing;
 	}
 
 	public function get choice () : boolean {

@@ -14692,11 +14692,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400046, guid: dae8fa9d8b2104e4197675942f405c78, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.27227497
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: dae8fa9d8b2104e4197675942f405c78, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: dae8fa9d8b2104e4197675942f405c78, type: 2}
       propertyPath: m_LocalPosition.z
@@ -23656,7 +23656,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.238370985, y: .0353244841, z: -.00126102567}
+  m_ConnectedAnchor: {x: -.23837091, y: .0353244916, z: -.00126081146}
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_LowTwistLimit:
     limit: -90
@@ -25190,7 +25190,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .151632398, y: -.000506129116, z: -.0689054579}
+  m_ConnectedAnchor: {x: .15163213, y: -.000506339595, z: -.0689054504}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -20
@@ -26897,7 +26897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   on: 1
-  onlyInPlayMode: 0
+  onlyInPlayMode: 1
   sceneViewFollowers:
   - enable: 1
     positionOffset: {x: 0, y: 2, z: -2}
@@ -33626,7 +33626,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.471352249, y: .0237953812, z: 1.80435862e-07}
+  m_ConnectedAnchor: {x: -.47135222, y: .0237958562, z: 1.77307143e-07}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -40
@@ -34254,7 +34254,7 @@ Transform:
   m_PrefabInternal: {fileID: 351929997}
   m_GameObject: {fileID: 827916896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -8.27227497, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 685610090}
@@ -34393,6 +34393,7 @@ MonoBehaviour:
   raycastToGoal: 1
   raycastDistance: 100
   updateDelay: 1
+  maxDrop: 2
 --- !u!95 &827916903
 Animator:
   serializedVersion: 2
@@ -37864,7 +37865,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.371734023, y: -.00199650973, z: .0730361119}
+  m_ConnectedAnchor: {x: -.37173444, y: -.00199680775, z: .0730361119}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -80
@@ -47737,7 +47738,7 @@ Transform:
   m_PrefabInternal: {fileID: 1759506734}
   m_GameObject: {fileID: 1105803963}
   m_LocalRotation: {x: 0, y: -.00327060232, z: 0, w: .999994695}
-  m_LocalPosition: {x: -11.2682619, y: .986317635, z: 8.29447556}
+  m_LocalPosition: {x: 8.39123249, y: 10, z: 3.02143955}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 551529392}
@@ -47940,7 +47941,6 @@ MonoBehaviour:
   antiBumpFactor: .75
   antiBunnyHopFactor: 1
   fallingDamageThreshold: 10
-  gravity: 20
   jumpSpeed: 10
   moveDirection: {x: 0, y: 0, z: 0}
   slideSpeed: 12
@@ -55072,7 +55072,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .371734381, y: -.00199648738, z: .0730362758}
+  m_ConnectedAnchor: {x: .371734589, y: -.0019967556, z: .0730362758}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -80
@@ -61838,7 +61838,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .151632577, y: -.0005059205, z: .0689053535}
+  m_ConnectedAnchor: {x: .15163219, y: -.000506118871, z: .0689053535}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -20
@@ -77749,15 +77749,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400064, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.2682619
+      value: 8.39123249
       objectReference: {fileID: 0}
     - target: {fileID: 400064, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .986317635
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400064, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 8.29447556
+      value: 3.02143955
       objectReference: {fileID: 0}
     - target: {fileID: 400064, guid: 1bbc96e093fa80e43943e3636769dc78, type: 2}
       propertyPath: m_LocalRotation.x
@@ -84439,7 +84439,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .24062027, y: .00514375139, z: -.0121183237}
+  m_ConnectedAnchor: {x: .240620121, y: .00514327688, z: -.012117858}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -90
@@ -90372,7 +90372,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.0802452117, y: .000621980987, z: -2.74963554e-07}
+  m_ConnectedAnchor: {x: -.0802452341, y: .000621743966, z: -2.73402833e-07}
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_LowTwistLimit:
     limit: -20
