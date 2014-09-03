@@ -74,6 +74,63 @@ NavMeshSettings:
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
   m_NavMesh: {fileID: 0}
+--- !u!1 &440893235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 440893237}
+  - 114: {fileID: 440893236}
+  m_Layer: 0
+  m_Name: New Sequence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &440893236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 440893235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6799db0a203ba4dc085e0320f7acc706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyframes:
+  - position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    fov: 60
+    color: {r: 1, g: 1, b: 1, a: 1}
+    wait: 1
+    stop: 0
+    time: 1
+    easing: 0
+  - position: {x: 0, y: 10, z: 0}
+    rotation: {x: 90, y: 0, z: 0}
+    fov: 60
+    color: {r: 1, g: 1, b: 1, a: 1}
+    wait: 1
+    stop: 0
+    time: 1
+    easing: 0
+  cam: {fileID: 1896294253}
+  currentKeyframe: 0
+--- !u!4 &440893237
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 440893235}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &1896294249
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +143,6 @@ GameObject:
   - 92: {fileID: 1896294252}
   - 124: {fileID: 1896294251}
   - 81: {fileID: 1896294250}
-  - 114: {fileID: 1896294255}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -155,35 +211,3 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &1896294255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1896294249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c30558fe665e4b24aec398f935486ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sequences:
-  - name: Testing Sequence
-    keyframes:
-    - position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      fov: 60
-      color: {r: 1, g: 1, b: 1, a: 1}
-      wait: 1
-      stop: 0
-      time: 2
-      easing: 0
-    - position: {x: 0, y: 10, z: 0}
-      rotation: {x: 90, y: 0, z: 90}
-      fov: 60
-      color: {r: 1, g: 1, b: 1, a: 1}
-      wait: 1
-      stop: 0
-      time: 1
-      easing: 0
-  currentSequence: 0
-  currentKeyframe: 0
