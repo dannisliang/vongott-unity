@@ -61,7 +61,7 @@ public class OJManagerInspector extends Editor {
 		seq.name = EditorGUILayout.TextField ( "Name", seq.name );
 
 		EditorGUILayout.Space ();
-		
+	
 		EditorGUILayout.BeginHorizontal ();
 		
 		if ( GUILayout.Button ( "PLAY" ) ) {
@@ -81,7 +81,7 @@ public class OJManagerInspector extends Editor {
 		EditorGUILayout.Space ();
 
 		// Pick keyframe
-		EditorGUILayout.LabelField ( "Keyframe: " + currentKeyframe, EditorStyles.boldLabel );
+		EditorGUILayout.LabelField ( "Keyframe: " + manager.currentKeyframe + " / " + ( seq.keyframes.Count - 1 ), EditorStyles.boldLabel );
 		
 		GUILayout.Space ( 30 );
 		
@@ -174,7 +174,7 @@ public class OJManagerInspector extends Editor {
 
 		if ( GUILayout.Button ( "Copy from scene" ) ) {
 			kf.position = manager.transform.position;
-			kf.rotation = manager.transform.eulerAngles;
+			kf.rotation = manager.transform.localEulerAngles;
 		}
 		EditorGUILayout.EndHorizontal ();
 		

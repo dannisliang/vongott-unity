@@ -5,8 +5,8 @@ import DG.Tweening;
 public class OJManager extends MonoBehaviour {
 	public var sequences : List.< OJSequence > = new List.< OJSequence > ();
 
-	private var currentSequence : int;
-	private var currentKeyframe : int;
+	@HideInInspector public var currentSequence : int;
+	@HideInInspector public var currentKeyframe : int;
 
 	private function get keyframes () : List.< OJKeyframe > {
 		if ( sequences.Count < 1 ) {
@@ -43,19 +43,27 @@ public class OJManager extends MonoBehaviour {
 		}
 	}
 
+	// Tween functions
 	public function SetPosition ( value : Vector3 ) {
-		camera.transform.position = value;
+		transform.position = value;
 	}
 
 	public function GetPosition () : Vector3 {
-		return camera.transform.position;
+		return transform.position;
+	}
+
+	public function SetRotation ( value : Vector3 ) {
+		transform.localRotation = Quaternion.Euler ( value );
+	}
+
+	public function GetRotation () : Vector3 {
+		return transform.localEulerAngles;
 	}
 
 	public function PlayCurrentKeyframe () {
 		if ( isReady && currentKeyframe < keyframes.Count - 1 ) {
 			var thiskf : OJKeyframe = keyframes [ currentKeyframe ];
 			var nextkf : OJKeyframe = keyframes [ currentKeyframe + 1 ];
-			var c : Camera = camera;
 
 			var moveTween : Tween = DOTween.To (
 				GetPosition,
@@ -63,7 +71,15 @@ public class OJManager extends MonoBehaviour {
 				nextkf.position,
 				thiskf.time
 			);
+			
+			var rotateTween : Tween = DOTween.To (
+				GetRotation,
+				SetRotation,
+				nextkf.rotation,
+				thiskf.time
+			);
 
+			rotateTween.SetEase ( thiskf.easing );
 			moveTween.SetEase ( thiskf.easing );
 		}
 	}
@@ -83,6 +99,9 @@ public class OJManager extends MonoBehaviour {
 
 	public function Reset () {
 		currentKeyframe = 0;
+
+		SetPosition ( keyframes [ currentKeyframe ].position );
+		SetRotation ( keyframes [ currentKeyframe ].rotation );
 	}
 
 	public function Stop () {
