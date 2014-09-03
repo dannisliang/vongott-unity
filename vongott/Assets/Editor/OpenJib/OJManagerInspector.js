@@ -104,6 +104,7 @@ public class OJManagerInspector extends Editor {
 
 			if ( GUILayout.Button ( i.ToString(), GUILayout.Width ( 24 ), GUILayout.Height ( 16 ) ) ) {
 				currentKeyframe = i;
+				manager.SetKeyframePose ( i );
 			}
 			
 			if ( i == currentKeyframe ) {

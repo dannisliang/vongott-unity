@@ -17,10 +17,12 @@ public class OJManager extends MonoBehaviour {
 	}
 	
 	private function get isReady () : boolean {
-		return camera != null && keyframes.Count > 0 && currentKeyframe < keyframes.Count;
+		return Application.isPlaying && camera != null && keyframes.Count > 0 && currentKeyframe < keyframes.Count;
 	}
 	
 	public function Start () {
+		DOTween.Init ( false, false, LogBehaviour.Default );
+
 		if ( !camera ) {
 			this.gameObject.AddComponent.< Camera > ();
 		}
@@ -41,6 +43,14 @@ public class OJManager extends MonoBehaviour {
 		if ( !keyframes [ currentKeyframe ].stop ) {
 			PlayCurrentKeyframe ();
 		}
+	}
+
+	// Frame functions
+	public function SetKeyframePose ( i : int ) {
+		var kf : OJKeyframe = keyframes [ i ];
+		
+		SetPosition ( kf.position );
+		SetRotation ( kf.rotation );
 	}
 
 	// Tween functions
@@ -89,9 +99,9 @@ public class OJManager extends MonoBehaviour {
 	}
 
 	public function Play ( sequence : int ) {
-		currentSequence = sequence;
-
 		if ( isReady ) {
+			currentSequence = sequence;
+
 			camera.enabled = true;
 			PlayCurrentKeyframe ();
 		}
