@@ -141,7 +141,7 @@ public class OJSequenceInspector extends Editor {
 		
 		EditorGUILayout.LabelField ( "Properties", EditorStyles.boldLabel );
 		kf.fov = EditorGUILayout.IntField ( "FOV", kf.fov );
-		kf.color = EditorGUILayout.ColorField ( "Color", kf.color );
+		kf.brightness = EditorGUILayout.FloatField ( "Brightness", kf.brightness );
 		kf.wait = EditorGUILayout.FloatField ( "Wait", kf.wait );
 		kf.stop = EditorGUILayout.Toggle ( "Stop", kf.stop );
 		

@@ -1,5 +1,7 @@
 #pragma strict
 
+import DG.Tweening;
+
 public class OJKeyframe {
 	// Transform
 	public var position : Vector3;
@@ -7,13 +9,13 @@ public class OJKeyframe {
 	
 	// Properties
 	public var fov : int = 60;
-	public var color : Color = Color.white;
+	public var brightness : float = 1;
 	public var wait : float = 1;
 	public var stop : boolean;
 	
 	// Next tween
 	public var time : float = 1;
-	public var easing : Ease;
+	public var easing : DG.Tweening.Ease;
 
 	public function Focus ( cam : Transform, target : Transform ) {
 		var lookPos : Vector3 = target.position - cam.position;
@@ -71,14 +73,14 @@ public class OJSequence extends MonoBehaviour {
 			var thiskf : OJKeyframe = keyframes [ currentKeyframe ];
 			var nextkf : OJKeyframe = keyframes [ currentKeyframe + 1 ];
 
-			var moveTween : Tween = DOTween.To (
+			var moveTween : DG.Tweening.Tween = DOTween.To (
 				GetPosition,
 				SetPosition,
 				nextkf.position,
 				thiskf.time
 			);
 			
-			var rotateTween : Tween = DOTween.To (
+			var rotateTween : DG.Tweening.Tween = DOTween.To (
 				GetRotation,
 				SetRotation,
 				nextkf.rotation,
