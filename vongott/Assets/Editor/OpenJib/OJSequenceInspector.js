@@ -128,10 +128,6 @@ public class OJSequenceInspector extends Editor {
 		EditorGUILayout.BeginHorizontal ();
 		EditorGUILayout.LabelField ( "Transform", EditorStyles.boldLabel );
 
-		if ( GUILayout.Button ( "Copy from scene" ) ) {
-			kf.position = sequence.cam.transform.position;
-			kf.rotation = sequence.cam.transform.localEulerAngles;
-		}
 		EditorGUILayout.EndHorizontal ();
 		
 		kf.position = EditorGUILayout.Vector3Field ( "Position", kf.position );
@@ -151,5 +147,8 @@ public class OJSequenceInspector extends Editor {
 		kf.time = EditorGUILayout.FloatField ( "Time", kf.time );
 		kf.easing = EditorGUILayout.Popup ( "Easing", kf.easing, System.Enum.GetNames ( Ease ) );
 
+		// Adopt data
+		kf.position = sequence.cam.transform.position;
+		kf.rotation = sequence.cam.transform.localEulerAngles;
 	}
 }

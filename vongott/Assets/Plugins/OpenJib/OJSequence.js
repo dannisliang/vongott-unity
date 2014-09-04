@@ -16,6 +16,7 @@ public class OJKeyframe {
 	// Next tween
 	public var time : float = 1;
 	public var easing : DG.Tweening.Ease;
+	public var path : Vector3 [];
 
 	public function Focus ( cam : Transform, target : Transform ) {
 		var lookPos : Vector3 = target.position - cam.position;
@@ -36,10 +37,12 @@ public class OJSequence extends MonoBehaviour {
 	}
 	
 	public function PlayNextKeyframe () {
-		currentKeyframe++;
+		if ( currentKeyframe < keyframes.Count - 1 ) {
+			currentKeyframe++;
 
-		if ( !keyframes [ currentKeyframe ].stop ) {
-			PlayCurrentKeyframe ();
+			if ( !keyframes [ currentKeyframe ].stop ) {
+				PlayCurrentKeyframe ();
+			}
 		}
 	}
 
@@ -70,25 +73,31 @@ public class OJSequence extends MonoBehaviour {
 
 	public function PlayCurrentKeyframe () {
 		if ( isReady && currentKeyframe < keyframes.Count - 1 ) {
-			var thiskf : OJKeyframe = keyframes [ currentKeyframe ];
-			var nextkf : OJKeyframe = keyframes [ currentKeyframe + 1 ];
+			StartCoroutine ( function () : IEnumerator {
+				var thiskf : OJKeyframe = keyframes [ currentKeyframe ];
+				var nextkf : OJKeyframe = keyframes [ currentKeyframe + 1 ];
 
-			var moveTween : DG.Tweening.Tween = DOTween.To (
-				GetPosition,
-				SetPosition,
-				nextkf.position,
-				thiskf.time
-			);
-			
-			var rotateTween : DG.Tweening.Tween = DOTween.To (
-				GetRotation,
-				SetRotation,
-				nextkf.rotation,
-				thiskf.time
-			);
+				if ( thiskf.wait > 0 ) {
+					yield WaitForSeconds ( thiskf.wait );
+				}
 
-			rotateTween.SetEase ( thiskf.easing );
-			moveTween.SetEase ( thiskf.easing );
+				var moveTween : DG.Tweening.Tween = DOTween.To (
+					GetPosition,
+					SetPosition,
+					nextkf.position,
+					thiskf.time
+				);
+				
+				var rotateTween : DG.Tweening.Tween = DOTween.To (
+					GetRotation,
+					SetRotation,
+					nextkf.rotation,
+					thiskf.time
+				);
+
+				rotateTween.SetEase ( thiskf.easing );
+				moveTween.SetEase ( thiskf.easing );
+			} () );
 		}
 	}
 
