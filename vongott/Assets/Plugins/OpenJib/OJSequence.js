@@ -1,30 +1,33 @@
 #pragma strict
 
-import DG.Tweening;
-
 public class OJKeyframe {
 	public class Curve {
+		public var symmetrical : boolean = false;
 		public var before : Vector3;
 		public var after : Vector3;
 	}
 
-	// Transform
 	public var position : Vector3;
 	public var rotation : Vector3;
 	public var curve : Curve = new Curve ();
-	
-	// Properties
 	public var fov : int = 60;
 	public var brightness : float = 1;
 	public var time : float = 0;
 	public var stop : boolean;
 
-	// Next tween
 	public function Focus ( cam : Transform, target : Transform ) {
 		var lookPos : Vector3 = target.position - cam.position;
 		lookPos.y = 0;
 		
 		rotation = Quaternion.LookRotation ( lookPos ).eulerAngles;
+	}
+	
+	public function MirrorCurveBefore () {
+		curve.before = -curve.after;
+	}
+	
+	public function MirrorCurveAfter () {
+		curve.after = -curve.before;
 	}
 }
 
@@ -107,19 +110,7 @@ public class OJSequence extends MonoBehaviour {
 		kf.position = Vector3.Lerp ( kf1.position, kf2.position, percent ); 
 	}	
 
-	private static function LinearTween ( t : float, b : float, c : float, d : float ) {
-		return c * t / d + b;
-	}
-	
-	private static function EaseInTween ( t : float, b : float, c : float, d : float ) {
-		t /= d;
-		return c*t*t + b;
-	}
-
 	public function LerpCamera ( kf1 : OJKeyframe, kf2 : OJKeyframe, t : float ) {
-		//t = LinearTween ( t, 0, 1, kf2.time - kf1.time );
-		//t = EaseInTween ( t, 0, 1, kf2.time - kf1.time );
-		
 		cam.transform.localPosition = CalculateBezierPoint ( t, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
 		cam.transform.localRotation = Quaternion.Lerp ( Quaternion.Euler ( kf1.rotation ), Quaternion.Euler ( kf2.rotation ), t ); 
 	}	

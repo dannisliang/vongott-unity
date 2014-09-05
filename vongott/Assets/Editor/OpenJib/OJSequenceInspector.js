@@ -1,7 +1,5 @@
 #pragma strict
 
-import DG.Tweening;
-
 @CustomEditor ( OJSequence )
 public class OJSequenceInspector extends Editor {
 	private static var currentEditorTime : float;
@@ -115,6 +113,7 @@ public class OJSequenceInspector extends Editor {
 			// Curve
 			EditorGUILayout.Space ();
 			EditorGUILayout.LabelField ( "Curve", EditorStyles.boldLabel );
+			kf.curve.symmetrical = EditorGUILayout.Toggle ( "Symmetrical", kf.curve.symmetrical );
 			kf.curve.before = EditorGUILayout.Vector3Field ( "Before", kf.curve.before );
 			kf.curve.after = EditorGUILayout.Vector3Field ( "After", kf.curve.after );
 
@@ -171,20 +170,28 @@ public class OJSequenceInspector extends Editor {
 					
 					Handles.DrawLine ( p1, p2 );
 				}
-				
-				Handles.color = new Color ( 0, 1, 1, 0.5 );
-			
-				DrawHandles ( kf1 );
-
-				if ( k >= sequence.keyframes.Count - 1 ) {
-					DrawHandles ( kf2 );
-				}
 			}
 		}
 		
 		var kf : OJKeyframe = sequence.keyframes [ currentEditorKeyframe ];
 		
-		kf.curve.before = Handles.PositionHandle ( kf.position + kf.curve.before, Quaternion.Euler ( Vector3.zero ) ) - kf.position;
+		Handles.color = new Color ( 0, 1, 1, 0.5 );
+		DrawHandles ( kf );
+	
+		var before : Vector3 = kf.curve.before;
+	       	kf.curve.before = Handles.PositionHandle ( kf.position + kf.curve.before, Quaternion.Euler ( Vector3.zero ) ) - kf.position;
+		
+		var after : Vector3 = kf.curve.after;
 		kf.curve.after = Handles.PositionHandle ( kf.position + kf.curve.after, Quaternion.Euler ( Vector3.zero ) ) - kf.position;
+	
+		if ( kf.curve.symmetrical ) {	
+			if ( before != kf.curve.before ) {
+				kf.MirrorCurveAfter ();
+			
+			} else if ( after != kf.curve.after ) {
+				kf.MirrorCurveBefore ();
+			
+			}
+		}
 	}
 }

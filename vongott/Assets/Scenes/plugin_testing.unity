@@ -243,8 +243,9 @@ MonoBehaviour:
   - position: {x: 0, y: 1, z: 0}
     rotation: {x: 90, y: 0, z: 0}
     curve:
+      symmetrical: 0
       before: {x: 0, y: 0, z: 0}
-      after: {x: 2, y: 2, z: 0}
+      after: {x: -.916562915, y: 2.16586018, z: -.0933974981}
     fov: 60
     brightness: 1
     time: 2
@@ -252,8 +253,9 @@ MonoBehaviour:
   - position: {x: 0, y: 3, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     curve:
-      before: {x: 0, y: 0, z: 2}
-      after: {x: 0, y: 0, z: -8}
+      symmetrical: 1
+      before: {x: 1.89135742, y: -1.74616909, z: 1.66833973}
+      after: {x: -1.89135742, y: 1.74616909, z: -1.66833973}
     fov: 60
     brightness: 1
     time: 5
@@ -261,7 +263,8 @@ MonoBehaviour:
   - position: {x: -5, y: 0, z: 0}
     rotation: {x: 0, y: 90, z: 0}
     curve:
-      before: {x: -1.93731403, y: 6.65267944, z: 1.7115345}
+      symmetrical: 0
+      before: {x: -.164458275, y: 2.44957733, z: -.24143672}
       after: {x: 0, y: 0, z: 0}
     fov: 60
     brightness: 1
