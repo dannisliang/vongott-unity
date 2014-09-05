@@ -249,14 +249,23 @@ MonoBehaviour:
     brightness: 1
     time: 2
     stop: 0
-  - position: {x: 0, y: 5, z: 0}
+  - position: {x: 0, y: 3, z: 0}
     rotation: {x: 90, y: 0, z: 0}
+    curve:
+      before: {x: 0, y: 0, z: 1}
+      after: {x: 0, y: 2, z: 0}
+    fov: 60
+    brightness: 1
+    time: 5
+    stop: 0
+  - position: {x: 0, y: 0, z: 5}
+    rotation: {x: 0, y: 180, z: 0}
     curve:
       before: {x: 0, y: 0, z: 2}
       after: {x: 0, y: 0, z: 0}
     fov: 60
     brightness: 1
-    time: 5
+    time: 8
     stop: 0
   cam: {fileID: 1896294253}
   length: 30
@@ -517,8 +526,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1896294249}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: .0480238013, y: 0, z: 0, w: .998846233}
+  m_LocalPosition: {x: .348444521, y: 1.02548158, z: .0124444515}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

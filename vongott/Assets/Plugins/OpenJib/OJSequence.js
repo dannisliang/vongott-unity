@@ -107,10 +107,20 @@ public class OJSequence extends MonoBehaviour {
 		kf.position = Vector3.Lerp ( kf1.position, kf2.position, percent ); 
 	}	
 
+	private static function LinearTween ( t : float, b : float, c : float, d : float ) {
+		return c * t / d + b;
+	}
+	
+	private static function EaseInTween ( t : float, b : float, c : float, d : float ) {
+		t /= d;
+		return c*t*t + b;
+	}
+
 	public function LerpCamera ( kf1 : OJKeyframe, kf2 : OJKeyframe, t : float ) {
-		cam.transform.localPosition = CalculateBezierPoint ( t, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
-		//cam.transform.localPosition = Vector3.Lerp ( kf1.position, kf2.position, t ); 
+		//t = LinearTween ( t, 0, 1, kf2.time - kf1.time );
+		//t = EaseInTween ( t, 0, 1, kf2.time - kf1.time );
 		
+		cam.transform.localPosition = CalculateBezierPoint ( t, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
 		cam.transform.localRotation = Quaternion.Lerp ( Quaternion.Euler ( kf1.rotation ), Quaternion.Euler ( kf2.rotation ), t ); 
 	}	
 
@@ -130,11 +140,22 @@ public class OJSequence extends MonoBehaviour {
 		// Create new keyframe
 		var kf : OJKeyframe = new OJKeyframe ();
 		var closest : KeyframePair = FindClosestKeyframes ();
-		var cursor : float = GetCursorPosition ( closest.kf1, closest.kf2 );
 		
-		kf.time = time;
-		LerpKeyframe (  kf,closest.kf1, closest.kf2, cursor );
+		
+		if ( closest.kf1 && closest.kf2 ) {
+			var cursor : float = GetCursorPosition ( closest.kf1, closest.kf2 );
+			LerpKeyframe ( kf, closest.kf1, closest.kf2, cursor );
+		
+		} else if ( closest.kf1 ) {
+			kf = closest.kf1;
 
+		} else if ( closest.kf2 ) {
+			kf = closest.kf2;
+
+		}
+
+		kf.time = time;
+		
 		keyframes.Add ( kf );
 		SortKeyframes ();
 		
