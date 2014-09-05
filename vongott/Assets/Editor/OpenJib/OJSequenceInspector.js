@@ -23,12 +23,15 @@ public class OJSequenceInspector extends Editor {
 		// Controls
 		EditorGUILayout.BeginHorizontal ();
 		
-		if ( GUILayout.Button ( "PLAY" ) ) {
-			sequence.Play ();
-		}
+		if ( sequence.playing ) {
+			if ( GUILayout.Button ( "STOP" ) ) {
+				sequence.Stop ();
+			}
 		
-		if ( GUILayout.Button ( "PAUSE" ) ) {
-			sequence.Stop ();
+		} else {
+			if ( GUILayout.Button ( "PLAY" ) ) {
+				sequence.Play ();
+			}
 		}
 		
 		if ( GUILayout.Button ( "RESET" ) ) {
@@ -140,5 +143,48 @@ public class OJSequenceInspector extends Editor {
 		if ( !sequence.playing ) {
 			currentEditorTime = currentTime;
 		}
+	}
+
+	private function DrawHandles ( kf : OJKeyframe ) {
+		if ( kf.curve.before != Vector3.zero ) {
+			Handles.DrawLine ( kf.position, kf.position + kf.curve.before );
+		}
+		
+		if ( kf.curve.after != Vector3.zero ) {
+			Handles.DrawLine ( kf.position, kf.position + kf.curve.after );
+		}
+	}
+
+	public function OnSceneGUI () {
+		var sequence : OJSequence = target as OJSequence;
+		
+		if ( sequence.keyframes.Count > 1 ) {
+			for ( var k : int = 1; k < sequence.keyframes.Count; k++ ) {
+				Handles.color = new Color ( 1, 1, 1, 0.5 );
+
+				var kf1 : OJKeyframe = sequence.keyframes [ k - 1 ];
+				var kf2 : OJKeyframe = sequence.keyframes [ k ];
+
+				for ( var t : float = 0.05; t <= 1.05; t += 0.05 ) {
+					var p1 : Vector3 = OJSequence.CalculateBezierPoint ( t - 0.05, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
+					var p2 : Vector3 = OJSequence.CalculateBezierPoint ( t, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
+					
+					Handles.DrawLine ( p1, p2 );
+				}
+				
+				Handles.color = new Color ( 0, 1, 1, 0.5 );
+			
+				DrawHandles ( kf1 );
+
+				if ( k >= sequence.keyframes.Count - 1 ) {
+					DrawHandles ( kf2 );
+				}
+			}
+		}
+		
+		var kf : OJKeyframe = sequence.keyframes [ currentEditorKeyframe ];
+		
+		kf.curve.before = Handles.PositionHandle ( kf.position + kf.curve.before, Quaternion.Euler ( Vector3.zero ) ) - kf.position;
+		kf.curve.after = Handles.PositionHandle ( kf.position + kf.curve.after, Quaternion.Euler ( Vector3.zero ) ) - kf.position;
 	}
 }

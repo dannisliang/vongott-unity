@@ -50,7 +50,7 @@ public class OJSequence extends MonoBehaviour {
 		return Application.isPlaying && cam != null && keyframes.Count > 0;
 	}
 
-	private static function CalculateBezierPoint ( t : float, p0 : Vector3, p1 : Vector3, p2 : Vector3, p3 : Vector3 ) : Vector3 {
+	public static function CalculateBezierPoint ( t : float, p0 : Vector3, p1 : Vector3, p2 : Vector3, p3 : Vector3 ) : Vector3 {
 		var u : float = 1 - t;
 		var tt : float = t*t;
 	  	var uu : float = u*u;
@@ -220,22 +220,6 @@ public class OJSequence extends MonoBehaviour {
 			} else {			
 				SetTime ( currentTime );
 			
-			}
-		}
-	}
-
-	public function OnDrawGizmosSelected () {
-		if ( keyframes.Count > 1 ) {
-			for ( var k : int = 1; k < keyframes.Count; k++ ) {
-				var kf1 : OJKeyframe = keyframes [ k - 1 ];
-				var kf2 : OJKeyframe = keyframes [ k ];
-
-				for ( var t : float = 0.1; t <= 1; t += 0.1 ) {
-					var p1 : Vector3 = CalculateBezierPoint ( t - 0.1, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
-					var p2 : Vector3 = CalculateBezierPoint ( t, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
-					
-					Gizmos.DrawLine ( p1, p2 );
-				}
 			}
 		}
 	}
