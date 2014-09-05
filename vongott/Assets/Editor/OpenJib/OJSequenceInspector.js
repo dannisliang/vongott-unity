@@ -40,6 +40,8 @@ public class OJSequenceInspector extends Editor {
 
 		EditorGUILayout.EndHorizontal ();
 
+		sequence.autoPlay = EditorGUILayout.Toggle ( "Autoplay", sequence.autoPlay );
+
 		EditorGUILayout.Space ();
 
 		timelineScale = EditorGUILayout.Slider ( "Scale", timelineScale + 80, 100, 500 ) - 80;

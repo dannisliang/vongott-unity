@@ -1,5 +1,7 @@
 #pragma strict
 
+import System.Collections.Generic;
+
 public class OJKeyframe {
 	public class Curve {
 		public var symmetrical : boolean = false;
@@ -41,13 +43,13 @@ public class OJSequence extends MonoBehaviour {
 			this.kf2 = kf2;
 		}
 	}
-	
+
+	public var autoPlay : boolean = false;	
 	public var keyframes : List.< OJKeyframe > = new List.< OJKeyframe > (); 
 	public var cam : Camera;
 	public var length : float = 30;
-
-	@HideInInspector public var currentTime : float;
-	@HideInInspector public var playing : boolean = false;
+	public var currentTime : float;
+	public var playing : boolean = false;
 
 	private function get isReady () : boolean {
 		return Application.isPlaying && cam != null && keyframes.Count > 0;
@@ -91,7 +93,13 @@ public class OJSequence extends MonoBehaviour {
 	}
 
 	public function Start () {
-		cam.enabled = false;
+		if ( autoPlay ) {
+			Play ();
+		
+		} else {
+			cam.enabled = false;
+		
+		}
 	}
 
 	public function Stop () {
@@ -156,6 +164,8 @@ public class OJSequence extends MonoBehaviour {
 				return i;
 			}
 		}
+
+		return 0;
 	}
 
 	public function GetCursorPosition ( kf1 : OJKeyframe, kf2 : OJKeyframe ) : float {
