@@ -3,21 +3,23 @@
 import DG.Tweening;
 
 public class OJKeyframe {
+	public class Curve {
+		public var before : Vector3;
+		public var after : Vector3;
+	}
+
 	// Transform
 	public var position : Vector3;
 	public var rotation : Vector3;
+	public var curve : Curve = new Curve ();
 	
 	// Properties
 	public var fov : int = 60;
 	public var brightness : float = 1;
-	public var wait : float = 1;
+	public var time : float = 0;
 	public var stop : boolean;
-	
-	// Next tween
-	public var time : float = 1;
-	public var easing : DG.Tweening.Ease;
-	public var path : Vector3 [];
 
+	// Next tween
 	public function Focus ( cam : Transform, target : Transform ) {
 		var lookPos : Vector3 = target.position - cam.position;
 		lookPos.y = 0;
@@ -27,92 +29,62 @@ public class OJKeyframe {
 }
 
 public class OJSequence extends MonoBehaviour {
-	public var keyframes : List.< OJKeyframe > = new List.< OJKeyframe > (); 
-	public var cam : Camera;
+	private class KeyframePair {
+		public var kf1 : OJKeyframe;
+		public var kf2 : OJKeyframe;
 
-	@HideInInspector public var currentKeyframe : int;
-
-	private function get isReady () : boolean {
-		return Application.isPlaying && cam != null && keyframes.Count > 0 && currentKeyframe < keyframes.Count;
+		function KeyframePair ( kf1 : OJKeyframe, kf2 : OJKeyframe ) {
+			this.kf1 = kf1;
+			this.kf2 = kf2;
+		}
 	}
 	
-	public function PlayNextKeyframe () {
-		if ( currentKeyframe < keyframes.Count - 1 ) {
-			currentKeyframe++;
+	public var keyframes : List.< OJKeyframe > = new List.< OJKeyframe > (); 
+	public var cam : Camera;
+	public var length : float = 30;
 
-			if ( !keyframes [ currentKeyframe ].stop ) {
-				PlayCurrentKeyframe ();
-			}
-		}
+	@HideInInspector public var currentTime : float;
+	@HideInInspector public var playing : boolean = false;
+
+	private function get isReady () : boolean {
+		return Application.isPlaying && cam != null && keyframes.Count > 0;
 	}
 
-	// Frame functions
-	public function SetKeyframePose ( i : int ) {
-		var kf : OJKeyframe = keyframes [ i ];
-		
-		SetPosition ( kf.position );
-		SetRotation ( kf.rotation );
-	}
-
-	// Tween functions
-	public function SetPosition ( value : Vector3 ) {
-		cam.transform.position = value;
-	}
-
-	public function GetPosition () : Vector3 {
-		return cam.transform.position;
-	}
-
-	public function SetRotation ( value : Vector3 ) {
-		cam.transform.localRotation = Quaternion.Euler ( value );
-	}
-
-	public function GetRotation () : Vector3 {
-		return cam.transform.localEulerAngles;
-	}
-
-	public function PlayCurrentKeyframe () {
-		if ( isReady && currentKeyframe < keyframes.Count - 1 ) {
-			StartCoroutine ( function () : IEnumerator {
-				var thiskf : OJKeyframe = keyframes [ currentKeyframe ];
-				var nextkf : OJKeyframe = keyframes [ currentKeyframe + 1 ];
-
-				if ( thiskf.wait > 0 ) {
-					yield WaitForSeconds ( thiskf.wait );
-				}
-
-				var moveTween : DG.Tweening.Tween = DOTween.To (
-					GetPosition,
-					SetPosition,
-					nextkf.position,
-					thiskf.time
-				);
-				
-				var rotateTween : DG.Tweening.Tween = DOTween.To (
-					GetRotation,
-					SetRotation,
-					nextkf.rotation,
-					thiskf.time
-				);
-
-				rotateTween.SetEase ( thiskf.easing );
-				moveTween.SetEase ( thiskf.easing );
-			} () );
-		}
+	private static function CalculateBezierPoint ( t : float, p0 : Vector3, p1 : Vector3, p2 : Vector3, p3 : Vector3 ) : Vector3 {
+		var u : float = 1 - t;
+		var tt : float = t*t;
+	  	var uu : float = u*u;
+	  	var uuu : float = uu * u;
+	  	var ttt : float = tt * t;
+	 
+	  	var p : Vector3 = uuu * p0;
+	  	p += 3 * uu * t * p1;
+	  	p += 3 * u * tt * p2;
+	  	p += ttt * p3;
+	 
+	  	return p;
+	}	
+	
+	public function SortKeyframes () {
+		keyframes.Sort ( function ( a : OJKeyframe, b : OJKeyframe ) {
+			a.time.CompareTo ( b.time );
+		} );
 	}
 
 	public function Play () {
 		if ( isReady ) {
 			cam.enabled = true;
-			PlayCurrentKeyframe ();
+			playing = true;
 		}
 	}
 
 	public function Reset () {
-		currentKeyframe = 0;
+		currentTime = 0;
 
-		SetPosition ( keyframes [ currentKeyframe ].position );
-		SetRotation ( keyframes [ currentKeyframe ].rotation );
+		var kf : OJKeyframe = keyframes [ 0 ];
+	
+		cam.transform.localPosition = kf.position;
+		cam.transform.localEulerAngles = kf.rotation;
 	}
 
 	public function Start () {
@@ -120,10 +92,130 @@ public class OJSequence extends MonoBehaviour {
 	}
 
 	public function Stop () {
-	
+		playing = false;
 	}
 
 	public function Exit () {
 		cam.enabled = false;
+	}
+
+	public function RemoveKeyframe ( i : int ) {
+		keyframes.RemoveAt ( i );
+	}
+	
+	public function LerpKeyframe ( kf : OJKeyframe, kf1 : OJKeyframe, kf2 : OJKeyframe, percent : float ) {
+		kf.position = Vector3.Lerp ( kf1.position, kf2.position, percent ); 
+	}	
+
+	public function LerpCamera ( kf1 : OJKeyframe, kf2 : OJKeyframe, t : float ) {
+		cam.transform.localPosition = CalculateBezierPoint ( t, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
+		//cam.transform.localPosition = Vector3.Lerp ( kf1.position, kf2.position, t ); 
+		
+		cam.transform.localRotation = Quaternion.Lerp ( Quaternion.Euler ( kf1.rotation ), Quaternion.Euler ( kf2.rotation ), t ); 
+	}	
+
+	public function SetCamera ( kf : OJKeyframe ) {
+		cam.transform.localPosition = kf.position;
+		cam.transform.localRotation = Quaternion.Euler ( kf.rotation );
+	}
+
+	public function AddKeyframe ( time : float ) : int {
+		// Check if keyframe exists at the given time
+		for ( var i : int = 0; i < keyframes.Count; i++ ) {
+			if ( keyframes [ i ].time == time ) {
+				return i;
+			}
+		}
+
+		// Create new keyframe
+		var kf : OJKeyframe = new OJKeyframe ();
+		var closest : KeyframePair = FindClosestKeyframes ();
+		var cursor : float = GetCursorPosition ( closest.kf1, closest.kf2 );
+		
+		kf.time = time;
+		LerpKeyframe (  kf,closest.kf1, closest.kf2, cursor );
+
+		keyframes.Add ( kf );
+		SortKeyframes ();
+		
+		// Return the correct index
+		for ( i = 0; i < keyframes.Count; i++ ) {
+			if ( keyframes [ i ].time == time ) {
+				return i;
+			}
+		}
+	}
+
+	public function GetCursorPosition ( kf1 : OJKeyframe, kf2 : OJKeyframe ) : float {
+		var min : float = kf1.time;
+		var cursor : float = currentTime;
+		var max : float = kf2.time;
+		
+		return ( cursor - min ) / ( max - min );
+	}
+
+	public function FindClosestKeyframes () : KeyframePair {
+		var kf1 : OJKeyframe;
+		var kf2 : OJKeyframe;
+	
+		for ( var i : int = 0; i < keyframes.Count; i++ ) {
+			var kf : OJKeyframe = keyframes [ i ];
+
+			if ( kf.time == currentTime || ( kf.time < currentTime && ( kf1 == null || Mathf.Abs ( kf.time - currentTime ) < Mathf.Abs ( kf1.time - currentTime ) ) ) ) {
+				kf1 = kf;
+			
+			} else if ( kf.time > currentTime && ( kf2 == null || Mathf.Abs ( kf.time - currentTime ) < Mathf.Abs ( kf2.time - currentTime ) ) ) {
+				kf2 = kf;
+
+			}
+		}
+
+		return new KeyframePair ( kf1, kf2 );
+	}
+
+	public function SetTime ( time : float ) {
+		currentTime = time;
+
+		var closest : KeyframePair = FindClosestKeyframes ();
+	
+		if ( closest.kf1 ) {
+			if ( closest.kf2 ) { 
+				LerpCamera ( closest.kf1, closest.kf2, GetCursorPosition ( closest.kf1, closest.kf2 ) ); 
+			
+			} else {
+				SetCamera ( closest.kf1 ); 
+
+			}
+		}	
+	}
+
+	public function Update () {
+		if ( playing ) {
+			currentTime += Time.deltaTime;
+
+			if ( currentTime >= length ) {
+				playing = false;
+			
+			} else {			
+				SetTime ( currentTime );
+			
+			}
+		}
+	}
+
+	public function OnDrawGizmosSelected () {
+		if ( keyframes.Count > 1 ) {
+			for ( var k : int = 1; k < keyframes.Count; k++ ) {
+				var kf1 : OJKeyframe = keyframes [ k - 1 ];
+				var kf2 : OJKeyframe = keyframes [ k ];
+
+				for ( var t : float = 0.1; t <= 1; t += 0.1 ) {
+					var p1 : Vector3 = CalculateBezierPoint ( t - 0.1, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
+					var p2 : Vector3 = CalculateBezierPoint ( t, kf1.position, kf1.position + kf1.curve.after, kf2.position + kf2.curve.before, kf2.position );
+					
+					Gizmos.DrawLine ( p1, p2 );
+				}
+			}
+		}
 	}
 }

@@ -4,12 +4,15 @@ import DG.Tweening;
 
 @CustomEditor ( OJSequence )
 public class OJSequenceInspector extends Editor {
-	private static var currentSequence : int;
-	private static var currentKeyframe : int;
-	
+	private static var currentEditorTime : float;
+	private static var currentEditorKeyframe : int;
+	private static var timelineScale : float = 20;
+
 	override function OnInspectorGUI () {
 		var sequence : OJSequence = target as OJSequence;
-	
+		var padding : float = 10;
+		var currentTime : float = sequence.playing ? sequence.currentTime : currentEditorTime;
+
 		sequence.cam = EditorGUILayout.ObjectField ( "Camera", sequence.cam, typeof ( Camera ), true ) as Camera;
 
 		if ( !sequence.cam ) {
@@ -17,6 +20,7 @@ public class OJSequenceInspector extends Editor {
 			return;
 		}
 
+		// Controls
 		EditorGUILayout.BeginHorizontal ();
 		
 		if ( GUILayout.Button ( "PLAY" ) ) {
@@ -28,127 +32,113 @@ public class OJSequenceInspector extends Editor {
 		}
 		
 		if ( GUILayout.Button ( "RESET" ) ) {
+			currentEditorTime = 0;
+			currentTime = 0;
 			sequence.Reset ();
 		}
 
 		EditorGUILayout.EndHorizontal ();
-		
+
 		EditorGUILayout.Space ();
 
-		// Pick keyframe
-		EditorGUILayout.LabelField ( "Keyframe: " + sequence.currentKeyframe + " / " + ( sequence.keyframes.Count - 1 ), EditorStyles.boldLabel );
+		timelineScale = EditorGUILayout.Slider ( "Scale", timelineScale + 80, 100, 500 ) - 80;
 		
-		GUILayout.Space ( 30 );
-		
+		// Timeline
 		EditorGUILayout.BeginHorizontal ();
 		
-		if ( sequence.keyframes.Count < 1 ) {
-			sequence.keyframes.Add ( new OJKeyframe () );
+		GUILayout.Box ( "", GUILayout.Height ( 50 ), GUILayout.ExpandWidth ( true ) );
+		
+		var rect : Rect = GUILayoutUtility.GetLastRect ();
+
+		if ( !sequence.playing && GUILayout.Button ( "+", GUILayout.Width ( 32 ), GUILayout.ExpandHeight ( true ) ) ) {
+			currentEditorKeyframe = sequence.AddKeyframe ( currentTime );
+		}
+		
+		EditorGUILayout.EndHorizontal ();
+
+		GUI.BeginScrollView ( rect, new Vector2 ( currentTime * timelineScale, 0 ), new Rect ( 0, 0, padding * 2 + sequence.length * timelineScale, 20 ), GUIStyle.none, GUIStyle.none );
+		
+		for ( var s : int = 0; s <= sequence.length; s++ ) {
+			GUI.Label ( new Rect ( padding - 5 + s * timelineScale, 0, 20, 14 ), s.ToString() );
 		}
 
-		if ( currentKeyframe >= sequence.keyframes.Count ) {
-			currentKeyframe = sequence.keyframes.Count - 1;
-		}
+		GUI.Box ( new Rect ( padding, 34, sequence.length * timelineScale, 2 ), "" );
+
+		GUI.color = Color.red;
+
+		GUI.Box ( new Rect ( padding + currentTime * timelineScale, 20, 2, 30 ), "" );
 
 		for ( var i : int = 0; i < sequence.keyframes.Count; i++ ) {
-			if ( i == currentKeyframe ) {
-				GUI.backgroundColor = Color.white;
-			} else {
-				GUI.backgroundColor = Color.grey;
-			}
+			var kf : OJKeyframe = sequence.keyframes [ i ];
 
-			if ( GUILayout.Button ( i.ToString(), GUILayout.Width ( 24 ), GUILayout.Height ( 16 ) ) ) {
-				currentKeyframe = i;
-				sequence.SetKeyframePose ( i );
+			GUI.color = i == currentEditorKeyframe ? Color.green : Color.white;
+
+			if ( GUI.Button ( new Rect ( padding - 5 + kf.time * timelineScale, 25.0, 10, 20 ), "" ) ) {
+				currentEditorKeyframe = i;
 			}
+		}
+
+		GUI.color = Color.white;
+		
+		GUI.EndScrollView ();
+
+		if ( !sequence.playing ) {
+			// Scrobble
+			EditorGUILayout.Space ();
+
+			EditorGUILayout.BeginHorizontal ();
+			currentTime = EditorGUILayout.Slider ( currentTime, 0, sequence.length );
+			EditorGUILayout.LabelField ( "/", GUILayout.Width ( 10 ) );
+			sequence.length = EditorGUILayout.FloatField ( sequence.length, GUILayout.Width ( 50 ) );
+			EditorGUILayout.EndHorizontal ();
+
+			EditorGUILayout.Space ();
+
+			// Properties
+			kf = sequence.keyframes [ currentEditorKeyframe ];
+
+			// Transform
+			EditorGUILayout.BeginHorizontal ();
+			EditorGUILayout.LabelField ( "Transform", EditorStyles.boldLabel );
+			if ( GUILayout.Button ( "Copy from scene", GUILayout.Width ( 120 ) ) ) {
+				kf.position = sequence.cam.transform.localPosition;
+				kf.rotation = sequence.cam.transform.localEulerAngles;
+			}
+			EditorGUILayout.EndHorizontal ();
 			
-			if ( i == currentKeyframe ) {
-				var rect : Rect = GUILayoutUtility.GetLastRect ();
-				var bRect : Rect = rect;
+			kf.position = EditorGUILayout.Vector3Field ( "Position", kf.position );
+			kf.rotation = EditorGUILayout.Vector3Field ( "Rotation", kf.rotation );
+			
+			// Curve
+			EditorGUILayout.Space ();
+			EditorGUILayout.LabelField ( "Curve", EditorStyles.boldLabel );
+			kf.curve.before = EditorGUILayout.Vector3Field ( "Before", kf.curve.before );
+			kf.curve.after = EditorGUILayout.Vector3Field ( "After", kf.curve.after );
 
-				bRect.y = rect.y - 24;
+			EditorGUILayout.Space ();
+			
+			EditorGUILayout.LabelField ( "Properties", EditorStyles.boldLabel );
+			kf.fov = EditorGUILayout.IntField ( "FOV", kf.fov );
+			kf.brightness = EditorGUILayout.FloatField ( "Brightness", kf.brightness );
+			kf.stop = EditorGUILayout.Toggle ( "Stop", kf.stop );
+			kf.time = EditorGUILayout.Slider ( "Time", kf.time, 0, sequence.length );
+			
+			// Actions
+			EditorGUILayout.Space ();
 
-				GUI.backgroundColor = Color.red;
-				if ( GUI.Button ( bRect, "-" ) ) {
-					sequence.keyframes.RemoveAt ( i );
-					return;
-				}
-				GUI.backgroundColor = Color.white;
-
-				if ( i > 0 ) {
-					bRect.x = rect.x - 20;
-					bRect.width = 16;
-
-					if ( GUI.Button ( bRect, "<" ) ) {
-						var a : OJKeyframe = sequence.keyframes [ i - 1 ];
-						var b : OJKeyframe = sequence.keyframes [ i ];
-
-						sequence.keyframes [ i - 1 ] = b;
-						sequence.keyframes [ i ] = a;
-
-						currentKeyframe--;
-						return;
-					}
-				}
-				
-				if ( i < sequence.keyframes.Count - 1 ) {
-					bRect.x = rect.xMax + 4;
-					bRect.width = 16;
-
-					if ( GUI.Button ( bRect, ">" ) ) {
-						a = sequence.keyframes [ i + 1 ];
-						b = sequence.keyframes [ i ];
-
-						sequence.keyframes [ i + 1 ] = b;
-						sequence.keyframes [ i ] = a;
-
-						currentKeyframe++;
-						return;
-					}
-				}
+			if ( GUILayout.Button ( "Remove" ) ) {
+				sequence.RemoveKeyframe ( currentEditorKeyframe );
 			}
-
-			GUI.backgroundColor = Color.white;
-		}
-		
-		GUI.backgroundColor = Color.green;
-		if ( GUILayout.Button ( "+", GUILayout.Width ( 24 ), GUILayout.Height ( 16 ) ) ) {
-			sequence.keyframes.Add ( new OJKeyframe () );
 		}
 
-		GUI.backgroundColor = Color.white;
-		
-		EditorGUILayout.EndHorizontal ();
+		// Make sure the list of keyframes is sorted by time
+		if ( !sequence.playing && GUI.changed ) {
+			sequence.SortKeyframes ();
+			sequence.SetTime ( currentTime );
+		}
 
-		EditorGUILayout.Space ();
-
-		var kf : OJKeyframe = sequence.keyframes [ currentKeyframe ];
-		
-		// Transform
-		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.LabelField ( "Transform", EditorStyles.boldLabel );
-
-		EditorGUILayout.EndHorizontal ();
-		
-		kf.position = EditorGUILayout.Vector3Field ( "Position", kf.position );
-		kf.rotation = EditorGUILayout.Vector3Field ( "Rotation", kf.rotation );
-
-		EditorGUILayout.Space ();
-		
-		EditorGUILayout.LabelField ( "Properties", EditorStyles.boldLabel );
-		kf.fov = EditorGUILayout.IntField ( "FOV", kf.fov );
-		kf.brightness = EditorGUILayout.FloatField ( "Brightness", kf.brightness );
-		kf.wait = EditorGUILayout.FloatField ( "Wait", kf.wait );
-		kf.stop = EditorGUILayout.Toggle ( "Stop", kf.stop );
-		
-		EditorGUILayout.Space ();
-		
-		EditorGUILayout.LabelField ( "Next tween", EditorStyles.boldLabel );
-		kf.time = EditorGUILayout.FloatField ( "Time", kf.time );
-		kf.easing = EditorGUILayout.Popup ( "Easing", kf.easing, System.Enum.GetNames ( Ease ) );
-
-		// Adopt data
-		kf.position = sequence.cam.transform.position;
-		kf.rotation = sequence.cam.transform.localEulerAngles;
+		if ( !sequence.playing ) {
+			currentEditorTime = currentTime;
+		}
 	}
 }

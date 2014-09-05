@@ -62,7 +62,6 @@ public class OJSequenceEditor extends OGPage {
 
 		keyframeProperties.sldFOV.sliderValue = kf.fov / 100;
 		keyframeProperties.sldBrightness.sliderValue = kf.brightness;
-		keyframeProperties.fldWait.text = kf.wait.ToString ();
 		keyframeProperties.tbxStop.isTicked = kf.stop;
 	}
 
@@ -77,8 +76,6 @@ public class OJSequenceEditor extends OGPage {
 		
 		kf.fov = 100 * keyframeProperties.sldFOV.sliderValue;
 		kf.brightness = keyframeProperties.sldBrightness.sliderValue;
-		kf.wait = float.Parse ( keyframeProperties.fldWait.text );
-		kf.stop = keyframeProperties.tbxStop.isTicked;
 	}
 
 	private function GenerateKeyframeButtons () : IEnumerator {
