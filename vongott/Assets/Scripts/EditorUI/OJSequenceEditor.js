@@ -1,32 +1,18 @@
 ﻿#pragma strict
 
 public class OJSequenceEditor extends OGPage {
-	private class KeyframeTransform {
-		public var lblPosition : OGLabel;
-		public var lblRotation : OGLabel;
-	}
-
-	private class KeyframeProperties {
-		public var sldFOV : OGSlider;
-		public var sldBrightness : OGSlider;
-		public var fldWait : OGTextField;
-		public var tbxStop : OGTickBox;
-	}
-
-	private class KeyframeTween {
-		public var fldTime : OGTextField;
-		public var popEasing : OGPopUp;
-	}
-
-	public var navigation : Transform;
-	public var btnAdd : OGButton;
-	public var keyframeTransform : KeyframeTransform;
-	public var keyframeProperties : KeyframeProperties;
-	public var keyframeTween : KeyframeTween;
+	public var linLeft : Transform;
+	public var linRight : Transform;
+	public var timestepContainer : Transform;
 	public var keyframeContainer : Transform;
 	public var sequenceCamera : Camera;
+	public var timeline : OGScrollView;
+	public var sldScale : OGSlider;
+	public var timelineScale : float = 20;
+	public var inspector : OEComponentInspector;
 
 	private var currentKeyframe : int;
+	private var currentTime : float;
 
 	public static var sequence : OJSequence;
 
@@ -47,35 +33,33 @@ public class OJSequenceEditor extends OGPage {
 	}
 
 	public function AddKeyframe () {
-		sequence.keyframes.Add ( new OJKeyframe () );
+		sequence.AddKeyframe ( currentTime );
 
 		StartCoroutine ( GenerateKeyframeButtons () );
 	}
 
 	public function ReadKeyframe () {
-		navigation.localPosition.x = 8 + currentKeyframe * 20;
-		
-		var kf : OJKeyframe = sequence.keyframes [ currentKeyframe ];
-
-		keyframeTransform.lblPosition.text = kf.position.ToString();
-		keyframeTransform.lblRotation.text = kf.rotation.ToString();
-
-		keyframeProperties.sldFOV.sliderValue = kf.fov / 100;
-		keyframeProperties.sldBrightness.sliderValue = kf.brightness;
-		keyframeProperties.tbxStop.isTicked = kf.stop;
 	}
-
-	public function WriteKeyframe () {
-		var kf : OJKeyframe = sequence.keyframes [ currentKeyframe ];
 	
-		kf.position = sequence.cam.transform.localPosition;
-		keyframeTransform.lblPosition.text = kf.position.ToString();
+	private function GenerateTimestepLabels () : IEnumerator {
+		for ( var i : int = 0; i < timestepContainer.childCount; i++ ) {
+			Destroy ( timestepContainer.GetChild ( i ).gameObject );
+		}
+
+		yield WaitForEndOfFrame ();
 		
-		kf.rotation = sequence.transform.localEulerAngles;
-		keyframeTransform.lblRotation.text = kf.rotation.ToString();
-		
-		kf.fov = 100 * keyframeProperties.sldFOV.sliderValue;
-		kf.brightness = keyframeProperties.sldBrightness.sliderValue;
+		for ( i = 0; i <= sequence.length; i++ ) {
+			var lbl : OGLabel = new GameObject ( i.ToString () ).AddComponent.< OGLabel > ();
+			lbl.ApplyDefaultStyles ();
+			lbl.text = i.ToString ();
+			lbl.pivot.x = RelativeX.Center;
+			lbl.overrideAlignment = true;
+			lbl.alignment = TextAnchor.UpperCenter;
+
+			lbl.transform.parent = timestepContainer;
+			lbl.transform.localScale = new Vector3 ( 20, 14, 1 );
+			lbl.transform.localPosition = new Vector3 ( i * timelineScale, 0, 0 );
+		}
 	}
 
 	private function GenerateKeyframeButtons () : IEnumerator {
@@ -86,30 +70,55 @@ public class OJSequenceEditor extends OGPage {
 		yield WaitForEndOfFrame ();
 		
 		for ( i = 0; i < sequence.keyframes.Count; i++ ) {
+			var kf : OJKeyframe = sequence.keyframes [ i ];
+
 			var btn : OGButton = new GameObject ( i.ToString () ).AddComponent.< OGButton > ();
 			btn.ApplyDefaultStyles ();
-			btn.text = i.ToString ();
 			btn.target = this.gameObject;
 			btn.message = "SelectKeyframe";
 			btn.argument = i.ToString ();
 
 			btn.transform.parent = keyframeContainer;
-			btn.transform.localScale = new Vector3 ( 16, 16, 1 );
-			btn.transform.localPosition = new Vector3 ( i * 20, -8, 0 );
+			btn.transform.localScale = new Vector3 ( 10, 20, 1 );
+			btn.transform.localPosition = new Vector3 ( kf.time * timelineScale - 5, 0, 0 );
 		}
+	}
 
-		btnAdd.transform.localPosition.x = 20 * ( i + 1 );
+	public function Refresh () {
+		StartCoroutine ( GenerateKeyframeButtons () );
+		StartCoroutine ( GenerateTimestepLabels () );
 	}
 
 	override function StartPage () {
 		sequenceCamera.enabled = true;
-
-		StartCoroutine ( GenerateKeyframeButtons () );
+		
+		Refresh ();
 	}
 
 	override function ExitPage () {
 		sequenceCamera.enabled = false;
 		
 		sequence = null;
+	}
+
+	override function UpdatePage () {
+		currentTime = -timeline.position.x / timelineScale;
+		
+		var prevTimelineScale : float = timelineScale;
+	       	timelineScale = 20 + sldScale.sliderValue * 100;
+
+		if ( timelineScale != prevTimelineScale ) {
+			Refresh ();
+		}
+
+		linLeft.localPosition.x = -timeline.position.x;
+		linRight.localPosition.x = -timeline.position.x + timeline.size.x;
+
+		if ( sequence.keyframes.Count > 0 && currentKeyframe < sequence.keyframes.Count ) {
+			var kf : OJKeyframe = sequence.keyframes [ currentKeyframe ];
+		
+			//inspector.target = ;
+			inspector.Update ();
+		}
 	}
 }

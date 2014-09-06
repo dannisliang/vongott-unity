@@ -2,6 +2,7 @@
 
 public class EditorEventManager extends MonoBehaviour {
 	public var navmeshMaterial : Material;
+	public var sequenceCamera : Camera;
 	
 	public function Play ( btn : OGButton ) {
 		if ( !String.IsNullOrEmpty ( OEWorkspace.GetInstance().currentSavePath ) ) {
@@ -19,6 +20,19 @@ public class EditorEventManager extends MonoBehaviour {
 		var go : GameObject = Instantiate ( Resources.Load ( "Prefabs/Meta/trigger" ) ) as GameObject;
 		var so : OFSerializedObject = go.GetComponent.< OFSerializedObject > ();
 		var workspace : OEWorkspace = OEWorkspace.GetInstance();
+
+		workspace.PlaceAtCursor ( so );
+		workspace.SelectObject ( so );
+		workspace.RefreshAll ();
+	}
+	
+	public function AddSequence () {
+		var go : GameObject = Instantiate ( Resources.Load ( "Prefabs/Meta/sequence" ) ) as GameObject;
+		var so : OFSerializedObject = go.GetComponent.< OFSerializedObject > ();
+		var seq : OJSequence = go.GetComponent.< OJSequence > ();
+		var workspace : OEWorkspace = OEWorkspace.GetInstance();
+
+		seq.cam = sequenceCamera;
 
 		workspace.PlaceAtCursor ( so );
 		workspace.SelectObject ( so );
