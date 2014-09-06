@@ -13,8 +13,8 @@ public class ScriptEditor extends OGPage {
 			var so : OFSerializedObject = ( obj as GameObject ).GetComponent.< OFSerializedObject > ();
 
 			if ( so ) {
-				var before : String = target.luaString.Substring ( 0, fldEditor.editor.cursorIndex );
-				var after : String = target.luaString.Substring ( fldEditor.editor.cursorIndex );
+				var before : String = target.luaString.Substring ( 0, fldEditor.betaEditor.cursorIndex );
+				var after : String = target.luaString.Substring ( fldEditor.betaEditor.cursorIndex );
 
 				target.luaString = before + "'" + so.id + "'" + after;
 			}

@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b939f26117da42740bc71b621d68273d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 1
@@ -126,8 +126,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -405,8 +407,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -675,8 +679,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -1000,8 +1006,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -1292,8 +1300,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: 0
+    xFactor: 0
     y: 3
     yOffset: -60
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -1597,8 +1607,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -1876,8 +1888,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -2405,8 +2419,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -2750,8 +2766,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -3025,8 +3043,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -3303,8 +3323,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -3644,8 +3666,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -3945,8 +3969,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -4220,8 +4246,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -4498,8 +4526,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -4723,8 +4753,9 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
-    enabled: 1
+  hideText: 0
+  betaEditor:
+    enabled: 0
     string: 
     cursorPos: {x: 0, y: 0}
     cursorSelectPos: {x: 0, y: 0}
@@ -4793,8 +4824,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -5018,8 +5051,9 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
-    enabled: 1
+  hideText: 0
+  betaEditor:
+    enabled: 0
     string: 
     cursorPos: {x: 0, y: 0}
     cursorSelectPos: {x: 0, y: 0}
@@ -5096,7 +5130,13 @@ MonoBehaviour:
   autoPlay: 0
   rotateAlongCurve: 0
   keyframes:
-  - position: {x: 0, y: 0, z: 0}
+  - time: 1
+    stop: 0
+    event:
+      message: 
+      argument: 
+      fired: 0
+    position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     curve:
       symmetrical: 0
@@ -5104,12 +5144,6 @@ MonoBehaviour:
       after: {x: 0, y: 0, z: 0}
     fov: 60
     brightness: 1
-    time: 1
-    stop: 0
-    event:
-      message: 
-      argument: 
-      fired: 0
   cam: {fileID: 508660080}
   length: 30
   currentTime: 0
@@ -5258,8 +5292,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -5483,8 +5519,9 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
-    enabled: 1
+  hideText: 0
+  betaEditor:
+    enabled: 0
     string: 
     cursorPos: {x: 0, y: 0}
     cursorSelectPos: {x: 0, y: 0}
@@ -5553,8 +5590,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -5752,14 +5791,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 5
-    y: 425
+    x: 65
+    y: 350
     width: 210
     height: 170
   mouseRct:
     serializedVersion: 2
-    x: 5
-    y: 425
+    x: 65
+    y: 350
     width: 210
     height: 170
   drawDepth: -30
@@ -5997,8 +6036,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -6222,8 +6263,9 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
-    enabled: 1
+  hideText: 0
+  betaEditor:
+    enabled: 0
     string: 
     cursorPos: {x: 0, y: 0}
     cursorSelectPos: {x: 0, y: 0}
@@ -6306,12 +6348,14 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
-    widthOffset: -42
+    widthOffset: -372
     height: 0
     heightFactor: 1
     heightOffset: 0
@@ -6505,15 +6549,15 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 6
-    y: 3
-    width: 758
+    x: 61
+    y: 6
+    width: 428
     height: 48
   mouseRct:
     serializedVersion: 2
-    x: 6
-    y: 3
-    width: 758
+    x: 61
+    y: 6
+    width: 428
     height: 48
   drawDepth: -10
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -6528,10 +6572,10 @@ MonoBehaviour:
   infiniteScrolling: 0
   lockAxis: 1
   scrollbarVisibility: 0
-  size: {x: 758, y: 48}
+  size: {x: 428, y: 48}
   position: {x: 0, y: 0}
   padding: {x: 0, y: 0}
-  elasticity: 2
+  elasticity: 0
   thumbScale: {x: 16, y: 1}
 --- !u!1 &409913496
 GameObject:
@@ -6584,8 +6628,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -6863,8 +6909,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -35
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -7200,8 +7248,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -7545,8 +7595,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: -300
+    xFactor: 0
     y: 2
     yOffset: -250
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -7831,7 +7883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b939f26117da42740bc71b621d68273d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 1
@@ -7844,8 +7896,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -110
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -8123,8 +8177,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -8403,8 +8459,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: -202
+    xFactor: 0
     y: 2
     yOffset: -52
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -8672,8 +8730,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -8919,8 +8979,8 @@ Camera:
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .0125000002
-    y: .716666639
+    x: .0874999985
+    y: .591666639
     width: .25
     height: .266666681
   near clip plane: .300000012
@@ -8928,7 +8988,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 1
+  m_Depth: 5
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -8998,8 +9058,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: 0
+    xFactor: 0
     y: 2
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -9302,8 +9364,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -9578,8 +9642,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -9803,8 +9869,9 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
-    enabled: 1
+  hideText: 0
+  betaEditor:
+    enabled: 0
     string: 
     cursorPos: {x: 505, y: 482}
     cursorSelectPos: {x: 0, y: 0}
@@ -9873,8 +9940,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -10199,8 +10268,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -10480,8 +10551,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -10925,8 +10998,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -11150,8 +11225,9 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
-    enabled: 1
+  hideText: 0
+  betaEditor:
+    enabled: 0
     string: 
     cursorPos: {x: 0, y: 0}
     cursorSelectPos: {x: 0, y: 0}
@@ -11231,8 +11307,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -11506,8 +11584,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -11807,8 +11887,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -12169,8 +12251,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -12449,8 +12533,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: -302
+    xFactor: 0
     y: 2
     yOffset: -202
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -12718,8 +12804,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -12943,7 +13031,8 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
+  hideText: 0
+  betaEditor:
     enabled: 0
     string: 
     cursorPos: {x: 0, y: 0}
@@ -13058,8 +13147,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -13328,8 +13419,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -13606,8 +13699,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -13865,7 +13960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b939f26117da42740bc71b621d68273d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 1
@@ -13878,8 +13973,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -110
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -14157,8 +14254,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -14427,8 +14526,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -14705,8 +14806,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -15067,8 +15170,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -15348,7 +15453,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 855484009}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 600, y: 15, z: 0}
+  m_LocalPosition: {x: 200, y: 15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 219060346}
@@ -15376,8 +15481,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -15575,8 +15682,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 606
-    y: 20
+    x: 261
+    y: 23
     width: 1
     height: 1
   mouseRct:
@@ -15635,7 +15742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668593e9100cece4e85d4003565bc41f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 1
@@ -15648,8 +15755,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -15675,7 +15784,7 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 11400000, guid: 64a60312765b7e94eb2ee545b9e013a0, type: 2}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -15931,8 +16040,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: -252
+    xFactor: 0
     y: 2
     yOffset: -107
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -16235,8 +16346,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -16498,7 +16611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf85498c81483e49b991b79d244577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 0
@@ -16511,8 +16624,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -16543,7 +16658,7 @@ MonoBehaviour:
         fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 3
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -16805,8 +16920,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -305
+    xFactor: 1
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -17074,8 +17191,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -17349,8 +17468,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -17634,8 +17755,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -304
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -17903,8 +18026,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -18256,8 +18381,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -18542,7 +18669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668593e9100cece4e85d4003565bc41f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 1
@@ -18555,8 +18682,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -18582,7 +18711,7 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 11400000, guid: 64a60312765b7e94eb2ee545b9e013a0, type: 2}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -18833,8 +18962,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -19072,7 +19203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &972052278
 Transform:
   m_ObjectHideFlags: 0
@@ -19085,7 +19216,6 @@ Transform:
   m_Children:
   - {fileID: 1535285551}
   - {fileID: 1825360811}
-  - {fileID: 1228474693}
   m_Father: {fileID: 1088966306}
 --- !u!114 &972052279
 MonoBehaviour:
@@ -19109,7 +19239,7 @@ MonoBehaviour:
   timelineScale: 20
   inspector:
     width: 280
-    transform: {fileID: 1510407372}
+    transform: {fileID: 0}
     overrideTarget: 0
 --- !u!1 &977245676
 GameObject:
@@ -19150,7 +19280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b939f26117da42740bc71b621d68273d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 1
@@ -19163,8 +19293,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -19484,8 +19616,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -19763,8 +19897,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -20033,8 +20169,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -20303,8 +20441,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -20619,8 +20759,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -20981,8 +21123,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -21254,8 +21398,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -21572,8 +21718,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -35
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -21851,8 +21999,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -22100,7 +22250,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetResolution: {x: 0, y: 0}
   skin: {fileID: 11400000, guid: 8db56b7a0d73e774ca26d2e2c923e673, type: 2}
-  currentPage: {fileID: 978572959}
+  currentPages:
+  - {fileID: 978572959}
+  - {fileID: 972052279}
   lineMaterial: {fileID: 2100000, guid: bc148260939374bf18c0c4a9e5ccb860, type: 2}
   downWidget: {fileID: 0}
   isMouseOver: 0
@@ -22147,10 +22299,10 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 4
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -22220,7 +22372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf85498c81483e49b991b79d244577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 0
@@ -22233,8 +22385,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -22265,7 +22419,7 @@ MonoBehaviour:
         fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 3
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -22508,8 +22662,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -22787,8 +22943,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -23128,7 +23286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf85498c81483e49b991b79d244577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 0
@@ -23141,8 +23299,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -23173,7 +23333,7 @@ MonoBehaviour:
         fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 3
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -23499,8 +23659,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -23769,8 +23931,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -24033,7 +24197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf85498c81483e49b991b79d244577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 0
@@ -24046,8 +24210,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -24078,7 +24244,7 @@ MonoBehaviour:
         fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 3
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -24321,8 +24487,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -24596,8 +24764,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -24871,8 +25041,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -270
+    xFactor: 1
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -25146,8 +25318,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -25425,8 +25599,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -25653,277 +25829,6 @@ MonoBehaviour:
   enableImage: 1
   imageScale: {x: .5, y: 1}
   imageOffset: {x: 0, y: 0}
---- !u!1 &1228474692
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1228474693}
-  - 114: {fileID: 1228474694}
-  m_Layer: 0
-  m_Name: TopRight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1228474693
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1228474692}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 490, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1405984715}
-  - {fileID: 1510407372}
-  m_Father: {fileID: 972052278}
---- !u!114 &1228474694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1228474692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b57158aa55ffb564697aae03f4a069d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  root: {fileID: 1088966305}
-  isDrawn: 1
-  isDisabled: 0
-  isSelectable: 0
-  isDraggable: 0
-  resetAfterDrag: 0
-  tint: {r: 1, g: 1, b: 1, a: 1}
-  pivot:
-    x: 0
-    y: 0
-  anchor:
-    x: 3
-    xOffset: -310
-    y: 0
-    yOffset: 0
-  stretch:
-    width: 0
-    widthFactor: 1
-    widthOffset: 0
-    height: 0
-    heightFactor: 1
-    heightOffset: 0
-  clipTo: {fileID: 0}
-  styles:
-    basic:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-    hover:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-    active:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-    ticked:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-    thumb:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-  currentStyle:
-    name: New Style
-    coordinates:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 32
-      height: 32
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
-    text:
-      fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
-      fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 0
-      wordWrap: 1
-      padding:
-        m_Left: 0
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1
-  drawCrd:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 32
-    height: 32
-  drawRct:
-    serializedVersion: 2
-    x: 490
-    y: 599
-    width: 1
-    height: 1
-  mouseRct:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  drawDepth: -0
-  scrollOffset: {x: 0, y: 0, z: 0}
-  dragOffset: {x: 0, y: 0, z: 0}
-  dragOrigPos: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  hidden: 0
-  outOfBounds: 0
-  isDirty: 0
-  isAlwaysOnTop: 0
 --- !u!1 &1231236526
 GameObject:
   m_ObjectHideFlags: 0
@@ -25963,7 +25868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf85498c81483e49b991b79d244577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 0
@@ -25976,8 +25881,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -26008,7 +25915,7 @@ MonoBehaviour:
         fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 3
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -26286,8 +26193,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -26549,7 +26458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668593e9100cece4e85d4003565bc41f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 1
@@ -26562,8 +26471,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -26589,7 +26500,7 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 11400000, guid: 64a60312765b7e94eb2ee545b9e013a0, type: 2}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -26840,8 +26751,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -27266,8 +27179,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -27513,7 +27428,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1328117611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 759, y: 2, z: 0}
+  m_LocalPosition: {x: 704, y: 2, z: 0}
   m_LocalScale: {x: 28, y: 66, z: 1}
   m_Children: []
   m_Father: {fileID: 1535285551}
@@ -27541,8 +27456,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -36
+    xFactor: 1
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -27741,13 +27658,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 764
-    y: 4
+    y: 7
     width: 28
     height: 66
   mouseRct:
     serializedVersion: 2
     x: 764
-    y: 4
+    y: 7
     width: 28
     height: 66
   drawDepth: -10
@@ -27861,8 +27778,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -28131,8 +28050,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: 0
+    xFactor: 0
     y: 2
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -28503,8 +28424,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -28702,8 +28625,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 10
-    y: 430
+    x: 70
+    y: 355
     width: 200
     height: 160
   mouseRct:
@@ -28775,8 +28698,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: -150
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -29031,7 +28956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85036f9f458ddb440b8cf020cb2bed1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 1
@@ -29044,8 +28969,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -29322,8 +29249,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -29547,8 +29476,9 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
-    enabled: 1
+  hideText: 0
+  betaEditor:
+    enabled: 0
     string: 
     cursorPos: {x: 0, y: 0}
     cursorSelectPos: {x: 0, y: 0}
@@ -29566,276 +29496,6 @@ MonoBehaviour:
     repeat: 10
     exitKey: 27
   listening: 0
---- !u!1 &1405984714
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1405984715}
-  - 114: {fileID: 1405984716}
-  m_Layer: 0
-  m_Name: img_Background
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1405984715
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1405984714}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 5, z: 30}
-  m_LocalScale: {x: 300, y: 300, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1228474693}
---- !u!114 &1405984716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1405984714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7ad9f3468794f4ea38d72dd7e11647, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  root: {fileID: 1088966305}
-  isDrawn: 1
-  isDisabled: 0
-  isSelectable: 0
-  isDraggable: 0
-  resetAfterDrag: 0
-  tint: {r: 1, g: 1, b: 1, a: 1}
-  pivot:
-    x: 0
-    y: 0
-  anchor:
-    x: 0
-    xOffset: 0
-    y: 0
-    yOffset: 0
-  stretch:
-    width: 0
-    widthFactor: 1
-    widthOffset: 0
-    height: 0
-    heightFactor: 1
-    heightOffset: 0
-  clipTo: {fileID: 0}
-  styles:
-    basic:
-      name: SpriteBackground
-      coordinates:
-        serializedVersion: 2
-        x: 96
-        y: 64
-        width: 32
-        height: 32
-      border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-    hover:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-    active:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-    ticked:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-    thumb:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      color: {r: 1, g: 1, b: 1, a: 1}
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1
-  currentStyle:
-    name: New Style
-    coordinates:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 32
-      height: 32
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
-    text:
-      fontIndex: 0
-      font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
-      fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 0
-      wordWrap: 1
-      padding:
-        m_Left: 0
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1
-  drawCrd:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 32
-    height: 32
-  drawRct:
-    serializedVersion: 2
-    x: 495
-    y: 295
-    width: 300
-    height: 300
-  mouseRct:
-    serializedVersion: 2
-    x: 495
-    y: 295
-    width: 300
-    height: 300
-  drawDepth: -30
-  scrollOffset: {x: 0, y: 0, z: 0}
-  dragOffset: {x: 0, y: 0, z: 0}
-  dragOrigPos: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  hidden: 0
-  outOfBounds: 0
-  isDirty: 0
-  isAlwaysOnTop: 0
-  tile: {x: 1, y: 1}
 --- !u!1 &1413609549
 GameObject:
   m_ObjectHideFlags: 0
@@ -29876,8 +29536,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -30191,8 +29853,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -30469,8 +30133,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -220
+    xFactor: 1
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -30747,8 +30413,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -304
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -31016,8 +30684,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -31215,14 +30885,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 238
-    y: 54
+    x: 293
+    y: 57
     width: 20
     height: 12
   mouseRct:
     serializedVersion: 2
-    x: 238
-    y: 54
+    x: 293
+    y: 57
     width: 20
     height: 12
   drawDepth: -10
@@ -31363,8 +31033,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -31633,32 +31305,6 @@ Transform:
   - {fileID: 1413609551}
   - {fileID: 83317681}
   m_Father: {fileID: 517434035}
---- !u!1 &1510407371
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1510407372}
-  m_Layer: 0
-  m_Name: Inspector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1510407372
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1510407371}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 5, z: 10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1228474693}
 --- !u!1 &1532633665
 GameObject:
   m_ObjectHideFlags: 0
@@ -31710,8 +31356,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -31961,7 +31609,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1535285550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 528, z: 10}
+  m_LocalPosition: {x: 60, y: 525, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1328117612}
@@ -31994,9 +31642,11 @@ MonoBehaviour:
     y: 0
   anchor:
     x: 0
-    xOffset: -302
+    xOffset: 0
+    xFactor: 0
     y: 3
-    yOffset: -72
+    yOffset: -75
+    yFactor: 1
   stretch:
     width: 0
     widthFactor: 1
@@ -32194,8 +31844,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 5
-    y: 71
+    x: 60
+    y: 74
     width: 1
     height: 1
   mouseRct:
@@ -32264,8 +31914,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -32543,8 +32195,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -32847,8 +32501,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -33072,8 +32728,9 @@ MonoBehaviour:
   locked: 0
   singleLine: 0
   fitToText: 0
-  editor:
-    enabled: 1
+  hideText: 0
+  betaEditor:
+    enabled: 0
     string: 
     cursorPos: {x: 0, y: 0}
     cursorSelectPos: {x: 0, y: 0}
@@ -33115,7 +32772,7 @@ Transform:
   m_GameObject: {fileID: 1598654461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 30}
-  m_LocalScale: {x: 790, y: 70, z: 1}
+  m_LocalScale: {x: 430, y: 70, z: 1}
   m_Children: []
   m_Father: {fileID: 1535285551}
 --- !u!114 &1598654463
@@ -33142,12 +32799,14 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
-    widthOffset: -10
+    widthOffset: -370
     height: 0
     heightFactor: 1
     heightOffset: 0
@@ -33341,15 +33000,15 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 5
-    y: 2
-    width: 790
+    x: 60
+    y: 5
+    width: 430
     height: 70
   mouseRct:
     serializedVersion: 2
-    x: 5
-    y: 2
-    width: 790
+    x: 60
+    y: 5
+    width: 430
     height: 70
   drawDepth: -40
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -33412,8 +33071,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -22
+    xFactor: 1
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -33691,8 +33352,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -33890,8 +33553,8 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 6
-    y: 20
+    x: 61
+    y: 23
     width: 1
     height: 1
   mouseRct:
@@ -33979,8 +33642,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -34265,8 +33930,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -34614,8 +34281,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -34912,8 +34581,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -35210,8 +34881,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -35489,8 +35162,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -35760,8 +35435,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -36039,8 +35716,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -36318,8 +35997,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -36614,8 +36295,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -36893,8 +36576,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -37160,8 +36845,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -37514,8 +37201,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -37789,8 +37478,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -38064,8 +37755,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -38361,8 +38054,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -38665,8 +38360,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -38940,8 +38637,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -39186,7 +38885,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1825360810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 60, y: 75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1364537731}
@@ -39245,8 +38944,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: 0
+    xFactor: .5
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -39320,8 +39021,8 @@ MonoBehaviour:
       name: ButtonActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 0
+        y: 32
         width: 32
         height: 32
       border:
@@ -39334,7 +39035,7 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
         fontSize: 12
-        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 4
@@ -39514,8 +39215,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -39793,8 +39496,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -40063,8 +39768,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -40342,8 +40049,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -40621,8 +40330,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -40891,8 +40602,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -41090,14 +40803,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 8
-    y: 54
+    x: 63
+    y: 57
     width: 20
     height: 12
   mouseRct:
     serializedVersion: 2
-    x: 8
-    y: 54
+    x: 63
+    y: 57
     width: 20
     height: 12
   drawDepth: -10
@@ -41212,8 +40925,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -41474,8 +41189,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -41760,8 +41477,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 1
     widthFactor: 1
@@ -42038,8 +41757,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -42313,8 +42034,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -42512,14 +42235,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 35
-    y: 54
+    x: 90
+    y: 57
     width: 200
     height: 12
   mouseRct:
     serializedVersion: 2
-    x: 29
-    y: 54
+    x: 84
+    y: 57
     width: 206
     height: 12
   drawDepth: -10
@@ -42596,8 +42319,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: -302
+    xFactor: 0
     y: 2
     yOffset: -207
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -42865,8 +42590,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -43135,8 +42862,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -43398,7 +43127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf85498c81483e49b991b79d244577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 0
@@ -43411,8 +43140,10 @@ MonoBehaviour:
   anchor:
     x: 2
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -43443,7 +43174,7 @@ MonoBehaviour:
         fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 3
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -43817,8 +43548,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -44076,8 +43809,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -44345,7 +44080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf85498c81483e49b991b79d244577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
+  root: {fileID: 1088966305}
   isDrawn: 1
   isDisabled: 0
   isSelectable: 0
@@ -44358,8 +44093,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -44390,7 +44127,7 @@ MonoBehaviour:
         fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 3
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
@@ -44639,8 +44376,10 @@ MonoBehaviour:
   anchor:
     x: 3
     xOffset: -304
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
@@ -44908,8 +44647,10 @@ MonoBehaviour:
   anchor:
     x: 0
     xOffset: 0
+    xFactor: 0
     y: 0
     yOffset: 0
+    yFactor: 0
   stretch:
     width: 0
     widthFactor: 1
