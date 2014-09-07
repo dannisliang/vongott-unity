@@ -7,6 +7,7 @@ public class OJSequenceEditor extends OGPage {
 	public var keyframeContainer : Transform;
 	public var sequenceCamera : Camera;
 	public var timeline : OGScrollView;
+	public var cursor : Transform;
 	public var sldScale : OGSlider;
 	public var timelineScale : float = 20;
 
@@ -99,8 +100,6 @@ public class OJSequenceEditor extends OGPage {
 	}
 
 	public function Update () {
-		currentTime = -timeline.position.x / timelineScale;
-		
 		var prevTimelineScale : float = timelineScale;
 	       	timelineScale = 20 + sldScale.sliderValue * 100;
 
@@ -110,5 +109,14 @@ public class OJSequenceEditor extends OGPage {
 
 		linLeft.localPosition.x = -timeline.position.x;
 		linRight.localPosition.x = -timeline.position.x + timeline.size.x;
+	
+		if ( Input.GetMouseButton ( 0 ) && timeline.CheckMouseOver () ) {
+			currentTime -= Input.GetAxis ( "Mouse X" );
+			
+			currentTime = Mathf.Clamp ( currentTime, 0, sequence.length );
+		}
+		
+		cursor.localPosition.x = 10 + currentTime * timelineScale;
+		timeline.position.x = -currentTime * timelineScale;
 	}
 }

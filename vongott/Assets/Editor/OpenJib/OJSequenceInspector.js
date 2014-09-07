@@ -59,6 +59,7 @@ public class OJSequenceInspector extends Editor {
 
 		if ( !sequence.playing && GUILayout.Button ( "+", GUILayout.Width ( 32 ), GUILayout.ExpandHeight ( true ) ) ) {
 			currentEditorKeyframe = sequence.AddKeyframe ( currentTime );
+			return;
 		}
 		
 		EditorGUILayout.EndHorizontal ();
@@ -103,6 +104,7 @@ public class OJSequenceInspector extends Editor {
 
 			if ( currentEditorKeyframe > -1 && currentEditorKeyframe < sequence.keyframes.Count ) { 
 				kf = sequence.keyframes [ currentEditorKeyframe ];
+				EditorGUILayout.LabelField ( "# " + currentEditorKeyframe );
 				
 				kf.stop = EditorGUILayout.Toggle ( "Stop", kf.stop );
 				kf.time = EditorGUILayout.Slider ( "Time", kf.time, 0, sequence.length );
@@ -173,7 +175,11 @@ public class OJSequenceInspector extends Editor {
 
 	public function OnSceneGUI () {
 		var sequence : OJSequence = target as OJSequence;
-		
+	
+		if ( currentEditorKeyframe >= sequence.keyframes.Count ) {
+			currentEditorKeyframe = 0;
+		}
+
 		if ( sequence.keyframes.Count > 1 ) {
 			for ( var k : int = 1; k < sequence.keyframes.Count; k++ ) {
 				Handles.color = new Color ( 1, 1, 1, 0.5 );

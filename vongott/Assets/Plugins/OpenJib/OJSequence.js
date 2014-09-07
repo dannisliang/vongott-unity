@@ -202,7 +202,7 @@ public class OJSequence extends MonoBehaviour {
 		
 		keyframes.Add ( kf );
 		SortKeyframes ();
-		
+
 		// Return the correct index
 		for ( i = 0; i < keyframes.Count; i++ ) {
 			if ( keyframes [ i ].time == time ) {
