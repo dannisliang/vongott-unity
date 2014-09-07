@@ -14,28 +14,26 @@ public class OJSequenceInspector extends OEComponentInspector {
 		}
 
 		if ( !editorOpen ) {
-			if ( Button ( "Open editor" ) ) {
-				OJSequenceEditor.sequence = sequence;
-				
-				var page : OGPage;
-
-				for ( var p : OGPage in OGRoot.GetInstance().transform.GetComponentsInChildren.< OGPage > ( true ) ) {
-					if ( p.pageName == "SequenceEditor" ) {
-						page = p;
-						break;
-					}	
-				}
+			OJSequenceEditor.sequence = sequence;
 			
-				if ( page ) {	
-					OGRoot.GetInstance().AddToCurrentPages ( page );
-					page.gameObject.SetActive ( true );
-					page.StartPage ();
-					page.UpdateStyles ();
-				
-				} else {
-					Debug.Log ( "Couldn't find page 'SequenceEditor'!" );
+			var page : OGPage;
 
-				}
+			for ( var p : OGPage in OGRoot.GetInstance().transform.GetComponentsInChildren.< OGPage > ( true ) ) {
+				if ( p.pageName == "SequenceEditor" ) {
+					page = p;
+					break;
+				}	
+			}
+		
+			if ( page ) {	
+				OGRoot.GetInstance().AddToCurrentPages ( page );
+				page.gameObject.SetActive ( true );
+				page.StartPage ();
+				page.UpdateStyles ();
+			
+			} else {
+				Debug.Log ( "Couldn't find page 'SequenceEditor'!" );
+
 			}
 		
 		} else if ( !sequence.playing && sequence.keyframes.Count > 0 && OJSequenceEditor.currentKeyframe < sequence.keyframes.Count ) {

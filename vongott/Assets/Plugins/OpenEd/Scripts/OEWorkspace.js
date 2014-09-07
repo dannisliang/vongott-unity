@@ -404,6 +404,8 @@ public class OEWorkspace extends MonoBehaviour {
 	}
 	
 	public function ClearSelection () {
+		OGRoot.GetInstance().GoToPage ( "Home" );
+		
 		instance.selection.Clear ();
 
 		// Check for MeshFilters with null mesh

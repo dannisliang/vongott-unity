@@ -3,6 +3,8 @@
 public class OJSequenceEditor extends OGPage {
 	public var linLeft : Transform;
 	public var linRight : Transform;
+	public var fldCursorInput : OGTextField;
+	public var fldSequenceLength : OGTextField;
 	public var timestepContainer : Transform;
 	public var keyframeContainer : Transform;
 	public var sequenceCamera : Camera;
@@ -28,71 +30,70 @@ public class OJSequenceEditor extends OGPage {
 
 	public function DeleteKeyframe () {
 		sequence.keyframes.RemoveAt ( currentKeyframe );
-
-		StartCoroutine ( GenerateKeyframeButtons () );
 	}
 
 	public function AddKeyframe () {
 		sequence.AddKeyframe ( currentTime );
-
-		StartCoroutine ( GenerateKeyframeButtons () );
 	}
 
 	public function ReadKeyframe () {
 	}
 	
-	private function GenerateTimestepLabels () : IEnumerator {
-		for ( var i : int = 0; i < timestepContainer.childCount; i++ ) {
-			Destroy ( timestepContainer.GetChild ( i ).gameObject );
-		}
-
-		yield WaitForEndOfFrame ();
-		
-		for ( i = 0; i <= sequence.length; i++ ) {
-			var lbl : OGLabel = new GameObject ( i.ToString () ).AddComponent.< OGLabel > ();
-			lbl.ApplyDefaultStyles ();
+	private function UpdateTimestepLabels () {
+		for ( var i : int = 0; i <= sequence.length; i++ ) {
+			var lbl : OGLabel;
+		       
+			if ( i < timestepContainer.childCount ) {
+				lbl = timestepContainer.GetChild ( i ).gameObject.GetComponent.< OGLabel > ();
+			} else {
+				lbl = new GameObject ( i.ToString () ).AddComponent.< OGLabel > ();
+				lbl.ApplyDefaultStyles ();
+				lbl.transform.parent = timestepContainer;
+			}
+			
 			lbl.text = i.ToString ();
 			lbl.pivot.x = RelativeX.Center;
 			lbl.overrideAlignment = true;
 			lbl.alignment = TextAnchor.UpperCenter;
 
-			lbl.transform.parent = timestepContainer;
 			lbl.transform.localScale = new Vector3 ( 20, 14, 1 );
 			lbl.transform.localPosition = new Vector3 ( i * timelineScale, 0, 0 );
 		}
+
+		for ( i = sequence.length + 1; i < timestepContainer.childCount; i++ ) {
+			DestroyImmediate ( timestepContainer.GetChild ( i ).gameObject );
+		}
 	}
 
-	private function GenerateKeyframeButtons () : IEnumerator {
-		for ( var i : int = 0; i < keyframeContainer.childCount; i++ ) {
-			Destroy ( keyframeContainer.GetChild ( i ).gameObject );
-		}
+	private function UpdateKeyframeButtons () {
+		for ( var i : int = 0; i < sequence.keyframes.Count; i++ ) {
+			var btn : OGButton;
+		       
+			if ( i < keyframeContainer.childCount ) {
+				btn = keyframeContainer.GetChild ( i ).gameObject.GetComponent.< OGButton > ();
+			} else {
+				btn = new GameObject ( i.ToString () ).AddComponent.< OGButton > ();
+				btn.ApplyDefaultStyles ();
+				btn.transform.parent = keyframeContainer;
+			}
 
-		yield WaitForEndOfFrame ();
-		
-		for ( i = 0; i < sequence.keyframes.Count; i++ ) {
 			var kf : OJKeyframe = sequence.keyframes [ i ];
-
-			var btn : OGButton = new GameObject ( i.ToString () ).AddComponent.< OGButton > ();
-			btn.ApplyDefaultStyles ();
 			btn.target = this.gameObject;
 			btn.message = "SelectKeyframe";
 			btn.argument = i.ToString ();
+			btn.tint = i == currentKeyframe ? Color.green : Color.white;
 
-			btn.transform.parent = keyframeContainer;
 			btn.transform.localScale = new Vector3 ( 10, 20, 1 );
 			btn.transform.localPosition = new Vector3 ( kf.time * timelineScale - 5, 0, 0 );
 		}
-	}
 
-	public function Refresh () {
-		StartCoroutine ( GenerateKeyframeButtons () );
-		StartCoroutine ( GenerateTimestepLabels () );
+		for ( i = sequence.keyframes.Count; i < keyframeContainer.childCount; i++ ) {
+			Destroy ( keyframeContainer.GetChild ( i ).gameObject );
+		}
 	}
 
 	override function StartPage () {
 		sequenceCamera.enabled = true;
-		
-		Refresh ();
 	}
 
 	override function ExitPage () {
@@ -100,23 +101,31 @@ public class OJSequenceEditor extends OGPage {
 	}
 
 	public function Update () {
-		var prevTimelineScale : float = timelineScale;
 	       	timelineScale = 20 + sldScale.sliderValue * 100;
-
-		if ( timelineScale != prevTimelineScale ) {
-			Refresh ();
-		}
 
 		linLeft.localPosition.x = -timeline.position.x;
 		linRight.localPosition.x = -timeline.position.x + timeline.size.x;
 	
-		if ( Input.GetMouseButton ( 0 ) && timeline.CheckMouseOver () ) {
-			currentTime -= Input.GetAxis ( "Mouse X" );
+		if ( !sequence.playing ) {
+			if ( timeline.CheckMouseOver () ) {
+				currentTime += Input.GetAxis ( "Mouse ScrollWheel" );
+				
+				currentTime = Mathf.Clamp ( currentTime, 0, sequence.length );
+			}
 			
-			currentTime = Mathf.Clamp ( currentTime, 0, sequence.length );
+			sequence.SetTime ( currentTime );
+
+			fldSequenceLength.text = sequence.length.ToString();
+			sequence.length = float.Parse ( fldSequenceLength.text );
+
+			fldCursorInput.text = currentTime.ToString();
+			currentTime = float.Parse ( fldCursorInput.text );
 		}
-		
+
 		cursor.localPosition.x = 10 + currentTime * timelineScale;
 		timeline.position.x = -currentTime * timelineScale;
+	
+		UpdateTimestepLabels ();
+		UpdateKeyframeButtons ();
 	}
 }
