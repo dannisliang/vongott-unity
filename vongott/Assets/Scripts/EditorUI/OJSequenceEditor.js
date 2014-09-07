@@ -9,12 +9,11 @@ public class OJSequenceEditor extends OGPage {
 	public var timeline : OGScrollView;
 	public var sldScale : OGSlider;
 	public var timelineScale : float = 20;
-	public var inspector : OEComponentInspector;
 
-	private var currentKeyframe : int;
 	private var currentTime : float;
 
 	public static var sequence : OJSequence;
+	public static var currentKeyframe : int;
 
 	public function ReadSequence () {
 		
@@ -97,11 +96,9 @@ public class OJSequenceEditor extends OGPage {
 
 	override function ExitPage () {
 		sequenceCamera.enabled = false;
-		
-		sequence = null;
 	}
 
-	override function UpdatePage () {
+	public function Update () {
 		currentTime = -timeline.position.x / timelineScale;
 		
 		var prevTimelineScale : float = timelineScale;
@@ -113,12 +110,5 @@ public class OJSequenceEditor extends OGPage {
 
 		linLeft.localPosition.x = -timeline.position.x;
 		linRight.localPosition.x = -timeline.position.x + timeline.size.x;
-
-		if ( sequence.keyframes.Count > 0 && currentKeyframe < sequence.keyframes.Count ) {
-			var kf : OJKeyframe = sequence.keyframes [ currentKeyframe ];
-		
-			//inspector.target = ;
-			inspector.Update ();
-		}
 	}
 }

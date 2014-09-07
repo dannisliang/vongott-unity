@@ -19203,7 +19203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &972052278
 Transform:
   m_ObjectHideFlags: 0
@@ -19237,10 +19237,6 @@ MonoBehaviour:
   timeline: {fileID: 390020049}
   sldScale: {fileID: 1964775265}
   timelineScale: 20
-  inspector:
-    width: 280
-    transform: {fileID: 0}
-    overrideTarget: 0
 --- !u!1 &977245676
 GameObject:
   m_ObjectHideFlags: 0
@@ -22252,7 +22248,6 @@ MonoBehaviour:
   skin: {fileID: 11400000, guid: 8db56b7a0d73e774ca26d2e2c923e673, type: 2}
   currentPages:
   - {fileID: 978572959}
-  - {fileID: 972052279}
   lineMaterial: {fileID: 2100000, guid: bc148260939374bf18c0c4a9e5ccb860, type: 2}
   downWidget: {fileID: 0}
   isMouseOver: 0
