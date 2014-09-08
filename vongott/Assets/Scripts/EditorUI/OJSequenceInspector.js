@@ -64,6 +64,18 @@ public class OJSequenceInspector extends OEComponentInspector {
 		OEWorkspace.GetInstance().cam.materials.highlight.SetPass ( 0 );
 
 		DrawPath ( sequence );
+		
+		var pos : Vector3 = sequence.cam.transform.position;	
+		var t : Transform = Camera.main.transform;
+
+		GL.Color ( new Color ( 0.4, 1.0, 0.4 ) );
+
+		GL.Vertex ( pos - t.right / 6 + t.up / 6 );
+		GL.Vertex ( pos + t.right / 6 + t.up / 6 );
+		GL.Vertex ( pos + t.right / 6 + t.up / 6 );
+		GL.Vertex ( pos - t.up / 6 );
+		GL.Vertex ( pos - t.up / 6 );
+		GL.Vertex ( pos - t.right / 6 + t.up / 6 );
 
 		GL.End ();
 	}	
@@ -117,11 +129,6 @@ public class OJSequenceInspector extends OEComponentInspector {
 			
 			// Transform
 			LabelField ( "Transform" );
-			if ( Button ( "Copy from scene" ) ) {
-				kf.position = sequence.cam.transform.position - sequence.transform.position;
-				kf.rotation = sequence.cam.transform.localEulerAngles;
-			}
-			
 			kf.position = Vector3Field ( "Position", kf.position );
 			kf.rotation = Vector3Field ( "Rotation", kf.rotation );
 			

@@ -7,6 +7,8 @@ public class OJSequenceEditor extends OGPage {
 	public var fldSequenceLength : OGTextField;
 	public var timestepContainer : Transform;
 	public var keyframeContainer : Transform;
+	public var tbxFollowCurve : OGTickBox;
+	public var tbxAutoplay : OGTickBox;
 	public var sequenceCamera : Camera;
 	public var timeline : OGScrollView;
 	public var cursor : Transform;
@@ -127,5 +129,11 @@ public class OJSequenceEditor extends OGPage {
 	
 		UpdateTimestepLabels ();
 		UpdateKeyframeButtons ();
+
+		tbxAutoplay.isTicked = sequence.autoPlay;
+		sequence.autoPlay = tbxAutoplay.isTicked;
+
+		tbxFollowCurve.isTicked = sequence.rotateAlongCurve;
+		sequence.rotateAlongCurve = tbxFollowCurve.isTicked;
 	}
 }
