@@ -59,6 +59,10 @@ public class OJSequenceInspector extends OEComponentInspector {
 	override function DrawGL () {
 		var sequence : OJSequence = target.GetComponent.< OJSequence >();
 		
+		if ( !sequence.cam ) {
+			sequence.cam = OEWorkspace.GetInstance().eventHandler.GetComponent.< EditorEventManager > ().sequenceCamera;
+		}
+
 		GL.Begin ( GL.LINES );
 		
 		OEWorkspace.GetInstance().cam.materials.highlight.SetPass ( 0 );

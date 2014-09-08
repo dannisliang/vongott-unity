@@ -122,8 +122,8 @@ public class OJSequenceEditor extends OGPage {
 			
 			sequence.SetTime ( currentTime );
 
-			sequence.length = float.Parse ( fldSequenceLength.text );
-			currentTime = float.Parse ( fldCursorInput.text );
+			float.TryParse ( fldSequenceLength.text, sequence.length );
+			fldCursorInput.text = currentTime.ToString();
 		}
 
 		cursor.localPosition.x = 10 + currentTime * timelineScale;
