@@ -162,7 +162,7 @@ public class OJSequenceInspector extends OEComponentInspector {
 			// Properties	
 			LabelField ( "Properties" );
 			kf.fov = Slider ( "FOV", kf.fov, 1, 179 );
-			kf.brightness = FloatField ( "Brightness", kf.brightness );
+			kf.brightness = Slider ( "Brightness", kf.brightness, 0, 1 );
 			
 			// Actions
 			Offset ( 0, 20 );
