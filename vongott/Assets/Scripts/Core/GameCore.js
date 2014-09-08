@@ -11,6 +11,7 @@ public enum eGameState {
 
 class GameCore extends MonoBehaviour {
 	// Public vars
+	public var sequenceCamera : Camera;
 	public var levelContainer : Transform;
 	public var highlightColor : Color;
 	public var player : Player;
@@ -168,9 +169,13 @@ class GameCore extends MonoBehaviour {
 		SetPlayerSpeaker ();
 		
 		for ( var t : OATrigger in levelContainer.GetComponentsInChildren.< OATrigger > () ) {
-			t.eventHandler = this.gameObject;
+			t.eventHandler = GetEventManager ().gameObject;
 		}
 
+		for ( var s : OJSequence in levelContainer.GetComponentsInChildren.< OJSequence > () ) {
+			s.cam = sequenceCamera;
+			s.eventHandler = GetEventManager ().gameObject;
+		}
 
 		if ( properties ) {
 			if ( properties.HasField ( "musicCalm" ) ) {

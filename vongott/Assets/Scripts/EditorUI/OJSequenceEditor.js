@@ -96,6 +96,11 @@ public class OJSequenceEditor extends OGPage {
 
 	override function StartPage () {
 		sequenceCamera.enabled = true;
+		
+		fldSequenceLength.text = sequence.length.ToString();
+		fldCursorInput.text = currentTime.ToString();
+		tbxAutoplay.isTicked = sequence.autoPlay;
+		tbxFollowCurve.isTicked = sequence.rotateAlongCurve;
 	}
 
 	override function ExitPage () {
@@ -117,10 +122,7 @@ public class OJSequenceEditor extends OGPage {
 			
 			sequence.SetTime ( currentTime );
 
-			fldSequenceLength.text = sequence.length.ToString();
 			sequence.length = float.Parse ( fldSequenceLength.text );
-
-			fldCursorInput.text = currentTime.ToString();
 			currentTime = float.Parse ( fldCursorInput.text );
 		}
 
@@ -130,10 +132,7 @@ public class OJSequenceEditor extends OGPage {
 		UpdateTimestepLabels ();
 		UpdateKeyframeButtons ();
 
-		tbxAutoplay.isTicked = sequence.autoPlay;
 		sequence.autoPlay = tbxAutoplay.isTicked;
-
-		tbxFollowCurve.isTicked = sequence.rotateAlongCurve;
 		sequence.rotateAlongCurve = tbxFollowCurve.isTicked;
 	}
 }
