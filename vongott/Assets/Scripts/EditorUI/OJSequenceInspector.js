@@ -3,6 +3,71 @@
 public class OJSequenceInspector extends OEComponentInspector {
 	override function get type () : System.Type { return typeof ( OJSequence ); }
 	
+	private function DrawHandles ( sequence : OJSequence, kf : OJKeyframe ) {
+		if ( kf.curve.before != Vector3.zero ) {
+			GL.Vertex ( sequence.transform.position + kf.position );
+		       	GL.Vertex ( sequence.transform.position + kf.position + kf.curve.before );
+		}
+		
+		if ( kf.curve.after != Vector3.zero ) {
+			GL.Vertex ( sequence.transform.position + kf.position );
+		       	GL.Vertex ( sequence.transform.position + kf.position + kf.curve.after );
+		}
+	}
+
+	public function DrawPath ( sequence : OJSequence ) {
+		if ( sequence.keyframes.Count > 1 ) {
+			for ( var k : int = 1; k < sequence.keyframes.Count; k++ ) {
+				GL.Color ( new Color ( 1, 1, 1, 0.5 ) );
+
+				var kf1 : OJKeyframe = sequence.keyframes [ k - 1 ];
+				var kf2 : OJKeyframe = sequence.keyframes [ k ];
+
+				for ( var t : float = 0.05; t <= 1.05; t += 0.05 ) {
+					var p1 : Vector3 = OJSequence.CalculateBezierPoint ( t - 0.05, sequence.transform.position + kf1.position, sequence.transform.position + kf1.position + kf1.curve.after, sequence.transform.position + kf2.position + kf2.curve.before, sequence.transform.position + kf2.position );
+					var p2 : Vector3 = OJSequence.CalculateBezierPoint ( t, sequence.transform.position + kf1.position, sequence.transform.position + kf1.position + kf1.curve.after, sequence.transform.position + kf2.position + kf2.curve.before, sequence.transform.position + kf2.position );
+					
+					GL.Vertex ( p1 );
+				       	GL.Vertex ( p2 );
+				}
+			}
+		
+			var kf : OJKeyframe = sequence.keyframes [ OJSequenceEditor.currentKeyframe ];
+			
+			GL.Color ( new Color ( 0, 1, 1, 0.5 ) );
+			DrawHandles ( sequence, kf );
+		
+			var before : Vector3 = kf.curve.before;
+			//kf.curve.before = Handles.PositionHandle ( sequence.transform.position + kf.position + kf.curve.before, Quaternion.Euler ( Vector3.zero ) ) - kf.position - sequence.transform.position;
+			
+			var after : Vector3 = kf.curve.after;
+			//kf.curve.after = Handles.PositionHandle ( sequence.transform.position + kf.position + kf.curve.after, Quaternion.Euler ( Vector3.zero ) ) - kf.position - sequence.transform.position;
+		
+			if ( kf.curve.symmetrical ) {	
+				if ( before != kf.curve.before ) {
+					kf.MirrorCurveAfter ();
+				
+				} else if ( after != kf.curve.after ) {
+					kf.MirrorCurveBefore ();
+				
+				}
+			}
+		}
+		
+	}
+
+	override function DrawGL () {
+		var sequence : OJSequence = target.GetComponent.< OJSequence >();
+		
+		GL.Begin ( GL.LINES );
+		
+		OEWorkspace.GetInstance().cam.materials.highlight.SetPass ( 0 );
+
+		DrawPath ( sequence );
+
+		GL.End ();
+	}	
+
 	override function Inspector () {
 		var sequence : OJSequence = target.GetComponent.< OJSequence >();
 		var editorOpen : boolean = false;
@@ -64,8 +129,22 @@ public class OJSequenceInspector extends OEComponentInspector {
 			Offset ( 0, 20 );
 			LabelField ( "Curve" );
 			kf.curve.symmetrical = Toggle ( "Symmetrical", kf.curve.symmetrical );
+			
+			var before : Vector3 = kf.curve.before;
 			kf.curve.before = Vector3Field ( "Before", kf.curve.before );
+			
+			var after : Vector3 = kf.curve.after;
 			kf.curve.after = Vector3Field ( "After", kf.curve.after );
+			
+			if ( kf.curve.symmetrical ) {	
+				if ( before != kf.curve.before ) {
+					kf.MirrorCurveAfter ();
+				
+				} else if ( after != kf.curve.after ) {
+					kf.MirrorCurveBefore ();
+				
+				}
+			}
 
 			Offset ( 0, 20 );
 		
@@ -83,54 +162,4 @@ public class OJSequenceInspector extends OEComponentInspector {
 		}
 	}
 
-	private function DrawHandles ( sequence : OJSequence, kf : OJKeyframe ) {
-		if ( kf.curve.before != Vector3.zero ) {
-			Handles.DrawLine ( sequence.transform.position + kf.position, sequence.transform.position + kf.position + kf.curve.before );
-		}
-		
-		if ( kf.curve.after != Vector3.zero ) {
-			Handles.DrawLine ( sequence.transform.position + kf.position, sequence.transform.position + kf.position + kf.curve.after );
-		}
-	}
-
-	public function OnSceneGUI () {
-		var sequence : OJSequence = target as OJSequence;
-		
-		if ( sequence.keyframes.Count > 1 ) {
-			for ( var k : int = 1; k < sequence.keyframes.Count; k++ ) {
-				Handles.color = new Color ( 1, 1, 1, 0.5 );
-
-				var kf1 : OJKeyframe = sequence.keyframes [ k - 1 ];
-				var kf2 : OJKeyframe = sequence.keyframes [ k ];
-
-				for ( var t : float = 0.05; t <= 1.05; t += 0.05 ) {
-					var p1 : Vector3 = OJSequence.CalculateBezierPoint ( t - 0.05, sequence.transform.position + kf1.position, sequence.transform.position + kf1.position + kf1.curve.after, sequence.transform.position + kf2.position + kf2.curve.before, sequence.transform.position + kf2.position );
-					var p2 : Vector3 = OJSequence.CalculateBezierPoint ( t, sequence.transform.position + kf1.position, sequence.transform.position + kf1.position + kf1.curve.after, sequence.transform.position + kf2.position + kf2.curve.before, sequence.transform.position + kf2.position );
-					
-					Handles.DrawLine ( p1, p2 );
-				}
-			}
-		}
-		
-		var kf : OJKeyframe = sequence.keyframes [ OJSequenceEditor.currentKeyframe ];
-		
-		Handles.color = new Color ( 0, 1, 1, 0.5 );
-		DrawHandles ( sequence, kf );
-	
-		var before : Vector3 = kf.curve.before;
-		kf.curve.before = Handles.PositionHandle ( sequence.transform.position + kf.position + kf.curve.before, Quaternion.Euler ( Vector3.zero ) ) - kf.position - sequence.transform.position;
-		
-		var after : Vector3 = kf.curve.after;
-		kf.curve.after = Handles.PositionHandle ( sequence.transform.position + kf.position + kf.curve.after, Quaternion.Euler ( Vector3.zero ) ) - kf.position - sequence.transform.position;
-	
-		if ( kf.curve.symmetrical ) {	
-			if ( before != kf.curve.before ) {
-				kf.MirrorCurveAfter ();
-			
-			} else if ( after != kf.curve.after ) {
-				kf.MirrorCurveBefore ();
-			
-			}
-		}
-	}
 }

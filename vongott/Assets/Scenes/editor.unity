@@ -10038,7 +10038,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1
     thumb:
-      name: New Style
+      name: Button
       coordinates:
         serializedVersion: 2
         x: 0
@@ -10046,19 +10046,19 @@ MonoBehaviour:
         width: 32
         height: 32
       border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
+        top: 4
+        bottom: 4
+        left: 4
+        right: 4
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 11400000, guid: 71c50facf23474bf39105e5c98995d4b, type: 2}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0

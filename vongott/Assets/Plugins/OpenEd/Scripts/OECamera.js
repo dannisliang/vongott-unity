@@ -230,7 +230,16 @@ public class OECamera extends MonoBehaviour {
 	}
 
 	public function Update () {
-		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage && ( OGRoot.GetInstance().currentPage.name == "Home" || OGRoot.GetInstance().currentPage.name == "Picker" ) ) {
+		var isHome : boolean = false;
+
+		for ( var p : int = 0; p < OGRoot.GetInstance().currentPages.Length; p++ ) {
+			if ( OGRoot.GetInstance().currentPages [ p ].name == "Home" ) {
+				isHome = true;
+				break;
+			}
+		}
+
+		if ( OGRoot.GetInstance() && OGRoot.GetInstance().currentPage && ( isHome || OGRoot.GetInstance().currentPage.name == "Picker" ) ) {
 			var focus : Vector3 = OEWorkspace.GetInstance().GetFocus ();
 			
 			if ( flyMode ) {
@@ -270,7 +279,7 @@ public class OECamera extends MonoBehaviour {
 							OEWorkspace.GetInstance().SetFocus ( hit.point );
 						}
 					
-					} else if ( OGRoot.GetInstance().currentPage.pageName == "Home" && Input.GetMouseButtonDown ( 0 ) ) {
+					} else if ( isHome && Input.GetMouseButtonDown ( 0 ) ) {
 						var hits : RaycastHit[] = Physics.RaycastAll ( ray, Mathf.Infinity );
 					
 						if ( hits.Length < 1 ) {

@@ -33,7 +33,7 @@ public class OJSequenceEditor extends OGPage {
 	}
 
 	public function AddKeyframe () {
-		sequence.AddKeyframe ( currentTime );
+		currentKeyframe = sequence.AddKeyframe ( currentTime );
 	}
 
 	public function ReadKeyframe () {
@@ -108,7 +108,7 @@ public class OJSequenceEditor extends OGPage {
 	
 		if ( !sequence.playing ) {
 			if ( timeline.CheckMouseOver () ) {
-				currentTime += Input.GetAxis ( "Mouse ScrollWheel" );
+				currentTime += System.Math.Round ( Input.GetAxis ( "Mouse ScrollWheel" ) * 0.5, 1 );
 				
 				currentTime = Mathf.Clamp ( currentTime, 0, sequence.length );
 			}
