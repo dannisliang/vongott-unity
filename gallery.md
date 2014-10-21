@@ -37,4 +37,7 @@ galleries:
       text: "Unreal style skybox"
     - name: "terminal"
       text: "Terminal with surveillance camera controls"
+ - title: "Videos"
+   videos:
+   - id: "a48bC4eOuFg"
 ---
