@@ -1,3 +1,7 @@
+---
+**NOTICE:** The Unity3D version of The Vongott Chronicles is now deprecated. The repo for the Unreal Engine version is [here](github.com/mrzapp/vongott)
+---
+
 This project is an open source ARPG set in the world of Warren Spector's Deus Ex.
 
 ### The story
