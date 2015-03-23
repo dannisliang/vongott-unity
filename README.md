@@ -1,6 +1,6 @@
 ___
 
-**NOTICE:** 
+**NOTICE:**  
 The Unity3D version of The Vongott Chronicles is now deprecated. The repo for the Unreal Engine version is [here](github.com/mrzapp/vongott)
 
 ___
